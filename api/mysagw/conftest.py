@@ -2,9 +2,12 @@ import importlib
 import inspect
 
 import pytest
+from django.core.cache import cache
 from factory.base import FactoryMetaClass
 from pytest_factoryboy import register
 from rest_framework.test import APIClient
+
+from .oidc_auth.models import OIDCUser
 
 
 def register_module(module):
@@ -16,7 +19,30 @@ def register_module(module):
             register(obj, base_name)
 
 
-register_module(importlib.import_module(".user.factories", "mysagw"))
+register_module(importlib.import_module(".identity.factories", "mysagw"))
+
+
+@pytest.fixture
+def admin_groups():
+    return ["admin"]
+
+
+# @pytest.fixture
+# def user(settings, admin_groups):
+#     return OIDCUser("sometoken", {"sub": "user", settings.OIDC_GROUPS_CLAIM: ["group"]})
+
+
+@pytest.fixture
+def admin_user(settings, admin_groups):
+    return OIDCUser(
+        "sometoken", {"sub": "admin", settings.OIDC_GROUPS_CLAIM: admin_groups}
+    )
+
+
+# @pytest.fixture
+# def client(db):
+#     client = APIClient()
+#     return client
 
 
 @pytest.fixture
@@ -24,3 +50,8 @@ def admin_client(db, admin_user):
     client = APIClient()
     client.force_authenticate(user=admin_user)
     return client
+
+
+@pytest.fixture(scope="function", autouse=True)
+def _autoclear_cache():
+    cache.clear()
