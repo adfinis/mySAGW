@@ -1,0 +1,12 @@
+.cache
+.coverage
+.coverage.*
+Dockerfile
+.dockerignore
+.env
+**/*.pyc
+__pycache__
+**/*.pyd
+**/*.pyo
+.pytest_cache
+**/*.swp

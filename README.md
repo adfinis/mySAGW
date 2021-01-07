@@ -1,8 +1,11 @@
-# mysagw
+# mySAGW
 
-[![Build Status](https://travis-ci.com/adfinis-sygroup/mysagw.svg?branch=master)](https://travis-ci.com/adfinis-sygroup/mysagw)
-[![Pyup](https://pyup.io/repos/github/adfinis-sygroup/mysagw/shield.svg)](https://pyup.io/account/repos/github/adfinis-sygroup/mysagw/)
+!!!WIP!!!
+
+[![Build Status](https://github.com/adfinis-sygroup/mySAGW/workflows/Tests/badge.svg)](https://github.com/adfinis-sygroup/mySAGW/actions?query=workflow%3ATests)
+[![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)](https://github.com/adfinis-sygroup/mySAGW/blob/master/setup.cfg#L50)
 [![Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/adfinis-sygroup/mySAGW)
+[![License: GPL-3.0-or-later](https://img.shields.io/github/license/adfinis-sygroup/mySAGW)](https://spdx.org/licenses/GPL-3.0-or-later.html)
 
 Application management for SAGW
 
@@ -24,7 +27,7 @@ You can now access the api at [http://localhost:8000/api/v1/](http://localhost:8
 
 ### Configuration
 
-Document Merge Service is a [12factor app](https://12factor.net/) which means that configuration is stored in environment variables.
+mySAGW is a [12factor app](https://12factor.net/) which means that configuration is stored in environment variables.
 Different environment variable types are explained at [django-environ](https://github.com/joke2k/django-environ#supported-types).
 
 #### Common

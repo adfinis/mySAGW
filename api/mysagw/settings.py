@@ -8,7 +8,7 @@ env = environ.Env()
 django_root = environ.Path(__file__) - 2
 
 ENV_FILE = env.str("ENV_FILE", default=django_root(".env"))
-if os.path.exists(ENV_FILE):
+if os.path.exists(ENV_FILE):  # pragma: no cover
     environ.Env.read_env(ENV_FILE)
 
 # per default production is enabled for security reasons
@@ -35,6 +35,9 @@ INSTALLED_APPS = [
     "mysagw.user.apps.DefaultConfig",
 ]
 
+if ENV == "dev":
+    INSTALLED_APPS.append("django_extensions")
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -55,9 +58,7 @@ DATABASES = {
         ),
         "NAME": env.str("DATABASE_NAME", default="mysagw"),
         "USER": env.str("DATABASE_USER", default="mysagw"),
-        "PASSWORD": env.str(
-            "DATABASE_PASSWORD", default=default("mysagw")
-        ),
+        "PASSWORD": env.str("DATABASE_PASSWORD", default=default("mysagw")),
         "HOST": env.str("DATABASE_HOST", default="localhost"),
         "PORT": env.str("DATABASE_PORT", default=""),
         "OPTIONS": env.dict("DATABASE_OPTIONS", default={}),

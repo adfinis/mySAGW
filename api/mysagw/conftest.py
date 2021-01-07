@@ -16,11 +16,7 @@ def register_module(module):
             register(obj, base_name)
 
 
-register_module(
-    importlib.import_module(
-        ".user.factories", "mysagw"
-    )
-)
+register_module(importlib.import_module(".user.factories", "mysagw"))
 
 
 @pytest.fixture
