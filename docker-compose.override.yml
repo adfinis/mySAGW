@@ -5,14 +5,14 @@ services:
       - POSTGRES_PASSWORD=mysagw
     ports:
       - "5432:5432"
-  backend:
+  api:
     build:
-      context: .
+      context: ./api/
       args:
         REQUIREMENTS: requirements-dev.txt
     user: "${UID:?Set UID env variable to your user id}"
     volumes:
-      - ./:/app
+      - ./api:/app
     command:
       [
         "/bin/sh",
