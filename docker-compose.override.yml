@@ -3,8 +3,11 @@ services:
   db:
     environment:
       - POSTGRES_PASSWORD=mysagw
+      - CALUMA_DB_PASSWORD=caluma
     ports:
       - "5432:5432"
+    volumes:
+      - ./postgres/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh:ro
   api:
     build:
       context: ./api/
@@ -21,3 +24,16 @@ services:
       ]
     environment:
       - ENV=dev
+  caluma:
+    environment:
+      - ENV=dev
+#      - OIDC_VERIFY_SSL=False
+#      - OIDC_USERINFO_ENDPOINT=http://mysagw/openid/userinfo
+    volumes:
+      - ./caluma/extensions:/app/caluma/extensions:ro
+    command:
+      [
+        "/bin/sh",
+        "-c",
+        "wait-for-it.sh db:5432 -- ./manage.py migrate && ./manage.py runserver 0.0.0.0:8000",
+      ]

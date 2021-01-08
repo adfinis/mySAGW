@@ -9,6 +9,7 @@ services:
       # - POSTGRES_PASSWORD=
     volumes:
       - dbdata:/var/lib/postgresql/data
+
   api:
     image: adfinis-sygroup/mysagw
     ports:
@@ -25,6 +26,32 @@ services:
       # https://docs.djangoproject.com/en/2.1/ref/settings/#password
       # same as postgres password above
       # - DATABASE_PASSWORD=
+
+  caluma:
+    image: projectcaluma/caluma:version-7.2.0
+    build:
+      context: caluma
+      cache_from:
+        - projectcaluma/caluma:version-7.2.0
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_PORT=5432
+      - OIDC_BEARER_TOKEN_REVALIDATION_TIME=300
+      - VISIBILITY_CLASSES=caluma.extensions.visibilities.MySAGWVisibility
+      - PERMISSION_CLASSES=caluma.extensions.permissions.MySAGWPermission
+#      - VISIBILITY_CLASSES=caluma.caluma_user.visibilities.Authenticated,caluma.extensions.visibilities.MySAGWVisibility
+#      - PERMISSION_CLASSES=caluma.caluma_user.permissions.IsAuthenticated,caluma.extensions.permissions.MySAGWPermission
+      - LANGUAGE_CODE=de
+      - LANGUAGES=de,fr
+    depends_on:
+      - db
+
+  proxy:
+    image: nginx:1.19-alpine
+    volumes:
+      - ./proxy/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - "80:80"
 
 volumes:
   dbdata:
