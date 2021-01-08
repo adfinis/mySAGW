@@ -3,7 +3,7 @@
 !!!WIP!!!
 
 [![Build Status](https://github.com/adfinis-sygroup/mySAGW/workflows/Tests/badge.svg)](https://github.com/adfinis-sygroup/mySAGW/actions?query=workflow%3ATests)
-[![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)](https://github.com/adfinis-sygroup/mySAGW/blob/master/setup.cfg#L50)
+[![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)](https://github.com/adfinis-sygroup/mySAGW/blob/master/api/setup.cfg#L53)
 [![Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/adfinis-sygroup/mySAGW)
 [![License: GPL-3.0-or-later](https://img.shields.io/github/license/adfinis-sygroup/mySAGW)](https://spdx.org/licenses/GPL-3.0-or-later.html)
 
