@@ -1,24 +1,42 @@
 repos:
   - repo: local
     hooks:
-      - id: isort
+      - id: api-isort
         stages: [commit]
-        name: isort
+        name: api-isort
         language: system
-        entry: isort --settings-path api/setup.cfg
+        entry: /bin/sh -c 'cd ./api/ && isort'
         types: [python]
-      - id: black
+      - id: api-black
         stages: [commit]
-        name: black
+        name: api-black
         language: system
-        entry: black
+        entry: /bin/sh -c 'cd ./api/ && black'
         types: [python]
-      - id: flake8
+      - id: api-flake8
         stages: [commit]
-        name: flake8
+        name: api-flake8
         language: system
-        entry: flake8 --config api/setup.cfg
+        entry: /bin/sh -c 'cd ./api/ && flake8'
         types: [python]
+      - id: caluma-isort
+        stages: [ commit ]
+        name: caluma-isort
+        language: system
+        entry: /bin/sh -c 'cd ./caluma/ && isort'
+        types: [ python ]
+      - id: caluma-black
+        stages: [ commit ]
+        name: caluma-black
+        language: system
+        entry: /bin/sh -c 'cd ./caluma/ && black'
+        types: [ python ]
+      - id: caluma-flake8
+        stages: [ commit ]
+        name: caluma-flake8
+        language: system
+        entry: /bin/sh -c 'cd ./caluma/ && flake8'
+        types: [ python ]
       - id: gitlint
         stages: [commit-msg]
         name: gitlint

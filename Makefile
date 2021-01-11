@@ -39,3 +39,13 @@ migrate: ## Migrate django
 .PHONY: dbshell
 dbshell: ## Start a psql shell
 	@docker-compose exec db psql -Umysagw
+
+.PHONY: caluma-test
+caluma-test: ## test caluma config and extensions
+	@docker-compose exec -T caluma python manage.py check
+	@docker-compose exec -T caluma ./caluma/ci/test.sh
+
+.PHONY: caluma-lint
+caluma-lint: ## lint caluma extensions
+	@cd ./caluma && black --check .
+	@cd ./caluma && flake8
