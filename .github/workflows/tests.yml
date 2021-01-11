@@ -6,6 +6,9 @@ on:
   schedule:
     - cron:  '0 0 * * 0'
 
+env:
+  ember-dir: ./ember
+
 jobs:
   api-tests:
     runs-on: ubuntu-latest
@@ -41,6 +44,19 @@ jobs:
         run: pip install -r ./api/requirements-dev.txt
       - name: Run test suite
         run: make caluma-lint
+  ember-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10
+      - name: Install dependencies
+        run: yarn install
+        working-directory: ${{env.ember-dir}}
+      - name: Run tests
+        run: yarn test:ember
+        working-directory: ${{env.ember-dir}}
   commit-lint:
     runs-on: ubuntu-latest
     steps:

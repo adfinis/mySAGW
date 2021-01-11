@@ -1,0 +1,31 @@
+.nav-bar {
+  border-bottom: solid 1px $global-border;
+  padding-left: 15px;
+
+  & img.nav-bar-logo {
+    height: 50px;
+  }
+
+  & [uk-tab] {
+    margin: 0;
+
+    &::before {
+      border-bottom: none;
+    }
+
+    &,
+    & li {
+      height: 100%;
+    }
+
+    & a {
+      @extend .uk-flex, .uk-flex-middle;
+      padding: 0;
+      height: calc(100% - 2px);
+    }
+
+    & .uk-active > a {
+      border-bottom: solid 2px $app-accent-color;
+    }
+  }
+}

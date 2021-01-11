@@ -1,0 +1,19 @@
+<span class="uk-flex uk-flex-middle">
+  {{#if this.iconLeft}}
+    <span
+      uk-icon={{get this.icons @state}}
+      class="uk-margin-small-right"
+    ></span>
+    <span>
+      {{t (concat "documents.states." @state)}}
+    </span>
+  {{else}}
+    <span>
+      {{t (concat "documents.states." @state)}}
+    </span>
+    <span
+      uk-icon={{get this.icons @state}}
+      class="uk-margin-small-left"
+    ></span>
+  {{/if}}
+</span>

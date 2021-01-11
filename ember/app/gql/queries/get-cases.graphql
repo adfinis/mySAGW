@@ -1,0 +1,33 @@
+query GetCases($cursor: String, $forms: [String], $orderBy: [CaseOrdering]!) {
+  allCases(
+    first: 15
+    after: $cursor
+    orderBy: $orderBy
+    filter: [{ documentForms: $forms }]
+  ) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    totalCount
+    edges {
+      node {
+        id
+        createdAt
+        modifiedAt
+        closedAt
+        status
+        document {
+          id
+          createdAt
+          modifiedAt
+          form {
+            slug
+            name
+            description
+          }
+        }
+      }
+    }
+  }
+}

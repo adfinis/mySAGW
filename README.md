@@ -25,6 +25,12 @@ docker-compose up -d
 
 You can now access the api at [http://localhost:8000/api/v1/](http://localhost:8000/api/v1/).
 
+This will load the config data into Caluma:
+
+```bash
+make caluma-loadconfig
+```
+
 ### Configuration
 
 mySAGW is a [12factor app](https://12factor.net/) which means that configuration is stored in environment variables.
