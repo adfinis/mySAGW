@@ -52,9 +52,7 @@ WSGI_APPLICATION = "mysagw.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": env.str(
-            "DATABASE_ENGINE", default="django.db.backends.postgresql_psycopg2"
-        ),
+        "ENGINE": "psqlextra.backend",
         "NAME": env.str("DATABASE_NAME", default="mysagw"),
         "USER": env.str("DATABASE_USER", default="mysagw"),
         "PASSWORD": env.str("DATABASE_PASSWORD", default=default("mysagw")),
