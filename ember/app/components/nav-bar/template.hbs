@@ -17,6 +17,9 @@
       <tab.link-item @route="form-builder">
         {{t "nav.form-builder"}}
       </tab.link-item>
+      <tab.item {{on "click" this.invalidateSession}}>
+        {{t "nav.logout"}}
+      </tab.item>
     </UkTab>
   </div>
 </nav>
