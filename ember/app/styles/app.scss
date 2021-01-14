@@ -1,0 +1,21 @@
+$app-accent-color: #002596;
+
+$global-primary-background: $app-accent-color;
+$global-success-background: $app-accent-color;
+
+@import "ember-alexandria";
+@import "ember-emeis";
+@import "ember-power-select";
+@import "ember-uikit";
+@import "ember-caluma";
+
+@import "components/nav-bar";
+
+main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+}

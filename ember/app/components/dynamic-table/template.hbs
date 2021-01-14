@@ -1,0 +1,45 @@
+{{#if @loading}}
+  <div class="uk-text-center uk-padding">
+    <UkSpinner @ratio={{2}} />
+  </div>
+{{else}}
+  <table
+    class="uk-table uk-table-striped uk-table-hover uk-table-responsive {{
+      join " " @config.classList
+    }}"
+    ...attributes
+  >
+    <thead>
+      <tr>
+        {{#each (map-by "heading" @config.columns) as |header|}}
+          <th class={{join " " header.classList}}>
+            {{t header.label}}
+          </th>
+        {{/each}}
+      </tr>
+    </thead>
+    <tbody class="uk-overflow-auto">
+      {{#each @data as |entry|}}
+        <tr class="uk-table-middle">
+          {{#each @config.columns as |tdDefinition|}}
+            <DynamicTable::TableData
+              @tdDefinition={{tdDefinition}}
+              @value={{entry}}
+            />
+          {{/each}}
+        </tr>
+      {{/each}}
+      {{#if @hasNextPage}}
+        <tr>
+          <td
+            colspan="8"
+            class="uk-text-center"
+            {{in-viewport onEnter=@loadMoreData}}
+          >
+            <UkSpinner />
+          </td>
+        </tr>
+      {{/if}}
+    </tbody>
+  </table>
+{{/if}}

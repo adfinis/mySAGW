@@ -1,0 +1,7 @@
+mutation($form: ID!, $workflow: ID!) {
+  saveCase(input: { form: $form, workflow: $workflow }) {
+    case {
+      id
+    }
+  }
+}

@@ -1,0 +1,7 @@
+mutation($case: ID!) {
+  cancelCase(input: { id: $case }) {
+    case {
+      id
+    }
+  }
+}

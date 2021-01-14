@@ -30,3 +30,11 @@ update_configs:
       - match:
           dependency_name: "python"
           version_requirement: ">=3.9"
+  - package_manager: "javascript"
+    directory: "/ember"
+    update_schedule: "daily"
+    version_requirement_updates: "increase_versions"
+    automerged_updates:
+      - match:
+          dependency_type: "development"
+          update_type: "semver:minor"

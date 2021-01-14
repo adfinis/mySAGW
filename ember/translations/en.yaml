@@ -1,0 +1,52 @@
+demo: "Caluma Building Permit Demo"
+
+global:
+  continue: "Continue"
+
+nav:
+  emeis: "Emeis"
+  alexandria: "Alexandria"
+  documents: "Documents"
+  home: "Home"
+  support: "Support"
+  form-builder: "Form Builder"
+
+documents:
+  title: "Documents"
+  number: "Number"
+  municipality: "Municipality"
+  type: "Type"
+
+  pageInfo: "Showing {length} of {total} documents"
+  orderBy: "Order by"
+  createdAt: "Created"
+  modifiedAt: "Last updated"
+  desc: "Desc"
+  asc: "Asc"
+  description: "Description"
+  status: "Status"
+
+  general: "General information"
+
+  actions: "Actions"
+  edit: "Edit document"
+  editText: "You can modify the document and change your previous data."
+  delete: "Delete document"
+  deleteText: "You can delete the document if its not needed anymore."
+
+  states:
+    RUNNING: "Running"
+    CANCELED: "Canceled"
+    COMPLETED: "Completed"
+
+  new:
+    title: "Create a new document"
+    type: "Please select the type of document"
+
+  empty:
+    welcome: "Welcome to {appName}"
+    no-documents: "It looks like you do not have any documents as of yet."
+
+  subnav:
+    overview: "Overview"
+    document: "Document"

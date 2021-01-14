@@ -49,3 +49,15 @@ caluma-test: ## test caluma config and extensions
 caluma-lint: ## lint caluma extensions
 	@cd ./caluma && black --check .
 	@cd ./caluma && flake8
+
+.PHONY: caluma-loadconfig
+caluma-loadconfig: ## load Caluma config
+	@docker-compose run --rm caluma ./manage.py loaddata ./caluma/data/config.json
+
+.PHONY: ember-lint
+ember-lint: ## lint the frontend
+	@docker-compose run --rm ember yarn lint
+
+.PHONY: ember-test
+ember-test: ## test the frontend
+	@docker-compose run --rm ember yarn test:ember

@@ -1,0 +1,21 @@
+query GetCases($caseId: ID!) {
+  allCases(filter: [{ rootCase: $caseId }]) {
+    edges {
+      node {
+        id
+        createdAt
+        modifiedAt
+        closedAt
+        status
+        document {
+          id
+          form {
+            slug
+            name
+            description
+          }
+        }
+      }
+    }
+  }
+}

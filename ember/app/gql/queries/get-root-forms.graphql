@@ -1,0 +1,10 @@
+query GetRootForms($slug: String) {
+  allForms(orderBy: NAME_ASC, slug: $slug) {
+    edges {
+      node {
+        slug
+        name
+      }
+    }
+  }
+}
