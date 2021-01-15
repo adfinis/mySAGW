@@ -27,8 +27,8 @@ services:
   caluma:
     environment:
       - ENV=dev
-#      - OIDC_VERIFY_SSL=False
-#      - OIDC_USERINFO_ENDPOINT=http://mysagw/openid/userinfo
+      # - OIDC_VERIFY_SSL=False
+      # - OIDC_USERINFO_ENDPOINT=http://mysagw/openid/userinfo
     volumes:
       - ./caluma/extensions:/app/caluma/extensions:ro
     command:
@@ -50,3 +50,23 @@ services:
       - "7020:7020"
       - "7357:7357"
     command: ember serve --proxy http://proxy
+
+  keycloak:
+    environment:
+      - POSTGRES_PASSWORD=keycloak
+      - KEYCLOAK_PASSWORD=keycloak
+    volumes:
+      - ./keycloak/dev-config.json:/etc/keycloak/dev-config.json
+
+    # export is a bit tricky: We need to _start_ keycloak with specific arguments to perform an export
+    # command: ["-Dkeycloak.migration.action=export", "-Dkeycloak.migration.provider=singleFile", "-Dkeycloak.migration.file=/etc/keycloak/dev-config.json", "-b", "0.0.0.0"]
+    #
+    # http://www.keycloak.org/docs/3.3/server_admin/topics/export-import.html
+    command:
+      [
+        "-Dkeycloak.migration.action=import",
+        "-Dkeycloak.migration.provider=singleFile",
+        "-Dkeycloak.migration.file=/etc/keycloak/dev-config.json",
+        "-b",
+        "0.0.0.0",
+      ]
