@@ -14,27 +14,27 @@ start: ## Start the development server
 
 .PHONY: api-test
 api-test: ## Test the backend
-	@docker-compose run api pytest --no-cov-on-fail --cov --create-db -vv
+	@docker-compose run --rm api pytest --no-cov-on-fail --cov --create-db -vv
 
 .PHONY: api-lint
 api-lint: ## Lint the backend
-	@docker-compose run api sh -c "black --check . && flake8"
+	@docker-compose run --rm api sh -c "black --check . && flake8"
 
 .PHONY: api-bash
 api-bash: ## Shell into the backend
-	@docker-compose run api bash
+	@docker-compose run --rm api bash
 
 .PHONY: api-shell_plus
 api-shell_plus: ## Run shell_plus
-	@docker-compose run api python ./manage.py shell_plus
+	@docker-compose run --rm api python ./manage.py shell_plus
 
 .PHONY: makemigrations
 makemigrations: ## Make django migrations
-	@docker-compose run api python ./manage.py makemigrations
+	@docker-compose run --rm api python ./manage.py makemigrations
 
 .PHONY: migrate
 migrate: ## Migrate django
-	@docker-compose run api python ./manage.py migrate
+	@docker-compose run --rm api python ./manage.py migrate
 
 .PHONY: dbshell
 dbshell: ## Start a psql shell
