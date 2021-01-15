@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.postgres",
+    "simple_history",
     "mysagw.identity.apps.DefaultConfig",
 ]
 
@@ -41,6 +42,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.locale.LocaleMiddleware",
+    "simple_history.middleware.HistoryRequestMiddleware",
 ]
 
 ROOT_URLCONF = "mysagw.urls"
@@ -97,6 +99,10 @@ OIDC_OP_INTROSPECT_ENDPOINT = env.str("OIDC_OP_INTROSPECT_ENDPOINT", default=Non
 OIDC_RP_CLIENT_ID = env.str("OIDC_RP_CLIENT_ID", default=None)
 OIDC_RP_CLIENT_SECRET = env.str("OIDC_RP_CLIENT_SECRET", default=None)
 OIDC_DRF_AUTH_BACKEND = "mysagw.oidc_auth.authentication.MySAGWAuthenticationBackend"
+
+
+# simple history
+SIMPLE_HISTORY_HISTORY_ID_USE_UUID = True
 
 
 REST_FRAMEWORK = {
