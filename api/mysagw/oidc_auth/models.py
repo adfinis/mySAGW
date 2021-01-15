@@ -16,10 +16,13 @@ class BaseUser:  # pragma: no cover
     def __str__(self):
         raise NotImplementedError
 
+    @property
+    def is_admin(self):
+        return settings.ADMIN_GROUP in self.groups
 
-class AnonymousUser(BaseUser):
-    def __str__(self):
-        return "AnonymousUser"
+    @property
+    def is_staff(self):
+        return self.is_admin or settings.STAFF_GROUP in self.groups
 
 
 class OIDCUser(BaseUser):

@@ -11,10 +11,8 @@ def _history_user_getter(historical_instance):  # pragma: todo cover
 def _history_user_setter(historical_instance, user):
     request = getattr(HistoricalRecords.thread, "request", None)
     user = None
-    if request is not None:  # pragma: todo cover
+    if request is not None:
         user = request.user.username
-        if request.user.__class__.__name__ == "AnonymousUser":
-            user = "AnonymousUser"
     historical_instance.history_user_id = user
 
 

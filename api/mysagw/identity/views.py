@@ -1,14 +1,10 @@
 from rest_framework_json_api import views
 
 from . import models, serializers
+from .permissions import IsAdmin, IsAuthenticated, IsStaff
 
 
 class IdentityViewSet(views.ModelViewSet):
     serializer_class = serializers.IdentitySerializer
-    queryset = models.Identity.objects
-    lookup_field = "idp_id"
-
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        user = self.request.user
-        return queryset.filter(pk=user.identity.pk)
+    queryset = models.Identity.objects.all()
+    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)

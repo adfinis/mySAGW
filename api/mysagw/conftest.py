@@ -23,32 +23,34 @@ register_module(importlib.import_module(".identity.factories", "mysagw"))
 
 
 @pytest.fixture
-def admin_groups():
-    return ["admin"]
-
-
-# @pytest.fixture
-# def user(settings, admin_groups):
-#     return OIDCUser("sometoken", {"sub": "user", settings.OIDC_GROUPS_CLAIM: ["group"]})
-
-
-@pytest.fixture
-def admin_user(settings, admin_groups):
+def admin_user(settings):
     return OIDCUser(
-        "sometoken", {"sub": "admin", settings.OIDC_GROUPS_CLAIM: admin_groups}
+        "sometoken", {"sub": "admin", settings.OIDC_GROUPS_CLAIM: ["admin"]}
     )
 
 
-# @pytest.fixture
-# def client(db):
-#     client = APIClient()
-#     return client
+@pytest.fixture
+def staff_user(settings):
+    return OIDCUser(
+        "sometoken",
+        {"sub": "staff_user", settings.OIDC_GROUPS_CLAIM: [settings.STAFF_GROUP]},
+    )
 
 
 @pytest.fixture
-def admin_client(db, admin_user):
+def user(settings):
+    return OIDCUser("sometoken", {"sub": "user", settings.OIDC_GROUPS_CLAIM: []})
+
+
+@pytest.fixture
+def client(db, user, staff_user, admin_user, request):
+    user_arg = getattr(request, "param", "admin")
+    usermap = {"user": user, "staff": staff_user, "admin": admin_user}
+
     client = APIClient()
-    client.force_authenticate(user=admin_user)
+    user = usermap[user_arg]
+    client.force_authenticate(user=user)
+    client.user = user
     return client
 
 

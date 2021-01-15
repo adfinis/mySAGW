@@ -141,6 +141,10 @@ JSON_API_FORMAT_FIELD_NAMES = "dasherize"
 JSON_API_FORMAT_TYPES = "dasherize"
 JSON_API_PLURALIZE_TYPES = True
 
+# mySAGW
+ADMIN_GROUP = "admin"
+STAFF_GROUP = "sagw"
+
 
 def parse_admins(admins):
     """
