@@ -42,13 +42,11 @@ def user(settings):
     return OIDCUser("sometoken", {"sub": "user", settings.OIDC_GROUPS_CLAIM: []})
 
 
-@pytest.fixture
+@pytest.fixture(params=["admin"])
 def client(db, user, staff_user, admin_user, request):
-    user_arg = getattr(request, "param", "admin")
     usermap = {"user": user, "staff": staff_user, "admin": admin_user}
-
     client = APIClient()
-    user = usermap[user_arg]
+    user = usermap[request.param]
     client.force_authenticate(user=user)
     client.user = user
     return client
