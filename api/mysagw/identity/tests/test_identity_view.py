@@ -133,3 +133,34 @@ def test_identity_delete(db, client, expected_status, identity_factory):
     if expected_status == status.HTTP_204_NO_CONTENT:
         with pytest.raises(Identity.DoesNotExist):
             identity.refresh_from_db()
+
+
+def test_identity_set_interests(db, client, identity_factory, interest_option_factory):
+    identity = identity_factory()
+    assert identity.interests.count() == 0
+
+    interests = interest_option_factory.create_batch(2)
+
+    url = reverse("identity-detail", args=[identity.pk])
+
+    data = {
+        "data": {
+            "type": "identities",
+            "id": str(identity.pk),
+            "attributes": {"first-name": "Foo"},
+            "relationships": {
+                "interests": {
+                    "data": [
+                        {"id": str(interests[0].pk), "type": "interest-options"},
+                        {"id": str(interests[1].pk), "type": "interest-options"},
+                    ]
+                }
+            },
+        }
+    }
+
+    response = client.patch(url, data=data)
+
+    assert response.status_code == status.HTTP_200_OK
+    identity.refresh_from_db()
+    assert identity.interests.count() == 2

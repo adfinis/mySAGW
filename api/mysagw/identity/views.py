@@ -23,3 +23,15 @@ class MeViewSet(
     def update(self, request, *args, **kwargs):
         self.kwargs["pk"] = self.request.user.identity.pk
         return super().update(request, *args, **kwargs)
+
+
+class InterestCategoryViewSet(views.ModelViewSet):
+    serializer_class = serializers.InterestCategorySerializer
+    queryset = models.InterestCategory.objects.all()
+    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
+
+
+class InterestOptionViewSet(views.ModelViewSet):
+    serializer_class = serializers.InterestOptionSerializer
+    queryset = models.InterestOption.objects.all()
+    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
