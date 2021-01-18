@@ -1,20 +1,9 @@
-import uuid
-
 from django.db import models
 
-
-class UUIDModel(models.Model):
-    """
-    Models which use uuid as primary key.
-
-    Defined as mySAGW default
-    """
-
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-
-    class Meta:
-        abstract = True
+from mysagw.models import HistoricalModel, TrackingModel, UUIDModel
 
 
-class Identity(UUIDModel):
+class Identity(UUIDModel, HistoricalModel, TrackingModel):
     idp_id = models.CharField(max_length=255, unique=True, null=True, blank=False)
+    first_name = models.CharField(max_length=255, null=True, blank=True)
+    last_name = models.CharField(max_length=255, null=True, blank=True)

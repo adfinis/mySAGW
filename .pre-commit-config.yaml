@@ -5,7 +5,7 @@ repos:
         stages: [commit]
         name: api-isort
         language: system
-        entry: /bin/sh -c 'cd ./api/ && isort'
+        entry: /bin/sh -c 'cd ./api/ && isort .'
         types: [python]
       - id: api-black
         stages: [commit]
