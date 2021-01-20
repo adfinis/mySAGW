@@ -9,7 +9,7 @@ r.register(r"identities", views.IdentityViewSet)
 
 urlpatterns = [
     url(
-        r"^me",
+        r"^me/?$",
         views.MeViewSet.as_view({"get": "retrieve", "patch": "update"}),
         name="me",
     )
