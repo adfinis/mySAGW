@@ -35,3 +35,20 @@ class InterestOptionViewSet(views.ModelViewSet):
     serializer_class = serializers.InterestOptionSerializer
     queryset = models.InterestOption.objects.all()
     permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
+
+
+class MembershipRoleViewSet(views.ModelViewSet):
+    serializer_class = serializers.MembershipRoleSerializer
+    queryset = models.MembershipRole.objects.all()
+    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
+
+
+class MembershipViewSet(views.ModelViewSet):
+    serializer_class = serializers.MembershipSerializer
+    queryset = models.Membership.objects.all()
+    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
+
+    def perform_destroy(self, instance):
+        super().perform_destroy(instance)
+        instance.identity.modified_by_user = self.request.user.username
+        instance.identity.save()
