@@ -13,10 +13,7 @@ from .oidc_auth.models import OIDCUser
 def register_module(module):
     for name, obj in inspect.getmembers(module):
         if isinstance(obj, FactoryMetaClass) and not obj._meta.abstract:
-            # name needs to be compatible with
-            # `rest_framework.routers.SimpleRouter` naming for easier testing
-            base_name = obj._meta.model._meta.object_name.lower()
-            register(obj, base_name)
+            register(obj)
 
 
 register_module(importlib.import_module(".identity.factories", "mysagw"))
