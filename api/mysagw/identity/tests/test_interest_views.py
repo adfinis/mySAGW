@@ -21,12 +21,12 @@ def test_interest_detail(
     interest_category_factory,
     interest_option_factory,
 ):
-    factory = interest_category_factory
-    include = {}
+    interestoption = interest_option_factory(category=interest_category_factory())
+    include = {"include": "options"}
+    obj = interestoption.category
     if model == "option":
-        factory = interest_option_factory
         include = {"include": "category"}
-    obj = factory()
+        obj = interestoption
 
     url = reverse(f"interest{model}-detail", args=[obj.pk])
 
@@ -39,6 +39,13 @@ def test_interest_detail(
 
     json = response.json()
     assert json["data"]["id"] == str(obj.pk)
+    json_type = "interest-options"
+    obj_id = str(interestoption.pk)
+    if model == "option":
+        json_type = "interest-categories"
+        obj_id = str(interestoption.category.pk)
+    assert json["included"][0]["type"] == json_type
+    assert json["included"][0]["id"] == obj_id
 
 
 @pytest.mark.parametrize(
