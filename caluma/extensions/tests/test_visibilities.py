@@ -3,7 +3,9 @@ from caluma.extensions.visibilities import MySAGWVisibility
 
 
 def test_visibilities_default(
-    db, form, admin_info,
+    db,
+    form,
+    admin_info,
 ):
     vis = MySAGWVisibility()
 

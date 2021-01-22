@@ -64,7 +64,10 @@ def test_authentication(
 
 
 def test_authentication_idp_502(
-    db, rf, requests_mock, settings,
+    db,
+    rf,
+    requests_mock,
+    settings,
 ):
     requests_mock.get(
         settings.OIDC_OP_USER_ENDPOINT, status_code=status.HTTP_502_BAD_GATEWAY
@@ -76,7 +79,10 @@ def test_authentication_idp_502(
 
 
 def test_authentication_idp_missing_claim(
-    db, rf, requests_mock, settings,
+    db,
+    rf,
+    requests_mock,
+    settings,
 ):
     settings.OIDC_USERNAME_CLAIM = "missing"
     userinfo = {"sub": "1"}
@@ -88,7 +94,10 @@ def test_authentication_idp_missing_claim(
 
 
 def test_authentication_no_client(
-    db, rf, requests_mock, settings,
+    db,
+    rf,
+    requests_mock,
+    settings,
 ):
     requests_mock.get(
         settings.OIDC_OP_USER_ENDPOINT, status_code=status.HTTP_401_UNAUTHORIZED

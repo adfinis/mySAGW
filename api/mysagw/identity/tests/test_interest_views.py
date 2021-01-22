@@ -14,7 +14,11 @@ from rest_framework import status
 )
 @pytest.mark.parametrize("model", ["category", "option"])
 def test_interest_detail(
-    db, client, expected_status, model, interest_option,
+    db,
+    client,
+    expected_status,
+    model,
+    interest_option,
 ):
     include = {"include": "options"}
     obj = interest_option.category
@@ -88,10 +92,15 @@ def test_interest_list(
     indirect=["client"],
 )
 @pytest.mark.parametrize(
-    "model", ["category", "option"],
+    "model",
+    ["category", "option"],
 )
 def test_interest_create(
-    db, client, expected_status, model, interest_category_factory,
+    db,
+    client,
+    expected_status,
+    model,
+    interest_category_factory,
 ):
     category = interest_category_factory()
 
@@ -129,7 +138,8 @@ def test_interest_create(
     indirect=["client"],
 )
 @pytest.mark.parametrize(
-    "model", ["category", "option"],
+    "model",
+    ["category", "option"],
 )
 def test_interest_update(
     db,

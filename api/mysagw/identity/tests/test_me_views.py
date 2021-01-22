@@ -6,7 +6,9 @@ TIMESTAMP = "2017-05-21T11:25:41.123840Z"
 
 
 @pytest.mark.parametrize(
-    "client", ["user"], indirect=["client"],
+    "client",
+    ["user"],
+    indirect=["client"],
 )
 def test_me_retrieve(db, client):
     identity = client.user.identity
@@ -22,7 +24,9 @@ def test_me_retrieve(db, client):
 
 
 @pytest.mark.parametrize(
-    "client", ["user"], indirect=["client"],
+    "client",
+    ["user"],
+    indirect=["client"],
 )
 def test_my_orgs_list(db, client, membership_factory, identity_factory):
     identity = client.user.identity
@@ -48,7 +52,9 @@ def test_my_orgs_list(db, client, membership_factory, identity_factory):
 
 
 @pytest.mark.parametrize(
-    "client", ["user"], indirect=["client"],
+    "client",
+    ["user"],
+    indirect=["client"],
 )
 def test_me_update(db, client):
     identity = client.user.identity
@@ -73,10 +79,13 @@ def test_me_update(db, client):
 
 
 @pytest.mark.parametrize(
-    "client", ["user"], indirect=["client"],
+    "client",
+    ["user"],
+    indirect=["client"],
 )
 @pytest.mark.parametrize(
-    "authorized", [True, False],
+    "authorized",
+    [True, False],
 )
 def test_my_orgs_update(db, client, authorized, membership_factory):
     identity = client.user.identity
@@ -104,7 +113,9 @@ def test_my_orgs_update(db, client, authorized, membership_factory):
 
 
 @pytest.mark.parametrize(
-    "client", ["user"], indirect=["client"],
+    "client",
+    ["user"],
+    indirect=["client"],
 )
 def test_my_orgs_delete_failure(db, client):
     url = reverse("my-orgs-detail", args=["foo"])

@@ -13,7 +13,9 @@ class IdentityViewSet(views.ModelViewSet):
 
 
 class MeViewSet(
-    RetrieveModelMixin, UpdateModelMixin, GenericViewSet,
+    RetrieveModelMixin,
+    UpdateModelMixin,
+    GenericViewSet,
 ):
     serializer_class = serializers.MeSerializer
 
@@ -26,7 +28,10 @@ class MeViewSet(
 
 
 class MyOrgsViewSet(
-    RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericViewSet,
+    RetrieveModelMixin,
+    ListModelMixin,
+    UpdateModelMixin,
+    GenericViewSet,
 ):
     serializer_class = serializers.MyOrgsSerializer
     permission_classes = (IsAuthenticated & IsOrgAdmin,)

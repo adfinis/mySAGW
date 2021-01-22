@@ -28,10 +28,14 @@ class MembershipRole(UUIDModel, HistoricalModel):
 
 class Membership(UUIDModel, HistoricalModel):
     identity = models.ForeignKey(
-        "Identity", on_delete=models.CASCADE, related_name="members",
+        "Identity",
+        on_delete=models.CASCADE,
+        related_name="members",
     )
     organisation = models.ForeignKey(
-        "Identity", on_delete=models.CASCADE, related_name="memberships",
+        "Identity",
+        on_delete=models.CASCADE,
+        related_name="memberships",
     )
     role = models.ForeignKey(
         MembershipRole,
