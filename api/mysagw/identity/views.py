@@ -1,9 +1,9 @@
-from rest_framework.mixins import RetrieveModelMixin, UpdateModelMixin
+from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework.viewsets import GenericViewSet
 from rest_framework_json_api import views
 
 from . import models, serializers
-from .permissions import IsAdmin, IsAuthenticated, IsStaff
+from .permissions import IsAdmin, IsAuthenticated, IsOrgAdmin, IsStaff
 
 
 class IdentityViewSet(views.ModelViewSet):
@@ -25,6 +25,16 @@ class MeViewSet(
         return super().update(request, *args, **kwargs)
 
 
+class MyOrgsViewSet(
+    RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericViewSet,
+):
+    serializer_class = serializers.MyOrgsSerializer
+    permission_classes = (IsAuthenticated & IsOrgAdmin,)
+
+    def get_queryset(self):
+        return self.request.user.identity.member_of
+
+
 class InterestCategoryViewSet(views.ModelViewSet):
     serializer_class = serializers.InterestCategorySerializer
     queryset = models.InterestCategory.objects.all()
@@ -35,3 +45,20 @@ class InterestOptionViewSet(views.ModelViewSet):
     serializer_class = serializers.InterestOptionSerializer
     queryset = models.InterestOption.objects.all()
     permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
+
+
+class MembershipRoleViewSet(views.ModelViewSet):
+    serializer_class = serializers.MembershipRoleSerializer
+    queryset = models.MembershipRole.objects.all()
+    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
+
+
+class MembershipViewSet(views.ModelViewSet):
+    serializer_class = serializers.MembershipSerializer
+    queryset = models.Membership.objects.all()
+    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
+
+    def perform_destroy(self, instance):
+        super().perform_destroy(instance)
+        instance.identity.modified_by_user = self.request.user.username
+        instance.identity.save()

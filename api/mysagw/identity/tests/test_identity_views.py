@@ -112,6 +112,12 @@ def test_identity_update(db, client, expected_status, identity_factory):
 
     assert response.status_code == expected_status
 
+    if expected_status != status.HTTP_200_OK:
+        return
+
+    identity.refresh_from_db()
+    assert identity.modified_by_user == client.user.username
+
 
 @pytest.mark.parametrize(
     "client,expected_status",

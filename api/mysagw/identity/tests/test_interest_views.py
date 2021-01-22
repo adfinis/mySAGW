@@ -14,19 +14,13 @@ from rest_framework import status
 )
 @pytest.mark.parametrize("model", ["category", "option"])
 def test_interest_detail(
-    db,
-    client,
-    expected_status,
-    model,
-    interest_category_factory,
-    interest_option_factory,
+    db, client, expected_status, model, interest_option,
 ):
-    factory = interest_category_factory
-    include = {}
+    include = {"include": "options"}
+    obj = interest_option.category
     if model == "option":
-        factory = interest_option_factory
         include = {"include": "category"}
-    obj = factory()
+        obj = interest_option
 
     url = reverse(f"interest{model}-detail", args=[obj.pk])
 
@@ -39,6 +33,13 @@ def test_interest_detail(
 
     json = response.json()
     assert json["data"]["id"] == str(obj.pk)
+    json_type = "interest-options"
+    obj_id = str(interest_option.pk)
+    if model == "option":
+        json_type = "interest-categories"
+        obj_id = str(interest_option.category.pk)
+    assert json["included"][0]["type"] == json_type
+    assert json["included"][0]["id"] == obj_id
 
 
 @pytest.mark.parametrize(
