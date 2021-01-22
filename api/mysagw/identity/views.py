@@ -1,9 +1,9 @@
-from rest_framework.mixins import RetrieveModelMixin, UpdateModelMixin
+from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework.viewsets import GenericViewSet
 from rest_framework_json_api import views
 
 from . import models, serializers
-from .permissions import IsAdmin, IsAuthenticated, IsStaff
+from .permissions import IsAdmin, IsAuthenticated, IsOrgAdmin, IsStaff
 
 
 class IdentityViewSet(views.ModelViewSet):
@@ -23,6 +23,16 @@ class MeViewSet(
     def update(self, request, *args, **kwargs):
         self.kwargs["pk"] = self.request.user.identity.pk
         return super().update(request, *args, **kwargs)
+
+
+class MyOrgsViewSet(
+    RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericViewSet,
+):
+    serializer_class = serializers.MyOrgsSerializer
+    permission_classes = (IsAuthenticated & IsOrgAdmin,)
+
+    def get_queryset(self):
+        return self.request.user.identity.member_of
 
 
 class InterestCategoryViewSet(views.ModelViewSet):

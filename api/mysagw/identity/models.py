@@ -56,3 +56,19 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
         InterestOption, related_name="identities", blank=True
     )
     is_organisation = models.BooleanField(default=False)
+
+    def _get_memberships(self, only_authorized=False):
+        memberships = Membership.objects.filter(identity=self)
+        if only_authorized:
+            memberships = memberships.filter(authorized=True)
+        return self.__class__.objects.filter(
+            pk__in=memberships.values_list("organisation", flat=True).distinct()
+        )
+
+    @property
+    def authorized_for(self):
+        return self._get_memberships(only_authorized=True)
+
+    @property
+    def member_of(self):
+        return self._get_memberships(only_authorized=False)

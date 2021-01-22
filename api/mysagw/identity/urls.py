@@ -10,6 +10,7 @@ r.register(r"interest-categories", views.InterestCategoryViewSet)
 r.register(r"interest-options", views.InterestOptionViewSet)
 r.register(r"membership-roles", views.MembershipRoleViewSet)
 r.register(r"memberships", views.MembershipViewSet)
+r.register(r"my-orgs", views.MyOrgsViewSet, basename="my-orgs")
 
 urlpatterns = [
     url(

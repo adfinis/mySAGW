@@ -30,6 +30,23 @@ class MeSerializer(serializers.ModelSerializer):
         )
 
 
+class MyOrgsSerializer(serializers.ModelSerializer):
+    is_authorized = serializers.SerializerMethodField()
+
+    def get_is_authorized(self, obj):
+        identity = self.context["request"].user.identity
+        return obj.memberships.filter(identity=identity, authorized=True).exists()
+
+    class Meta:
+        model = models.Identity
+        fields = (
+            "first_name",
+            "last_name",
+            "organisation_name",
+            "is_authorized",
+        )
+
+
 class InterestCategorySerializer(serializers.ModelSerializer):
     included_serializers = {
         "options": "mysagw.identity.serializers.InterestOptionSerializer",
