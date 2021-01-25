@@ -207,7 +207,9 @@ class Migration(migrations.Migration):
                 ("last_name", models.CharField(blank=True, max_length=255, null=True)),
                 ("is_organisation", models.BooleanField(default=False)),
             ],
-            options={"abstract": False,},
+            options={
+                "abstract": False,
+            },
         ),
         migrations.CreateModel(
             name="InterestCategory",
@@ -235,7 +237,9 @@ class Migration(migrations.Migration):
                 ),
                 ("archived", models.BooleanField(default=False)),
             ],
-            options={"abstract": False,},
+            options={
+                "abstract": False,
+            },
         ),
         migrations.CreateModel(
             name="MembershipRole",
@@ -263,7 +267,9 @@ class Migration(migrations.Migration):
                 ),
                 ("archived", models.BooleanField(default=False)),
             ],
-            options={"abstract": False,},
+            options={
+                "abstract": False,
+            },
         ),
         migrations.CreateModel(
             name="Membership",
@@ -319,7 +325,9 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"abstract": False,},
+            options={
+                "abstract": False,
+            },
         ),
         migrations.CreateModel(
             name="InterestOption",
@@ -355,7 +363,9 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"abstract": False,},
+            options={
+                "abstract": False,
+            },
         ),
         migrations.AddField(
             model_name="identity",
