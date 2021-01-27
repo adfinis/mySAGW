@@ -1,0 +1,10 @@
+{$DOMAIN_NAME} {
+    reverse_proxy /api* http://api:8000
+    reverse_proxy /graphql* http://caluma:8000
+    reverse_proxy /auth* http://keycloak:8080
+    reverse_proxy /* http://ember:{$EMBER_PORT}
+    log {
+        output stdout
+    }
+    encode gzip
+}

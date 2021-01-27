@@ -45,12 +45,19 @@ services:
       - db
       - keycloak
 
-  proxy:
-    image: nginx:1.19-alpine
+  caddy:
+    restart: unless-stopped
+    image: caddy:latest
     volumes:
-      - ./proxy/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    environment:
+      - DOMAIN_NAME=mysagw.local
+      - EMBER_PORT=80
     ports:
-      - "80:80"
+      - "0.0.0.0:80:80"
+      - "0.0.0.0:443:443"
 
   keycloak:
     depends_on:
@@ -61,6 +68,9 @@ services:
       - POSTGRES_USER=keycloak
       - POSTGRES_DATABASE=keycloak
       - KEYCLOAK_USER=admin
+      - PROXY_ADDRESS_FORWARDING=true
 
 volumes:
   dbdata:
+  caddy_data:
+  caddy_config:
