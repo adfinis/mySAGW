@@ -31,6 +31,27 @@ This will load the config data into Caluma:
 make caluma-loadconfig
 ```
 
+### Development
+
+Load the config data into Caluma:
+
+```bash
+make caluma-loadconfig
+```
+
+Add `mysagw.local` to `/etc/hosts`:
+
+```bash
+echo "127.0.0.1 mysagw.local" | sudo tee -a /etc/hosts
+```
+
+You can now access the application under the following URIs:
+
+ - http://mysagw.local/auth/ --> keycloak
+ - http://mysagw.local:4200/ --> frontend
+ - http://mysagw.local/api/ --> backend
+ - http://mysagw.local/graphql/ --> caluma
+
 ### Configuration
 
 mySAGW is a [12factor app](https://12factor.net/) which means that configuration is stored in environment variables.

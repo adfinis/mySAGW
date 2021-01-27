@@ -370,7 +370,26 @@
       ]
     }
   },
-  "groups": [],
+  "groups": [
+    {
+      "id": "2615c535-33d1-495d-ad88-b49cca31db10",
+      "name": "admin",
+      "path": "/admin",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "id": "472bf516-087e-4199-b376-bd5d70329ea4",
+      "name": "sagw",
+      "path": "/sagw",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    }
+  ],
   "defaultRoles": [
     "offline_access",
     "uma_authorization"
@@ -623,10 +642,12 @@
       "secret": "**********",
       "redirectUris": [
         "http://mysagw.local/*",
+        "http://mysagw.local:4200/*",
         "http://localhost:4200/*"
       ],
       "webOrigins": [
         "http://mysagw.local",
+        "http://mysagw.local:4200",
         "http://localhost:4200"
       ],
       "notBefore": 0,
