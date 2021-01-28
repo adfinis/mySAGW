@@ -9,10 +9,6 @@ services:
   caluma:
     env_file: ./.envs/.production/.caluma
 
-  ember:
-    build:
-      context: ./ember/
-
   caddy:
     env_file: ./.envs/.production/.caddy
 

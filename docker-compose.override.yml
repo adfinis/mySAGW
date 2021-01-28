@@ -32,19 +32,6 @@ services:
         "wait-for-it.sh db:5432 -- ./manage.py migrate && ./manage.py runserver 0.0.0.0:8000",
       ]
 
-  ember:
-    image: danlynn/ember-cli:latest
-    volumes:
-      - ./ember:/myapp
-      - ./ember/node_modules/:/myapp/node_modules
-    tmpfs:
-      - /myapp/tmp
-    ports:
-      - "4200:4200"
-      - "7020:7020"
-      - "7357:7357"
-    command: ember serve --proxy=https://mysagw.local
-
   caddy:
     env_file: ./.envs/.local/.caddy
     networks:

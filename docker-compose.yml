@@ -51,6 +51,10 @@ services:
       - KEYCLOAK_USER=admin
       - PROXY_ADDRESS_FORWARDING=true
 
+  ember:
+    build:
+      context: ./ember/
+
 volumes:
   dbdata:
   caddy_data:
