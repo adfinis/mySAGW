@@ -58,6 +58,10 @@ caluma-loadconfig: ## load Caluma config
 ember-lint: ## lint the frontend
 	@docker-compose run --rm ember yarn lint
 
+.PHONY: ember-lint-fix
+ember-lint-fix: ## lint and fix the frontend
+	@docker-compose run --rm ember yarn lint:js --fix
+
 .PHONY: ember-test
 ember-test: ## test the frontend
 	@docker-compose run --rm ember yarn test:ember
