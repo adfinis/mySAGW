@@ -1,0 +1,6 @@
+# API (Django)
+# ------------------------------------------------------------------------------
+DATABASE_HOST=db
+SECRET_KEY=verysecure
+ALLOWED_HOSTS=yourdomain.tld,www.yourdomain.tdl
+DATABASE_PASSWORD=alsoverysecure

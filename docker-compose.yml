@@ -2,11 +2,6 @@ version: "3"
 services:
   db:
     image: postgres:alpine
-    environment:
-      - POSTGRES_USER=mysagw
-      # following option is a must to configure on production system:
-      # https://hub.docker.com/_/postgres
-      # - POSTGRES_PASSWORD=
     volumes:
       - dbdata:/var/lib/postgresql/data
 
@@ -16,16 +11,6 @@ services:
       - "8000:8000"
     depends_on:
       - db
-    environment:
-      - DATABASE_HOST=db
-      # following options are a must to configure on production system:
-      # https://docs.djangoproject.com/en/2.1/ref/settings/#std:setting-SECRET_KEY
-      # - SECRET_KEY=
-      # https://docs.djangoproject.com/en/2.1/ref/settings/#allowed-hosts
-      # - ALLOWED_HOSTS=
-      # https://docs.djangoproject.com/en/2.1/ref/settings/#password
-      # same as postgres password above
-      # - DATABASE_PASSWORD=
 
   caluma:
     image: projectcaluma/caluma:version-7.2.0
@@ -52,9 +37,6 @@ services:
       - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy_data:/data
       - caddy_config:/config
-    environment:
-      - DOMAIN_NAME=mysagw.local
-      - EMBER_PORT=80
     ports:
       - "0.0.0.0:80:80"
       - "0.0.0.0:443:443"

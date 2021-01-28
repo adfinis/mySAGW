@@ -1,9 +1,7 @@
 version: "3"
 services:
   db:
-    environment:
-      - POSTGRES_PASSWORD=mysagw
-      - CALUMA_DB_PASSWORD=caluma
+    env_file: ./.envs/.local/.postgres
     ports:
       - "5432:5432"
     volumes:
@@ -22,13 +20,12 @@ services:
         "-c",
         "wait-for-it.sh db:5432 -- ./manage.py migrate && ./manage.py runserver 0.0.0.0:8000",
       ]
-    environment:
-      - ENV=dev
+    env_file: ./.envs/.local/.api
   caluma:
-    environment:
-      - ENV=dev
-      # - OIDC_VERIFY_SSL=False
-      # - OIDC_USERINFO_ENDPOINT=http://mysagw/openid/userinfo
+    # environment:
+    #    - OIDC_VERIFY_SSL=False
+    #    - OIDC_USERINFO_ENDPOINT=http://mysagw/openid/userinfo
+    env_file: ./.envs/.local/.caluma
     volumes:
       - ./caluma/extensions:/app/caluma/extensions:ro
     command:
@@ -52,16 +49,12 @@ services:
     command: ember serve
 
   caddy:
-    environment:
-      - EMBER_PORT=4200
+    env_file: ./.envs/.local/.caddy
 
   keycloak:
-    environment:
-      - POSTGRES_PASSWORD=keycloak
-      - KEYCLOAK_PASSWORD=keycloak
     volumes:
       - ./keycloak/dev-config.json:/etc/keycloak/dev-config.json
-
+    env_file: ./.envs/.local/.keycloak
     # export is a bit tricky: We need to _start_ keycloak with specific arguments to perform an export
     # command: ["-Dkeycloak.migration.action=export", "-Dkeycloak.migration.provider=singleFile", "-Dkeycloak.migration.file=/etc/keycloak/dev-config.json", "-b", "0.0.0.0"]
     #
