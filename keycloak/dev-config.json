@@ -641,14 +641,14 @@
       "clientAuthenticatorType": "client-secret",
       "secret": "**********",
       "redirectUris": [
-        "http://mysagw.local/*",
-        "http://mysagw.local:4200/*",
-        "http://localhost:4200/*"
+        "https://mysagw.local/*",
+        "https://mysagw.local:4200/*",
+        "https://localhost:4200/*"
       ],
       "webOrigins": [
-        "http://mysagw.local",
-        "http://mysagw.local:4200",
-        "http://localhost:4200"
+        "https://mysagw.local",
+        "https://mysagw.local:4200",
+        "https://localhost:4200"
       ],
       "notBefore": 0,
       "bearerOnly": false,

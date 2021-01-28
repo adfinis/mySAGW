@@ -49,7 +49,11 @@ services:
       - "4200:4200"
       - "7020:7020"
       - "7357:7357"
-    command: ember serve --proxy http://proxy
+    command: ember serve
+
+  caddy:
+    environment:
+      - EMBER_PORT=4200
 
   keycloak:
     environment:

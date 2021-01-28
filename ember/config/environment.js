@@ -13,7 +13,7 @@ module.exports = function (environment) {
       endSessionEndpoint: "/logout",
       userinfoEndpoint: "/userinfo",
       afterLogoutUri: "/",
-      host: "http://mysagw.local/auth/realms/mysagw/protocol/openid-connect",
+      host: "https://mysagw.local/auth/realms/mysagw/protocol/openid-connect",
     },
     EmberENV: {
       FEATURES: {
