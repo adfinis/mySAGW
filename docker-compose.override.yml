@@ -22,9 +22,6 @@ services:
       ]
     env_file: ./.envs/.local/.api
   caluma:
-    # environment:
-    #    - OIDC_VERIFY_SSL=False
-    #    - OIDC_USERINFO_ENDPOINT=http://mysagw/openid/userinfo
     env_file: ./.envs/.local/.caluma
     volumes:
       - ./caluma/extensions:/app/caluma/extensions:ro
@@ -46,10 +43,14 @@ services:
       - "4200:4200"
       - "7020:7020"
       - "7357:7357"
-    command: ember serve
+    command: ember serve --proxy=https://mysagw.local
 
   caddy:
     env_file: ./.envs/.local/.caddy
+    networks:
+      default:
+        aliases:
+          - mysagw.local
 
   keycloak:
     volumes:
