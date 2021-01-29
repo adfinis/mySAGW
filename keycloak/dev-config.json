@@ -642,13 +642,11 @@
       "secret": "**********",
       "redirectUris": [
         "https://mysagw.local/*",
-        "https://mysagw.local:4200/*",
-        "https://localhost:4200/*"
+        "http://mysagw.local:4200/*"
       ],
       "webOrigins": [
         "https://mysagw.local",
-        "https://mysagw.local:4200",
-        "https://localhost:4200"
+        "http://mysagw.local:4200"
       ],
       "notBefore": 0,
       "bearerOnly": false,

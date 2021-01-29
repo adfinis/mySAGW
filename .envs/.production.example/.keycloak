@@ -1,0 +1,4 @@
+# Keycloak
+# ------------------------------------------------------------------------------
+POSTGRES_PASSWORD=keycloak-db-secret
+KEYCLOAK_PASSWORD=keycloak-secret

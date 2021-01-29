@@ -60,7 +60,7 @@ DATABASES = {
         "NAME": env.str("DATABASE_NAME", default="mysagw"),
         "USER": env.str("DATABASE_USER", default="mysagw"),
         "PASSWORD": env.str("DATABASE_PASSWORD", default=default("mysagw")),
-        "HOST": env.str("DATABASE_HOST", default="localhost"),
+        "HOST": env.str("DATABASE_HOST", default="db"),
         "PORT": env.str("DATABASE_PORT", default=""),
         "OPTIONS": env.dict("DATABASE_OPTIONS", default={}),
     }

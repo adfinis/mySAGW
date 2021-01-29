@@ -1,5 +1,17 @@
 version: "3"
 services:
-  ember:
-    build:
-      context: ./ember/
+  db:
+    env_file: ./.envs/.production/.postgres
+
+  api:
+    env_file: ./.envs/.production/.api
+
+  caluma:
+    env_file: ./.envs/.production/.caluma
+
+  caddy:
+    env_file: ./.envs/.production/.caddy
+
+  keycloak:
+    env_file:
+      - ./.envs/.production/.keycloak
