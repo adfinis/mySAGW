@@ -2,7 +2,7 @@ from django.contrib.postgres.fields import DateRangeField
 from django.db import models
 from localized_fields.fields import LocalizedCharField, LocalizedTextField
 
-from mysagw.models import HistoricalModel, TrackingModel, UUIDModel
+from mysagw.models import HistoricalModel, TrackingModel, UniqueBooleanField, UUIDModel
 
 
 class InterestCategory(UUIDModel, HistoricalModel):
@@ -76,3 +76,15 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
     @property
     def member_of(self):
         return self._get_memberships(only_authorized=False)
+
+
+class Email(UUIDModel, HistoricalModel):
+    identity = models.ForeignKey(
+        Identity, related_name="emails", on_delete=models.CASCADE
+    )
+    email = models.EmailField()
+    description = models.CharField(max_length=255, null=True, blank=True)
+    default = UniqueBooleanField(default=False, together=["identity"])
+
+    class Meta:
+        unique_together = [["identity", "email"]]

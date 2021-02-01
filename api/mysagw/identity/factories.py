@@ -12,6 +12,16 @@ class IdentityFactory(DjangoModelFactory):
         model = models.Identity
 
 
+class EmailFactory(DjangoModelFactory):
+    identity = SubFactory(IdentityFactory)
+    email = Faker("email")
+    description = Faker("text")
+    default = True
+
+    class Meta:
+        model = models.Email
+
+
 class InterestCategoryFactory(DjangoModelFactory):
     title = Faker("multilang", faker_provider="name")
     description = Faker("multilang", faker_provider="text")
