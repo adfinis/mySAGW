@@ -3,11 +3,15 @@ import inspect
 
 import pytest
 from django.core.cache import cache
+from factory import Faker
 from factory.base import FactoryMetaClass
 from pytest_factoryboy import register
 from rest_framework.test import APIClient
 
+from .faker import MultilangProvider
 from .oidc_auth.models import OIDCUser
+
+Faker.add_provider(MultilangProvider)
 
 
 def register_module(module):
@@ -17,6 +21,7 @@ def register_module(module):
 
 
 register_module(importlib.import_module(".identity.factories", "mysagw"))
+register_module(importlib.import_module(".snippets.factories", "mysagw"))
 
 
 @pytest.fixture

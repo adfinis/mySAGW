@@ -13,8 +13,8 @@ class IdentityFactory(DjangoModelFactory):
 
 
 class InterestCategoryFactory(DjangoModelFactory):
-    title = Faker("name")
-    description = Faker("text")
+    title = Faker("multilang", faker_provider="name")
+    description = Faker("multilang", faker_provider="text")
     archived = False
 
     class Meta:
@@ -22,8 +22,8 @@ class InterestCategoryFactory(DjangoModelFactory):
 
 
 class InterestOptionFactory(DjangoModelFactory):
-    title = Faker("name")
-    description = Faker("text")
+    title = Faker("multilang", faker_provider="name")
+    description = Faker("multilang", faker_provider="text")
     archived = False
     category = SubFactory(InterestCategoryFactory)
 
@@ -32,8 +32,8 @@ class InterestOptionFactory(DjangoModelFactory):
 
 
 class MembershipRoleFactory(DjangoModelFactory):
-    title = Faker("name")
-    description = Faker("text")
+    title = Faker("multilang", faker_provider="name")
+    description = Faker("multilang", faker_provider="text")
     archived = False
 
     class Meta:
