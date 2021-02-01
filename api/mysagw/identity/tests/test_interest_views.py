@@ -3,6 +3,10 @@ from django.urls import reverse
 from rest_framework import status
 
 
+def remove_underscore(value):
+    return value.replace("_", "")
+
+
 @pytest.mark.parametrize(
     "client,expected_status",
     [
@@ -12,21 +16,21 @@ from rest_framework import status
     ],
     indirect=["client"],
 )
-@pytest.mark.parametrize("model", ["category", "option"])
+@pytest.mark.parametrize("model", ["interest_category", "interest"])
 def test_interest_detail(
     db,
     client,
     expected_status,
     model,
-    interest_option,
+    interest,
 ):
-    include = {"include": "options"}
-    obj = interest_option.category
-    if model == "option":
+    include = {"include": "interests"}
+    obj = interest.category
+    if model == "interest":
         include = {"include": "category"}
-        obj = interest_option
+        obj = interest
 
-    url = reverse(f"interest{model}-detail", args=[obj.pk])
+    url = reverse(f"{remove_underscore(model)}-detail", args=[obj.pk])
 
     response = client.get(url, include)
 
@@ -37,11 +41,11 @@ def test_interest_detail(
 
     json = response.json()
     assert json["data"]["id"] == str(obj.pk)
-    json_type = "interest-options"
-    obj_id = str(interest_option.pk)
-    if model == "option":
+    json_type = "interests"
+    obj_id = str(interest.pk)
+    if model == "interest":
         json_type = "interest-categories"
-        obj_id = str(interest_option.category.pk)
+        obj_id = str(interest.category.pk)
     assert json["included"][0]["type"] == json_type
     assert json["included"][0]["id"] == obj_id
 
@@ -55,21 +59,21 @@ def test_interest_detail(
     ],
     indirect=["client"],
 )
-@pytest.mark.parametrize("model", ["category", "option"])
+@pytest.mark.parametrize("model", ["interest_category", "interest"])
 def test_interest_list(
     db,
     client,
     expected_status,
     model,
     interest_category_factory,
-    interest_option_factory,
+    interest_factory,
 ):
     factory = interest_category_factory
-    if model == "option":
-        factory = interest_option_factory
+    if model == "interest":
+        factory = interest_factory
     factory.create_batch(3)
 
-    url = reverse(f"interest{model}-list")
+    url = reverse(f"{remove_underscore(model)}-list")
 
     response = client.get(url)
 
@@ -93,7 +97,7 @@ def test_interest_list(
 )
 @pytest.mark.parametrize(
     "model",
-    ["category", "option"],
+    ["interest_category", "interest"],
 )
 def test_interest_create(
     db,
@@ -104,13 +108,13 @@ def test_interest_create(
 ):
     category = interest_category_factory()
 
-    url = reverse(f"interest{model}-list")
+    url = reverse(f"{remove_underscore(model)}-list")
 
     data = {
         "data": {"type": "interest-categories", "attributes": {"title": {"de": "Foo"}}}
     }
-    if model == "option":
-        data["data"]["type"] = "interest-options"
+    if model == "interest":
+        data["data"]["type"] = "interests"
         data["data"]["relationships"] = {
             "category": {
                 "data": {"id": str(category.pk), "type": "interest-categories"}
@@ -139,7 +143,7 @@ def test_interest_create(
 )
 @pytest.mark.parametrize(
     "model",
-    ["category", "option"],
+    ["interest_category", "interest"],
 )
 def test_interest_update(
     db,
@@ -147,14 +151,14 @@ def test_interest_update(
     expected_status,
     model,
     interest_category_factory,
-    interest_option_factory,
+    interest_factory,
 ):
     factory = interest_category_factory
-    if model == "option":
-        factory = interest_option_factory
+    if model == "interest":
+        factory = interest_factory
     obj = factory(title="Bar")
 
-    url = reverse(f"interest{model}-detail", args=[obj.pk])
+    url = reverse(f"{remove_underscore(model)}-detail", args=[obj.pk])
 
     data = {
         "data": {
@@ -163,9 +167,9 @@ def test_interest_update(
             "attributes": {"title": {"de": "Foo"}},
         }
     }
-    if model == "option":
+    if model == "interest":
         category = interest_category_factory()
-        data["data"]["type"] = "interest-options"
+        data["data"]["type"] = "interests"
         data["data"]["relationships"] = {
             "category": {
                 "data": {"id": str(category.pk), "type": "interest-categories"}
@@ -194,21 +198,21 @@ def test_interest_update(
     ],
     indirect=["client"],
 )
-@pytest.mark.parametrize("model", ["category", "option"])
+@pytest.mark.parametrize("model", ["interest_category", "interest"])
 def test_interest_delete(
     db,
     client,
     expected_status,
     model,
     interest_category_factory,
-    interest_option_factory,
+    interest_factory,
 ):
     factory = interest_category_factory
-    if model == "option":
-        factory = interest_option_factory
+    if model == "interest":
+        factory = interest_factory
     obj = factory()
 
-    url = reverse(f"interest{model}-detail", args=[obj.pk])
+    url = reverse(f"{remove_underscore(model)}-detail", args=[obj.pk])
 
     response = client.delete(url)
 

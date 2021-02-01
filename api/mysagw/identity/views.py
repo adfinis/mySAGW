@@ -67,9 +67,9 @@ class InterestCategoryViewSet(views.ModelViewSet):
     permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
 
 
-class InterestOptionViewSet(views.ModelViewSet):
-    serializer_class = serializers.InterestOptionSerializer
-    queryset = models.InterestOption.objects.all()
+class InterestViewSet(views.ModelViewSet):
+    serializer_class = serializers.InterestSerializer
+    queryset = models.Interest.objects.all()
     permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
 
 

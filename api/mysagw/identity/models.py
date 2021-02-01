@@ -11,11 +11,11 @@ class InterestCategory(UUIDModel, HistoricalModel):
     archived = models.BooleanField(default=False)
 
 
-class InterestOption(UUIDModel, HistoricalModel):
+class Interest(UUIDModel, HistoricalModel):
     title = LocalizedCharField()
     description = LocalizedTextField(blank=True, null=True, required=False)
     category = models.ForeignKey(
-        InterestCategory, related_name="options", on_delete=models.PROTECT
+        InterestCategory, related_name="interests", on_delete=models.PROTECT
     )
     archived = models.BooleanField(default=False)
 
@@ -56,9 +56,7 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
     organisation_name = models.CharField(max_length=255, null=True, blank=True)
     first_name = models.CharField(max_length=255, null=True, blank=True)
     last_name = models.CharField(max_length=255, null=True, blank=True)
-    interests = models.ManyToManyField(
-        InterestOption, related_name="identities", blank=True
-    )
+    interests = models.ManyToManyField(Interest, related_name="identities", blank=True)
     is_organisation = models.BooleanField(default=False)
 
     def _get_memberships(self, only_authorized=False):

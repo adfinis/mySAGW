@@ -31,14 +31,14 @@ class InterestCategoryFactory(DjangoModelFactory):
         model = models.InterestCategory
 
 
-class InterestOptionFactory(DjangoModelFactory):
+class InterestFactory(DjangoModelFactory):
     title = Faker("multilang", faker_provider="name")
     description = Faker("multilang", faker_provider="text")
     archived = False
     category = SubFactory(InterestCategoryFactory)
 
     class Meta:
-        model = models.InterestOption
+        model = models.Interest
 
 
 class MembershipRoleFactory(DjangoModelFactory):

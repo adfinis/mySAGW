@@ -141,11 +141,11 @@ def test_identity_delete(db, client, expected_status, identity_factory):
             identity.refresh_from_db()
 
 
-def test_identity_set_interests(db, client, identity_factory, interest_option_factory):
+def test_identity_set_interests(db, client, identity_factory, interest_factory):
     identity = identity_factory()
     assert identity.interests.count() == 0
 
-    interests = interest_option_factory.create_batch(2)
+    interests = interest_factory.create_batch(2)
 
     url = reverse("identity-detail", args=[identity.pk])
 
@@ -157,8 +157,8 @@ def test_identity_set_interests(db, client, identity_factory, interest_option_fa
             "relationships": {
                 "interests": {
                     "data": [
-                        {"id": str(interests[0].pk), "type": "interest-options"},
-                        {"id": str(interests[1].pk), "type": "interest-options"},
+                        {"id": str(interests[0].pk), "type": "interests"},
+                        {"id": str(interests[1].pk), "type": "interests"},
                     ]
                 }
             },
