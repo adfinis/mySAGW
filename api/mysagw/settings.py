@@ -89,6 +89,13 @@ LANGUAGES = [
     ("en", "en"),
     ("fr", "fr"),
 ]
+LOCALIZED_FIELDS_FALLBACKS = {
+    "de": ["en", "fr"],
+    "fr": ["de", "en"],
+    "en": ["de", "fr"],
+}
+LOCALIZED_FIELDS_EXPERIMENTAL = False
+
 TIME_ZONE = env.str("TIME_ZONE", "UTC")
 USE_I18N = True
 USE_L10N = True
@@ -138,6 +145,7 @@ REST_FRAMEWORK = {
         "rest_framework.filters.SearchFilter",
     ),
     "ORDERING_PARAM": "sort",
+    "SEARCH_PARAM": "filter[search]",
     "TEST_REQUEST_RENDERER_CLASSES": (
         "rest_framework_json_api.renderers.JSONRenderer",
         "rest_framework.renderers.JSONRenderer",
