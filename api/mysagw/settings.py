@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "localized_fields",
     "simple_history",
     "mysagw.identity.apps.DefaultConfig",
+    "mysagw.snippets.apps.SnippetsConfig",
 ]
 
 if ENV == "dev":
