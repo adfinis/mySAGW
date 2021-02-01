@@ -86,24 +86,24 @@ class MyOrgsSerializer(serializers.ModelSerializer):
 
 class InterestCategorySerializer(serializers.ModelSerializer):
     included_serializers = {
-        "options": "mysagw.identity.serializers.InterestOptionSerializer",
+        "interests": "mysagw.identity.serializers.InterestSerializer",
     }
 
     class Meta:
         model = models.InterestCategory
-        fields = ("title", "description", "archived", "options")
+        fields = ("title", "description", "archived", "interests")
         extra_kwargs = {
-            "options": {"required": False},
+            "interests": {"required": False},
         }
 
 
-class InterestOptionSerializer(serializers.ModelSerializer):
+class InterestSerializer(serializers.ModelSerializer):
     included_serializers = {
         "category": InterestCategorySerializer,
     }
 
     class Meta:
-        model = models.InterestOption
+        model = models.Interest
         fields = (
             "title",
             "description",
