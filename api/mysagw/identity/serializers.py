@@ -6,7 +6,42 @@ from ..serializers import TrackingSerializer
 from . import models
 
 
+class SetModifyingUserOnIdentityMixin:
+    def set_modifying_user_on_identity(self, instance):
+        instance.identity.modified_by_user = self.context["request"].user.username
+        instance.identity.save()
+
+    def create(self, validated_data):
+        instance = super().create(validated_data)
+        self.set_modifying_user_on_identity(instance)
+        return instance
+
+    def update(self, instance, validated_data):
+        instance = super().update(instance, validated_data)
+        self.set_modifying_user_on_identity(instance)
+        return instance
+
+
+class EmailSerializer(SetModifyingUserOnIdentityMixin, serializers.ModelSerializer):
+    included_serializers = {
+        "identity": "mysagw.identity.serializers.IdentitySerializer",
+    }
+
+    class Meta:
+        model = models.Email
+        fields = (
+            "email",
+            "identity",
+            "description",
+            "default",
+        )
+
+
 class IdentitySerializer(TrackingSerializer):
+    included_serializers = {
+        "emails": "mysagw.identity.serializers.EmailSerializer",
+    }
+
     class Meta:
         model = models.Identity
         fields = TrackingSerializer.Meta.fields + (
@@ -14,10 +49,12 @@ class IdentitySerializer(TrackingSerializer):
             "first_name",
             "last_name",
             "interests",
+            "emails",
         )
         extra_kwargs = {
             **TrackingSerializer.Meta.extra_kwargs,
             "interests": {"required": False},
+            "emails": {"required": False},
         }
 
 
@@ -85,7 +122,9 @@ class MembershipRoleSerializer(serializers.ModelSerializer):
         )
 
 
-class MembershipSerializer(serializers.ModelSerializer):
+class MembershipSerializer(
+    SetModifyingUserOnIdentityMixin, serializers.ModelSerializer
+):
     identity = serializers.ResourceRelatedField(
         queryset=models.Identity.objects.filter(is_organisation=False)
     )
@@ -108,20 +147,6 @@ class MembershipSerializer(serializers.ModelSerializer):
             ):
                 raise ValidationError(f'Field "{field}" can\'t be modified.')
         return validated_data
-
-    def set_modifying_user_on_identity(self, instance):
-        instance.identity.modified_by_user = self.context["request"].user.username
-        instance.identity.save()
-
-    def create(self, validated_data):
-        instance = super().create(validated_data)
-        self.set_modifying_user_on_identity(instance)
-        return instance
-
-    def update(self, instance, validated_data):
-        instance = super().update(instance, validated_data)
-        self.set_modifying_user_on_identity(instance)
-        return instance
 
     class Meta:
         model = models.Membership

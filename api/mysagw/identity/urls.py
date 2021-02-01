@@ -5,6 +5,7 @@ from . import views
 
 r = SimpleRouter(trailing_slash=False)
 
+r.register(r"emails", views.EmailViewSet)
 r.register(r"identities", views.IdentityViewSet)
 r.register(r"interest-categories", views.InterestCategoryViewSet)
 r.register(r"interest-options", views.InterestOptionViewSet)
