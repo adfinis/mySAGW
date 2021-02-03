@@ -37,9 +37,27 @@ class EmailSerializer(SetModifyingUserOnIdentityMixin, serializers.ModelSerializ
         )
 
 
+class PhoneNumberSerializer(
+    SetModifyingUserOnIdentityMixin, serializers.ModelSerializer
+):
+    included_serializers = {
+        "identity": "mysagw.identity.serializers.IdentitySerializer",
+    }
+
+    class Meta:
+        model = models.PhoneNumber
+        fields = (
+            "phone",
+            "identity",
+            "description",
+            "default",
+        )
+
+
 class IdentitySerializer(TrackingSerializer):
     included_serializers = {
         "emails": "mysagw.identity.serializers.EmailSerializer",
+        "phone_numbers": "mysagw.identity.serializers.PhoneNumberSerializer",
     }
 
     class Meta:
@@ -50,11 +68,13 @@ class IdentitySerializer(TrackingSerializer):
             "last_name",
             "interests",
             "emails",
+            "phone_numbers",
         )
         extra_kwargs = {
             **TrackingSerializer.Meta.extra_kwargs,
             "interests": {"required": False},
             "emails": {"required": False},
+            "phone_numbers": {"required": False},
         }
 
 

@@ -8,10 +8,11 @@ from factory.base import FactoryMetaClass
 from pytest_factoryboy import register
 from rest_framework.test import APIClient
 
-from .faker import MultilangProvider
+from .faker import MultilangProvider, SwissPhoneNumberProvider
 from .oidc_auth.models import OIDCUser
 
 Faker.add_provider(MultilangProvider)
+Faker.add_provider(SwissPhoneNumberProvider)
 
 
 def register_module(module):

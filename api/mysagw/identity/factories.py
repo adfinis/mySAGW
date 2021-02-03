@@ -22,6 +22,16 @@ class EmailFactory(DjangoModelFactory):
         model = models.Email
 
 
+class PhoneNumberFactory(DjangoModelFactory):
+    identity = SubFactory(IdentityFactory)
+    phone = Faker("phone_number")
+    description = Faker("text")
+    default = True
+
+    class Meta:
+        model = models.PhoneNumber
+
+
 class InterestCategoryFactory(DjangoModelFactory):
     title = Faker("multilang", faker_provider="name")
     description = Faker("multilang", faker_provider="text")
