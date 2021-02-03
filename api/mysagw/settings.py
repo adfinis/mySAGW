@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "django.contrib.postgres",
     "psqlextra",
     "localized_fields",
+    "phonenumber_field",
     "simple_history",
     "mysagw.identity.apps.DefaultConfig",
     "mysagw.snippets.apps.SnippetsConfig",
@@ -100,6 +101,11 @@ TIME_ZONE = env.str("TIME_ZONE", "UTC")
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+
+# Phonenumbers
+
+PHONENUMBER_DEFAULT_REGION = "CH"
+
 
 # Authentication
 OIDC_OP_USER_ENDPOINT = env.str("OIDC_OP_USER_ENDPOINT", default=None)

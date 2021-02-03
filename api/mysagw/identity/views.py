@@ -27,6 +27,17 @@ class EmailViewSet(views.ModelViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+class PhoneNumberViewSet(views.ModelViewSet):
+    serializer_class = serializers.PhoneNumberSerializer
+    queryset = models.PhoneNumber.objects.all()
+    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
+
+    def perform_destroy(self, instance):
+        super().perform_destroy(instance)
+        instance.identity.modified_by_user = self.request.user.username
+        instance.identity.save()
+
+
 class IdentityViewSet(views.ModelViewSet):
     serializer_class = serializers.IdentitySerializer
     queryset = models.Identity.objects.all()

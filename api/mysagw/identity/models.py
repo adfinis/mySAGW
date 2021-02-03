@@ -1,6 +1,7 @@
 from django.contrib.postgres.fields import DateRangeField
 from django.db import models
 from localized_fields.fields import LocalizedCharField, LocalizedTextField
+from phonenumber_field.modelfields import PhoneNumberField
 
 from mysagw.models import HistoricalModel, TrackingModel, UniqueBooleanField, UUIDModel
 
@@ -86,3 +87,15 @@ class Email(UUIDModel, HistoricalModel):
 
     class Meta:
         unique_together = [["identity", "email"]]
+
+
+class PhoneNumber(UUIDModel, HistoricalModel):
+    identity = models.ForeignKey(
+        Identity, related_name="phone_numbers", on_delete=models.CASCADE
+    )
+    phone = PhoneNumberField()
+    description = models.CharField(max_length=255, null=True, blank=True)
+    default = UniqueBooleanField(default=False, together=["identity"])
+
+    class Meta:
+        unique_together = [["identity", "phone"]]

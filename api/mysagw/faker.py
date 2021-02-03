@@ -1,9 +1,10 @@
 from faker import Faker
-from faker.providers.date_time import Provider
+from faker.providers.date_time import Provider as DateTimeProvider
+from faker.providers.phone_number import Provider as PhoneNumberProvider
 from localized_fields.util import get_language_codes
 
 
-class MultilangProvider(Provider):
+class MultilangProvider(DateTimeProvider):
     """
     Create dictionary compatible with `LocalizedField`.
 
@@ -17,3 +18,15 @@ class MultilangProvider(Provider):
             value[language] = getattr(Faker(language), faker_provider)(*kwargs)
 
         return value
+
+
+class SwissPhoneNumberProvider(PhoneNumberProvider):
+    # https://de.wikipedia.org/wiki/Rufnummer#Schreibweisen
+    formats = (
+        "+41#########",
+        "+41 ## ### ## ##",
+        "0#########",
+        "0## ### ## ##",
+        "0041#########",
+        "0041 ## ### ## ##",
+    )
