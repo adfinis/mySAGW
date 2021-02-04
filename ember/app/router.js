@@ -29,11 +29,5 @@ Router.map(function () {
       path: "/form-builder",
       resetNamespace,
     });
-    this.route("cases", { resetNamespace }, function () {
-      this.route("detail", { path: "/:id" }, function () {
-        this.route("edit");
-      });
-      this.route("new");
-    });
   });
 });
