@@ -1,6 +1,7 @@
 FROM danlynn/ember-cli:latest
 COPY . /myapp
-RUN yarn install && yarn build
+
+RUN yarn install && eval $(cat /.env | grep -v "^#") yarn build
 
 FROM nginx:alpine as final
 COPY --from=0 /myapp/dist /usr/share/nginx/html

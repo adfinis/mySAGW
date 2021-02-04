@@ -16,3 +16,7 @@ services:
 
   keycloak:
     env_file: ./.envs/.staging/.keycloak
+
+  ember:
+    volumes:
+      - ./.envs/.staging/.ember:/.env:ro

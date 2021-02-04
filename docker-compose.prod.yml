@@ -14,3 +14,7 @@ services:
 
   keycloak:
     env_file: ./.envs/.production/.keycloak
+
+  ember:
+    volumes:
+      - ./.envs/.production/.ember:/.env:ro

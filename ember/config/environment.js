@@ -13,7 +13,9 @@ module.exports = function (environment) {
       endSessionEndpoint: "/logout",
       userinfoEndpoint: "/userinfo",
       afterLogoutUri: "/",
-      host: "https://mysagw.local/auth/realms/mysagw/protocol/openid-connect",
+      host:
+        process.env.OIDC_HOST ||
+        "https://mysagw.local/auth/realms/mysagw/protocol/openid-connect",
     },
     EmberENV: {
       FEATURES: {
