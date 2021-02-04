@@ -18,5 +18,6 @@ services:
     env_file: ./.envs/.staging/.keycloak
 
   ember:
-    volumes:
-      - ./.envs/.staging/.ember:/.env:ro
+    build:
+      args:
+        OIDC_HOST: "${OIDC_HOST:?Set OIDC_HOST env variable}"
