@@ -57,8 +57,12 @@ cp -r ./.envs/.production.example ./.envs/.production
 
 Then edit the files under `./.envs/.production/` to your needs.
 
+For the staging envireonment, copy to `./.envs/.staging/`.
+
 ```bash
-echo "UID=$(id -u)" > .env
+echo -e "UID=$(id -u)\nCOMPOSE_FILE=docker-compose.yml:docker-compose.prod.yml" > .env
+# on staging environments:
+# echo -e "UID=$(id -u)\nCOMPOSE_FILE=docker-compose.yml:docker-compose.staging.yml" > .env
 docker-compose up -d
 make caluma-loadconfig
 ```
