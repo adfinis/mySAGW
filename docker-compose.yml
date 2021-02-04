@@ -23,7 +23,6 @@ services:
       - OIDC_BEARER_TOKEN_REVALIDATION_TIME=300
       - VISIBILITY_CLASSES=caluma.caluma_user.visibilities.Authenticated,caluma.extensions.visibilities.MySAGWVisibility
       - PERMISSION_CLASSES=caluma.caluma_user.permissions.IsAuthenticated,caluma.extensions.permissions.MySAGWPermission
-      - OIDC_USERINFO_ENDPOINT=https://mysagw.local/auth/realms/mysagw/protocol/openid-connect/userinfo
       - LANGUAGE_CODE=de
       - LANGUAGES=de,fr
     depends_on:
