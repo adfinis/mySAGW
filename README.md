@@ -63,6 +63,7 @@ For the staging envireonment, copy to `./.envs/.staging/`.
 echo -e "UID=$(id -u)\nCOMPOSE_FILE=docker-compose.yml:docker-compose.prod.yml" > .env
 # on staging environments:
 # echo -e "UID=$(id -u)\nCOMPOSE_FILE=docker-compose.yml:docker-compose.staging.yml" > .env
+# Also in .env file, set OIDC_HOST variable
 docker-compose up -d
 make caluma-loadconfig
 ```
