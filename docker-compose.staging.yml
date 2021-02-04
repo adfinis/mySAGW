@@ -1,0 +1,18 @@
+version: "3"
+services:
+  db:
+    env_file: ./.envs/.staging/.postgres
+
+  api:
+    build:
+      context: ./api/
+    env_file: ./.envs/.staging/.api
+
+  caluma:
+    env_file: ./.envs/.staging/.caluma
+
+  caddy:
+    env_file: ./.envs/.staging/.caddy
+
+  keycloak:
+    env_file: ./.envs/.staging/.keycloak
