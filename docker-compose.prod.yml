@@ -13,5 +13,4 @@ services:
     env_file: ./.envs/.production/.caddy
 
   keycloak:
-    env_file:
-      - ./.envs/.production/.keycloak
+    env_file: ./.envs/.production/.keycloak
