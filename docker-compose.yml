@@ -4,6 +4,7 @@ services:
     image: postgres:alpine
     volumes:
       - dbdata:/var/lib/postgresql/data
+      - ./postgres/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh:ro
 
   api:
     image: adfinis-sygroup/mysagw
