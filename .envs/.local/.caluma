@@ -2,3 +2,4 @@
 # ------------------------------------------------------------------------------
 ENV=dev
 OIDC_VERIFY_SSL=False
+OIDC_USERINFO_ENDPOINT=https://mysagw.local/auth/realms/mysagw/protocol/openid-connect/userinfo
