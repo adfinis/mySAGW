@@ -1,9 +1,13 @@
 "use strict";
 
+const { name } = require("../package");
+
 module.exports = function (environment) {
   const ENV = {
-    modulePrefix: "mysagw",
     environment,
+    modulePrefix: name,
+    podModulePrefix: `${name}/ui`,
+
     rootURL: "/",
     locationType: "auto",
     "ember-simple-auth-oidc": {
