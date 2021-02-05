@@ -1,4 +1,4 @@
-# Keycloak
+# Postfix
 # ------------------------------------------------------------------------------
-DB_PASSWORD=keycloak-db-secret
-KEYCLOAK_PASSWORD=keycloak-secret
+POSTFIX_myhostname=mysagw.tdl
+POSTFIX_mail_name=noreply@mysagw.tdl

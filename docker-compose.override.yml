@@ -4,6 +4,7 @@ services:
     env_file: ./.envs/.local/.postgres
     ports:
       - "5432:5432"
+
   api:
     build:
       context: ./api/
@@ -19,6 +20,7 @@ services:
         "wait-for-it.sh db:5432 -- ./manage.py migrate && ./manage.py runserver 0.0.0.0:8000",
       ]
     env_file: ./.envs/.local/.api
+
   caluma:
     env_file: ./.envs/.local/.caluma
     volumes:
@@ -38,18 +40,14 @@ services:
           - mysagw.local
 
   keycloak:
-    volumes:
-      - ./keycloak/dev-config.json:/etc/keycloak/dev-config.json
     env_file: ./.envs/.local/.keycloak
-    # export is a bit tricky: We need to _start_ keycloak with specific arguments to perform an export
-    # command: ["-Dkeycloak.migration.action=export", "-Dkeycloak.migration.provider=singleFile", "-Dkeycloak.migration.file=/etc/keycloak/dev-config.json", "-b", "0.0.0.0"]
-    #
-    # http://www.keycloak.org/docs/3.3/server_admin/topics/export-import.html
-    command:
-      [
-        "-Dkeycloak.migration.action=import",
-        "-Dkeycloak.migration.provider=singleFile",
-        "-Dkeycloak.migration.file=/etc/keycloak/dev-config.json",
-        "-b",
-        "0.0.0.0",
-      ]
+    depends_on:
+      - mail
+
+  mail:
+    image: mailhog/mailhog
+    environment:
+      - VIRTUAL_PORT=8025
+      - VIRTUAL_HOST=mail.mysagw.local
+    ports:
+      - 8025:8025

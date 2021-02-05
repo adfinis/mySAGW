@@ -1,5 +1,7 @@
 version: "3"
+
 services:
+
   db:
     env_file: ./.envs/.staging/.postgres
 
@@ -16,8 +18,15 @@ services:
 
   keycloak:
     env_file: ./.envs/.staging/.keycloak
+    depends_on:
+      - mail
 
   ember:
     build:
       args:
         OIDC_HOST: "${OIDC_HOST:?Set OIDC_HOST env variable}"
+
+  mail:
+    image: mwader/postfix-relay
+    env_file: ./.envs/.staging/.mail
+    restart: always
