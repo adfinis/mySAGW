@@ -7,4 +7,9 @@ export default Factory.extend({
   firstName: () => faker.name.firstName(),
   lastName: () => faker.name.lastName(),
   isOrganisation: () => faker.random.boolean(),
+
+  afterCreate(identity, server) {
+    server.createList("email", 3, { identity });
+    server.createList("phone-number", 3, { identity });
+  },
 });

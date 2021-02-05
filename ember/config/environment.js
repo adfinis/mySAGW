@@ -10,6 +10,7 @@ module.exports = function (environment) {
 
     rootURL: "/",
     locationType: "auto",
+
     "ember-simple-auth-oidc": {
       clientId: "mysagw",
       authEndpoint: "/auth",
@@ -21,6 +22,10 @@ module.exports = function (environment) {
         process.env.OIDC_HOST ||
         "https://mysagw.local/auth/realms/mysagw/protocol/openid-connect",
     },
+    "ember-validated-form": {
+      theme: "uikit",
+    },
+
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build

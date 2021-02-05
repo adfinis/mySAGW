@@ -7,6 +7,7 @@ export default class MembershipModel extends LocalizedModel {
   @belongsTo("membership-role") role;
   @attr authorized;
   @attr timeSlot;
+  @attr nextElection;
   @localizedAttr comment;
   @attr inactive;
 }

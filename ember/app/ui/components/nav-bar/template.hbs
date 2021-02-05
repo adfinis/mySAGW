@@ -9,6 +9,9 @@
 
   <div class="uk-navbar-left">
     <UkTab as |tab|>
+      <tab.link-item @route="identities">
+        {{t "nav.identities"}}
+      </tab.link-item>
       <tab.link-item @route="form-builder">
         {{t "nav.form-builder"}}
       </tab.link-item>

@@ -23,6 +23,7 @@
   "devDependencies": {
     "@adfinis-sygroup/eslint-config": "^1.3.2",
     "@ember/optional-features": "^1.3.0",
+    "@ember/render-modifiers": "^1.0.2",
     "@glimmer/component": "^1.0.3",
     "@glimmer/tracking": "^1.0.3",
     "babel-eslint": "^10.1.0",
@@ -31,6 +32,8 @@
     "ember-apollo-client": "^2.2.0",
     "ember-auto-import": "^1.10.1",
     "ember-caluma": "^6.6.1",
+    "ember-changeset": "^3.12.0",
+    "ember-changeset-validations": "^3.12.0",
     "ember-cli": "~3.24.0",
     "ember-cli-app-version": "^3.2.0",
     "ember-cli-babel": "^7.19.0",
@@ -54,7 +57,7 @@
     "ember-in-viewport": "^3.8.1",
     "ember-intl": "^5.6.2",
     "ember-load-initializers": "^2.1.2",
-    "ember-localized-model": "^1.0.1",
+    "ember-localized-model": "projectcaluma/ember-localized-model#v1.0.1",
     "ember-math-helpers": "^2.15.0",
     "ember-maybe-import-regenerator": "^0.1.6",
     "ember-moment": "^8.0.1",
@@ -68,6 +71,7 @@
     "ember-source": "~3.24.1",
     "ember-template-lint": "^2.16.0",
     "ember-uikit": "^2.1.2",
+    "ember-validated-form": "^3.0.2",
     "eslint": "^7.17.0",
     "eslint-plugin-ember": "^8.11.0",
     "eslint-plugin-import": "^2.22.1",
@@ -79,6 +83,9 @@
     "npm-run-all": "^4.1.5",
     "qunit-dom": "^1.6.0",
     "sass": "^1.32.5"
+  },
+  "resolutions": {
+    "validated-changeset": "0.13.1"
   },
   "engines": {
     "node": "10.* || >= 12"

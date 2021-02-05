@@ -1,0 +1,14 @@
+<h1>{{t "page.identities.edit.title"}}</h1>
+
+<IdentityForm @identity={{this.model}} />
+
+<div uk-grid>
+  <div class="uk-width-1-2@m">
+    <IdentityEmails @identity={{this.model}} />
+  </div>
+
+  <div class="uk-width-1-2@m">
+    <IdentityPhoneNumbers @identity={{this.model}} />
+  </div>
+
+</div>
