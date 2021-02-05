@@ -1,14 +1,17 @@
-import Model, { attr, hasMany } from "@ember-data/model";
+import { attr, hasMany } from "@ember-data/model";
+import { LocalizedModel } from "ember-localized-model";
 
-export default class IdentityModel extends Model {
+export default class IdentityModel extends LocalizedModel {
   @attr idpId;
   @attr organisationName;
   @attr firstName;
   @attr lastName;
-  @hasMany("interest") interests;
+  @hasMany emails;
+  @hasMany phoneNumbers;
+  @hasMany interests;
   @attr isOrganisation;
 
-  fullName() {
+  get fullName() {
     return [this.firstName, this.lastName].filter(Boolean).join(" ");
   }
 }
