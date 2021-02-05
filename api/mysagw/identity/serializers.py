@@ -92,7 +92,7 @@ class MyOrgsSerializer(serializers.ModelSerializer):
 
     def get_is_authorized(self, obj):
         identity = self.context["request"].user.identity
-        return obj.memberships.filter(identity=identity, authorized=True).exists()
+        return obj.members.filter(identity=identity, authorized=True).exists()
 
     class Meta:
         model = models.Identity
