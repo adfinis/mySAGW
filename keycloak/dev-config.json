@@ -1304,7 +1304,16 @@
     "xXSSProtection": "1; mode=block",
     "strictTransportSecurity": "max-age=31536000; includeSubDomains"
   },
-  "smtpServer": {},
+  "smtpServer": {
+    "replyToDisplayName": "",
+    "starttls": "",
+    "auth": "false",
+    "port": "1025",
+    "host": "mail",
+    "from": "noreply@mysagw.local",
+    "fromDisplayName": "mySAGW",
+    "ssl": ""
+  },
   "eventsEnabled": false,
   "eventsListeners": [
     "jboss-logging"
