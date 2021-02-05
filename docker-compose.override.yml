@@ -4,6 +4,7 @@ services:
     env_file: ./.envs/.local/.postgres
     ports:
       - "5432:5432"
+
   api:
     build:
       context: ./api/
@@ -19,6 +20,7 @@ services:
         "wait-for-it.sh db:5432 -- ./manage.py migrate && ./manage.py runserver 0.0.0.0:8000",
       ]
     env_file: ./.envs/.local/.api
+
   caluma:
     env_file: ./.envs/.local/.caluma
     volumes:
