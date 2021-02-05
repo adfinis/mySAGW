@@ -5,6 +5,8 @@ export default class IdentitiesEditRoute extends Route {
   @service store;
 
   model({ identity }) {
-    return this.store.findRecord("identity", identity);
+    return this.store.findRecord("identity", identity, {
+      include: "interests,interests.category",
+    });
   }
 }

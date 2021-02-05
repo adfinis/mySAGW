@@ -61,13 +61,14 @@ export default class IdentityPhoneNumbersComponent extends Component {
       yield this.editItem.save({
         adapterOptions: { include: "identity,identity.phone-numbers" },
       });
+
       // Reset form and list.
       // TODO Update `phoneNumbers` via Ember Data store.
       this.onUpdate();
       this.editItem = null;
     } catch (error) {
       console.error(error);
-      this.notification.danger("ERROR");
+      this.notification.danger(error.message);
     }
   }
 
@@ -90,10 +91,9 @@ export default class IdentityPhoneNumbersComponent extends Component {
         );
       } catch (error) {
         console.error(error);
-        this.notification.danger("ERROR");
+        this.notification.danger(error.message);
       }
     } catch (error) {
-      console.error(error);
       // Dialog was dimissed. No action necessary.
     }
   }

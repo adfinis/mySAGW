@@ -21,7 +21,10 @@ export default function () {
   this.patch("/phone-numbers/:id");
   this.delete("/phone-numbers/:id");
 
-  this.get("/identities");
+  this.get("/identities", (schema, request) => {
+    const isOrganisation = request.queryParams["filter[isOrganisation]"];
+    return schema.memberships.where({ isOrganisation });
+  });
   this.post("/identities");
   this.get("/identities/:id");
   this.patch("/identities/:id");

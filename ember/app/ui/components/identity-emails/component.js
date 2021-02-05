@@ -58,13 +58,14 @@ export default class IdentityEmailsComponent extends Component {
       yield this.editItem.save({
         adapterOptions: { include: "identity,identity.emails" },
       });
+
       // Reset form and list.
       // TODO Update `emails` via Ember Data store.
       this.onUpdate();
       this.editItem = null;
     } catch (error) {
       console.error(error);
-      this.notification.danger("ERROR");
+      this.notification.danger(error.message);
     }
   }
 
@@ -84,10 +85,9 @@ export default class IdentityEmailsComponent extends Component {
         );
       } catch (error) {
         console.error(error);
-        this.notification.danger("ERROR");
+        this.notification.danger(error.message);
       }
     } catch (error) {
-      console.error(error);
       // Dialog was dimissed. No action necessary.
     }
   }

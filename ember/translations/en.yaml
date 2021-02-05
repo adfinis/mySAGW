@@ -158,7 +158,7 @@ component:
         add: "Add membership"
         edit: "Edit membership"
       label:
-        identity: "Identity / Organisation"
+        organisation: "Organisation"
         role: "Membership role"
         timeFrom: "From"
         timeUntil: "Until"

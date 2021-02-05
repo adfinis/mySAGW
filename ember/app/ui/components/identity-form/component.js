@@ -34,7 +34,7 @@ export default class IdentityFormComponent extends Component {
       this.args.onSave?.(this.model);
     } catch (error) {
       console.error(error);
-      this.notification.danger("ERROR");
+      this.notification.danger(error.message);
     }
   }
 }
