@@ -31,12 +31,12 @@ class Membership(UUIDModel, HistoricalModel):
     identity = models.ForeignKey(
         "Identity",
         on_delete=models.CASCADE,
-        related_name="members",
+        related_name="memberships",
     )
     organisation = models.ForeignKey(
         "Identity",
         on_delete=models.CASCADE,
-        related_name="memberships",
+        related_name="members",
     )
     role = models.ForeignKey(
         MembershipRole,

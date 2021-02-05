@@ -170,3 +170,68 @@ def test_identity_set_interests(db, client, identity_factory, interest_factory):
     assert response.status_code == status.HTTP_200_OK
     identity.refresh_from_db()
     assert identity.interests.count() == 2
+
+
+@pytest.mark.parametrize(
+    "search,expected",
+    [
+        ("Winst", [0]),
+        ("Präsi", [1]),
+        ("SAGW", [1, 2]),
+        ("@exam", [3]),
+        ("123456", [4]),
+        ("pHil", [5]),
+    ],
+)
+def test_identity_search(
+    db,
+    client,
+    identity_factory,
+    membership_role_factory,
+    membership_factory,
+    email_factory,
+    phone_number_factory,
+    interest_factory,
+    search,
+    expected,
+):
+    identities = []
+
+    identities.append(identity_factory(first_name="Winston"))
+
+    membership_role = membership_role_factory(title={"de": "PräsidentIn"})
+    membership = membership_factory(
+        role=membership_role,
+        organisation__organisation_name="SAGW",
+        organisation__is_organisation=True,
+    )
+    identities.append(membership.identity)
+    identities.append(membership.organisation)
+
+    email = email_factory(email="test@example.com")
+    identities.append(email.identity)
+
+    phone = phone_number_factory(phone="+41771234567")
+    identities.append(phone.identity)
+
+    interest_identity = identity_factory()
+    interest = interest_factory(title={"en": "philosophy"})
+    interest_identity.interests.add(interest)
+    identities.append(interest_identity)
+
+    url = reverse("identity-list")
+
+    response = client.get(url, {"filter[search]": search})
+
+    assert response.status_code == status.HTTP_200_OK
+
+    expected_ids = sorted([str(identities[ex].pk) for ex in expected])
+
+    json = response.json()
+
+    received_ids = []
+    for snippet in json["data"]:
+        received_ids.append(snippet["id"])
+    received_ids = sorted(received_ids)
+
+    assert expected_ids == received_ids

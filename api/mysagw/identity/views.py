@@ -42,6 +42,23 @@ class IdentityViewSet(views.ModelViewSet):
     serializer_class = serializers.IdentitySerializer
     queryset = models.Identity.objects.all()
     permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
+    search_fields = (
+        "organisation_name",
+        "first_name",
+        "last_name",
+        "interests__title",
+        "interests__description",
+        "emails__email",
+        "phone_numbers__phone",
+        "memberships__role__title",
+        "memberships__role__description",
+        "memberships__organisation__organisation_name",
+        "memberships__organisation__first_name",
+        "memberships__organisation__last_name",
+        "members__organisation__organisation_name",
+        "members__organisation__first_name",
+        "members__organisation__last_name",
+    )
 
 
 class MeViewSet(
