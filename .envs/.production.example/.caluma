@@ -4,3 +4,4 @@ SECRET_KEY=verysecure
 ALLOWED_HOSTS=yourdomain.tld,www.yourdomain.tdl
 DATABASE_PASSWORD=alsoverysecure
 OIDC_USERINFO_ENDPOINT=https://yourdomain.tld/auth/realms/mysagw/protocol/openid-connect/userinfo
+ADMINS=Test Example <test@example.com>,Test2 <test2@example.com>
