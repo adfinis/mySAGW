@@ -40,14 +40,14 @@ export default class CaseNewController extends Controller.extend(
     return (yield this.apollo.query(
       { query: getRootFormsQuery, fetchPolicy: "network-only" },
       "allForms.edges"
-    )).map(({ node }) => node);
+    )).mapBy("node");
   }
 
   @task *createCase() {
     const workflow = (yield this.apollo.query(
       { query: getWorkflowQuery },
       "allWorkflows.edges"
-    )).map(({ node }) => node)[0];
+    )).mapBy("node").firstObject;
 
     const newCase = yield this.apollo.mutate({
       mutation: createCaseMutation,

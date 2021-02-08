@@ -53,7 +53,7 @@ export default class CasesTableComponent extends Component {
         },
         "allCases"
       );
-      const cases = raw.edges.map(({ node }) => node);
+      const cases = raw.edges.mapBy("node");
 
       this.cases = [...this.cases, ...cases];
 

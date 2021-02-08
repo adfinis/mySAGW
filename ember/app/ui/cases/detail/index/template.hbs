@@ -59,29 +59,25 @@
     </span>
   </div>
   <div class="uk-width-2-3">
-    <h3>
-      {{t "documents.edit"}}
-    </h3>
-    <p>
-      {{t "documents.editText"}}
-    </p>
+    <h3>{{t "documents.edit"}}</h3>
+    <p>{{t "documents.editText"}}</p>
+
     <LinkTo @route="cases.detail.edit" class="uk-button uk-button-default">
       {{t "documents.edit"}}
     </LinkTo>
 
-    <h3>
-      {{t "documents.delete"}}
-    </h3>
-    <p>
-      {{t "documents.deleteText"}}
-    </p>
-    <UkButton
-      @on-click={{perform this.closeCase @model}}
-      @disabled={{this.closeCase.isRunning}}
-      @loading={{this.closeCase.isRunning}}
-    >
-      {{t "documents.delete"}}
-    </UkButton>
+    {{#if (or (eq @model.status "RUNNING") (eq @model.status "SUSPENDED"))}}
+      <h3>{{t "documents.delete"}}</h3>
+      <p>{{t "documents.deleteText"}}</p>
+
+      <UkButton
+        @on-click={{perform this.closeCase @model}}
+        @disabled={{this.closeCase.isRunning}}
+        @loading={{this.closeCase.isRunning}}
+      >
+        {{t "documents.delete"}}
+      </UkButton>
+    {{/if}}
   </div>
 </div>
 
