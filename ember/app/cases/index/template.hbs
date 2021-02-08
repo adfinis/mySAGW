@@ -1,0 +1,12 @@
+<h1 class="uk-flex uk-flex-between">
+  {{t "documents.title"}}
+
+  <span>
+    <LinkTo @route="cases.new" class="uk-button uk-button-primary">
+      {{t "documents.new.title"}}
+    </LinkTo>
+  </span>
+</h1>
+
+<hr />
+<CasesTable @order={{this.order}} @updateOrder={{this.updateOrder}} />
