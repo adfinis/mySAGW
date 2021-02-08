@@ -29,6 +29,6 @@ export default class CasesDetailController extends Controller.extend(
       },
       "allCases.edges"
     );
-    return caseNode.map(({ node }) => node)[0];
+    return caseNode.mapBy("node").firstObject;
   }
 }
