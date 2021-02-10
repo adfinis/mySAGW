@@ -70,7 +70,7 @@ def test_email_create(db, identity, client, expected_status):
     data = {
         "data": {
             "type": "emails",
-            "attributes": {"email": "test@example.com", "default": False},
+            "attributes": {"email": "test@example.com"},
             "relationships": {
                 "identity": {"data": {"id": str(identity.pk), "type": "identities"}},
             },
@@ -87,24 +87,19 @@ def test_email_create(db, identity, client, expected_status):
     assert models.Email.objects.count() == 1
     email = models.Email.objects.first()
     assert email.email == "test@example.com"
-    # As it's the only email for this identity, `default` will be set to `True`
-    # regardless of the POST data
-    assert email.default is True
-
     identity.refresh_from_db()
     assert identity.modified_by_user == client.user.username
 
 
-def test_email_create_new_default(db, email_factory, client):
+def test_email_create_with_includes(db, email_factory, client):
     email = email_factory()
-    other_email = email_factory()
 
-    url = f"{reverse('email-list')}?include=identity&include=identity.emails"
+    url = f"{reverse('email-list')}?include=identity&include=identity.additional_emails"
 
     data = {
         "data": {
             "type": "emails",
-            "attributes": {"email": "test@example.com", "default": True},
+            "attributes": {"email": "test@example.com"},
             "relationships": {
                 "identity": {
                     "data": {"id": str(email.identity.pk), "type": "identities"}
@@ -117,20 +112,15 @@ def test_email_create_new_default(db, email_factory, client):
 
     assert response.status_code == status.HTTP_201_CREATED
 
-    assert models.Email.objects.count() == 3
+    assert models.Email.objects.count() == 2
     new = models.Email.objects.get(pk=response.json()["data"]["id"])
     assert new != email
     assert new.email == "test@example.com"
     email.refresh_from_db()
-    other_email.refresh_from_db()
-    assert new.default is True
-    assert email.default is False
-    assert other_email.default is True
 
     # assert includes
     json = response.json()
     assert len(json["included"]) == 2
-    assert json["included"][0]["attributes"]["default"] is False
     identity = json["included"][1]
     assert identity["type"] == "identities"
     assert identity["id"] == str(email.identity.pk)
@@ -187,7 +177,7 @@ def test_email_update(db, client, expected_status, email_factory):
 )
 def test_email_delete(db, client, expected_status, email_factory):
     main_email = email_factory()
-    other_email = email_factory(identity=main_email.identity, default=False)
+    other_email = email_factory(identity=main_email.identity)
     assert other_email.identity.modified_by_user != client.user.username
 
     url = reverse("email-detail", args=[other_email.pk])
@@ -202,12 +192,3 @@ def test_email_delete(db, client, expected_status, email_factory):
 
         other_email.identity.refresh_from_db()
         assert other_email.identity.modified_by_user == client.user.username
-
-
-def test_email_delete_default_failure(db, client, email):
-    url = reverse("email-detail", args=[email.pk])
-
-    response = client.delete(url)
-
-    assert response.status_code == status.HTTP_400_BAD_REQUEST
-    assert response.json()["errors"][0]["detail"] == "Cannot delete default Email."

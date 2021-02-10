@@ -33,7 +33,6 @@ class EmailSerializer(SetModifyingUserOnIdentityMixin, serializers.ModelSerializ
             "email",
             "identity",
             "description",
-            "default",
         )
 
 
@@ -56,7 +55,7 @@ class PhoneNumberSerializer(
 
 class IdentitySerializer(TrackingSerializer):
     included_serializers = {
-        "emails": "mysagw.identity.serializers.EmailSerializer",
+        "additional_emails": "mysagw.identity.serializers.EmailSerializer",
         "phone_numbers": "mysagw.identity.serializers.PhoneNumberSerializer",
     }
 
@@ -67,13 +66,15 @@ class IdentitySerializer(TrackingSerializer):
             "first_name",
             "last_name",
             "interests",
-            "emails",
+            "email",
+            "additional_emails",
             "phone_numbers",
         )
         extra_kwargs = {
             **TrackingSerializer.Meta.extra_kwargs,
             "interests": {"required": False},
-            "emails": {"required": False},
+            "email": {"read_only": True},
+            "additional_emails": {"required": False},
             "phone_numbers": {"required": False},
         }
 
@@ -84,7 +85,11 @@ class MeSerializer(serializers.ModelSerializer):
         fields = (
             "first_name",
             "last_name",
+            "email",
         )
+        extra_kwargs = {
+            "email": {"read_only": True},
+        }
 
 
 class MyOrgsSerializer(serializers.ModelSerializer):
@@ -101,7 +106,11 @@ class MyOrgsSerializer(serializers.ModelSerializer):
             "last_name",
             "organisation_name",
             "is_authorized",
+            "email",
         )
+        extra_kwargs = {
+            "email": {"read_only": True},
+        }
 
 
 class InterestCategorySerializer(serializers.ModelSerializer):

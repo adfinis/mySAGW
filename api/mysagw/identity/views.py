@@ -1,7 +1,4 @@
-from rest_framework import status
-from rest_framework.exceptions import ValidationError
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin
-from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 from rest_framework_json_api import views
 
@@ -18,13 +15,6 @@ class EmailViewSet(views.ModelViewSet):
         super().perform_destroy(instance)
         instance.identity.modified_by_user = self.request.user.username
         instance.identity.save()
-
-    def destroy(self, request, *args, **kwargs):
-        instance = self.get_object()
-        if instance.default is True:
-            raise ValidationError("Cannot delete default Email.")
-        self.perform_destroy(instance)
-        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class PhoneNumberViewSet(views.ModelViewSet):
@@ -46,18 +36,16 @@ class IdentityViewSet(views.ModelViewSet):
         "organisation_name",
         "first_name",
         "last_name",
+        "email",
         "interests__title",
         "interests__description",
-        "emails__email",
+        "additional_emails__email",
         "phone_numbers__phone",
         "memberships__role__title",
         "memberships__role__description",
         "memberships__organisation__organisation_name",
         "memberships__organisation__first_name",
         "memberships__organisation__last_name",
-        "members__organisation__organisation_name",
-        "members__organisation__first_name",
-        "members__organisation__last_name",
     )
 
 

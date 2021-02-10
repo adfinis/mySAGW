@@ -176,9 +176,10 @@ def test_identity_set_interests(db, client, identity_factory, interest_factory):
     "search,expected",
     [
         ("Winst", [0]),
+        ("agw@", [0]),
         ("Präsi", [1]),
-        ("SAGW", [1, 2]),
-        ("@exam", [3]),
+        ("SAGW", [0, 1, 2, 3]),
+        ("@sag", [0, 3]),
         ("123456", [4]),
         ("pHil", [5]),
     ],
@@ -195,9 +196,7 @@ def test_identity_search(
     search,
     expected,
 ):
-    identities = []
-
-    identities.append(identity_factory(first_name="Winston"))
+    identities = [identity_factory(first_name="Winston", email="sagw@sagw.ch")]
 
     membership_role = membership_role_factory(title={"de": "PräsidentIn"})
     membership = membership_factory(
@@ -208,7 +207,7 @@ def test_identity_search(
     identities.append(membership.identity)
     identities.append(membership.organisation)
 
-    email = email_factory(email="test@example.com")
+    email = email_factory(email="test@sagw.ch")
     identities.append(email.identity)
 
     phone = phone_number_factory(phone="+41771234567")

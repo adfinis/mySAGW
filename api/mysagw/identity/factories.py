@@ -6,6 +6,7 @@ from . import models
 
 class IdentityFactory(DjangoModelFactory):
     idp_id = Faker("uuid4")
+    email = Faker("email")
     is_organisation = False
 
     class Meta:
@@ -16,7 +17,6 @@ class EmailFactory(DjangoModelFactory):
     identity = SubFactory(IdentityFactory)
     email = Faker("email")
     description = Faker("text")
-    default = True
 
     class Meta:
         model = models.Email

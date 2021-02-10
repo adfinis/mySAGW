@@ -15,7 +15,7 @@ class MySAGWAuthenticationBackend(OIDCAuthenticationBackend):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.OIDC_USERNAME_CLAIM = self.get_settings("OIDC_USERNAME_CLAIM")
+        self.OIDC_EMAIL_CLAIM = self.get_settings("OIDC_EMAIL_CLAIM")
         self.OIDC_OP_INTROSPECT_ENDPOINT = self.get_settings(
             "OIDC_OP_INTROSPECT_ENDPOINT"
         )

@@ -31,19 +31,19 @@ def test_authentication(
     is_id_token,
     requests_mock,
     settings,
+    claims,
 ):
-    userinfo = {"sub": "1"}
-    requests_mock.get(settings.OIDC_OP_USER_ENDPOINT, text=json.dumps(userinfo))
+    requests_mock.get(settings.OIDC_OP_USER_ENDPOINT, text=json.dumps(claims))
 
     assert Identity.objects.count() == 0
 
     if not is_id_token:
-        userinfo = {"client_id": "test_client", "sub": "1"}
+        claims["client_id"] = "test_client"
         requests_mock.get(
             settings.OIDC_OP_USER_ENDPOINT, status_code=status.HTTP_401_UNAUTHORIZED
         )
         requests_mock.post(
-            settings.OIDC_OP_INTROSPECT_ENDPOINT, text=json.dumps(userinfo)
+            settings.OIDC_OP_INTROSPECT_ENDPOINT, text=json.dumps(claims)
         )
 
     request = rf.get("/openid", HTTP_AUTHORIZATION=authentication_header)
@@ -56,11 +56,43 @@ def test_authentication(
             key = "userinfo" if is_id_token else "introspection"
             user, auth = result
             assert user.is_authenticated
+            assert auth == authentication_header.split(" ")[1]
             assert (
                 cache.get(f"auth.{key}.{hashlib.sha256(b'Token').hexdigest()}")
-                == userinfo
+                == claims
             )
             assert Identity.objects.count() == 1
+        else:
+            assert result is None
+
+
+@pytest.mark.parametrize(
+    "identity__idp_id,identity__email,",
+    [("matching_id", None), (None, "match@example.com")],
+)
+def test_authentication_exiting_identity(
+    db,
+    rf,
+    requests_mock,
+    settings,
+    identity,
+    get_claims,
+):
+    claims = get_claims(
+        id_claim="matching_id", groups_claim=[], email_claim="match@example.com"
+    )
+
+    requests_mock.get(settings.OIDC_OP_USER_ENDPOINT, text=json.dumps(claims))
+
+    assert Identity.objects.count() == 1
+
+    request = rf.get("/openid", HTTP_AUTHORIZATION="Bearer Token")
+    result = OIDCAuthentication().authenticate(request)
+
+    user, auth = result
+    assert user.is_authenticated
+    assert user.identity == identity
+    assert Identity.objects.count() == 1
 
 
 def test_authentication_idp_502(
@@ -83,28 +115,21 @@ def test_authentication_idp_missing_claim(
     rf,
     requests_mock,
     settings,
+    claims,
 ):
-    settings.OIDC_USERNAME_CLAIM = "missing"
-    userinfo = {"sub": "1"}
-    requests_mock.get(settings.OIDC_OP_USER_ENDPOINT, text=json.dumps(userinfo))
+    settings.OIDC_ID_CLAIM = "missing"
+    requests_mock.get(settings.OIDC_OP_USER_ENDPOINT, text=json.dumps(claims))
 
     request = rf.get("/openid", HTTP_AUTHORIZATION="Bearer Token")
     with pytest.raises(AuthenticationFailed):
         OIDCAuthentication().authenticate(request)
 
 
-def test_authentication_no_client(
-    db,
-    rf,
-    requests_mock,
-    settings,
-):
+def test_authentication_no_client(db, rf, requests_mock, settings, claims):
     requests_mock.get(
         settings.OIDC_OP_USER_ENDPOINT, status_code=status.HTTP_401_UNAUTHORIZED
     )
-    requests_mock.post(
-        settings.OIDC_OP_INTROSPECT_ENDPOINT, text=json.dumps({"sub": "1"})
-    )
+    requests_mock.post(settings.OIDC_OP_INTROSPECT_ENDPOINT, text=json.dumps(claims))
 
     request = rf.get("/openid", HTTP_AUTHORIZATION="Bearer Token")
     with pytest.raises(AuthenticationFailed):
