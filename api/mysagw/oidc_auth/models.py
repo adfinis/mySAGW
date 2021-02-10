@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.core.exceptions import SuspiciousOperation
+from django.db.models import Q
 
 from mysagw.identity.models import Identity
 
@@ -48,20 +49,25 @@ class OIDCUser(BaseUser):
         self.is_authenticated = True
 
         self.identity = None
-        for matcher in [{"idp_id": self.id}, {"email": self.username}]:
-            try:
-                self.identity = Identity.objects.get(**matcher)
-                self.identity.email = self.username
-                self.identity.idp_id = self.id
-            except Identity.DoesNotExist:
-                continue
 
-        if not self.identity:
+        try:
+            self.identity = Identity.objects.get(
+                Q(idp_id=self.id) | Q(email=self.username)
+            )
+            self.identity.email = self.username
+            self.identity.idp_id = self.id
+            self.identity.save()
+        except Identity.MultipleObjectsReturned:  # pragma: no cover
+            # this only could happen in the unlikely case where a user with an existing
+            # Identity changes it's email in keycloak to an email that already exists
+            raise SuspiciousOperation(
+                "Found one Identity with same idp_id and one with same email. I'm confused..."
+            )
+        except Identity.DoesNotExist:
             self.identity = Identity.objects.create(
                 idp_id=self.id,
                 email=self.username,
             )
-        self.identity.save()
 
     def __str__(self):
         return self.username

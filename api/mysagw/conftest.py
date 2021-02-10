@@ -54,7 +54,11 @@ def claims(settings):
 def admin_user(settings, get_claims):
     return OIDCUser(
         "sometoken",
-        get_claims("admin", [settings.ADMIN_GROUP], "admin@example.com"),
+        get_claims(
+            id_claim="admin",
+            groups_claim=[settings.ADMIN_GROUP],
+            email_claim="admin@example.com",
+        ),
     )
 
 
@@ -62,7 +66,11 @@ def admin_user(settings, get_claims):
 def staff_user(settings, get_claims):
     return OIDCUser(
         "sometoken",
-        get_claims("staff_user", [settings.STAFF_GROUP], "staff@example.com"),
+        get_claims(
+            id_claim="staff_user",
+            groups_claim=[settings.STAFF_GROUP],
+            email_claim="staff@example.com",
+        ),
     )
 
 
@@ -70,7 +78,7 @@ def staff_user(settings, get_claims):
 def user(get_claims):
     return OIDCUser(
         "sometoken",
-        get_claims("user", [], "user@example.com"),
+        get_claims(id_claim="user", groups_claim=[], email_claim="user@example.com"),
     )
 
 
