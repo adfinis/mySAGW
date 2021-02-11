@@ -1,5 +1,6 @@
 import importlib
 import inspect
+from functools import partial
 
 import pytest
 from django.core.cache import cache
@@ -25,24 +26,60 @@ register_module(importlib.import_module(".identity.factories", "mysagw"))
 register_module(importlib.import_module(".snippets.factories", "mysagw"))
 
 
-@pytest.fixture
-def admin_user(settings):
-    return OIDCUser(
-        "sometoken", {"sub": "admin", settings.OIDC_GROUPS_CLAIM: ["admin"]}
-    )
+def _get_claims(
+    settings,
+    id_claim="00000000-0000-0000-0000-000000000000",
+    groups_claim=None,
+    email_claim="test@example.com",
+):
+    groups_claim = groups_claim if groups_claim else []
+    return {
+        settings.OIDC_ID_CLAIM: id_claim,
+        settings.OIDC_GROUPS_CLAIM: groups_claim,
+        settings.OIDC_EMAIL_CLAIM: email_claim,
+    }
 
 
 @pytest.fixture
-def staff_user(settings):
+def get_claims(settings):
+    return partial(_get_claims, settings)
+
+
+@pytest.fixture
+def claims(settings):
+    return _get_claims(settings)
+
+
+@pytest.fixture
+def admin_user(settings, get_claims):
     return OIDCUser(
         "sometoken",
-        {"sub": "staff_user", settings.OIDC_GROUPS_CLAIM: [settings.STAFF_GROUP]},
+        get_claims(
+            id_claim="admin",
+            groups_claim=[settings.ADMIN_GROUP],
+            email_claim="admin@example.com",
+        ),
     )
 
 
 @pytest.fixture
-def user(settings):
-    return OIDCUser("sometoken", {"sub": "user", settings.OIDC_GROUPS_CLAIM: []})
+def staff_user(settings, get_claims):
+    return OIDCUser(
+        "sometoken",
+        get_claims(
+            id_claim="staff_user",
+            groups_claim=[settings.STAFF_GROUP],
+            email_claim="staff@example.com",
+        ),
+    )
+
+
+@pytest.fixture
+def user(get_claims):
+    return OIDCUser(
+        "sometoken",
+        get_claims(id_claim="user", groups_claim=[], email_claim="user@example.com"),
+    )
 
 
 @pytest.fixture(params=["admin"])

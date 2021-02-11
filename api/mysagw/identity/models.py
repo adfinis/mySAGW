@@ -54,6 +54,7 @@ class Membership(UUIDModel, HistoricalModel):
 
 class Identity(UUIDModel, HistoricalModel, TrackingModel):
     idp_id = models.CharField(max_length=255, unique=True, null=True, blank=False)
+    email = models.EmailField(unique=True, null=True, blank=True)
     organisation_name = models.CharField(max_length=255, null=True, blank=True)
     first_name = models.CharField(max_length=255, null=True, blank=True)
     last_name = models.CharField(max_length=255, null=True, blank=True)
@@ -79,11 +80,10 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
 
 class Email(UUIDModel, HistoricalModel):
     identity = models.ForeignKey(
-        Identity, related_name="emails", on_delete=models.CASCADE
+        Identity, related_name="additional_emails", on_delete=models.CASCADE
     )
     email = models.EmailField()
     description = models.CharField(max_length=255, null=True, blank=True)
-    default = UniqueBooleanField(default=False, together=["identity"])
 
     class Meta:
         unique_together = [["identity", "email"]]
