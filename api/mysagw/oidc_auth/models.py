@@ -1,8 +1,11 @@
+import logging
+
 from django.conf import settings
-from django.core.exceptions import SuspiciousOperation
 from django.db.models import Q
 
 from mysagw.identity.models import Identity
+
+logger = logging.getLogger(__name__)
 
 
 class BaseUser:  # pragma: no cover
@@ -27,18 +30,8 @@ class BaseUser:  # pragma: no cover
 
 
 class OIDCUser(BaseUser):
-    def _validate_claims(self, claims):
-        for claim in [
-            settings.OIDC_ID_CLAIM,
-            settings.OIDC_EMAIL_CLAIM,
-            settings.OIDC_GROUPS_CLAIM,
-        ]:
-            if claim not in claims:
-                raise SuspiciousOperation(f'Couldn\'t find "{claim}" claim')
-
     def __init__(self, token: str, claims: dict):
         super().__init__()
-        self._validate_claims(claims)
 
         self.claims = claims
         self.id = self.claims[settings.OIDC_ID_CLAIM]
@@ -47,27 +40,31 @@ class OIDCUser(BaseUser):
         self.group = self.groups[0] if self.groups else None
         self.token = token
         self.is_authenticated = True
+        self.identity = self._get_or_create_identity()
 
-        self.identity = None
-
+    def _get_or_create_identity(self):
         try:
-            self.identity = Identity.objects.get(
-                Q(idp_id=self.id) | Q(email=self.username)
+            identity = Identity.objects.get(Q(idp_id=self.id) | Q(email=self.username))
+            # we only want to save if necessary in order to prevent adding historical
+            # records on every request
+            if identity.idp_id != self.id or identity.email != self.username:
+                identity.idp_id = self.id
+                identity.email = self.username
+                identity.modified_by_user = self.username
+                identity.save()
+        except Identity.MultipleObjectsReturned:
+            # TODO: trigger notification for staff members or admins
+            logger.warning(
+                "Found one Identity with same idp_id and one with same email. Matching"
+                " on idp_id."
             )
-            self.identity.email = self.username
-            self.identity.idp_id = self.id
-            self.identity.save()
-        except Identity.MultipleObjectsReturned:  # pragma: no cover
-            # this only could happen in the unlikely case where a user with an existing
-            # Identity changes it's email in keycloak to an email that already exists
-            raise SuspiciousOperation(
-                "Found one Identity with same idp_id and one with same email. I'm confused..."
-            )
+            identity = Identity.objects.get(idp_id=self.id)
         except Identity.DoesNotExist:
-            self.identity = Identity.objects.create(
+            identity = Identity.objects.create(
                 idp_id=self.id,
                 email=self.username,
             )
+        return identity
 
     def __str__(self):
         return self.username
