@@ -7,6 +7,7 @@ from mozilla_django_oidc.contrib.drf import OIDCAuthentication
 from requests.exceptions import HTTPError
 from rest_framework import exceptions, status
 from rest_framework.exceptions import AuthenticationFailed
+from simple_history.models import HistoricalRecords
 
 from mysagw.identity.models import Identity
 
@@ -47,6 +48,8 @@ def test_authentication(
         )
 
     request = rf.get("/openid", HTTP_AUTHORIZATION=authentication_header)
+    HistoricalRecords.thread.request = request
+
     try:
         result = OIDCAuthentication().authenticate(request)
     except exceptions.AuthenticationFailed:
@@ -70,7 +73,7 @@ def test_authentication(
     "identity__idp_id,identity__email,",
     [("matching_id", None), (None, "match@example.com")],
 )
-def test_authentication_exiting_identity(
+def test_authentication_existing_identity(
     db,
     rf,
     requests_mock,
@@ -87,12 +90,48 @@ def test_authentication_exiting_identity(
     assert Identity.objects.count() == 1
 
     request = rf.get("/openid", HTTP_AUTHORIZATION="Bearer Token")
+    HistoricalRecords.thread.request = request
+
     result = OIDCAuthentication().authenticate(request)
 
     user, auth = result
     assert user.is_authenticated
     assert user.identity == identity
     assert Identity.objects.count() == 1
+
+
+def test_authentication_multiple_existing_identity(
+    db,
+    rf,
+    requests_mock,
+    settings,
+    identity_factory,
+    get_claims,
+    caplog,
+):
+    identity = identity_factory(idp_id="matching_id")
+    identity_factory(email="match@example.com")
+    claims = get_claims(
+        id_claim="matching_id", groups_claim=[], email_claim="match@example.com"
+    )
+
+    requests_mock.get(settings.OIDC_OP_USER_ENDPOINT, text=json.dumps(claims))
+
+    assert Identity.objects.count() == 2
+
+    request = rf.get("/openid", HTTP_AUTHORIZATION="Bearer Token")
+    HistoricalRecords.thread.request = request
+
+    result = OIDCAuthentication().authenticate(request)
+
+    user, auth = result
+    assert user.is_authenticated
+    assert user.identity == identity
+    assert Identity.objects.count() == 2
+    assert (
+        caplog.records[0].msg
+        == "Found one Identity with same idp_id and one with same email. Matching on idp_id."
+    )
 
 
 def test_authentication_idp_502(

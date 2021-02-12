@@ -1,17 +1,22 @@
 import base64
 import functools
 import hashlib
+from collections import namedtuple
 
 import requests
+from django.conf import settings
 from django.core.cache import cache
 from django.core.exceptions import SuspiciousOperation
 from django.utils.encoding import force_bytes
 from mozilla_django_oidc.auth import OIDCAuthenticationBackend
+from simple_history.models import HistoricalRecords
 
 from .models import OIDCUser
 
 
 class MySAGWAuthenticationBackend(OIDCAuthenticationBackend):
+    _HistoricalRequestUser = namedtuple("User", ["username"])
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -68,6 +73,24 @@ class MySAGWAuthenticationBackend(OIDCAuthenticationBackend):
         """Verify claims and return user, otherwise raise an Exception."""
 
         claims = self.get_userinfo_or_introspection(access_token)
+
+        for claim in [
+            settings.OIDC_ID_CLAIM,
+            settings.OIDC_EMAIL_CLAIM,
+            settings.OIDC_GROUPS_CLAIM,
+        ]:
+            if claim not in claims:
+                raise SuspiciousOperation(f'Couldn\'t find "{claim}" claim')
+
+        # simple history reads the username from the current user from the request. But
+        # for the user to be available in the request, authentication needs to be
+        # completed. That's why we just add a namedtuple to the request, so the correct
+        # username will be set on the historical record when creating/updating the
+        # identity
+        HistoricalRecords.thread.request.user = self._HistoricalRequestUser(
+            claims[settings.OIDC_EMAIL_CLAIM]
+        )
+
         user = OIDCUser(access_token, claims)
 
         return user
