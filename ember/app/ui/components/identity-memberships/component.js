@@ -9,6 +9,7 @@ import {
   restartableTask,
   lastValue,
 } from "ember-concurrency-decorators";
+import moment from "moment";
 import MembershipValidations from "mysagw/validations/membership";
 import UIkit from "uikit";
 
@@ -22,17 +23,17 @@ export default class IdentityMembershipsComponent extends Component {
 
   // List
 
-  @lastValue("fetchMembership") memberships;
+  @lastValue("fetchMemberships") memberships;
 
-  @restartableTask *fetchMembership(identity) {
+  @restartableTask *fetchMemberships(identity) {
     return yield this.store.query("membership", {
       filter: { identity: identity.id },
-      include: "role,organisation",
+      include: "role",
     });
   }
 
   @action onUpdate() {
-    this.fetchMembership.perform(this.args.identity);
+    this.fetchMemberships.perform(this.args.identity);
     this.fetchIdentities.perform(this.args.identity);
     this.fetchRoles.perform(this.args.identity);
   }
@@ -59,8 +60,25 @@ export default class IdentityMembershipsComponent extends Component {
 
   @dropTask *submit(changeset) {
     try {
-      yield changeset.save();
+      let timeSlot = changeset.get("timeSlot") || {};
+      if (!timeSlot.lower && !timeSlot.upper) {
+        timeSlot = null;
+      } else {
+        timeSlot.lower = timeSlot.lower
+          ? moment(timeSlot.lower).format("YYYY-MM-DD")
+          : undefined;
+        timeSlot.upper = timeSlot.upper
+          ? moment(timeSlot.upper).format("YYYY-MM-DD")
+          : undefined;
+      }
+      changeset.set("timeSlot", timeSlot);
 
+      const election = changeset.get("nextElection");
+      if (election) {
+        changeset.set("nextElection", moment(election).format("YYYY-MM-DD"));
+      }
+
+      yield changeset.save();
       this.changeset = null;
       yield this.onUpdate();
     } catch (error) {

@@ -7,6 +7,7 @@ nav:
   home: "Home"
   documents: "Documents"
   identities: "Identities"
+  interests: "Interests"
   support: "Support"
   emeis: "Emeis"
   alexandria: "Alexandria"
@@ -64,6 +65,43 @@ page:
 
     edit:
       title: "Edit identity"
+
+  interests:
+    index:
+      title: "Interests"
+      add: "Add interest category"
+
+      list:
+        edit: "Edit category"
+        delete: "Delete category"
+        empty: "No categories yet."
+      delete:
+        prompt: "Do you really want to delete the category {category}?"
+        success: "Category {category} deleted successfully."
+
+    add:
+      title: "Add interest category"
+
+    edit:
+      title: "Edit interest category"
+
+      list:
+        title: "Interests"
+        edit: "Edit interest"
+        delete: "Delete interest"
+        add: "Add interest"
+        empty: "No ineterests yet."
+      form:
+        title: "Edit interest"
+        label:
+          title: "Title"
+          description: "Description"
+        control:
+          cancel: "Cancel"
+          submit: "Save"
+      delete:
+        prompt: "Do you really want to delete the interest {interest}?"
+        success: "Interest {interest} deleted successfully."
 
 component:
   identity-form:
@@ -176,3 +214,12 @@ component:
     delete:
       prompt: "Do you really want to delete the membership {membership}?"
       success: "Membership {membership} deleted successfully."
+
+  interest-category-form:
+    label:
+      title: "Title"
+      description: "Description"
+    control:
+      cancel: "Cancel"
+      submit: "Save"
+    success: "Category {category} saved successfully."
