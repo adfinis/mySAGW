@@ -39,5 +39,9 @@ Router.map(function () {
       this.route("add");
       this.route("edit", { path: "/edit/:identity" });
     });
+    this.route("interests", { resetNamespace }, function () {
+      this.route("add");
+      this.route("edit", { path: "/edit/:category" });
+    });
   });
 });
