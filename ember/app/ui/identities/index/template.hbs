@@ -1,0 +1,29 @@
+<div
+  {{did-insert this.onUpdate}}
+  {{did-update this.onUpdate}}
+>
+  <h1>{{t "page.identities.index.title"}}</h1>
+
+  {{#if this.fetchIdentities.isRunning}}
+    <LoadingSpinner />
+  {{else}}
+    <ul class="uk-list uk-list-divider">
+      {{#each this.identities as |identity|}}
+      <li>
+        <LinkTo @route="identities.edit" @model={{identity.id}}>
+          <strong>{{identity.fullName}}</strong>
+        </LinkTo>
+      </li>
+      {{/each}}
+    </ul>
+  {{/if}}
+
+  <p class="uk-text-right">
+    <LinkTo
+      @route="identities.add"
+      class="uk-button uk-button-default"
+    >
+      {{t "page.identities.index.add"}}
+    </LinkTo>
+  </p>
+</div>
