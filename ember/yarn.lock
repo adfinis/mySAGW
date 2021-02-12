@@ -5790,6 +5790,22 @@ ember-basic-dropdown@^3.0.11:
     ember-maybe-in-element "^2.0.1"
     ember-truth-helpers "^2.1.0 || ^3.0.0"
 
+ember-basic-dropdown@^3.0.12:
+  version "3.0.12"
+  resolved "https://registry.yarnpkg.com/ember-basic-dropdown/-/ember-basic-dropdown-3.0.12.tgz#dc9eb1098cec6e1af27402c62cc3c3402e6d5824"
+  integrity sha512-W67UtAWaANCEwwHYTiagfLRlAcn6dC6f0NO0DpJRIZK9iflBzV6nSIkbCuN1lwf6JFRbEGoFj2bV+io0maMCsg==
+  dependencies:
+    "@ember/render-modifiers" "^1.0.2"
+    "@glimmer/component" "^1.0.1"
+    "@glimmer/tracking" "^1.0.1"
+    ember-cli-babel "^7.21.0"
+    ember-cli-htmlbars "^5.2.0"
+    ember-cli-typescript "^3.1.2"
+    ember-element-helper "^0.2.0"
+    ember-maybe-in-element "^2.0.1"
+    ember-style-modifier "^0.6.0"
+    ember-truth-helpers "^2.1.0 || ^3.0.0"
+
 ember-caluma@^6.6.1:
   version "6.6.1"
   resolved "https://registry.yarnpkg.com/ember-caluma/-/ember-caluma-6.6.1.tgz#7646c963f14f97d3358c51294a9b3afbf923389c"
@@ -5843,6 +5859,17 @@ ember-changeset-validations@^3.10.0:
     ember-get-config "^0.2.4"
     ember-validators "^3.0.1"
 
+ember-changeset-validations@^3.13.0:
+  version "3.13.0"
+  resolved "https://registry.yarnpkg.com/ember-changeset-validations/-/ember-changeset-validations-3.13.0.tgz#e709fcf6a4b1fb2b79a100a69e7d2fd423a52620"
+  integrity sha512-ObxWKgyTXTZbTl4fnNlMllM61s+KPJH0Bjzanfl7NkBGBk60oufy9sdgJOD43m52/sIJjt41gORVLAqvv+JsbA==
+  dependencies:
+    ember-changeset "^3.12.0"
+    ember-cli-babel "^7.8.0"
+    ember-cli-htmlbars "^4.0.5"
+    ember-get-config "^0.2.4"
+    ember-validators "^3.0.1"
+
 ember-changeset@^3.10.2, ember-changeset@^3.10.4:
   version "3.10.4"
   resolved "https://registry.yarnpkg.com/ember-changeset/-/ember-changeset-3.10.4.tgz#692589fc9b96b59d86c11abec331af54c9633c53"
@@ -5852,6 +5879,16 @@ ember-changeset@^3.10.2, ember-changeset@^3.10.4:
     ember-auto-import "^1.5.2"
     ember-cli-babel "^7.19.0"
     validated-changeset "~0.10.4"
+
+ember-changeset@^3.12.0:
+  version "3.12.0"
+  resolved "https://registry.yarnpkg.com/ember-changeset/-/ember-changeset-3.12.0.tgz#f220c27824bf3abbaa8f1b26700794d6df9d0451"
+  integrity sha512-Ae1XkIZW2wFLYV31wuixp4vd7tnU+CkVsX5Q/YKfH+oXy0hm5Zfzse0Kizz4DdOSaSOjtNXUymiXOtwbismS7g==
+  dependencies:
+    "@glimmer/tracking" "^1.0.1"
+    ember-auto-import "^1.5.2"
+    ember-cli-babel "^7.19.0"
+    validated-changeset "~0.13.1"
 
 ember-class-based-modifier@^0.10.0:
   version "0.10.0"
@@ -6702,6 +6739,14 @@ ember-localized-model@^1.0.1:
     ember-cli-htmlbars "^4.3.1"
     ember-data "^3.20.0"
 
+ember-localized-model@projectcaluma/ember-localized-model#v1.0.1:
+  version "1.0.1"
+  resolved "https://codeload.github.com/projectcaluma/ember-localized-model/tar.gz/e975d9527464adce7807a48cc29fa834278e0cd2"
+  dependencies:
+    ember-cli-babel "^7.19.0"
+    ember-cli-htmlbars "^4.3.1"
+    ember-data "^3.20.0"
+
 ember-macro-helpers@^4.2.2:
   version "4.2.2"
   resolved "https://registry.yarnpkg.com/ember-macro-helpers/-/ember-macro-helpers-4.2.2.tgz#dfb28b2b21f9fd49ade599f68c99e73ce5692cdc"
@@ -6796,7 +6841,7 @@ ember-pikaday@^3.0.0:
     ember-cli-moment-shim "^3.7.1"
     pikaday "^1.8.0"
 
-ember-power-select@^4.0.3, ember-power-select@^4.0.6, ember-power-select@^4.1.0:
+ember-power-select@^4.0.6, ember-power-select@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/ember-power-select/-/ember-power-select-4.1.0.tgz#0897ae56ed96835b2393452b3303126407d468b7"
   integrity sha512-HJQDQq8riUUtrfrN69yRIOCx8hsLPGmA6/pAn8BOnmL+N+86It8d/xRpXrZBQw/Dw9cnj9EQp2Vqi0PhPBBhGg==
@@ -6805,6 +6850,23 @@ ember-power-select@^4.0.3, ember-power-select@^4.0.6, ember-power-select@^4.1.0:
     "@glimmer/tracking" "^1.0.2"
     ember-assign-helper "^0.3.0"
     ember-basic-dropdown "^3.0.11"
+    ember-cli-babel "^7.22.1"
+    ember-cli-htmlbars "^5.3.1"
+    ember-cli-typescript "^3.1.4"
+    ember-concurrency ">=1.0.0 <3"
+    ember-concurrency-decorators "^2.0.0"
+    ember-text-measurer "^0.6.0"
+    ember-truth-helpers "^2.1.0 || ^3.0.0"
+
+ember-power-select@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/ember-power-select/-/ember-power-select-4.1.2.tgz#f19306db7612b440861f23b12a35e4484d3a4203"
+  integrity sha512-Bhr3Gfq1emXbs82+trjiqt2K8tUIZMJ82ZJ5yaKgEsptLGrI/3pZ43PP8ziZEjN/Kfor/H0bfL+JP+5oWh612g==
+  dependencies:
+    "@glimmer/component" "^1.0.2"
+    "@glimmer/tracking" "^1.0.2"
+    ember-assign-helper "^0.3.0"
+    ember-basic-dropdown "^3.0.12"
     ember-cli-babel "^7.22.1"
     ember-cli-htmlbars "^5.3.1"
     ember-cli-typescript "^3.1.4"
@@ -6950,6 +7012,14 @@ ember-source@~3.24.1:
     resolve "^1.17.0"
     semver "^6.1.1"
     silent-error "^1.1.1"
+
+ember-style-modifier@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/ember-style-modifier/-/ember-style-modifier-0.6.0.tgz#cc5e58db7f6d6662028a7b4e3cf63cf25ba59a8f"
+  integrity sha512-KqW4vyR80l/GMJsuFV+WLqTmGjXKLpoQ/HAmno+oMDrMt13p/5ImrvarQ6lFgXttFnLCxl6YpMY4YX27p1G54g==
+  dependencies:
+    ember-cli-babel "^7.21.0"
+    ember-modifier "^2.1.0"
 
 ember-template-lint@^2.16.0:
   version "2.16.0"
@@ -13480,10 +13550,10 @@ validate-npm-package-name@^3.0.0:
   dependencies:
     builtins "^1.0.3"
 
-validated-changeset@~0.10.4:
-  version "0.10.4"
-  resolved "https://registry.yarnpkg.com/validated-changeset/-/validated-changeset-0.10.4.tgz#dcb3961f4e974eeb9430804f657b6f8eae84d5dd"
-  integrity sha512-05opaR2iE5XohmARGnMM04lx7xIQDiT3wxkvAQrT7Ix7EhmAHSWkFZbigoQ6iSLyERAaUw5IL593a5rUWkyFQg==
+validated-changeset@0.13.1, validated-changeset@~0.10.4, validated-changeset@~0.13.1:
+  version "0.13.1"
+  resolved "https://registry.yarnpkg.com/validated-changeset/-/validated-changeset-0.13.1.tgz#cf36dbcfcd18cc0cf92bdfc352e0fed26892a973"
+  integrity sha512-rKc3wPaS6+XPefiGjCqlOrRCtUDw+6CQnUv8AIyzbYSprzWwFAPTeYtWmYzTDBP9G6AENZ34QXszZlMz9INPGw==
 
 vary@~1.1.2:
   version "1.1.2"

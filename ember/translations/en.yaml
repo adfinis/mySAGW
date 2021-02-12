@@ -4,11 +4,11 @@ global:
   continue: "Continue"
 
 nav:
+  home: "Home"
+  documents: "Documents"
+  support: "Support"
   emeis: "Emeis"
   alexandria: "Alexandria"
-  documents: "Documents"
-  home: "Home"
-  support: "Support"
   form-builder: "Form Builder"
   logout: "Logout"
 
