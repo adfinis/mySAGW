@@ -35,5 +35,9 @@ Router.map(function () {
       });
       this.route("new");
     });
+    this.route("identities", { resetNamespace }, function () {
+      this.route("add");
+      this.route("edit", { path: "/edit/:identity" });
+    });
   });
 });

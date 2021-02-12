@@ -6,6 +6,7 @@ global:
 nav:
   home: "Home"
   documents: "Documents"
+  identities: "Identities"
   support: "Support"
   emeis: "Emeis"
   alexandria: "Alexandria"
@@ -51,3 +52,127 @@ documents:
   subnav:
     overview: "Overview"
     document: "Document"
+
+page:
+  identities:
+    index:
+      title: "Identities"
+      add: "Add identity"
+
+    add:
+      title: "Add identity"
+
+    edit:
+      title: "Edit identity"
+
+component:
+  identity-form:
+    label:
+      idpId: "IDP ID"
+      organisationName: "Organisation name"
+      firstName: "First name"
+      lastName: "Last name"
+      email: "Main email address"
+      isOrganisation: "This is an organisation."
+    hint:
+      email: "Managed through KeyCloak."
+    control:
+      cancel: "Cancel"
+      submit: "Save"
+    success: "Identity {name} saved successfully."
+
+  identity-emails:
+    title: "Email addresses"
+    add: "Add address"
+
+    list:
+      edit: "Edit address"
+      delete: "Delete address"
+      empty: "No addresses yet."
+    form:
+      title:
+        add: "Add email address"
+        edit: "Edit email address"
+      label:
+        email: "Email address"
+        description: "Description"
+        default: "This is the default address."
+      control:
+        cancel: "Cancel"
+        submit: "Save"
+    delete:
+      prompt: "Do you really want to delete the address {address}?"
+      success: "Email address {address} deleted successfully."
+
+  identity-phone-numbers:
+    title: "Phone numbers"
+    add: "Add numbers"
+
+    list:
+      edit: "Edit numbers"
+      delete: "Delete numbers"
+      empty: "No numbers yet."
+    form:
+      title:
+        add: "Add phone numbers"
+        edit: "Edit phone numbers"
+      label:
+        phone: "Phone number"
+        description: "Description"
+        default: "This is the default number."
+      control:
+        cancel: "Cancel"
+        submit: "Save"
+    delete:
+      prompt: "Do you really want to delete the number {number}?"
+      success: "Phone number {number} deleted successfully."
+
+  identity-interests:
+    title: "Interests"
+    add: "Add interest"
+
+    list:
+      edit: "Edit interest"
+      delete: "Delete interest"
+      empty: "No interests yet."
+    form:
+      title:
+        add: "Add interest"
+        edit: "Edit interest"
+      label:
+        interest: "Interest"
+      control:
+        cancel: "Cancel"
+        submit: "Save"
+    delete:
+      prompt: "Do you really want to delete the interest {interest}?"
+      success: "Interest {interest} deleted successfully."
+
+  identity-memberships:
+    title: "Memberships"
+    add: "Add membership"
+    timeSlotLower: "From"
+    timeSlotUpper: "Until"
+
+    list:
+      nextElection: "Next election {date}"
+      edit: "Edit membership"
+      delete: "Delete membership"
+      empty: "No memberships yet."
+    form:
+      title:
+        add: "Add membership"
+        edit: "Edit membership"
+      label:
+        organisation: "Organisation"
+        role: "Membership role"
+        timeFrom: "From"
+        timeUntil: "Until"
+        nextElection: "Next election"
+        comment: "Comment"
+      control:
+        cancel: "Cancel"
+        submit: "Save"
+    delete:
+      prompt: "Do you really want to delete the membership {membership}?"
+      success: "Membership {membership} deleted successfully."
