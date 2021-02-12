@@ -1,3 +1,3 @@
-import { LocalizedSerializer } from "ember-localized-model";
+import { JSONAPISerializer } from "ember-cli-mirage";
 
-export default class MirageApplicationSerializer extends LocalizedSerializer {}
+export default class MirageApplicationSerializer extends JSONAPISerializer {}
