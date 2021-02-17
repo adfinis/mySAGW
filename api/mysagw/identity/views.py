@@ -2,7 +2,7 @@ from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateMode
 from rest_framework.viewsets import GenericViewSet
 from rest_framework_json_api import views
 
-from . import models, serializers
+from . import filters, models, serializers
 from .permissions import IsAdmin, IsAuthenticated, IsOrgAdmin, IsStaff
 
 
@@ -10,6 +10,7 @@ class EmailViewSet(views.ModelViewSet):
     serializer_class = serializers.EmailSerializer
     queryset = models.Email.objects.all()
     permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
+    filterset_class = filters.EmailFilterSet
 
     def perform_destroy(self, instance):
         super().perform_destroy(instance)
@@ -21,6 +22,7 @@ class PhoneNumberViewSet(views.ModelViewSet):
     serializer_class = serializers.PhoneNumberSerializer
     queryset = models.PhoneNumber.objects.all()
     permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
+    filterset_class = filters.PhoneNumberFilterSet
 
     def perform_destroy(self, instance):
         super().perform_destroy(instance)
@@ -32,6 +34,7 @@ class IdentityViewSet(views.ModelViewSet):
     serializer_class = serializers.IdentitySerializer
     queryset = models.Identity.objects.all()
     permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
+    filterset_class = filters.IdentityFilterSet
     search_fields = (
         "organisation_name",
         "first_name",
@@ -99,6 +102,7 @@ class MembershipViewSet(views.ModelViewSet):
     serializer_class = serializers.MembershipSerializer
     queryset = models.Membership.objects.all()
     permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
+    filterset_class = filters.MembershipFilterSet
 
     def perform_destroy(self, instance):
         super().perform_destroy(instance)
