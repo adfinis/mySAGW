@@ -53,6 +53,27 @@ def test_email_list(db, client, expected_status, email_factory):
     assert len(json["data"]) == models.Email.objects.count() == 3
 
 
+def test_email_identity_filters(db, client, email_factory):
+    email_factory.create_batch(3)
+    expected = email_factory.create_batch(3, identity=client.user.identity)
+    expected_ids = sorted([str(ex.pk) for ex in expected])
+
+    url = reverse("email-list")
+
+    response = client.get(url, {"filter[identity]": client.user.identity.pk})
+
+    assert response.status_code == status.HTTP_200_OK
+
+    json = response.json()
+
+    received_ids = []
+    for email in json["data"]:
+        received_ids.append(email["id"])
+    received_ids = sorted(received_ids)
+
+    assert expected_ids == received_ids
+
+
 @pytest.mark.parametrize(
     "client,expected_status",
     [

@@ -234,3 +234,38 @@ def test_identity_search(
     received_ids = sorted(received_ids)
 
     assert expected_ids == received_ids
+
+
+@pytest.mark.parametrize("is_organisation", [True, False, None])
+def test_identity_organisation_filters(db, client, identity_factory, is_organisation):
+    identities = list(Identity.objects.all())  # created by the `client` fixture
+    assert len(identities) == 3
+
+    organisations = identity_factory.create_batch(3, is_organisation=True)
+
+    expected = identities + organisations
+    if is_organisation is True:
+        expected = organisations
+    elif is_organisation is False:
+        expected = identities
+
+    expected_ids = sorted([str(ex.pk) for ex in expected])
+
+    url = reverse("identity-list")
+
+    filters = {}
+    if is_organisation in [True, False]:
+        filters = {"filter[is-organisation]": is_organisation}
+
+    response = client.get(url, filters)
+
+    assert response.status_code == status.HTTP_200_OK
+
+    json = response.json()
+
+    received_ids = []
+    for identity in json["data"]:
+        received_ids.append(identity["id"])
+    received_ids = sorted(received_ids)
+
+    assert expected_ids == received_ids
