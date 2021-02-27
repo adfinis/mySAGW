@@ -7,7 +7,7 @@ django-postgres-extra==2.0.2
 django_simple_history==2.12.0
 djangorestframework==3.12.2
 djangorestframework-jsonapi==4.0.0
-drf-extra-fields==3.0.4
+drf-extra-fields==3.1.0
 mozilla-django-oidc==1.2.4
 requests==2.25.1
 uwsgi==2.0.19.1
