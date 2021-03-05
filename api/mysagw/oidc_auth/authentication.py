@@ -1,6 +1,7 @@
 import base64
 import functools
 import hashlib
+import warnings
 from collections import namedtuple
 
 import requests
@@ -10,6 +11,7 @@ from django.core.exceptions import SuspiciousOperation
 from django.utils.encoding import force_bytes
 from mozilla_django_oidc.auth import OIDCAuthenticationBackend
 from simple_history.models import HistoricalRecords
+from urllib3.exceptions import InsecureRequestWarning
 
 from .models import OIDCUser
 
@@ -100,8 +102,11 @@ class MySAGWAuthenticationBackend(OIDCAuthenticationBackend):
 
         func = functools.partial(method, token, None, None)
 
-        return cache.get_or_set(
-            f"{cache_prefix}.{token_hash}",
-            func,
-            timeout=self.OIDC_BEARER_TOKEN_REVALIDATION_TIME,
-        )
+        with warnings.catch_warnings():
+            if settings.DEBUG:  # pragma: no cover
+                warnings.simplefilter("ignore", InsecureRequestWarning)
+            return cache.get_or_set(
+                f"{cache_prefix}.{token_hash}",
+                func,
+                timeout=self.OIDC_BEARER_TOKEN_REVALIDATION_TIME,
+            )
