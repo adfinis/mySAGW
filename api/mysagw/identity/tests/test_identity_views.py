@@ -68,7 +68,7 @@ def test_identity_list(db, client, expected_status):
 def test_identity_create(db, client, expected_status):
     url = reverse("identity-list")
 
-    data = {"data": {"type": "identities", "attributes": {"idp_id": "foo"}}}
+    data = {"data": {"type": "identities", "attributes": {"first_name": "foo"}}}
 
     response = client.post(url, data=data)
 
@@ -77,7 +77,7 @@ def test_identity_create(db, client, expected_status):
     if expected_status == status.HTTP_403_FORBIDDEN:
         return
 
-    identity = Identity.objects.get(idp_id="foo")
+    identity = Identity.objects.get(first_name="foo")
     assert identity.created_by_user == identity.modified_by_user == client.user.username
     json = response.json()
     assert (
