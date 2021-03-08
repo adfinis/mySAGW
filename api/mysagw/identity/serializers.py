@@ -29,6 +29,7 @@ class EmailSerializer(SetModifyingUserOnIdentityMixin, serializers.ModelSerializ
 
     class Meta:
         model = models.Email
+        resource_name = "additional-emails"
         fields = (
             "email",
             "identity",
