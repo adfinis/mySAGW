@@ -60,6 +60,32 @@ class IdentitySerializer(TrackingSerializer):
         "phone_numbers": "mysagw.identity.serializers.PhoneNumberSerializer",
     }
 
+    def validate(self, *args, **kwargs):
+        validated_data = super().validate(*args, **kwargs)
+        if not self.instance:
+            return validated_data
+
+        is_organisation = validated_data.get("is_organisation")
+        if (
+            self.instance.is_organisation
+            and not is_organisation
+            and self.instance.members.exists()
+        ):
+            raise ValidationError(
+                'Can\'t unset "is_organisation", because there are members.'
+            )
+
+        if (
+            not self.instance.is_organisation
+            and is_organisation
+            and self.instance.memberships.exists()
+        ):
+            raise ValidationError(
+                'Can\'t set "is_organisation", because there are memberships.'
+            )
+
+        return validated_data
+
     class Meta:
         model = models.Identity
         fields = TrackingSerializer.Meta.fields + (

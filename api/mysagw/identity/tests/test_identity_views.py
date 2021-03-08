@@ -120,6 +120,39 @@ def test_identity_update(db, client, expected_status, identity_factory):
 
 
 @pytest.mark.parametrize(
+    "is_organisation,field,error_msg_vars",
+    [
+        (True, "identity", ["set", "memberships"]),
+        (False, "organisation", ["unset", "members"]),
+    ],
+)
+def test_identity_update_is_organisation_membership_failure(
+    db, client, membership_factory, is_organisation, field, error_msg_vars
+):
+    membership = membership_factory(organisation__is_organisation=True)
+    instance = getattr(membership, field)
+
+    url = reverse("identity-detail", args=[instance.pk])
+
+    data = {
+        "data": {
+            "type": "identities",
+            "id": str(instance.pk),
+            "attributes": {"is-organisation": is_organisation},
+        }
+    }
+
+    response = client.patch(url, data=data)
+
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+    assert (
+        response.json()["errors"][0]["detail"]
+        == f'Can\'t {error_msg_vars[0]} "is_organisation", because there are {error_msg_vars[1]}.'
+    )
+
+
+@pytest.mark.parametrize(
     "client,expected_status",
     [
         ("user", status.HTTP_403_FORBIDDEN),
