@@ -9,11 +9,20 @@
   {{else}}
     <ul class="uk-list uk-list-divider">
       {{#each this.identities as |identity|}}
-      <li>
-        <LinkTo @route="identities.edit" @model={{identity.id}}>
-          <strong>{{identity.fullName}}</strong>
-        </LinkTo>
-      </li>
+        {{#unless identity.isNew}}
+          <li>
+            <LinkTo
+              @route="identities.edit"
+              @model={{identity.id}}
+              class="uk-text-bold"
+            >
+              {{if identity.isOrganisation
+                identity.organisationName
+                identity.fullName
+              }}
+            </LinkTo>
+          </li>
+        {{/unless}}
       {{/each}}
     </ul>
   {{/if}}

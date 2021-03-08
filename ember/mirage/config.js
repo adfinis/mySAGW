@@ -69,6 +69,13 @@ export default function () {
   this.patch("/membership-roles/:id");
   this.delete("/membership-roles/:id");
 
+  this.get("/snippets", (schema, request) => {
+    const query = parseFilters(request, [
+      { source: "archived", target: "archived" },
+    ]);
+    return schema.snippets.where(query);
+  });
+
   // Use ember-caluma's Mirage routing for /graphql endpoint.
   // https://github.com/projectcaluma/ember-caluma/blob/master/tests/dummy/app/templates/docs/testing.md
   this.post("/graphql", graphqlHandler(this), 200);

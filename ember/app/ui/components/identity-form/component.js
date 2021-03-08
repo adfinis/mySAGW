@@ -21,7 +21,11 @@ export default class IdentityFormComponent extends Component {
   get keyCloakAccountUrl() {
     const host =
       location.hostname === "localhost" ? "mysagw.local" : location.hostname;
-    return `https://${host}/auth/realms/mysagw/account/`;
+    return [
+      `https://${host}/auth/admin/master/console/`,
+      "#/realms/mysagw/users/",
+      this.changeset.get("idpId"),
+    ].join("");
   }
 
   @action onUpdate() {
@@ -34,6 +38,14 @@ export default class IdentityFormComponent extends Component {
 
   @dropTask *submit(changeset) {
     try {
+      if (!changeset.get("isOrganisation")) {
+        changeset.set("organisationName", null);
+      }
+
+      if (changeset.get("idpId")) {
+        changeset.set("email", null);
+      }
+
       yield changeset.save();
       this.notification.success(
         this.intl.t("component.identity-form.success", {

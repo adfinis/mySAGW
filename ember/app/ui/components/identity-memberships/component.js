@@ -90,7 +90,7 @@ export default class IdentityMembershipsComponent extends Component {
   @lastValue("fetchIdentities") identities;
 
   @restartableTask *fetchIdentities() {
-    return yield this.store.findAll("identity", {
+    return yield this.store.query("identity", {
       filter: { isOrganisation: true },
     });
   }

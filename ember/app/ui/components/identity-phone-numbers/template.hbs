@@ -1,6 +1,7 @@
 <div
   {{did-insert this.onUpdate}}
   {{did-update this.onUpdate @identity}}
+  class="uk-margin-remove-last-child"
 >
   <h2>{{t "component.identity-phone-numbers.title"}}</h2>
 
@@ -31,30 +32,32 @@
               {{/if}}
             </div>
 
-            <div>
+            <div class="uk-flex uk-flex-between">
               <a
-                class="uk-icon-button uk-button-default uk-margin-right"
+                class="uk-icon-button uk-button-default"
                 uk-icon="receiver"
                 href="tel:{{phoneNumber.phone}}"
               ></a>
 
-              <button
-                class="uk-icon-button uk-button-default"
-                type="button"
-                uk-icon="pencil"
-                disabled={{this.changeset}}
-                title={{t "component.identity-phone-numbers.list.edit"}}
-                {{on "click" (fn this.edit phoneNumber)}}
-              ></button>
+              <div class="uk-margin-left">
+                <button
+                  class="uk-icon-button uk-button-default"
+                  type="button"
+                  uk-icon="pencil"
+                  disabled={{this.changeset}}
+                  title={{t "component.identity-phone-numbers.list.edit"}}
+                  {{on "click" (fn this.edit phoneNumber)}}
+                ></button>
 
-              <button
-                class="uk-icon-button uk-button-default"
-                type="button"
-                uk-icon="close"
-                disabled={{or this.changeset this.delete.isRunning}}
-                title={{t "component.identity-phone-numbers.list.delete"}}
-                {{on "click" (perform this.delete phoneNumber)}}
-              ></button>
+                <button
+                  class="uk-icon-button uk-button-default"
+                  type="button"
+                  uk-icon="close"
+                  disabled={{or this.changeset this.delete.isRunning}}
+                  title={{t "component.identity-phone-numbers.list.delete"}}
+                  {{on "click" (perform this.delete phoneNumber)}}
+                ></button>
+              </div>
             </div>
           </li>
         {{/each}}
@@ -75,6 +78,8 @@
   {{/if}}
 
   {{#if this.changeset}}
+    <hr>
+
     <h3 class="uk-margin-remove-top">
       {{if this.changeset.isNew
         (t "component.identity-phone-numbers.form.title.add")
@@ -85,6 +90,7 @@
     <ValidatedForm
       @model={{this.changeset}}
       @on-submit={{perform this.submit}}
+      class="uk-margin-remove-last-child"
       as |Form|
     >
       <Form.input

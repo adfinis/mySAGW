@@ -6,6 +6,7 @@
     <ValidatedForm
       @model={{changeset this.model this.validations}}
       @on-submit={{perform this.submit}}
+      class="uk-margin-remove-last-child"
       as |Form|
     >
       <Form.input

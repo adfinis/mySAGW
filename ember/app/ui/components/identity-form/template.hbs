@@ -6,6 +6,7 @@
     <ValidatedForm
       @model={{this.changeset}}
       @on-submit={{perform this.submit}}
+      class="uk-margin-remove-last-child"
       as |Form|
     >
       <Form.input
@@ -14,33 +15,28 @@
         @name="isOrganisation"
       />
 
-      <Form.input
-        @label={{t "component.identity-form.label.idpId"}}
-        @name="idpId"
-      />
-
       {{#if this.changeset.isOrganisation}}
         <Form.input
           @label={{t "component.identity-form.label.organisationName"}}
           @name="organisationName"
           @disabled={{not this.changeset.isOrganisation}}
         />
-      {{else}}
-        <div class="uk-child-width-expand@s" uk-grid>
-          <div>
-            <Form.input
-              @label={{t "component.identity-form.label.firstName"}}
-              @name="firstName"
-            />
-          </div>
-          <div>
-            <Form.input
-              @label={{t "component.identity-form.label.lastName"}}
-              @name="lastName"
-            />
-          </div>
-        </div>
       {{/if}}
+
+      <div class="uk-child-width-expand@s" uk-grid>
+        <div>
+          <Form.input
+            @label={{t "component.identity-form.label.firstName"}}
+            @name="firstName"
+          />
+        </div>
+        <div>
+          <Form.input
+            @label={{t "component.identity-form.label.lastName"}}
+            @name="lastName"
+          />
+        </div>
+      </div>
 
       <div class="uk-margin">
         <label class="uk-form-label" for="form-email">
@@ -50,15 +46,17 @@
             <input
               class="uk-input"
               id="form-email"
-              disabled={{true}}
+              disabled={{this.changeset.idpId}}
               value={{this.changeset.email}}
             >
         </div>
-        <p class="uk-margin-remove-top">
-          <a href={{this.keyCloakAccountUrl}}>
-            {{~t "component.identity-form.hint.email"~}}
-          </a>
-        </p>
+        {{#if this.changeset.idpId}}
+          <p class="uk-margin-remove-top">
+            <a href={{this.keyCloakAccountUrl}}>
+              {{~t "component.identity-form.hint.email"~}}
+            </a>
+          </p>
+        {{/if}}
       </div>
 
       <p class="uk-text-right">
