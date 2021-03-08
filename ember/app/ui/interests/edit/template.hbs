@@ -2,6 +2,8 @@
 
 <InterestCategoryForm @category={{this.model}} />
 
+<hr>
+
 <div class="uk-card uk-card-default uk-card-body uk-card-small">
   <h2>{{t "page.interests.edit.list.title"}}</h2>
   {{#if this.interests.length}}
@@ -60,6 +62,8 @@
   </p>
 
   {{#if this.changeset}}
+    <hr>
+
     <h3 class="uk-margin-remove-top">
       {{t "page.interests.edit.form.title"}}
     </h3>
@@ -67,6 +71,7 @@
     <ValidatedForm
       @model={{this.changeset}}
       @on-submit={{perform this.submit}}
+      class="uk-margin-remove-last-child"
       as |Form|
     >
       <Form.input

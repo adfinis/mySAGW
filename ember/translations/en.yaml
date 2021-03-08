@@ -12,6 +12,8 @@ nav:
   emeis: "Emeis"
   alexandria: "Alexandria"
   form-builder: "Form Builder"
+  admin: "Administration"
+  account: "Account"
   logout: "Logout"
 
 documents:

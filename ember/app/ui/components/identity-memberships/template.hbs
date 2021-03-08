@@ -1,6 +1,7 @@
 <div
   {{did-insert this.onUpdate}}
   {{did-update this.onUpdate @identity}}
+  class="uk-margin-remove-last-child"
 >
   <h2>{{t "component.identity-memberships.title"}}</h2>
 
@@ -78,6 +79,8 @@
   {{/if}}
 
   {{#if this.changeset}}
+    <hr>
+
     <h3 class="uk-margin-remove-top">
       {{if this.changeset.isNew
         (t "component.identity-memberships.form.title.add")
@@ -88,6 +91,7 @@
     <ValidatedForm
       @model={{this.changeset}}
       @on-submit={{perform this.submit}}
+      class="uk-margin-remove-last-child"
       as |Form|
     >
       <div class="uk-margin">

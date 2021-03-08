@@ -18,7 +18,7 @@
       {{#each this.categories as |category|}}
         <div>
           <div class="uk-card uk-card-default uk-card-body uk-card-small">
-            <p class="uk-flex uk-flex-between uk-flex-middle uk-margin-remove-bottom">
+            <div class="uk-flex uk-flex-between uk-flex-middle">
               <div>
                 <strong>{{category.title}}</strong>
                 {{#if category.description}}
@@ -26,7 +26,7 @@
                 {{/if}}
               </div>
 
-              <div>
+              <div class="uk-flex-none">
                 <LinkTo
                   class="uk-icon-button uk-button-default"
                   uk-icon="pencil"
@@ -46,15 +46,17 @@
                   data-test-category-delete
                 ></button>
               </div>
-            </p>
+            </div>
 
             {{#if category.interests.length}}
             <ul class="uk-list uk-list-divider">
               {{#each category.interests as |interest|}}
-                <li>
-                  {{interest.title}}
-                  <div class="uk-text-meta">{{interest.description}}</div>
-                </li>
+                {{#unless interest.isNew}}
+                  <li>
+                    {{interest.title}}
+                    <div class="uk-text-meta">{{interest.description}}</div>
+                  </li>
+                {{/unless}}
               {{/each}}
             </ul>
             {{/if}}
