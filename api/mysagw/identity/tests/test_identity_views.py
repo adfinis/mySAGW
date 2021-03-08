@@ -153,6 +153,53 @@ def test_identity_update_is_organisation_membership_failure(
 
 
 @pytest.mark.parametrize(
+    "identity__organisation_name,identity__is_organisation,expected_status",
+    [
+        ("AllSafe", True, [status.HTTP_200_OK, status.HTTP_201_CREATED]),
+        (None, False, [status.HTTP_400_BAD_REQUEST]),
+    ],
+)
+@pytest.mark.parametrize("update", [True, False])
+def test_identity_update_is_organisation_organisation_name_failure(
+    db, client, identity, expected_status, update
+):
+    is_organisation = not identity.is_organisation
+
+    data = {
+        "data": {
+            "type": "identities",
+            "attributes": {
+                "is-organisation": is_organisation,
+                "organisation-name": identity.organisation_name,
+            },
+        }
+    }
+
+    url = reverse("identity-list")
+    method = client.post
+    if update:
+        data["data"]["id"] = str(identity.pk)
+        url = reverse("identity-detail", args=[identity.pk])
+        method = client.patch
+
+    response = method(url, data=data)
+
+    assert response.status_code in expected_status
+
+    result = response.json()
+
+    if response.status_code == status.HTTP_400_BAD_REQUEST:
+        assert (
+            result["errors"][0]["detail"]
+            == 'Can\'t set "is_organisation" without an organisation_name.'
+        )
+        return
+
+    new_identity = Identity.objects.get(pk=result["data"]["id"])
+    assert new_identity.organisation_name is None
+
+
+@pytest.mark.parametrize(
     "client,expected_status",
     [
         ("user", status.HTTP_403_FORBIDDEN),

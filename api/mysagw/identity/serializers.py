@@ -62,27 +62,34 @@ class IdentitySerializer(TrackingSerializer):
 
     def validate(self, *args, **kwargs):
         validated_data = super().validate(*args, **kwargs)
-        if not self.instance:
-            return validated_data
 
         is_organisation = validated_data.get("is_organisation")
-        if (
-            self.instance.is_organisation
-            and not is_organisation
-            and self.instance.members.exists()
-        ):
-            raise ValidationError(
-                'Can\'t unset "is_organisation", because there are members.'
-            )
+        organisation_name = validated_data.get("organisation_name")
+        no_organisation_name_msg = (
+            'Can\'t set "is_organisation" without an organisation_name.'
+        )
 
-        if (
-            not self.instance.is_organisation
-            and is_organisation
-            and self.instance.memberships.exists()
-        ):
-            raise ValidationError(
-                'Can\'t set "is_organisation", because there are memberships.'
-            )
+        if not self.instance:
+            if is_organisation and not organisation_name:
+                raise ValidationError(no_organisation_name_msg)
+            elif not is_organisation and organisation_name:
+                validated_data["organisation_name"] = None
+            return validated_data
+
+        if self.instance.is_organisation and not is_organisation:
+            if self.instance.members.exists():
+                raise ValidationError(
+                    'Can\'t unset "is_organisation", because there are members.'
+                )
+            validated_data["organisation_name"] = None
+
+        if not self.instance.is_organisation and is_organisation:
+            if self.instance.memberships.exists():
+                raise ValidationError(
+                    'Can\'t set "is_organisation", because there are memberships.'
+                )
+            elif not organisation_name:
+                raise ValidationError(no_organisation_name_msg)
 
         return validated_data
 
