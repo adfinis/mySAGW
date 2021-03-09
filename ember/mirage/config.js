@@ -33,7 +33,45 @@ export default function () {
     const query = parseFilters(request, [
       { source: "isOrganisation", target: "isOrganisation" },
     ]);
-    return schema.identities.where(query);
+
+    const pageSize = request.queryParams["page[size]"];
+    const pageNumber = request.queryParams["page[number]"] || 1;
+    const search = request.queryParams.search?.toLowerCase();
+    const keys = ["organisationName", "firstName", "lastName", "email"];
+
+    const result = schema.identities.where(function (identity) {
+      let result = !(search || Object.keys(query).length);
+
+      if (search) {
+        for (const key of keys) {
+          if (identity[key]?.toLowerCase().includes(search)) {
+            result = true;
+            break;
+          }
+        }
+      }
+
+      if (Object.keys(query).length) {
+        for (const key in query) {
+          if (identity[key] === query[key]) {
+            result = true;
+            break;
+          }
+        }
+      }
+
+      return result;
+    });
+
+    if (pageSize) {
+      const start = (pageNumber - 1) * pageSize;
+      const sliced = result.slice(start, start + Number(pageSize));
+      const json = this.serializerOrRegistry.serialize(sliced);
+      json.meta = { totalPages: Math.ceil(result.models.length / pageSize) };
+      return json;
+    }
+
+    return result;
   });
   this.post("/identities");
   this.get("/identities/:id");

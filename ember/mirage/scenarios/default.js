@@ -1,5 +1,5 @@
 export default function (server) {
-  server.createList("identity", 10);
-  server.createList("interest-category", 10);
-  server.createList("membership-role", 10);
+  server.createList("identity", 100);
+  server.createList("interest-category", 20);
+  server.createList("membership-role", 15);
 }
