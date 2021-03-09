@@ -1,8 +1,19 @@
 <div
   {{did-insert this.onUpdate}}
-  {{did-update this.onUpdate}}
+  {{did-update this.onUpdate this.pageNumber}}
 >
   <h1>{{t "page.identities.index.title"}}</h1>
+
+  <div class="uk-margin">
+    <label class="uk-form-label" for="form-search">
+      {{t "page.identities.index.search"}}
+    </label>
+    <input
+      class="uk-input"
+      id="form-search"
+      {{on "input" (perform this.search)}}
+    >
+  </div>
 
   {{#if this.fetchIdentities.isRunning}}
     <LoadingSpinner />
@@ -24,6 +35,28 @@
           </li>
         {{/unless}}
       {{/each}}
+    </ul>
+  {{/if}}
+
+  {{#if (and this.totalPages (not this.fetchIdentities.isRunning))}}
+    <ul class="uk-pagination uk-flex-center">
+      <li class={{if (eq this.pageNumber 1) "uk-disabled"}}>
+        <LinkTo @query={{hash pageNumber=(sub this.pageNumber 1)}}>
+          <span uk-pagination-previous></span>
+        </LinkTo>
+      </li>
+      {{#each this.pages as |page|}}
+        <li class={{if page.active "uk-active"}}>
+          <LinkTo @query={{hash pageNumber=page.number}}>
+            {{page.number}}
+          </LinkTo>
+        </li>
+      {{/each}}
+      <li class={{if (eq this.pageNumber this.totalPages) "uk-disabled"}}>
+        <LinkTo @query={{hash pageNumber=(add this.pageNumber 1)}}>
+          <span uk-pagination-next></span>
+        </LinkTo>
+      </li>
     </ul>
   {{/if}}
 
