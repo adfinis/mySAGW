@@ -137,19 +137,24 @@ def test_membership_role_create(db, client, expected_status):
 
 
 @pytest.mark.parametrize(
-    "client,identity_is_organisation,organisation_is_organisation,expected_status",
+    "client,identity_is_organisation,organisation_is_organisation,set_lower,set_upper,expected_status",
     [
-        ("user", False, True, status.HTTP_403_FORBIDDEN),
-        ("staff", False, True, status.HTTP_201_CREATED),
-        ("admin", False, True, status.HTTP_201_CREATED),
-        ("admin", True, True, status.HTTP_400_BAD_REQUEST),
-        ("admin", False, False, status.HTTP_400_BAD_REQUEST),
+        ("user", False, True, True, True, status.HTTP_403_FORBIDDEN),
+        ("staff", False, True, True, True, status.HTTP_201_CREATED),
+        ("admin", False, True, True, True, status.HTTP_201_CREATED),
+        ("admin", False, True, False, True, status.HTTP_201_CREATED),
+        ("admin", False, True, True, False, status.HTTP_201_CREATED),
+        ("admin", False, True, False, False, status.HTTP_201_CREATED),
+        ("admin", True, True, True, True, status.HTTP_400_BAD_REQUEST),
+        ("admin", False, False, True, True, status.HTTP_400_BAD_REQUEST),
     ],
     indirect=["client"],
 )
 def test_membership_create(
     db,
     client,
+    set_lower,
+    set_upper,
     expected_status,
     identity_factory,
     identity_is_organisation,
@@ -161,8 +166,9 @@ def test_membership_create(
 
     url = reverse("membership-list")
 
-    start = datetime.date(2020, 1, 1)
-    end = datetime.date(2020, 12, 31)
+    start = datetime.date(2020, 1, 1) if set_lower else None
+    end = datetime.date(2020, 12, 31) if set_upper else None
+    bounds = "[)" if set_lower else "()"
     next_election = datetime.date(2020, 11, 23)
 
     data = {
@@ -192,7 +198,7 @@ def test_membership_create(
     membership = models.Membership.objects.first()
     assert membership.identity == identity
     assert membership.organisation == organisation
-    assert membership.time_slot == DateRange(start, end)
+    assert membership.time_slot == DateRange(start, end, bounds)
     assert membership.next_election == next_election
     assert membership.identity.modified_by_user == client.user.username
 

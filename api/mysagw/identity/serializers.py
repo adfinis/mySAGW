@@ -197,7 +197,7 @@ class MembershipSerializer(
     organisation = serializers.ResourceRelatedField(
         queryset=models.Identity.objects.filter(is_organisation=True)
     )
-    time_slot = DateRangeField()
+    time_slot = DateRangeField(child_attrs={"allow_null": True})
 
     included_serializers = {
         "role": MembershipRoleSerializer,
