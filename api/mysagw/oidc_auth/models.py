@@ -63,6 +63,8 @@ class OIDCUser(BaseUser):
             identity = Identity.objects.create(
                 idp_id=self.id,
                 email=self.username,
+                modified_by_user=self.username,
+                created_by_user=self.username,
             )
         return identity
 

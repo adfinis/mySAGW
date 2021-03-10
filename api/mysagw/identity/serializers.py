@@ -29,6 +29,7 @@ class EmailSerializer(SetModifyingUserOnIdentityMixin, serializers.ModelSerializ
 
     class Meta:
         model = models.Email
+        resource_name = "additional-emails"
         fields = (
             "email",
             "identity",
@@ -59,6 +60,39 @@ class IdentitySerializer(TrackingSerializer):
         "phone_numbers": "mysagw.identity.serializers.PhoneNumberSerializer",
     }
 
+    def validate(self, *args, **kwargs):
+        validated_data = super().validate(*args, **kwargs)
+
+        is_organisation = validated_data.get("is_organisation")
+        organisation_name = validated_data.get("organisation_name")
+        no_organisation_name_msg = (
+            'Can\'t set "is_organisation" without an organisation_name.'
+        )
+
+        if not self.instance:
+            if is_organisation and not organisation_name:
+                raise ValidationError(no_organisation_name_msg)
+            elif not is_organisation and organisation_name:
+                validated_data["organisation_name"] = None
+            return validated_data
+
+        if self.instance.is_organisation and not is_organisation:
+            if self.instance.members.exists():
+                raise ValidationError(
+                    'Can\'t unset "is_organisation", because there are members.'
+                )
+            validated_data["organisation_name"] = None
+
+        if not self.instance.is_organisation and is_organisation:
+            if self.instance.memberships.exists():
+                raise ValidationError(
+                    'Can\'t set "is_organisation", because there are memberships.'
+                )
+            elif not organisation_name:
+                raise ValidationError(no_organisation_name_msg)
+
+        return validated_data
+
     class Meta:
         model = models.Identity
         fields = TrackingSerializer.Meta.fields + (
@@ -69,11 +103,14 @@ class IdentitySerializer(TrackingSerializer):
             "email",
             "additional_emails",
             "phone_numbers",
+            "is_organisation",
+            "organisation_name",
         )
         extra_kwargs = {
             **TrackingSerializer.Meta.extra_kwargs,
             "interests": {"required": False},
             "email": {"read_only": True},
+            "idp_id": {"read_only": True},
             "additional_emails": {"required": False},
             "phone_numbers": {"required": False},
         }

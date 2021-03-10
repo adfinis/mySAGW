@@ -90,7 +90,7 @@ def test_email_create(db, identity, client, expected_status):
 
     data = {
         "data": {
-            "type": "emails",
+            "type": "additional-emails",
             "attributes": {"email": "test@example.com"},
             "relationships": {
                 "identity": {"data": {"id": str(identity.pk), "type": "identities"}},
@@ -119,7 +119,7 @@ def test_email_create_with_includes(db, email_factory, client):
 
     data = {
         "data": {
-            "type": "emails",
+            "type": "additional-emails",
             "attributes": {"email": "test@example.com"},
             "relationships": {
                 "identity": {
@@ -164,7 +164,7 @@ def test_email_update(db, client, expected_status, email_factory):
 
     data = {
         "data": {
-            "type": "emails",
+            "type": "additional-emails",
             "id": str(email.pk),
             "attributes": {"description": "Foo"},
         }

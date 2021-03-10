@@ -68,7 +68,7 @@ def test_identity_list(db, client, expected_status):
 def test_identity_create(db, client, expected_status):
     url = reverse("identity-list")
 
-    data = {"data": {"type": "identities", "attributes": {"idp_id": "foo"}}}
+    data = {"data": {"type": "identities", "attributes": {"first_name": "foo"}}}
 
     response = client.post(url, data=data)
 
@@ -77,7 +77,7 @@ def test_identity_create(db, client, expected_status):
     if expected_status == status.HTTP_403_FORBIDDEN:
         return
 
-    identity = Identity.objects.get(idp_id="foo")
+    identity = Identity.objects.get(first_name="foo")
     assert identity.created_by_user == identity.modified_by_user == client.user.username
     json = response.json()
     assert (
@@ -117,6 +117,86 @@ def test_identity_update(db, client, expected_status, identity_factory):
 
     identity.refresh_from_db()
     assert identity.modified_by_user == client.user.username
+
+
+@pytest.mark.parametrize(
+    "is_organisation,field,error_msg_vars",
+    [
+        (True, "identity", ["set", "memberships"]),
+        (False, "organisation", ["unset", "members"]),
+    ],
+)
+def test_identity_update_is_organisation_membership_failure(
+    db, client, membership_factory, is_organisation, field, error_msg_vars
+):
+    membership = membership_factory(organisation__is_organisation=True)
+    instance = getattr(membership, field)
+
+    url = reverse("identity-detail", args=[instance.pk])
+
+    data = {
+        "data": {
+            "type": "identities",
+            "id": str(instance.pk),
+            "attributes": {"is-organisation": is_organisation},
+        }
+    }
+
+    response = client.patch(url, data=data)
+
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+    assert (
+        response.json()["errors"][0]["detail"]
+        == f'Can\'t {error_msg_vars[0]} "is_organisation", because there are {error_msg_vars[1]}.'
+    )
+
+
+@pytest.mark.parametrize(
+    "identity__organisation_name,identity__is_organisation,expected_status",
+    [
+        ("AllSafe", True, [status.HTTP_200_OK, status.HTTP_201_CREATED]),
+        (None, False, [status.HTTP_400_BAD_REQUEST]),
+    ],
+)
+@pytest.mark.parametrize("update", [True, False])
+def test_identity_update_is_organisation_organisation_name_failure(
+    db, client, identity, expected_status, update
+):
+    is_organisation = not identity.is_organisation
+
+    data = {
+        "data": {
+            "type": "identities",
+            "attributes": {
+                "is-organisation": is_organisation,
+                "organisation-name": identity.organisation_name,
+            },
+        }
+    }
+
+    url = reverse("identity-list")
+    method = client.post
+    if update:
+        data["data"]["id"] = str(identity.pk)
+        url = reverse("identity-detail", args=[identity.pk])
+        method = client.patch
+
+    response = method(url, data=data)
+
+    assert response.status_code in expected_status
+
+    result = response.json()
+
+    if response.status_code == status.HTTP_400_BAD_REQUEST:
+        assert (
+            result["errors"][0]["detail"]
+            == 'Can\'t set "is_organisation" without an organisation_name.'
+        )
+        return
+
+    new_identity = Identity.objects.get(pk=result["data"]["id"])
+    assert new_identity.organisation_name is None
 
 
 @pytest.mark.parametrize(

@@ -11,7 +11,7 @@ repos:
         stages: [commit]
         name: api-black
         language: system
-        entry: /bin/sh -c 'cd ./api/ && black'
+        entry: /bin/sh -c 'cd ./api/ && black .'
         types: [python]
       - id: api-flake8
         stages: [commit]
