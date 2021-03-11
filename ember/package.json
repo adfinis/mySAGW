@@ -29,7 +29,7 @@
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
     "ember-alexandria": "~1.0.0",
-    "ember-apollo-client": "^2.2.0",
+    "ember-apollo-client": "^3.1.0",
     "ember-auto-import": "^1.10.1",
     "ember-caluma": "^6.6.1",
     "ember-changeset": "^3.12.0",
