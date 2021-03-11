@@ -2,6 +2,8 @@
     reverse_proxy /api* http://api:8000
     reverse_proxy /graphql* http://caluma:8000
     reverse_proxy /auth* http://keycloak:8080
+    reverse_proxy /caluma-media* http://minio:9000
+    reverse_proxy /minio/* http://minio:9000
     reverse_proxy /* http://ember:80
     log {
         output stdout

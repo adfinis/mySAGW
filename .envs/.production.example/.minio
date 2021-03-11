@@ -1,0 +1,5 @@
+# minIO
+# ------------------------------------------------------------------------------
+MINIO_ROOT_USER=verysecure
+MINIO_ROOT_PASSWORD=verysecure
+MINIO_BROWSER=off

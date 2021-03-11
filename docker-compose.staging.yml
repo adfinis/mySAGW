@@ -30,3 +30,9 @@ services:
     image: mwader/postfix-relay
     env_file: ./.envs/.staging/.mail
     restart: always
+
+  minio:
+    env_file: ./.envs/.staging/.minio
+
+  mc:
+    env_file: ./.envs/.staging/.minio

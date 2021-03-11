@@ -51,3 +51,9 @@ services:
       - VIRTUAL_HOST=mail.mysagw.local
     ports:
       - 8025:8025
+
+  minio:
+    env_file: ./.envs/.local/.minio
+
+  mc:
+    env_file: ./.envs/.local/.minio

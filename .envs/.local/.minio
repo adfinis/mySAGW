@@ -1,0 +1,5 @@
+# minIO
+# ------------------------------------------------------------------------------
+MINIO_ROOT_USER=mysagw-minio
+MINIO_ROOT_PASSWORD=mysagw-minio123
+MINIO_BROWSER=on
