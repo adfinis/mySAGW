@@ -6,7 +6,7 @@ export COVERAGE_FILE="/tmp/.coverage"
 export ENV="test"
 
 # Only install deps if not yet done - speeds up local development
-(pip freeze | grep -q pytest-cov) || pip install --user -r requirements-dev.txt
+pip show pytest-cov 2>/dev/null >/dev/null || pip install --user -r requirements-dev.txt
 
 pytest -n0 \
     caluma/extensions/ \
