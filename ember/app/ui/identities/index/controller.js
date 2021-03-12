@@ -36,7 +36,7 @@ export default class IdentitiesIndexController extends Controller {
   @restartableTask *fetchIdentities() {
     try {
       const identities = yield this.store.query("identity", {
-        search: this.searchTerm,
+        "filter[search]": this.searchTerm,
         page: {
           number: this.pageNumber,
           size: this.pageSize,
