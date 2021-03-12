@@ -22,11 +22,12 @@ class MultilangProvider(DateTimeProvider):
 
 class SwissPhoneNumberProvider(PhoneNumberProvider):
     # https://de.wikipedia.org/wiki/Rufnummer#Schreibweisen
+    _vorwahlen = (76, 77, 78, 79, 41, 44, 31, 56)
     formats = (
-        "+41#########",
-        "+41 ## ### ## ##",
-        "0#########",
-        "0## ### ## ##",
-        "0041#########",
-        "0041 ## ### ## ##",
+        *[f"+41{v}#######" for v in _vorwahlen],
+        *[f"+41 {v} ### ## ##" for v in _vorwahlen],
+        *[f"0{v}#######" for v in _vorwahlen],
+        *[f"0{v} ### ## ##" for v in _vorwahlen],
+        *[f"0041{v}#######" for v in _vorwahlen],
+        *[f"0041 {v} ### ## ##" for v in _vorwahlen],
     )
