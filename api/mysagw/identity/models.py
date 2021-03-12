@@ -99,3 +99,4 @@ class PhoneNumber(UUIDModel, HistoricalModel):
 
     class Meta:
         unique_together = [["identity", "phone"]]
+        ordering = ("-default",)

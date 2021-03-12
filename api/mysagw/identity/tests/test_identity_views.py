@@ -1,3 +1,6 @@
+import json
+
+import pyexcel
 import pytest
 from django.urls import reverse
 from rest_framework import status
@@ -349,3 +352,55 @@ def test_identity_organisation_filters(db, client, identity_factory, is_organisa
     received_ids = sorted(received_ids)
 
     assert expected_ids == received_ids
+
+
+def test_identity_export(
+    db, client, identity_factory, phone_number_factory, email_factory
+):
+    identities = identity_factory.create_batch(10)
+    identity_factory()  # create another one to make sure the filtering actually works
+    for i in identities:
+        phone_number_factory.create_batch(3, identity=i)
+        email_factory.create_batch(3, identity=i)
+    url = reverse("identity-export")
+
+    data = {"export": [str(i.pk) for i in identities]}
+
+    response = client.post(url, data=json.dumps(data), content_type="application/json")
+
+    assert response.status_code == status.HTTP_200_OK
+
+    sheet = pyexcel.get_sheet(file_type="xlsx", file_content=response.content)
+    assert len(sheet.array) == len(identities) + 1
+    assert sheet.array[0][0] == "additional_emails"
+    assert sheet.array[0][1] == "email"
+    assert sheet.array[0][2] == "first_name"
+    assert sheet.array[1][0].split() == [
+        e.email for e in identities[0].additional_emails.all()
+    ]
+    assert sheet.array[1][1] == identities[0].email
+    assert sheet.array[1][2] == identities[0].first_name
+    assert sheet.array[1][4] == identities[0].last_name
+    assert sheet.array[1][6].split() == [
+        str(p.phone) for p in identities[0].phone_numbers.all()
+    ]
+
+
+@pytest.mark.parametrize(
+    "data",
+    [
+        None,
+        "string",
+        {},
+        {"some-key": [False]},
+        {"export": None},
+        {"export": [None]},
+        {"export": "string"},
+        {"export": ["18606ef7-038a-4f14-a5ac-bfa3420de2de"]},
+    ],
+)
+def test_identity_export_failure(db, client, data):
+    url = reverse("identity-export")
+    response = client.post(url, data=json.dumps(data), content_type="application/json")
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert response.json()["errors"][0]["detail"] == "No identity IDs provided."
