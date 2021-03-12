@@ -11,6 +11,7 @@
     <input
       class="uk-input"
       id="form-search"
+      value={{this.searchTerm}}
       {{on "input" (perform this.search)}}
     >
   </div>
