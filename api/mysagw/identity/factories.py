@@ -9,6 +9,8 @@ class IdentityFactory(DjangoModelFactory):
     email = Faker("email")
     is_organisation = False
     organisation_name = None
+    first_name = Faker("first_name")
+    last_name = Faker("last_name")
 
     class Meta:
         model = models.Identity
