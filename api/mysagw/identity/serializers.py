@@ -109,7 +109,6 @@ class IdentitySerializer(TrackingSerializer):
         extra_kwargs = {
             **TrackingSerializer.Meta.extra_kwargs,
             "interests": {"required": False},
-            "email": {"read_only": True},
             "idp_id": {"read_only": True},
             "additional_emails": {"required": False},
             "phone_numbers": {"required": False},
@@ -197,7 +196,9 @@ class MembershipSerializer(
     organisation = serializers.ResourceRelatedField(
         queryset=models.Identity.objects.filter(is_organisation=True)
     )
-    time_slot = DateRangeField(child_attrs={"allow_null": True})
+    time_slot = DateRangeField(
+        child_attrs={"allow_null": True}, required=False, allow_null=True
+    )
 
     included_serializers = {
         "role": MembershipRoleSerializer,

@@ -357,7 +357,15 @@ def test_identity_organisation_filters(db, client, identity_factory, is_organisa
 def test_identity_export(
     db, client, identity_factory, phone_number_factory, email_factory
 ):
-    identities = identity_factory.create_batch(10)
+    identities = sorted(
+        identity_factory.create_batch(10),
+        key=lambda item: (
+            item.last_name,
+            item.first_name,
+            item.email,
+        ),  # use same ordering as the model
+    )
+
     identity_factory()  # create another one to make sure the filtering actually works
     for i in identities:
         phone_number_factory.create_batch(3, identity=i)

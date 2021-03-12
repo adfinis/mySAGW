@@ -77,6 +77,9 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
     def member_of(self):
         return self._get_memberships(only_authorized=False)
 
+    class Meta:
+        ordering = ("last_name", "first_name", "email")
+
 
 class Email(UUIDModel, HistoricalModel):
     identity = models.ForeignKey(
