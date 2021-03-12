@@ -39,24 +39,32 @@
       </div>
 
       <div class="uk-margin">
-        <label class="uk-form-label" for="form-email">
-          {{t "component.identity-form.label.email"}}
-        </label>
-        <div class="uk-form-controls">
+        <Form.input
+          @label={{t "component.identity-form.label.email"}}
+          @name="email"
+          as |field|
+        >
+          <div class="uk-form-controls">
             <input
-              class="uk-input"
+              class="
+                uk-input
+                {{if field.isValid "uk-form-success"}}
+                {{if field.isInvalid "uk-form-danger"}}
+              "
               id="form-email"
               disabled={{this.changeset.idpId}}
-              value={{this.changeset.email}}
+              value={{field.value}}
+              {{on "input" (fn this.eventTarget field.update)}}
             >
-        </div>
-        {{#if this.changeset.idpId}}
-          <p class="uk-margin-remove-top">
-            <a href={{this.keyCloakAccountUrl}}>
-              {{~t "component.identity-form.hint.email"~}}
-            </a>
-          </p>
-        {{/if}}
+          </div>
+          {{#if this.changeset.idpId}}
+            <p class="uk-margin-remove-top">
+              <a href={{this.keyCloakAccountUrl}}>
+                {{~t "component.identity-form.hint.email"~}}
+              </a>
+            </p>
+          {{/if}}
+        </Form.input>
       </div>
 
       <p class="uk-text-right">

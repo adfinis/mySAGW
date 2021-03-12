@@ -28,6 +28,10 @@ export default class IdentityFormComponent extends Component {
     ].join("");
   }
 
+  @action eventTarget(handler, event) {
+    handler(event.target.value);
+  }
+
   @action onUpdate() {
     this.changeset = Changeset(
       this.args.identity || this.store.createRecord("identity"),
