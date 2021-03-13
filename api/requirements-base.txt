@@ -2,7 +2,7 @@ django==2.2.19
 django-environ==0.4.5
 django-excel==0.0.10
 django-filter==2.4.0
-django-localized-fields==6.2
+django-localized-fields==6.3
 django-phonenumber-field[phonenumberslite]==5.0.0
 django-postgres-extra==2.0.2
 django_simple_history==2.12.0
