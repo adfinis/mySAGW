@@ -166,7 +166,7 @@ def test_email_update(db, client, expected_status, email_factory):
         "data": {
             "type": "additional-emails",
             "id": str(email.pk),
-            "attributes": {"description": "Foo"},
+            "attributes": {"description": {"de": "Foo"}},
         }
     }
 
@@ -178,12 +178,16 @@ def test_email_update(db, client, expected_status, email_factory):
         return
 
     json = response.json()
-    assert json["data"]["attributes"]["description"] == "Foo"
+    assert json["data"]["attributes"]["description"] == {
+        "de": "Foo",
+        "en": "",
+        "fr": "",
+    }
 
     email.refresh_from_db()
     email.identity.refresh_from_db()
 
-    assert email.description == "Foo"
+    assert email.description.de == "Foo"
     assert email.identity.modified_by_user == client.user.username
 
 

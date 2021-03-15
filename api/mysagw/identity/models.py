@@ -7,14 +7,14 @@ from mysagw.models import HistoricalModel, TrackingModel, UniqueBooleanField, UU
 
 
 class InterestCategory(UUIDModel, HistoricalModel):
-    title = LocalizedCharField()
-    description = LocalizedTextField(blank=True, null=True, required=False)
+    title = models.CharField(max_length=255)
+    description = models.CharField(max_length=255, blank=True, null=True)
     archived = models.BooleanField(default=False)
 
 
 class Interest(UUIDModel, HistoricalModel):
-    title = LocalizedCharField()
-    description = LocalizedTextField(blank=True, null=True, required=False)
+    title = models.CharField(max_length=255)
+    description = models.CharField(max_length=255, blank=True, null=True)
     category = models.ForeignKey(
         InterestCategory, related_name="interests", on_delete=models.PROTECT
     )
@@ -48,7 +48,7 @@ class Membership(UUIDModel, HistoricalModel):
     authorized = models.BooleanField(default=False)
     time_slot = DateRangeField(null=True, blank=True)
     next_election = models.DateField(null=True, blank=True)
-    comment = LocalizedTextField(blank=True, null=True, required=False)
+    comment = models.TextField(blank=True, null=True)
     inactive = models.BooleanField(default=False)
 
 
@@ -86,7 +86,7 @@ class Email(UUIDModel, HistoricalModel):
         Identity, related_name="additional_emails", on_delete=models.CASCADE
     )
     email = models.EmailField()
-    description = models.CharField(max_length=255, null=True, blank=True)
+    description = LocalizedCharField(blank=True, null=True, required=False)
 
     class Meta:
         unique_together = [["identity", "email"]]
@@ -97,7 +97,7 @@ class PhoneNumber(UUIDModel, HistoricalModel):
         Identity, related_name="phone_numbers", on_delete=models.CASCADE
     )
     phone = PhoneNumberField()
-    description = models.CharField(max_length=255, null=True, blank=True)
+    description = LocalizedCharField(blank=True, null=True, required=False)
     default = UniqueBooleanField(default=False, together=["identity"])
 
     class Meta:

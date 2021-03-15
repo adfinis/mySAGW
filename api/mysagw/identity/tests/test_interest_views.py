@@ -110,9 +110,7 @@ def test_interest_create(
 
     url = reverse(f"{remove_underscore(model)}-list")
 
-    data = {
-        "data": {"type": "interest-categories", "attributes": {"title": {"de": "Foo"}}}
-    }
+    data = {"data": {"type": "interest-categories", "attributes": {"title": "Foo"}}}
     if model == "interest":
         data["data"]["type"] = "interests"
         data["data"]["relationships"] = {
@@ -129,7 +127,7 @@ def test_interest_create(
         return
 
     json = response.json()
-    assert json["data"]["attributes"]["title"] == {"de": "Foo", "en": "", "fr": ""}
+    assert json["data"]["attributes"]["title"] == "Foo"
 
 
 @pytest.mark.parametrize(
@@ -164,7 +162,7 @@ def test_interest_update(
         "data": {
             "id": str(obj.pk),
             "type": "interest-categories",
-            "attributes": {"title": {"de": "Foo"}},
+            "attributes": {"title": "Foo"},
         }
     }
     if model == "interest":
@@ -184,9 +182,9 @@ def test_interest_update(
         return
 
     json = response.json()
-    assert json["data"]["attributes"]["title"] == {"de": "Foo", "en": "", "fr": ""}
+    assert json["data"]["attributes"]["title"] == "Foo"
     obj.refresh_from_db()
-    assert dict(obj.title) == {"de": "Foo", "en": "", "fr": ""}
+    assert obj.title == "Foo"
 
 
 @pytest.mark.parametrize(
