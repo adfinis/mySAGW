@@ -33,7 +33,7 @@ export default class InterestsIndexController extends Controller {
       });
     } catch (error) {
       console.error(error);
-      this.notification.danger(error.message);
+      this.notification.fromError(error);
     }
   }
 
@@ -52,10 +52,12 @@ export default class InterestsIndexController extends Controller {
         this.onUpdate();
       } catch (error) {
         console.error(error);
-        this.notification.danger(error.message);
+        this.notification.fromError(error);
       }
     } catch (error) {
       // Dialog was dimissed. No action necessary.
+      // Log the error anyway in case something else broke in the try.
+      console.error(error);
     }
   }
 }

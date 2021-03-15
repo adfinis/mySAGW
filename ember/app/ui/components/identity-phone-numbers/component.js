@@ -9,6 +9,7 @@ import {
   restartableTask,
   lastValue,
 } from "ember-concurrency-decorators";
+import applyError from "mysagw/utils/apply-error";
 import PhoneValidations from "mysagw/validations/phone-number";
 import UIkit from "uikit";
 
@@ -71,7 +72,8 @@ export default class IdentityPhoneNumbersComponent extends Component {
       this.changeset = null;
     } catch (error) {
       console.error(error);
-      this.notification.danger(error.message);
+      this.notification.fromError(error);
+      applyError(changeset, error);
     }
   }
 
@@ -94,10 +96,12 @@ export default class IdentityPhoneNumbersComponent extends Component {
         );
       } catch (error) {
         console.error(error);
-        this.notification.danger(error.message);
+        this.notification.fromError(error);
       }
     } catch (error) {
       // Dialog was dimissed. No action necessary.
+      // Log the error anyway in case something else broke in the try.
+      console.error(error);
     }
   }
 }

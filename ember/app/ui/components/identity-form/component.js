@@ -5,6 +5,7 @@ import { tracked } from "@glimmer/tracking";
 import { Changeset } from "ember-changeset";
 import lookupValidator from "ember-changeset-validations";
 import { dropTask } from "ember-concurrency-decorators";
+import applyError from "mysagw/utils/apply-error";
 import IdentityValidations from "mysagw/validations/identity";
 
 /**
@@ -55,7 +56,8 @@ export default class IdentityFormComponent extends Component {
       this.args.onSave?.(changeset.data);
     } catch (error) {
       console.error(error);
-      this.notification.danger(error.message);
+      this.notification.fromError(error);
+      applyError(changeset, error);
     }
   }
 }

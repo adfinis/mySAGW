@@ -42,7 +42,7 @@ export default class InterestsEditController extends Controller {
       this.changeset = null;
     } catch (error) {
       console.error(error);
-      this.notification.danger(error.message);
+      this.notification.fromError(error);
     }
   }
 
@@ -62,10 +62,12 @@ export default class InterestsEditController extends Controller {
         );
       } catch (error) {
         console.error(error);
-        this.notification.danger(error.message);
+        this.notification.fromError(error);
       }
     } catch (error) {
       // Dialog was dimissed. No action necessary.
+      // Log the error anyway in case something else broke in the try.
+      console.error(error);
     }
   }
 }
