@@ -23,15 +23,6 @@
                     <button
                       class="uk-icon-button uk-button-default"
                       type="button"
-                      disabled={{this.changeset}}
-                      uk-icon="pencil"
-                      title={{t "component.identity-interests.list.edit"}}
-                      {{on "click" (fn this.edit interest)}}
-                    ></button>
-
-                    <button
-                      class="uk-icon-button uk-button-default"
-                      type="button"
                       disabled={{or this.changeset this.delete.isRunning}}
                       uk-icon="close"
                       title={{t "component.identity-interests.list.delete"}}
@@ -62,10 +53,7 @@
     <hr>
 
     <h3 class="uk-margin-remove-top">
-      {{if this.changeset.isNew
-        (t "component.identity-interests.form.title.add")
-        (t "component.identity-interests.form.title.edit")
-      }}
+      {{t "component.identity-interests.form.title.add"}}
     </h3>
 
     <ValidatedForm
