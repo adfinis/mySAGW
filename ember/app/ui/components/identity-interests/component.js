@@ -26,7 +26,7 @@ export default class IdentityInterestsComponent extends Component {
 
   @action onUpdate() {
     this.categories = this.parseOwnInterests(this.args.identity);
-    this.fetchInterestCategories.perform(this.args.identity);
+    this.fetchInterestCategories.perform();
   }
 
   // List
@@ -79,17 +79,12 @@ export default class IdentityInterestsComponent extends Component {
 
   @lastValue("fetchInterestCategories") interestCategories;
 
-  @restartableTask *fetchInterestCategories(identity) {
-    const currentIds = identity.interests.mapBy("id");
-
-    const allInterests = yield this.store.findAll("interest", {
+  @restartableTask *fetchInterestCategories() {
+    const interests = yield this.store.findAll("interest", {
       include: "category",
     });
-    const interests = allInterests.filter((interest) => {
-      return !currentIds.includes(interest.get("id"));
-    });
 
-    return allInterests
+    return interests
       .getEach("category")
       .uniqBy("id")
       .map((category) => ({
