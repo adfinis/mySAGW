@@ -1,5 +1,5 @@
 import { attr, belongsTo } from "@ember-data/model";
-import { LocalizedModel, localizedAttr } from "ember-localized-model";
+import { LocalizedModel } from "ember-localized-model";
 
 export default class MembershipModel extends LocalizedModel {
   @belongsTo("identity") identity;
@@ -8,6 +8,6 @@ export default class MembershipModel extends LocalizedModel {
   @attr authorized;
   @attr timeSlot;
   @attr nextElection;
-  @localizedAttr comment;
+  @attr comment;
   @attr inactive;
 }
