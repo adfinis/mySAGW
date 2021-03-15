@@ -46,7 +46,7 @@ export default class IdentitiesIndexController extends Controller {
       return identities;
     } catch (error) {
       console.error(error);
-      this.notification.danger(error.message);
+      this.notification.fromError(error);
     }
   }
 

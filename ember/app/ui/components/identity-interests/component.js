@@ -9,6 +9,7 @@ import {
   restartableTask,
   lastValue,
 } from "ember-concurrency-decorators";
+import applyError from "mysagw/utils/apply-error";
 import InterestValidations from "mysagw/validations/identity-interest";
 import UIkit from "uikit";
 
@@ -73,7 +74,8 @@ export default class IdentityInterestsComponent extends Component {
       this.changeset = null;
     } catch (error) {
       console.error(error);
-      this.notification.danger(error.message);
+      this.notification.fromError(error);
+      applyError(changeset, error);
     }
   }
 
@@ -114,10 +116,12 @@ export default class IdentityInterestsComponent extends Component {
         this.onUpdate();
       } catch (error) {
         console.error(error);
-        this.notification.danger(error.message);
+        this.notification.fromError(error);
       }
     } catch (error) {
       // Dialog was dimissed. No action necessary.
+      // Log the error anyway in case something else broke in the try.
+      console.error(error);
     }
   }
 }

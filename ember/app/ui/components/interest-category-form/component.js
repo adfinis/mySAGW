@@ -3,6 +3,7 @@ import { inject as service } from "@ember/service";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { dropTask } from "ember-concurrency-decorators";
+import applyError from "mysagw/utils/apply-error";
 import InterestCategoryValidations from "mysagw/validations/interest-category";
 
 /**
@@ -34,7 +35,8 @@ export default class InterestCategoryFormComponent extends Component {
       this.args.onSave?.(this.model);
     } catch (error) {
       console.error(error);
-      this.notification.danger(error.message);
+      this.notification.fromError(error);
+      applyError(changeset, error);
     }
   }
 }

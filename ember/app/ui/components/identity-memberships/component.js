@@ -10,6 +10,7 @@ import {
   lastValue,
 } from "ember-concurrency-decorators";
 import moment from "moment";
+import applyError from "mysagw/utils/apply-error";
 import MembershipValidations from "mysagw/validations/membership";
 import UIkit from "uikit";
 
@@ -83,7 +84,8 @@ export default class IdentityMembershipsComponent extends Component {
       yield this.onUpdate();
     } catch (error) {
       console.error(error);
-      this.notification.danger(error.message);
+      this.notification.fromError(error);
+      applyError(changeset, error);
     }
   }
 
@@ -119,10 +121,12 @@ export default class IdentityMembershipsComponent extends Component {
         yield this.onUpdate();
       } catch (error) {
         console.error(error);
-        this.notification.danger(error.message);
+        this.notification.fromError(error);
       }
     } catch (error) {
       // Dialog was dimissed. No action necessary.
+      // Log the error anyway in case something else broke in the try.
+      console.error(error);
     }
   }
 }
