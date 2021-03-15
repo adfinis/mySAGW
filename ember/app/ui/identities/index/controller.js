@@ -42,7 +42,7 @@ export default class IdentitiesIndexController extends Controller {
           size: this.pageSize,
         },
       });
-      this.totalPages = identities.meta.totalPages;
+      this.totalPages = identities.meta.pages;
       return identities;
     } catch (error) {
       console.error(error);

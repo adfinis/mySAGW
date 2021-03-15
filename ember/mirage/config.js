@@ -34,8 +34,8 @@ export default function () {
       { source: "isOrganisation", target: "isOrganisation" },
     ]);
 
-    const pageSize = request.queryParams["page[size]"];
-    const pageNumber = request.queryParams["page[number]"] || 1;
+    const pageSize = Number(request.queryParams["page[size]"]);
+    const pageNumber = Number(request.queryParams["page[number]"] || 1);
     const search = request.queryParams.search?.toLowerCase();
     const keys = ["organisationName", "firstName", "lastName", "email"];
 
@@ -65,9 +65,13 @@ export default function () {
 
     if (pageSize) {
       const start = (pageNumber - 1) * pageSize;
-      const sliced = result.slice(start, start + Number(pageSize));
+      const sliced = result.slice(start, start + pageSize);
       const json = this.serializerOrRegistry.serialize(sliced);
-      json.meta = { totalPages: Math.ceil(result.models.length / pageSize) };
+      json.meta = {
+        count: result.models.length,
+        pages: Math.ceil(result.models.length / pageSize),
+        page: pageNumber,
+      };
       return json;
     }
 
