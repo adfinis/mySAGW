@@ -25,12 +25,25 @@
             <LinkTo
               @route="identities.edit"
               @model={{identity.id}}
-              class="uk-text-bold"
+              class="uk-text-bold uk-flex uk-flex-between uk-flex-wrap"
             >
-              {{if identity.isOrganisation
-                identity.organisationName
-                identity.fullName
-              }}
+              {{#if (or identity.fullName identity.isOrganisation)}}
+                <div class="uk-margin-right">
+                  {{#if identity.fullName}}
+                    {{identity.fullName}}
+                  {{~/if}}
+
+                  {{~if (and identity.fullName identity.isOrganisation) ","}}
+
+                  {{#if identity.isOrganisation}}
+                    {{identity.organisationName}}
+                  {{/if}}
+                </div>
+              {{/if}}
+
+              <div class="uk-text-small">
+                {{identity.email}}
+              </div>
             </LinkTo>
           </li>
         {{/unless}}
