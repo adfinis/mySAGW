@@ -4,33 +4,41 @@ services:
 
   db:
     env_file: ./.envs/.production/.postgres
+    restart: unless-stopped
 
   api:
     env_file: ./.envs/.production/.api
+    restart: unless-stopped
 
   caluma:
     env_file: ./.envs/.production/.caluma
+    restart: unless-stopped
 
   caddy:
     env_file: ./.envs/.production/.caddy
+    restart: unless-stopped
 
   keycloak:
     env_file: ./.envs/.production/.keycloak
     depends_on:
       - mail
+      - restart: unless-stopped
 
   ember:
     build:
       args:
         OIDC_HOST: "${OIDC_HOST:?Set OIDC_HOST env variable}"
+    restart: unless-stopped
 
   mail:
     image: mwader/postfix-relay
     env_file: ./.envs/.production/.mail
-    restart: always
+    restart: unless-stopped
 
   minio:
     env_file: ./.envs/.production/.minio
+    restart: unless-stopped
 
   mc:
     env_file: ./.envs/.production/.minio
+    restart: unless-stopped
