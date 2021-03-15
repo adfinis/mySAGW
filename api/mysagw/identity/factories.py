@@ -1,4 +1,4 @@
-from factory import Faker, SubFactory
+from factory import Faker, Maybe, SubFactory, fuzzy
 from factory.django import DjangoModelFactory
 
 from . import models
@@ -8,7 +8,7 @@ class IdentityFactory(DjangoModelFactory):
     idp_id = Faker("uuid4")
     email = Faker("email")
     is_organisation = False
-    organisation_name = None
+    organisation_name = Maybe("is_organisation", Faker("company"), None)
     first_name = Faker("first_name")
     last_name = Faker("last_name")
 
@@ -19,7 +19,7 @@ class IdentityFactory(DjangoModelFactory):
 class EmailFactory(DjangoModelFactory):
     identity = SubFactory(IdentityFactory)
     email = Faker("email")
-    description = Faker("text")
+    description = fuzzy.FuzzyChoice(["work", "private", "assistant"])
 
     class Meta:
         model = models.Email
@@ -28,7 +28,7 @@ class EmailFactory(DjangoModelFactory):
 class PhoneNumberFactory(DjangoModelFactory):
     identity = SubFactory(IdentityFactory)
     phone = Faker("phone_number")
-    description = Faker("text")
+    description = fuzzy.FuzzyChoice(["work", "private", "home", "office", "mobile"])
     default = True
 
     class Meta:
@@ -36,8 +36,8 @@ class PhoneNumberFactory(DjangoModelFactory):
 
 
 class InterestCategoryFactory(DjangoModelFactory):
-    title = Faker("multilang", faker_provider="name")
-    description = Faker("multilang", faker_provider="text")
+    title = Faker("word")
+    description = Faker("sentence")
     archived = False
 
     class Meta:
@@ -45,8 +45,8 @@ class InterestCategoryFactory(DjangoModelFactory):
 
 
 class InterestFactory(DjangoModelFactory):
-    title = Faker("multilang", faker_provider="name")
-    description = Faker("multilang", faker_provider="text")
+    title = Faker("job")
+    description = Faker("sentence")
     archived = False
     category = SubFactory(InterestCategoryFactory)
 
@@ -55,7 +55,7 @@ class InterestFactory(DjangoModelFactory):
 
 
 class MembershipRoleFactory(DjangoModelFactory):
-    title = Faker("multilang", faker_provider="name")
+    title = Faker("multilang", faker_provider="job")
     description = Faker("multilang", faker_provider="text")
     archived = False
 

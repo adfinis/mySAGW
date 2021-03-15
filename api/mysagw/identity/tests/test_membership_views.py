@@ -255,7 +255,7 @@ def test_membership_update(db, client, expected_status, membership_factory):
         "data": {
             "type": "memberships",
             "id": str(membership.pk),
-            "attributes": {"comment": {"de": "Foo"}},
+            "attributes": {"comment": "Foo"},
             "relationships": {"role": {}},
         },
     }
@@ -269,7 +269,7 @@ def test_membership_update(db, client, expected_status, membership_factory):
 
     membership.refresh_from_db()
     assert membership.role is None
-    assert dict(membership.comment) == {"de": "Foo", "en": "", "fr": ""}
+    assert membership.comment == "Foo"
 
 
 @pytest.mark.parametrize("field", ["identity", "organisation"])

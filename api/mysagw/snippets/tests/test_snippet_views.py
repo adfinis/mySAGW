@@ -71,7 +71,7 @@ def test_snippet_update(db, client, expected_status, snippet_factory):
         "data": {
             "type": "snippets",
             "id": str(snippet.pk),
-            "attributes": {"title": {"de": "Foo"}},
+            "attributes": {"title": "Foo"},
         }
     }
 
@@ -83,9 +83,9 @@ def test_snippet_update(db, client, expected_status, snippet_factory):
         return
 
     json = response.json()
-    assert json["data"]["attributes"]["title"] == {"de": "Foo", "en": "", "fr": ""}
+    assert json["data"]["attributes"]["title"] == "Foo"
     snippet.refresh_from_db()
-    assert dict(snippet.title) == {"de": "Foo", "en": "", "fr": ""}
+    assert snippet.title == "Foo"
 
 
 @pytest.mark.parametrize(

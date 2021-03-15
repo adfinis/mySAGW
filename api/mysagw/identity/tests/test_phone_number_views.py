@@ -158,7 +158,7 @@ def test_phone_number_update(db, client, expected_status, phone_number_factory):
         "data": {
             "type": "phone-numbers",
             "id": str(phone_number.pk),
-            "attributes": {"description": "Foo"},
+            "attributes": {"description": {"de": "Foo"}},
         }
     }
 
@@ -170,12 +170,16 @@ def test_phone_number_update(db, client, expected_status, phone_number_factory):
         return
 
     json = response.json()
-    assert json["data"]["attributes"]["description"] == "Foo"
+    assert json["data"]["attributes"]["description"] == {
+        "de": "Foo",
+        "en": "",
+        "fr": "",
+    }
 
     phone_number.refresh_from_db()
     phone_number.identity.refresh_from_db()
 
-    assert phone_number.description == "Foo"
+    assert dict(phone_number.description) == {"de": "Foo", "en": "", "fr": ""}
     assert phone_number.identity.modified_by_user == client.user.username
 
 
