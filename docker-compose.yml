@@ -32,7 +32,6 @@ services:
       - keycloak
 
   caddy:
-    restart: unless-stopped
     image: caddy:latest
     volumes:
       - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
