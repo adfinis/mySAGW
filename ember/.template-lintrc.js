@@ -5,5 +5,6 @@ module.exports = {
 
   rules: {
     "no-bare-strings": true,
+    "block-indentation": true,
   },
 };

@@ -44,41 +44,41 @@
 </nav>
 
 <div id="offcanvas" uk-offcanvas="flip: true; overlay: true">
-    <div class="uk-offcanvas-bar uk-flex uk-flex-column">
-      <button class="uk-offcanvas-close" type="button" uk-close></button>
+  <div class="uk-offcanvas-bar uk-flex uk-flex-column">
+    <button class="uk-offcanvas-close" type="button" uk-close></button>
 
-      <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
-          <li>
-            <LinkTo @route="cases" uk-toggle="target: #offcanvas">
-              {{t "nav.documents"}}
-            </LinkTo>
-          </li>
+    <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
+      <li>
+        <LinkTo @route="cases" uk-toggle="target: #offcanvas">
+          {{t "nav.documents"}}
+        </LinkTo>
+      </li>
 
-          <li class="uk-nav-header">{{t "nav.admin"}}</li>
-          <li>
-            <LinkTo @route="identities" uk-toggle="target: #offcanvas">
-              {{t "nav.identities"}}
-            </LinkTo>
-          </li>
-          <li>
-            <LinkTo @route="interests" uk-toggle="target: #offcanvas">
-              {{t "nav.interests"}}
-            </LinkTo>
-          </li>
-          <li>
-            <LinkTo @route="form-builder" uk-toggle="target: #offcanvas">
-              {{t "nav.form-builder"}}
-            </LinkTo>
-          </li>
+      <li class="uk-nav-header">{{t "nav.admin"}}</li>
+      <li>
+        <LinkTo @route="identities" uk-toggle="target: #offcanvas">
+          {{t "nav.identities"}}
+        </LinkTo>
+      </li>
+      <li>
+        <LinkTo @route="interests" uk-toggle="target: #offcanvas">
+          {{t "nav.interests"}}
+        </LinkTo>
+      </li>
+      <li>
+        <LinkTo @route="form-builder" uk-toggle="target: #offcanvas">
+          {{t "nav.form-builder"}}
+        </LinkTo>
+      </li>
 
-          <li class="uk-nav-header">{{t "nav.account"}}</li>
-          <li>
-            <a href="#" {{on "click" this.invalidateSession}} uk-toggle="target: #offcanvas">
-              <span class="uk-margin-small-right" uk-icon="icon: sign-out"></span>
-              {{t "nav.logout"}}
-            </a>
-          </li>
-      </ul>
+      <li class="uk-nav-header">{{t "nav.account"}}</li>
+      <li>
+        <a href="#" {{on "click" this.invalidateSession}} uk-toggle="target: #offcanvas">
+          <span class="uk-margin-small-right" uk-icon="icon: sign-out"></span>
+          {{t "nav.logout"}}
+        </a>
+      </li>
+    </ul>
 
-    </div>
+  </div>
 </div>
