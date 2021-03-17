@@ -1,0 +1,4 @@
+# DMS
+# ------------------------------------------------------------------------------
+ENV=dev
+DATABASE_PASSWORD=document-merge-service

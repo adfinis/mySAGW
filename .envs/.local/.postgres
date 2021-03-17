@@ -4,3 +4,4 @@ POSTGRES_USER=mysagw
 POSTGRES_PASSWORD=mysagw
 CALUMA_DB_PASSWORD=caluma
 KEYCLOAK_DB_PASSWORD=keycloak
+DMS_DB_PASSWORD=document-merge-service
