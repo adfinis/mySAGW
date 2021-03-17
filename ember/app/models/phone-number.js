@@ -5,4 +5,5 @@ export default class PhoneNumberModel extends LocalizedModel {
   @belongsTo("identity") identity;
   @attr phone;
   @localizedAttr description;
+  @attr default;
 }

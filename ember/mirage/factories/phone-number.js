@@ -6,4 +6,5 @@ import setAllLocales from "../helpers/set-all-locales";
 export default Factory.extend({
   phone: () => faker.phone.phoneNumber(),
   description: () => setAllLocales(faker.random.words()),
+  default: (index) => index === 0,
 });
