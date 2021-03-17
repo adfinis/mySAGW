@@ -68,9 +68,11 @@ export default function () {
       const sliced = result.slice(start, start + pageSize);
       const json = this.serializerOrRegistry.serialize(sliced);
       json.meta = {
-        count: result.models.length,
-        pages: Math.ceil(result.models.length / pageSize),
-        page: pageNumber,
+        pagination: {
+          count: result.models.length,
+          pages: Math.ceil(result.models.length / pageSize),
+          page: pageNumber,
+        },
       };
       return json;
     }
