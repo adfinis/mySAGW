@@ -8,6 +8,17 @@ module("Integration | Component | identity-phone-numbers", function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
+  hooks.beforeEach(function () {
+    this.owner.register(
+      "service:session",
+      {
+        isAuthenticated: true,
+        data: { authenticated: { userinfo: { mysagw_groups: ["sagw"] } } },
+      },
+      { instantiate: false }
+    );
+  });
+
   test("it renders", async function (assert) {
     this.server.create("identity");
 

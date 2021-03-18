@@ -24,25 +24,29 @@
           </div>
 
           <div>
-            <button
-              class="uk-icon-button uk-button-default"
-              type="button"
-              uk-icon="pencil"
-              title={{t "page.interests.edit.list.edit"}}
-              disabled={{this.changeset}}
-              {{on "click" (fn this.edit interest)}}
-              data-test-interest-edit
-            ></button>
+            {{#if (can "edit interest" interest)}}
+              <button
+                class="uk-icon-button uk-button-default"
+                type="button"
+                uk-icon="pencil"
+                title={{t "page.interests.edit.list.edit"}}
+                disabled={{this.changeset}}
+                {{on "click" (fn this.edit interest)}}
+                data-test-interest-edit
+              ></button>
+            {{/if}}
 
-            <button
-              class="uk-icon-button uk-button-default"
-              type="button"
-              uk-icon="close"
-              title={{t "page.interests.edit.list.delete"}}
-              disabled={{or this.changeset this.delete.isRunning}}
-              {{on "click" (perform this.delete interest)}}
-              data-test-interest-edit
-            ></button>
+            {{#if (can "delete interest" interest)}}
+              <button
+                class="uk-icon-button uk-button-default"
+                type="button"
+                uk-icon="close"
+                title={{t "page.interests.edit.list.delete"}}
+                disabled={{or this.changeset this.delete.isRunning}}
+                {{on "click" (perform this.delete interest)}}
+                data-test-interest-edit
+              ></button>
+            {{/if}}
           </div>
         </li>
       {{/each}}
@@ -51,17 +55,19 @@
     <p>{{t "page.interests.edit.list.empty"}}</p>
   {{/if}}
 
-  <p class="uk-text-right">
-    <button
-      class="uk-button uk-button-default"
-      type="button"
-      disabled={{this.changeset}}
-      {{on "click" (fn this.edit null)}}
-      data-test-interest-add
-    >
-      {{t "page.interests.edit.list.add"}}
-    </button>
-  </p>
+  {{#if (can "add interest")}}
+    <p class="uk-text-right">
+      <button
+        class="uk-button uk-button-default"
+        type="button"
+        disabled={{this.changeset}}
+        {{on "click" (fn this.edit null)}}
+        data-test-interest-add
+      >
+        {{t "page.interests.edit.list.add"}}
+      </button>
+    </p>
+  {{/if}}
 
   {{#if this.changeset}}
     <hr>

@@ -17,6 +17,7 @@
         @disabled={{or
           this.changeset.hasMembers
           this.changeset.hasMemberships
+          (cannot "edit identity" this.changeset.data)
         }}
       />
 
@@ -24,7 +25,7 @@
         <Form.input
           @label={{t "component.identity-form.label.organisationName"}}
           @name="organisationName"
-          @disabled={{not this.changeset.isOrganisation}}
+          @disabled={{cannot "edit identity" this.changeset.data}}
         />
       {{/if}}
 
@@ -42,12 +43,14 @@
           <Form.input
             @label={{t "component.identity-form.label.firstName"}}
             @name="firstName"
+            @disabled={{cannot "edit identity" this.changeset.data}}
           />
         </div>
         <div>
           <Form.input
             @label={{t "component.identity-form.label.lastName"}}
             @name="lastName"
+            @disabled={{cannot "edit identity" this.changeset.data}}
           />
         </div>
       </div>
@@ -66,7 +69,7 @@
                 {{if field.isInvalid "uk-form-danger"}}
               "
               id="form-email"
-              disabled={{this.changeset.idpId}}
+              disabled={{or this.changeset.idpId (cannot "edit identity" this.changeset.data)}}
               value={{field.value}}
               {{on "input" (fn this.eventTarget field.update)}}
               {{on "blur" field.setDirty}}
@@ -84,7 +87,7 @@
 
       <p class="uk-flex uk-flex-between">
         <div>
-          {{#unless this.changeset.isNew}}
+          {{#if (and (not this.changeset.isNew) (can "delete identity" this.changeset.data))}}
             <button
               class="uk-button uk-button-danger"
               type="button"
@@ -92,7 +95,7 @@
             >
               {{t "component.identity-form.control.delete"}}
             </button>
-          {{/unless}}
+          {{/if}}
         </div>
 
         <div>
@@ -105,6 +108,7 @@
 
           <Form.submit
             @label={{t "component.identity-form.control.submit"}}
+            @disabled={{cannot "edit identity" this.changeset.data}}
           />
         </div>
       </p>

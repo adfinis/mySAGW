@@ -20,6 +20,7 @@ nav:
   admin: "Administration"
   account: "Account"
   logout: "Logout"
+  login: "Login"
 
 documents:
   title: "Documents"

@@ -15,24 +15,38 @@
 
   <div class="uk-navbar-left uk-visible@m">
     <UkTab as |tab|>
-      <tab.link-item @route="cases">
-        {{t "nav.documents"}}
-      </tab.link-item>
-      <tab.link-item @route="identities">
-        {{t "nav.identities"}}
-      </tab.link-item>
-      <tab.link-item @route="interests">
-        {{t "nav.interests"}}
-      </tab.link-item>
-      <tab.link-item @route="membership-roles">
-        {{t "nav.roles"}}
-      </tab.link-item>
-      <tab.link-item @route="form-builder">
-        {{t "nav.form-builder"}}
-      </tab.link-item>
-      <tab.item {{on "click" this.invalidateSession}}>
-        {{t "nav.logout"}}
-      </tab.item>
+      {{#if this.session.isAuthenticated}}
+        <tab.link-item @route="cases">
+          {{t "nav.documents"}}
+        </tab.link-item>
+
+        {{#if (can "list identity")}}
+          <tab.link-item @route="identities">
+            {{t "nav.identities"}}
+          </tab.link-item>
+        {{/if}}
+        {{#if (can "list interest")}}
+          <tab.link-item @route="interests">
+            {{t "nav.interests"}}
+          </tab.link-item>
+        {{/if}}
+        {{#if (can "list membership-role")}}
+          <tab.link-item @route="membership-roles">
+            {{t "nav.roles"}}
+          </tab.link-item>
+        {{/if}}
+
+        <tab.link-item @route="form-builder">
+          {{t "nav.form-builder"}}
+        </tab.link-item>
+        <tab.item {{on "click" this.invalidateSession}}>
+          {{t "nav.logout"}}
+        </tab.item>
+      {{else}}
+        <tab.link-item @route="login">
+          {{t "nav.login"}}
+        </tab.link-item>
+      {{/if}}
     </UkTab>
   </div>
 
@@ -58,16 +72,20 @@
       </li>
 
       <li class="uk-nav-header">{{t "nav.admin"}}</li>
-      <li>
-        <LinkTo @route="identities" uk-toggle="target: #offcanvas">
-          {{t "nav.identities"}}
-        </LinkTo>
-      </li>
-      <li>
-        <LinkTo @route="interests" uk-toggle="target: #offcanvas">
-          {{t "nav.interests"}}
-        </LinkTo>
-      </li>
+      {{#if (can "list identity")}}
+        <li>
+          <LinkTo @route="identities" uk-toggle="target: #offcanvas">
+            {{t "nav.identities"}}
+          </LinkTo>
+        </li>
+      {{/if}}
+      {{#if (can "list interest")}}
+        <li>
+          <LinkTo @route="interests" uk-toggle="target: #offcanvas">
+            {{t "nav.interests"}}
+          </LinkTo>
+        </li>
+      {{/if}}
       <li>
         <LinkTo @route="membership-roles" uk-toggle="target: #offcanvas">
           {{t "nav.roles"}}

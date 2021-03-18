@@ -40,27 +40,31 @@
               ></a>
 
               <div class="uk-margin-left">
-                <button
-                  class="uk-icon-button uk-button-default"
-                  type="button"
-                  uk-icon="pencil"
-                  disabled={{this.changeset}}
-                  title={{t "component.identity-phone-numbers.list.edit"}}
-                  {{on "click" (fn this.edit phoneNumber)}}
-                ></button>
+                {{#if (can "edit phone-number" phoneNumber)}}
+                  <button
+                    class="uk-icon-button uk-button-default"
+                    type="button"
+                    uk-icon="pencil"
+                    disabled={{this.changeset}}
+                    title={{t "component.identity-phone-numbers.list.edit"}}
+                    {{on "click" (fn this.edit phoneNumber)}}
+                  ></button>
+                {{/if}}
 
-                <button
-                  class="uk-icon-button uk-button-default"
-                  type="button"
-                  uk-icon="close"
-                  disabled={{or
-                    this.changeset
-                    this.delete.isRunning
-                    (and phoneNumber.default (gt this.phoneNumbers.length 1))
-                  }}
-                  title={{t "component.identity-phone-numbers.list.delete"}}
-                  {{on "click" (perform this.delete phoneNumber)}}
-                ></button>
+                {{#if (can "delete phone-number" phoneNumber)}}
+                  <button
+                    class="uk-icon-button uk-button-default"
+                    type="button"
+                    uk-icon="close"
+                    disabled={{or
+                      this.changeset
+                      this.delete.isRunning
+                      (and phoneNumber.default (gt this.phoneNumbers.length 1))
+                    }}
+                    title={{t "component.identity-phone-numbers.list.delete"}}
+                    {{on "click" (perform this.delete phoneNumber)}}
+                  ></button>
+                {{/if}}
               </div>
             </div>
           </li>
@@ -70,17 +74,19 @@
       <p>{{t "component.identity-phone-numbers.list.empty"}}</p>
     {{/if}}
 
-    <p class="uk-text-right">
-      <button
-        class="uk-button uk-button-default"
-        type="button"
-        disabled={{this.changeset}}
-        {{on "click" (fn this.edit null)}}
-        data-test-phone-add
-      >
-        {{t "component.identity-phone-numbers.add"}}
-      </button>
-    </p>
+    {{#if (can "add phone-number")}}
+      <p class="uk-text-right">
+        <button
+          class="uk-button uk-button-default"
+          type="button"
+          disabled={{this.changeset}}
+          {{on "click" (fn this.edit null)}}
+          data-test-phone-add
+        >
+          {{t "component.identity-phone-numbers.add"}}
+        </button>
+      </p>
+    {{/if}}
   {{/if}}
 
   {{#if this.changeset}}
