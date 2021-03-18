@@ -15,10 +15,6 @@ module("Integration | Component | identity-emails", function (hooks) {
 
     await render(hbs`<IdentityEmails @identity={{this.identity}} />`);
     assert.ok(this.element);
-
-    assert.dom("[data-test-email-list").exists();
-    // The 3 emails are defined in mirage/factories/identity.js
-    assert.dom("[data-test-email-item").exists({ count: 3 });
   });
 
   test("it can add new addresses", async function (assert) {
