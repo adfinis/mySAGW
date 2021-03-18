@@ -57,7 +57,7 @@
     "ember-in-viewport": "^3.8.1",
     "ember-intl": "^5.6.2",
     "ember-load-initializers": "^2.1.2",
-    "ember-localized-model": "projectcaluma/ember-localized-model#v1.0.1",
+    "ember-localized-model": "^1.1.0",
     "ember-math-helpers": "^2.15.0",
     "ember-maybe-import-regenerator": "^0.1.6",
     "ember-moment": "^8.0.1",

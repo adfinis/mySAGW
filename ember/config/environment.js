@@ -25,6 +25,10 @@ module.exports = function (environment) {
     "ember-validated-form": {
       theme: "uikit",
     },
+    localizedModel: {
+      allowAnyFallback: true,
+      fallbacks: ["de", "en"],
+    },
 
     EmberENV: {
       FEATURES: {

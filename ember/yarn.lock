@@ -6739,9 +6739,10 @@ ember-localized-model@^1.0.1:
     ember-cli-htmlbars "^4.3.1"
     ember-data "^3.20.0"
 
-ember-localized-model@projectcaluma/ember-localized-model#v1.0.1:
-  version "1.0.1"
-  resolved "https://codeload.github.com/projectcaluma/ember-localized-model/tar.gz/e975d9527464adce7807a48cc29fa834278e0cd2"
+ember-localized-model@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/ember-localized-model/-/ember-localized-model-1.1.0.tgz#6d00d44eb26b4b4c198c0ceb8cc808a12ad875b2"
+  integrity sha512-ey2CJ0yl+D2Q+A80ETqMKFaQ7tFv9ywNwxWlSVq1sMARGdVYZ1QqmunUknTMDAkwvMpvXNXIu51FIwhq6MKimw==
   dependencies:
     ember-cli-babel "^7.19.0"
     ember-cli-htmlbars "^4.3.1"
