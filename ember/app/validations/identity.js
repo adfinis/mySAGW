@@ -6,7 +6,7 @@ import {
 export default {
   firstName: [],
   lastName: [],
-  email: [validateFormat({ type: "email" })],
+  email: [validateFormat({ type: "email", allowBlank: true })],
   organisationName: [
     validatePresence({ presence: true, on: "isOrganisation" }),
   ],
