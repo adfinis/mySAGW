@@ -7,6 +7,7 @@ import lookupValidator from "ember-changeset-validations";
 import { dropTask } from "ember-concurrency-decorators";
 import applyError from "mysagw/utils/apply-error";
 import IdentityValidations from "mysagw/validations/identity";
+import UIkit from "uikit";
 
 /**
  * @arg identity
@@ -16,6 +17,7 @@ export default class IdentityFormComponent extends Component {
   @service notification;
   @service store;
   @service intl;
+  @service router;
 
   @tracked changeset;
 
@@ -62,6 +64,29 @@ export default class IdentityFormComponent extends Component {
       console.error(error);
       this.notification.fromError(error);
       applyError(changeset, error);
+    }
+  }
+
+  @dropTask *delete(identity) {
+    try {
+      yield UIkit.modal.confirm(
+        this.intl.t("component.identity-form.delete.prompt")
+      );
+
+      try {
+        yield identity.destroyRecord();
+        this.notification.success(
+          this.intl.t("component.identity-form.delete.success")
+        );
+        this.router.transitionTo("identities");
+      } catch (error) {
+        console.error(error);
+        this.notification.fromError(error);
+      }
+    } catch (error) {
+      // Dialog was dimissed. No action necessary.
+      // Log the error anyway in case something else broke in the try.
+      console.error(error);
     }
   }
 }
