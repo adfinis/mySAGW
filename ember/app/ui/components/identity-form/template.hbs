@@ -67,17 +67,31 @@
         </Form.input>
       </div>
 
-      <p class="uk-text-right">
-        <LinkTo
-          class="uk-button uk-button-default"
-          @route="identities"
-        >
-          {{t "component.identity-form.control.cancel"}}
-        </LinkTo>
+      <p class="uk-flex uk-flex-between">
+        <div>
+          {{#unless this.changeset.isNew}}
+            <button
+              class="uk-button uk-button-danger"
+              type="button"
+              {{on "click" (perform this.delete this.changeset.data)}}
+            >
+              {{t "component.identity-form.control.delete"}}
+            </button>
+          {{/unless}}
+        </div>
 
-        <Form.submit
-          @label={{t "component.identity-form.control.submit"}}
-        />
+        <div>
+          <LinkTo
+            class="uk-button uk-button-default"
+            @route="identities"
+          >
+            {{t "component.identity-form.control.cancel"}}
+          </LinkTo>
+
+          <Form.submit
+            @label={{t "component.identity-form.control.submit"}}
+          />
+        </div>
       </p>
     </ValidatedForm>
   {{/if}}

@@ -118,8 +118,12 @@ component:
     hint:
       email: "Managed through KeyCloak."
     control:
+      delete: "Delete"
       cancel: "Cancel"
       submit: "Save"
+    delete:
+      prompt: "Do you really want to delete this identity?"
+      success: "Identity deleted successfully."
     success: "Identity {name} saved successfully."
 
   identity-emails:
