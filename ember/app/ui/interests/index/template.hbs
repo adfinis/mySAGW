@@ -49,16 +49,16 @@
             </div>
 
             {{#if category.interests.length}}
-            <ul class="uk-list uk-list-divider">
-              {{#each category.interests as |interest|}}
-                {{#unless interest.isNew}}
-                  <li>
-                    {{interest.title}}
-                    <div class="uk-text-meta">{{interest.description}}</div>
-                  </li>
-                {{/unless}}
-              {{/each}}
-            </ul>
+              <ul class="uk-list uk-list-divider">
+                {{#each category.interests as |interest|}}
+                  {{#unless interest.isNew}}
+                    <li>
+                      {{interest.title}}
+                      <div class="uk-text-meta">{{interest.description}}</div>
+                    </li>
+                  {{/unless}}
+                {{/each}}
+              </ul>
             {{/if}}
           </div>
         </div>

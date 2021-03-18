@@ -45,7 +45,9 @@
         type="button"
         disabled={{this.changeset}}
         {{on "click" (fn this.edit null)}}
-      >{{t "component.identity-interests.add"}}</button>
+      >
+        {{t "component.identity-interests.add"}}
+      </button>
     </p>
   {{/if}}
 
@@ -80,7 +82,7 @@
             {{opt.title}}
           </PowerSelect>
         </Form.input>
-       </div>
+      </div>
 
       <p class="uk-text-right">
         <button

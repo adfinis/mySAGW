@@ -58,7 +58,9 @@
       disabled={{this.changeset}}
       {{on "click" (fn this.edit null)}}
       data-test-interest-add
-    >{{t "page.interests.edit.list.add"}}</button>
+    >
+      {{t "page.interests.edit.list.add"}}
+    </button>
   </p>
 
   {{#if this.changeset}}
