@@ -15,10 +15,6 @@ module("Integration | Component | identity-phone-numbers", function (hooks) {
 
     await render(hbs`<IdentityPhoneNumbers @identity={{this.identity}} />`);
     assert.ok(this.element);
-
-    assert.dom("[data-test-phone-list").exists();
-    // The 3 phone-numbers are defined in mirage/factories/identity.js
-    assert.dom("[data-test-phone-item").exists({ count: 3 });
   });
 
   test("it can add new addresses", async function (assert) {

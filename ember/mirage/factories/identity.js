@@ -14,7 +14,21 @@ export default Factory.extend({
       identity.organisationName = null;
     }
 
-    server.createList("additional-email", 3, { identity });
-    server.createList("phone-number", 3, { identity });
+    const interests = server.schema.interests.all();
+    interests.models = faker.random.arrayElements(
+      interests.models,
+      faker.random.number({ min: 0, max: 5 })
+    );
+    identity.interests = interests;
+
+    server.createList(
+      "additional-email",
+      faker.random.number({ min: 0, max: 3 }),
+      { identity }
+    );
+
+    server.createList("phone-number", faker.random.number({ min: 0, max: 3 }), {
+      identity,
+    });
   },
 });
