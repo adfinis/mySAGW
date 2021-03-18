@@ -54,6 +54,12 @@ caluma-lint: ## lint caluma extensions
 caluma-loadconfig: ## load Caluma config
 	@docker-compose run --rm caluma ./manage.py loaddata ./caluma/data/config.json
 
+.PHONY: caluma-dump-forms
+caluma-dump-forms: ## dump Caluma form models
+	@docker-compose run --rm caluma python manage.py dumpdata --indent 4 \
+	caluma_form.Form caluma_form.FormQuestion caluma_form.Question \
+	caluma_form.QuestionOption caluma_form.Option
+
 .PHONY: ember-lint
 ember-lint: ## lint the frontend
 	@docker-compose run --rm ember yarn lint
