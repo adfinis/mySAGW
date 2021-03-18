@@ -43,4 +43,3 @@ services:
 
   mc:
     env_file: ./.envs/.staging/.minio
-    restart: unless-stopped
