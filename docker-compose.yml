@@ -23,6 +23,7 @@ services:
       - DATABASE_HOST=db
       - DATABASE_PORT=5432
       - OIDC_BEARER_TOKEN_REVALIDATION_TIME=300
+      - OIDC_GROUPS_CLAIM=mysagw_groups
       - VISIBILITY_CLASSES=caluma.caluma_user.visibilities.Authenticated,caluma.extensions.visibilities.MySAGWVisibility
       - PERMISSION_CLASSES=caluma.caluma_user.permissions.IsAuthenticated,caluma.extensions.permissions.MySAGWPermission
       - LANGUAGE_CODE=de
