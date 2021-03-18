@@ -173,13 +173,11 @@ component:
     add: "Add interest"
 
     list:
-      edit: "Edit interest"
       delete: "Delete interest"
       empty: "No interests yet."
     form:
       title:
         add: "Add interest"
-        edit: "Edit interest"
       label:
         interest: "Interest"
       control:
