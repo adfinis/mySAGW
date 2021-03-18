@@ -55,6 +55,7 @@
               disabled={{this.changeset.idpId}}
               value={{field.value}}
               {{on "input" (fn this.eventTarget field.update)}}
+              {{on "blur" field.setDirty}}
             >
           </div>
           {{#if this.changeset.idpId}}
