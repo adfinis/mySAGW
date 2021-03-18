@@ -2,7 +2,16 @@
   {{did-insert this.onUpdate}}
   {{did-update this.onUpdate}}
 >
-  <h1>{{t "page.interests.index.title"}}</h1>
+  <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
+    <h1 class="uk-margin-remove">{{t "page.interests.index.title"}}</h1>
+
+    <LinkTo
+      @route="interests.add"
+      class="uk-button uk-button-default uk-flex-none"
+    >
+      {{t "page.interests.index.add"}}
+    </LinkTo>
+  </div>
 
   {{#if this.fetchInterests.isRunning}}
     <LoadingSpinner />
@@ -67,13 +76,4 @@
   {{else}}
     <p>{{t "page.interests.index.list.empty"}}</p>
   {{/if}}
-
-  <p class="uk-text-right">
-    <LinkTo
-      @route="interests.add"
-      class="uk-button uk-button-default"
-    >
-      {{t "page.interests.index.add"}}
-    </LinkTo>
-  </p>
 </div>
