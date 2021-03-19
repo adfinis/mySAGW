@@ -29,12 +29,14 @@ Router.map(function () {
       path: "/form-builder",
       resetNamespace,
     });
+
     this.route("cases", { resetNamespace }, function () {
       this.route("detail", { path: "/:id" }, function () {
         this.route("edit");
       });
       this.route("new");
     });
+
     this.route("identities", { resetNamespace }, function () {
       this.route("add");
       this.route("edit", { path: "/edit/:identity" });
@@ -42,6 +44,10 @@ Router.map(function () {
     this.route("interests", { resetNamespace }, function () {
       this.route("add");
       this.route("edit", { path: "/edit/:category" });
+    });
+    this.route("membership-roles", { resetNamespace }, function () {
+      this.route("add");
+      this.route("edit", { path: "/edit/:role" });
     });
   });
 });
