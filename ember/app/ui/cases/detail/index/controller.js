@@ -2,7 +2,7 @@ import Controller from "@ember/controller";
 import { inject as service } from "@ember/service";
 import { queryManager } from "ember-apollo-client";
 import { task } from "ember-concurrency-decorators";
-import cancelCaseMutation from "mysagw/gql/mutations/cancel-case";
+import cancelCaseMutation from "mysagw/gql/mutations/cancel-case.graphql";
 
 export default class CasesDetailIndexController extends Controller {
   @service router;
