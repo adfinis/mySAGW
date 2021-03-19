@@ -57,7 +57,7 @@ export default function () {
 
       if (Object.keys(query).length) {
         for (const key in query) {
-          if (identity[key] === query[key]) {
+          if (String(identity[key]) === query[key]) {
             result = true;
             break;
           }

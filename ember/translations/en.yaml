@@ -8,6 +8,7 @@ nav:
   documents: "Documents"
   identities: "Identities"
   interests: "Interests"
+  roles: "Roles"
   support: "Support"
   emeis: "Emeis"
   alexandria: "Alexandria"
@@ -105,6 +106,25 @@ page:
       delete:
         prompt: "Do you really want to delete the interest {interest}?"
         success: "Interest {interest} deleted successfully."
+
+  roles:
+    index:
+      title: "Roles"
+      add: "Add role"
+
+      list:
+        edit: "Edit role"
+        delete: "Delete role"
+        empty: "No roles yet."
+      delete:
+        prompt: "Do you really want to delete the role {role}?"
+        success: "Role {role} deleted successfully."
+
+    add:
+      title: "Add role"
+
+    edit:
+      title: "Edit role"
 
 component:
   identity-form:
@@ -228,3 +248,13 @@ component:
       cancel: "Cancel"
       submit: "Save"
     success: "Category {category} saved successfully."
+
+  membership-role-form:
+    label:
+      title: "Title"
+      description: "Description"
+    control:
+      cancel: "Cancel"
+      submit: "Save"
+    success: "Role {role} saved successfully."
+
