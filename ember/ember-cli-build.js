@@ -17,9 +17,6 @@ module.exports = function (defaults) {
         "node_modules/ember-basic-dropdown/app/styles/",
       ],
     },
-    emberApolloClient: {
-      keepGraphqlFileExtension: false,
-    },
     "ember-fetch": {
       preferNative: true,
     },
