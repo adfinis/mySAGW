@@ -5,7 +5,7 @@ import { tracked } from "@glimmer/tracking";
 import { queryManager } from "ember-apollo-client";
 import { restartableTask } from "ember-concurrency-decorators";
 import ENV from "mysagw/config/environment";
-import getCasesQuery from "mysagw/gql/queries/get-cases";
+import getCasesQuery from "mysagw/gql/queries/get-cases.graphql";
 
 export default class CasesTableComponent extends Component {
   @queryManager apollo;

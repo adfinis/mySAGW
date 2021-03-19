@@ -5,9 +5,9 @@ import { queryManager } from "ember-apollo-client";
 import { decodeId } from "ember-caluma/helpers/decode-id";
 import { task, lastValue } from "ember-concurrency-decorators";
 import QueryParams from "ember-parachute";
-import createCaseMutation from "mysagw/gql/mutations/create-case";
-import getRootFormsQuery from "mysagw/gql/queries/get-root-forms";
-import getWorkflowQuery from "mysagw/gql/queries/get-workflow";
+import createCaseMutation from "mysagw/gql/mutations/create-case.graphql";
+import getRootFormsQuery from "mysagw/gql/queries/get-root-forms.graphql";
+import getWorkflowQuery from "mysagw/gql/queries/get-workflow.graphql";
 
 const queryParams = new QueryParams({
   selectedForm: {

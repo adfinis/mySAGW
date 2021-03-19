@@ -2,7 +2,7 @@ import Controller from "@ember/controller";
 import { queryManager } from "ember-apollo-client";
 import { task, lastValue } from "ember-concurrency-decorators";
 import QueryParams from "ember-parachute";
-import getCaseQuery from "mysagw/gql/queries/get-case";
+import getCaseQuery from "mysagw/gql/queries/get-case.graphql";
 
 export default class CasesDetailController extends Controller.extend(
   new QueryParams().Mixin

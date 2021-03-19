@@ -5,6 +5,10 @@ export default function () {
   this.passthrough("/auth");
   this.passthrough("https://mysagw.local/auth/**");
 
+  // Use ember-caluma's Mirage routing for /graphql endpoint.
+  // https://github.com/projectcaluma/ember-caluma/blob/master/tests/dummy/app/templates/docs/testing.md
+  this.post("/graphql", graphqlHandler(this), 200);
+
   this.namespace = "api/v1";
 
   this.get("/additional-emails", (schema, request) => {
@@ -119,8 +123,4 @@ export default function () {
     ]);
     return schema.snippets.where(query);
   });
-
-  // Use ember-caluma's Mirage routing for /graphql endpoint.
-  // https://github.com/projectcaluma/ember-caluma/blob/master/tests/dummy/app/templates/docs/testing.md
-  this.post("/graphql", graphqlHandler(this), 200);
 }
