@@ -81,7 +81,7 @@ export default class IdentityPhoneNumbersComponent extends Component {
 
   @dropTask *delete(phoneNumber) {
     try {
-      const options = { address: phoneNumber.phone };
+      const options = { number: phoneNumber.phone };
       yield UIkit.modal.confirm(
         this.intl.t("component.identity-phone-numbers.delete.prompt", options)
       );
