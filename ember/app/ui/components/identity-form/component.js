@@ -23,7 +23,7 @@ export default class IdentityFormComponent extends Component {
     const host =
       location.hostname === "localhost" ? "mysagw.local" : location.hostname;
     return [
-      `https://${host}/auth/admin/master/console/`,
+      `https://${host}/auth/admin/mysagw/console/`,
       "#/realms/mysagw/users/",
       this.changeset.get("idpId"),
     ].join("");
