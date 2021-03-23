@@ -75,7 +75,7 @@
     "ember-uikit": "^2.1.2",
     "ember-validated-form": "^3.0.2",
     "eslint": "^7.17.0",
-    "eslint-plugin-ember": "^8.11.0",
+    "eslint-plugin-ember": "^10.3.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.3.1",
