@@ -64,7 +64,7 @@ services:
       "-Dkeycloak.migration.action=import",
       "-Dkeycloak.migration.strategy=IGNORE_EXISTING",
       "-Dkeycloak.migration.provider=singleFile",
-      "-Dkeycloak.migration.file=/etc/keycloak/dev-config.json",
+      "-Dkeycloak.migration.file=/etc/keycloak/config.json",
       "-b",
       "0.0.0.0",
       ]
