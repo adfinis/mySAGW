@@ -47,7 +47,7 @@ services:
       - db
     image: jboss/keycloak:12.0.4
     volumes:
-      - ./keycloak/dev-config.json:/etc/keycloak/dev-config.json
+      - ./keycloak/config.json:/etc/keycloak/config.json
     environment:
       - DB_VENDOR=postgres
       - DB_ADDR=db
@@ -56,7 +56,7 @@ services:
       - KEYCLOAK_USER=admin
       - PROXY_ADDRESS_FORWARDING=true
     # export is a bit tricky: We need to _start_ keycloak with specific arguments to perform an export
-    # command: ["-Dkeycloak.migration.action=export", "-Dkeycloak.migration.provider=singleFile", "-Dkeycloak.migration.file=/etc/keycloak/dev-config.json", "-b", "0.0.0.0"]
+    # command: ["-Dkeycloak.migration.action=export", "-Dkeycloak.migration.provider=singleFile", "-Dkeycloak.migration.file=/etc/keycloak/config.json", "-b", "0.0.0.0"]
     #
     # http://www.keycloak.org/docs/3.3/server_admin/topics/export-import.html
     command:
