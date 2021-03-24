@@ -53,6 +53,10 @@ export default class IdentityMembershipsComponent extends Component {
       lookupValidator(MembershipValidations),
       MembershipValidations
     );
+
+    if (!this.changeset.get("timeSlot")) {
+      this.changeset.set("timeSlot", {});
+    }
   }
 
   @action cancel() {
