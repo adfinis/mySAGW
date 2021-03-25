@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.postgres.fields import DateRangeField
 from django.db import models
 from localized_fields.fields import LocalizedCharField, LocalizedTextField
@@ -53,11 +54,27 @@ class Membership(UUIDModel, HistoricalModel):
 
 
 class Identity(UUIDModel, HistoricalModel, TrackingModel):
+    SALUTATION_MR = "male"
+    SALUTATION_MRS = "female"
+    SALUTATION_NEUTRAL = "neutral"
+
+    SALUTATION_CHOICES = (
+        (SALUTATION_MR, {"de": "Herr", "en": "Mr.", "fr": "Monsieur"}),
+        (SALUTATION_MRS, {"de": "Frau", "en": "Mrs.", "fr": "Madame"}),
+        (SALUTATION_NEUTRAL, {"de": "", "en": "", "fr": ""}),
+    )
+
     idp_id = models.CharField(max_length=255, unique=True, null=True, blank=False)
     email = models.EmailField(unique=True, null=True, blank=True)
     organisation_name = models.CharField(max_length=255, null=True, blank=True)
     first_name = models.CharField(max_length=255, null=True, blank=True)
     last_name = models.CharField(max_length=255, null=True, blank=True)
+    salutation = models.CharField(
+        choices=SALUTATION_CHOICES, default=SALUTATION_NEUTRAL, max_length=7
+    )
+    language = models.CharField(
+        max_length=2, choices=settings.LANGUAGES, default=settings.LANGUAGE_CODE
+    )
     interests = models.ManyToManyField(Interest, related_name="identities", blank=True)
     is_organisation = models.BooleanField(default=False)
 

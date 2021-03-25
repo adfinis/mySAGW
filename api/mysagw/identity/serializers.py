@@ -99,6 +99,8 @@ class IdentitySerializer(TrackingSerializer):
             "idp_id",
             "first_name",
             "last_name",
+            "salutation",
+            "language",
             "interests",
             "email",
             "additional_emails",
@@ -121,6 +123,8 @@ class MeSerializer(serializers.ModelSerializer):
         fields = (
             "first_name",
             "last_name",
+            "salutation",
+            "language",
             "email",
         )
         extra_kwargs = {
