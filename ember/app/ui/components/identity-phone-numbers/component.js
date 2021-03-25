@@ -87,7 +87,9 @@ export default class IdentityPhoneNumbersComponent extends Component {
       );
 
       try {
-        yield phoneNumber.destroyRecord();
+        yield phoneNumber.destroyRecord({
+          adapterOptions: { include: "identity,identity.phone-numbers" },
+        });
         this.notification.success(
           this.intl.t(
             "component.identity-phone-numbers.delete.success",

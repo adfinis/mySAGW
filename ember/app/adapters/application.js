@@ -31,4 +31,11 @@ export default class ApplicationAdapter extends JSONAPIAdapter.extend(
       snapshot.adapterOptions
     );
   }
+
+  urlForDeleteRecord(id, modelName, snapshot) {
+    return this._appendInclude(
+      super.urlForDeleteRecord(id, modelName, snapshot),
+      snapshot.adapterOptions
+    );
+  }
 }
