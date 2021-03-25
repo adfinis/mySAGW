@@ -14,6 +14,12 @@ Router.map(function () {
   this.route("login");
 
   this.route("protected", { path: "/" }, function () {
+    // Index
+    // Probably because of the namespace reset,
+    // we need to manually specify the index route.
+    this.route("index", { resetNamespace, path: "/" });
+
+    // Engines
     this.mount("ember-emeis", {
       as: "emeis",
       path: "/emeis",
@@ -30,6 +36,7 @@ Router.map(function () {
       resetNamespace,
     });
 
+    // Caluma
     this.route("cases", { resetNamespace }, function () {
       this.route("detail", { path: "/:id" }, function () {
         this.route("edit");
@@ -37,6 +44,7 @@ Router.map(function () {
       this.route("new");
     });
 
+    // API
     this.route("identities", { resetNamespace }, function () {
       this.route("add");
       this.route("edit", { path: "/edit/:identity" });
