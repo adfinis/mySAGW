@@ -13,6 +13,7 @@
         @label={{t "component.identity-form.label.isOrganisation"}}
         @type="checkbox"
         @name="isOrganisation"
+        @on-update={{this.updateOrganisation}}
       />
 
       {{#if this.changeset.isOrganisation}}
