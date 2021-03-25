@@ -12,6 +12,7 @@ import UIkit from "uikit";
 /**
  * @arg identity
  * @arg onSave
+ * @arg onOrganisationUpdate
  */
 export default class IdentityFormComponent extends Component {
   @service notification;
@@ -41,6 +42,12 @@ export default class IdentityFormComponent extends Component {
       lookupValidator(IdentityValidations),
       IdentityValidations
     );
+  }
+
+  @action updateOrganisation() {
+    const isOrganisation = !this.changeset.get("isOrganisation");
+    this.args.onOrganisationUpdate?.(isOrganisation);
+    this.changeset.set("isOrganisation", isOrganisation);
   }
 
   @dropTask *submit(changeset) {
