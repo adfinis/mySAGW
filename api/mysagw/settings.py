@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "psqlextra",
     "localized_fields",
     "phonenumber_field",
+    "django_countries",
     "simple_history",
     "mysagw.identity.apps.DefaultConfig",
     "mysagw.snippets.apps.SnippetsConfig",

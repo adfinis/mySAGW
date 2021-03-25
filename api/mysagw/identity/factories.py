@@ -35,6 +35,19 @@ class PhoneNumberFactory(DjangoModelFactory):
         model = models.PhoneNumber
 
 
+class AddressFactory(DjangoModelFactory):
+    identity = SubFactory(IdentityFactory)
+    street_and_number = Faker("street_address")
+    postcode = Faker("postcode")
+    town = Faker("city")
+    country = Faker("country_code")
+    description = fuzzy.FuzzyChoice(["work", "private", "home", "office"])
+    default = True
+
+    class Meta:
+        model = models.Address
+
+
 class InterestCategoryFactory(DjangoModelFactory):
     title = Faker("word")
     description = Faker("sentence")
