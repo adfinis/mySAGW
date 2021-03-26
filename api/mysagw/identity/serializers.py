@@ -22,6 +22,20 @@ class SetModifyingUserOnIdentityMixin:
         return instance
 
 
+class UniqueBooleanFieldSerializerMixin:
+    def validate(self, *args, **kwargs):
+        validated_data = super().validate(*args, **kwargs)
+        if (
+            self.instance
+            and self.instance.default
+            and not validated_data.get("default", True)
+        ):
+            raise ValidationError(
+                'Can\'t unset "default". Set another default instead.'
+            )
+        return validated_data
+
+
 class EmailSerializer(SetModifyingUserOnIdentityMixin, serializers.ModelSerializer):
     included_serializers = {
         "identity": "mysagw.identity.serializers.IdentitySerializer",
@@ -38,7 +52,9 @@ class EmailSerializer(SetModifyingUserOnIdentityMixin, serializers.ModelSerializ
 
 
 class PhoneNumberSerializer(
-    SetModifyingUserOnIdentityMixin, serializers.ModelSerializer
+    SetModifyingUserOnIdentityMixin,
+    UniqueBooleanFieldSerializerMixin,
+    serializers.ModelSerializer,
 ):
     included_serializers = {
         "identity": "mysagw.identity.serializers.IdentitySerializer",

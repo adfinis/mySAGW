@@ -183,6 +183,28 @@ def test_phone_number_update(db, client, expected_status, phone_number_factory):
     assert phone_number.identity.modified_by_user == client.user.username
 
 
+def test_phone_number_update_unset_default(db, client, phone_number):
+    assert phone_number.default
+
+    url = reverse("phonenumber-detail", args=[phone_number.pk])
+
+    data = {
+        "data": {
+            "type": "phone-numbers",
+            "id": str(phone_number.pk),
+            "attributes": {"default": False},
+        }
+    }
+
+    response = client.patch(url, data=data)
+
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert (
+        response.json()["errors"][0]["detail"]
+        == 'Can\'t unset "default". Set another default instead.'
+    )
+
+
 @pytest.mark.parametrize(
     "client,expected_status",
     [
@@ -211,3 +233,29 @@ def test_phone_number_delete(db, client, expected_status, phone_number_factory):
 
         other_phone_number.identity.refresh_from_db()
         assert other_phone_number.identity.modified_by_user == client.user.username
+
+
+@pytest.mark.parametrize("has_other", [True, False])
+def test_phone_number_delete_default(db, client, phone_number_factory, has_other):
+    main_phone_number = phone_number_factory()
+    if has_other:
+        phone_number_factory(identity=main_phone_number.identity, default=False)
+
+    url = reverse("phonenumber-detail", args=[main_phone_number.pk])
+
+    response = client.delete(url)
+
+    assert (
+        response.status_code == status.HTTP_400_BAD_REQUEST
+        if has_other
+        else status.HTTP_204_NO_CONTENT
+    )
+
+    if response.status_code == status.HTTP_204_NO_CONTENT:
+        with pytest.raises(models.PhoneNumber.DoesNotExist):
+            main_phone_number.refresh_from_db()
+    else:
+        assert (
+            response.json()["errors"][0]["detail"]
+            == "Can't delete the default entry. Set another entry as default first."
+        )

@@ -34,13 +34,13 @@ class UniqueBooleanField(models.BooleanField):
         model = model_instance.__class__
         together = model.objects.filter(
             **{t: getattr(model_instance, t, None) for t in self.together},
-        )
+        ).exclude(pk=model_instance.pk)
 
         if getattr(model_instance, self.attname) is True:
             # If True then set all others as False
             together.filter(**{self.attname: True}).update(**{self.attname: False})
 
-        elif not together.filter(**{self.attname: True}).exists():
+        elif not together.exists():
             # We're the only one, thus setting to True
             setattr(model_instance, self.attname, True)
 

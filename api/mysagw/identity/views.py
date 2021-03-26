@@ -9,6 +9,19 @@ from .export import IdentityExport
 from .permissions import IsAdmin, IsAuthenticated, IsOrgAdmin, IsStaff
 
 
+class UniqueBooleanFieldViewSetMixin:
+    def perform_destroy(self, instance):
+        if (
+            instance.default
+            and instance.__class__.objects.filter(identity=instance.identity).count()
+            > 1
+        ):
+            raise ValidationError(
+                "Can't delete the default entry. Set another entry as default first."
+            )
+        super().perform_destroy(instance)
+
+
 class EmailViewSet(views.ModelViewSet):
     serializer_class = serializers.EmailSerializer
     queryset = models.Email.objects.all()
@@ -21,7 +34,7 @@ class EmailViewSet(views.ModelViewSet):
         instance.identity.save()
 
 
-class PhoneNumberViewSet(views.ModelViewSet):
+class PhoneNumberViewSet(UniqueBooleanFieldViewSetMixin, views.ModelViewSet):
     serializer_class = serializers.PhoneNumberSerializer
     queryset = models.PhoneNumber.objects.all()
     permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
