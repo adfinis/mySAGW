@@ -1,6 +1,5 @@
 import django_excel
 from rest_framework.decorators import action
-from rest_framework.exceptions import ValidationError
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework.viewsets import GenericViewSet
 from rest_framework_json_api import views
@@ -57,20 +56,9 @@ class IdentityViewSet(views.ModelViewSet):
 
     @action(detail=False, methods=["post"])
     def export(self, request, *args, **kwargs):
-        error_msg = "No identity IDs provided."
-
-        if not request.data or not isinstance(request.data, dict):
-            raise ValidationError(error_msg)
-
-        pks = request.data.get("export")
-        if not pks or not isinstance(pks, list):
-            raise ValidationError(error_msg)
-
-        queryset = self.queryset.filter(pk__in=pks).prefetch_related(
+        queryset = self.filter_queryset(self.get_queryset()).prefetch_related(
             "phone_numbers", "additional_emails"
         )
-        if not queryset.exists():
-            raise ValidationError(error_msg)
 
         ex = IdentityExport()
         records = ex.export(queryset)
