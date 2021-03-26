@@ -71,6 +71,15 @@ export default class IdentityPhoneNumbersComponent extends Component {
       this.onUpdate();
       this.changeset = null;
     } catch (error) {
+      // A "unique" error can only apply to the phone number.
+      // But as the backend validation doesn't stem from the field itself
+      // it cannot automatically be attributed by `applyError`. That's why we add
+      // the specific field error manually to the changeset if present.
+      const unique = error.errors?.find(({ code }) => code === "unique");
+      if (unique) {
+        changeset.addError("phone", unique.detail);
+      }
+
       console.error(error);
       this.notification.fromError(error);
       applyError(changeset, error);
