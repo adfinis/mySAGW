@@ -2,6 +2,7 @@ import os
 import re
 
 import environ
+from django.utils.translation import gettext_lazy as _
 
 env = environ.Env()
 django_root = environ.Path(__file__) - 2
@@ -86,9 +87,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = env.str("LANGUAGE_CODE", "de")
 LANGUAGES = [
-    ("de", "de"),
-    ("en", "en"),
-    ("fr", "fr"),
+    ("de", _("German")),
+    ("en", _("English")),
+    ("fr", _("French")),
 ]
 LOCALIZED_FIELDS_FALLBACKS = {
     "de": ["en", "fr"],
