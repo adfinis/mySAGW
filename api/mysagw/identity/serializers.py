@@ -70,10 +70,31 @@ class PhoneNumberSerializer(
         )
 
 
+class AddressSerializer(SetModifyingUserOnIdentityMixin, serializers.ModelSerializer):
+    included_serializers = {
+        "identity": "mysagw.identity.serializers.IdentitySerializer",
+    }
+
+    class Meta:
+        model = models.Address
+        fields = (
+            "identity",
+            "address_addition",
+            "street_and_number",
+            "po_box",
+            "postcode",
+            "town",
+            "country",
+            "description",
+            "default",
+        )
+
+
 class IdentitySerializer(TrackingSerializer):
     included_serializers = {
         "additional_emails": "mysagw.identity.serializers.EmailSerializer",
         "phone_numbers": "mysagw.identity.serializers.PhoneNumberSerializer",
+        "addresses": "mysagw.identity.serializers.AddressSerializer",
     }
 
     def validate(self, *args, **kwargs):
@@ -121,6 +142,7 @@ class IdentitySerializer(TrackingSerializer):
             "email",
             "additional_emails",
             "phone_numbers",
+            "addresses",
             "is_organisation",
             "organisation_name",
         )
@@ -130,6 +152,7 @@ class IdentitySerializer(TrackingSerializer):
             "idp_id": {"read_only": True},
             "additional_emails": {"required": False},
             "phone_numbers": {"required": False},
+            "addresses": {"required": False},
         }
 
 

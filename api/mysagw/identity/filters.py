@@ -27,6 +27,14 @@ class PhoneNumberFilterSet(FilterSet):
         ]
 
 
+class AddressFilterSet(FilterSet):
+    class Meta:
+        model = models.Address
+        fields = [
+            "identity",
+        ]
+
+
 class MembershipFilterSet(FilterSet):
     class Meta:
         model = models.Membership

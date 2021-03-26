@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.postgres.fields import DateRangeField
 from django.db import models
+from django_countries.fields import CountryField
 from localized_fields.fields import LocalizedCharField, LocalizedTextField
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -119,4 +120,21 @@ class PhoneNumber(UUIDModel, HistoricalModel):
 
     class Meta:
         unique_together = [["identity", "phone"]]
+        ordering = ("-default",)
+
+
+class Address(UUIDModel, HistoricalModel):
+    identity = models.ForeignKey(
+        Identity, related_name="addresses", on_delete=models.CASCADE
+    )
+    address_addition = models.CharField(max_length=255, null=True, blank=True)
+    street_and_number = models.CharField(max_length=255)
+    po_box = models.CharField(max_length=255, null=True, blank=True)
+    postcode = models.CharField(max_length=255)
+    town = models.CharField(max_length=255)
+    country = CountryField(default="CH")
+    description = LocalizedCharField(blank=True, null=True, required=False)
+    default = UniqueBooleanField(default=False, together=["identity"])
+
+    class Meta:
         ordering = ("-default",)

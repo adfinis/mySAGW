@@ -47,6 +47,18 @@ class PhoneNumberViewSet(UniqueBooleanFieldViewSetMixin, views.ModelViewSet):
         instance.identity.save()
 
 
+class AddressViewSet(views.ModelViewSet):
+    serializer_class = serializers.AddressSerializer
+    queryset = models.Address.objects.all()
+    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
+    filterset_class = filters.AddressFilterSet
+
+    def perform_destroy(self, instance):
+        super().perform_destroy(instance)
+        instance.identity.modified_by_user = self.request.user.username
+        instance.identity.save()
+
+
 class IdentityViewSet(views.ModelViewSet):
     serializer_class = serializers.IdentitySerializer
     queryset = models.Identity.objects.all()
