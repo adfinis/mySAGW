@@ -160,7 +160,7 @@ component:
         edit: "Edit email address"
       label:
         email: "Email address"
-        description: "Description"
+        description: "Description ({lang})"
         default: "This is the default address."
       control:
         cancel: "Cancel"
@@ -183,7 +183,7 @@ component:
         edit: "Edit phone numbers"
       label:
         phone: "Phone number"
-        description: "Description"
+        description: "Description ({lang})"
         default: "This is the default number."
       control:
         cancel: "Cancel"
@@ -251,8 +251,8 @@ component:
 
   membership-role-form:
     label:
-      title: "Title"
-      description: "Description"
+      title: "Title ({lang})"
+      description: "Description ({lang})"
     control:
       cancel: "Cancel"
       submit: "Save"

@@ -10,7 +10,7 @@ import {
   lastValue,
 } from "ember-concurrency-decorators";
 import applyError from "mysagw/utils/apply-error";
-import EmailValidations from "mysagw/validations/email";
+import EmailValidations from "mysagw/validations/additional-email";
 import UIkit from "uikit";
 
 export default class IdentityEmailsComponent extends Component {
