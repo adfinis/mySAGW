@@ -5,7 +5,7 @@
 >
   <h2>{{t "component.identity-phone-numbers.title"}}</h2>
 
-  {{#if this.fetchEmails.isRunning}}
+  {{#if this.fetchPhoneNumbers.isRunning}}
     <LoadingSpinner />
   {{else}}
     {{#if this.phoneNumbers.length}}
@@ -53,7 +53,11 @@
                   class="uk-icon-button uk-button-default"
                   type="button"
                   uk-icon="close"
-                  disabled={{or this.changeset this.delete.isRunning phoneNumber.default}}
+                  disabled={{or
+                    this.changeset
+                    this.delete.isRunning
+                    (and phoneNumber.default (gt this.phoneNumbers.length 1))
+                  }}
                   title={{t "component.identity-phone-numbers.list.delete"}}
                   {{on "click" (perform this.delete phoneNumber)}}
                 ></button>
