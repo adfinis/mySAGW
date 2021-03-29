@@ -33,6 +33,17 @@ export default function () {
   this.patch("/phone-numbers/:id");
   this.delete("/phone-numbers/:id");
 
+  this.get("/addresses", (schema, request) => {
+    const query = parseFilters(request, [
+      { source: "identity", target: "identityId" },
+    ]);
+    return schema.addresses.where(query);
+  });
+  this.post("/addresses");
+  this.get("/addresses/:id");
+  this.patch("/addresses/:id");
+  this.delete("/addresses/:id");
+
   this.get("/identities", (schema, request) => {
     const query = parseFilters(request, [
       { source: "isOrganisation", target: "isOrganisation" },

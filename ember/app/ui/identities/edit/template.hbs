@@ -8,35 +8,32 @@
 <hr>
 
 <div uk-grid>
-  <div class="
-    uk-width-1-2@m uk-width-1-3@l
-    {{unless this.isOrganisation "uk-width-1-4@xl"}}
-  ">
+  <div class="uk-width-1-2@m uk-width-1-3@l">
+    <div class="uk-card uk-card-default uk-card-body uk-card-small">
+      <IdentityAddresses @identity={{this.model}} />
+    </div>
+  </div>
+
+  <div class="uk-width-1-2@m uk-width-1-3@l">
     <div class="uk-card uk-card-default uk-card-body uk-card-small">
       <IdentityEmails @identity={{this.model}} />
     </div>
   </div>
 
-  <div class="
-    uk-width-1-2@m uk-width-1-3@l
-    {{unless this.isOrganisation "uk-width-1-4@xl"}}
-  ">
+  <div class="uk-width-1-2@m uk-width-1-3@l">
     <div class="uk-card uk-card-default uk-card-body uk-card-small">
       <IdentityPhoneNumbers @identity={{this.model}} />
     </div>
   </div>
 
-  <div class="
-    uk-width-1-2@m uk-width-1-3@l
-    {{unless this.isOrganisation "uk-width-1-4@xl"}}
-  ">
+  <div class="uk-width-1-2@m">
     <div class="uk-card uk-card-default uk-card-body uk-card-small">
       <IdentityInterests @identity={{this.model}} />
     </div>
   </div>
 
   {{#unless this.isOrganisation}}
-    <div class="uk-width-1-2@m uk-width-1-3@l uk-width-1-4@xl">
+    <div class="uk-width-1-2@m">
       <div class="uk-card uk-card-default uk-card-body uk-card-small">
         <IdentityMemberships @identity={{this.model}} />
       </div>

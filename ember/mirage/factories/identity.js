@@ -30,5 +30,9 @@ export default Factory.extend({
     server.createList("phone-number", faker.random.number({ min: 0, max: 3 }), {
       identity,
     });
+
+    server.createList("address", faker.random.number({ min: 0, max: 3 }), {
+      identity,
+    });
   },
 });
