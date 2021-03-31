@@ -60,9 +60,9 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
     SALUTATION_NEUTRAL = "neutral"
 
     SALUTATION_CHOICES = (
-        (SALUTATION_MR, {"de": "Herr", "en": "Mr.", "fr": "Monsieur"}),
-        (SALUTATION_MRS, {"de": "Frau", "en": "Mrs.", "fr": "Madame"}),
-        (SALUTATION_NEUTRAL, {"de": "", "en": "", "fr": ""}),
+        (SALUTATION_MR, SALUTATION_MR),
+        (SALUTATION_MRS, SALUTATION_MRS),
+        (SALUTATION_NEUTRAL, SALUTATION_NEUTRAL),
     )
 
     idp_id = models.CharField(max_length=255, unique=True, null=True, blank=False)

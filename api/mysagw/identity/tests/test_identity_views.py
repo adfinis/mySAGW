@@ -69,7 +69,12 @@ def test_identity_list(db, client, expected_status):
 def test_identity_create(db, client, expected_status):
     url = reverse("identity-list")
 
-    data = {"data": {"type": "identities", "attributes": {"first_name": "foo"}}}
+    data = {
+        "data": {
+            "type": "identities",
+            "attributes": {"first_name": "foo", "salutation": "neutral"},
+        }
+    }
 
     response = client.post(url, data=data)
 
