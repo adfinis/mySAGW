@@ -91,11 +91,20 @@ class AddressSerializer(SetModifyingUserOnIdentityMixin, serializers.ModelSerial
 
 
 class IdentitySerializer(TrackingSerializer):
+    has_memberships = serializers.SerializerMethodField()
+    has_members = serializers.SerializerMethodField()
+
     included_serializers = {
         "additional_emails": "mysagw.identity.serializers.EmailSerializer",
         "phone_numbers": "mysagw.identity.serializers.PhoneNumberSerializer",
         "addresses": "mysagw.identity.serializers.AddressSerializer",
     }
+
+    def get_has_memberships(self, obj):
+        return obj.memberships.exists()
+
+    def get_has_members(self, obj):
+        return obj.members.exists()
 
     def validate(self, *args, **kwargs):
         validated_data = super().validate(*args, **kwargs)
@@ -145,6 +154,8 @@ class IdentitySerializer(TrackingSerializer):
             "addresses",
             "is_organisation",
             "organisation_name",
+            "has_memberships",
+            "has_members",
         )
         extra_kwargs = {
             **TrackingSerializer.Meta.extra_kwargs,
