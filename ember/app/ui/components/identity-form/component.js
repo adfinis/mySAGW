@@ -22,6 +22,14 @@ export default class IdentityFormComponent extends Component {
 
   @tracked changeset;
 
+  get salutations() {
+    return [
+      { label: this.intl.t("global.salutation.neutral"), value: "neutral" },
+      { label: this.intl.t("global.salutation.male"), value: "male" },
+      { label: this.intl.t("global.salutation.female"), value: "female" },
+    ];
+  }
+
   get keyCloakAccountUrl() {
     const host =
       location.hostname === "localhost" ? "mysagw.local" : location.hostname;

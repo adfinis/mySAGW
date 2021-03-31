@@ -24,6 +24,15 @@
         />
       {{/if}}
 
+      <Form.input
+        @label={{t "component.identity-form.label.salutation"}}
+        @name="salutation"
+        @type="select"
+        @options={{this.salutations}}
+        @optionLabelPath="label"
+        @optionTargetPath="value"
+      />
+
       <div class="uk-child-width-expand@s" uk-grid>
         <div>
           <Form.input

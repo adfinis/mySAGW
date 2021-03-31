@@ -39,6 +39,10 @@
             >
               {{#if (or identity.fullName identity.isOrganisation)}}
                 <div class="uk-margin-right">
+                  {{#if identity.salutation}}
+                    {{t (concat "global.salutation." identity.salutation)}}
+                  {{/if}}
+
                   {{#if identity.fullName}}
                     {{identity.fullName}}
                   {{~/if}}

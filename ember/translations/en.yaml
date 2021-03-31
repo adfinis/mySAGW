@@ -2,6 +2,10 @@ demo: "mySAGW"
 
 global:
   continue: "Continue"
+  salutation:
+    male: "Mr."
+    female: "Mrs."
+    neutral: ""
 
 nav:
   home: "Home"
@@ -131,6 +135,7 @@ component:
     label:
       idpId: "IDP ID"
       organisationName: "Organisation name"
+      salutation: "Salutation"
       firstName: "First name"
       lastName: "Last name"
       email: "Main email address"
