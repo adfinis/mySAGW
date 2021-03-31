@@ -62,6 +62,9 @@ page:
     index:
       title: "Identities"
       add: "Add identity"
+      export:
+        button: "Export"
+        filename: "identities-{date}"
       search: "Search"
 
     add:

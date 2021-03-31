@@ -5,12 +5,23 @@
   <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
     <h1 class="uk-margin-remove">{{t "page.identities.index.title"}}</h1>
 
-    <LinkTo
-      @route="identities.add"
-      class="uk-button uk-button-default uk-flex-none"
-    >
-      {{t "page.identities.index.add"}}
-    </LinkTo>
+    <div class="uk-flex-none">
+      <button
+        type="button"
+        class="uk-button uk-button-primary"
+        disabled={{this.exportSearch.isRunning}}
+        {{on "click" (perform this.exportSearch)}}
+      >
+        {{t "page.identities.index.export.button"}}
+      </button>
+
+      <LinkTo
+        @route="identities.add"
+        class="uk-button uk-button-default"
+      >
+        {{t "page.identities.index.add"}}
+      </LinkTo>
+    </div>
   </div>
 
   <div class="uk-margin">
@@ -20,6 +31,7 @@
     <input
       class="uk-input"
       id="form-search"
+      type="search"
       value={{this.searchTerm}}
       {{on "input" (perform this.search)}}
     >
