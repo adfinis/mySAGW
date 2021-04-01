@@ -3,6 +3,7 @@ import { LocalizedModel } from "ember-localized-model";
 
 export default class IdentityModel extends LocalizedModel {
   @attr idpId;
+  @attr salutation;
   @attr organisationName;
   @attr firstName;
   @attr lastName;
