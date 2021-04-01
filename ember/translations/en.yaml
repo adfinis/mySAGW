@@ -182,13 +182,13 @@ component:
     add: "Add numbers"
 
     list:
-      edit: "Edit numbers"
-      delete: "Delete numbers"
+      edit: "Edit number"
+      delete: "Delete number"
       empty: "No numbers yet."
     form:
       title:
-        add: "Add phone numbers"
-        edit: "Edit phone numbers"
+        add: "Add phone number"
+        edit: "Edit phone number"
       label:
         phone: "Phone number"
         description: "Description ({lang})"

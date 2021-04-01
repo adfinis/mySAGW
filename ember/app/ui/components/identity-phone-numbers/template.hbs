@@ -5,7 +5,7 @@
 >
   <h2>{{t "component.identity-phone-numbers.title"}}</h2>
 
-  {{#if this.fetchEmails.isRunning}}
+  {{#if this.fetchPhoneNumbers.isRunning}}
     <LoadingSpinner />
   {{else}}
     {{#if this.phoneNumbers.length}}
