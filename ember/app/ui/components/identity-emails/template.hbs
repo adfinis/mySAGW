@@ -36,23 +36,27 @@
               ></a>
 
               <div class="uk-margin-left">
-                <button
-                  class="uk-icon-button uk-button-default"
-                  type="button"
-                  uk-icon="pencil"
-                  disabled={{this.changeset}}
-                  title={{t "component.identity-emails.list.edit"}}
-                  {{on "click" (fn this.edit email)}}
-                ></button>
+                {{#if (can "edit additional-email" email)}}
+                  <button
+                    class="uk-icon-button uk-button-default"
+                    type="button"
+                    uk-icon="pencil"
+                    disabled={{this.changeset}}
+                    title={{t "component.identity-emails.list.edit"}}
+                    {{on "click" (fn this.edit email)}}
+                  ></button>
+                {{/if}}
 
-                <button
-                  class="uk-icon-button uk-button-default"
-                  type="button"
-                  uk-icon="close"
-                  disabled={{or this.changeset this.delete.isRunning}}
-                  title={{t "component.identity-emails.list.delete"}}
-                  {{on "click" (perform this.delete email)}}
-                ></button>
+                {{#if (can "delete additional-email" email)}}
+                  <button
+                    class="uk-icon-button uk-button-default"
+                    type="button"
+                    uk-icon="close"
+                    disabled={{or this.changeset this.delete.isRunning}}
+                    title={{t "component.identity-emails.list.delete"}}
+                    {{on "click" (perform this.delete email)}}
+                  ></button>
+                {{/if}}
               </div>
             </div>
           </li>
@@ -62,17 +66,19 @@
       <p>{{t "component.identity-emails.list.empty"}}</p>
     {{/if}}
 
-    <p class="uk-text-right">
-      <button
-        class="uk-button uk-button-default"
-        type="button"
-        disabled={{this.changeset}}
-        {{on "click" (fn this.edit null)}}
-        data-test-email-add
-      >
-        {{t "component.identity-emails.add"}}
-      </button>
-    </p>
+    {{#if (can "add additional-email")}}
+      <p class="uk-text-right">
+        <button
+          class="uk-button uk-button-default"
+          type="button"
+          disabled={{this.changeset}}
+          {{on "click" (fn this.edit null)}}
+          data-test-email-add
+        >
+          {{t "component.identity-emails.add"}}
+        </button>
+      </p>
+    {{/if}}
   {{/if}}
 
   {{#if this.changeset}}

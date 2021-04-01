@@ -53,6 +53,7 @@
 
         <Form.submit
           @label={{t "component.membership-role-form.control.submit"}}
+          @disabled={{cannot "edit membership-role" this.changeset.data}}
         />
       </p>
     </ValidatedForm>

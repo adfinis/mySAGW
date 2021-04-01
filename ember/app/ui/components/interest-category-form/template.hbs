@@ -30,6 +30,7 @@
 
         <Form.submit
           @label={{t "component.interest-category-form.control.submit"}}
+          @disabled={{cannot "edit interest-category" this.changeset.data}}
         />
       </p>
     </ValidatedForm>

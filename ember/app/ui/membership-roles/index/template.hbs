@@ -5,12 +5,14 @@
   <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
     <h1 class="uk-margin-remove">{{t "page.roles.index.title"}}</h1>
 
-    <LinkTo
-      @route="membership-roles.add"
-      class="uk-button uk-button-default uk-flex-none"
-    >
-      {{t "page.roles.index.add"}}
-    </LinkTo>
+    {{#if (can "add membership-role")}}
+      <LinkTo
+        @route="membership-roles.add"
+        class="uk-button uk-button-default uk-flex-none"
+      >
+        {{t "page.roles.index.add"}}
+      </LinkTo>
+    {{/if}}
   </div>
 
   {{#if this.fetchRoles.isRunning}}
@@ -37,24 +39,28 @@
                 </div>
 
                 <div class="uk-flex-none">
-                  <LinkTo
-                    class="uk-icon-button uk-button-default"
-                    uk-icon="pencil"
-                    title={{t "page.roles.index.list.edit"}}
-                    @route="membership-roles.edit"
-                    @model={{role.id}}
-                    data-test-role-edit
-                  ></LinkTo>
+                  {{#if (can "edit membership-role" role)}}
+                    <LinkTo
+                      class="uk-icon-button uk-button-default"
+                      uk-icon="pencil"
+                      title={{t "page.roles.index.list.edit"}}
+                      @route="membership-roles.edit"
+                      @model={{role.id}}
+                      data-test-role-edit
+                    ></LinkTo>
+                  {{/if}}
 
-                  <button
-                    class="uk-icon-button uk-button-default"
-                    type="button"
-                    uk-icon="close"
-                    title={{t "page.roles.index.list.delete"}}
-                    disabled={{or this.delete.isRunning}}
-                    {{on "click" (perform this.delete role)}}
-                    data-test-role-delete
-                  ></button>
+                  {{#if (can "delete membership-role" role)}}
+                    <button
+                      class="uk-icon-button uk-button-default"
+                      type="button"
+                      uk-icon="close"
+                      title={{t "page.roles.index.list.delete"}}
+                      disabled={{or this.delete.isRunning}}
+                      {{on "click" (perform this.delete role)}}
+                      data-test-role-delete
+                    ></button>
+                  {{/if}}
                 </div>
               </div>
             </div>

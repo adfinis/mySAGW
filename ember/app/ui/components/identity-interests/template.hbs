@@ -19,16 +19,18 @@
                 <li class="uk-flex uk-flex-between uk-flex-middle">
                   <div>{{interest.title}}</div>
 
-                  <div>
-                    <button
-                      class="uk-icon-button uk-button-default"
-                      type="button"
-                      disabled={{or this.changeset this.delete.isRunning}}
-                      uk-icon="close"
-                      title={{t "component.identity-interests.list.delete"}}
-                      {{on "click" (perform this.delete interest)}}
-                    ></button>
-                  </div>
+                  {{#if (can "remove interest from identity" this.changeset.data)}}
+                    <div>
+                      <button
+                        class="uk-icon-button uk-button-default"
+                        type="button"
+                        disabled={{or this.changeset this.delete.isRunning}}
+                        uk-icon="close"
+                        title={{t "component.identity-interests.list.delete"}}
+                        {{on "click" (perform this.delete interest)}}
+                      ></button>
+                    </div>
+                  {{/if}}
                 </li>
               {{/each}}
             </ul>
@@ -39,16 +41,18 @@
       <p>{{t "component.identity-interests.list.empty"}}</p>
     {{/if}}
 
-    <p class="uk-text-right">
-      <button
-        class="uk-button uk-button-default"
-        type="button"
-        disabled={{this.changeset}}
-        {{on "click" (fn this.edit null)}}
-      >
-        {{t "component.identity-interests.add"}}
-      </button>
-    </p>
+    {{#if (can "add interest to identity" this.changeset.data)}}
+      <p class="uk-text-right">
+        <button
+          class="uk-button uk-button-default"
+          type="button"
+          disabled={{this.changeset}}
+          {{on "click" (fn this.edit null)}}
+        >
+          {{t "component.identity-interests.add"}}
+        </button>
+      </p>
+    {{/if}}
   {{/if}}
 
   {{#if this.changeset}}

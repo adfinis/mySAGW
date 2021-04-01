@@ -5,12 +5,14 @@
   <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
     <h1 class="uk-margin-remove">{{t "page.interests.index.title"}}</h1>
 
-    <LinkTo
-      @route="interests.add"
-      class="uk-button uk-button-default uk-flex-none"
-    >
-      {{t "page.interests.index.add"}}
-    </LinkTo>
+    {{#if (can "add interest-category")}}
+      <LinkTo
+        @route="interests.add"
+        class="uk-button uk-button-default uk-flex-none"
+      >
+        {{t "page.interests.index.add"}}
+      </LinkTo>
+    {{/if}}
   </div>
 
   {{#if this.fetchInterests.isRunning}}
@@ -36,24 +38,28 @@
               </div>
 
               <div class="uk-flex-none">
-                <LinkTo
-                  class="uk-icon-button uk-button-default"
-                  uk-icon="pencil"
-                  title={{t "page.interests.index.list.edit"}}
-                  @route="interests.edit"
-                  @model={{category.id}}
-                  data-test-category-edit
-                ></LinkTo>
+                {{#if (can "edit interest-category" category)}}
+                  <LinkTo
+                    class="uk-icon-button uk-button-default"
+                    uk-icon="pencil"
+                    title={{t "page.interests.index.list.edit"}}
+                    @route="interests.edit"
+                    @model={{category.id}}
+                    data-test-category-edit
+                  ></LinkTo>
+                {{/if}}
 
-                <button
-                  class="uk-icon-button uk-button-default"
-                  type="button"
-                  uk-icon="close"
-                  title={{t "page.interests.index.list.delete"}}
-                  disabled={{or this.delete.isRunning}}
-                  {{on "click" (perform this.delete category)}}
-                  data-test-category-delete
-                ></button>
+                {{#if (can "delete interest-category" category)}}
+                  <button
+                    class="uk-icon-button uk-button-default"
+                    type="button"
+                    uk-icon="close"
+                    title={{t "page.interests.index.list.delete"}}
+                    disabled={{or this.delete.isRunning}}
+                    {{on "click" (perform this.delete category)}}
+                    data-test-category-delete
+                  ></button>
+                {{/if}}
               </div>
             </div>
 
