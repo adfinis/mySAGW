@@ -1,20 +1,17 @@
-<div
-  {{did-insert this.onUpdate}}
-  {{did-update this.onUpdate @identity}}
->
+<div {{did-insert this.onUpdate}} {{did-update this.onUpdate @identity}}>
   {{#if this.changeset}}
     <ValidatedForm
       @model={{this.changeset}}
       @on-submit={{perform this.submit}}
-      class="uk-margin-remove-last-child"
-      as |Form|
+      class="uk-margin-remove-last-child" as |Form|
     >
       <Form.input
         @label={{t "component.identity-form.label.isOrganisation"}}
         @type="checkbox"
         @name="isOrganisation"
         @on-update={{this.updateOrganisation}}
-        @disabled={{or
+        @disabled={{
+          or
           this.changeset.hasMembers
           this.changeset.hasMemberships
           (cannot "edit identity" this.changeset.data)
@@ -58,26 +55,29 @@
       <div class="uk-margin">
         <Form.input
           @label={{t "component.identity-form.label.email"}}
-          @name="email"
-          as |field|
+          @name="email" as |field|
         >
           <div class="uk-form-controls">
             <input
               class="
-                uk-input
-                {{if field.isValid "uk-form-success"}}
-                {{if field.isInvalid "uk-form-danger"}}
+              uk-input
+              {{if field.isValid "uk-form-success"}}
+               {{if field.isInvalid "uk-form-danger"}}
               "
               id="form-email"
-              disabled={{or this.changeset.idpId (cannot "edit identity" this.changeset.data)}}
+              disabled={{
+                or
+                this.changeset.idpId
+                (cannot "edit identity" this.changeset.data)
+              }}
               value={{field.value}}
               {{on "input" (fn this.eventTarget field.update)}}
               {{on "blur" field.setDirty}}
-            >
+            />
           </div>
           {{#if this.changeset.idpId}}
             <p class="uk-margin-remove-top">
-              <a href={{this.keyCloakAccountUrl}}>
+              <a href={{this.keyCloakAccountUrl}} target="_blank" rel="noopener noreferrer">
                 {{~t "component.identity-form.hint.email"~}}
               </a>
             </p>
@@ -87,7 +87,12 @@
 
       <p class="uk-flex uk-flex-between">
         <div>
-          {{#if (and (not this.changeset.isNew) (can "delete identity" this.changeset.data))}}
+          {{#if
+            (and
+              (not this.changeset.isNew)
+              (can "delete identity" this.changeset.data)
+            )
+          }}
             <button
               class="uk-button uk-button-danger"
               type="button"
@@ -99,10 +104,7 @@
         </div>
 
         <div>
-          <LinkTo
-            class="uk-button uk-button-default"
-            @route="identities"
-          >
+          <LinkTo class="uk-button uk-button-default" @route="identities">
             {{t "component.identity-form.control.cancel"}}
           </LinkTo>
 

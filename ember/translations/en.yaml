@@ -5,7 +5,7 @@ global:
   salutation:
     male: "Mr."
     female: "Mrs."
-    neutral: ""
+    neutral: "Neutral salutation"
 
 nav:
   home: "Home"
