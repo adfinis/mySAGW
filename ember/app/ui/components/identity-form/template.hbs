@@ -14,6 +14,10 @@
         @type="checkbox"
         @name="isOrganisation"
         @on-update={{this.updateOrganisation}}
+        @disabled={{or
+          this.changeset.hasMembers
+          this.changeset.hasMemberships
+        }}
       />
 
       {{#if this.changeset.isOrganisation}}
