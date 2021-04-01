@@ -201,6 +201,34 @@ component:
       prompt: "Do you really want to delete the number {number}?"
       success: "Phone number {number} deleted successfully."
 
+  identity-addresses:
+    title: "Addresses"
+    add: "Add address"
+
+    list:
+      edit: "Edit address"
+      delete: "Delete address"
+      empty: "No addresses yet."
+    form:
+      title:
+        add: "Add address"
+        edit: "Edit address"
+      label:
+        addressAddition: "Address addition"
+        streetAndNumber: "Street and number"
+        poBox: "P.O. box"
+        postcode: "Postcode"
+        town: "Town"
+        country: "Country"
+        description: "Description ({lang})"
+        default: "This is the default address."
+      control:
+        cancel: "Cancel"
+        submit: "Save"
+    delete:
+      prompt: "Do you really want to delete the address {address}?"
+      success: "Address {address} deleted successfully."
+
   identity-interests:
     title: "Interests"
     add: "Add interest"
