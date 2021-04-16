@@ -364,6 +364,7 @@ def test_identity_export(
     phone_number_factory,
     email_factory,
     membership_factory,
+    address_factory,
 ):
     identities = sorted(
         identity_factory.create_batch(
@@ -382,6 +383,7 @@ def test_identity_export(
     for i in identities:
         phone_number_factory.create_batch(3, identity=i)
         email_factory.create_batch(3, identity=i)
+        address_factory(identity=i)
         membership_factory(identity=i, organisation=org)
     url = reverse("identity-export")
 
@@ -391,15 +393,26 @@ def test_identity_export(
 
     sheet = pyexcel.get_sheet(file_type="xlsx", file_content=response.content)
     assert len(sheet.array) == len(identities) + 2
-    assert sheet.array[0][0] == "additional_emails"
-    assert sheet.array[0][1] == "email"
-    assert sheet.array[0][2] == "first_name"
-    assert sheet.array[1][0].split() == [
+    assert sheet.array[0][0] == "first_name"
+    assert sheet.array[0][1] == "last_name"
+    assert sheet.array[0][2] == "is_organisation"
+    assert sheet.array[0][3] == "organisation_name"
+
+    assert sheet.array[1][0] == identities[0].first_name
+    assert sheet.array[1][1] == identities[0].last_name
+    assert sheet.array[1][2] == identities[0].is_organisation
+    assert sheet.array[1][5].split() == [
         e.email for e in identities[0].additional_emails.all()
     ]
-    assert sheet.array[1][1] == identities[0].email
-    assert sheet.array[1][2] == identities[0].first_name
-    assert sheet.array[1][4] == identities[0].last_name
     assert sheet.array[1][6].split() == [
         str(p.phone) for p in identities[0].phone_numbers.all()
     ]
+    identity_address = identities[0].addresses.get(default=True)
+    assert sheet.array[1][7] == ""
+    assert sheet.array[1][8] == identity_address.street_and_number
+    assert sheet.array[1][9] == ""
+    assert sheet.array[1][10] == identity_address.postcode
+    assert sheet.array[1][11] == identity_address.town
+    assert sheet.array[1][12] == identity_address.country
+
+    assert sheet.array[7][3] == org.organisation_name

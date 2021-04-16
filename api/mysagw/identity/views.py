@@ -83,7 +83,7 @@ class IdentityViewSet(views.ModelViewSet):
     @action(detail=False, methods=["post"])
     def export(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset()).prefetch_related(
-            "phone_numbers", "additional_emails"
+            "phone_numbers", "additional_emails", "addresses"
         )
 
         ex = IdentityExport()
