@@ -5,7 +5,7 @@
 >
   <h2>{{t "component.identity-memberships.title"}}</h2>
 
-  {{#if this.fetchInterests.isRunning}}
+  {{#if this.fetchMemberships.isRunning}}
     <LoadingSpinner />
   {{else}}
     {{#if this.memberships.length}}
