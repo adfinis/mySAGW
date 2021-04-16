@@ -5,6 +5,7 @@ class IdentityExport:
     values = (
         "first_name",
         "last_name",
+        "localized_salutation",
         "is_organisation",
         "organisation_name",
         "email",

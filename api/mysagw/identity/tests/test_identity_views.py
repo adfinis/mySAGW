@@ -385,6 +385,14 @@ def test_identity_export(
         email_factory.create_batch(3, identity=i)
         address_factory(identity=i)
         membership_factory(identity=i, organisation=org)
+
+    identities[1].salutation = Identity.SALUTATION_MR
+    identities[1].language = "fr"
+    identities[1].save()
+    identities[2].salutation = Identity.SALUTATION_MRS
+    identities[2].language = "en"
+    identities[2].save()
+
     url = reverse("identity-export")
 
     response = client.post(url, QUERY_STRING=f"filter[search]={org.organisation_name}")
@@ -392,27 +400,45 @@ def test_identity_export(
     assert response.status_code == status.HTTP_200_OK
 
     sheet = pyexcel.get_sheet(file_type="xlsx", file_content=response.content)
+
     assert len(sheet.array) == len(identities) + 2
-    assert sheet.array[0][0] == "first_name"
-    assert sheet.array[0][1] == "last_name"
-    assert sheet.array[0][2] == "is_organisation"
-    assert sheet.array[0][3] == "organisation_name"
+
+    assert sheet.array[0] == [
+        "first_name",
+        "last_name",
+        "localized_salutation",
+        "is_organisation",
+        "organisation_name",
+        "email",
+        "additional_emails",
+        "phone_numbers",
+        "address_addition",
+        "street_and_number",
+        "po_box",
+        "postcode",
+        "town",
+        "country",
+    ]
 
     assert sheet.array[1][0] == identities[0].first_name
     assert sheet.array[1][1] == identities[0].last_name
-    assert sheet.array[1][2] == identities[0].is_organisation
-    assert sheet.array[1][5].split() == [
+    assert sheet.array[1][2] == identities[0].localized_salutation
+    assert sheet.array[1][3] == identities[0].is_organisation
+    assert sheet.array[1][6].split() == [
         e.email for e in identities[0].additional_emails.all()
     ]
-    assert sheet.array[1][6].split() == [
+    assert sheet.array[1][7].split() == [
         str(p.phone) for p in identities[0].phone_numbers.all()
     ]
     identity_address = identities[0].addresses.get(default=True)
-    assert sheet.array[1][7] == ""
-    assert sheet.array[1][8] == identity_address.street_and_number
-    assert sheet.array[1][9] == ""
-    assert sheet.array[1][10] == identity_address.postcode
-    assert sheet.array[1][11] == identity_address.town
-    assert sheet.array[1][12] == identity_address.country
+    assert sheet.array[1][8] == ""
+    assert sheet.array[1][9] == identity_address.street_and_number
+    assert sheet.array[1][10] == ""
+    assert sheet.array[1][11] == identity_address.postcode
+    assert sheet.array[1][12] == identity_address.town
+    assert sheet.array[1][13] == identity_address.country
 
-    assert sheet.array[7][3] == org.organisation_name
+    assert sheet.array[2][2] == identities[1].localized_salutation
+    assert sheet.array[3][2] == identities[2].localized_salutation
+
+    assert sheet.array[7][4] == org.organisation_name
