@@ -442,3 +442,31 @@ def test_identity_export(
     assert sheet.array[3][2] == identities[2].localized_salutation
 
     assert sheet.array[7][4] == org.organisation_name
+
+
+def test_identity_export_email(
+    db,
+    client,
+    identity_factory,
+):
+    identities = sorted(
+        identity_factory.create_batch(10, last_name="Smith"),
+        key=lambda item: (
+            item.last_name,
+            item.first_name,
+            item.email,
+        ),  # use same ordering as the model
+    )
+
+    url = reverse("identity-export-email")
+
+    response = client.post(url, QUERY_STRING="filter[search]=smith")
+
+    assert response.status_code == status.HTTP_200_OK
+
+    sheet = pyexcel.get_sheet(file_type="xlsx", file_content=response.content)
+    assert len(sheet.array) == len(identities) + 1
+    assert sheet.array[0] == ["email"]
+
+    for i in range(10):
+        assert sheet.array[i + 1][0] == identities[i].email

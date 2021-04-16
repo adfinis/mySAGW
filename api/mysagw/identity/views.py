@@ -91,6 +91,14 @@ class IdentityViewSet(views.ModelViewSet):
         response = django_excel.make_response_from_records(records, "xlsx")
         return response
 
+    @action(detail=False, methods=["post"])
+    def export_email(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        records = queryset.values("email")
+        response = django_excel.make_response_from_records(records, "xlsx")
+        return response
+
 
 class MeViewSet(
     RetrieveModelMixin,
