@@ -87,16 +87,18 @@
       <p>{{t "component.identity-memberships.list.empty"}}</p>
     {{/if}}
 
-    <p class="uk-text-right">
-      <button
-        class="uk-button uk-button-default"
-        type="button"
-        disabled={{this.changeset}}
-        {{on "click" (fn this.edit null)}}
-      >
-        {{t "component.identity-memberships.add"}}
-      </button>
-    </p>
+    {{#if (can "add membership-role")}}
+      <p class="uk-text-right">
+        <button
+          class="uk-button uk-button-default"
+          type="button"
+          disabled={{this.changeset}}
+          {{on "click" (fn this.edit null)}}
+        >
+          {{t "component.identity-memberships.add"}}
+        </button>
+      </p>
+    {{/if}}
   {{/if}}
 
   {{#if this.changeset}}

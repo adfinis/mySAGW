@@ -23,4 +23,12 @@ export default class BaseAbility extends Ability {
 
     return this.userGroups.includes("sagw");
   }
+
+  isAuthenticatedIdentity(identity) {
+    if (!this.session.isAuthenticated) {
+      return false;
+    }
+
+    return identity.idpId === this.session.data.authenticated.userinfo.sub;
+  }
 }

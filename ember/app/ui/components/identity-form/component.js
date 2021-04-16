@@ -30,6 +30,14 @@ export default class IdentityFormComponent extends Component {
     ];
   }
 
+  get languages() {
+    return [
+      { label: this.intl.t("global.languages.german"), value: "de" },
+      { label: this.intl.t("global.languages.english"), value: "en" },
+      { label: this.intl.t("global.languages.french"), value: "fr" },
+    ];
+  }
+
   get keyCloakAccountUrl() {
     const host =
       location.hostname === "localhost" ? "mysagw.local" : location.hostname;
@@ -64,11 +72,10 @@ export default class IdentityFormComponent extends Component {
         changeset.set("organisationName", null);
       }
 
-      if (changeset.get("idpId")) {
-        changeset.set("email", null);
-      }
+      yield changeset.save({
+        adapterOptions: { meEndpoint: this.args.useMeEndpoint },
+      });
 
-      yield changeset.save();
       this.notification.success(
         this.intl.t("component.identity-form.success", {
           name: changeset.data.fullName,

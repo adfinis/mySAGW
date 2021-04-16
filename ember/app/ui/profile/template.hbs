@@ -1,0 +1,82 @@
+<h1>{{t "page.profile.title"}}</h1>
+
+<IdentityForm
+  @identity={{this.model}}
+  @useMeEndpoint={{true}}
+/>
+
+<hr>
+
+<div class="uk-margin-bottom">
+  <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
+    <h2 class="uk-margin-remove">{{t "page.profile.organisation.title"}}</h2>
+  </div>
+
+  {{#if this.fetchOrganisations.isRunning}}
+    <LoadingSpinner />
+  {{else}}
+    <ul class="uk-list uk-list-divider">
+      {{#each this.organisations as |organisation|}}
+        {{#unless identity.isNew}}
+          <li>
+            <LinkTo
+              @route="identities.edit"
+              @model={{organisation.id}}
+              class="uk-text-bold uk-flex uk-flex-between uk-flex-wrap"
+            >
+              {{#if (or organisation.fullName organisation.isOrganisation)}}
+                <div class="uk-margin-right">
+                  {{#if organisation.fullName}}
+                    {{organisation.fullName}}
+                  {{~/if}}
+
+                  {{~if (and organisation.fullName organisation.isOrganisation) ","}}
+
+                  {{#if organisation.isOrganisation}}
+                    {{organisation.organisationName}}
+                  {{/if}}
+                </div>
+              {{/if}}
+
+              <div class="uk-text-small uk-width-1-1 uk-width-auto@s">
+                {{organisation.email}}
+              </div>
+            </LinkTo>
+          </li>
+        {{/unless}}
+      {{else}}
+        <li>{{t "page.profile.organisation.empty"}}</li>
+      {{/each}}
+    </ul>
+  {{/if}}
+</div>
+
+<hr>
+
+<div uk-grid>
+  <div class="uk-width-1-2@m uk-width-1-3@l">
+    <div class="uk-card uk-card-default uk-card-body uk-card-small">
+      <IdentityAddresses @identity={{this.model}} />
+    </div>
+  </div>
+
+  <div class="uk-width-1-2@m uk-width-1-3@l">
+    <div class="uk-card uk-card-default uk-card-body uk-card-small">
+      <IdentityEmails @identity={{this.model}} />
+    </div>
+  </div>
+
+  <div class="uk-width-1-2@m uk-width-1-3@l">
+    <div class="uk-card uk-card-default uk-card-body uk-card-small">
+      <IdentityPhoneNumbers @identity={{this.model}} />
+    </div>
+  </div>
+
+  {{#unless this.model.isOrganisation}}
+    <div class="uk-width-1-2@m">
+      <div class="uk-card uk-card-default uk-card-body uk-card-small">
+        <IdentityMemberships @identity={{this.model}} />
+      </div>
+    </div>
+  {{/unless}}
+</div>

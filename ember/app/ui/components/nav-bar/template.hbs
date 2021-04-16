@@ -36,9 +36,16 @@
           </tab.link-item>
         {{/if}}
 
-        <tab.link-item @route="form-builder">
-          {{t "nav.form-builder"}}
+        {{#if (can "list form-builder")}}
+          <tab.link-item @route="form-builder">
+            {{t "nav.form-builder"}}
+          </tab.link-item>
+        {{/if}}
+
+        <tab.link-item @route="profile">
+          {{t "nav.profile"}}
         </tab.link-item>
+
         <tab.item {{on "click" this.invalidateSession}}>
           {{t "nav.logout"}}
         </tab.item>
@@ -86,18 +93,27 @@
           </LinkTo>
         </li>
       {{/if}}
-      <li>
-        <LinkTo @route="membership-roles" uk-toggle="target: #offcanvas">
-          {{t "nav.roles"}}
-        </LinkTo>
-      </li>
+      {{#if (can "list membership-role")}}
+        <li>
+          <LinkTo @route="membership-roles" uk-toggle="target: #offcanvas">
+            {{t "nav.roles"}}
+          </LinkTo>
+        </li>
+      {{/if}}
+      {{#if (can "list form-builder")}}
       <li>
         <LinkTo @route="form-builder" uk-toggle="target: #offcanvas">
           {{t "nav.form-builder"}}
         </LinkTo>
       </li>
+      {{/if}}
 
       <li class="uk-nav-header">{{t "nav.account"}}</li>
+      <li>
+        <LinkTo @route="profile" uk-toggle="target: #offcanvas">
+          {{t "nav.profile"}}
+        </LinkTo>
+      </li>
       <li>
         <a href="#" {{on "click" this.invalidateSession}} uk-toggle="target: #offcanvas">
           <span class="uk-margin-small-right" uk-icon="icon: sign-out"></span>
