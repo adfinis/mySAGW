@@ -59,6 +59,12 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
     SALUTATION_MRS = "female"
     SALUTATION_NEUTRAL = "neutral"
 
+    SALUTATION_LOCALIZED_MAP = {
+        SALUTATION_MR: {"de": "Herr", "en": "Mr.", "fr": "Monsieur"},
+        SALUTATION_MRS: {"de": "Frau", "en": "Mrs.", "fr": "Madame"},
+        SALUTATION_NEUTRAL: {"de": "", "en": "", "fr": ""},
+    }
+
     SALUTATION_CHOICES = (
         (SALUTATION_MR, SALUTATION_MR),
         (SALUTATION_MRS, SALUTATION_MRS),
@@ -94,6 +100,10 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
     @property
     def member_of(self):
         return self._get_memberships(only_authorized=False)
+
+    @property
+    def localized_salutation(self):
+        return self.SALUTATION_LOCALIZED_MAP[self.salutation][self.language]
 
     class Meta:
         ordering = ("last_name", "first_name", "email")

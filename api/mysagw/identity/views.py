@@ -83,11 +83,19 @@ class IdentityViewSet(views.ModelViewSet):
     @action(detail=False, methods=["post"])
     def export(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset()).prefetch_related(
-            "phone_numbers", "additional_emails"
+            "phone_numbers", "additional_emails", "addresses"
         )
 
         ex = IdentityExport()
         records = ex.export(queryset)
+        response = django_excel.make_response_from_records(records, "xlsx")
+        return response
+
+    @action(detail=False, methods=["post"])
+    def export_email(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        records = queryset.values("email")
         response = django_excel.make_response_from_records(records, "xlsx")
         return response
 
