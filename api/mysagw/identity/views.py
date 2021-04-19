@@ -91,7 +91,7 @@ class IdentityViewSet(views.ModelViewSet):
         response = django_excel.make_response_from_records(records, "xlsx")
         return response
 
-    @action(detail=False, methods=["post"])
+    @action(detail=False, methods=["post"], url_path="export-email")
     def export_email(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
 
