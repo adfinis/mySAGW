@@ -58,6 +58,8 @@ Router.map(function () {
       this.route("add");
       this.route("edit", { path: "/edit/:role" });
     });
-    this.route("profile", { resetNamespace });
+    this.route("profile", { resetNamespace }, function () {
+      this.route("edit", { path: "/edit/:identity" });
+    });
   });
 });

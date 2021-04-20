@@ -101,11 +101,11 @@
         </li>
       {{/if}}
       {{#if (can "list form-builder")}}
-      <li>
-        <LinkTo @route="form-builder" uk-toggle="target: #offcanvas">
-          {{t "nav.form-builder"}}
-        </LinkTo>
-      </li>
+        <li>
+          <LinkTo @route="form-builder" uk-toggle="target: #offcanvas">
+            {{t "nav.form-builder"}}
+          </LinkTo>
+        </li>
       {{/if}}
 
       <li class="uk-nav-header">{{t "nav.account"}}</li>

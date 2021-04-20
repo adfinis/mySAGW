@@ -143,9 +143,11 @@ page:
 
   profile:
     title: "Profile"
+    switcher:
+      identity: "Identity"
+      organisations: "Organisations"
     organisation:
-      title: "Organisation admin"
-      search: "Search"
+      edit: "Edit organisaton"
       empty: "No organisations yet."
 
   notfound:

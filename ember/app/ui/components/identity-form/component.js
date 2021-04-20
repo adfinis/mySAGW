@@ -48,6 +48,10 @@ export default class IdentityFormComponent extends Component {
     ].join("");
   }
 
+  get cancelRoute() {
+    return this.args.cancelRouteOverride || "identities";
+  }
+
   @action eventTarget(handler, event) {
     handler(event.target.value);
   }
@@ -73,7 +77,7 @@ export default class IdentityFormComponent extends Component {
       }
 
       yield changeset.save({
-        adapterOptions: { meEndpoint: this.args.useMeEndpoint },
+        adapterOptions: { customEndpoint: this.args.customEndpoint },
       });
 
       this.notification.success(

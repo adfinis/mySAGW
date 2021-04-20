@@ -201,6 +201,7 @@ class MeSerializer(serializers.ModelSerializer):
         )
         extra_kwargs = {
             "idp_id": {"read_only": True},
+            "email": {"read_only": True},
         }
 
 
@@ -217,6 +218,8 @@ class MyOrgsSerializer(serializers.ModelSerializer):
             "idp_id",
             "first_name",
             "last_name",
+            "salutation",
+            "language",
             "is_organisation",
             "organisation_name",
             "is_authorized",
@@ -225,7 +228,6 @@ class MyOrgsSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             "idp_id": {"read_only": True},
             "is_organisation": {"read_only": True},
-            "email": {"read_only": True},
         }
 
 

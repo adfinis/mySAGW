@@ -9,6 +9,6 @@ export default class IdentityAbility extends BaseAbility {
   @readOnly("isStaff") canRemoveInterest;
 
   canEdit(identity) {
-    return this.isStaff || this.isAuthenticatedIdentity(identity);
+    return this.isStaffOrOwnIdentity(identity);
   }
 }
