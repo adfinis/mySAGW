@@ -7090,10 +7090,10 @@ ember-localized-model@^1.0.1:
     ember-cli-htmlbars "^4.3.1"
     ember-data "^3.20.0"
 
-ember-localized-model@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/ember-localized-model/-/ember-localized-model-1.2.0.tgz#b78685215279085e215258e113949111ea4b88cb"
-  integrity sha512-RbHG53JLAJiYD5CoqBaASiCW0pm4K5gmusFFRFmOm1bmhIHJF4H7F+xI3Ap0g7Ad6UrG8L1LDR0leGScGyJz8g==
+ember-localized-model@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/ember-localized-model/-/ember-localized-model-1.2.1.tgz#39f782352b4827855d561d82b7fa2a294f992cc4"
+  integrity sha512-5J6sYWpJXHFraH8SzwvAMYN4j0niny4eFXIyT+6cfVchSpGM2/Q6nMXem7nKINtI5ihiRiHO2PHg/7uhyKZh2w==
   dependencies:
     ember-cli-babel "^7.19.0"
     ember-cli-htmlbars "^4.3.1"
