@@ -31,3 +31,14 @@ class IsOrgAdmin(BasePermission):
 
     def has_object_permission(self, request, view, obj):
         return obj in request.user.identity.authorized_for
+
+
+class IsOwnOrAuthorized(BasePermission):
+    def has_permission(self, request, view):
+        return True
+
+    def has_object_permission(self, request, view, obj):
+        return getattr(obj, "identity") and (
+            obj.identity == request.user.identity
+            or obj.identity in request.user.identity.authorized_for
+        )

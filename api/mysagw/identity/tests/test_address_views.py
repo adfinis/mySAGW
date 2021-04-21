@@ -6,15 +6,20 @@ from mysagw.identity import models
 
 
 @pytest.mark.parametrize(
-    "client,expected_status",
+    "client,own,expected_status",
     [
-        ("user", status.HTTP_403_FORBIDDEN),
-        ("staff", status.HTTP_200_OK),
-        ("admin", status.HTTP_200_OK),
+        ("user", False, status.HTTP_404_NOT_FOUND),
+        ("user", True, status.HTTP_200_OK),
+        ("staff", True, status.HTTP_200_OK),
+        ("admin", True, status.HTTP_200_OK),
     ],
     indirect=["client"],
 )
-def test_address_detail(db, address, client, expected_status):
+def test_address_detail(db, address, client, own, expected_status):
+    if own:
+        address.identity = client.user.identity
+        address.save()
+
     url = reverse("address-detail", args=[address.pk])
 
     response = client.get(url)
@@ -29,40 +34,42 @@ def test_address_detail(db, address, client, expected_status):
 
 
 @pytest.mark.parametrize(
-    "client,expected_status",
+    "client,expected_count",
     [
-        ("user", status.HTTP_403_FORBIDDEN),
-        ("staff", status.HTTP_200_OK),
-        ("admin", status.HTTP_200_OK),
+        ("user", 1),
+        ("staff", 3),
+        ("admin", 3),
     ],
     indirect=["client"],
 )
-def test_address_list(db, client, expected_status, address_factory):
-    address_factory.create_batch(3)
+def test_address_list(db, client, expected_count, address_factory):
+    address_factory.create_batch(2)
+    address_factory(identity=client.user.identity)
 
     url = reverse("address-list")
 
     response = client.get(url)
 
-    assert response.status_code == expected_status
-
-    if expected_status != status.HTTP_200_OK:
-        return
+    assert response.status_code == status.HTTP_200_OK
 
     json = response.json()
-    assert len(json["data"]) == models.Address.objects.count() == 3
+    assert len(json["data"]) == expected_count
 
 
 @pytest.mark.parametrize(
-    "client,expected_status",
+    "client,own,expected_status",
     [
-        ("user", status.HTTP_403_FORBIDDEN),
-        ("staff", status.HTTP_201_CREATED),
-        ("admin", status.HTTP_201_CREATED),
+        ("user", False, status.HTTP_403_FORBIDDEN),
+        ("user", True, status.HTTP_201_CREATED),
+        ("staff", True, status.HTTP_201_CREATED),
+        ("admin", True, status.HTTP_201_CREATED),
     ],
     indirect=["client"],
 )
-def test_address_create(db, identity, client, expected_status):
+def test_address_create(db, identity, client, own, expected_status):
+    if own:
+        client.user.identity = identity
+
     assert identity.modified_by_user != client.user.username
 
     url = reverse("address-list")
@@ -148,17 +155,22 @@ def test_address_create_new_default(db, address_factory, client):
 
 
 @pytest.mark.parametrize(
-    "client,expected_status",
+    "client,own,expected_status",
     [
-        ("user", status.HTTP_403_FORBIDDEN),
-        ("staff", status.HTTP_200_OK),
-        ("admin", status.HTTP_200_OK),
+        ("user", False, status.HTTP_404_NOT_FOUND),
+        ("user", True, status.HTTP_200_OK),
+        ("staff", True, status.HTTP_200_OK),
+        ("admin", True, status.HTTP_200_OK),
     ],
     indirect=["client"],
 )
-def test_address_update(db, client, expected_status, address_factory):
-    address = address_factory(description="Bar")
+def test_address_update(db, client, own, expected_status, address):
     assert address.identity.modified_by_user != client.user.username
+
+    address.description = "Bar"
+    if own:
+        address.identity = client.user.identity
+    address.save()
 
     url = reverse("address-detail", args=[address.pk])
 
@@ -192,18 +204,22 @@ def test_address_update(db, client, expected_status, address_factory):
 
 
 @pytest.mark.parametrize(
-    "client,expected_status",
+    "client,own,expected_status",
     [
-        ("user", status.HTTP_403_FORBIDDEN),
-        ("staff", status.HTTP_204_NO_CONTENT),
-        ("admin", status.HTTP_204_NO_CONTENT),
+        ("user", False, status.HTTP_404_NOT_FOUND),
+        ("user", True, status.HTTP_204_NO_CONTENT),
+        ("staff", True, status.HTTP_204_NO_CONTENT),
+        ("admin", True, status.HTTP_204_NO_CONTENT),
     ],
     indirect=["client"],
 )
-def test_address_delete(db, client, expected_status, address_factory):
+def test_address_delete(db, client, own, expected_status, address_factory):
     main_address = address_factory()
     other_address = address_factory(identity=main_address.identity, default=False)
     assert other_address.identity.modified_by_user != client.user.username
+
+    if own:
+        client.user.identity = other_address.identity
 
     url = reverse("address-detail", args=[other_address.pk])
 
