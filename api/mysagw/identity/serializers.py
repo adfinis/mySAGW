@@ -1,3 +1,4 @@
+from django.conf import settings
 from drf_extra_fields.fields import DateRangeField
 from rest_framework.exceptions import ValidationError
 from rest_framework_json_api import serializers
@@ -259,6 +260,14 @@ class MembershipRoleSerializer(serializers.ModelSerializer):
             "description",
             "archived",
         )
+
+    def validate(self, *args, **kwargs):
+        validated_data = super().validate(*args, **kwargs)
+        if not validated_data.get("title", {}).get(settings.LANGUAGE_CODE):
+            raise ValidationError(
+                f'Title must be set for language: "{settings.LANGUAGE_CODE}"'
+            )
+        return validated_data
 
 
 class MembershipSerializer(
