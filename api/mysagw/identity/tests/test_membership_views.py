@@ -1,6 +1,7 @@
 import datetime
 
 import pytest
+from django.conf import settings
 from django.urls import reverse
 from psycopg2.extras import DateRange
 from rest_framework import status
@@ -134,6 +135,28 @@ def test_membership_role_create(db, client, expected_status):
         "en": "",
         "fr": "",
     }
+
+
+@pytest.mark.parametrize(
+    "title",
+    [
+        {"de": ""},
+        {"de": None},
+        {"en": "Foo"},
+        {},
+    ],
+)
+def test_membership_role_empty_failure(db, client, title):
+    url = reverse("membershiprole-list")
+    data = {"data": {"type": "membership-roles", "attributes": {"title": title}}}
+
+    response = client.post(url, data=data)
+
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert (
+        response.json()["errors"][0]["detail"]
+        == f'Title must be set for language: "{settings.LANGUAGE_CODE}"'
+    )
 
 
 @pytest.mark.parametrize(
