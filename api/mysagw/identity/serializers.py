@@ -106,6 +106,24 @@ class IdentitySerializer(TrackingSerializer):
     def get_has_members(self, obj):
         return obj.members.exists()
 
+    def _ensure_no_empty_identity(self, validated_data):
+        any_needed = ["email", "first_name", "last_name"]
+        if validated_data.get(
+            "is_organisation", getattr(self.instance, "is_organisation", None)
+        ):
+            any_needed.append("organisation_name")
+
+        values = [
+            validated_data.get(attr, getattr(self.instance, attr, None))
+            for attr in any_needed
+        ]
+
+        if not any(values):
+            raise ValidationError(
+                "Identities need at least an email, first_name, last_name or "
+                "organisation_name."
+            )
+
     def validate(self, *args, **kwargs):
         validated_data = super().validate(*args, **kwargs)
 
@@ -114,6 +132,8 @@ class IdentitySerializer(TrackingSerializer):
         no_organisation_name_msg = (
             'Can\'t set "is_organisation" without an organisation_name.'
         )
+
+        self._ensure_no_empty_identity(validated_data)
 
         if not self.instance:
             if is_organisation and not organisation_name:
