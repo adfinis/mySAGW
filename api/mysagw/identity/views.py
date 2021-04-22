@@ -1,13 +1,20 @@
 import django_excel
+from django.db.models import Q
 from rest_framework.decorators import action
-from rest_framework.exceptions import ValidationError
+from rest_framework.exceptions import PermissionDenied, ValidationError
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework.viewsets import GenericViewSet
 from rest_framework_json_api import views
 
 from . import filters, models, serializers
 from .export import IdentityExport
-from .permissions import IsAdmin, IsAuthenticated, IsOrgAdmin, IsStaff
+from .permissions import (
+    IsAdmin,
+    IsAuthenticated,
+    IsOrgAdmin,
+    IsOwnOrAuthorized,
+    IsStaff,
+)
 
 
 class UniqueBooleanFieldViewSetMixin:
@@ -23,10 +30,37 @@ class UniqueBooleanFieldViewSetMixin:
         super().perform_destroy(instance)
 
 
-class EmailViewSet(views.ModelViewSet):
+class IdentityAdditionsViewSetMixin:
+    """Only allow to see/create objects for own identities."""
+
+    def perform_create(self, serializer):
+        identity = serializer.validated_data["identity"]
+        if (
+            identity != self.request.user.identity
+            and identity not in self.request.user.identity.authorized_for
+            and not self.request.user.is_staff
+        ):
+            raise PermissionDenied(
+                "You can only create records for your own identity or identities you "
+                "are authorized to manage."
+            )
+        return super().perform_create(serializer)
+
+    def get_queryset(self, *args, **kwargs):
+        qs = super().get_queryset(*args, **kwargs)
+        if self.request.user.is_staff:
+            return qs
+        qs = qs.filter(
+            Q(identity=self.request.user.identity)
+            | Q(identity__in=self.request.user.identity.authorized_for)
+        )
+        return qs
+
+
+class EmailViewSet(IdentityAdditionsViewSetMixin, views.ModelViewSet):
     serializer_class = serializers.EmailSerializer
     queryset = models.Email.objects.all()
-    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
+    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff | IsOwnOrAuthorized),)
     filterset_class = filters.EmailFilterSet
 
     def perform_destroy(self, instance):
@@ -35,10 +69,12 @@ class EmailViewSet(views.ModelViewSet):
         instance.identity.save()
 
 
-class PhoneNumberViewSet(UniqueBooleanFieldViewSetMixin, views.ModelViewSet):
+class PhoneNumberViewSet(
+    IdentityAdditionsViewSetMixin, UniqueBooleanFieldViewSetMixin, views.ModelViewSet
+):
     serializer_class = serializers.PhoneNumberSerializer
     queryset = models.PhoneNumber.objects.all()
-    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
+    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff | IsOwnOrAuthorized),)
     filterset_class = filters.PhoneNumberFilterSet
 
     def perform_destroy(self, instance):
@@ -47,10 +83,10 @@ class PhoneNumberViewSet(UniqueBooleanFieldViewSetMixin, views.ModelViewSet):
         instance.identity.save()
 
 
-class AddressViewSet(views.ModelViewSet):
+class AddressViewSet(IdentityAdditionsViewSetMixin, views.ModelViewSet):
     serializer_class = serializers.AddressSerializer
     queryset = models.Address.objects.all()
-    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
+    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff | IsOwnOrAuthorized),)
     filterset_class = filters.AddressFilterSet
 
     def perform_destroy(self, instance):

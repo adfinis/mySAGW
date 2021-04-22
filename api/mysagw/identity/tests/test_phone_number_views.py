@@ -6,15 +6,20 @@ from mysagw.identity import models
 
 
 @pytest.mark.parametrize(
-    "client,expected_status",
+    "client,own,expected_status",
     [
-        ("user", status.HTTP_403_FORBIDDEN),
-        ("staff", status.HTTP_200_OK),
-        ("admin", status.HTTP_200_OK),
+        ("user", False, status.HTTP_404_NOT_FOUND),
+        ("user", True, status.HTTP_200_OK),
+        ("staff", True, status.HTTP_200_OK),
+        ("admin", True, status.HTTP_200_OK),
     ],
     indirect=["client"],
 )
-def test_phone_number_detail(db, phone_number, client, expected_status):
+def test_phone_number_detail(db, phone_number, client, own, expected_status):
+    if own:
+        phone_number.identity = client.user.identity
+        phone_number.save()
+
     url = reverse("phonenumber-detail", args=[phone_number.pk])
 
     response = client.get(url)
@@ -29,40 +34,41 @@ def test_phone_number_detail(db, phone_number, client, expected_status):
 
 
 @pytest.mark.parametrize(
-    "client,expected_status",
+    "client,expected_count",
     [
-        ("user", status.HTTP_403_FORBIDDEN),
-        ("staff", status.HTTP_200_OK),
-        ("admin", status.HTTP_200_OK),
+        ("user", 1),
+        ("staff", 3),
+        ("admin", 3),
     ],
     indirect=["client"],
 )
-def test_phone_number_list(db, client, expected_status, phone_number_factory):
-    phone_number_factory.create_batch(3)
+def test_phone_number_list(db, client, expected_count, phone_number_factory):
+    phone_number_factory.create_batch(2)
+    phone_number_factory(identity=client.user.identity)
 
     url = reverse("phonenumber-list")
 
     response = client.get(url)
 
-    assert response.status_code == expected_status
-
-    if expected_status != status.HTTP_200_OK:
-        return
+    assert response.status_code == status.HTTP_200_OK
 
     json = response.json()
-    assert len(json["data"]) == models.PhoneNumber.objects.count() == 3
+    assert len(json["data"]) == expected_count
 
 
 @pytest.mark.parametrize(
-    "client,expected_status",
+    "client,own,expected_status",
     [
-        ("user", status.HTTP_403_FORBIDDEN),
-        ("staff", status.HTTP_201_CREATED),
-        ("admin", status.HTTP_201_CREATED),
+        ("user", False, status.HTTP_403_FORBIDDEN),
+        ("user", True, status.HTTP_201_CREATED),
+        ("staff", True, status.HTTP_201_CREATED),
+        ("admin", True, status.HTTP_201_CREATED),
     ],
     indirect=["client"],
 )
-def test_phone_number_create(db, identity, client, expected_status):
+def test_phone_number_create(db, identity, client, own, expected_status):
+    if own:
+        client.user.identity = identity
     assert identity.modified_by_user != client.user.username
 
     url = reverse("phonenumber-list")
@@ -140,17 +146,22 @@ def test_phone_number_create_new_default(db, phone_number_factory, client):
 
 
 @pytest.mark.parametrize(
-    "client,expected_status",
+    "client,own,expected_status",
     [
-        ("user", status.HTTP_403_FORBIDDEN),
-        ("staff", status.HTTP_200_OK),
-        ("admin", status.HTTP_200_OK),
+        ("user", False, status.HTTP_404_NOT_FOUND),
+        ("user", True, status.HTTP_200_OK),
+        ("staff", True, status.HTTP_200_OK),
+        ("admin", True, status.HTTP_200_OK),
     ],
     indirect=["client"],
 )
-def test_phone_number_update(db, client, expected_status, phone_number_factory):
-    phone_number = phone_number_factory(description="Bar")
+def test_phone_number_update(db, client, own, expected_status, phone_number):
     assert phone_number.identity.modified_by_user != client.user.username
+
+    phone_number.description = "Bar"
+    if own:
+        phone_number.identity = client.user.identity
+    phone_number.save()
 
     url = reverse("phonenumber-detail", args=[phone_number.pk])
 
@@ -206,20 +217,24 @@ def test_phone_number_update_unset_default(db, client, phone_number):
 
 
 @pytest.mark.parametrize(
-    "client,expected_status",
+    "client,own,expected_status",
     [
-        ("user", status.HTTP_403_FORBIDDEN),
-        ("staff", status.HTTP_204_NO_CONTENT),
-        ("admin", status.HTTP_204_NO_CONTENT),
+        ("user", False, status.HTTP_404_NOT_FOUND),
+        ("user", True, status.HTTP_204_NO_CONTENT),
+        ("staff", True, status.HTTP_204_NO_CONTENT),
+        ("admin", True, status.HTTP_204_NO_CONTENT),
     ],
     indirect=["client"],
 )
-def test_phone_number_delete(db, client, expected_status, phone_number_factory):
+def test_phone_number_delete(db, client, own, expected_status, phone_number_factory):
     main_phone_number = phone_number_factory()
     other_phone_number = phone_number_factory(
         identity=main_phone_number.identity, default=False
     )
     assert other_phone_number.identity.modified_by_user != client.user.username
+
+    if own:
+        client.user.identity = other_phone_number.identity
 
     url = reverse("phonenumber-detail", args=[other_phone_number.pk])
 

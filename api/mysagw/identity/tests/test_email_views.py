@@ -6,15 +6,20 @@ from mysagw.identity import models
 
 
 @pytest.mark.parametrize(
-    "client,expected_status",
+    "client,own,expected_status",
     [
-        ("user", status.HTTP_403_FORBIDDEN),
-        ("staff", status.HTTP_200_OK),
-        ("admin", status.HTTP_200_OK),
+        ("user", False, status.HTTP_404_NOT_FOUND),
+        ("user", True, status.HTTP_200_OK),
+        ("staff", True, status.HTTP_200_OK),
+        ("admin", True, status.HTTP_200_OK),
     ],
     indirect=["client"],
 )
-def test_email_detail(db, email, client, expected_status):
+def test_email_detail(db, email, client, own, expected_status):
+    if own:
+        email.identity = client.user.identity
+        email.save()
+
     url = reverse("email-detail", args=[email.pk])
 
     response = client.get(url)
@@ -29,28 +34,26 @@ def test_email_detail(db, email, client, expected_status):
 
 
 @pytest.mark.parametrize(
-    "client,expected_status",
+    "client,expected_count",
     [
-        ("user", status.HTTP_403_FORBIDDEN),
-        ("staff", status.HTTP_200_OK),
-        ("admin", status.HTTP_200_OK),
+        ("user", 1),
+        ("staff", 3),
+        ("admin", 3),
     ],
     indirect=["client"],
 )
-def test_email_list(db, client, expected_status, email_factory):
-    email_factory.create_batch(3)
+def test_email_list(db, client, expected_count, email_factory):
+    email_factory.create_batch(2)
+    email_factory(identity=client.user.identity)
 
     url = reverse("email-list")
 
     response = client.get(url)
 
-    assert response.status_code == expected_status
-
-    if expected_status != status.HTTP_200_OK:
-        return
+    assert response.status_code == status.HTTP_200_OK
 
     json = response.json()
-    assert len(json["data"]) == models.Email.objects.count() == 3
+    assert len(json["data"]) == expected_count
 
 
 def test_email_identity_filters(db, client, email_factory):
@@ -75,15 +78,18 @@ def test_email_identity_filters(db, client, email_factory):
 
 
 @pytest.mark.parametrize(
-    "client,expected_status",
+    "client,own,expected_status",
     [
-        ("user", status.HTTP_403_FORBIDDEN),
-        ("staff", status.HTTP_201_CREATED),
-        ("admin", status.HTTP_201_CREATED),
+        ("user", False, status.HTTP_403_FORBIDDEN),
+        ("user", True, status.HTTP_201_CREATED),
+        ("staff", True, status.HTTP_201_CREATED),
+        ("admin", True, status.HTTP_201_CREATED),
     ],
     indirect=["client"],
 )
-def test_email_create(db, identity, client, expected_status):
+def test_email_create(db, identity, client, own, expected_status):
+    if own:
+        client.user.identity = identity
     assert identity.modified_by_user != client.user.username
 
     url = reverse("email-list")
@@ -148,17 +154,22 @@ def test_email_create_with_includes(db, email_factory, client):
 
 
 @pytest.mark.parametrize(
-    "client,expected_status",
+    "client,own,expected_status",
     [
-        ("user", status.HTTP_403_FORBIDDEN),
-        ("staff", status.HTTP_200_OK),
-        ("admin", status.HTTP_200_OK),
+        ("user", False, status.HTTP_404_NOT_FOUND),
+        ("user", True, status.HTTP_200_OK),
+        ("staff", True, status.HTTP_200_OK),
+        ("admin", True, status.HTTP_200_OK),
     ],
     indirect=["client"],
 )
-def test_email_update(db, client, expected_status, email_factory):
-    email = email_factory(description="Bar")
+def test_email_update(db, client, own, expected_status, email):
     assert email.identity.modified_by_user != client.user.username
+
+    email.description = "Bar"
+    if own:
+        email.identity = client.user.identity
+    email.save()
 
     url = reverse("email-detail", args=[email.pk])
 
@@ -192,18 +203,22 @@ def test_email_update(db, client, expected_status, email_factory):
 
 
 @pytest.mark.parametrize(
-    "client,expected_status",
+    "client,own,expected_status",
     [
-        ("user", status.HTTP_403_FORBIDDEN),
-        ("staff", status.HTTP_204_NO_CONTENT),
-        ("admin", status.HTTP_204_NO_CONTENT),
+        ("user", False, status.HTTP_404_NOT_FOUND),
+        ("user", True, status.HTTP_204_NO_CONTENT),
+        ("staff", True, status.HTTP_204_NO_CONTENT),
+        ("admin", True, status.HTTP_204_NO_CONTENT),
     ],
     indirect=["client"],
 )
-def test_email_delete(db, client, expected_status, email_factory):
+def test_email_delete(db, client, own, expected_status, email_factory):
     main_email = email_factory()
     other_email = email_factory(identity=main_email.identity)
     assert other_email.identity.modified_by_user != client.user.username
+
+    if own:
+        client.user.identity = other_email.identity
 
     url = reverse("email-detail", args=[other_email.pk])
 
