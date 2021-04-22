@@ -53,15 +53,15 @@
             >
               {{#if (or identity.fullName identity.isOrganisation)}}
                 <div class="uk-margin-right">
+                  {{#if identity.isOrganisation}}
+                    <i>{{identity.organisationName}}</i>
+                  {{/if}}
+
+                  {{~if (and identity.fullName identity.isOrganisation) " -"}}
+
                   {{#if identity.fullName}}
                     {{identity.fullName}}
                   {{~/if}}
-
-                  {{~if (and identity.fullName identity.isOrganisation) ","}}
-
-                  {{#if identity.isOrganisation}}
-                    {{identity.organisationName}}
-                  {{/if}}
                 </div>
               {{/if}}
 
