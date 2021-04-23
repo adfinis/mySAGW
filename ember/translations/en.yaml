@@ -266,10 +266,13 @@ component:
       label:
         organisation: "Organisation"
         role: "Membership role"
+        authorized: "Organisation admin"
+        admin: "Admin"
         timeFrom: "From"
         timeUntil: "Until"
         nextElection: "Next election"
         comment: "Comment"
+        inactive: "Inactive"
       control:
         cancel: "Cancel"
         submit: "Save"

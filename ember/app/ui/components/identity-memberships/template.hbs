@@ -5,7 +5,7 @@
 >
   <h2>{{t "component.identity-memberships.title"}}</h2>
 
-  {{#if this.fetchInterests.isRunning}}
+  {{#if this.fetchMemberships.isRunning}}
     <LoadingSpinner />
   {{else}}
     {{#if this.memberships.length}}
@@ -13,10 +13,29 @@
         {{#each this.memberships as |membership|}}
           <li class="uk-flex uk-flex-between uk-flex-middle">
             <div>
-              <strong>{{membership.organisation.organisationName}}</strong><br>
+              {{#if membership.isInactive}}
+                <del>
+                  <strong>{{membership.organisation.organisationName}}</strong>
+                  {{#if membership.authorized}}
+                    ({{t "component.identity-memberships.form.label.admin"}})
+                  {{/if}}
+                </del>
+              {{else}}
+                <strong>{{membership.organisation.organisationName}}</strong>
+                {{#if membership.authorized}}
+                  ({{t "component.identity-memberships.form.label.admin"}})
+                {{/if}}
+              {{/if}}
+              <br>
 
               {{#if membership.role}}
-                <div class="uk-text-meta">{{membership.role.title}}</div>
+                <div class="uk-text-meta">
+                  {{#if membership.isInactive}}
+                    <del>{{membership.role.title}}</del>
+                  {{else}}
+                    {{membership.role.title}}
+                  {{/if}}
+                </div>
               {{/if}}
 
               <div class="uk-text-small">
@@ -137,6 +156,14 @@
         </Form.input>
       </div>
 
+      <Form.input
+        @label={{t "component.identity-memberships.form.label.authorized"}}
+        @type="checkbox"
+        @name="authorized"
+        @required={{false}}
+        @disabled={{false}}
+      />
+
       <div class="uk-margin">
         <div class="uk-child-width-expand" uk-grid>
           <div>
@@ -192,6 +219,14 @@
           @name="comment"
         />
       </div>
+
+      <Form.input
+        @label={{t "component.identity-memberships.form.label.inactive"}}
+        @type="checkbox"
+        @name="inactive"
+        @required={{false}}
+        @disabled={{false}}
+      />
 
       <p class="uk-text-right">
         <button
