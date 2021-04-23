@@ -69,6 +69,8 @@ page:
       add: "Add identity"
       export:
         button: "Export"
+        standard: "Standard"
+        email-only: "Email only"
         filename: "identities-{date}"
       search: "Search"
 

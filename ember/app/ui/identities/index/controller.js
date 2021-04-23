@@ -61,12 +61,12 @@ export default class IdentitiesIndexController extends Controller {
     this.fetchIdentities.perform();
   }
 
-  @dropTask *exportSearch() {
+  @dropTask *exportSearch(endpoint) {
     const adapter = this.store.adapterFor("identity");
 
     let uri = `${this.store
       .adapterFor("identity")
-      .buildURL("identity")}/export`;
+      .buildURL("identity")}/${endpoint}`;
 
     if (this.searchTerm) {
       uri += `?filter[search]=${this.searchTerm}`;
