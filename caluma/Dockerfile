@@ -1,4 +1,4 @@
-FROM projectcaluma/caluma:version-7.8.0
+FROM projectcaluma/caluma:version-7.10.0
 
 ENV PATH="${HOME}/.local/bin:${PATH}"
 
