@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.contrib.postgres.fields import DateRangeField
 from django.db import models
+from django.db.models import Q
+from django.utils import timezone
 from django_countries.fields import CountryField
 from localized_fields.fields import LocalizedCharField, LocalizedTextField
 from phonenumber_field.modelfields import PhoneNumberField
@@ -86,7 +88,11 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
     is_organisation = models.BooleanField(default=False)
 
     def _get_memberships(self, only_authorized=False):
-        memberships = Membership.objects.filter(identity=self)
+        memberships = Membership.objects.filter(
+            Q(identity=self),
+            Q(inactive=False),
+            Q(time_slot__isnull=True) | Q(time_slot__contains=timezone.now()),
+        )
         if only_authorized:
             memberships = memberships.filter(authorized=True)
         return self.__class__.objects.filter(

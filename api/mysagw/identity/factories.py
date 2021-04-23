@@ -80,6 +80,7 @@ class MembershipFactory(DjangoModelFactory):
     identity = SubFactory(IdentityFactory)
     organisation = SubFactory(IdentityFactory, is_organisation=True)
     role = SubFactory(MembershipRoleFactory)
+    time_slot = None
     authorized = False
     inactive = False
 
