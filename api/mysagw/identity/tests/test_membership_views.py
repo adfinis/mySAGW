@@ -12,7 +12,7 @@ from mysagw.identity import models
 @pytest.mark.parametrize(
     "client,expected_status",
     [
-        ("user", status.HTTP_403_FORBIDDEN),
+        ("user", status.HTTP_200_OK),
         ("staff", status.HTTP_200_OK),
         ("admin", status.HTTP_200_OK),
     ],
@@ -25,23 +25,25 @@ def test_membership_role_detail(db, membership_role, client, expected_status):
 
     assert response.status_code == expected_status
 
-    if expected_status != status.HTTP_200_OK:
-        return
-
     json = response.json()
     assert json["data"]["id"] == str(membership_role.pk)
 
 
 @pytest.mark.parametrize(
-    "client,expected_status",
+    "client,own,expected_status",
     [
-        ("user", status.HTTP_403_FORBIDDEN),
-        ("staff", status.HTTP_200_OK),
-        ("admin", status.HTTP_200_OK),
+        ("user", False, status.HTTP_404_NOT_FOUND),
+        ("user", True, status.HTTP_200_OK),
+        ("staff", False, status.HTTP_200_OK),
+        ("admin", False, status.HTTP_200_OK),
     ],
     indirect=["client"],
 )
-def test_membership_detail(db, membership, client, expected_status):
+def test_membership_detail(db, membership, client, own, expected_status):
+    if own:
+        membership.identity = client.user.identity
+        membership.save()
+
     url = reverse("membership-detail", args=[membership.pk])
 
     response = client.get(url, {"include": "role"})
@@ -59,7 +61,7 @@ def test_membership_detail(db, membership, client, expected_status):
 @pytest.mark.parametrize(
     "client,expected_status",
     [
-        ("user", status.HTTP_403_FORBIDDEN),
+        ("user", status.HTTP_200_OK),
         ("staff", status.HTTP_200_OK),
         ("admin", status.HTTP_200_OK),
     ],
@@ -74,36 +76,31 @@ def test_membership_role_list(db, client, expected_status, membership_role_facto
 
     assert response.status_code == expected_status
 
-    if expected_status != status.HTTP_200_OK:
-        return
-
     json = response.json()
     assert len(json["data"]) == models.MembershipRole.objects.count() == 3
 
 
 @pytest.mark.parametrize(
-    "client,expected_status",
+    "client,expected_count",
     [
-        ("user", status.HTTP_403_FORBIDDEN),
-        ("staff", status.HTTP_200_OK),
-        ("admin", status.HTTP_200_OK),
+        ("user", 1),
+        ("staff", 3),
+        ("admin", 3),
     ],
     indirect=["client"],
 )
-def test_membership_list(db, client, expected_status, membership_factory):
-    membership_factory.create_batch(3)
+def test_membership_list(db, client, expected_count, membership_factory):
+    membership_factory.create_batch(2)
+    membership_factory(identity=client.user.identity)
 
     url = reverse("membership-list")
 
     response = client.get(url)
 
-    assert response.status_code == expected_status
-
-    if expected_status != status.HTTP_200_OK:
-        return
+    assert response.status_code == status.HTTP_200_OK
 
     json = response.json()
-    assert len(json["data"]) == models.Membership.objects.count() == 3
+    assert len(json["data"]) == expected_count
 
 
 @pytest.mark.parametrize(

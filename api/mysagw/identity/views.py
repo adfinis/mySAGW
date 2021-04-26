@@ -8,7 +8,14 @@ from rest_framework_json_api import views
 
 from . import filters, models, serializers
 from .export import IdentityExport
-from .permissions import IsAdmin, IsAuthenticated, IsAuthorized, IsOwn, IsStaff
+from .permissions import (
+    IsAdmin,
+    IsAuthenticated,
+    IsAuthorized,
+    IsOwn,
+    IsStaff,
+    ReadOnly,
+)
 
 
 class UniqueBooleanFieldViewSetMixin:
@@ -173,14 +180,21 @@ class InterestViewSet(views.ModelViewSet):
 class MembershipRoleViewSet(views.ModelViewSet):
     serializer_class = serializers.MembershipRoleSerializer
     queryset = models.MembershipRole.objects.all()
-    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
+    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff | ReadOnly),)
 
 
 class MembershipViewSet(views.ModelViewSet):
     serializer_class = serializers.MembershipSerializer
     queryset = models.Membership.objects.all()
-    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
+    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff | (IsOwn & ReadOnly)),)
     filterset_class = filters.MembershipFilterSet
+
+    def get_queryset(self, *args, **kwargs):
+        qs = super().get_queryset(*args, **kwargs)
+        if self.request.user.is_staff:
+            return qs
+        qs = qs.filter(identity=self.request.user.identity)
+        return qs
 
     def perform_destroy(self, instance):
         super().perform_destroy(instance)

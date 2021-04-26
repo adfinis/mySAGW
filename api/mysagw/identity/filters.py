@@ -40,4 +40,5 @@ class MembershipFilterSet(FilterSet):
         model = models.Membership
         fields = [
             "identity",
+            "authorized",
         ]
