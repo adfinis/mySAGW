@@ -292,6 +292,7 @@ class MembershipSerializer(
 
     included_serializers = {
         "role": MembershipRoleSerializer,
+        "organisation": IdentitySerializer,
     }
 
     def validate(self, *args, **kwargs):

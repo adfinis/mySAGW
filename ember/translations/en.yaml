@@ -145,7 +145,7 @@ page:
     title: "Profile"
     switcher:
       identity: "Identity"
-      organisations: "Organisations"
+      memberships: "Memberships"
     organisation:
       edit: "Edit organisaton"
       empty: "No organisations yet."

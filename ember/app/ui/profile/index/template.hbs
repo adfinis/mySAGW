@@ -5,7 +5,7 @@
     {{! nav.component is either a uk-tab or a uk-subnav component }}
     <nav.component as |tab|>
       <tab.item {{on "click" (fn this.setActiveTab 0)}}>{{t "page.profile.switcher.identity"}}</tab.item>
-      <tab.item {{on "click" (fn this.setActiveTab 1)}}>{{t "page.profile.switcher.organisations"}}</tab.item>
+      <tab.item {{on "click" (fn this.setActiveTab 1)}}>{{t "page.profile.switcher.memberships"}}</tab.item>
     </nav.component>
   </switcher.nav>
 
@@ -42,35 +42,55 @@
 
     <content.item>
       <div class="uk-margin-bottom">
-        {{#if this.fetchOrganisations.isRunning}}
+        {{#if this.fetchMemberships.isRunning}}
           <LoadingSpinner />
         {{else}}
           <ul class="uk-list uk-list-divider">
-            {{#each this.organisations as |organisation|}}
-              {{#unless organisation.isNew}}
-                <li>
-                  <LinkTo @route="profile.edit" @model={{organisation.id}}
+            {{#each this.memberships as |membership|}}
+              <li class="{{if membership.isInactive "uk-text-muted" "uk-text-emphasis"}}">
+                {{#if membership.authorized}}
+                  <LinkTo @route="profile.edit" @model={{membership.organisation.id}}
                     class="uk-text-bold uk-flex uk-flex-between uk-flex-wrap">
-                    {{#if (or organisation.fullName organisation.isOrganisation)}}
+                    {{#if (or membership.organisation.fullName membership.organisation.isOrganisation)}}
                       <div class="uk-margin-right">
-                        {{#if organisation.fullName}}
-                          {{organisation.fullName}}
+                        {{#if membership.organisation.fullName}}
+                          {{membership.organisation.fullName}}
                         {{~/if}}
 
-                        {{~if (and organisation.fullName organisation.isOrganisation) ","}}
+                        {{~if (and membership.organisation.fullName membership.organisation.isOrganisation) ","}}
 
-                        {{#if organisation.isOrganisation}}
-                          {{organisation.organisationName}}
+                        {{#if membership.organisation.isOrganisation}}
+                          {{membership.organisation.organisationName}}
                         {{/if}}
                       </div>
                     {{/if}}
 
                     <div class="uk-text-small uk-width-1-1 uk-width-auto@s">
-                      {{organisation.email}}
+                      {{membership.organisation.email}}
                     </div>
                   </LinkTo>
-                </li>
-              {{/unless}}
+                {{else}}
+                  <span class="uk-text-bold uk-flex uk-flex-between uk-flex-wrap">
+                    {{#if (or membership.organisation.fullName membership.organisation.isOrganisation)}}
+                      <div class="uk-margin-right">
+                        {{#if membership.organisation.fullName}}
+                          {{membership.organisation.fullName}}
+                        {{~/if}}
+
+                        {{~if (and membership.organisation.fullName membership.organisation.isOrganisation) ","}}
+
+                        {{#if membership.organisation.isOrganisation}}
+                          {{membership.organisation.organisationName}}
+                        {{/if}}
+                      </div>
+                    {{/if}}
+
+                    <div class="uk-text-small uk-width-1-1 uk-width-auto@s">
+                      {{membership.organisation.email}}
+                    </div>
+                  </span>
+                {{/if}}
+              </li>
             {{else}}
               <li>{{t "page.profile.organisation.empty"}}</li>
             {{/each}}

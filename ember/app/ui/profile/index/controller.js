@@ -1,6 +1,5 @@
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
-import { filterBy } from "@ember/object/computed";
 import { tracked } from "@glimmer/tracking";
 import { lastValue, restartableTask } from "ember-concurrency-decorators";
 
@@ -8,16 +7,16 @@ export default class ProfileIndexController extends Controller {
   queryParams = ["activeTab"];
   @tracked activeTab = 0;
 
-  @filterBy("_organisations", "isOrganisation", true) organisations;
-  @lastValue("fetchOrganisations") _organisations;
+  @lastValue("fetchMemberships") memberships;
   @restartableTask
-  *fetchOrganisations() {
+  *fetchMemberships() {
     try {
-      const organisations = yield this.store.findAll("identity", {
-        adapterOptions: { customEndpoint: "my-orgs" },
+      const memberships = yield this.store.query("membership", {
+        filter: { identity: this.model.id },
+        include: "organisation",
       });
 
-      return organisations;
+      return memberships;
     } catch (error) {
       console.error(error);
 
