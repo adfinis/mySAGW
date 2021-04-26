@@ -10,8 +10,8 @@ from mysagw.identity import models
     [
         ("user", False, status.HTTP_404_NOT_FOUND),
         ("user", True, status.HTTP_200_OK),
-        ("staff", True, status.HTTP_200_OK),
-        ("admin", True, status.HTTP_200_OK),
+        ("staff", False, status.HTTP_200_OK),
+        ("admin", False, status.HTTP_200_OK),
     ],
     indirect=["client"],
 )
@@ -61,8 +61,8 @@ def test_phone_number_list(db, client, expected_count, phone_number_factory):
     [
         ("user", False, status.HTTP_403_FORBIDDEN),
         ("user", True, status.HTTP_201_CREATED),
-        ("staff", True, status.HTTP_201_CREATED),
-        ("admin", True, status.HTTP_201_CREATED),
+        ("staff", False, status.HTTP_201_CREATED),
+        ("admin", False, status.HTTP_201_CREATED),
     ],
     indirect=["client"],
 )
@@ -150,8 +150,8 @@ def test_phone_number_create_new_default(db, phone_number_factory, client):
     [
         ("user", False, status.HTTP_404_NOT_FOUND),
         ("user", True, status.HTTP_200_OK),
-        ("staff", True, status.HTTP_200_OK),
-        ("admin", True, status.HTTP_200_OK),
+        ("staff", False, status.HTTP_200_OK),
+        ("admin", False, status.HTTP_200_OK),
     ],
     indirect=["client"],
 )
@@ -221,8 +221,8 @@ def test_phone_number_update_unset_default(db, client, phone_number):
     [
         ("user", False, status.HTTP_404_NOT_FOUND),
         ("user", True, status.HTTP_204_NO_CONTENT),
-        ("staff", True, status.HTTP_204_NO_CONTENT),
-        ("admin", True, status.HTTP_204_NO_CONTENT),
+        ("staff", False, status.HTTP_204_NO_CONTENT),
+        ("admin", False, status.HTTP_204_NO_CONTENT),
     ],
     indirect=["client"],
 )

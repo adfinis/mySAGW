@@ -8,13 +8,7 @@ from rest_framework_json_api import views
 
 from . import filters, models, serializers
 from .export import IdentityExport
-from .permissions import (
-    IsAdmin,
-    IsAuthenticated,
-    IsOrgAdmin,
-    IsOwnOrAuthorized,
-    IsStaff,
-)
+from .permissions import IsAdmin, IsAuthenticated, IsAuthorized, IsOwn, IsStaff
 
 
 class UniqueBooleanFieldViewSetMixin:
@@ -60,7 +54,7 @@ class IdentityAdditionsViewSetMixin:
 class EmailViewSet(IdentityAdditionsViewSetMixin, views.ModelViewSet):
     serializer_class = serializers.EmailSerializer
     queryset = models.Email.objects.all()
-    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff | IsOwnOrAuthorized),)
+    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff | IsOwn | IsAuthorized),)
     filterset_class = filters.EmailFilterSet
 
     def perform_destroy(self, instance):
@@ -74,7 +68,7 @@ class PhoneNumberViewSet(
 ):
     serializer_class = serializers.PhoneNumberSerializer
     queryset = models.PhoneNumber.objects.all()
-    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff | IsOwnOrAuthorized),)
+    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff | IsOwn | IsAuthorized),)
     filterset_class = filters.PhoneNumberFilterSet
 
     def perform_destroy(self, instance):
@@ -86,7 +80,7 @@ class PhoneNumberViewSet(
 class AddressViewSet(IdentityAdditionsViewSetMixin, views.ModelViewSet):
     serializer_class = serializers.AddressSerializer
     queryset = models.Address.objects.all()
-    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff | IsOwnOrAuthorized),)
+    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff | IsOwn | IsAuthorized),)
     filterset_class = filters.AddressFilterSet
 
     def perform_destroy(self, instance):
@@ -158,7 +152,7 @@ class MyOrgsViewSet(
     GenericViewSet,
 ):
     serializer_class = serializers.MyOrgsSerializer
-    permission_classes = (IsAuthenticated & IsOrgAdmin,)
+    permission_classes = (IsAuthenticated & IsAuthorized,)
 
     def get_queryset(self):
         return self.request.user.identity.member_of

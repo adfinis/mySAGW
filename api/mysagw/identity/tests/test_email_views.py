@@ -10,8 +10,8 @@ from mysagw.identity import models
     [
         ("user", False, status.HTTP_404_NOT_FOUND),
         ("user", True, status.HTTP_200_OK),
-        ("staff", True, status.HTTP_200_OK),
-        ("admin", True, status.HTTP_200_OK),
+        ("staff", False, status.HTTP_200_OK),
+        ("admin", False, status.HTTP_200_OK),
     ],
     indirect=["client"],
 )
@@ -82,8 +82,8 @@ def test_email_identity_filters(db, client, email_factory):
     [
         ("user", False, status.HTTP_403_FORBIDDEN),
         ("user", True, status.HTTP_201_CREATED),
-        ("staff", True, status.HTTP_201_CREATED),
-        ("admin", True, status.HTTP_201_CREATED),
+        ("staff", False, status.HTTP_201_CREATED),
+        ("admin", False, status.HTTP_201_CREATED),
     ],
     indirect=["client"],
 )
@@ -154,21 +154,36 @@ def test_email_create_with_includes(db, email_factory, client):
 
 
 @pytest.mark.parametrize(
-    "client,own,expected_status",
+    "client,own,for_org,expected_status",
     [
-        ("user", False, status.HTTP_404_NOT_FOUND),
-        ("user", True, status.HTTP_200_OK),
-        ("staff", True, status.HTTP_200_OK),
-        ("admin", True, status.HTTP_200_OK),
+        ("user", False, False, status.HTTP_404_NOT_FOUND),
+        ("user", True, False, status.HTTP_200_OK),
+        ("user", False, True, status.HTTP_200_OK),
+        ("staff", False, False, status.HTTP_200_OK),
+        ("admin", False, False, status.HTTP_200_OK),
     ],
     indirect=["client"],
 )
-def test_email_update(db, client, own, expected_status, email):
+def test_email_update(
+    db,
+    client,
+    own,
+    for_org,
+    expected_status,
+    email,
+    identity_factory,
+    membership_factory,
+):
     assert email.identity.modified_by_user != client.user.username
 
     email.description = "Bar"
     if own:
         email.identity = client.user.identity
+    if for_org:
+        email.identity = identity_factory(is_organisation=True)
+        membership_factory(
+            identity=client.user.identity, organisation=email.identity, authorized=True
+        )
     email.save()
 
     url = reverse("email-detail", args=[email.pk])
@@ -207,8 +222,8 @@ def test_email_update(db, client, own, expected_status, email):
     [
         ("user", False, status.HTTP_404_NOT_FOUND),
         ("user", True, status.HTTP_204_NO_CONTENT),
-        ("staff", True, status.HTTP_204_NO_CONTENT),
-        ("admin", True, status.HTTP_204_NO_CONTENT),
+        ("staff", False, status.HTTP_204_NO_CONTENT),
+        ("admin", False, status.HTTP_204_NO_CONTENT),
     ],
     indirect=["client"],
 )
