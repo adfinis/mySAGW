@@ -124,6 +124,7 @@ class Email(UUIDModel, HistoricalModel):
 
     class Meta:
         unique_together = [["identity", "email"]]
+        ordering = ("email",)
 
 
 class PhoneNumber(UUIDModel, HistoricalModel):
@@ -136,7 +137,7 @@ class PhoneNumber(UUIDModel, HistoricalModel):
 
     class Meta:
         unique_together = [["identity", "phone"]]
-        ordering = ("-default",)
+        ordering = ("-default", "phone")
 
 
 class Address(UUIDModel, HistoricalModel):
