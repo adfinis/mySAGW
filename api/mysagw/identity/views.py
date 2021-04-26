@@ -11,9 +11,10 @@ from .export import IdentityExport
 from .permissions import (
     IsAdmin,
     IsAuthenticated,
-    IsOrgAdmin,
-    IsOwnOrAuthorized,
+    IsAuthorized,
+    IsOwn,
     IsStaff,
+    ReadOnly,
 )
 
 
@@ -60,7 +61,7 @@ class IdentityAdditionsViewSetMixin:
 class EmailViewSet(IdentityAdditionsViewSetMixin, views.ModelViewSet):
     serializer_class = serializers.EmailSerializer
     queryset = models.Email.objects.all()
-    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff | IsOwnOrAuthorized),)
+    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff | IsOwn | IsAuthorized),)
     filterset_class = filters.EmailFilterSet
 
     def perform_destroy(self, instance):
@@ -74,7 +75,7 @@ class PhoneNumberViewSet(
 ):
     serializer_class = serializers.PhoneNumberSerializer
     queryset = models.PhoneNumber.objects.all()
-    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff | IsOwnOrAuthorized),)
+    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff | IsOwn | IsAuthorized),)
     filterset_class = filters.PhoneNumberFilterSet
 
     def perform_destroy(self, instance):
@@ -86,7 +87,7 @@ class PhoneNumberViewSet(
 class AddressViewSet(IdentityAdditionsViewSetMixin, views.ModelViewSet):
     serializer_class = serializers.AddressSerializer
     queryset = models.Address.objects.all()
-    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff | IsOwnOrAuthorized),)
+    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff | IsOwn | IsAuthorized),)
     filterset_class = filters.AddressFilterSet
 
     def perform_destroy(self, instance):
@@ -158,7 +159,7 @@ class MyOrgsViewSet(
     GenericViewSet,
 ):
     serializer_class = serializers.MyOrgsSerializer
-    permission_classes = (IsAuthenticated & IsOrgAdmin,)
+    permission_classes = (IsAuthenticated & IsAuthorized,)
 
     def get_queryset(self):
         return self.request.user.identity.member_of
@@ -179,14 +180,21 @@ class InterestViewSet(views.ModelViewSet):
 class MembershipRoleViewSet(views.ModelViewSet):
     serializer_class = serializers.MembershipRoleSerializer
     queryset = models.MembershipRole.objects.all()
-    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
+    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff | ReadOnly),)
 
 
 class MembershipViewSet(views.ModelViewSet):
     serializer_class = serializers.MembershipSerializer
     queryset = models.Membership.objects.all()
-    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
+    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff | (IsOwn & ReadOnly)),)
     filterset_class = filters.MembershipFilterSet
+
+    def get_queryset(self, *args, **kwargs):
+        qs = super().get_queryset(*args, **kwargs)
+        if self.request.user.is_staff:
+            return qs
+        qs = qs.filter(identity=self.request.user.identity)
+        return qs
 
     def perform_destroy(self, instance):
         super().perform_destroy(instance)

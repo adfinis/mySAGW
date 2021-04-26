@@ -1,9 +1,17 @@
-from rest_framework.permissions import BasePermission
+from rest_framework.permissions import SAFE_METHODS, BasePermission
 
 
 class IsAuthenticated(BasePermission):
     def has_permission(self, request, view):
         return bool(request.user and request.user.is_authenticated)
+
+    def has_object_permission(self, request, view, obj):
+        return self.has_permission(request, view)
+
+
+class ReadOnly(BasePermission):
+    def has_permission(self, request, view):
+        return bool(request.method in SAFE_METHODS)
 
     def has_object_permission(self, request, view, obj):
         return self.has_permission(request, view)
@@ -25,20 +33,14 @@ class IsStaff(BasePermission):
         return self.has_permission(request, view)
 
 
-class IsOrgAdmin(BasePermission):
-    def has_permission(self, request, view):
-        return True
-
+class IsAuthorized(BasePermission):
     def has_object_permission(self, request, view, obj):
-        return obj in request.user.identity.authorized_for
-
-
-class IsOwnOrAuthorized(BasePermission):
-    def has_permission(self, request, view):
-        return True
-
-    def has_object_permission(self, request, view, obj):
-        return getattr(obj, "identity") and (
-            obj.identity == request.user.identity
-            or obj.identity in request.user.identity.authorized_for
+        return obj in request.user.identity.authorized_for or (
+            hasattr(obj, "identity")
+            and (obj.identity in request.user.identity.authorized_for)
         )
+
+
+class IsOwn(BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return hasattr(obj, "identity") and (obj.identity == request.user.identity)
