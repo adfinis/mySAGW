@@ -6,6 +6,7 @@ class IdentityExport:
         "first_name",
         "last_name",
         "localized_salutation",
+        "language",
         "is_organisation",
         "organisation_name",
         "email",
