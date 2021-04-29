@@ -166,7 +166,7 @@ component:
       lastName: "Last name"
       email: "Main email address"
       isOrganisation: "This is an organisation."
-      language: "Language"
+      language: "Correspondence language"
     hint:
       email: "Managed through KeyCloak."
     control:

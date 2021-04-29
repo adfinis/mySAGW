@@ -14,12 +14,12 @@
           <li class="uk-flex uk-flex-between uk-flex-middle">
             <div>
               {{#if membership.isInactive}}
-                <del>
+                <s>
                   <strong>{{membership.organisation.organisationName}}</strong>
                   {{#if membership.authorized}}
                     ({{t "component.identity-memberships.form.label.admin"}})
                   {{/if}}
-                </del>
+                </s>
               {{else}}
                 <strong>{{membership.organisation.organisationName}}</strong>
                 {{#if membership.authorized}}
@@ -31,7 +31,7 @@
               {{#if membership.role}}
                 <div class="uk-text-meta">
                   {{#if membership.isInactive}}
-                    <del>{{membership.role.title}}</del>
+                    <s>{{membership.role.title}}</s>
                   {{else}}
                     {{membership.role.title}}
                   {{/if}}

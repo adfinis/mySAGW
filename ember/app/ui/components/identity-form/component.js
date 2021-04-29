@@ -41,6 +41,11 @@ export default class IdentityFormComponent extends Component {
   get keyCloakAccountUrl() {
     const host =
       location.hostname === "localhost" ? "mysagw.local" : location.hostname;
+
+    if (this.args.customEndpoint === "me") {
+      return `https://${host}/auth/realms/master/account/#/personal-info`;
+    }
+
     return [
       `https://${host}/auth/admin/mysagw/console/`,
       "#/realms/mysagw/users/",

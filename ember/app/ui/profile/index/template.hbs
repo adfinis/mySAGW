@@ -47,8 +47,8 @@
         {{else}}
           <ul class="uk-list uk-list-divider">
             {{#each this.memberships as |membership|}}
-              <li class="{{if membership.isInactive "uk-text-muted" "uk-text-emphasis"}}">
-                {{#if membership.authorized}}
+              <li>
+                {{#if (and membership.authorized (not membership.isInactive))}}
                   <LinkTo @route="profile.edit" @model={{membership.organisation.id}}
                     class="uk-text-bold uk-flex uk-flex-between uk-flex-wrap">
                     {{#if (or membership.organisation.fullName membership.organisation.isOrganisation)}}
@@ -66,9 +66,29 @@
                     {{/if}}
 
                     <div class="uk-text-small uk-width-1-1 uk-width-auto@s">
-                      {{membership.organisation.email}}
+                      {{membership.role.title}}
                     </div>
                   </LinkTo>
+                {{else if membership.isInactive}}
+                  <s class="uk-text-bold uk-flex uk-flex-between uk-flex-wrap">
+                    {{#if (or membership.organisation.fullName membership.organisation.isOrganisation)}}
+                      <div class="uk-margin-right">
+                        {{#if membership.organisation.fullName}}
+                          {{membership.organisation.fullName}}
+                        {{~/if}}
+
+                        {{~if (and membership.organisation.fullName membership.organisation.isOrganisation) ","}}
+
+                        {{#if membership.organisation.isOrganisation}}
+                          {{membership.organisation.organisationName}}
+                        {{/if}}
+                      </div>
+                    {{/if}}
+
+                    <div class="uk-text-small uk-width-1-1 uk-width-auto@s">
+                      {{membership.role.title}}
+                    </div>
+                  </s>
                 {{else}}
                   <span class="uk-text-bold uk-flex uk-flex-between uk-flex-wrap">
                     {{#if (or membership.organisation.fullName membership.organisation.isOrganisation)}}
@@ -86,7 +106,7 @@
                     {{/if}}
 
                     <div class="uk-text-small uk-width-1-1 uk-width-auto@s">
-                      {{membership.organisation.email}}
+                      {{membership.role.title}}
                     </div>
                   </span>
                 {{/if}}

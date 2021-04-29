@@ -13,7 +13,7 @@ export default class ProfileIndexController extends Controller {
     try {
       const memberships = yield this.store.query("membership", {
         filter: { identity: this.model.id },
-        include: "organisation",
+        include: "organisation,role",
       });
 
       return memberships;
