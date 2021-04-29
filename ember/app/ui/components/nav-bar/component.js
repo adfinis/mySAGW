@@ -13,6 +13,6 @@ export default class NavbarComponent extends Component {
 
   @action
   setLocale(locale) {
-    this.intl.setLocale(locale)
+    this.intl.setLocale(locale);
   }
 }

@@ -132,8 +132,8 @@
         </div>
       {{else}}
         <Form.input
-          @label={{t "component.identity-phone-numbers.form.label.description" lang=(uppercase @identity.language)}}
-          @name="descriptionObject.{{@identity.language}}"
+          @label={{t "component.identity-phone-numbers.form.label.description" lang=(uppercase this.intl.locale.firstObject)}}
+          @name="descriptionObject.{{this.intl.locale.firstObject}}"
           @required={{false}}
         />
       {{/if}}
