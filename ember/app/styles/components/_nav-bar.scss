@@ -28,3 +28,24 @@
     }
   }
 }
+
+.language-select {
+  .uk-dropdown {
+    min-width: 100px;
+  }
+}
+
+.language-select-offcanvas {
+  .uk-dropdown {
+    min-width: 100px;
+    max-width: 100px;
+  }
+
+  ul {
+    background: #222;
+
+    li a {
+      color: rgba(255, 255, 255, 0.7);
+    }
+  }
+}

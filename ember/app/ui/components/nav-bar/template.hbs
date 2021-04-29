@@ -54,6 +54,17 @@
           {{t "nav.login"}}
         </tab.link-item>
       {{/if}}
+
+      <tab.item class="language-select">
+        <a class="uk-link-reset" href="#">{{this.intl.locale}} <UkIcon @icon="chevron-down"/></a>
+        <ul uk-dropdown="pos: bottom-justify" class="uk-list uk-list-hyphen uk-list-collapse uk-padding-small">
+          {{#each this.intl.locales as |locale|}}
+            <li>
+              <a class="uk-link-text" {{on "click" (fn this.setLocale locale)}} href="#">{{locale}}</a>
+            </li>
+          {{/each}}
+        </ul>
+      </tab.item>
     </UkTab>
   </div>
 
@@ -120,7 +131,17 @@
           {{t "nav.logout"}}
         </a>
       </li>
-    </ul>
 
+      <li class="language-select-offcanvas">
+        <a class="uk-link-reset uk-text-uppercase" href="#">{{this.intl.locale}} <UkIcon @icon="chevron-down"/></a>
+        <ul uk-dropdown="pos: bottom-justify; mode: click" class="uk-list uk-list-hyphen uk-list-collapse uk-padding-small">
+          {{#each this.intl.locales as |locale|}}
+          <li>
+            <a class="uk-link-text uk-text-uppercase" {{on "click" (fn this.setLocale locale)}} href="#">{{locale}}</a>
+          </li>
+          {{/each}}
+        </ul>
+      </li>
+    </ul>
   </div>
 </div>
