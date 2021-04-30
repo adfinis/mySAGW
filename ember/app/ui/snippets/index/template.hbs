@@ -1,0 +1,66 @@
+<div>
+  <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
+    <h1 class="uk-margin-remove">{{t "page.snippets.index.title"}}</h1>
+
+    {{#if (can "add snippet")}}
+      <div class="uk-flex-none">
+        <LinkTo @route="snippets.add" class="uk-button uk-button-default">
+          {{t "page.snippets.index.add"}}
+        </LinkTo>
+      </div>
+    {{/if}}
+  </div>
+
+  <div class="uk-margin">
+    <label class="uk-form-label" for="form-search">
+      {{t "page.snippets.index.search"}}
+    </label>
+    <input
+      class="uk-input"
+      id="form-search"
+      type="search"
+      value={{this.searchTerm}}
+      {{on "input" (perform this.search)}}
+    >
+  </div>
+
+  {{#if this.fetchSnippets.isRunning}}
+    <LoadingSpinner />
+  {{else}}
+    <ul class="uk-list uk-list-divider">
+      {{#each this.snippets as |snippet|}}
+        {{#unless snippet.isNew}}
+          <li>
+            <LinkTo @route="snippets.edit" @model={{snippet.id}} class="uk-text-bold uk-flex uk-flex-between uk-flex-wrap">
+              {{snippet.title}}
+            </LinkTo>
+          </li>
+        {{/unless}}
+      {{else}}
+        <p>{{t "page.snippets.index.empty"}}</p>
+      {{/each}}
+    </ul>
+  {{/if}}
+
+  {{#if (and this.totalPages (not this.fetchSnippets.isRunning))}}
+    <ul class="uk-pagination uk-flex-center">
+      <li class={{if (eq this.pageNumber 1) "uk-disabled" }}>
+        <a {{on "click" (fn this.setPageNumber (sub this.pageNumber 1))}} href="#">
+          <span uk-pagination-previous></span>
+        </a>
+      </li>
+      {{#each this.pages as |page|}}
+        <li class={{if page.active "uk-active"}}>
+          <a {{on "click" (fn this.setPageNumber page.number)}} href="#">
+            {{page.number}}
+          </a>
+        </li>
+      {{/each}}
+      <li class={{if (eq this.pageNumber this.totalPages) "uk-disabled" }}>
+        <a {{on "click" (fn this.setPageNumber (add this.pageNumber 1))}} href="#">
+          <span uk-pagination-next></span>
+        </a>
+      </li>
+    </ul>
+  {{/if}}
+</div>

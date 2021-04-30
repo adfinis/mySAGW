@@ -35,6 +35,11 @@
             {{t "nav.roles"}}
           </tab.link-item>
         {{/if}}
+        {{#if (can "list snippets")}}
+          <tab.link-item @route="snippets">
+            {{t "nav.snippets"}}
+          </tab.link-item>
+        {{/if}}
 
         {{#if (can "list form-builder")}}
           <tab.link-item @route="form-builder">
@@ -108,6 +113,13 @@
         <li>
           <LinkTo @route="membership-roles" uk-toggle="target: #offcanvas">
             {{t "nav.roles"}}
+          </LinkTo>
+        </li>
+      {{/if}}
+      {{#if (can "list snippets")}}
+        <li>
+          <LinkTo @route="snippets" uk-toggle="target: #offcanvas">
+            {{t "nav.snippets"}}
           </LinkTo>
         </li>
       {{/if}}
