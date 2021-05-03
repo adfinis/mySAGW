@@ -27,6 +27,10 @@ nav:
   logout: "Logout"
   login: "Login"
   profile: "Profile"
+  snippet:
+    hint: "Copy snippet to clipboard"
+    copy-success: "Snippet was copied to clipboard"
+    copy-error: "There was a problem while copying the snippet"
 
 documents:
   title: "Documents"
