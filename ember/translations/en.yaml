@@ -29,6 +29,7 @@ nav:
   profile: "Profile"
   snippet:
     hint: "Copy {lang} to clipboard"
+    load-more: "Load more snippets"
     copy-success: "Snippet was copied to clipboard"
     copy-error: "There was a problem while copying the snippet"
 

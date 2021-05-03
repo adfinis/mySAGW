@@ -29,13 +29,11 @@
   {{else}}
     <ul class="uk-list uk-list-divider">
       {{#each this.snippets as |snippet|}}
-        {{#unless snippet.isNew}}
-          <li>
-            <LinkTo @route="snippets.edit" @model={{snippet.id}} class="uk-text-bold uk-flex uk-flex-between uk-flex-wrap">
-              {{snippet.title}}
-            </LinkTo>
-          </li>
-        {{/unless}}
+        <li>
+          <LinkTo @route="snippets.edit" @model={{snippet.id}} class="uk-text-bold {{if snippet.archived "uk-link-text"}}">
+            {{snippet.title}}
+          </LinkTo>
+        </li>
       {{else}}
         <p>{{t "page.snippets.index.empty"}}</p>
       {{/each}}
