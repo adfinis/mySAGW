@@ -110,6 +110,7 @@
         @name="phone"
       />
 
+<<<<<<< HEAD
       {{#if (can "show multi-lang-description phone-number")}}
         <div class="uk-background-muted uk-padding-small uk-margin uk-margin-remove-last-child">
           <Form.input
@@ -137,6 +138,17 @@
           @required={{false}}
         />
       {{/if}}
+=======
+      <div class="uk-background-muted uk-padding-small uk-margin uk-margin-remove-last-child">
+        {{#each this.intl.locales as |locale|}}
+          <Form.input
+            @label={{t "component.identity-phone-numbers.form.label.description" lang=(uppercase locale)}}
+            @name="descriptionObject.{{locale}}"
+            @required={{false}}
+          />
+        {{/each}}
+      </div>
+>>>>>>> 12303e7... feat(ember): show all languages in snippet selector
 
       <Form.input
         @label={{t "component.identity-phone-numbers.form.label.default"}}

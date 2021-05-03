@@ -28,7 +28,7 @@ nav:
   login: "Login"
   profile: "Profile"
   snippet:
-    hint: "Copy snippet to clipboard"
+    hint: "Copy {lang} to clipboard"
     copy-success: "Snippet was copied to clipboard"
     copy-error: "There was a problem while copying the snippet"
 

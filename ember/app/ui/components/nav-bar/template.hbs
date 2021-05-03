@@ -18,45 +18,36 @@
       <tab.link-item @route="cases">
         {{t "nav.documents"}}
       </tab.link-item>
-        {{#if (can "list identity")}}
-          <tab.link-item @route="identities">
-            {{t "nav.identities"}}
-          </tab.link-item>
-        {{/if}}
-        {{#if (can "list interest")}}
-          <tab.link-item @route="interests">
-            {{t "nav.interests"}}
-          </tab.link-item>
-        {{/if}}
-        {{#if (can "list membership-role")}}
-          <tab.link-item @route="membership-roles">
-            {{t "nav.roles"}}
-          </tab.link-item>
-        {{/if}}
-        {{#if (can "list snippets")}}
-          <tab.link-item @route="snippets">
-            {{t "nav.snippets"}}
-          </tab.link-item>
-        {{/if}}
-
-        {{#if (can "list form-builder")}}
-          <tab.link-item @route="form-builder">
-            {{t "nav.form-builder"}}
-          </tab.link-item>
-        {{/if}}
-
-        <tab.link-item @route="profile">
-          {{t "nav.profile"}}
-        </tab.link-item>
-
-        <tab.item {{on "click" this.invalidateSession}}>
-          {{t "nav.logout"}}
-        </tab.item>
-      {{else}}
-        <tab.link-item @route="login">
-          {{t "nav.login"}}
+      {{#if (can "list identity")}}
+        <tab.link-item @route="identities">
+          {{t "nav.identities"}}
         </tab.link-item>
       {{/if}}
+      {{#if (can "list interest")}}
+        <tab.link-item @route="interests">
+          {{t "nav.interests"}}
+        </tab.link-item>
+      {{/if}}
+      {{#if (can "list membership-role")}}
+        <tab.link-item @route="membership-roles">
+          {{t "nav.roles"}}
+        </tab.link-item>
+      {{/if}}
+      {{#if (can "list snippets")}}
+        <tab.link-item @route="snippets">
+          {{t "nav.snippets"}}
+        </tab.link-item>
+      {{/if}}
+
+      {{#if (can "list form-builder")}}
+        <tab.link-item @route="form-builder">
+          {{t "nav.form-builder"}}
+        </tab.link-item>
+      {{/if}}
+
+      <tab.link-item @route="profile">
+        {{t "nav.profile"}}
+      </tab.link-item>
 
       <tab.item class="language-select">
         <a class="uk-link-reset" href="#">{{this.intl.locale}} <UkIcon @icon="chevron-down"/></a>
@@ -68,6 +59,15 @@
           {{/each}}
         </ul>
       </tab.item>
+      {{#if (can "list snippets")}}
+        <tab.link-item @route="snippets">
+          {{t "nav.snippets"}}
+        </tab.link-item>
+      {{/if}}
+
+      <tab.link-item @route="form-builder">
+        {{t "nav.form-builder"}}
+      </tab.link-item>
     </UkTab>
   </div>
   <div class="uk-navbar-right uk-visible@m">
@@ -226,24 +226,24 @@
       >
     </div>
 
-    <ul class="uk-list uk-list-divider">
+    <ul uk-accordion="multiple: true">
       {{#each this.snippets as |snippet|}}
-        {{#unless snippet.isNew}}
-          <li class="uk-margin">
-            <label class="uk-form-label">{{snippet.title}}</label>
-            <div class="uk-flex">
-              <input id="snippet-{{snippet.id}}" value={{snippet.body}} class="uk-width-4-5 uk-input" readonly="" type="text"/>
+        <li class="uk-margin">
+          <a class="uk-accordion-title" href="#">{{snippet.title}}</a>
+          <div class="uk-accordion-content">
+            {{#each this.intl.locales as |locale|}}
+              <textarea id="snippet-{{snippet.id}}-{{locale}}" class="uk-textarea" readonly="">{{get snippet.bodyObject locale}}</textarea>
               <CopyButton
-                @clipboardTarget="#snippet-{{snippet.id}}"
+                @clipboardTarget="#snippet-{{snippet.id}}-{{locale}}"
                 @success={{this.onCopySuccess}}
                 @error={{this.onCopyError}}
-                class="uk-width-1-5"
-                title={{t "nav.snippet.hint"}}
-                uk-icon="pull"
-              ></CopyButton>
-            </div>
-          </li>
-        {{/unless}}
+                class="uk-button uk-width-1-1 uk-button-default uk-margin"
+              >
+                {{t "nav.snippet.hint" lang=locale}}
+              </CopyButton>
+            {{/each}}
+          </div>
+        </li>
       {{else}}
         <p>{{t "page.snippets.index.empty"}}</p>
       {{/each}}
