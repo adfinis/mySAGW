@@ -103,11 +103,15 @@
         </LinkTo>
       </li>
       {{#each this.pages as |page|}}
-        <li class={{if page.active "uk-active"}}>
-          <LinkTo @query={{hash pageNumber=page.number}}>
-            {{page.number}}
-          </LinkTo>
-        </li>
+        {{#if page.dots}}
+          <li class="uk-text-muted">...</li>
+        {{else}}
+          <li class={{if page.active "uk-active"}}>
+            <LinkTo @query={{hash pageNumber=page.number}}>
+              {{page.number}}
+            </LinkTo>
+          </li>
+        {{/if}}
       {{/each}}
       <li class={{if (eq this.pageNumber this.totalPages) "uk-disabled"}}>
         <LinkTo @query={{hash pageNumber=(add this.pageNumber 1)}}>

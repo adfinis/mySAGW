@@ -1,0 +1,199 @@
+<h1 {{did-insert (perform this.fetchWorkItems)}}>
+  {{t "workItems.edit"}}
+</h1>
+
+<hr>
+
+<h2>
+  {{this.workItem.task.name}}
+</h2>
+
+<div class="work-item-attributes">
+  {{#if this.workItem.isCompleted}}
+    <div class="work-item-attribute">
+      <span class="work-item-attribute__title">
+        {{t "workItems.closedBy"}}
+      </span>
+      {{this.workItem.closedByUser.fullName}}
+    </div>
+    <div class="work-item-attribute">
+      <span class="work-item-attribute__title">
+        {{t "workItems.closedAt"}}
+      </span>
+      {{
+      format-date
+        this.workItem.closedAt
+        day="2-digit"
+        month="2-digit"
+        year="numeric"
+        hour="2-digit"
+        minute="2-digit"
+        hour12=false
+      }}
+    </div>
+    <div class="work-item-attribute">
+      <span class="work-item-attribute__title">
+        {{t "workItems.comment"}}
+      </span>
+      {{or this.workItem.meta.completion-comment "-"}}
+    </div>
+  {{/if}}
+</div>
+
+<form
+  class="uk-form-stacked"
+  {{on "submit" (perform this.saveManualWorkItem)}}
+>
+  <div class="uk-margin">
+    <label class="uk-form-label" for="responsible">
+      {{t "workItems.responsible"}}
+    </label>
+    <div class="uk-form-controls">
+      <input
+        class="uk-input"
+        id="responsible"
+        type="text"
+        value={{this.workItem.addressedGroup.name}}
+        disabled={{true}}
+      >
+    </div>
+  </div>
+
+  <div class="uk-margin">
+    <label class="uk-form-label" for="createdBy">
+      {{t "workItems.createdBy"}}
+    </label>
+    <div class="uk-form-controls">
+      <input
+        class="uk-input"
+        id="createdBy"
+        type="text"
+        value={{this.workItem.createdByUser.fullName}}
+        disabled={{true}}
+      >
+    </div>
+  </div>
+
+  <div class="uk-margin">
+    <label class="uk-form-label" for="createdAt">
+      {{t "workItems.createdAt"}}
+    </label>
+    <div class="uk-form-controls">
+      <input class="uk-input" id="createdAt" type="text" value={{
+      format-date
+        this.workItem.createdAt
+        day="2-digit"
+        month="2-digit"
+        year="numeric"
+        hour="2-digit"
+        minute="2-digit"
+        hour12=false
+      }} disabled={{true}}>
+    </div>
+  </div>
+
+  <div class="uk-margin">
+    <label class="uk-form-label" for="description">
+      {{t "workItems.description"}}
+    </label>
+    <div class="uk-form-controls">
+      <Textarea
+        class="uk-input"
+        id="description"
+        @value={{this.workItem.task.description}}
+      />
+    </div>
+  </div>
+
+  <div class="uk-margin">
+    <label class="uk-form-label" for="deadline">
+      {{t "workItems.deadline"}}
+      <span class="mandatory">
+        *
+      </span>
+    </label>
+    <div class="uk-form-controls">
+      <PikadayInput
+        id="deadline"
+        class="uk-input"
+        @value={{this.workItem.deadline}}
+        @useUTC={{true}}
+        @onSelection={{this.setDeadline}}
+      />
+    </div>
+  </div>
+
+  <div class="uk-margin">
+    <div class="uk-form-label">{{t "workItems.notifications"}}</div>
+    <div class="uk-form-controls">
+      <label>
+        <Input
+          class="uk-checkbox"
+          @type="checkbox"
+          @checked={{this.workItem.meta.notify-completed}}
+        />
+        {{t "workItems.notifyCompleted"}}
+      </label>
+      <br />
+      <label>
+        <Input
+          class="uk-checkbox"
+          @type="checkbox"
+          @checked={{this.workItem.meta.notify-deadline}}
+        />
+        {{t "workItems.notifyDeadline"}}
+      </label>
+    </div>
+  </div>
+
+  <div class="uk-text-right">
+    <LinkTo
+      @route="work-items.index"
+      class="uk-margin-right"
+    >
+      <UkButton
+        @type="button"
+        @label={{t "global.cancel"}}
+      />
+    </LinkTo>
+    <UkButton
+      @type="submit"
+      @color="primary"
+      @label={{t "global.save"}}
+    />
+  </div>
+</form>
+
+{{#if this.workItem.canComplete}}
+  <h3>
+    {{t "workItems.actions.finish"}}
+  </h3>
+
+  <form
+    class="form form-edit work-item-form"
+    {{on "submit" (perform this.finishWorkItem)}}
+  >
+    <fieldset>
+      <legend>
+        {{t "workItems.actions.finish"}}
+      </legend>
+
+      <div class="row first">
+        <div class="label">
+          <label>
+            {{t "workItems.comment"}}
+          </label>
+        </div>
+        <div class="column-2">
+          <Textarea @value={{this.workItem.meta.completion-comment}} />
+        </div>
+      </div>
+    </fieldset>
+
+    <div class="row buttons-container">
+      <button class="button buttonstyle btn success" type="submit">
+        {{t "workItems.actions.finish"}}
+      </button>
+    </div>
+  </form>
+{{/if}}

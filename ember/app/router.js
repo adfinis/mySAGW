@@ -41,8 +41,18 @@ Router.map(function () {
     this.route("cases", { resetNamespace }, function () {
       this.route("detail", { path: "/:id" }, function () {
         this.route("edit");
+        this.route("work-items", function () {
+          this.route("edit", { path: "/:id" }, function () {
+            this.route("form");
+          });
+        });
       });
       this.route("new");
+    });
+    this.route("work-items", { resetNamespace }, function () {
+      this.route("detail", { path: "/ :id" }, function () {
+        this.route("edit");
+      });
     });
 
     // API

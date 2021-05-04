@@ -10,10 +10,16 @@ global:
     english: "English"
     german: "German"
     french: "French"
+  empty: "No entries found"
+  paginationInfo: "<strong>1 - {count}</strong> von {total}"
+  openMenu: "Open menu"
+  save: "Save"
+  cancel: "Cancel"
 
 nav:
   home: "Home"
   documents: "Documents"
+  tasks: "Tasks"
   identities: "Identities"
   interests: "Interests"
   roles: "Roles"
@@ -72,6 +78,7 @@ documents:
   subnav:
     overview: "Overview"
     document: "Document"
+    work-items: "Tasks"
 
 page:
   identities:
@@ -348,3 +355,53 @@ component:
       cancel: "Cancel"
       submit: "Save"
     success: "Snippet {title} saved successfully."
+
+workItems:
+  name: "Name"
+  title: "Open tasks"
+  completedTitle: "Completed tasks"
+  task: "Task"
+  instance: "Document"
+  description: "Desciption"
+  closedAt: "Completed on"
+  closedBy: "Completed by"
+  edit: "Edit task"
+  responsible: "Responsible"
+  deadline: "Deadline"
+  createdBy: "Created on"
+  createdAt: "Created by"
+  notifications: "Notifications"
+  notifyCompleted: "on completion"
+  notifyDeadline: "on deadline"
+
+  saveSuccess: "Task successfully saved"
+  finishSuccess: "Task successfully completed"
+  fetchError: "Error while loading tasks"
+  saveError: "Error while saving the task"
+
+  actions:
+    title: "Actions"
+    highlight: "Highlight"
+
+    markAsRead: "Mark as read"
+    markAsUnread: "Mark as unread"
+    assignToMe: "Assign to me"
+    edit: "Edit task"
+    finish: "Complete task"
+
+  filters:
+    responsible: "Responsible"
+    status: "Status"
+    type: "Type"
+    role: "Role"
+    order: "Order"
+
+    all: "All"
+    own: "Own"
+    unread: "Unread"
+    open: "Open"
+    closed: "Closed"
+    active: "Active"
+    control: "Controlling"
+    urgent: "Urgent"
+    new: "New"

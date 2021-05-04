@@ -1,0 +1,12 @@
+<h3>{{this.workItem.name}}</h3>
+
+{{#if this.fetchWorkItems.isRunning}}
+  <div class="uk-text-center uk-padding">
+    <UkSpinner @ratio={{2}} />
+  </div>
+{{else}}
+  <CfContent @documentId={{this.workItem.document.id}}
+    @context={{hash completeCallback=(perform this.completeWorkItem)}}
+    @disabled={{not this.workItem.isReady}}
+  />
+{{/if}}

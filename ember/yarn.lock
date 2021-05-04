@@ -7538,6 +7538,13 @@ ember-router-generator@^2.0.0:
     "@babel/traverse" "^7.4.5"
     recast "^0.18.1"
 
+ember-set-helper@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/ember-set-helper/-/ember-set-helper-2.0.1.tgz#e39417531e25089b45ccb905b8c00eda7b3fbbde"
+  integrity sha512-6IIimVGOdehZcncH1ilCY4p7hWBtZqWYMc1Xodr1ATOCuIk6ZO1yztKcUQhlmwl7fE82gL4wHD01T6XP5W59Ng==
+  dependencies:
+    ember-cli-babel "^7.18.0"
+
 ember-simple-auth-oidc@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/ember-simple-auth-oidc/-/ember-simple-auth-oidc-3.0.1.tgz#8660a089a016aa7723b83b13454566b2238014e7"
@@ -14343,7 +14350,7 @@ uuid@^3.1.0, uuid@^3.3.2:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
 
-uuid@^8.3.0, uuid@^8.3.1:
+uuid@^8.3.0, uuid@^8.3.1, uuid@^8.3.2:
   version "8.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==

@@ -1,4 +1,4 @@
-query GetCases($cursor: String, $forms: [String], $orderBy: [CaseOrdering]!) {
+query getCasesQuery($cursor: String, $forms: [String], $orderBy: [CaseOrdering]!) {
   allCases(
     first: 15
     after: $cursor
