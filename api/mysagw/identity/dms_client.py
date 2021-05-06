@@ -18,6 +18,20 @@ class DMSClient:
         response.raise_for_status()
         return response
 
+    def upload_template(self, slug, file, update=False, headers: dict = None):
+        headers = headers if headers else {}
+
+        url = build_url(self.url, "template", trailing=True)
+        method = requests.post
+        if update:
+            url = build_url(url, slug, trailing=True)
+            method = requests.patch
+
+        data = {"engine": self.engine, "slug": slug}
+        files = {"template": file}
+
+        return self._request(method, url, data=data, files=files, headers=headers)
+
     def merge(
         self,
         template_slug: str,
