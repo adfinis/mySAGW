@@ -129,6 +129,19 @@ OIDC_DRF_AUTH_BACKEND = "mysagw.oidc_auth.authentication.MySAGWAuthenticationBac
 SIMPLE_HISTORY_HISTORY_ID_USE_UUID = True
 
 
+# Document Merge Service
+DOCUMENT_MERGE_SERVICE_URL = env.str(
+    "DOCUMENT_MERGE_SERVICE_URL", default=default("http://dms:8000/api/v1")
+)
+DOCUMENT_MERGE_SERVICE_ENGINE = env.str(
+    "DOCUMENT_MERGE_SERVICE_ENGINE", default="docx-template"
+)
+
+DOCUMENT_MERGE_SERVICE_LABELS_TEMPLATE_SLUG = env.str(
+    "DOCUMENT_MERGE_SERVICE_LABELS_TEMPLATE_SLUG", default="identity-labels"
+)
+
+
 REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "rest_framework_json_api.exceptions.exception_handler",
     "DEFAULT_PAGINATION_CLASS": "rest_framework_json_api.pagination.JsonApiPageNumberPagination",
