@@ -31,7 +31,7 @@
   "loginWithEmailAllowed": true,
   "duplicateEmailsAllowed": false,
   "resetPasswordAllowed": true,
-  "editUsernameAllowed": false,
+  "editUsernameAllowed": true,
   "bruteForceProtected": false,
   "permanentLockout": false,
   "maxFailureWaitSeconds": 900,
@@ -274,7 +274,23 @@
           "attributes": {}
         }
       ],
-      "mysagw": [],
+      "mysagw": [
+        {
+          "id": "1f970637-4486-4595-b572-9ce0fb1a8dcc",
+          "name": "Admin",
+          "composite": true,
+          "composites": {
+            "client": {
+              "realm-management": [
+                "manage-users"
+              ]
+            }
+          },
+          "clientRole": true,
+          "containerId": "89e7c0eb-44c5-44cf-bc81-bb83a6ce823f",
+          "attributes": {}
+        }
+      ],
       "security-admin-console": [],
       "admin-cli": [],
       "account-console": [],
@@ -384,8 +400,17 @@
           "impersonation",
           "view-users",
           "view-authorization",
-          "query-groups",
-          "manage-users"
+          "query-groups"
+        ],
+        "mysagw": [
+          "Admin"
+        ],
+        "account": [
+          "manage-consent",
+          "manage-account",
+          "delete-account",
+          "view-applications",
+          "view-profile"
         ]
       },
       "subGroups": []
