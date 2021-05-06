@@ -71,6 +71,7 @@ page:
         button: "Export"
         standard: "Standard"
         email-only: "Email only"
+        address-labels: "Address labels"
         filename: "identities-{date}"
       search: "Search"
 

@@ -61,7 +61,7 @@ export default class IdentitiesIndexController extends Controller {
     this.fetchIdentities.perform();
   }
 
-  @dropTask *exportSearch(endpoint) {
+  @dropTask *exportSearch(endpoint, fileExtension) {
     const adapter = this.store.adapterFor("identity");
 
     let uri = `${this.store
@@ -87,7 +87,7 @@ export default class IdentitiesIndexController extends Controller {
       const blob = yield response.blob();
       const filename = `${this.intl.t("page.identities.index.export.filename", {
         date: moment().format("YYYY-MM-DD"),
-      })}.xls`;
+      })}.${fileExtension}`;
 
       saveAs(blob, filename);
     } catch (error) {
