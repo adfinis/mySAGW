@@ -1,5 +1,7 @@
 import importlib
 import inspect
+import io
+import re
 from functools import partial
 
 import pytest
@@ -7,10 +9,12 @@ from django.core.cache import cache
 from factory import Faker
 from factory.base import FactoryMetaClass
 from pytest_factoryboy import register
+from rest_framework import status
 from rest_framework.test import APIClient
 
 from .faker import MultilangProvider, SwissPhoneNumberProvider
 from .oidc_auth.models import OIDCUser
+from .utils import build_url
 
 Faker.add_provider(MultilangProvider)
 Faker.add_provider(SwissPhoneNumberProvider)
@@ -95,3 +99,43 @@ def client(db, user, staff_user, admin_user, request):
 @pytest.fixture(scope="function", autouse=True)
 def _autoclear_cache():
     cache.clear()
+
+
+@pytest.fixture(params=["success"])
+def dms_mock(requests_mock, settings, request):
+    matcher = re.compile(
+        build_url(
+            settings.DOCUMENT_MERGE_SERVICE_URL,
+            "template",
+            ".*",
+            "merge",
+            trailing=True,
+        )
+    )
+
+    response_map = {
+        "success": {
+            "status_code": status.HTTP_200_OK,
+            "headers": {
+                "Content-Type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            },
+            "body": io.BytesIO(b"I'm the merged document"),
+        },
+        "json_error": {
+            "status_code": status.HTTP_400_BAD_REQUEST,
+            "headers": {"Content-Type": "application/json"},
+            "json": {"error": "something went wrong"},
+        },
+        "text_error": {
+            "status_code": status.HTTP_400_BAD_REQUEST,
+            "headers": {"Content-Type": "text/plain"},
+            "text": "something went wrong",
+        },
+        "unknown_error": {
+            "status_code": status.HTTP_400_BAD_REQUEST,
+            "headers": {"Content-Type": "unknown"},
+            "text": "something went wrong",
+        },
+    }
+
+    requests_mock.post(matcher, **response_map[request.param])

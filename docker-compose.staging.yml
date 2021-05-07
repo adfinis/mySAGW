@@ -43,3 +43,7 @@ services:
 
   mc:
     env_file: ./.envs/.staging/.minio
+
+  dms:
+    env_file: ./.envs/.staging/.dms
+    restart: unless-stopped

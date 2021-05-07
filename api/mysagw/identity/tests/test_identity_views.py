@@ -4,6 +4,7 @@ from django.urls import reverse
 from rest_framework import status
 
 from mysagw.identity.models import Identity
+from mysagw.identity.views import IdentityViewSet
 
 TIMESTAMP = "2017-05-21T11:25:41.123840Z"
 
@@ -480,3 +481,89 @@ def test_identity_export_email(
 
     for i in range(10):
         assert sheet.array[i + 1][0] == identities[i].email
+
+
+@pytest.mark.parametrize(
+    "dms_mock,error_response_type,expected_status",
+    [
+        ("success", None, status.HTTP_200_OK),
+        ("json_error", "json", status.HTTP_400_BAD_REQUEST),
+        ("text_error", "text", status.HTTP_400_BAD_REQUEST),
+        ("unknown_error", "unknown", status.HTTP_400_BAD_REQUEST),
+    ],
+    indirect=["dms_mock"],
+)
+def test_identity_export_labels(
+    db,
+    client,
+    identity_factory,
+    snapshot,
+    dms_mock,
+    expected_status,
+    error_response_type,
+):
+    identity_factory.create_batch(10)
+
+    url = reverse("identity-export-labels")
+
+    response = client.post(url)
+
+    assert response.status_code == expected_status
+
+    if expected_status == status.HTTP_200_OK:
+        assert (
+            response.get("content-type")
+            == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        )
+        assert response.content == b"I'm the merged document"
+        return
+
+    if error_response_type == "json":
+        assert response.get("content-type") == "application/json"
+        assert response.json() == {
+            "errors": {"error": "something went wrong", "source": "DMS"}
+        }
+    elif error_response_type == "text":
+        assert response.get("content-type") == "text/plain"
+        assert response.content == b"[DMS] something went wrong"
+    elif error_response_type == "unknown":
+        assert response.get("content-type") == "unknown"
+        assert response.content == b"something went wrong"
+
+
+def test_identity_export_labels_context(
+    db,
+    client,
+    identity_factory,
+    phone_number_factory,
+    email_factory,
+    address_factory,
+    mocker,
+    snapshot,
+):
+    identities = identity_factory.create_batch(10)
+    for i in identities:
+        phone_number_factory.create_batch(3, identity=i)
+        email_factory.create_batch(3, identity=i)
+        address_factory(identity=i)
+
+    identities[1].organisation_name = "SAGW"
+    identities[1].save()
+    identity1_address = identities[1].addresses.first()
+    identity1_address.address_addition = "Haus der Akademien"
+    identity1_address.po_box = "23"
+    identity1_address.save()
+
+    url = reverse("identity-export-labels")
+
+    merge_mock = mocker.patch.object(
+        IdentityViewSet,
+        "_merge",
+        return_value=(status.HTTP_200_OK, "text/plain", "the response"),
+    )
+
+    response = client.post(url)
+
+    assert response.status_code == status.HTTP_200_OK
+    merge_mock.assert_called_once()
+    snapshot.assert_match(merge_mock.mock_calls[0].args[0])

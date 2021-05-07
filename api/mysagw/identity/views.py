@@ -1,5 +1,10 @@
+import json
+
 import django_excel
+from django.conf import settings
 from django.db.models import Q
+from django.http import HttpResponse
+from requests import HTTPError
 from rest_framework.decorators import action
 from rest_framework.exceptions import PermissionDenied, ValidationError
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin
@@ -7,6 +12,7 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework_json_api import views
 
 from . import filters, models, serializers
+from .dms_client import DMSClient
 from .export import IdentityExport
 from .permissions import (
     IsAdmin,
@@ -135,6 +141,68 @@ class IdentityViewSet(views.ModelViewSet):
         records = queryset.values("email")
         response = django_excel.make_response_from_records(records, "xlsx")
         return response
+
+    def _get_dms_error_content(self, response):
+        if response.headers["Content-Type"].startswith("application/json"):
+            content = response.json()
+            content["source"] = "DMS"
+            return json.dumps({"errors": content})
+        elif response.headers["Content-Type"].startswith("text/plain"):
+            return f"[DMS] {response.content.decode()}".encode("utf-8")
+        return response.content
+
+    def _merge(self, records):
+        client = DMSClient()
+        try:
+            resp = client.merge(
+                settings.DOCUMENT_MERGE_SERVICE_LABELS_TEMPLATE_SLUG,
+                {"identities": records},
+                None,
+            )
+            return resp.status_code, resp.headers["Content-Type"], resp.content
+        except HTTPError as e:
+            content = self._get_dms_error_content(e.response)
+            return e.response.status_code, e.response.headers["Content-Type"], content
+
+    @action(detail=False, methods=["post"], url_path="export-labels")
+    def export_labels(self, request, *args, **kwargs):
+        def group_records(records, group_size=3):
+            grouped_records = []
+            addrs = []
+            ct = None
+            for ct, identitiy in enumerate(records):
+                addrs.append(identitiy)
+                if (ct + 1) % group_size == 0:
+                    grouped_records.append(list(addrs))
+                    addrs = []
+            if ct is not None and (ct + 1) % group_size > 0:
+                grouped_records.append(list(addrs))
+            return grouped_records
+
+        queryset = self.filter_queryset(self.get_queryset()).prefetch_related(
+            "phone_numbers", "additional_emails", "addresses"
+        )
+        ex = IdentityExport()
+        records = ex.export(
+            queryset,
+            include_fields=[
+                "first_name",
+                "last_name",
+                "organisation_name",
+                "address_addition",
+                "street_and_number",
+                "po_box",
+                "postcode",
+                "town",
+                "country",
+            ],
+            ignore_empty=True,
+        )
+
+        records = group_records(records)
+
+        status_code, mime_type, resp_content = self._merge(records)
+        return HttpResponse(resp_content, status=status_code, content_type=mime_type)
 
 
 class MeViewSet(

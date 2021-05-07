@@ -92,8 +92,22 @@ services:
     depends_on:
       - minio
 
+  dms:
+    image: adfinissygroup/document-merge-service:v4.4.1
+    depends_on:
+      - db
+    volumes:
+      - templatefiles:/var/lib/document-merge-service/media
+    environment:
+      - DATABASE_ENGINE=django.db.backends.postgresql
+      - DATABASE_HOST=db
+      - DATABASE_PORT=5432
+      - DATABASE_NAME=dms
+      - DATABASE_USER=dms
+
 volumes:
   dbdata:
   caddy_data:
   caddy_config:
   minio_data:
+  templatefiles:

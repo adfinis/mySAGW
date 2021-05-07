@@ -4,3 +4,4 @@ POSTGRES_USER=mysagw
 POSTGRES_PASSWORD=mysagw-secret
 CALUMA_DB_PASSWORD=caluma-secret
 KEYCLOAK_DB_PASSWORD=keycloak-secret
+DMS_DB_PASSWORD=dms-secret

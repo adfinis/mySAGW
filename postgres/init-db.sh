@@ -9,6 +9,9 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" <<-EOSQL
     CREATE USER keycloak WITH PASSWORD '$KEYCLOAK_DB_PASSWORD';
     CREATE DATABASE keycloak OWNER keycloak;
     GRANT CONNECT ON DATABASE keycloak TO keycloak;
+    CREATE USER dms WITH PASSWORD '$DMS_DB_PASSWORD';
+    CREATE DATABASE dms OWNER dms;
+    GRANT CONNECT ON DATABASE dms TO dms;
 EOSQL
 
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" -d caluma <<-EOSQL

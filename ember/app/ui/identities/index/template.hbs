@@ -18,13 +18,18 @@
           <div uk-dropdown="mode: click">
             <ul class="uk-nav uk-dropdown-nav">
               <li>
-                <a href="#" {{on "click" (perform this.exportSearch "export")}}>
+                <a href="#" {{on "click" (perform this.exportSearch "export" "xlsx")}}>
                   {{t "page.identities.index.export.standard"}}
                 </a>
               </li>
               <li>
-                <a href="#" {{on "click" (perform this.exportSearch "export-email")}}>
+                <a href="#" {{on "click" (perform this.exportSearch "export-email" "xlsx")}}>
                   {{t "page.identities.index.export.email-only"}}
+                </a>
+              </li>
+              <li>
+                <a href="#" {{on "click" (perform this.exportSearch "export-labels" "docx")}}>
+                  {{t "page.identities.index.export.address-labels"}}
                 </a>
               </li>
             </ul>

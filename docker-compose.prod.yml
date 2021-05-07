@@ -41,3 +41,7 @@ services:
 
   mc:
     env_file: ./.envs/.production/.minio
+
+  dms:
+    env_file: ./.envs/.production/.dms
+    restart: unless-stopped

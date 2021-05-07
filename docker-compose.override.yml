@@ -57,3 +57,6 @@ services:
 
   mc:
     env_file: ./.envs/.local/.minio
+
+  dms:
+    env_file: ./.envs/.local/.dms
