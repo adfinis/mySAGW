@@ -1,5 +1,5 @@
 django==2.2.20
-django-countries==7.1
+django-countries==7.2
 django-environ==0.4.5
 django-excel==0.0.10
 django-filter==2.4.0
