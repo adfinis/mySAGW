@@ -131,7 +131,7 @@ SIMPLE_HISTORY_HISTORY_ID_USE_UUID = True
 
 # Document Merge Service
 DOCUMENT_MERGE_SERVICE_URL = env.str(
-    "DOCUMENT_MERGE_SERVICE_URL", default=default("http://dms:8000/api/v1")
+    "DOCUMENT_MERGE_SERVICE_URL", default="http://dms:8000/api/v1"
 )
 DOCUMENT_MERGE_SERVICE_ENGINE = env.str(
     "DOCUMENT_MERGE_SERVICE_ENGINE", default="docx-template"
