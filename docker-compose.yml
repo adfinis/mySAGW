@@ -104,6 +104,8 @@ services:
       - DATABASE_PORT=5432
       - DATABASE_NAME=dms
       - DATABASE_USER=dms
+      # needed until https://github.com/adfinis-sygroup/document-merge-service/issues/407 is closed
+      - DOCXTEMPLATE_JINJA_EXTENSIONS=
 
 volumes:
   dbdata:
