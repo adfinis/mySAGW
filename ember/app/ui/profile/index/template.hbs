@@ -1,0 +1,122 @@
+<h1>{{t "page.profile.title"}}</h1>
+
+<UkSwitcher @animation="uk-animation-fade" @active={{this.activeTab}} as |switcher|>
+  <switcher.nav @type="tab" as |nav|>
+    {{! nav.component is either a uk-tab or a uk-subnav component }}
+    <nav.component as |tab|>
+      <tab.item {{on "click" (fn this.setActiveTab 0)}}>{{t "page.profile.switcher.identity"}}</tab.item>
+      <tab.item {{on "click" (fn this.setActiveTab 1)}}>{{t "page.profile.switcher.memberships"}}</tab.item>
+    </nav.component>
+  </switcher.nav>
+
+  <switcher.content as |content|>
+    <content.item>
+      <IdentityForm
+        @identity={{this.model}}
+        @customEndpoint="me"
+        @hideCancel={{true}}
+      />
+
+      <hr>
+
+      <div uk-grid class="uk-margin-bottom">
+        <div class="uk-width-1-2@m uk-width-1-3@l">
+          <div class="uk-card uk-card-default uk-card-body uk-card-small">
+            <IdentityAddresses @identity={{this.model}} />
+          </div>
+        </div>
+
+        <div class="uk-width-1-2@m uk-width-1-3@l">
+          <div class="uk-card uk-card-default uk-card-body uk-card-small">
+            <IdentityEmails @identity={{this.model}} />
+          </div>
+        </div>
+
+        <div class="uk-width-1-2@m uk-width-1-3@l">
+          <div class="uk-card uk-card-default uk-card-body uk-card-small">
+            <IdentityPhoneNumbers @identity={{this.model}} />
+          </div>
+        </div>
+      </div>
+    </content.item>
+
+    <content.item>
+      <div class="uk-margin-bottom">
+        {{#if this.fetchMemberships.isRunning}}
+          <LoadingSpinner />
+        {{else}}
+          <ul class="uk-list uk-list-divider">
+            {{#each this.memberships as |membership|}}
+              <li>
+                {{#if (and membership.authorized (not membership.isInactive))}}
+                  <LinkTo @route="profile.edit" @model={{membership.organisation.id}}
+                    class="uk-text-bold uk-flex uk-flex-between uk-flex-wrap">
+                    {{#if (or membership.organisation.fullName membership.organisation.isOrganisation)}}
+                      <div class="uk-margin-right">
+                        {{#if membership.organisation.fullName}}
+                          {{membership.organisation.fullName}}
+                        {{~/if}}
+
+                        {{~if (and membership.organisation.fullName membership.organisation.isOrganisation) ","}}
+
+                        {{#if membership.organisation.isOrganisation}}
+                          {{membership.organisation.organisationName}}
+                        {{/if}}
+                      </div>
+                    {{/if}}
+
+                    <div class="uk-text-small uk-width-1-1 uk-width-auto@s">
+                      {{membership.role.title}}
+                    </div>
+                  </LinkTo>
+                {{else if membership.isInactive}}
+                  <s class="uk-text-bold uk-flex uk-flex-between uk-flex-wrap">
+                    {{#if (or membership.organisation.fullName membership.organisation.isOrganisation)}}
+                      <div class="uk-margin-right">
+                        {{#if membership.organisation.fullName}}
+                          {{membership.organisation.fullName}}
+                        {{~/if}}
+
+                        {{~if (and membership.organisation.fullName membership.organisation.isOrganisation) ","}}
+
+                        {{#if membership.organisation.isOrganisation}}
+                          {{membership.organisation.organisationName}}
+                        {{/if}}
+                      </div>
+                    {{/if}}
+
+                    <div class="uk-text-small uk-width-1-1 uk-width-auto@s">
+                      {{membership.role.title}}
+                    </div>
+                  </s>
+                {{else}}
+                  <span class="uk-text-bold uk-flex uk-flex-between uk-flex-wrap">
+                    {{#if (or membership.organisation.fullName membership.organisation.isOrganisation)}}
+                      <div class="uk-margin-right">
+                        {{#if membership.organisation.fullName}}
+                          {{membership.organisation.fullName}}
+                        {{~/if}}
+
+                        {{~if (and membership.organisation.fullName membership.organisation.isOrganisation) ","}}
+
+                        {{#if membership.organisation.isOrganisation}}
+                          {{membership.organisation.organisationName}}
+                        {{/if}}
+                      </div>
+                    {{/if}}
+
+                    <div class="uk-text-small uk-width-1-1 uk-width-auto@s">
+                      {{membership.role.title}}
+                    </div>
+                  </span>
+                {{/if}}
+              </li>
+            {{else}}
+              <li>{{t "page.profile.organisation.empty"}}</li>
+            {{/each}}
+          </ul>
+        {{/if}}
+      </div>
+    </content.item>
+  </switcher.content>
+</UkSwitcher>

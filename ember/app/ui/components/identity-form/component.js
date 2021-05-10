@@ -30,14 +30,31 @@ export default class IdentityFormComponent extends Component {
     ];
   }
 
+  get languages() {
+    return [
+      { label: this.intl.t("global.languages.german"), value: "de" },
+      { label: this.intl.t("global.languages.english"), value: "en" },
+      { label: this.intl.t("global.languages.french"), value: "fr" },
+    ];
+  }
+
   get keyCloakAccountUrl() {
     const host =
       location.hostname === "localhost" ? "mysagw.local" : location.hostname;
+
+    if (this.args.customEndpoint === "me") {
+      return `https://${host}/auth/realms/master/account/#/personal-info`;
+    }
+
     return [
       `https://${host}/auth/admin/mysagw/console/`,
       "#/realms/mysagw/users/",
       this.changeset.get("idpId"),
     ].join("");
+  }
+
+  get cancelRoute() {
+    return this.args.cancelRouteOverride || "identities";
   }
 
   @action eventTarget(handler, event) {
@@ -64,11 +81,10 @@ export default class IdentityFormComponent extends Component {
         changeset.set("organisationName", null);
       }
 
-      if (changeset.get("idpId")) {
-        changeset.set("email", null);
-      }
+      yield changeset.save({
+        adapterOptions: { customEndpoint: this.args.customEndpoint },
+      });
 
-      yield changeset.save();
       this.notification.success(
         this.intl.t("component.identity-form.success", {
           name: changeset.data.fullName,

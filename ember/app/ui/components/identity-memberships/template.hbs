@@ -14,12 +14,12 @@
           <li class="uk-flex uk-flex-between uk-flex-middle">
             <div>
               {{#if membership.isInactive}}
-                <del>
+                <s>
                   <strong>{{membership.organisation.organisationName}}</strong>
                   {{#if membership.authorized}}
                     ({{t "component.identity-memberships.form.label.admin"}})
                   {{/if}}
-                </del>
+                </s>
               {{else}}
                 <strong>{{membership.organisation.organisationName}}</strong>
                 {{#if membership.authorized}}
@@ -31,7 +31,7 @@
               {{#if membership.role}}
                 <div class="uk-text-meta">
                   {{#if membership.isInactive}}
-                    <del>{{membership.role.title}}</del>
+                    <s>{{membership.role.title}}</s>
                   {{else}}
                     {{membership.role.title}}
                   {{/if}}
@@ -87,16 +87,18 @@
       <p>{{t "component.identity-memberships.list.empty"}}</p>
     {{/if}}
 
-    <p class="uk-text-right">
-      <button
-        class="uk-button uk-button-default"
-        type="button"
-        disabled={{this.changeset}}
-        {{on "click" (fn this.edit null)}}
-      >
-        {{t "component.identity-memberships.add"}}
-      </button>
-    </p>
+    {{#if (can "add membership-role")}}
+      <p class="uk-text-right">
+        <button
+          class="uk-button uk-button-default"
+          type="button"
+          disabled={{this.changeset}}
+          {{on "click" (fn this.edit null)}}
+        >
+          {{t "component.identity-memberships.add"}}
+        </button>
+      </p>
+    {{/if}}
   {{/if}}
 
   {{#if this.changeset}}

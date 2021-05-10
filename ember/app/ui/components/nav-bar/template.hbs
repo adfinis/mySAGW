@@ -36,9 +36,16 @@
           </tab.link-item>
         {{/if}}
 
-        <tab.link-item @route="form-builder">
-          {{t "nav.form-builder"}}
+        {{#if (can "list form-builder")}}
+          <tab.link-item @route="form-builder">
+            {{t "nav.form-builder"}}
+          </tab.link-item>
+        {{/if}}
+
+        <tab.link-item @route="profile">
+          {{t "nav.profile"}}
         </tab.link-item>
+
         <tab.item {{on "click" this.invalidateSession}}>
           {{t "nav.logout"}}
         </tab.item>
@@ -47,6 +54,17 @@
           {{t "nav.login"}}
         </tab.link-item>
       {{/if}}
+
+      <tab.item class="language-select">
+        <a class="uk-link-reset" href="#">{{this.intl.locale}} <UkIcon @icon="chevron-down"/></a>
+        <ul uk-dropdown="pos: bottom-justify" class="uk-list uk-list-collapse uk-padding-small">
+          {{#each this.intl.locales as |locale|}}
+            <li>
+              <a class="uk-link-text" {{on "click" (fn this.setLocale locale)}} href="#">{{locale}}</a>
+            </li>
+          {{/each}}
+        </ul>
+      </tab.item>
     </UkTab>
   </div>
 
@@ -86,25 +104,44 @@
           </LinkTo>
         </li>
       {{/if}}
-      <li>
-        <LinkTo @route="membership-roles" uk-toggle="target: #offcanvas">
-          {{t "nav.roles"}}
-        </LinkTo>
-      </li>
-      <li>
-        <LinkTo @route="form-builder" uk-toggle="target: #offcanvas">
-          {{t "nav.form-builder"}}
-        </LinkTo>
-      </li>
+      {{#if (can "list membership-role")}}
+        <li>
+          <LinkTo @route="membership-roles" uk-toggle="target: #offcanvas">
+            {{t "nav.roles"}}
+          </LinkTo>
+        </li>
+      {{/if}}
+      {{#if (can "list form-builder")}}
+        <li>
+          <LinkTo @route="form-builder" uk-toggle="target: #offcanvas">
+            {{t "nav.form-builder"}}
+          </LinkTo>
+        </li>
+      {{/if}}
 
       <li class="uk-nav-header">{{t "nav.account"}}</li>
+      <li>
+        <LinkTo @route="profile" uk-toggle="target: #offcanvas">
+          {{t "nav.profile"}}
+        </LinkTo>
+      </li>
       <li>
         <a href="#" {{on "click" this.invalidateSession}} uk-toggle="target: #offcanvas">
           <span class="uk-margin-small-right" uk-icon="icon: sign-out"></span>
           {{t "nav.logout"}}
         </a>
       </li>
-    </ul>
 
+      <li class="language-select-offcanvas">
+        <a class="uk-link-reset uk-text-uppercase" href="#">{{this.intl.locale}} <UkIcon @icon="chevron-down"/></a>
+        <ul uk-dropdown="pos: bottom-justify; mode: click" class="uk-list uk-list-collapse uk-padding-small">
+          {{#each this.intl.locales as |locale|}}
+            <li>
+              <a class="uk-link-text uk-text-uppercase" {{on "click" (fn this.setLocale locale)}} href="#">{{locale}}</a>
+            </li>
+          {{/each}}
+        </ul>
+      </li>
+    </ul>
   </div>
 </div>

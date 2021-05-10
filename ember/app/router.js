@@ -12,6 +12,7 @@ const resetNamespace = true;
 //eslint-disable-next-line array-callback-return
 Router.map(function () {
   this.route("login");
+  this.route("notfound", { path: "/*path" });
 
   this.route("protected", { path: "/" }, function () {
     // Index
@@ -56,6 +57,9 @@ Router.map(function () {
     this.route("membership-roles", { resetNamespace }, function () {
       this.route("add");
       this.route("edit", { path: "/edit/:role" });
+    });
+    this.route("profile", { resetNamespace }, function () {
+      this.route("edit", { path: "/edit/:identity" });
     });
   });
 });

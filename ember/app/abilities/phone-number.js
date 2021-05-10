@@ -2,7 +2,17 @@ import { readOnly } from "@ember/object/computed";
 import BaseAbility from "mysagw/abilities/-base";
 
 export default class PhoneNumberAbility extends BaseAbility {
-  @readOnly("isStaff") canAdd;
-  @readOnly("isStaff") canEdit;
-  @readOnly("isStaff") canDelete;
+  @readOnly("isStaff") showMultiLangDescription;
+
+  canAdd(identity) {
+    return this.isStaffOrOwnIdentity(identity);
+  }
+
+  canEdit(identity) {
+    return this.isStaffOrOwnIdentity(identity);
+  }
+
+  canDelete(identity) {
+    return this.isStaffOrOwnIdentity(identity);
+  }
 }

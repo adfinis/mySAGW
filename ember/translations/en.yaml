@@ -6,6 +6,10 @@ global:
     male: "Mr."
     female: "Mrs."
     neutral: "Neutral salutation"
+  languages:
+    english: "English"
+    german: "German"
+    french: "French"
 
 nav:
   home: "Home"
@@ -21,6 +25,7 @@ nav:
   account: "Account"
   logout: "Logout"
   login: "Login"
+  profile: "Profile"
 
 documents:
   title: "Documents"
@@ -137,6 +142,21 @@ page:
     edit:
       title: "Edit role"
 
+  profile:
+    title: "Profile"
+    switcher:
+      identity: "Identity"
+      memberships: "Memberships"
+    organisation:
+      edit: "Edit organisaton"
+      empty: "No organisations yet."
+
+  notfound:
+    title: "404"
+    subtitle: "Page was not found"
+    link: "Back to"
+    home: "home page"
+
 component:
   identity-form:
     label:
@@ -147,6 +167,7 @@ component:
       lastName: "Last name"
       email: "Main email address"
       isOrganisation: "This is an organisation."
+      language: "Correspondence language"
     hint:
       email: "Managed through KeyCloak."
     control:

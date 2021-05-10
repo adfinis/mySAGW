@@ -1,0 +1,29 @@
+<h1>{{t "page.profile.organisation.edit"}}</h1>
+
+<IdentityForm
+  @identity={{this.model}}
+  @customEndpoint="my-orgs/{{this.model.id}}"
+  @cancelRouteOverride="profile"
+/>
+
+<hr>
+
+<div uk-grid class="uk-margin-bottom">
+  <div class="uk-width-1-2@m uk-width-1-3@l">
+    <div class="uk-card uk-card-default uk-card-body uk-card-small">
+      <IdentityAddresses @identity={{this.model}} />
+    </div>
+  </div>
+
+  <div class="uk-width-1-2@m uk-width-1-3@l">
+    <div class="uk-card uk-card-default uk-card-body uk-card-small">
+      <IdentityEmails @identity={{this.model}} />
+    </div>
+  </div>
+
+  <div class="uk-width-1-2@m uk-width-1-3@l">
+    <div class="uk-card uk-card-default uk-card-body uk-card-small">
+      <IdentityPhoneNumbers @identity={{this.model}} />
+    </div>
+  </div>
+</div>

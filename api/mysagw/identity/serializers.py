@@ -192,6 +192,7 @@ class MeSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Identity
         fields = (
+            "idp_id",
             "first_name",
             "last_name",
             "salutation",
@@ -199,6 +200,7 @@ class MeSerializer(serializers.ModelSerializer):
             "email",
         )
         extra_kwargs = {
+            "idp_id": {"read_only": True},
             "email": {"read_only": True},
         }
 
@@ -213,14 +215,19 @@ class MyOrgsSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Identity
         fields = (
+            "idp_id",
             "first_name",
             "last_name",
+            "salutation",
+            "language",
+            "is_organisation",
             "organisation_name",
             "is_authorized",
             "email",
         )
         extra_kwargs = {
-            "email": {"read_only": True},
+            "idp_id": {"read_only": True},
+            "is_organisation": {"read_only": True},
         }
 
 
@@ -285,6 +292,7 @@ class MembershipSerializer(
 
     included_serializers = {
         "role": MembershipRoleSerializer,
+        "organisation": IdentitySerializer,
     }
 
     def validate(self, *args, **kwargs):
