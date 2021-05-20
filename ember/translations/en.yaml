@@ -21,11 +21,17 @@ nav:
   emeis: "Emeis"
   alexandria: "Alexandria"
   form-builder: "Form Builder"
+  snippets: "Snippets"
   admin: "Administration"
   account: "Account"
   logout: "Logout"
   login: "Login"
   profile: "Profile"
+  snippet:
+    hint: "Copy {lang} to clipboard"
+    load-more: "Load more snippets"
+    copy-success: "Snippet was copied to clipboard"
+    copy-error: "There was a problem while copying the snippet"
 
 documents:
   title: "Documents"
@@ -156,6 +162,17 @@ page:
     subtitle: "Page was not found"
     link: "Back to"
     home: "home page"
+
+  snippets:
+    index:
+      title: "Snippets"
+      add: "Add snippet"
+      search: "Search"
+      empty: "No snippets yet."
+    add:
+      title: "Add snippet"
+    edit:
+      title: "Edit snippet"
 
 component:
   identity-form:
@@ -322,3 +339,12 @@ component:
       submit: "Save"
     success: "Role {role} saved successfully."
 
+  snippet-form:
+    label:
+      title: "Title"
+      body: "Body ({lang})"
+      archived: "Archived"
+    control:
+      cancel: "Cancel"
+      submit: "Save"
+    success: "Snippet {title} saved successfully."

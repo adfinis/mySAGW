@@ -1,10 +1,21 @@
 import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import Component from "@glimmer/component";
+import { tracked } from "@glimmer/tracking";
+import { timeout } from "ember-concurrency";
+import { restartableTask } from "ember-concurrency-decorators";
 
 export default class NavbarComponent extends Component {
   @service session;
   @service intl;
+  @service store;
+  @service notification;
+
+  @tracked pageSize = 10;
+  @tracked pageNumber = 1;
+  @tracked searchTerm = "";
+  @tracked totalPages;
+  @tracked snippets = [];
 
   @action
   invalidateSession() {
@@ -14,5 +25,51 @@ export default class NavbarComponent extends Component {
   @action
   setLocale(locale) {
     this.intl.setLocale(locale);
+  }
+
+  @action
+  onCopySuccess() {
+    this.notification.success(this.intl.t("nav.snippet.copy-success"));
+  }
+
+  @action
+  onCopyError() {
+    this.notification.danger(this.intl.t("nav.snippet.copy-error"));
+  }
+
+  @action
+  loadMoreSnippets() {
+    this.pageNumber += 1;
+    this.fetchSnippets.perform();
+  }
+
+  @restartableTask
+  *search(event) {
+    yield timeout(1000);
+    this.searchTerm = event.target.value;
+    this.pageNumber = 1;
+    this.snippets = [];
+    this.fetchSnippets.perform();
+  }
+
+  @restartableTask
+  *fetchSnippets() {
+    try {
+      const snippets = yield this.store.query("snippet", {
+        filter: { search: this.searchTerm, archived: false },
+        page: {
+          number: this.pageNumber,
+          size: this.pageSize,
+        },
+      });
+      this.totalPages = snippets.meta.pagination.pages;
+
+      this.snippets = [...this.snippets, ...snippets.toArray()];
+
+      return snippets;
+    } catch (error) {
+      console.error(error);
+      this.notification.fromError(error);
+    }
   }
 }

@@ -61,5 +61,9 @@ Router.map(function () {
     this.route("profile", { resetNamespace }, function () {
       this.route("edit", { path: "/edit/:identity" });
     });
+    this.route("snippets", { resetNamespace }, function () {
+      this.route("add");
+      this.route("edit", { path: "/edit/:snippet" });
+    });
   });
 });

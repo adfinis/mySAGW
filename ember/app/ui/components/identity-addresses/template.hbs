@@ -125,23 +125,13 @@
 
       {{#if (can "show multi-lang-description address")}}
         <div class="uk-background-muted uk-padding-small uk-margin uk-margin-remove-last-child">
-          <Form.input
-            @label={{t "component.identity-addresses.form.label.description" lang="DE"}}
-            @name="descriptionObject.de"
-            @required={{false}}
-          />
-
-          <Form.input
-            @label={{t "component.identity-addresses.form.label.description" lang="FR"}}
-            @name="descriptionObject.fr"
-            @required={{false}}
-          />
-
-          <Form.input
-            @label={{t "component.identity-addresses.form.label.description" lang="EN"}}
-            @name="descriptionObject.en"
-            @required={{false}}
-          />
+          {{#each this.intl.locales as |locale|}}
+            <Form.input
+              @label={{t "component.identity-addresses.form.label.description" lang=(uppercase locale)}}
+              @name="descriptionObject.{{locale}}"
+              @required={{false}}
+            />
+          {{/each}}
         </div>
       {{else}}
         <Form.input

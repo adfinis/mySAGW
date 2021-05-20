@@ -15,76 +15,104 @@
 
   <div class="uk-navbar-left uk-visible@m">
     <UkTab as |tab|>
-      {{#if this.session.isAuthenticated}}
-        <tab.link-item @route="cases">
-          {{t "nav.documents"}}
+      <tab.link-item @route="cases">
+        {{t "nav.documents"}}
+      </tab.link-item>
+      {{#if (can "list identity")}}
+        <tab.link-item @route="identities">
+          {{t "nav.identities"}}
         </tab.link-item>
-
-        {{#if (can "list identity")}}
-          <tab.link-item @route="identities">
-            {{t "nav.identities"}}
-          </tab.link-item>
-        {{/if}}
-        {{#if (can "list interest")}}
-          <tab.link-item @route="interests">
-            {{t "nav.interests"}}
-          </tab.link-item>
-        {{/if}}
-        {{#if (can "list membership-role")}}
-          <tab.link-item @route="membership-roles">
-            {{t "nav.roles"}}
-          </tab.link-item>
-        {{/if}}
-
-        {{#if (can "list form-builder")}}
-          <tab.link-item @route="form-builder">
-            {{t "nav.form-builder"}}
-          </tab.link-item>
-        {{/if}}
-
-        <tab.link-item @route="profile">
-          {{t "nav.profile"}}
+      {{/if}}
+      {{#if (can "list interest")}}
+        <tab.link-item @route="interests">
+          {{t "nav.interests"}}
         </tab.link-item>
-
-        <tab.item {{on "click" this.invalidateSession}}>
-          {{t "nav.logout"}}
-        </tab.item>
-      {{else}}
-        <tab.link-item @route="login">
-          {{t "nav.login"}}
+      {{/if}}
+      {{#if (can "list membership-role")}}
+        <tab.link-item @route="membership-roles">
+          {{t "nav.roles"}}
+        </tab.link-item>
+      {{/if}}
+      {{#if (can "list snippets")}}
+        <tab.link-item @route="snippets">
+          {{t "nav.snippets"}}
         </tab.link-item>
       {{/if}}
 
-      <tab.item class="language-select">
+      {{#if (can "list form-builder")}}
+        <tab.link-item @route="form-builder">
+          {{t "nav.form-builder"}}
+        </tab.link-item>
+      {{/if}}
+
+      <tab.link-item @route="profile">
+        {{t "nav.profile"}}
+      </tab.link-item>
+    </UkTab>
+  </div>
+  <div class="uk-navbar-right uk-visible@m">
+    <ul class="uk-navbar-nav">
+      {{#if this.session.isAuthenticated}}
+        <li>
+          <a class="uk-padding-remove-right" {{on "click" this.invalidateSession}} href="#">
+            {{t "nav.logout"}}
+          </a>
+        </li>
+      {{else}}
+        <li>
+          <LinkTo @route="login">
+            {{t "nav.login"}}
+          </LinkTo>
+        </li>
+      {{/if}}
+      <li class="language-select">
         <a class="uk-link-reset" href="#">{{this.intl.locale}} <UkIcon @icon="chevron-down"/></a>
-        <ul uk-dropdown="pos: bottom-justify" class="uk-list uk-list-collapse uk-padding-small">
+        <ul uk-dropdown="pos: bottom-justify" class="uk-list uk-list-collapse uk-padding-small uk-text-center uk-margin-remove">
           {{#each this.intl.locales as |locale|}}
             <li>
-              <a class="uk-link-text" {{on "click" (fn this.setLocale locale)}} href="#">{{locale}}</a>
+              <a class="uk-link-text uk-text-uppercase" {{on "click" (fn this.setLocale locale)}} href="#">{{locale}}</a>
             </li>
           {{/each}}
         </ul>
-      </tab.item>
-    </UkTab>
+      </li>
+      {{#if (and (can "list snippets") this.session.isAuthenticated)}}
+        <li class="uk-flex uk-flex-middle">
+          <button
+            class="uk-icon-button uk-button-default"
+            type="button"
+            uk-toggle="target: #offcanvas-snippets"
+            uk-icon="file-text"
+          ></button>
+        </li>
+      {{/if}}
+    </ul>
   </div>
 
   <div class="uk-navbar-right uk-hidden@m">
     <button
-      class="uk-icon-button uk-button-default"
+      class="uk-icon-button uk-button-default uk-margin-small-right"
       type="button"
-      uk-toggle="target: #offcanvas"
+      uk-toggle="target: #offcanvas-nav"
       uk-icon="menu"
     ></button>
+    {{#if (can "list snippets")}}
+      <button
+        class="uk-icon-button uk-button-default"
+        type="button"
+        uk-toggle="target: #offcanvas-snippets"
+        uk-icon="file-text"
+      ></button>
+    {{/if}}
   </div>
 </nav>
 
-<div id="offcanvas" uk-offcanvas="flip: true; overlay: true">
+<div id="offcanvas-nav" uk-offcanvas="flip: true; overlay: true">
   <div class="uk-offcanvas-bar uk-flex uk-flex-column">
     <button class="uk-offcanvas-close" type="button" uk-close></button>
 
     <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
       <li>
-        <LinkTo @route="cases" uk-toggle="target: #offcanvas">
+        <LinkTo @route="cases" uk-toggle="target: #offcanvas-nav">
           {{t "nav.documents"}}
         </LinkTo>
       </li>
@@ -92,22 +120,29 @@
       <li class="uk-nav-header">{{t "nav.admin"}}</li>
       {{#if (can "list identity")}}
         <li>
-          <LinkTo @route="identities" uk-toggle="target: #offcanvas">
+          <LinkTo @route="identities" uk-toggle="target: #offcanvas-nav">
             {{t "nav.identities"}}
           </LinkTo>
         </li>
       {{/if}}
       {{#if (can "list interest")}}
         <li>
-          <LinkTo @route="interests" uk-toggle="target: #offcanvas">
+          <LinkTo @route="interests" uk-toggle="target: #offcanvas-nav">
             {{t "nav.interests"}}
           </LinkTo>
         </li>
       {{/if}}
       {{#if (can "list membership-role")}}
         <li>
-          <LinkTo @route="membership-roles" uk-toggle="target: #offcanvas">
+          <LinkTo @route="membership-roles" uk-toggle="target: #offcanvas-nav">
             {{t "nav.roles"}}
+          </LinkTo>
+        </li>
+      {{/if}}
+      {{#if (can "list snippets")}}
+        <li>
+          <LinkTo @route="snippets" uk-toggle="target: #offcanvas-nav">
+            {{t "nav.snippets"}}
           </LinkTo>
         </li>
       {{/if}}
@@ -143,5 +178,56 @@
         </ul>
       </li>
     </ul>
+  </div>
+</div>
+
+<div id="offcanvas-snippets" uk-offcanvas="flip: true; overlay: true">
+  <div class="uk-offcanvas-bar uk-flex uk-flex-column" {{did-insert (perform this.fetchSnippets)}}>
+    <button class="uk-offcanvas-close" type="button" uk-close></button>
+
+    <h3>{{t "nav.snippets"}}</h3>
+
+    <div class="uk-margin">
+      <label class="uk-form-label" for="form-search">
+        {{t "page.snippets.index.search"}}
+      </label>
+      <input
+        class="uk-input"
+        id="form-search"
+        type="search"
+        value={{this.searchTerm}}
+        {{on "input" (perform this.search)}}
+      >
+    </div>
+
+    {{#if this.fetchSnippets.isRunning}}
+      <LoadingSpinner />
+    {{else}}
+      <ul uk-accordion="multiple: true">
+        {{#each this.snippets as |snippet|}}
+          <li class="uk-margin">
+            <a class="uk-accordion-title" href="#">{{snippet.title}}</a>
+            <div class="uk-accordion-content">
+              {{#each this.intl.locales as |locale|}}
+                <textarea id="snippet-{{snippet.id}}-{{locale}}" class="uk-textarea" readonly="">{{get snippet.bodyObject locale}}</textarea>
+                <CopyButton
+                  @clipboardTarget="#snippet-{{snippet.id}}-{{locale}}"
+                  @success={{this.onCopySuccess}}
+                  @error={{this.onCopyError}}
+                  class="uk-button uk-width-1-1 uk-button-default uk-margin"
+                >
+                  {{t "nav.snippet.hint" lang=locale}}
+                </CopyButton>
+              {{/each}}
+            </div>
+          </li>
+        {{else}}
+          <p>{{t "page.snippets.index.empty"}}</p>
+        {{/each}}
+        {{#if (not (eq this.pageNumber this.totalPages))}}
+          <a {{on "click" this.loadMoreSnippets}} href="#">{{t "nav.snippet.load-more"}}</a>
+        {{/if}}
+      </ul>
+    {{/if}}
   </div>
 </div>
