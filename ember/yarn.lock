@@ -7733,10 +7733,10 @@ ember-validated-form@^3.0.2:
     ember-truth-helpers "^3.0.0"
     uuid "^8.3.1"
 
-ember-validated-form@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/ember-validated-form/-/ember-validated-form-4.0.0.tgz#e822de413173bcd0b581b843efe7fd23d764cc5b"
-  integrity sha512-HbZbO2/Vlw8Tdwd99nVyFN9zL2ZnCwd6KAE8kpKaWJByqKdRwn4Dym25KknLikoVfB3yHxkozNhfVME/i3UpBQ==
+ember-validated-form@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/ember-validated-form/-/ember-validated-form-4.0.1.tgz#832435b1095c74db278f29a1c7144e63fa419735"
+  integrity sha512-sMOfAwD16DT8aWA84hhJeicohwCpDB1ZLhZgnlHnjJbB/U6OT7C2qonPvvcJiNNDVlU+UqN0qwObgIr6U/Ny5A==
   dependencies:
     ember-auto-import "^1.11.2"
     ember-cli-babel "^7.26.3"
