@@ -82,6 +82,7 @@
             type="button"
             uk-toggle="target: #offcanvas-snippets"
             uk-icon="file-text"
+            data-test-snippet-sidebar-button
           ></button>
         </li>
       {{/if}}
@@ -203,7 +204,7 @@
     {{#if this.fetchSnippets.isRunning}}
       <LoadingSpinner />
     {{else}}
-      <ul uk-accordion="multiple: true">
+      <ul uk-accordion="multiple: true" data-test-snippet-sidebar-list>
         {{#each this.snippets as |snippet|}}
           <li class="uk-margin">
             <a class="uk-accordion-title" href="#">{{snippet.title}}</a>

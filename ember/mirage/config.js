@@ -134,4 +134,7 @@ export default function () {
     ]);
     return schema.snippets.where(query);
   });
+  this.post("/snippets");
+  this.get("/snippets/:id");
+  this.patch("/snippets/:id");
 }

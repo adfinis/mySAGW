@@ -4,7 +4,7 @@
 
     {{#if (can "add snippet")}}
       <div class="uk-flex-none">
-        <LinkTo @route="snippets.add" class="uk-button uk-button-default">
+        <LinkTo @route="snippets.add" class="uk-button uk-button-default" data-test-snippet-add>
           {{t "page.snippets.index.add"}}
         </LinkTo>
       </div>
@@ -27,7 +27,7 @@
   {{#if this.fetchSnippets.isRunning}}
     <LoadingSpinner />
   {{else}}
-    <ul class="uk-list uk-list-divider">
+    <ul class="uk-list uk-list-divider" data-test-snippet-list>
       {{#each this.snippets as |snippet|}}
         <li>
           <LinkTo @route="snippets.edit" @model={{snippet.id}} class="uk-text-bold {{if snippet.archived "uk-link-text"}}">
@@ -35,7 +35,7 @@
           </LinkTo>
         </li>
       {{else}}
-        <p>{{t "page.snippets.index.empty"}}</p>
+        <li>{{t "page.snippets.index.empty"}}</li>
       {{/each}}
     </ul>
   {{/if}}
