@@ -59,14 +59,30 @@
     </span>
   </div>
   <div class="uk-width-2-3">
-    <h3>{{t "documents.edit"}}</h3>
-    <p>{{t "documents.editText"}}</p>
+    {{#if (and (eq @model.status "RUNNING") (or this.isNotSubmitted this.isNotRejected))}}
+      <h3>{{t "documents.edit"}}</h3>
+      <p>{{t "documents.editText"}}</p>
 
-    <LinkTo @route="cases.detail.edit" class="uk-button uk-button-default">
-      {{t "documents.edit"}}
-    </LinkTo>
+      <LinkTo @route="cases.detail.edit" class="uk-button uk-button-default">
+        {{t "documents.edit"}}
+      </LinkTo>
+    
+      <h3>{{t "documents.submit"}}</h3>
+      {{#if this.submitDisabled}}
+        <p>{{t "documents.noSubmitText"}}</p>
+      {{else}}
+        <p>{{t "documents.submitText"}}</p> 
+      {{/if}}
+      <UkButton
+        @on-click={{perform this.submitCase @model}}
+        @disabled={{or this.submitCase.isRunning}}
+        @loading={{this.submitCase.isRunning}}
+      >
+        {{t "documents.submit"}}
+      </UkButton>
+    {{/if}}
 
-    {{#if (or (eq @model.status "RUNNING") (eq @model.status "SUSPENDED"))}}
+    {{#if (and (eq @model.status "RUNNING") this.isNotSubmitted)}}
       <h3>{{t "documents.delete"}}</h3>
       <p>{{t "documents.deleteText"}}</p>
 

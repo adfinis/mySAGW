@@ -50,9 +50,16 @@ caluma-lint: ## lint caluma extensions
 	@cd ./caluma && black --check .
 	@cd ./caluma && flake8
 
+.PHONY: caluma-load-workflow
+caluma-load-workflow: ## Load workflow config from JSON
+	@docker-compose exec caluma python manage.py loaddata caluma/data/workflow-config.json
+
+.PHONY: caluma-load-form
+caluma-load-form: ## Load form config from JSON
+	@docker-compose exec caluma python manage.py loaddata caluma/data/form-config.json
+
 .PHONY: caluma-loadconfig
-caluma-loadconfig: ## load Caluma config
-	@docker-compose run --rm caluma ./manage.py loaddata ./caluma/data/config.json
+caluma-loadconfig: caluma-load-form caluma-load-workflow ## Load workflow and form config from JSON
 
 .PHONY: caluma-dump-forms
 caluma-dump-forms: ## dump Caluma form models

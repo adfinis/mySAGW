@@ -1,18 +1,67 @@
 import Controller from "@ember/controller";
 import { inject as service } from "@ember/service";
 import { queryManager } from "ember-apollo-client";
-import { task } from "ember-concurrency-decorators";
+import { dropTask } from "ember-concurrency-decorators";
+import ENV from "mysagw/config/environment";
 import cancelCaseMutation from "mysagw/gql/mutations/cancel-case.graphql";
+import completeWorkItem from "mysagw/gql/mutations/complete-work-item.graphql";
 
 export default class CasesDetailIndexController extends Controller {
   @service router;
+  @service notification;
+  @service intl;
+
   @queryManager apollo;
 
-  @task *closeCase() {
-    yield this.apollo.mutate({
-      mutation: cancelCaseMutation,
-      variables: { case: this.model.id },
-    });
-    this.router.transitionTo("cases.index");
+  get getNodes() {
+    return this.model.workItems.edges.mapBy("node");
+  }
+
+  get isNotSubmitted() {
+    return this.getNodes.find(
+      (workItem) =>
+        workItem.task.slug === ENV.APP.caluma.submitTaskSlug &&
+        workItem.status === "READY"
+    );
+  }
+
+  get isNotRejected() {
+    return this.getNodes.find(
+      (workItem) =>
+        workItem.task.slug === ENV.APP.caluma.reviseTaskSlug &&
+        workItem.status === "READY"
+    );
+  }
+
+  @dropTask *closeCase() {
+    try {
+      yield this.apollo.mutate({
+        mutation: cancelCaseMutation,
+        variables: { case: this.model.id },
+      });
+
+      this.notification.success(this.intl.t("documents.deleteSuccess"));
+
+      this.router.transitionTo("cases.index");
+    } catch (error) {
+      console.error(error);
+      this.notification.fromError(error);
+    }
+  }
+
+  @dropTask *submitCase() {
+    try {
+      yield this.apollo.mutate({
+        mutation: completeWorkItem,
+        variables: { id: this.model.workItems.edges[0].node.id },
+      });
+
+      this.notification.success(this.intl.t("documents.submitSuccess"));
+
+      this.router.transitionTo("cases.index");
+    } catch (error) {
+      console.error(error);
+      this.notification.fromError(error);
+    }
   }
 }

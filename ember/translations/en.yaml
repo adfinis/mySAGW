@@ -59,8 +59,13 @@ documents:
   actions: "Actions"
   edit: "Edit document"
   editText: "You can modify the document and change your previous data."
+  submit: "Submit document"
+  submitText: "You can submit the document."
+  noSubmitText: "You can't submit the document, it is incomplete."
+  submitSuccess: "The document was successfully submitted."
   delete: "Delete document"
   deleteText: "You can delete the document if its not needed anymore."
+  deleteSuccess: "The document has been deleted."
 
   states:
     RUNNING: "Running"
@@ -370,9 +375,6 @@ workItems:
   deadline: "Deadline"
   createdBy: "Created on"
   createdAt: "Created by"
-  notifications: "Notifications"
-  notifyCompleted: "on completion"
-  notifyDeadline: "on deadline"
 
   saveSuccess: "Task successfully saved"
   finishSuccess: "Task successfully completed"
@@ -383,8 +385,6 @@ workItems:
     title: "Actions"
     highlight: "Highlight"
 
-    markAsRead: "Mark as read"
-    markAsUnread: "Mark as unread"
     assignToMe: "Assign to me"
     edit: "Edit task"
     finish: "Complete task"
@@ -398,7 +398,6 @@ workItems:
 
     all: "All"
     own: "Own"
-    unread: "Unread"
     open: "Open"
     closed: "Closed"
     active: "Active"

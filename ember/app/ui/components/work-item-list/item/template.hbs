@@ -1,4 +1,4 @@
-<tr class={{this.highlightClasses}}>
+<tr class={{this.highlightClasses}} {{did-insert (perform this.getIdentity)}}>
   {{#if @highlight}}
     <td class="uk-padding-remove-horizontal uk-text-center"></td>
   {{/if}}

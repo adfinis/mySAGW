@@ -34,6 +34,8 @@ services:
 
   caddy:
     env_file: ./.envs/.local/.caddy
+    environment:
+      - GRAPHIQL_PROXY=reverse_proxy /static/graphene_django/* http://caluma:8000
     networks:
       default:
         aliases:

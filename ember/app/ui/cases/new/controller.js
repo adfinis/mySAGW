@@ -20,7 +20,11 @@ export default class CaseNewController extends Controller.extend(
   queryParams.Mixin
 ) {
   @queryManager apollo;
+
   @service router;
+  @service store;
+  @service session;
+
   @tracked selectedForm;
 
   setup() {
@@ -38,7 +42,11 @@ export default class CaseNewController extends Controller.extend(
   @lastValue("fetchForms") forms;
   @task *fetchForms() {
     return (yield this.apollo.query(
-      { query: getRootFormsQuery, fetchPolicy: "network-only" },
+      {
+        query: getRootFormsQuery,
+        fetchPolicy: "network-only",
+        variables: { isPublished: true, isArchived: false },
+      },
       "allForms.edges"
     )).mapBy("node");
   }
@@ -53,6 +61,7 @@ export default class CaseNewController extends Controller.extend(
       mutation: createCaseMutation,
       variables: { form: this.selectedForm, workflow: workflow.id },
     });
+
     this.router.transitionTo(
       "cases.detail.index",
       decodeId(newCase.saveCase.case.id)

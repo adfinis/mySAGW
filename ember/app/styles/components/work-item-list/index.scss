@@ -14,10 +14,6 @@ $expiring-color: #ff8800;
       border: 1px solid lightgrey;
     }
 
-    &--not-viewed {
-      font-weight: 700;
-    }
-
     &--expired td:first-child::before {
       background-color: $expired-color;
       border-color: darken($expired-color, 10%);

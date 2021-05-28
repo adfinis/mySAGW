@@ -11,3 +11,12 @@
     @disabled={{not this.workItem.isReady}}
   />
 {{/if}}
+
+{{#if this.workItem.canComplete}}
+  <UkButton
+    @type="submit"
+    @color="primary"
+    @label={{t "workItems.actions.finish"}}
+    {{on "click" (perform this.completeWorkItem)}}
+  />
+{{/if}}

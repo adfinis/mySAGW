@@ -11,26 +11,36 @@ export default class CustomWorkItemModel extends WorkItemModel {
   @service router;
   @service intl;
   @service notification;
+  @service session;
 
   @tracked meta = this.raw.meta;
-  @tracked notViewed = this.raw.meta["not-viewed"];
   @tracked assignedUsers = this.raw.assignedUsers;
 
   get assignedUser() {
     return this.store
       .peekAll("identity")
-      .find((identity) => this.assignedUsers.includes(identity.id));
+      .find((identity) => this.assignedUsers.includes(identity.idpId));
   }
-  set assignedUser(identity) {
-    this.assignedUsers = [identity.id];
+  set assignedUser(idpId) {
+    this.assignedUsers = [idpId];
   }
 
   get closedByUser() {
-    return this.raw.closedByUser;
+    return this.store
+      .peekAll("identity")
+      .findBy("idpId", this.raw.closedByUser);
   }
 
   get createdByUser() {
-    return this.raw.createdByUser;
+    return this.store
+      .peekAll("identity")
+      .findBy("idpId", this.raw.closedByUser);
+  }
+
+  get isAssignedToCurrentUser() {
+    return this.assignedUsers.includes(
+      this.session.data.authenticated.userinfo.sub
+    );
   }
 
   get isReady() {
@@ -50,38 +60,17 @@ export default class CustomWorkItemModel extends WorkItemModel {
   }
 
   get responsible() {
-    return this.assignedUser;
+    return this.assignedUser?.fullName ?? "-";
   }
 
   get case() {
     return this.raw.case.parentWorkItem?.case ?? this.raw.case;
   }
 
-  async toggleRead() {
-    try {
-      this.notViewed = !this.notViewed;
-
-      await this.apollo.mutate({
-        mutation: saveWorkItemMutation,
-        variables: {
-          input: {
-            workItem: this.id,
-            meta: JSON.stringify({
-              ...this.raw.meta,
-              "not-viewed": this.notViewed,
-            }),
-          },
-        },
-      });
-
-      return true;
-    } catch (error) {
-      this.notification.danger(this.intl.t("workItems.saveError"));
-    }
-  }
-
   async assignToMe() {
-    return await this.assignToUser(/* TODO current user*/);
+    return await this.assignToUser(
+      this.session.data.authenticated.userinfo.sub
+    );
   }
 
   async assignToUser(user) {
