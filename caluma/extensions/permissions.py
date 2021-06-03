@@ -4,6 +4,8 @@ from caluma.caluma_core.permissions import (
     object_permission_for,
     permission_for,
 )
+from caluma.caluma_form.schema import SaveDocumentAnswer
+from caluma.caluma_workflow.schema import SaveCase
 
 
 class MySAGWPermission(BasePermission):
@@ -15,9 +17,20 @@ class MySAGWPermission(BasePermission):
         return instance.created_by_user == info.context.user.username
 
     @permission_for(Mutation)
-    def has_permission_fallback(self, mutation, info):
-        return self._is_admin_or_sagw(info)
-
     @object_permission_for(Mutation)
-    def has_object_permission_fallback(self, mutation, info, instance):
-        return self._is_admin_or_sagw(info) or self._is_own(info, instance)
+    def has_permission_fallback(self, mutation, info, instance=None):
+        return self._is_admin_or_sagw(info) or (
+            bool(instance) and self._is_own(info, instance)
+        )
+
+    @permission_for(SaveCase)
+    @object_permission_for(SaveCase)
+    def has_permission_for_save_case(self, mutation, info, case=None):
+        return True
+
+    @permission_for(SaveDocumentAnswer)
+    @object_permission_for(SaveDocumentAnswer)
+    def has_permission_for_save_document_answer(self, mutation, info, answer=None):
+        return self._is_admin_or_sagw(info) or (
+            bool(answer) and self._is_own(info, answer.document)
+        )
