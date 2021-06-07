@@ -1,3 +1,5 @@
+from django.db.models import Q
+
 from caluma.caluma_core.types import Node
 from caluma.caluma_core.visibilities import BaseVisibility, Union, filter_queryset_for
 from caluma.caluma_form.schema import Form, Option, Question
@@ -23,7 +25,10 @@ class CreateOrAssignVisibility(BaseVisibility):
     @filter_queryset_for(WorkItem)
     def filter_queryset_for_workitem(self, node, queryset, info):
         user = info.context.user
-        return queryset.filter(assigned_users__contains=[user.username])
+        return queryset.filter(
+            Q(assigned_users__contains=[user.username])
+            | Q(addressed_groups__contains=[user.group])
+        )
 
     @filter_queryset_for(Task)
     @filter_queryset_for(Flow)
