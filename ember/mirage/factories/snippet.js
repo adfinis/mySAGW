@@ -6,5 +6,5 @@ import setAllLocales from "../helpers/set-all-locales";
 export default Factory.extend({
   title: () => faker.random.word(),
   body: () => setAllLocales(faker.lorem.text()),
-  archived: () => faker.random.boolean(),
+  archived: false,
 });
