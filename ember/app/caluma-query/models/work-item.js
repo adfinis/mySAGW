@@ -2,6 +2,8 @@ import { inject as service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import { queryManager } from "ember-apollo-client";
 import WorkItemModel from "ember-caluma/caluma-query/models/work-item";
+import moment from "moment";
+import ENV from "mysagw/config/environment";
 import saveWorkItemMutation from "mysagw/gql/mutations/save-work-item.graphql";
 
 export default class CustomWorkItemModel extends WorkItemModel {
@@ -15,6 +17,7 @@ export default class CustomWorkItemModel extends WorkItemModel {
 
   @tracked meta = this.raw.meta;
   @tracked assignedUsers = this.raw.assignedUsers;
+  @tracked deadline = moment(this.raw.deadline);
 
   get assignedUser() {
     return this.store
@@ -57,6 +60,13 @@ export default class CustomWorkItemModel extends WorkItemModel {
 
   get canComplete() {
     return this.isReady;
+  }
+
+  get canSkip() {
+    return (
+      this.isReady &&
+      ENV.APP.caluma.skippableTaskSlugs.includes(this.raw.task.slug)
+    );
   }
 
   get responsible() {

@@ -16,4 +16,10 @@ export default class DynamicTableTableDataComponent extends Component {
       this.args.tdDefinition.linkToModelField || "id"
     );
   }
+
+  get hasRunningWorkItem() {
+    return this.args.value.workItems.edges
+      .mapBy("node")
+      .some((workItem) => workItem.status === "READY");
+  }
 }

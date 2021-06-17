@@ -18,6 +18,7 @@ export default class CasesDetailWorkItemsRoute extends Route {
       },
       "allCases.edges"
     );
+
     return caseRecord.map(({ node }) => node)[0];
   }
 

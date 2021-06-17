@@ -4,6 +4,7 @@
     (if @tdDefinition.truncate "uk-text-truncate")
     " "
     (join " " @tdDefinition.classList)
+    (if (and this.hasRunningWorkItem @tdDefinition.linkTo) "accent-border-left")
   }}
   uk-tooltip={{if @tdDefinition.truncate this.value}}
 >

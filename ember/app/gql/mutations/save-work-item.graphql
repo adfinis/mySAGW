@@ -1,12 +1,10 @@
 mutation saveWorkItem($input: SaveWorkItemInput!) {
-  saveWorkItem(
-    input: $input
-  ) {
+  saveWorkItem(input: $input) {
     clientMutationId
     workItem {
       id
       assignedUsers
-      meta
+      deadline
     }
   }
 }

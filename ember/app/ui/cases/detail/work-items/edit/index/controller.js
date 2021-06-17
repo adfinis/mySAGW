@@ -6,8 +6,8 @@ import calumaQuery from "ember-caluma/caluma-query";
 import { allWorkItems } from "ember-caluma/caluma-query/queries";
 import { dropTask, lastValue } from "ember-concurrency-decorators";
 import moment from "moment";
-import completeWorkItem from "mysagw/gql/mutations/complete-work-item.graphql";
-import saveWorkItem from "mysagw/gql/mutations/save-work-item.graphql";
+import completeWorkItemMutation from "mysagw/gql/mutations/complete-work-item.graphql";
+import saveWorkItemMutation from "mysagw/gql/mutations/save-work-item.graphql";
 
 export default class CasesDetailWorkItemsEditController extends Controller {
   @queryManager apollo;
@@ -26,7 +26,7 @@ export default class CasesDetailWorkItemsEditController extends Controller {
     };
   }
 
-  @lastValue("fetchWorkItems") workItem;
+  @lastValue("fetchWorkItem") workItem;
   @dropTask()
   *fetchWorkItem() {
     try {
@@ -45,17 +45,7 @@ export default class CasesDetailWorkItemsEditController extends Controller {
 
     try {
       yield this.apollo.mutate({
-        mutation: saveWorkItem,
-        variables: {
-          input: {
-            workItem: this.workItem.id,
-            meta: JSON.stringify(this.workItem.meta),
-          },
-        },
-      });
-
-      yield this.apollo.mutate({
-        mutation: completeWorkItem,
+        mutation: completeWorkItemMutation,
         variables: { id: this.workItem.id },
       });
 
@@ -68,18 +58,17 @@ export default class CasesDetailWorkItemsEditController extends Controller {
   }
 
   @dropTask
-  *saveManualWorkItem(event) {
+  *saveWorkItem(event) {
     event.preventDefault();
 
     try {
       yield this.apollo.mutate({
-        mutation: saveWorkItem,
+        mutation: saveWorkItemMutation,
         variables: {
           input: {
             workItem: this.workItem.id,
-            description: this.workItem.description,
             deadline: this.workItem.deadline,
-            meta: JSON.stringify(this.workItem?.meta),
+            assignedUsers: this.workItem.assignedUsers,
           },
         },
       });

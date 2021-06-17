@@ -13,10 +13,20 @@
 {{/if}}
 
 {{#if this.workItem.canComplete}}
-  <UkButton
+  <WorkItemButton
+    @mutation="complete"
+    @workItemId={{@model}}
     @type="submit"
     @color="primary"
     @label={{t "workItems.actions.finish"}}
-    {{on "click" (perform this.completeWorkItem)}}
+  />
+{{/if}}
+
+{{#if this.workItem.canSkip}}
+  <WorkItemButton
+    @mutation="skip"
+    @workItemId={{@model}}
+    @type="submit"
+    @label={{t "workItems.actions.skip"}}
   />
 {{/if}}

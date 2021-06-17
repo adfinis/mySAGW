@@ -32,10 +32,10 @@
     "ember-alexandria": "~1.0.0",
     "ember-apollo-client": "^3.1.0",
     "ember-auto-import": "^1.10.1",
-    "ember-caluma": "^7.1.1",
+    "ember-caluma": "^7.3.0",
     "ember-can": "^3.0.0",
-    "ember-changeset": "^3.13.6",
-    "ember-changeset-validations": "^3.14.5",
+    "ember-changeset": "^3.13.8",
+    "ember-changeset-validations": "^3.14.7",
     "ember-cli": "~3.24.0",
     "ember-cli-app-version": "^3.2.0",
     "ember-cli-babel": "^7.19.0",
@@ -92,7 +92,7 @@
     "sass": "^1.32.5"
   },
   "resolutions": {
-    "validated-changeset": "0.14.6",
+    "validated-changeset": "0.14.8",
     "focus-trap": "6.2.1",
     "uikit": "3.6.18"
   },

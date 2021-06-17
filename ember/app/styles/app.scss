@@ -20,3 +20,7 @@ main {
   max-height: 100vh;
   overflow: hidden;
 }
+
+.accent-border-left {
+  border-left: 3px solid $app-accent-color;
+}
