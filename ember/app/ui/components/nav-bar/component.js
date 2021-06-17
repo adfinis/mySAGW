@@ -10,6 +10,7 @@ export default class NavbarComponent extends Component {
   @service intl;
   @service store;
   @service notification;
+  @service can;
 
   @tracked pageSize = 10;
   @tracked pageNumber = 1;
@@ -55,6 +56,10 @@ export default class NavbarComponent extends Component {
   @restartableTask
   *fetchSnippets() {
     try {
+      if (this.can.cannot("list snippets")) {
+        return;
+      }
+
       const snippets = yield this.store.query("snippet", {
         filter: { search: this.searchTerm, archived: false },
         page: {

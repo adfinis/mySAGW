@@ -8,16 +8,16 @@
   {{this.workItem.task.name}}
 </h2>
 
-<div class="work-item-attributes">
+<div class="uk-flex uk-flex-wrap">
   {{#if this.workItem.isCompleted}}
-    <div class="work-item-attribute">
-      <span class="work-item-attribute__title">
+    <div class="uk-flex uk-flex-column work-item-attribute">
+      <span class="uk-text-bold">
         {{t "workItems.closedBy"}}
       </span>
       {{this.workItem.closedByUser.fullName}}
     </div>
-    <div class="work-item-attribute">
-      <span class="work-item-attribute__title">
+    <div class="uk-flex uk-flex-column work-item-attribute">
+      <span class="uk-text-bold">
         {{t "workItems.closedAt"}}
       </span>
       {{
