@@ -5,7 +5,8 @@
     <UkSpinner @ratio={{2}} />
   </div>
 {{else}}
-  <CfContent @documentId={{this.workItem.document.id}}
+  <CfContent
+    @documentId={{this.workItem.document.id}}
     @context={{hash completeCallback=(perform this.completeWorkItem)}}
     @disabled={{not this.workItem.isReady}}
   />

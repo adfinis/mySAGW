@@ -3,7 +3,7 @@ import Component from "@glimmer/component";
 
 export default class WorkItemListComponent extends Component {
   get highlight() {
-    return this.args.highlight === undefined || this.args.highlight;
+    return this.args.highlight ?? true;
   }
 
   get colspan() {

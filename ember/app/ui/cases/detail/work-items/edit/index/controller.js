@@ -1,11 +1,10 @@
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
-import { tracked } from "@glimmer/tracking";
 import { queryManager } from "ember-apollo-client";
 import calumaQuery from "ember-caluma/caluma-query";
 import { allWorkItems } from "ember-caluma/caluma-query/queries";
-import { dropTask } from "ember-concurrency-decorators";
+import { dropTask, lastValue } from "ember-concurrency-decorators";
 import moment from "moment";
 import completeWorkItem from "mysagw/gql/mutations/complete-work-item.graphql";
 import saveWorkItem from "mysagw/gql/mutations/save-work-item.graphql";
@@ -18,8 +17,6 @@ export default class CasesDetailWorkItemsEditController extends Controller {
   @service intl;
   @service moment;
 
-  @tracked workItem;
-
   @calumaQuery({ query: allWorkItems, options: "options" })
   workItemsQuery;
 
@@ -29,12 +26,13 @@ export default class CasesDetailWorkItemsEditController extends Controller {
     };
   }
 
+  @lastValue("fetchWorkItems") workItem;
   @dropTask()
   *fetchWorkItems() {
     try {
       yield this.workItemsQuery.fetch({ filter: [{ id: this.model }] });
 
-      this.workItem = this.workItemsQuery.value[0];
+      return this.workItemsQuery.value[0];
     } catch (error) {
       this.notification.danger(this.intl.t("workItems.fetchError"));
     }

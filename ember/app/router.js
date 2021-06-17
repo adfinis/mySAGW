@@ -49,11 +49,7 @@ Router.map(function () {
       });
       this.route("new");
     });
-    this.route("work-items", { resetNamespace }, function () {
-      this.route("detail", { path: "/ :id" }, function () {
-        this.route("edit");
-      });
-    });
+    this.route("work-items", { resetNamespace });
 
     // API
     this.route("identities", { resetNamespace }, function () {

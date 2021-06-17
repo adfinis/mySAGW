@@ -46,7 +46,9 @@ export default class WorkItemListItemComponent extends Component {
   }
 
   get highlightClasses() {
-    if (!this.args.highlight) return "";
+    if (!this.args.highlight) {
+      return "";
+    }
 
     const notViewed = this.args.workItem.notViewed;
     const diff = this.args.workItem.deadline?.diff(moment(), "days", true);
@@ -77,15 +79,10 @@ export default class WorkItemListItemComponent extends Component {
   *edit(event) {
     event.preventDefault();
 
-    if (this.router.currentRouteName === "work-items.instance.index") {
-      return yield this.router.transitionTo(
-        "work-items.instance.edit",
-        this.args.workItem.id
-      );
-    }
-
-    if (this.args.workItem.editLink) {
-      location.replace(this.args.workItem.editLink);
-    }
+    return yield this.router.transitionTo(
+      "cases.detail.work-items.edit",
+      this.args.workItem.case.id,
+      this.args.workItem.id
+    );
   }
 }
