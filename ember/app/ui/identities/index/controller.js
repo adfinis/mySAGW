@@ -26,10 +26,46 @@ export default class IdentitiesIndexController extends Controller {
       return null;
     }
 
-    return Array.from({ length: this.totalPages }).map((_, index) => ({
-      number: index + 1,
-      active: index + 1 === this.pageNumber,
-    }));
+    const res = [];
+
+    // insert previous page
+    if (this.pageNumber - 1 > 0) {
+      res.push({
+        number: this.pageNumber - 1,
+      });
+    }
+    if (this.pageNumber - 1 > 2) {
+      res.unshift({ dots: true });
+    }
+    // first page
+    if (res.length > 0 && res[0].number !== 1) {
+      res.unshift({
+        number: 1,
+      });
+    }
+
+    res.push({
+      number: this.pageNumber,
+      active: true,
+    });
+
+    // insert next page
+    if (this.pageNumber + 1 <= this.totalPages) {
+      res.push({
+        number: this.pageNumber + 1,
+      });
+    }
+    if (this.pageNumber + 1 < this.totalPages - 1 && this.totalPages > 3) {
+      res.push({ dots: true });
+    }
+    // last page
+    if (res[res.length - 1].number !== this.totalPages) {
+      res.push({
+        number: this.totalPages,
+      });
+    }
+
+    return res;
   }
 
   @restartableTask *search(event) {

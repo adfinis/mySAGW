@@ -18,6 +18,9 @@
       <tab.link-item @route="cases">
         {{t "nav.documents"}}
       </tab.link-item>
+      <tab.link-item @route="work-items">
+        {{t "nav.tasks"}}
+      </tab.link-item>
       {{#if (can "list identity")}}
         <tab.link-item @route="identities">
           {{t "nav.identities"}}
@@ -115,6 +118,11 @@
       <li>
         <LinkTo @route="cases" uk-toggle="target: #offcanvas-nav">
           {{t "nav.documents"}}
+        </LinkTo>
+      </li>
+      <li>
+        <LinkTo @route="work-items" uk-toggle="target: #offcanvas-nav">
+          {{t "nav.tasks"}}
         </LinkTo>
       </li>
 

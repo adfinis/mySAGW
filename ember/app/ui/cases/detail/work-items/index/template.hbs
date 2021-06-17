@@ -1,0 +1,18 @@
+<h3 class="uk-flex uk-flex-between">
+  {{t "workItems.title"}}
+</h3>
+
+<hr>
+
+<WorkItemList
+  @query={{this.readyWorkItemsQuery}}
+  @columns={{array "task" "deadline" "responsible"}}
+/>
+
+<h3>{{t "workItems.completedTitle"}}</h3>
+
+<WorkItemList
+  @query={{this.completedWorkItemsQuery}}
+  @columns={{array "task" "closedAt" "closedBy"}}
+  @highlight={{false}}
+/>

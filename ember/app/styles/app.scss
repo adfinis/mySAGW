@@ -9,6 +9,8 @@ $global-primary-background: $app-accent-color;
 @import "ember-caluma";
 
 @import "components/nav-bar";
+@import "components/work-item-list";
+@import "components/context-menu";
 
 main {
   display: flex;

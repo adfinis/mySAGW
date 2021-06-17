@@ -43,6 +43,7 @@ module("Acceptance | snippets", function (hooks) {
     assert.expect(1);
 
     await click("[data-test-snippet-sidebar-button]");
+
     assert.dom("[data-test-snippet-sidebar-list] li").exists({ count: 1 });
   });
 });
