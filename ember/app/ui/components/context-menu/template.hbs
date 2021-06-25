@@ -7,11 +7,11 @@
     {{on "click" (set this "menuOpen" true)}}
   >
     <span hidden>{{t "global.openMenu"}}</span>
-    <UkIcon @icon=" more-vertical" />
+    <UkIcon @icon="more-vertical" />
   </button>
   {{#if this.menuOpen}}
     <div class="context-menu">
-      <ul>
+      <ul class="uk-list uk-list-hyphen uk-padding-remove">
         {{#each @actions as |action|}}
           <li>
             <button type="button" {{on "click" action.action}}>

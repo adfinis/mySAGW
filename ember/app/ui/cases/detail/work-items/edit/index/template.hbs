@@ -1,4 +1,4 @@
-<h1 {{did-insert (perform this.fetchWorkItems)}}>
+<h1 {{did-insert this.onUpdate}}>
   {{t "workItems.edit"}}
 </h1>
 
@@ -31,12 +31,6 @@
         hour12=false
       }}
     </div>
-    <div class="work-item-attribute">
-      <span class="work-item-attribute__title">
-        {{t "workItems.comment"}}
-      </span>
-      {{or this.workItem.meta.completion-comment "-"}}
-    </div>
   {{/if}}
 </div>
 
@@ -49,13 +43,27 @@
       {{t "workItems.responsible"}}
     </label>
     <div class="uk-form-controls">
-      <input
-        class="uk-input"
-        id="responsible"
-        type="text"
-        value={{this.workItem.addressedService.name}}
-        disabled
-      >
+      {{#if (and (can "edit work-item") (not this.workItem.isCompleted))}}
+        <PowerSelect
+          @searchEnabled={{true}}
+          @searchField="fullName"
+          @options={{this.identities}}
+          @selected={{this.workItem.assignedUser}}
+          @onChange={{this.setAssignedUser}}
+          @triggerClass="uk-select"
+          as |identity|
+        >
+          {{identity.fullName}}
+        </PowerSelect>
+      {{else}}
+        <input
+          class="uk-input"
+          id="responsible"
+          type="text"
+          value={{this.workItem.assignedUser.fullName}}
+          disabled
+        >
+      {{/if}}
     </div>
   </div>
 
@@ -101,6 +109,7 @@
         class="uk-input"
         id="description"
         @value={{this.workItem.task.description}}
+        disabled={{this.workItem.isCompleted}}
       />
     </div>
   </div>
@@ -119,36 +128,14 @@
         @value={{this.workItem.deadline}}
         @useUTC={{true}}
         @onSelection={{this.setDeadline}}
+        @disabled={{this.workItem.isCompleted}}
       />
-    </div>
-  </div>
-
-  <div class="uk-margin">
-    <div class="uk-form-label">{{t "workItems.notifications"}}</div>
-    <div class="uk-form-controls">
-      <label>
-        <Input
-          class="uk-checkbox"
-          @type="checkbox"
-          @checked={{this.workItem.meta.notify-completed}}
-        />
-        {{t "workItems.notifyCompleted"}}
-      </label>
-      <br />
-      <label>
-        <Input
-          class="uk-checkbox"
-          @type="checkbox"
-          @checked={{this.workItem.meta.notify-deadline}}
-        />
-        {{t "workItems.notifyDeadline"}}
-      </label>
     </div>
   </div>
 
   <div class="uk-text-right">
     <LinkTo
-      @route="work-items.index"
+      @route="work-items"
       class="uk-margin-right"
     >
       <UkButton

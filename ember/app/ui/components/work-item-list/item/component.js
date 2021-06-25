@@ -7,30 +7,21 @@ import moment from "moment";
 export default class WorkItemListItemComponent extends Component {
   @service router;
   @service intl;
+  @service can;
+  @service store;
 
   get actions() {
-    return [
-      this.editAction,
-      this.toggleReadAction,
-      this.assignToMeAction,
-    ].filter(Boolean);
+    if (this.can.cannot("edit work-item")) {
+      return [];
+    }
+
+    return [this.editAction, this.assignToMeAction].filter(Boolean);
   }
 
   get editAction() {
     return {
       action: performHelper([this.edit], {}),
       title: this.intl.t("workItems.actions.edit"),
-    };
-  }
-
-  get toggleReadAction() {
-    const key = this.args.workItem.notViewed
-      ? "workItems.actions.markAsRead"
-      : "workItems.actions.markAsUnread";
-
-    return {
-      action: performHelper([this.toggleRead], {}),
-      title: this.intl.t(key),
     };
   }
 
@@ -50,22 +41,13 @@ export default class WorkItemListItemComponent extends Component {
       return "";
     }
 
-    const notViewed = this.args.workItem.notViewed;
     const diff = this.args.workItem.deadline?.diff(moment(), "days", true);
 
     return [
       "highlight",
       ...(diff <= 0 ? ["highlight--expired"] : []),
       ...(diff <= 3 && diff > 0 ? ["highlight--expiring"] : []),
-      ...(notViewed ? ["highlight--not-viewed"] : []),
     ].join(" ");
-  }
-
-  @dropTask
-  *toggleRead(event) {
-    event.preventDefault();
-
-    yield this.args.workItem.toggleRead();
   }
 
   @dropTask
@@ -84,5 +66,31 @@ export default class WorkItemListItemComponent extends Component {
       this.args.workItem.case.id,
       this.args.workItem.id
     );
+  }
+
+  @dropTask
+  *getIdentity() {
+    if (this.can.cannot("edit work-item")) {
+      return;
+    }
+
+    let idpId = null;
+
+    if (
+      !this.args.workItem.assignedUser &&
+      this.args.workItem.assignedUsers[0]
+    ) {
+      idpId = this.args.workItem.assignedUsers[0];
+    }
+
+    if (this.args.workItem.isCompleted && !this.args.workItem.closedByUser) {
+      idpId = this.args.workItem.raw.closedByUser;
+    }
+
+    if (idpId) {
+      return yield this.store.query("identity", {
+        filter: { idpId },
+      });
+    }
   }
 }

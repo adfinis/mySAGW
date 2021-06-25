@@ -28,7 +28,7 @@ export default class CasesDetailWorkItemsEditController extends Controller {
 
   @lastValue("fetchWorkItems") workItem;
   @dropTask()
-  *fetchWorkItems() {
+  *fetchWorkItem() {
     try {
       yield this.workItemsQuery.fetch({ filter: [{ id: this.model }] });
 
@@ -38,6 +38,7 @@ export default class CasesDetailWorkItemsEditController extends Controller {
     }
   }
 
+  // Temporary, use ember-caluma WorkItemButton or TaskButton later
   @dropTask
   *finishWorkItem(event) {
     event.preventDefault();
@@ -91,8 +92,30 @@ export default class CasesDetailWorkItemsEditController extends Controller {
     }
   }
 
+  @lastValue("fetchIdentities") identities;
+  @dropTask
+  *fetchIdentities() {
+    return yield this.store.query("identity", {
+      filter: {
+        isOrganisation: false,
+        memberships__organisation__organisationName: "sagw",
+      },
+    });
+  }
+
+  @action
+  onUpdate() {
+    this.fetchWorkItem.perform();
+    this.fetchIdentities.perform();
+  }
+
   @action
   setDeadline(value) {
     this.workItem.deadline = moment(value);
+  }
+
+  @action
+  setAssignedUser(identity) {
+    this.workItem.assignedUser = identity.idpId;
   }
 }

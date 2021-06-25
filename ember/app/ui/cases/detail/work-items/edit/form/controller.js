@@ -38,12 +38,14 @@ export default class CasesDetailWorkItemsEditFormController extends Controller {
     }
   }
 
+  // Temporary, use ember-caluma WorkItemButton or TaskButton later
   @dropTask()
   *completeWorkItem() {
     yield this.apollo.mutate({
       mutation: completeWorkItem,
       variables: { id: this.workItem.id },
     });
+
     this.transitionToRoute("cases.detail.work-items");
   }
 }

@@ -15,6 +15,17 @@ query getCaseQuery($caseId: ID!) {
             description
           }
         }
+        workItems {
+          edges {
+            node {
+              id
+              status
+              task {
+                slug
+              }
+            }
+          }
+        }
       }
     }
   }

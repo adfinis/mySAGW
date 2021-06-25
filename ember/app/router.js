@@ -39,10 +39,10 @@ Router.map(function () {
 
     // Caluma
     this.route("cases", { resetNamespace }, function () {
-      this.route("detail", { path: "/:id" }, function () {
+      this.route("detail", { path: "/:case_id" }, function () {
         this.route("edit");
         this.route("work-items", function () {
-          this.route("edit", { path: "/:id" }, function () {
+          this.route("edit", { path: "/:work_item_id" }, function () {
             this.route("form");
           });
         });

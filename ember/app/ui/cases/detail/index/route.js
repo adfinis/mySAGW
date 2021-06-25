@@ -4,6 +4,7 @@ import getCaseQuery from "mysagw/gql/queries/get-case.graphql";
 
 export default class CasesDetailIndexRoute extends Route {
   @queryManager apollo;
+
   async model() {
     const model = this.modelFor("cases.detail");
     if (typeof model === "object" && model) {
@@ -17,6 +18,7 @@ export default class CasesDetailIndexRoute extends Route {
       },
       "allCases.edges"
     );
+
     return caseRecord.mapBy("node").firstObject;
   }
 }

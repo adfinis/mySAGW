@@ -1,0 +1,383 @@
+[
+  {
+    "model": "caluma_workflow.workflow",
+    "pk": "document-review",
+    "fields": {
+      "created_at": "2021-01-11T13:47:12.022Z",
+      "modified_at": "2021-01-11T13:47:12.022Z",
+      "created_by_user": null,
+      "created_by_group": null,
+      "name": "{\"de\": \"Default workflow\", \"fr\": null}",
+      "description": "{\"de\": null, \"fr\": null}",
+      "meta": {},
+      "is_published": true,
+      "is_archived": false,
+      "allow_all_forms": true,
+      "start_tasks": ["submit-document"],
+      "allow_forms": []
+    }
+  },
+  {
+    "model": "caluma_workflow.task",
+    "pk": "submit-document",
+    "fields": {
+      "created_at": "2021-01-11T13:25:35.478Z",
+      "modified_at": "2021-01-11T13:25:35.478Z",
+      "created_by_user": null,
+      "created_by_group": null,
+      "name": "{\"en\": \"Submit document\", \"de\": \"Gesuch einreichen\", \"fr\": null}",
+      "description": "{\"en\": null, \"de\": null, \"fr\": null}",
+      "type": "simple",
+      "meta": {},
+      "address_groups": ["applicant"],
+      "is_archived": false,
+      "form": null,
+      "lead_time": null,
+      "is_multiple_instance": false
+    }
+  },
+  {
+    "model": "caluma_workflow.task",
+    "pk": "review-document",
+    "fields": {
+      "created_at": "2021-01-11T13:25:35.478Z",
+      "modified_at": "2021-01-11T13:25:35.478Z",
+      "created_by_user": null,
+      "created_by_group": null,
+      "name": "{\"en\": \"Review document\", \"de\": \"Dokument prüfen\", \"fr\": null}",
+      "description": "{\"en\": null, \"de\": null, \"fr\": null}",
+      "type": "complete_task_form",
+      "meta": {},
+      "address_groups": ["sagw"],
+      "is_archived": false,
+      "form": "review-document-form",
+      "lead_time": 432000,
+      "is_multiple_instance": false
+    }
+  },
+  {
+    "model": "caluma_workflow.task",
+    "pk": "circulation",
+    "fields": {
+      "created_at": "2021-01-11T13:25:44.085Z",
+      "modified_at": "2021-01-11T13:25:44.085Z",
+      "created_by_user": null,
+      "created_by_group": null,
+      "name": "{\"en\": \"Cirkulation\", \"de\": \"Zirkulation\", \"fr\": null}",
+      "description": "{\"en\": null, \"de\": null, \"fr\": null}",
+      "type": "complete_task_form",
+      "meta": {},
+      "address_groups": ["sagw"],
+      "is_archived": false,
+      "form": "circulation-form",
+      "lead_time": 432000,
+      "is_multiple_instance": true
+    }
+  },
+  {
+    "model": "caluma_workflow.task",
+    "pk": "additional-data",
+    "fields": {
+      "created_at": "2021-05-28T11:38:41.503Z",
+      "modified_at": "2021-05-28T11:38:41.503Z",
+      "created_by_user": null,
+      "created_by_group": null,
+      "modified_by_user": null,
+      "modified_by_group": null,
+      "name": "{\"en\": \"Additional data\", \"de\": \"Erfassen weiterer Daten\", \"fr\": null}",
+      "description": "{\"en\": null, \"de\": null, \"fr\": null}",
+      "type": "complete_task_form",
+      "meta": {},
+      "address_groups": ["applicant"],
+      "control_groups": null,
+      "is_archived": false,
+      "form": "additional-data-form",
+      "lead_time": 432000,
+      "is_multiple_instance": false
+    }
+  },
+  {
+    "model": "caluma_workflow.task",
+    "pk": "complete-document",
+    "fields": {
+      "created_at": "2021-05-28T11:39:40.483Z",
+      "modified_at": "2021-05-28T11:39:40.483Z",
+      "created_by_user": null,
+      "created_by_group": null,
+      "modified_by_user": null,
+      "modified_by_group": null,
+      "name": "{\"en\": \"Complete document\", \"de\": \"Gesuch abschliessen\", \"fr\": null}",
+      "description": "{\"en\": null, \"de\": null, \"fr\": null}",
+      "type": "simple",
+      "meta": {},
+      "address_groups": ["sagw"],
+      "control_groups": null,
+      "is_archived": false,
+      "form": null,
+      "lead_time": 432000,
+      "is_multiple_instance": false
+    }
+  },
+  {
+    "model": "caluma_workflow.task",
+    "pk": "decision-and-credit",
+    "fields": {
+      "created_at": "2021-05-28T11:36:40.651Z",
+      "modified_at": "2021-05-28T11:36:40.651Z",
+      "created_by_user": null,
+      "created_by_group": null,
+      "modified_by_user": null,
+      "modified_by_group": null,
+      "name": "{\"en\": \"Decision and credit\", \"de\": \"Entscheid und Kredit\", \"fr\": null}",
+      "description": "{\"en\": null, \"de\": null, \"fr\": null}",
+      "type": "complete_task_form",
+      "meta": {},
+      "address_groups": ["sagw"],
+      "control_groups": null,
+      "is_archived": false,
+      "form": "decision-and-credit-form",
+      "lead_time": 432000,
+      "is_multiple_instance": false
+    }
+  },
+  {
+    "model": "caluma_workflow.task",
+    "pk": "define-amount",
+    "fields": {
+      "created_at": "2021-05-28T11:39:07.923Z",
+      "modified_at": "2021-05-28T11:39:07.923Z",
+      "created_by_user": null,
+      "created_by_group": null,
+      "modified_by_user": null,
+      "modified_by_group": null,
+      "name": "{\"en\": \"Define amount\", \"de\": \"Betrag festlegen\", \"fr\": null}",
+      "description": "{\"en\": null, \"de\": null, \"fr\": null}",
+      "type": "complete_task_form",
+      "meta": {},
+      "address_groups": ["sagw"],
+      "control_groups": null,
+      "is_archived": false,
+      "form": "define-amount-form",
+      "lead_time": 432000,
+      "is_multiple_instance": false
+    }
+  },
+  {
+    "model": "caluma_workflow.task",
+    "pk": "revise-document",
+    "fields": {
+      "created_at": "2021-05-28T12:11:09.320Z",
+      "modified_at": "2021-05-28T12:11:09.320Z",
+      "created_by_user": null,
+      "created_by_group": null,
+      "modified_by_user": null,
+      "modified_by_group": null,
+      "name": "{\"de\": \"Revise document\", \"de\": \"Gesuch überarbeiten\", \"fr\": null}",
+      "description": "{\"en\": null, \"de\": null, \"fr\": null}",
+      "type": "simple",
+      "meta": {},
+      "address_groups": ["applicant"],
+      "control_groups": null,
+      "is_archived": false,
+      "form": null,
+      "lead_time": 432000,
+      "is_multiple_instance": false
+    }
+  },
+  {
+    "model": "caluma_workflow.taskflow",
+    "pk": "0db0773e-bd9f-477b-9a0f-26b47e297bb2",
+    "fields": {
+      "created_at": "2021-05-28T13:51:42.543Z",
+      "modified_at": "2021-05-28T13:51:42.543Z",
+      "created_by_user": null,
+      "created_by_group": null,
+      "modified_by_user": null,
+      "modified_by_group": null,
+      "workflow": "document-review",
+      "task": "additional-data",
+      "flow": "576262fc-1f01-4f82-a64c-9bcaefa71938"
+    }
+  },
+  {
+    "model": "caluma_workflow.taskflow",
+    "pk": "1f095d7d-48b0-4694-8cab-23009b72acf4",
+    "fields": {
+      "created_at": "2021-05-28T13:49:42.200Z",
+      "modified_at": "2021-05-28T13:49:42.200Z",
+      "created_by_user": null,
+      "created_by_group": null,
+      "modified_by_user": null,
+      "modified_by_group": null,
+      "workflow": "document-review",
+      "task": "review-document",
+      "flow": "1ee5288e-73b6-4946-9b2a-13dd5d55163f"
+    }
+  },
+  {
+    "model": "caluma_workflow.taskflow",
+    "pk": "22c5853a-6eec-4b31-9162-e131be8f9897",
+    "fields": {
+      "created_at": "2021-05-28T13:48:20.277Z",
+      "modified_at": "2021-05-28T13:48:20.277Z",
+      "created_by_user": null,
+      "created_by_group": null,
+      "modified_by_user": null,
+      "modified_by_group": null,
+      "workflow": "document-review",
+      "task": "decision-and-credit",
+      "flow": "4f66a0b3-b5e6-445e-8ae3-9ac1c2ced929"
+    }
+  },
+  {
+    "model": "caluma_workflow.taskflow",
+    "pk": "2f1f014a-2f5e-4e31-99c5-9513ff2be96a",
+    "fields": {
+      "created_at": "2021-05-28T13:15:51.501Z",
+      "modified_at": "2021-05-28T13:15:51.501Z",
+      "created_by_user": null,
+      "created_by_group": null,
+      "modified_by_user": null,
+      "modified_by_group": null,
+      "workflow": "document-review",
+      "task": "revise-document",
+      "flow": "af4400ac-4a04-412a-9689-baee1fb608a8"
+    }
+  },
+  {
+    "model": "caluma_workflow.taskflow",
+    "pk": "6be5d482-cf2d-4e69-b3fb-c89845a28da9",
+    "fields": {
+      "created_at": "2021-05-28T13:51:15.853Z",
+      "modified_at": "2021-05-28T13:51:15.853Z",
+      "created_by_user": null,
+      "created_by_group": null,
+      "modified_by_user": null,
+      "modified_by_group": null,
+      "workflow": "document-review",
+      "task": "define-amount",
+      "flow": "e65b9815-21b5-4667-836e-b7bea8b66302"
+    }
+  },
+  {
+    "model": "caluma_workflow.taskflow",
+    "pk": "6f312aad-da95-4008-a9f2-567d201453c9",
+    "fields": {
+      "created_at": "2021-05-28T13:20:18.537Z",
+      "modified_at": "2021-05-28T13:20:18.537Z",
+      "created_by_user": null,
+      "created_by_group": null,
+      "modified_by_user": null,
+      "modified_by_group": null,
+      "workflow": "document-review",
+      "task": "circulation",
+      "flow": "e9540a87-6999-4c88-ad3c-7ec190f0b0de"
+    }
+  },
+  {
+    "model": "caluma_workflow.taskflow",
+    "pk": "968c3214-c9ab-4c0b-8a0f-905b435a1ae5",
+    "fields": {
+      "created_at": "2021-01-11T13:47:44.537Z",
+      "modified_at": "2021-01-11T13:47:44.537Z",
+      "created_by_user": null,
+      "created_by_group": null,
+      "modified_by_user": null,
+      "modified_by_group": null,
+      "workflow": "document-review",
+      "task": "submit-document",
+      "flow": "5b55683e-a1f5-4f77-9498-cc7748967eb3"
+    }
+  },
+  {
+    "model": "caluma_workflow.flow",
+    "pk": "1ee5288e-73b6-4946-9b2a-13dd5d55163f",
+    "fields": {
+      "created_at": "2021-05-28T13:49:42.198Z",
+      "modified_at": "2021-05-28T13:49:42.198Z",
+      "created_by_user": null,
+      "created_by_group": null,
+      "modified_by_user": null,
+      "modified_by_group": null,
+      "next": "'after-review-document'|task"
+    }
+  },
+  {
+    "model": "caluma_workflow.flow",
+    "pk": "4f66a0b3-b5e6-445e-8ae3-9ac1c2ced929",
+    "fields": {
+      "created_at": "2021-05-28T13:48:20.272Z",
+      "modified_at": "2021-05-28T13:48:20.272Z",
+      "created_by_user": null,
+      "created_by_group": null,
+      "modified_by_user": null,
+      "modified_by_group": null,
+      "next": "'after-decision-and-credit'|task"
+    }
+  },
+  {
+    "model": "caluma_workflow.flow",
+    "pk": "576262fc-1f01-4f82-a64c-9bcaefa71938",
+    "fields": {
+      "created_at": "2021-05-28T13:51:42.533Z",
+      "modified_at": "2021-05-28T13:51:42.533Z",
+      "created_by_user": null,
+      "created_by_group": null,
+      "modified_by_user": null,
+      "modified_by_group": null,
+      "next": "'define-amount'|task"
+    }
+  },
+  {
+    "model": "caluma_workflow.flow",
+    "pk": "5b55683e-a1f5-4f77-9498-cc7748967eb3",
+    "fields": {
+      "created_at": "2021-01-11T13:47:44.536Z",
+      "modified_at": "2021-01-11T13:47:44.536Z",
+      "created_by_user": null,
+      "created_by_group": null,
+      "modified_by_user": null,
+      "modified_by_group": null,
+      "next": "'review-document'|task"
+    }
+  },
+  {
+    "model": "caluma_workflow.flow",
+    "pk": "af4400ac-4a04-412a-9689-baee1fb608a8",
+    "fields": {
+      "created_at": "2021-05-28T13:15:51.497Z",
+      "modified_at": "2021-05-28T13:15:51.497Z",
+      "created_by_user": null,
+      "created_by_group": null,
+      "modified_by_user": null,
+      "modified_by_group": null,
+      "next": "'review-document'|task"
+    }
+  },
+  {
+    "model": "caluma_workflow.flow",
+    "pk": "e65b9815-21b5-4667-836e-b7bea8b66302",
+    "fields": {
+      "created_at": "2021-05-28T13:51:15.847Z",
+      "modified_at": "2021-05-28T13:51:15.847Z",
+      "created_by_user": null,
+      "created_by_group": null,
+      "modified_by_user": null,
+      "modified_by_group": null,
+      "next": "'after-define-amount'|task"
+    }
+  },
+  {
+    "model": "caluma_workflow.flow",
+    "pk": "e9540a87-6999-4c88-ad3c-7ec190f0b0de",
+    "fields": {
+      "created_at": "2021-05-28T13:20:18.523Z",
+      "modified_at": "2021-05-28T13:20:18.523Z",
+      "created_by_user": null,
+      "created_by_group": null,
+      "modified_by_user": null,
+      "modified_by_group": null,
+      "next": "'decision-and-credit'|task"
+    }
+  }
+]

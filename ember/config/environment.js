@@ -29,6 +29,9 @@ module.exports = function (environment) {
       allowAnyFallback: true,
       fallbacks: ["de", "en"],
     },
+    apollo: {
+      apiURL: "/graphql",
+    },
 
     EmberENV: {
       FEATURES: {
@@ -113,10 +116,11 @@ module.exports = function (environment) {
           },
         ],
       },
-    },
 
-    apollo: {
-      apiURL: "/graphql",
+      caluma: {
+        submitTaskSlug: "submit-document",
+        reviseTaskSlug: "revise-docment",
+      },
     },
   };
 

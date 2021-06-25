@@ -47,14 +47,15 @@
           {{t "nav.form-builder"}}
         </tab.link-item>
       {{/if}}
-
-      <tab.link-item @route="profile">
-        {{t "nav.profile"}}
-      </tab.link-item>
     </UkTab>
   </div>
   <div class="uk-navbar-right uk-visible@m">
     <ul class="uk-navbar-nav">
+      <li>
+        <LinkTo @route="profile">
+          {{t "nav.profile"}}
+        </LinkTo>
+      </li>
       {{#if this.session.isAuthenticated}}
         <li>
           <a class="uk-padding-remove-right" {{on "click" this.invalidateSession}} href="#">

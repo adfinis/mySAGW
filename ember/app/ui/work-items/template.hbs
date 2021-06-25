@@ -1,0 +1,58 @@
+<h1 class="uk-flex uk-flex-between">
+  {{t "workItems.title"}}
+</h1>
+
+<hr />
+
+<Filters {{did-insert (perform this.fetchWorkItems)}} as |Filter|>
+  <Filter.RadioButtons
+    @name="responsible"
+    @label={{t "workItems.filters.responsible"}}
+    @selected={{this.responsible}}
+    @options={{
+    array
+    (hash value="all" label=(t "workItems.filters.all"))
+    (hash value="own" label=(t "workItems.filters.own"))
+  }}
+    @onChange={{fn this.updateFilter "responsible"}}
+  />
+  <Filter.RadioButtons
+    @name="status"
+    @label={{t "workItems.filters.status"}}
+    @selected={{this.status}}
+    @options={{
+    array
+    (hash value="open" label=(t "workItems.filters.open"))
+    (hash value="closed" label=(t "workItems.filters.closed"))
+  }}
+    @onChange={{fn this.updateFilter "status"}}
+  />
+  <Filter.RadioButtons
+    @name="role"
+    @label={{t "workItems.filters.role"}}
+    @selected={{this.role}}
+    @options={{
+    array
+    (hash value="active" label=(t "workItems.filters.active"))
+    (hash value="control" label=(t "workItems.filters.control"))
+  }}
+    @onChange={{fn this.updateFilter "role"}}
+  />
+  <Filter.RadioButtons
+    @name="order"
+    @label={{t "workItems.filters.order"}}
+    @selected={{this.order}}
+    @options={{
+    array
+    (hash value="urgent" label=(t "workItems.filters.urgent"))
+    (hash value="new" label=(t "workItems.filters.new"))
+  }}
+    @onChange={{fn this.updateFilter "order"}}
+  />
+</Filters>
+
+<WorkItemList
+  @query={{this.workItemsQuery}}
+  @columns={{this.columns}}
+  @highlight={{not-eq this.status "closed"}}
+/>

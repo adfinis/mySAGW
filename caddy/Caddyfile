@@ -5,6 +5,7 @@
     reverse_proxy /caluma-media* http://minio:9000
     reverse_proxy /minio/* http://minio:9000
     reverse_proxy /* http://ember:80
+    {$GRAPHIQL_PROXY}
 
     log {
         output stdout
