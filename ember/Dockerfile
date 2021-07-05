@@ -5,6 +5,8 @@ COPY . /usr/share/app
 
 ARG OIDC_HOST
 
+RUN apt-get update && apt-get -y install git
+
 RUN yarn install && yarn build
 
 FROM nginx:alpine as final

@@ -1,5 +1,5 @@
 query getCaseQuery($caseId: ID!) {
-  allCases(filter: [{ rootCase: $caseId }]) {
+  allCases(filter: [{ id: $caseId }]) {
     edges {
       node {
         id
@@ -22,6 +22,10 @@ query getCaseQuery($caseId: ID!) {
               status
               task {
                 slug
+              }
+              childCase {
+                id
+                status
               }
             }
           }

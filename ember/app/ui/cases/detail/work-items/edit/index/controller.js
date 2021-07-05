@@ -6,7 +6,6 @@ import calumaQuery from "ember-caluma/caluma-query";
 import { allWorkItems } from "ember-caluma/caluma-query/queries";
 import { dropTask, lastValue } from "ember-concurrency-decorators";
 import moment from "moment";
-import completeWorkItemMutation from "mysagw/gql/mutations/complete-work-item.graphql";
 import saveWorkItemMutation from "mysagw/gql/mutations/save-work-item.graphql";
 
 export default class CasesDetailWorkItemsEditController extends Controller {
@@ -35,25 +34,6 @@ export default class CasesDetailWorkItemsEditController extends Controller {
       return this.workItemsQuery.value[0];
     } catch (error) {
       this.notification.danger(this.intl.t("workItems.fetchError"));
-    }
-  }
-
-  // Temporary, use ember-caluma WorkItemButton or TaskButton later
-  @dropTask
-  *finishWorkItem(event) {
-    event.preventDefault();
-
-    try {
-      yield this.apollo.mutate({
-        mutation: completeWorkItemMutation,
-        variables: { id: this.workItem.id },
-      });
-
-      this.notification.success(this.intl.t("workItems.finishSuccess"));
-
-      this.transitionToRoute("cases.detail.work-items.index");
-    } catch (error) {
-      this.notification.danger(this.intl.t("workItems.saveError"));
     }
   }
 
@@ -106,5 +86,10 @@ export default class CasesDetailWorkItemsEditController extends Controller {
   @action
   setAssignedUser(identity) {
     this.workItem.assignedUser = identity.idpId;
+  }
+
+  @action
+  transistionToCase() {
+    this.transitionToRoute("cases");
   }
 }

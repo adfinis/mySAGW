@@ -39,22 +39,36 @@ def test_permissions_fallback(
 
 
 @pytest.mark.parametrize(
-    "groups,created_by_user,has_perm,has_obj_perm",
+    "groups,created_by_user,assigned_users,has_perm,has_obj_perm",
     [
-        (["admin"], "bar", True, True),
-        (["sagw"], "bar", True, True),
-        (["foo"], "bar", False, False),
-        (["foo"], "baz", False, True),
+        (["admin"], "bar", ["admin"], True, True),
+        (["sagw"], "bar", ["admin"], True, True),
+        (["foo"], "bar", [], False, False),
+        (["foo"], "baz", [], False, True),
     ],
 )
 def test_permission_for_save_document_answer(
-    db, admin_info, answer, groups, created_by_user, has_perm, has_obj_perm
+    db,
+    admin_info,
+    answer,
+    work_item,
+    groups,
+    created_by_user,
+    assigned_users,
+    has_perm,
+    has_obj_perm,
 ):
     admin_info.context.user.groups = groups
     admin_info.context.user.username = "baz"
 
     answer.document.created_by_user = created_by_user
     answer.document.save()
+
+    answer.document.case.parent_work_item = work_item
+    answer.document.case.save()
+
+    work_item.assigned_users = assigned_users
+    work_item.save()
 
     perm = MySAGWPermission()
 

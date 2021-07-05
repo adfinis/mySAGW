@@ -24,3 +24,12 @@ main {
 .accent-border-left {
   border-left: 3px solid $app-accent-color;
 }
+
+.ember-power-select-multiple-option {
+  margin: 5px 0 0 5px;
+}
+
+.ember-power-select-trigger[aria-disabled="true"]
+  .ember-power-select-multiple-option {
+  background-color: rgb(100, 100, 100);
+}

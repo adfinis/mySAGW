@@ -82,6 +82,7 @@
         @workItemId={{@model.workItems.edges.firstObject.node.id}}
         @label={{t "documents.submit"}}
         @disabled={{this.submitDisabled}}
+        @onSuccess={{this.transistionToCase}}
       />
     {{/if}}
 

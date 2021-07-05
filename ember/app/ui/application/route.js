@@ -6,9 +6,16 @@ export default class ApplicationRoute extends Route.extend(
   OIDCApplicationRouteMixin
 ) {
   @service intl;
+  @service calumaOptions;
 
   beforeModel(...args) {
     super.beforeModel(...args);
     this.intl.setLocale(["en"]);
+
+    this.calumaOptions.registerComponentOverride({
+      label: "Circulation",
+      component: "circulation",
+      type: "CheckboxQuestion",
+    });
   }
 }

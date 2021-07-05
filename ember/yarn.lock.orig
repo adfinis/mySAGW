@@ -7004,6 +7004,35 @@ ember-changeset-validations@^3.14.7:
     ember-validators "^3.0.1"
     validated-changeset "~0.14.8"
 
+<<<<<<< HEAD
+ember-changeset@^3.13.8:
+  version "3.13.8"
+  resolved "https://registry.yarnpkg.com/ember-changeset/-/ember-changeset-3.13.8.tgz#7f31e4dc170f75b57fc03fb278e2ba19bf6c5c04"
+  integrity sha512-Lzuvs0SY3Vzu1IYQ3aCflipRYdtk0U8S85dlrPtdsWH2hzAhVk4fgXlbT4bVkO1ikxvJjrZSRLRNwia0fRJNxw==
+=======
+ember-changeset-validations@^3.14.7:
+  version "3.14.7"
+  resolved "https://registry.yarnpkg.com/ember-changeset-validations/-/ember-changeset-validations-3.14.7.tgz#83ddc63173c1321053385b36c209050c047e5a8b"
+  integrity sha512-2d2r1JatkdSJ0M70lE79DWkjqp5Ha3VG8EY3YAynVRYmnLWZxIleV85Re2P155lfOIkmkQOo9HXPQzcXqY0qpw==
+  dependencies:
+    ember-changeset "^3.13.8"
+    ember-cli-babel "^7.11.1"
+    ember-cli-htmlbars "^4.0.5"
+    ember-get-config "^0.3.0"
+    ember-validators "^3.0.1"
+    validated-changeset "~0.14.8"
+
+ember-changeset@^3.13.6:
+  version "3.13.6"
+  resolved "https://registry.yarnpkg.com/ember-changeset/-/ember-changeset-3.13.6.tgz#40b7936fa7174dfb4f5dcfc57c172623e7d91090"
+  integrity sha512-kn5i37OApEVS6HOo/MUAN0mIvTOUuRBjIggbBak3pGC9WYO0dhF1s+nsLMR95SSG2m4sNbjhzDWKCSA+kWo6yg==
+>>>>>>> 71ca0a2 (feat(ember): improve user guidance)
+  dependencies:
+    "@glimmer/tracking" "^1.0.1"
+    ember-auto-import "^1.5.2"
+    ember-cli-babel "^7.19.0"
+    validated-changeset "~0.14.8"
+
 ember-changeset@^3.13.8:
   version "3.13.8"
   resolved "https://registry.yarnpkg.com/ember-changeset/-/ember-changeset-3.13.8.tgz#7f31e4dc170f75b57fc03fb278e2ba19bf6c5c04"
@@ -12962,9 +12991,9 @@ printf@^0.5.1:
   resolved "https://registry.yarnpkg.com/printf/-/printf-0.5.3.tgz#8b7eec278d886833312238b2bf42b2b6f250880a"
   integrity sha512-t3lYN6vPU5PZXDiEZZqoyXvN8wCsBfi8gPoxTKo2e5hhV673t/KUh+mfO8P8lCOCDC/BWcOGIxKyebxc5FuqLA==
 
-"prismjs@https://github.com/PrismJS/prism#7e51b99c86991b669435c51f80d6b16b9131fc6f":
+"prismjs@git+https://github.com/PrismJS/prism.git#7e51b99c86991b669435c51f80d6b16b9131fc6f":
   version "1.23.0"
-  resolved "https://github.com/PrismJS/prism#7e51b99c86991b669435c51f80d6b16b9131fc6f"
+  resolved "git+https://github.com/PrismJS/prism.git#7e51b99c86991b669435c51f80d6b16b9131fc6f"
 
 private@^0.1.6, private@^0.1.8:
   version "0.1.8"
@@ -15205,7 +15234,11 @@ validate-npm-package-name@^3.0.0:
   dependencies:
     builtins "^1.0.3"
 
+<<<<<<< HEAD
 validated-changeset@0.14.8, validated-changeset@~0.14.8:
+=======
+validated-changeset@0.14.8, validated-changeset@~0.14.5, validated-changeset@~0.14.6, validated-changeset@~0.14.8:
+>>>>>>> 71ca0a2 (feat(ember): improve user guidance)
   version "0.14.8"
   resolved "https://registry.yarnpkg.com/validated-changeset/-/validated-changeset-0.14.8.tgz#4d3d5df6725188d984d605cfb21818c307d4e90e"
   integrity sha512-xHQgLIOhUa+AZcSvYIfFMf4WOck0BHDv5V11EIelQEy+yCwUUEtMm/fgRcHDV5meWJ3I9xodutIsz/AwnlQ1FQ==

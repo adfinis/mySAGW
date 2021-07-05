@@ -1,9 +1,11 @@
 import Controller from "@ember/controller";
+import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import { queryManager } from "ember-apollo-client";
 import { dropTask } from "ember-concurrency-decorators";
 import ENV from "mysagw/config/environment";
 import cancelCaseMutation from "mysagw/gql/mutations/cancel-case.graphql";
+import completeWorkItem from "mysagw/gql/mutations/complete-work-item.graphql";
 
 export default class CasesDetailIndexController extends Controller {
   @service router;
@@ -40,7 +42,8 @@ export default class CasesDetailIndexController extends Controller {
     return !(this.isNotRejected || this.isNotSubmitted);
   }
 
-  @dropTask *closeCase() {
+  @dropTask
+  *closeCase() {
     try {
       yield this.apollo.mutate({
         mutation: cancelCaseMutation,
@@ -54,5 +57,27 @@ export default class CasesDetailIndexController extends Controller {
       console.error(error);
       this.notification.fromError(error);
     }
+  }
+
+  @dropTask
+  *submitCase() {
+    try {
+      yield this.apollo.mutate({
+        mutation: completeWorkItem,
+        variables: { id: this.model.workItems.edges[0].node.id },
+      });
+
+      this.notification.success(this.intl.t("documents.submitSuccess"));
+
+      this.router.transitionTo("cases.index");
+    } catch (error) {
+      console.error(error);
+      this.notification.fromError(error);
+    }
+  }
+
+  @action
+  transistionToCase() {
+    this.transitionToRoute("cases");
   }
 }

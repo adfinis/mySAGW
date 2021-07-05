@@ -59,13 +59,14 @@ export default class CustomWorkItemModel extends WorkItemModel {
   }
 
   get canComplete() {
-    return this.isReady;
+    return this.isReady && this.isAssignedToCurrentUser;
   }
 
   get canSkip() {
     return (
       this.isReady &&
-      ENV.APP.caluma.skippableTaskSlugs.includes(this.raw.task.slug)
+      ENV.APP.caluma.skippableTaskSlugs.includes(this.raw.task.slug) &&
+      this.isAssignedToCurrentUser
     );
   }
 
@@ -75,6 +76,10 @@ export default class CustomWorkItemModel extends WorkItemModel {
 
   get case() {
     return this.raw.case.parentWorkItem?.case ?? this.raw.case;
+  }
+
+  get statusName() {
+    return this.intl.t(`workItems.statuses.${this.raw.status}`);
   }
 
   async assignToMe() {

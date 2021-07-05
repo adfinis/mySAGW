@@ -1,4 +1,5 @@
 import Controller from "@ember/controller";
+import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import { queryManager } from "ember-apollo-client";
 import calumaQuery from "ember-caluma/caluma-query";
@@ -12,17 +13,14 @@ export default class CasesDetailWorkItemsEditFormController extends Controller {
   @service notification;
   @service intl;
   @service moment;
-
-  @lastValue("fetchWorkItems") workItem;
+  @service session;
 
   @calumaQuery({ query: allWorkItems })
   workItemsQuery;
 
+  @lastValue("fetchWorkItems") workItem;
   @restartableTask()
   *fetchWorkItems(model) {
-    if (typeof model === "object") {
-      return model;
-    }
     try {
       yield this.workItemsQuery.fetch({ filter: [{ id: model }] });
 
@@ -31,5 +29,10 @@ export default class CasesDetailWorkItemsEditFormController extends Controller {
       console.error(error);
       this.notification.danger(this.intl.t("workItems.fetchError"));
     }
+  }
+
+  @action
+  transistionToCase() {
+    this.transitionToRoute("cases");
   }
 }

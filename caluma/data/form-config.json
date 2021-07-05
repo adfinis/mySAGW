@@ -106,7 +106,22 @@
 },
 {
     "model": "caluma_form.formquestion",
-    "pk": "circulation-form.circulation-text",
+    "pk": "circulation-form.circulation-decision",
+    "fields": {
+        "created_at": "2021-06-25T13:19:22.324Z",
+        "modified_at": "2021-06-25T13:19:22.324Z",
+        "created_by_user": null,
+        "created_by_group": null,
+        "modified_by_user": null,
+        "modified_by_group": null,
+        "form": "circulation-form",
+        "question": "circulation-decision",
+        "sort": 2
+    }
+},
+{
+    "model": "caluma_form.formquestion",
+    "pk": "circulation-form.circulation-comment",
     "fields": {
         "created_at": "2021-05-31T16:01:25.864Z",
         "modified_at": "2021-05-31T16:01:25.864Z",
@@ -115,7 +130,7 @@
         "modified_by_user": null,
         "modified_by_group": null,
         "form": "circulation-form",
-        "question": "circulation-text",
+        "question": "circulation-comment",
         "sort": 1
     }
 },
@@ -214,7 +229,37 @@
 },
 {
     "model": "caluma_form.question",
-    "pk": "circulation-text",
+    "pk": "circulation-decision",
+    "fields": {
+        "created_at": "2021-06-25T13:19:22.232Z",
+        "modified_at": "2021-06-25T13:19:30.433Z",
+        "created_by_user": null,
+        "created_by_group": null,
+        "modified_by_user": null,
+        "modified_by_group": null,
+        "label": "{\"de\": \"Entscheid\", \"fr\": null}",
+        "type": "choice",
+        "is_required": "true",
+        "is_hidden": "false",
+        "is_archived": false,
+        "placeholder": "{\"de\": null, \"fr\": null}",
+        "info_text": "{\"de\": \"\", \"fr\": null}",
+        "static_content": "{\"de\": \"\", \"fr\": \"\"}",
+        "configuration": {},
+        "meta": {},
+        "data_source": null,
+        "row_form": null,
+        "sub_form": null,
+        "source": null,
+        "format_validators": "[]",
+        "default_answer": null,
+        "calc_expression": null,
+        "calc_dependents": "[]"
+    }
+},
+{
+    "model": "caluma_form.question",
+    "pk": "circulation-comment",
     "fields": {
         "created_at": "2021-05-31T16:01:25.772Z",
         "modified_at": "2021-05-31T16:01:25.772Z",
@@ -222,8 +267,8 @@
         "created_by_group": null,
         "modified_by_user": null,
         "modified_by_group": null,
-        "label": "{\"de\": \"Text\", \"fr\": null}",
-        "type": "text",
+        "label": "{\"de\": \"Kommentar\", \"fr\": null}",
+        "type": "textarea",
         "is_required": "false",
         "is_hidden": "false",
         "is_archived": false,
@@ -623,11 +668,43 @@
     "fields": {
         "created_at": "2021-05-31T09:41:37.580Z",
         "modified_at": "2021-06-03T09:17:44.758Z",
-        "created_by_user": null,
+        "created_by_user":  null,
         "created_by_group": null,
         "modified_by_user": null,
         "modified_by_group": null,
         "label": "{\"de\": \"R\\u00fcckweisung\", \"fr\": null}",
+        "is_archived": false,
+        "meta": {},
+        "source": null
+    }
+},
+{
+    "model": "caluma_form.option",
+    "pk": "circulation-decision-approved",
+    "fields": {
+        "created_at": "2021-06-25T13:19:30.349Z",
+        "modified_at": "2021-06-25T13:19:30.349Z",
+        "created_by_user": null,
+        "created_by_group": null,
+        "modified_by_user": null,
+        "modified_by_group": null,
+        "label": "{\"de\": \"Genehmigt\", \"fr\": null}",
+        "is_archived": false,
+        "meta": {},
+        "source": null
+    }
+},
+{
+    "model": "caluma_form.option",
+    "pk": "circulation-decision-declined",
+    "fields": {
+        "created_at": "2021-06-25T13:19:30.354Z",
+        "modified_at": "2021-06-25T13:19:30.354Z",
+        "created_by_user": null,
+        "created_by_group": null,
+        "modified_by_user": null,
+        "modified_by_group": null,
+        "label": "{\"de\": \"Abgelehnt\", \"fr\": null}",
         "is_archived": false,
         "meta": {},
         "source": null

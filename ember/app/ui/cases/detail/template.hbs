@@ -9,19 +9,24 @@
       class="uk-icon-button uk-margin-right"
       uk-icon="icon: arrow-left; ratio: 2"
     />
-    {{this.caseNode.document.form.name}}
+    {{@model.document.form.name}}
   </h2>
 
   <UkTab as |tab|>
-    <tab.link-item @route="cases.detail.index" @model={{this.caseNode}}>
+    <tab.link-item @route="cases.detail.index" @model={{@model}}>
       {{t "documents.subnav.overview"}}
     </tab.link-item>
-    <tab.link-item @route="cases.detail.work-items" @model={{this.caseNode}}>
+    <tab.link-item @route="cases.detail.work-items" @model={{@model}}>
       {{t "documents.subnav.work-items"}}
     </tab.link-item>
-    <tab.link-item @route="cases.detail.edit" @model={{this.caseNode}}>
+    <tab.link-item @route="cases.detail.edit" @model={{@model}}>
       {{t "documents.subnav.document"}}
     </tab.link-item>
+    {{#if this.circulationActive}}
+      <tab.link-item @route="cases.detail.circulation" @model={{@model}}>
+        {{t "documents.subnav.circulation"}}
+      </tab.link-item>
+    {{/if}}
   </UkTab>
 
   {{outlet}}

@@ -1,0 +1,5 @@
+mutation createWorkItem($input: CreateWorkItemInput!) {
+  createWorkItem(input: $input) {
+    clientMutationId
+  }
+}
