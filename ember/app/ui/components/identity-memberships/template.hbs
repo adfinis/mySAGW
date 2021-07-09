@@ -13,28 +13,18 @@
         {{#each this.memberships as |membership|}}
           <li class="uk-flex uk-flex-between uk-flex-middle">
             <div>
-              {{#if membership.isInactive}}
-                <s>
-                  <strong>{{membership.organisation.organisationName}}</strong>
-                  {{#if membership.authorized}}
-                    ({{t "component.identity-memberships.form.label.admin"}})
-                  {{/if}}
-                </s>
-              {{else}}
-                <strong>{{membership.organisation.organisationName}}</strong>
+              <span class="uk-text-bold {{if membership.isInactive "text-strike-through"}}">
+                {{membership.organisation.organisationName}}
                 {{#if membership.authorized}}
                   ({{t "component.identity-memberships.form.label.admin"}})
                 {{/if}}
-              {{/if}}
-              <br>
+              </span>
 
               {{#if membership.role}}
                 <div class="uk-text-meta">
-                  {{#if membership.isInactive}}
-                    <s>{{membership.role.title}}</s>
-                  {{else}}
+                  <span class={{if membership.isInactive "text-strike-through"}}>
                     {{membership.role.title}}
-                  {{/if}}
+                  </span>
                 </div>
               {{/if}}
 
