@@ -316,7 +316,12 @@ def test_identity_set_interests(db, client, identity_factory, interest_factory):
         ("SAGW", [0, 1, 2, 3]),
         ("@sag", [0, 3]),
         ("123456", [4]),
-        ("pHil", [5]),
+        ("pHil", [5, 6]),
+        ("philosophy class", [5, 6]),
+        ('"philosophy class"', [6]),
+        ('"philosophy class', [6]),
+        ('"philosophy -class"', []),
+        ("SAGW -winst", [1, 2, 3]),
     ],
 )
 def test_identity_search(
@@ -348,10 +353,17 @@ def test_identity_search(
     phone = phone_number_factory(phone="+41771234567")
     identities.append(phone.identity)
 
-    interest_identity = identity_factory()
-    interest = interest_factory(title={"en": "philosophy"})
-    interest_identity.interests.add(interest)
-    identities.append(interest_identity)
+    phil_interest_identity = identity_factory()
+    phil_interest = interest_factory(title={"en": "philosophy"})
+    class_interest = interest_factory(title={"en": "class"})
+    phil_interest_identity.interests.add(phil_interest)
+    phil_interest_identity.interests.add(class_interest)
+    identities.append(phil_interest_identity)
+
+    phil_class_interest_identity = identity_factory()
+    phil_class_interest = interest_factory(title={"en": "philosophy class"})
+    phil_class_interest_identity.interests.add(phil_class_interest)
+    identities.append(phil_class_interest_identity)
 
     url = reverse("identity-list")
 
