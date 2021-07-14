@@ -8,7 +8,7 @@
   <CfContent
     @documentId={{this.workItem.document.id}}
     @context={{hash completeCallback=(perform this.completeWorkItem)}}
-    @disabled={{not this.workItem.isReady}}
+    @disabled={{not (and this.workItem.isAssignedToCurrentUser this.workItem.isReady)}}
   />
 {{/if}}
 
@@ -28,5 +28,6 @@
     @workItemId={{@model}}
     @type="submit"
     @label={{t "workItems.actions.skip"}}
+    @onSuccess={{this.transitionToCase}}
   />
 {{/if}}

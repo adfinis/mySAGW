@@ -72,3 +72,6 @@ target/
 
 # Editor swap files
 *.swp
+
+# git
+*.orig

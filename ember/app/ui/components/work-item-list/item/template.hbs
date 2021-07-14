@@ -27,7 +27,7 @@
         >
           {{@workItem.case.document.form.name}}
         </LinkTo>
-      {{else if (eq column "deadline")}}
+      {{else if (and (eq column "deadline") @workItem.raw.deadline)}}
         <span title={{format-date @workItem.deadline day="2-digit" month="2-digit" year="numeric"}}>
           {{moment-from @workItem.deadline}}
         </span>
@@ -47,6 +47,8 @@
         {{if @workItem.closedByUser @workItem.closedByUser.fullName "-"}}
       {{else if (eq column "description")}}
         <span title={{@workItem.instanceDescription}}>{{@workItem.instanceDescription}}</span>
+      {{else if (eq column "status")}}
+        {{@workItem.statusName}}
       {{/if}}
     </td>
   {{/each}}

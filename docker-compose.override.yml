@@ -25,6 +25,7 @@ services:
     env_file: ./.envs/.local/.caluma
     volumes:
       - ./caluma/extensions:/app/caluma/extensions:ro
+      - ./caluma/data:/app/caluma/data:ro
     command:
       [
         "/bin/sh",

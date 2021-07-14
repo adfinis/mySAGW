@@ -84,6 +84,7 @@ documents:
     overview: "Overview"
     document: "Document"
     work-items: "Tasks"
+    circulation: "Circulation"
 
 page:
   identities:
@@ -185,6 +186,10 @@ page:
       title: "Add snippet"
     edit:
       title: "Edit snippet"
+
+  circulation:
+    add: "Add to circulation"
+    finish: "Finish circulation"
 
 component:
   identity-form:
@@ -375,6 +380,7 @@ workItems:
   deadline: "Deadline"
   createdBy: "Created on"
   createdAt: "Created by"
+  status: "Status"
 
   saveSuccess: "Task successfully saved"
   finishSuccess: "Task successfully completed"
@@ -405,3 +411,10 @@ workItems:
     control: "Controlling"
     urgent: "Urgent"
     new: "New"
+
+  statuses:
+    READY: "Ready"
+    COMPLETED: "Completed"
+    CANCELED: "Canceled"
+    SKIPPED: "Skipped"
+    SUSPENDED: "Suspended"

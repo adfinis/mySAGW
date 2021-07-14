@@ -67,6 +67,12 @@ caluma-dump-forms: ## dump Caluma form models
 	caluma_form.Form caluma_form.FormQuestion caluma_form.Question \
 	caluma_form.QuestionOption caluma_form.Option
 
+.PHONY: caluma-dump-workflow
+caluma-dump-workflow: ## dump Caluma workflow models
+	@docker-compose run --rm caluma python manage.py dumpdata --indent 4 \
+	caluma_workflow.Task caluma_workflow.Workflow caluma_workflow.Flow \
+	caluma_workflow.TaskFlow caluma_workflow.Case
+
 .PHONY: ember-lint
 ember-lint: ## lint the frontend
 	@docker-compose run --rm ember yarn lint

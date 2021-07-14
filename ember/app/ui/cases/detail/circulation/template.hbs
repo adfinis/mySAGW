@@ -1,0 +1,38 @@
+<div {{did-insert (queue (perform this.fetchIdentities) (perform this.fetchWorkItems))}}>
+  <div class="uk-flex">
+    <PowerSelectMultiple
+      @searchEnabled={{true}}
+      @options={{this.identities}}
+      @selected={{this.selectedIdentities}}
+      @onChange={{fn (mut this.selectedIdentities)}}
+      @triggerClass="uk-select uk-width-2-3"
+      @disabled={{@disabled}}
+      as |identity|
+    >
+      {{identity.fullName}}
+    </PowerSelectMultiple>
+
+    <UkButton
+      @color="primary"
+      @disabled={{or this.addToCirculation.isRunning (not this.selectedIdentities.length)}}
+      @loading={{this.addToCirculation.isRunning}}
+      @on-click={{perform this.addToCirculation}}
+      @class="uk-margin-left"
+    >
+      {{t "page.circulation.add"}}
+    </UkButton>
+  </div>
+
+  <WorkItemList
+    @query={{this.workItemsQuery}}
+    @columns={{array "responsible" "status" "task" "closedAt"}}
+    @highlight={{false}}
+  />
+
+  <WorkItemButton
+    @workItemId={{this.circulationWorkItem.id}}
+    @label={{t "page.circulation.finish"}}
+    @mutation="complete"
+    @disabled={{this.canFinishCirculation}}
+  />
+</div>

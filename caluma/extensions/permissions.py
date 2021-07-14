@@ -14,7 +14,10 @@ class MySAGWPermission(BasePermission):
         return "admin" in groups or "sagw" in groups
 
     def _is_own(self, info, instance):
-        return instance.created_by_user == info.context.user.username
+        return instance.created_by_user == info.context.user.claims["sub"]
+
+    def _is_assigned(self, info, instance):
+        return info.context.user.claims["sub"] in instance.assigned_users
 
     @permission_for(Mutation)
     @object_permission_for(Mutation)
@@ -31,6 +34,12 @@ class MySAGWPermission(BasePermission):
     @permission_for(SaveDocumentAnswer)
     @object_permission_for(SaveDocumentAnswer)
     def has_permission_for_save_document_answer(self, mutation, info, answer=None):
-        return self._is_admin_or_sagw(info) or (
-            bool(answer) and self._is_own(info, answer.document)
+        return (
+            self._is_admin_or_sagw(info)
+            or (bool(answer) and self._is_own(info, answer.document))
+            or (
+                bool(answer)
+                and hasattr(answer.document.case, "parent_work_item")
+                and self._is_assigned(info, answer.document.case.parent_work_item)
+            )
         )

@@ -158,5 +158,6 @@
     @type="submit"
     @color="primary"
     @label={{t "workItems.actions.finish"}}
+    @onSuccess={{this.transitionToCase}}
   />
 {{/if}}

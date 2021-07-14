@@ -47,6 +47,7 @@ export default class CasesTableComponent extends Component {
           variables: {
             cursor,
             orderBy: this.order,
+            filter: [{ workflow: "circulation", invert: true }],
           },
 
           fetchPolicy: "network-only",
