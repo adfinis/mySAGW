@@ -45,6 +45,10 @@
             }}
           </td>
         </tr>
+        <tr>
+          <th>{{t "workItems.title"}}</th>
+          <td>{{this.readyWorkItems}}</td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -73,13 +77,12 @@
       {{else}}
         <p>{{t "documents.submitText"}}</p> 
       {{/if}}
-      <UkButton
-        @on-click={{perform this.submitCase @model}}
-        @disabled={{or this.submitCase.isRunning}}
-        @loading={{this.submitCase.isRunning}}
-      >
-        {{t "documents.submit"}}
-      </UkButton>
+      <WorkItemButton
+        @mutation="complete"
+        @workItemId={{@model.workItems.edges.firstObject.node.id}}
+        @label={{t "documents.submit"}}
+        @disabled={{this.submitDisabled}}
+      />
     {{/if}}
 
     {{#if (and (eq @model.status "RUNNING") this.isNotSubmitted)}}

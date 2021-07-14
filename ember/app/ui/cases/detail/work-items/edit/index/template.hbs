@@ -36,7 +36,7 @@
 
 <form
   class="uk-form-stacked"
-  {{on "submit" (perform this.saveManualWorkItem)}}
+  {{on "submit" (perform this.saveWorkItem)}}
 >
   <div class="uk-margin">
     <label class="uk-form-label" for="responsible">
@@ -109,7 +109,7 @@
         class="uk-input"
         id="description"
         @value={{this.workItem.task.description}}
-        disabled={{this.workItem.isCompleted}}
+        disabled
       />
     </div>
   </div>
@@ -152,10 +152,11 @@
 </form>
 
 {{#if this.workItem.canComplete}}
-  <UkButton
+  <WorkItemButton
+    @mutation="complete"
+    @workItemId={{this.workItem.id}}
     @type="submit"
     @color="primary"
     @label={{t "workItems.actions.finish"}}
-    {{on "click" (perform this.finishWorkItem)}}
   />
 {{/if}}

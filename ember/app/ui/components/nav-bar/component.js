@@ -56,7 +56,7 @@ export default class NavbarComponent extends Component {
   @restartableTask
   *fetchSnippets() {
     try {
-      if (this.can.cannot("list snippets")) {
+      if (this.can.cannot("list snippet")) {
         return;
       }
 

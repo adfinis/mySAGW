@@ -15,11 +15,13 @@
 
   <div class="uk-navbar-left uk-visible@m">
     <UkTab as |tab|>
+      {{#if (can "list work-item")}}
+        <tab.link-item @route="work-items">
+          {{t "nav.tasks"}}
+        </tab.link-item>
+      {{/if}}
       <tab.link-item @route="cases">
         {{t "nav.documents"}}
-      </tab.link-item>
-      <tab.link-item @route="work-items">
-        {{t "nav.tasks"}}
       </tab.link-item>
       {{#if (can "list identity")}}
         <tab.link-item @route="identities">
@@ -36,7 +38,7 @@
           {{t "nav.roles"}}
         </tab.link-item>
       {{/if}}
-      {{#if (can "list snippets")}}
+      {{#if (can "list snippet")}}
         <tab.link-item @route="snippets">
           {{t "nav.snippets"}}
         </tab.link-item>
@@ -58,13 +60,13 @@
       </li>
       {{#if this.session.isAuthenticated}}
         <li>
-          <a class="uk-padding-remove-right" {{on "click" this.invalidateSession}} href="#">
+          <a class="uk-padding-remove" {{on "click" this.invalidateSession}} href="#">
             {{t "nav.logout"}}
           </a>
         </li>
       {{else}}
         <li>
-          <LinkTo @route="login">
+          <LinkTo @route="login" class="uk-padding-remove">
             {{t "nav.login"}}
           </LinkTo>
         </li>
@@ -79,7 +81,7 @@
           {{/each}}
         </ul>
       </li>
-      {{#if (and (can "list snippets") this.session.isAuthenticated)}}
+      {{#if (and (can "list snippet") this.session.isAuthenticated)}}
         <li class="uk-flex uk-flex-middle">
           <button
             class="uk-icon-button uk-button-default"
@@ -100,7 +102,7 @@
       uk-toggle="target: #offcanvas-nav"
       uk-icon="menu"
     ></button>
-    {{#if (can "list snippets")}}
+    {{#if (can "list snippet")}}
       <button
         class="uk-icon-button uk-button-default"
         type="button"
@@ -149,7 +151,7 @@
           </LinkTo>
         </li>
       {{/if}}
-      {{#if (can "list snippets")}}
+      {{#if (can "list snippet")}}
         <li>
           <LinkTo @route="snippets" uk-toggle="target: #offcanvas-nav">
             {{t "nav.snippets"}}

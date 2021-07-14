@@ -17,6 +17,14 @@ query getCasesQuery($cursor: String, $forms: [String], $orderBy: [CaseOrdering]!
         modifiedAt
         closedAt
         status
+        workItems {
+          edges {
+            node {
+              id
+              status
+            }
+          }
+        }
         document {
           id
           createdAt

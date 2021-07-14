@@ -388,6 +388,7 @@ workItems:
     assignToMe: "Assign to me"
     edit: "Edit task"
     finish: "Complete task"
+    skip: "Skip task"
 
   filters:
     responsible: "Responsible"
