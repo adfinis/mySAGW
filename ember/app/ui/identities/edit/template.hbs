@@ -32,11 +32,17 @@
     </div>
   </div>
 
-  {{#unless this.isOrganisation}}
+  {{#if this.isOrganisation}}
+    <div class="uk-width-1-2@m">
+      <div class="uk-card uk-card-default uk-card-body uk-card-small">
+        <IdentityMembers @identity={{this.model}} />
+      </div>
+    </div>
+  {{else}}
     <div class="uk-width-1-2@m">
       <div class="uk-card uk-card-default uk-card-body uk-card-small">
         <IdentityMemberships @identity={{this.model}} />
       </div>
     </div>
-  {{/unless}}
+  {{/if}}
 </div>

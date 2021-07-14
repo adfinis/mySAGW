@@ -1,0 +1,38 @@
+<div
+  {{did-insert (perform this.fetchMembers)}}
+  class="uk-margin-remove-last-child"
+>
+  <h2>{{t "component.identity-members.title"}}</h2>
+
+  {{#if this.fetchMembers.isRunning}}
+    <LoadingSpinner />
+  {{else}}
+    {{#if this.members.length}}
+      <ul class="uk-list uk-list-divider">
+        {{#each this.members as |member|}}
+          <li class="uk-flex uk-flex-between uk-flex-middle">
+            <div>
+              <LinkTo
+                @route="identities.edit"
+                @model={{member.identity.id}}
+                class="uk-text-bold"
+              >
+                {{member.identity.fullName}}
+              </LinkTo>
+
+              <div class="uk-text-meta">
+                {{#each member.roles as |role index|}}
+                  <span class={{if role.inactive "text-strike-through"}}>
+                    {{role.title}}{{if (not (eq index (sub member.roles.length 1))) ","}}
+                  </span>
+                {{/each}}
+              </div>
+            </div>
+          </li>
+        {{/each}}
+      </ul>
+    {{else}}
+      <p>{{t "component.identity-members.list.empty"}}</p>
+    {{/if}}
+  {{/if}}
+</div>

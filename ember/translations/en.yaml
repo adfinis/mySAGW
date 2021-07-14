@@ -306,6 +306,11 @@ component:
       prompt: "Do you really want to delete the interest {interest}?"
       success: "Interest {interest} deleted successfully."
 
+  identity-members:
+    title: "Members"
+    list:
+      empty: "No members yet."
+
   identity-memberships:
     title: "Memberships"
     add: "Add membership"
