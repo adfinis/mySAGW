@@ -14,7 +14,7 @@ class MySAGWPermission(BasePermission):
         return "admin" in groups or "sagw" in groups
 
     def _is_own(self, info, instance):
-        return instance.created_by_user == info.context.user.username
+        return instance.created_by_user == info.context.user.claims["sub"]
 
     def _is_assigned(self, info, instance):
         return info.context.user.claims["sub"] in instance.assigned_users

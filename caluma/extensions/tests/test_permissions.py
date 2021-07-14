@@ -23,7 +23,7 @@ def test_permissions_fallback(
     mocker, admin_info, groups, created_by_user, has_perm, has_obj_perm
 ):
     admin_info.context.user.groups = groups
-    admin_info.context.user.username = "baz"
+    admin_info.context.user.claims["sub"] = "baz"
 
     fallback_obj = _Fallbackobj(created_by_user=created_by_user)
 
@@ -41,8 +41,8 @@ def test_permissions_fallback(
 @pytest.mark.parametrize(
     "groups,created_by_user,assigned_users,has_perm,has_obj_perm",
     [
-        (["admin"], "bar", ["admin"], True, True),
-        (["sagw"], "bar", ["admin"], True, True),
+        (["admin"], "bar", ["baz"], True, True),
+        (["sagw"], "bar", ["baz"], True, True),
         (["foo"], "bar", [], False, False),
         (["foo"], "baz", [], False, True),
     ],
@@ -59,7 +59,7 @@ def test_permission_for_save_document_answer(
     has_obj_perm,
 ):
     admin_info.context.user.groups = groups
-    admin_info.context.user.username = "baz"
+    admin_info.context.user.claims["sub"] = "baz"
 
     answer.document.created_by_user = created_by_user
     answer.document.save()
@@ -90,7 +90,7 @@ def test_permission_for_save_case(
     db, admin_info, answer, groups, created_by_user, has_perm, has_obj_perm
 ):
     admin_info.context.user.groups = groups
-    admin_info.context.user.username = "baz"
+    admin_info.context.user.claims["sub"] = "baz"
 
     answer.document.created_by_user = created_by_user
     answer.document.save()

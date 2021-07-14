@@ -26,12 +26,8 @@ export default class CasesDetailCirculationController extends Controller {
 
   get identities() {
     const assignedUsers = this.workItemsQuery.value
-      .map((workItem) => {
-        if (workItem.raw.status === "READY") {
-          return workItem.raw.assignedUsers;
-        }
-        return [];
-      })
+      .filter((workItem) => workItem.raw.status === "READY")
+      .map((workItem) => workItem.raw.assignedUsers)
       .flat();
 
     return this._identities?.filter((identity) => {

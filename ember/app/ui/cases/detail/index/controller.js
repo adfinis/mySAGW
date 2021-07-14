@@ -77,7 +77,7 @@ export default class CasesDetailIndexController extends Controller {
   }
 
   @action
-  transistionToCase() {
+  transitionToCase() {
     this.transitionToRoute("cases");
   }
 }
