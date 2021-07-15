@@ -30,6 +30,11 @@
   />
 
   <WorkItemButton
+    @workItemId={{this.circulationWorkItem.node.id}}
+    @label={{t "page.circulation.skip"}}
+    @mutation="skip"
+  />
+  <WorkItemButton
     @workItemId={{this.circulationWorkItem.id}}
     @label={{t "page.circulation.finish"}}
     @mutation="complete"
