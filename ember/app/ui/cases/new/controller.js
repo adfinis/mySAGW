@@ -64,7 +64,7 @@ export default class CaseNewController extends Controller.extend(
 
     this.router.transitionTo(
       "cases.detail.index",
-      decodeId(newCase.saveCase.case.id)
+      decodeId(newCase.startCase.case.id)
     );
   }
 }

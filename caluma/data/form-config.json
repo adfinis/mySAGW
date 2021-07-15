@@ -385,6 +385,36 @@
 },
 {
     "model": "caluma_form.question",
+    "pk": "dossier-nr",
+    "fields": {
+        "created_at": "2021-05-31T09:41:37.767Z",
+        "modified_at": "2021-06-03T09:17:44.911Z",
+        "created_by_user": null,
+        "created_by_group": null,
+        "modified_by_user": null,
+        "modified_by_group": null,
+        "label": "{\"de\": \"Dossier-Nummer\", \"fr\": \"N\\\\u00b0 de dossier\", \"en\": \"dossier number\"}",
+        "type": "text",
+        "is_required": "true",
+        "is_hidden": "true",
+        "is_archived": false,
+        "placeholder": "{\"de\": null, \"fr\": null, \"en\": null}",
+        "info_text": "{\"de\": \"\", \"fr\": null, \"en\": null}",
+        "static_content": "{\"de\": \"\", \"fr\": \"\", \"en\": \"\"}",
+        "configuration": {},
+        "meta": {},
+        "data_source": null,
+        "row_form": null,
+        "sub_form": null,
+        "source": null,
+        "format_validators": "[]",
+        "default_answer": null,
+        "calc_expression": null,
+        "calc_dependents": "[]"
+    }
+},
+{
+    "model": "caluma_form.question",
     "pk": "review-document-decision",
     "fields": {
         "created_at": "2021-05-31T09:41:37.767Z",
