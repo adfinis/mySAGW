@@ -25,7 +25,8 @@ export default class IdentityInterestsComponent extends Component {
 
   // Lifecycle
 
-  @action onUpdate() {
+  @action
+  onUpdate() {
     this.categories = this.parseOwnInterests(this.args.identity);
     this.fetchInterestCategories.perform();
   }
@@ -45,11 +46,17 @@ export default class IdentityInterestsComponent extends Component {
       }));
   }
 
+  @action
+  focusPowerSelect(select) {
+    select.actions.open();
+  }
+
   // Add / Edit
 
   @tracked changeset = null;
 
-  @action edit(interest) {
+  @action
+  edit(interest) {
     this.changeset = Changeset(
       { interest },
       lookupValidator(InterestValidations),
@@ -57,11 +64,13 @@ export default class IdentityInterestsComponent extends Component {
     );
   }
 
-  @action cancel() {
+  @action
+  cancel() {
     this.changeset = null;
   }
 
-  @dropTask *submit(changeset) {
+  @dropTask
+  *submit(changeset) {
     try {
       // Apply changes and save.
       changeset.execute();
@@ -80,8 +89,8 @@ export default class IdentityInterestsComponent extends Component {
   }
 
   @lastValue("fetchInterestCategories") interestCategories;
-
-  @restartableTask *fetchInterestCategories() {
+  @restartableTask
+  *fetchInterestCategories() {
     const interests = yield this.store.findAll("interest", {
       include: "category",
     });
@@ -97,7 +106,8 @@ export default class IdentityInterestsComponent extends Component {
 
   // Delete
 
-  @dropTask *delete(interest) {
+  @dropTask
+  *delete(interest) {
     try {
       const options = { interest: interest.title };
       yield UIkit.modal.confirm(

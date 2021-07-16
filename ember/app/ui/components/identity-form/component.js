@@ -57,11 +57,13 @@ export default class IdentityFormComponent extends Component {
     return this.args.cancelRouteOverride || "identities";
   }
 
-  @action eventTarget(handler, event) {
+  @action
+  eventTarget(handler, event) {
     handler(event.target.value);
   }
 
-  @action onUpdate() {
+  @action
+  onUpdate() {
     this.changeset = Changeset(
       this.args.identity || this.store.createRecord("identity"),
       lookupValidator(IdentityValidations),
@@ -69,13 +71,20 @@ export default class IdentityFormComponent extends Component {
     );
   }
 
-  @action updateOrganisation() {
+  @action
+  updateOrganisation() {
     const isOrganisation = !this.changeset.get("isOrganisation");
     this.args.onOrganisationUpdate?.(isOrganisation);
     this.changeset.set("isOrganisation", isOrganisation);
   }
 
-  @dropTask *submit(changeset) {
+  @action
+  setBackToIdentities() {
+    this.backToIdentities = true;
+  }
+
+  @dropTask
+  *submit(changeset) {
     try {
       if (!changeset.get("isOrganisation")) {
         changeset.set("organisationName", null);
@@ -91,6 +100,10 @@ export default class IdentityFormComponent extends Component {
         })
       );
       this.args.onSave?.(changeset.data);
+
+      if (this.backToIdentities) {
+        this.router.transitionTo("identities");
+      }
     } catch (error) {
       console.error(error);
       this.notification.fromError(error);
@@ -98,7 +111,8 @@ export default class IdentityFormComponent extends Component {
     }
   }
 
-  @dropTask *delete(identity) {
+  @dropTask
+  *delete(identity) {
     try {
       yield UIkit.modal.confirm(
         this.intl.t("component.identity-form.delete.prompt")
