@@ -1,3 +1,6 @@
+# import * from 'ember-caluma/gql/fragments/field-answer.graphql'
+# import * from 'ember-caluma/gql/fragments/question-info.graphql'
+
 query getCaseQuery($caseId: ID!) {
   allCases(filter: [{ id: $caseId }]) {
     edges {
@@ -13,6 +16,20 @@ query getCaseQuery($caseId: ID!) {
             slug
             name
             description
+            questions {
+              edges {
+                node {
+                  ...QuestionInfo
+                }
+              }
+            }
+          }
+          answers {
+            edges {
+              node {
+                ...FieldAnswer
+              }
+            }
           }
         }
         workItems {

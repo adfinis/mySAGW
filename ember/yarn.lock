@@ -4878,7 +4878,36 @@ broccoli-funnel@^1.0.1:
     symlink-or-copy "^1.0.0"
     walk-sync "^0.3.1"
 
-broccoli-funnel@^3.0.1, broccoli-funnel@^3.0.3, broccoli-funnel@^3.0.5, broccoli-funnel@^3.0.7:
+broccoli-funnel@^3.0.1, broccoli-funnel@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/broccoli-funnel/-/broccoli-funnel-3.0.3.tgz#26fd42632471f67a91f4770d1987118087219937"
+  integrity sha512-LPzZ91BwStoHZXdXHQAJeYORl189OrRKM5NdIi86SDU9wZ4s/3lV1PRFOiobDT/jKM10voM7CDzfvicHbCYxAQ==
+  dependencies:
+    array-equal "^1.0.0"
+    blank-object "^1.0.1"
+    broccoli-plugin "^4.0.1"
+    debug "^4.1.1"
+    fast-ordered-set "^1.0.0"
+    fs-tree-diff "^2.0.1"
+    heimdalljs "^0.2.0"
+    minimatch "^3.0.0"
+    path-posix "^1.0.0"
+    walk-sync "^2.0.2"
+
+broccoli-funnel@^3.0.5:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/broccoli-funnel/-/broccoli-funnel-3.0.6.tgz#2216a802fc2f6d6875a66531cfbc07e4e4c22d6c"
+  integrity sha512-pJK+pO+2J6BYPiPNNAe16KiCK8SIVUHzjcDbtYMiAwGDhGrNXO91dm1Z/GOtpjqa3xmfm/IuQwMf01tW+FO2Ow==
+  dependencies:
+    array-equal "^1.0.0"
+    broccoli-plugin "^4.0.7"
+    debug "^4.1.1"
+    fs-tree-diff "^2.0.1"
+    heimdalljs "^0.2.0"
+    minimatch "^3.0.0"
+    walk-sync "^2.0.2"
+
+broccoli-funnel@^3.0.8:
   version "3.0.8"
   resolved "https://registry.yarnpkg.com/broccoli-funnel/-/broccoli-funnel-3.0.8.tgz#f5b62e2763c3918026a15a3c833edc889971279b"
   integrity sha512-ng4eIhPYiXqMw6SyGoxPHR3YAwEd2lr9FgBI1CyTbspl4txZovOsmzFkMkGAlu88xyvYXJqHiM2crfLa65T1BQ==
@@ -6662,10 +6691,10 @@ ember-apollo-client@^3.1.0:
     ember-auto-import "^1.6.0"
     ember-cli-babel "^7.22.1"
 
-ember-apollo-client@^3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/ember-apollo-client/-/ember-apollo-client-3.1.1.tgz#e5e2e46466d75e705a418d1bb85129cfd827582e"
-  integrity sha512-5qmKwdGO3d5I1wsw8RL8zRgLQS0ZGp5+HMMX57TdWTxH0DmZlSJ2q/jMwYNn4A2hzYEHjikMWQ8b6jSA6+20CA==
+ember-apollo-client@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/ember-apollo-client/-/ember-apollo-client-3.2.0.tgz#fea5f2ad285a65fa22dd2fc02a785f38dedd025a"
+  integrity sha512-wIlGpw6wrSUeJ6ONL2NH2/ld6mR6KB/KCoVt2vuTcvRl0FgEzJr/6IYxuR0xpuj2+PfpprVn1nrugpHukLDdBQ==
   dependencies:
     "@apollo/client" "^3.2.1"
     "@ember/test-waiters" "^2.3.0"
@@ -6797,19 +6826,19 @@ ember-basic-dropdown@^3.0.18:
     ember-style-modifier "^0.6.0"
     ember-truth-helpers "^2.1.0 || ^3.0.0"
 
-ember-caluma@^7.3.0:
-  version "7.3.0"
-  resolved "https://registry.yarnpkg.com/ember-caluma/-/ember-caluma-7.3.0.tgz#088c0a880e1cb98bfa8aa285ed824df96e02bee3"
-  integrity sha512-4mAsm+TdIKLFEkHxbXsblxYP+9mGLyKqU8dacxzAoYpHVOAAp7CEz9+Q+SqIg+eQMFiD5qiks0nE3IxGE645GA==
+ember-caluma@^7.4.0:
+  version "7.4.0"
+  resolved "https://registry.yarnpkg.com/ember-caluma/-/ember-caluma-7.4.0.tgz#835f18c7623becd078c1f80705d2248a24725741"
+  integrity sha512-Vhn/DxUBEaAwQVJ/OU3GrFqJkafvDkAtYmZiXjHEFVMKTyiAaXfUpRVkpHIVR5DvM1pVFd0h9KIf4Ih92mvLtA==
   dependencies:
     "@apollo/client" "^3.3.20"
     "@ember/render-modifiers" "^1.0.2"
     "@glimmer/component" "1.0.4"
     "@glimmer/tracking" "^1.0.4"
-    broccoli-funnel "^3.0.7"
+    broccoli-funnel "^3.0.8"
     broccoli-merge-trees "^4.2.0"
     codejar "^3.4.0"
-    ember-apollo-client "^3.1.1"
+    ember-apollo-client "^3.2.0"
     ember-auto-import "^1.11.3"
     ember-changeset "^3.13.8"
     ember-changeset-validations "^3.14.7"
@@ -6818,19 +6847,21 @@ ember-caluma@^7.3.0:
     ember-cli-sass "^10.0.0"
     ember-cli-showdown "^4.5.0"
     ember-cli-string-helpers "^6.1.0"
-    ember-composable-helpers "^4.4.0"
+    ember-composable-helpers "^4.5.0"
     ember-concurrency "^2.1.0"
-    ember-fetch "^8.0.5"
+    ember-fetch "^8.1.0"
+    ember-in-viewport "^3.10.2"
     ember-intl "^5.6.2"
     ember-math-helpers "^2.16.0"
     ember-power-select "^4.1.6"
-    ember-test-selectors "^5.3.0"
+    ember-test-selectors "^5.4.0"
     ember-uikit "^3.0.2"
     ember-validated-form "^3.0.3"
     graphql "^15.4.0"
     graphql-iso-date "^3.6.1"
     graphql-tag "^2.12.4"
     graphql-tools "^4.0.8"
+    intersection-observer "^0.12.0"
     jexl "^2.3.0"
     lodash.clonedeep "^4.5.0"
     lodash.isequal "^4.5.0"
@@ -7438,7 +7469,7 @@ ember-compatibility-helpers@^1.1.1, ember-compatibility-helpers@^1.1.2, ember-co
     ember-cli-version-checker "^5.1.1"
     semver "^5.4.1"
 
-ember-composable-helpers@^4.3.0, ember-composable-helpers@^4.4.0, ember-composable-helpers@^4.4.1:
+ember-composable-helpers@^4.3.0, ember-composable-helpers@^4.4.1:
   version "4.4.1"
   resolved "https://registry.yarnpkg.com/ember-composable-helpers/-/ember-composable-helpers-4.4.1.tgz#968f0ef72731cc300b377c552f36f20881911472"
   integrity sha512-MVx4KGFL6JzsYfCf9OqLCCnr7DN5tG2jFW9EvosvfgCL7gRdNxLqewR4PWPYA882wetmJ9zvcIEUJhFzZ4deaw==
@@ -7446,6 +7477,16 @@ ember-composable-helpers@^4.3.0, ember-composable-helpers@^4.4.0, ember-composab
     "@babel/core" "^7.0.0"
     broccoli-funnel "2.0.1"
     ember-cli-babel "^7.11.1"
+    resolve "^1.10.0"
+
+ember-composable-helpers@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/ember-composable-helpers/-/ember-composable-helpers-4.5.0.tgz#94febbdf4348e64f45f7a6f993f326e32540a61e"
+  integrity sha512-XjpDLyVPsLCy6kd5dIxZonOECCO6AA5sY5Hr6tYUbJg3s5ghFAiFWaNcYraYC+fL2yPJQAswwpfwGlQORUJZkw==
+  dependencies:
+    "@babel/core" "^7.0.0"
+    broccoli-funnel "2.0.1"
+    ember-cli-babel "^7.26.3"
     resolve "^1.10.0"
 
 ember-concurrency-decorators@^2.0.0, ember-concurrency-decorators@^2.0.1:
@@ -7652,7 +7693,7 @@ ember-fetch@^8.0.1, ember-fetch@^8.0.2:
     node-fetch "^2.6.1"
     whatwg-fetch "^3.4.0"
 
-ember-fetch@^8.0.5:
+ember-fetch@^8.1.0:
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/ember-fetch/-/ember-fetch-8.1.0.tgz#6228f49baaf6f435af1e5c767e19ef638ff28883"
   integrity sha512-797IPPuXrWGAecsAuCPH6+2pJCcawy7+CiRrtoe1qLhXJ6Ue0Lxu4loXxHHQNCxRvvUvx8tTDuP63sOKfi3xug==
@@ -8092,10 +8133,10 @@ ember-test-selectors@^5.0.0:
     ember-cli-babel "^7.22.1"
     ember-cli-version-checker "^5.1.1"
 
-ember-test-selectors@^5.3.0:
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/ember-test-selectors/-/ember-test-selectors-5.3.0.tgz#1dee515e43e7beb7b7083a2fee2cdf808bf9de26"
-  integrity sha512-B9kkCTO39l+XXcp6eRnfZWHeeL3Ffxdux8chXHSwmAPYCc50KI8VW7mr1uy2ZcUMNP/o0sk7VrpA6x3lBkSvWQ==
+ember-test-selectors@^5.4.0:
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/ember-test-selectors/-/ember-test-selectors-5.5.0.tgz#114bd29c4a33eee3a328c9ce32a57a018c27f5f6"
+  integrity sha512-PiKhbPnidRYQ5ed/CTU3teJV3XmzkjYjsCGx1UTy7qEY/1dEqxezlZu1DtisoLJ9Y+BcjTVlE+596lo9cOXd3w==
   dependencies:
     calculate-cache-key-for-tree "^2.0.0"
     ember-cli-babel "^7.26.4"
@@ -10269,6 +10310,11 @@ intersection-observer-admin@~0.3.2:
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/intersection-observer-admin/-/intersection-observer-admin-0.3.2.tgz#0b6e95ce7272a383e8bbdd47f9ff48de9eab9919"
   integrity sha512-kJEcF9iVRuI4thXiJd28UzFDgvFHBNUgwkKA4F0bPMmRdzc+1Eq7/J13n2gSgfZ5tsVxb+wJOV7k3DXcsc7D6Q==
+
+intersection-observer@^0.12.0:
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/intersection-observer/-/intersection-observer-0.12.0.tgz#6c84628f67ce8698e5f9ccf857d97718745837aa"
+  integrity sha512-2Vkz8z46Dv401zTWudDGwO7KiGHNDkMv417T5ItcNYfmvHR/1qCTVBO9vwH8zZmQ0WkA/1ARwpysR9bsnop4NQ==
 
 intl-messageformat-parser@6.4.3, intl-messageformat-parser@^6.0.5:
   version "6.4.3"
