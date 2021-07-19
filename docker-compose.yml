@@ -30,7 +30,7 @@ services:
       - DYNAMIC_TASKS_CLASSES=caluma.extensions.dynamic_tasks.CustomDynamicTasks
       - DATA_SOURCE_CLASSES=caluma.extensions.data_sources.SagwUsersDataSource
       - LANGUAGE_CODE=de
-      - LANGUAGES=de,fr
+      - LANGUAGES=de,fr,en
     depends_on:
       - db
       - keycloak
