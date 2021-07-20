@@ -1,0 +1,40 @@
+<h1>{{t "page.form-configuration.title"}}</h1>
+
+{{#if this.fetchForms.isRunning}}
+  <div class="uk-text-center uk-padding uk-list-large">
+    <UkSpinner @ratio={{2}} />
+  </div>
+{{else}}
+  <ul class="uk-list uk-list-divider">
+    {{#each this.forms as |form|}}
+      <li class="uk-flex uk-flex-middle">
+        <span class="uk-text-bold"><LinkTo @route="form-builder.edit" @model={{form.slug}}>{{form.name}}</LinkTo></span>
+
+        <span class="uk-width-expand uk-text-muted uk-text-small uk-text-truncate"></span>
+
+        <span>
+          <label class="uk-margin-small-right">
+            <input
+              type="checkbox"
+              checked={{form.meta.expertAssociationForm}}
+              {{on "click" (perform this.setFormMeta form "expertAssociationForm")}}
+              class="uk-checkbox"
+            />
+            {{t "page.form-configuration.expertAssociationForm"}}
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              checked={{form.meta.advisoryBoardForm}}
+              class="uk-checkbox"
+              {{on "click" (perform this.setFormMeta form "advisoryBoardForm")}}
+            />
+            {{t "page.form-configuration.advisoryBoardForm"}}
+          </label>
+        </span>
+      </li>
+    {{else}}
+      <p>{{t "global.empty"}}</p>
+    {{/each}}
+  </ul>
+{{/if}}

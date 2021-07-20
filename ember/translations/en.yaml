@@ -28,6 +28,7 @@ nav:
   emeis: "Emeis"
   alexandria: "Alexandria"
   form-builder: "Form Builder"
+  form-configuration: "Form Configration"
   snippets: "Snippets"
   admin: "Administration"
   account: "Account"
@@ -192,6 +193,12 @@ page:
     add: "Add to circulation"
     finish: "Finish circulation"
     skip: "Skip circulation"
+
+  form-configuration:
+    title: "Configuration"
+    expertAssociationForm: "Expert association form"
+    advisoryBoardForm: "Advisory board form"
+    saveSuccess: "Form {name} saved successfully"
 
 component:
   identity-form:

@@ -9,6 +9,7 @@ query GetRootForms($slug: String, $isPublished: Boolean, $isArchived: Boolean) {
       node {
         slug
         name
+        meta
       }
     }
   }

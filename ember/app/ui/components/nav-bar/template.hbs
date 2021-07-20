@@ -49,6 +49,11 @@
           {{t "nav.form-builder"}}
         </tab.link-item>
       {{/if}}
+      {{#if (can "list form-configuration")}}
+        <tab.link-item @route="form-configuration">
+          {{t "nav.form-configuration"}}
+        </tab.link-item>
+      {{/if}}
     </UkTab>
   </div>
   <div class="uk-navbar-right uk-visible@m">
