@@ -4,11 +4,7 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { Changeset } from "ember-changeset";
 import lookupValidator from "ember-changeset-validations";
-import {
-  dropTask,
-  restartableTask,
-  lastValue,
-} from "ember-concurrency-decorators";
+import { dropTask, restartableTask, lastValue } from "ember-concurrency";
 import moment from "moment";
 import applyError from "mysagw/utils/apply-error";
 import MembershipValidations from "mysagw/validations/membership";

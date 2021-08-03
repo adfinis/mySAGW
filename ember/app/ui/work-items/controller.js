@@ -5,7 +5,7 @@ import { tracked } from "@glimmer/tracking";
 import { queryManager } from "ember-apollo-client";
 import calumaQuery from "ember-caluma/caluma-query";
 import { allWorkItems } from "ember-caluma/caluma-query/queries";
-import { restartableTask } from "ember-concurrency-decorators";
+import { restartableTask } from "ember-concurrency";
 
 export default class WorkItemsIndexController extends Controller {
   queryParams = ["order", "responsible", "status", "role"];

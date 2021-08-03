@@ -4,7 +4,7 @@ import { tracked } from "@glimmer/tracking";
 import { queryManager } from "ember-apollo-client";
 import calumaQuery from "ember-caluma/caluma-query";
 import { allWorkItems } from "ember-caluma/caluma-query/queries";
-import { dropTask, lastValue } from "ember-concurrency-decorators";
+import { dropTask, lastValue } from "ember-concurrency";
 import moment from "moment";
 import createWorkItem from "mysagw/gql/mutations/create-work-item.graphql";
 

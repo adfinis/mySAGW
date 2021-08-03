@@ -7448,7 +7448,7 @@ ember-composable-helpers@^4.3.0, ember-composable-helpers@^4.4.0, ember-composab
     ember-cli-babel "^7.11.1"
     resolve "^1.10.0"
 
-ember-concurrency-decorators@^2.0.0, ember-concurrency-decorators@^2.0.1, ember-concurrency-decorators@^2.0.3:
+ember-concurrency-decorators@^2.0.0, ember-concurrency-decorators@^2.0.1:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/ember-concurrency-decorators/-/ember-concurrency-decorators-2.0.3.tgz#2816c9a0283b90ba5340fc5b4e0b92ea91f7d6e3"
   integrity sha512-r6O34YKI/slyYapVsuOPnmaKC4AsmBSwvgcadbdy+jHNj+mnryXPkm+3hhhRnFdlsKUKdEuXvl43lhjhYRLhhA==
@@ -9677,7 +9677,14 @@ globals@^11.1.0:
   resolved "https://registry.yarnpkg.com/globals/-/globals-11.12.0.tgz#ab8795338868a0babd8525758018c2a7eb95c42e"
   integrity sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==
 
-globals@^13.6.0, globals@^13.9.0:
+globals@^13.6.0:
+  version "13.7.0"
+  resolved "https://registry.yarnpkg.com/globals/-/globals-13.7.0.tgz#aed3bcefd80ad3ec0f0be2cf0c895110c0591795"
+  integrity sha512-Aipsz6ZKRxa/xQkZhNg0qIWXT6x6rD46f6x/PCnBomlttdIyAPak4YD9jTmKpZ72uROSMU87qJtcgpgHaVchiA==
+  dependencies:
+    type-fest "^0.20.2"
+
+globals@^13.9.0:
   version "13.10.0"
   resolved "https://registry.yarnpkg.com/globals/-/globals-13.10.0.tgz#60ba56c3ac2ca845cfbf4faeca727ad9dd204676"
   integrity sha512-piHC3blgLGFjvOuMmWZX60f+na1lXFDhQXBf1UYp2fXPXqvEUbOhNwi6BsQ0bQishwedgnjkwv1d9zKf+MWw3g==

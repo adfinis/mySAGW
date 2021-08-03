@@ -2,7 +2,7 @@ import Controller from "@ember/controller";
 import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import { queryManager } from "ember-apollo-client";
-import { dropTask } from "ember-concurrency-decorators";
+import { dropTask } from "ember-concurrency";
 import ENV from "mysagw/config/environment";
 import cancelCaseMutation from "mysagw/gql/mutations/cancel-case.graphql";
 import completeWorkItem from "mysagw/gql/mutations/complete-work-item.graphql";

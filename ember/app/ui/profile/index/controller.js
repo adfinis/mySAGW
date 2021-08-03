@@ -1,7 +1,7 @@
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
 import { tracked } from "@glimmer/tracking";
-import { lastValue, restartableTask } from "ember-concurrency-decorators";
+import { lastValue, restartableTask } from "ember-concurrency";
 import QueryParams from "ember-parachute";
 
 const queryParams = new QueryParams({
