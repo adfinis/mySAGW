@@ -5,7 +5,7 @@ import { inject as service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import { Changeset } from "ember-changeset";
 import lookupValidator from "ember-changeset-validations";
-import { dropTask } from "ember-concurrency-decorators";
+import { dropTask } from "ember-concurrency";
 import InterestValidations from "mysagw/validations/interest";
 import UIkit from "uikit";
 

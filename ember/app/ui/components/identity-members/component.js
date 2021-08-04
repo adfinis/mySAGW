@@ -1,6 +1,6 @@
 import { inject as service } from "@ember/service";
 import Component from "@glimmer/component";
-import { restartableTask, lastValue } from "ember-concurrency-decorators";
+import { restartableTask, lastValue } from "ember-concurrency";
 
 /**
  * @arg identity

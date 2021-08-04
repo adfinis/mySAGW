@@ -2,7 +2,7 @@ import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
-import { dropTask } from "ember-concurrency-decorators";
+import { dropTask } from "ember-concurrency";
 import applyError from "mysagw/utils/apply-error";
 import InterestCategoryValidations from "mysagw/validations/interest-category";
 

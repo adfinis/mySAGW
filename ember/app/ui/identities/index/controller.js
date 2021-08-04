@@ -2,12 +2,12 @@ import Controller from "@ember/controller";
 import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
-import { timeout } from "ember-concurrency";
 import {
+  timeout,
   restartableTask,
   lastValue,
   dropTask,
-} from "ember-concurrency-decorators";
+} from "ember-concurrency";
 import { saveAs } from "file-saver";
 import moment from "moment";
 

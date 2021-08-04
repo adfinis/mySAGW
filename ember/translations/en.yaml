@@ -15,6 +15,7 @@ global:
   openMenu: "Open menu"
   save: "Save"
   cancel: "Cancel"
+  loadMore: "Load more"
 
 nav:
   home: "Home"

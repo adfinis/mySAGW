@@ -3,7 +3,7 @@ import { inject as service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import { queryManager } from "ember-apollo-client";
 import { decodeId } from "ember-caluma/helpers/decode-id";
-import { task, lastValue } from "ember-concurrency-decorators";
+import { task, lastValue } from "ember-concurrency";
 import QueryParams from "ember-parachute";
 import createCaseMutation from "mysagw/gql/mutations/create-case.graphql";
 import getRootFormsQuery from "mysagw/gql/queries/get-root-forms.graphql";

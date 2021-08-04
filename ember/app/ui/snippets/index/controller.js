@@ -2,8 +2,7 @@ import Controller from "@ember/controller";
 import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
-import { timeout } from "ember-concurrency";
-import { restartableTask, lastValue } from "ember-concurrency-decorators";
+import { timeout, restartableTask, lastValue } from "ember-concurrency";
 
 export default class SnippetsIndexController extends Controller {
   @service notification;
