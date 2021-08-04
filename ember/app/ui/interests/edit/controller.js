@@ -1,20 +1,22 @@
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
-import { filterBy } from "@ember/object/computed";
 import { inject as service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import { Changeset } from "ember-changeset";
 import lookupValidator from "ember-changeset-validations";
-import { dropTask } from "ember-concurrency";
-import InterestValidations from "mysagw/validations/interest";
+import { dropTask } from "ember-concurrency-decorators";
 import UIkit from "uikit";
+
+import InterestValidations from "mysagw/validations/interest";
 
 export default class InterestsEditController extends Controller {
   @service notification;
   @service store;
   @service intl;
 
-  @filterBy("model.interests", "isNew", false) interests;
+  get interests() {
+    return this.model.interests.filterBy("isNew", false);
+  }
 
   @tracked changeset = null;
 

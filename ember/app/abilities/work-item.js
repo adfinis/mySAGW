@@ -1,7 +1,10 @@
-import { readOnly } from "@ember/object/computed";
 import BaseAbility from "mysagw/abilities/-base";
 
 export default class WorkItemAbility extends BaseAbility {
-  @readOnly("isStaff") canList;
-  @readOnly("isStaff") canEdit;
+  get canList() {
+    return this.isStaff;
+  }
+  get canEdit() {
+    return this.isStaff;
+  }
 }

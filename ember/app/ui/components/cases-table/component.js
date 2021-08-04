@@ -1,9 +1,9 @@
 import { action } from "@ember/object";
-import { reads } from "@ember/object/computed";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { queryManager } from "ember-apollo-client";
-import { restartableTask } from "ember-concurrency";
+import { restartableTask } from "ember-concurrency-decorators";
+
 import ENV from "mysagw/config/environment";
 import getCasesQuery from "mysagw/gql/queries/get-cases.graphql";
 
@@ -14,7 +14,9 @@ export default class CasesTableComponent extends Component {
   @tracked types = [];
   @tracked order;
 
-  @reads("fetchCases.lastSuccessful.value.pageInfo") pageInfo;
+  get pageInfo() {
+    return this.fetchCases.lastSuccessful.value.pageInfo;
+  }
 
   orderOptions = ENV.APP.casesTable.orderOptions;
   dynamicTableConfig = ENV.APP.dynamicTable;

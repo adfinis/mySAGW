@@ -4,10 +4,11 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { Changeset } from "ember-changeset";
 import lookupValidator from "ember-changeset-validations";
-import { dropTask } from "ember-concurrency";
+import { dropTask } from "ember-concurrency-decorators";
+import UIkit from "uikit";
+
 import applyError from "mysagw/utils/apply-error";
 import IdentityValidations from "mysagw/validations/identity";
-import UIkit from "uikit";
 
 /**
  * @arg identity

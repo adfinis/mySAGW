@@ -1,5 +1,6 @@
-import formatError from "mysagw/utils/format-error";
 import { module, test } from "qunit";
+
+import formatError from "mysagw/utils/format-error";
 
 module("Unit | Utility | format-error", function () {
   test("it handles strings", function (assert) {

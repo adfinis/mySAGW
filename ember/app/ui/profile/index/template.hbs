@@ -70,7 +70,7 @@
                     </div>
                   </LinkTo>
                 {{else if membership.isInactive}}
-                  <s class="uk-text-bold uk-flex uk-flex-between uk-flex-wrap">
+                  <span class="uk-text-bold uk-flex uk-flex-between uk-flex-wrap text-strike-through">
                     {{#if (or membership.organisation.fullName membership.organisation.isOrganisation)}}
                       <div class="uk-margin-right">
                         {{#if membership.organisation.fullName}}
@@ -88,7 +88,7 @@
                     <div class="uk-text-small uk-width-1-1 uk-width-auto@s">
                       {{membership.role.title}}
                     </div>
-                  </s>
+                  </span>
                 {{else}}
                   <span class="uk-text-bold uk-flex uk-flex-between uk-flex-wrap">
                     {{#if (or membership.organisation.fullName membership.organisation.isOrganisation)}}

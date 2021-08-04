@@ -1,6 +1,7 @@
 import Changeset from "ember-changeset";
-import applyError from "mysagw/utils/apply-error";
 import { module, test } from "qunit";
+
+import applyError from "mysagw/utils/apply-error";
 
 module("Unit | Utility | apply-error", function () {
   test("it works", function (assert) {
