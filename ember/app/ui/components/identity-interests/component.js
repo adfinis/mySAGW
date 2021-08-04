@@ -47,7 +47,7 @@ export default class IdentityInterestsComponent extends Component {
   }
 
   @action
-  focusPowerSelect(select) {
+  openPowerSelect(select) {
     select.actions.open();
   }
 
