@@ -120,7 +120,7 @@ module.exports = function (environment) {
       caluma: {
         submitTaskSlug: "submit-document",
         reviseTaskSlug: "revise-docment",
-        skippableTaskSlugs: ["circulation", "define-amount"],
+        skippableTaskSlugs: ["define-amount"],
       },
     },
   };

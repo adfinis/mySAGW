@@ -12,9 +12,14 @@ from caluma.caluma_workflow.events import post_create_work_item
 @on(post_create_work_item, raise_exception=True)
 @transaction.atomic
 def set_assigned_user(sender, work_item, user, **kwargs):
-    if work_item.task_id in ["submit-document", "revise-document", "additional-data"]:
+    if work_item.task_id == "submit-document":
         work_item.assigned_users = [user.claims["sub"]]
-        work_item.save()
+    elif work_item.task_id in ["revise-document", "additional-data"]:
+        work_item.assigned_users = caluma_workflow_models.WorkItem.objects.get(
+            task_id="submit-document", case=work_item.case
+        ).assigned_users
+
+    work_item.save()
 
 
 @on(post_create_work_item, raise_exception=True)

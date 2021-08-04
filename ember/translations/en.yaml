@@ -190,6 +190,7 @@ page:
   circulation:
     add: "Add to circulation"
     finish: "Finish circulation"
+    skip: "Skip circulation"
 
 component:
   identity-form:

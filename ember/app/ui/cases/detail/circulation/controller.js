@@ -45,7 +45,8 @@ export default class CasesDetailCirculationController extends Controller {
     return yield this.store.query("identity", {
       filter: {
         isOrganisation: false,
-        memberships__organisation__organisationName: "sagw",
+        memberships__organisation__organisationName: "SAGW",
+        hasIdpId: true,
       },
     });
   }
@@ -80,6 +81,8 @@ export default class CasesDetailCirculationController extends Controller {
         },
       });
     }
+
+    this.selectedIdentities = [];
 
     yield this.fetchWorkItems.perform();
   }

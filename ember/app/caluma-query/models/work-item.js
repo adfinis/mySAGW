@@ -55,18 +55,23 @@ export default class CustomWorkItemModel extends WorkItemModel {
   }
 
   get canEdit() {
+    if (this.raw.task.slug === "circulation-decision") {
+      return this.isReady && this.isAssignedToCurrentUser;
+    }
     return this.isReady;
   }
 
   get canComplete() {
-    return this.isReady && this.isAssignedToCurrentUser;
+    if (this.raw.task.slug === "circulation-decision") {
+      return this.isReady && this.isAssignedToCurrentUser;
+    }
+    return this.isReady;
   }
 
   get canSkip() {
     return (
       this.isReady &&
-      ENV.APP.caluma.skippableTaskSlugs.includes(this.raw.task.slug) &&
-      this.isAssignedToCurrentUser
+      ENV.APP.caluma.skippableTaskSlugs.includes(this.raw.task.slug)
     );
   }
 
