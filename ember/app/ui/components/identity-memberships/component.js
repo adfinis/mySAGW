@@ -25,25 +25,32 @@ export default class IdentityMembershipsComponent extends Component {
   // List
 
   @lastValue("fetchMemberships") memberships;
-
-  @restartableTask *fetchMemberships(identity) {
+  @restartableTask
+  *fetchMemberships(identity) {
     return yield this.store.query("membership", {
       filter: { identity: identity.id },
       include: "role",
     });
   }
 
-  @action onUpdate() {
+  @action
+  onUpdate() {
     this.fetchMemberships.perform(this.args.identity);
     this.fetchIdentities.perform(this.args.identity);
     this.fetchRoles.perform(this.args.identity);
+  }
+
+  @action
+  openPowerSelect(select) {
+    select.actions.open();
   }
 
   // Add / Edit
 
   @tracked changeset = null;
 
-  @action edit(membership) {
+  @action
+  edit(membership) {
     this.changeset = Changeset(
       membership ||
         this.store.createRecord("membership", {
@@ -59,11 +66,13 @@ export default class IdentityMembershipsComponent extends Component {
     }
   }
 
-  @action cancel() {
+  @action
+  cancel() {
     this.changeset = null;
   }
 
-  @dropTask *submit(changeset) {
+  @dropTask
+  *submit(changeset) {
     try {
       let timeSlot = changeset.get("timeSlot") || {};
       if (!timeSlot.lower && !timeSlot.upper) {
@@ -94,22 +103,23 @@ export default class IdentityMembershipsComponent extends Component {
   }
 
   @lastValue("fetchIdentities") identities;
-
-  @restartableTask *fetchIdentities() {
+  @restartableTask
+  *fetchIdentities() {
     return yield this.store.query("identity", {
       filter: { isOrganisation: true },
     });
   }
 
   @lastValue("fetchRoles") roles;
-
-  @restartableTask *fetchRoles() {
+  @restartableTask
+  *fetchRoles() {
     return yield this.store.findAll("membership-role");
   }
 
   // Delete
 
-  @dropTask *delete(membership) {
+  @dropTask
+  *delete(membership) {
     try {
       const options = {
         membership: membership.get("organisation.organisationName"),

@@ -125,6 +125,14 @@
             @label={{t "component.identity-form.control.submit"}}
             @disabled={{cannot "edit identity" this.changeset.data}}
           />
+
+          <UkButton
+            @type="submit"
+            @color="primary"
+            @on-click={{this.setBackToIdentities}}
+            @label={{t "component.identity-form.control.submitBack"}}
+            @disabled={{cannot "edit identity" this.changeset.data}}
+          />
         </div>
       </p>
     </ValidatedForm>

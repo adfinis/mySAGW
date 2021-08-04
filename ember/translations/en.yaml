@@ -209,6 +209,7 @@ component:
       delete: "Delete"
       cancel: "Cancel"
       submit: "Save"
+      submitBack: "Save and Back"
     delete:
       prompt: "Do you really want to delete this identity?"
       success: "Identity deleted successfully."
