@@ -2,7 +2,7 @@ import operator
 import shlex
 from functools import reduce
 
-from django_filters import BooleanFilter
+from django_filters import BooleanFilter, CharFilter
 from django_filters.rest_framework import FilterSet
 from rest_framework.compat import distinct
 from rest_framework.filters import SearchFilter
@@ -12,6 +12,7 @@ from mysagw.identity import models
 
 class IdentityFilterSet(FilterSet):
     has_idp_id = BooleanFilter(field_name="idp_id", lookup_expr="isnull", exclude=True)
+    memberships__organisation__organisation_name = CharFilter(distinct=True)
 
     class Meta:
         model = models.Identity
