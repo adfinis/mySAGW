@@ -418,6 +418,29 @@ def test_identity_organisation_filters(db, client, identity_factory, is_organisa
     assert expected_ids == received_ids
 
 
+def test_identity_organisation_filters_distinct(
+    db, client, identity_factory, membership_factory
+):
+    organisation = identity_factory(is_organisation=True, organisation_name="SAGW")
+    membership = membership_factory(organisation=organisation, role=None)
+    membership_factory(
+        identity=membership.identity, organisation=organisation, role=None
+    )
+
+    url = reverse("identity-list")
+
+    response = client.get(
+        url, {"filter[memberships__organisation__organisationName]": "SAGW"}
+    )
+
+    assert response.status_code == status.HTTP_200_OK
+
+    json = response.json()
+
+    assert len(json["data"]) == 1
+    assert json["data"][0]["id"] == str(membership.identity.pk)
+
+
 def test_identity_export(
     db,
     client,
