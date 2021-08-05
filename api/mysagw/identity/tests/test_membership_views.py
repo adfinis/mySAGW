@@ -80,6 +80,28 @@ def test_membership_role_list(db, client, expected_status, membership_role_facto
     assert len(json["data"]) == models.MembershipRole.objects.count() == 3
 
 
+@pytest.mark.parametrize("lang", ["de", "fr"])
+def test_membership_role_list_ordering(db, client, lang, membership_role_factory):
+    role1 = membership_role_factory(title={"de": "aaa", "fr": "bbb"})
+    role2 = membership_role_factory(title={"de": "bbb", "fr": "aaa"})
+
+    expected = [str(role1.pk), str(role2.pk)]
+    if lang == "fr":
+        expected = [str(role2.pk), str(role1.pk)]
+
+    url = reverse("membershiprole-list")
+
+    response = client.get(url, HTTP_ACCEPT_LANGUAGE=lang)
+
+    assert response.status_code == status.HTTP_200_OK
+
+    json = response.json()
+
+    assert len(json["data"]) == 2
+    assert json["data"][0]["id"] == expected[0]
+    assert json["data"][1]["id"] == expected[1]
+
+
 @pytest.mark.parametrize(
     "client,expected_count",
     [
