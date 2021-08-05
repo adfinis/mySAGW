@@ -1,0 +1,21 @@
+<DocumentValidity
+  @document={{@field.document}}
+  
+  as |isValid|
+>
+  <div {{in-viewport onEnter=(perform this.fetchWorkItem)}}></div>
+  {{#if this.fetchWorkItem.isRunning}}
+    <LoadingSpinner />
+  {{else}}
+    <WorkItemButton
+      @mutation="complete"
+      @workItemId={{this.workItem}}
+      @filters={{this.submitWorkItemFilters}}
+      @label={{t "component.submit-button.title"}}
+      @disabled={{not (and this.workItem isValid)}}
+      @color="primary"
+      @type="button"
+      @onSuccess={{this.transitionToCase}}
+    />
+  {{/if}}
+</DocumentValidity>

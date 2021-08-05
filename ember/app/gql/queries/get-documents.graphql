@@ -1,0 +1,29 @@
+query getDocumentsQuery($cursor: String, $filter: [DocumentFilterSetType]) {
+  allDocuments(first: 15, after: $cursor, filter: $filter) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    totalCount
+    edges {
+      node {
+        id
+        case {
+          id
+          status
+          workItems {
+            edges {
+              node {
+                id
+                status
+                task {
+                  slug
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

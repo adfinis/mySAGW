@@ -1,6 +1,4 @@
-import { getOwner } from "@ember/application";
 import Controller from "@ember/controller";
-import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import { queryManager } from "ember-apollo-client";
 import { dropTask } from "ember-concurrency";
@@ -75,19 +73,5 @@ export default class CasesDetailIndexController extends Controller {
       console.error(error);
       this.notification.fromError(error);
     }
-  }
-
-  @dropTask()
-  *computeDocument() {
-    return yield getOwner(this)
-      .factoryFor("caluma-model:document")
-      .create({
-        raw: parseDocument(this.model.document),
-      });
-  }
-
-  @action
-  transitionToCase() {
-    this.transitionToRoute("cases");
   }
 }

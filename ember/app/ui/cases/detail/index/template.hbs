@@ -70,28 +70,6 @@
       <LinkTo @route="cases.detail.edit" class="uk-button uk-button-default">
         {{t "documents.edit"}}
       </LinkTo>
-    
-      <h3 {{did-insert (perform this.computeDocument)}}>{{t "documents.submit"}}</h3>
-      {{#if this.submitDisabled}}
-        <p>{{t "documents.noSubmitText"}}</p>
-      {{else}}
-        <p>{{t "documents.submitText"}}</p> 
-      {{/if}}
-      {{#if this.computeDocument.isRunning}}
-        <div class="uk-text-center uk-padding">
-          <UkSpinner @ratio={{2}} />
-        </div>
-      {{else}}
-        <DocumentValidity @document={{this.computeDocument.lastSuccessful.value}} as |isValid|>
-          <WorkItemButton
-            @mutation="complete"
-            @workItemId={{@model.workItems.edges.firstObject.node.id}}
-            @label={{t "documents.submit"}}
-            @disabled={{and this.submitDisabled (not isValid)}}
-            @onSuccess={{this.transitionToCase}}
-          />
-        </DocumentValidity>
-      {{/if}}
     {{/if}}
 
     {{#if (and (eq @model.status "RUNNING") this.isNotSubmitted)}}

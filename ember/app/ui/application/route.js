@@ -13,9 +13,9 @@ export default class ApplicationRoute extends Route.extend(
     this.intl.setLocale(["en"]);
 
     this.calumaOptions.registerComponentOverride({
-      label: "Circulation",
-      component: "circulation",
-      type: "CheckboxQuestion",
+      label: "Einreichen Button",
+      component: "submit-button",
+      type: "StaticQuestion",
     });
   }
 }
