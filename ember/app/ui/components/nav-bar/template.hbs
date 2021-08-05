@@ -13,7 +13,7 @@
     {{/if}}
   </LinkTo>
 
-  <div class="uk-navbar-left uk-visible@m">
+  <div class="uk-navbar-left uk-visible@l">
     <UkTab as |tab|>
       {{#if (can "list work-item")}}
         <tab.link-item @route="work-items">
@@ -23,40 +23,59 @@
       <tab.link-item @route="cases">
         {{t "nav.documents"}}
       </tab.link-item>
-      {{#if (can "list identity")}}
-        <tab.link-item @route="identities">
-          {{t "nav.identities"}}
-        </tab.link-item>
-      {{/if}}
-      {{#if (can "list interest")}}
-        <tab.link-item @route="interests">
-          {{t "nav.interests"}}
-        </tab.link-item>
-      {{/if}}
-      {{#if (can "list membership-role")}}
-        <tab.link-item @route="membership-roles">
-          {{t "nav.roles"}}
-        </tab.link-item>
-      {{/if}}
+
       {{#if (can "list snippet")}}
         <tab.link-item @route="snippets">
           {{t "nav.snippets"}}
         </tab.link-item>
       {{/if}}
 
-      {{#if (can "list form-builder")}}
-        <tab.link-item @route="form-builder">
-          {{t "nav.form-builder"}}
-        </tab.link-item>
+      {{#if (or (can "list identity") (can "list interests") (can "list membership-role"))}}
+        <tab.item id="nav-identity-management">
+          {{t "nav.identity-management"}}<span uk-icon="chevron-down"></span>
+        </tab.item>
       {{/if}}
-      {{#if (can "list form-configuration")}}
-        <tab.link-item @route="form-configuration">
-          {{t "nav.form-configuration"}}
-        </tab.link-item>
+      {{#if (or (can "list form-builder") (can "list form-configuration"))}}
+        <tab.item id="nav-form-management">
+          {{t "nav.form-management"}}<span uk-icon="chevron-down"></span>
+        </tab.item>
       {{/if}}
     </UkTab>
   </div>
-  <div class="uk-navbar-right uk-visible@m">
+  <div uk-dropdown="toggle: #nav-identity-management" class="uk-margin-remove uk-text-uppercase">
+    <ul class="uk-nav uk-dropdown-nav">
+      {{#if (can "list identity")}}
+        <li>
+          <LinkTo @route="identities">{{t "nav.identities"}}</LinkTo>
+        </li>
+      {{/if}}
+      {{#if (can "list interest")}}
+        <li>
+          <LinkTo @route="interests">{{t "nav.interests"}}</LinkTo>
+        </li>
+      {{/if}}
+      {{#if (can "list membership-role")}}
+        <li>
+          <LinkTo @route="membership-roles">{{t "nav.roles"}}</LinkTo>
+        </li>
+      {{/if}}
+    </ul>
+  </div>
+  <div uk-dropdown="toggle: #nav-form-management" class="uk-margin-remove uk-text-uppercase">
+    <ul class="uk-nav uk-dropdown-nav">
+      {{#if (can "list form-builder")}}
+        <li>
+          <LinkTo @route="form-builder">{{t "nav.form-builder"}}</LinkTo>
+        </li>
+      {{/if}}
+      {{#if (can "list form-configuration")}}
+        <li>
+          <LinkTo @route="form-configuration">{{t "nav.form-configuration"}}</LinkTo>
+        </li>
+      {{/if}}
+    </ul>
+  </div>
+  <div class="uk-navbar-right uk-visible@l">
     <ul class="uk-navbar-nav">
       <li>
         <LinkTo @route="profile">
@@ -100,7 +119,7 @@
     </ul>
   </div>
 
-  <div class="uk-navbar-right uk-hidden@m">
+  <div class="uk-navbar-right uk-hidden@l">
     <button
       class="uk-icon-button uk-button-default uk-margin-small-right"
       type="button"
@@ -167,6 +186,13 @@
         <li>
           <LinkTo @route="form-builder" uk-toggle="target: #offcanvas">
             {{t "nav.form-builder"}}
+          </LinkTo>
+        </li>
+      {{/if}}
+      {{#if (can "list form-configuration")}}
+        <li>
+          <LinkTo @route="form-configuration" uk-toggle="target: #offcanvas">
+            {{t "nav.form-configuration"}}
           </LinkTo>
         </li>
       {{/if}}
