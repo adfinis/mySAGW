@@ -7,7 +7,8 @@ COPY package.json yarn.lock /myapp/
 RUN yarn install
 
 COPY . /myapp/
-RUN yarn build
+
+RUN yarn deploy production
 
 FROM nginx:alpine
 
