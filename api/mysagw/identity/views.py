@@ -4,6 +4,7 @@ import django_excel
 from django.conf import settings
 from django.db.models import Q
 from django.http import HttpResponse
+from django.utils import translation
 from requests import HTTPError
 from rest_framework.decorators import action
 from rest_framework.exceptions import PermissionDenied, ValidationError
@@ -249,6 +250,11 @@ class MembershipRoleViewSet(views.ModelViewSet):
     serializer_class = serializers.MembershipRoleSerializer
     queryset = models.MembershipRole.objects.all()
     permission_classes = (IsAuthenticated & (IsAdmin | IsStaff | ReadOnly),)
+
+    def get_queryset(self, *args, **kwargs):
+        qs = super().get_queryset(*args, **kwargs)
+        lang = translation.get_language()
+        return qs.order_by(f"title__{lang}")
 
 
 class MembershipViewSet(views.ModelViewSet):
