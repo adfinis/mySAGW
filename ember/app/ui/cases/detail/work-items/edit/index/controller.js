@@ -55,7 +55,10 @@ export default class CasesDetailWorkItemsEditController extends Controller {
 
       this.notification.success(this.intl.t("workItems.saveSuccess"));
 
-      this.transitionToRoute("cases.detail.work-items.index");
+      this.transitionToRoute(
+        "cases.detail.work-items.index",
+        this.workItem.case.id
+      );
     } catch (error) {
       this.notification.danger(this.intl.t("workItems.saveError"));
     }
@@ -67,15 +70,10 @@ export default class CasesDetailWorkItemsEditController extends Controller {
     return yield this.store.query("identity", {
       filter: {
         isOrganisation: false,
-        memberships__organisation__organisationName: "sagw",
+        memberships__organisation__organisationName: "SAGW",
+        hasIdpId: true,
       },
     });
-  }
-
-  @action
-  onUpdate() {
-    this.fetchWorkItem.perform();
-    this.fetchIdentities.perform();
   }
 
   @action
@@ -89,7 +87,7 @@ export default class CasesDetailWorkItemsEditController extends Controller {
   }
 
   @action
-  transitionToCase() {
-    this.transitionToRoute("cases");
+  transitionToWorkItems() {
+    this.transitionToRoute("work-items");
   }
 }

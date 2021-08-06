@@ -1,33 +1,27 @@
-{{#if this.fetchCase.isRunning}}
-  <div class="uk-text-center uk-padding">
-    <UkSpinner @ratio={{2}} />
-  </div>
-{{else}}
-  <h2 class="uk-flex uk-flex-middle">
-    <LinkTo
-      @route="cases.index"
-      class="uk-icon-button uk-margin-right"
-      uk-icon="icon: arrow-left; ratio: 2"
-    />
-    {{@model.document.form.name}}
-  </h2>
+<h2 class="uk-flex uk-flex-middle">
+  <LinkTo
+    @route="cases.index"
+    class="uk-icon-button uk-margin-right"
+    uk-icon="icon: arrow-left; ratio: 2"
+  />
+  {{@model.document.form.name}}
+</h2>
 
-  <UkTab as |tab|>
-    <tab.link-item @route="cases.detail.index" @model={{@model}}>
-      {{t "documents.subnav.overview"}}
+<UkTab as |tab|>
+  <tab.link-item @route="cases.detail.index" @model={{@model}}>
+    {{t "documents.subnav.overview"}}
+  </tab.link-item>
+  <tab.link-item @route="cases.detail.work-items" @model={{@model}}>
+    {{t "documents.subnav.work-items"}}
+  </tab.link-item>
+  <tab.link-item @route="cases.detail.edit" @model={{@model}}>
+    {{t "documents.subnav.document"}}
+  </tab.link-item>
+  {{#if this.circulation}}
+    <tab.link-item @route="cases.detail.circulation" @model={{@model}}>
+      {{t "documents.subnav.circulation"}}
     </tab.link-item>
-    <tab.link-item @route="cases.detail.work-items" @model={{@model}}>
-      {{t "documents.subnav.work-items"}}
-    </tab.link-item>
-    <tab.link-item @route="cases.detail.edit" @model={{@model}}>
-      {{t "documents.subnav.document"}}
-    </tab.link-item>
-    {{#if this.circulationActive}}
-      <tab.link-item @route="cases.detail.circulation" @model={{@model}}>
-        {{t "documents.subnav.circulation"}}
-      </tab.link-item>
-    {{/if}}
-  </UkTab>
+  {{/if}}
+</UkTab>
 
-  {{outlet}}
-{{/if}}
+{{outlet}}

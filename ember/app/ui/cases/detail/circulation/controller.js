@@ -1,4 +1,5 @@
 import Controller from "@ember/controller";
+import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import { queryManager } from "ember-apollo-client";
@@ -14,6 +15,7 @@ export default class CasesDetailCirculationController extends Controller {
   @service store;
   @service notification;
   @service intl;
+  @service router;
 
   @tracked selectedIdentities = [];
 
@@ -26,7 +28,7 @@ export default class CasesDetailCirculationController extends Controller {
 
   get identities() {
     const assignedUsers = this.workItemsQuery.value
-      .filter((workItem) => workItem.raw.status === "READY")
+      .filter((workItem) => workItem.isReady)
       .map((workItem) => workItem.raw.assignedUsers)
       .flat();
 
@@ -36,7 +38,11 @@ export default class CasesDetailCirculationController extends Controller {
   }
 
   get canFinishCirculation() {
-    return this.circulationWorkItem.node.childCase.status !== "COMPLETED";
+    return this.circulationWorkItem.node.childCase.status === "COMPLETED";
+  }
+
+  get circulationActive() {
+    return this.circulationWorkItem.node.status === "READY";
   }
 
   @lastValue("fetchIdentities") _identities;
@@ -85,5 +91,13 @@ export default class CasesDetailCirculationController extends Controller {
     this.selectedIdentities = [];
 
     yield this.fetchWorkItems.perform();
+  }
+
+  @action
+  transitionToCaseWorkItems() {
+    this.transitionToRoute(
+      "cases.detail.work-items",
+      this.circulationWorkItem.node.childCase.id
+    );
   }
 }

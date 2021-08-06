@@ -32,7 +32,10 @@ export default class CasesDetailWorkItemsEditFormController extends Controller {
   }
 
   @action
-  transitionToCaseTasks() {
-    this.transitionToRoute("cases.detail.work-items", this.workItem.case.id);
+  transitionToCaseWorkItems() {
+    this.transitionToRoute(
+      "cases.detail.work-items.index",
+      this.workItem.case.id
+    );
   }
 }

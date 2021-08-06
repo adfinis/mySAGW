@@ -21,7 +21,7 @@
           @type="submit"
           @color="primary"
           @label={{t "workItems.actions.finish"}}
-          @onSuccess={{this.transitionToCaseTasks}}
+          @onSuccess={{this.transitionToCaseWorkItems}}
           @disabled={{not isValid}}
         />
       {{/if}}
@@ -31,7 +31,7 @@
           @workItemId={{@model}}
           @type="submit"
           @label={{t "workItems.actions.skip"}}
-          @onSuccess={{this.transitionToCaseTasks}}
+          @onSuccess={{this.transitionToCaseWorkItems}}
           @disabled={{not isValid}}
         />
       {{/if}}

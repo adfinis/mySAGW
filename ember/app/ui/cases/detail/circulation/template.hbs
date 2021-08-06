@@ -1,4 +1,4 @@
-<div {{did-insert (queue (perform this.fetchIdentities) (perform this.fetchWorkItems))}}>
+{{#if this.circulationActive}}
   <div class="uk-flex">
     <PowerSelectMultiple
       @searchEnabled={{true}}
@@ -22,22 +22,27 @@
       {{t "page.circulation.add"}}
     </UkButton>
   </div>
+{{/if}}
 
-  <WorkItemList
-    @query={{this.workItemsQuery}}
-    @columns={{array "responsible" "status" "task" "closedAt"}}
-    @highlight={{false}}
-  />
+<WorkItemList
+  @query={{this.workItemsQuery}}
+  @columns={{array "responsible" "status" "task" "closedAt"}}
+  @highlight={{false}}
+/>
 
+{{#if this.circulationActive}}
   <WorkItemButton
     @workItemId={{this.circulationWorkItem.node.id}}
     @label={{t "page.circulation.skip"}}
     @mutation="skip"
+    @onSuccess={{this.transitionToCaseWorkItems}}
   />
   <WorkItemButton
-    @workItemId={{this.circulationWorkItem.id}}
+    @workItemId={{this.circulationWorkItem.node.id}}
     @label={{t "page.circulation.finish"}}
     @mutation="complete"
-    @disabled={{this.canFinishCirculation}}
+    @disabled={{not this.canFinishCirculation}}
+    @color="primary"
+    @onSuccess={{this.transitionToCaseWorkItems}}
   />
-</div>
+{{/if}}
