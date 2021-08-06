@@ -1,14 +1,16 @@
-FROM node:lts-slim
-
-WORKDIR /usr/share/app
-COPY . /usr/share/app
+FROM danlynn/ember-cli:3.24.0 as build
 
 ARG OIDC_HOST
 
-RUN yarn install && yarn build
+COPY package.json yarn.lock /myapp/
 
-FROM nginx:alpine as final
-COPY --from=0 /usr/share/app/dist /usr/share/nginx/html
+RUN yarn install
+
+COPY . /myapp/
+
+RUN yarn deploy production
+
+FROM nginx:alpine
+
+COPY --from=build /myapp/build /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
