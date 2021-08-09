@@ -28,12 +28,15 @@ nav:
   emeis: "Emeis"
   alexandria: "Alexandria"
   form-builder: "Form Builder"
+  form-configuration: "Form Configuration"
   snippets: "Snippets"
   admin: "Administration"
   account: "Account"
   logout: "Logout"
   login: "Login"
   profile: "Profile"
+  identity-management: "Identity management"
+  form-management: "Form management"
   snippet:
     hint: "Copy {lang} to clipboard"
     load-more: "Load more snippets"
@@ -192,6 +195,12 @@ page:
     add: "Add to circulation"
     finish: "Finish circulation"
     skip: "Skip circulation"
+
+  form-configuration:
+    title: "Configuration"
+    expertAssociationForm: "Expert association form"
+    advisoryBoardForm: "Advisory board form"
+    saveSuccess: "Form {name} saved successfully"
 
 component:
   identity-form:

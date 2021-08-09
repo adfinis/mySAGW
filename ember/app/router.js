@@ -73,4 +73,5 @@ Router.map(function () {
       this.route("edit", { path: "/edit/:snippet" });
     });
   });
+  this.route("form-configuration");
 });
