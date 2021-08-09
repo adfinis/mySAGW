@@ -54,7 +54,7 @@
       "address_groups": ["applicant"],
       "is_archived": false,
       "form": null,
-      "lead_time": null,
+      "lead_time": 2592000,
       "is_multiple_instance": false
     }
   },
@@ -92,7 +92,7 @@
       "address_groups": ["sagw"],
       "is_archived": false,
       "form": null,
-      "lead_time": 432000,
+      "lead_time": null,
       "is_multiple_instance": false
     }
   },

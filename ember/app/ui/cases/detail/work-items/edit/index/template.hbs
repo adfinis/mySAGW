@@ -1,4 +1,4 @@
-<h1 {{did-insert this.onUpdate}}>
+<h1>
   {{t "workItems.edit"}}
 </h1>
 
@@ -135,29 +135,26 @@
 
   <div class="uk-text-right">
     <LinkTo
-      @route="work-items"
-      class="uk-margin-right"
+      @route="cases.detail.work-items"
+      class="uk-button uk-button-default"
     >
-      <UkButton
-        @type="button"
-        @label={{t "global.cancel"}}
-      />
+      {{t "global.cancel"}}
     </LinkTo>
     <UkButton
       @type="submit"
       @color="primary"
       @label={{t "global.save"}}
     />
+    {{#unless this.workItem.document}}
+      <WorkItemButton
+        @mutation="complete"
+        @workItemId={{this.workItem.id}}
+        @type="button"
+        @color="primary"
+        @label={{t "workItems.actions.finish"}}
+        @disabled={{not this.workItem.canComplete}}
+        @onSuccess={{this.transitionToWorkItems}}
+      />
+    {{/unless}}
   </div>
 </form>
-
-{{#if this.workItem.canComplete}}
-  <WorkItemButton
-    @mutation="complete"
-    @workItemId={{this.workItem.id}}
-    @type="submit"
-    @color="primary"
-    @label={{t "workItems.actions.finish"}}
-    @onSuccess={{this.transitionToCase}}
-  />
-{{/if}}

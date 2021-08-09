@@ -26,13 +26,9 @@ def set_assigned_user(sender, work_item, user, **kwargs):
 @transaction.atomic
 def create_circulation_child_case(sender, work_item, user, **kwargs):
     if work_item.task_id == "circulation":
-        case = caluma_workflow_api.start_case(
+        caluma_workflow_api.start_case(
             workflow=caluma_workflow_models.Workflow.objects.get(pk="circulation"),
             form=caluma_form_models.Form.objects.get(pk="circulation-form"),
             user=user,
             parent_work_item=work_item,
         )
-
-        work_item = case.work_items.all().first()
-        work_item.assigned_users = [user.claims["sub"]]
-        work_item.save()
