@@ -9,26 +9,32 @@
     @documentId={{this.workItem.document.id}}
     @context={{hash completeCallback=(perform this.completeWorkItem)}}
     @disabled={{not this.workItem.canEdit}}
-  />
-{{/if}}
+    as |content|
+  >
+    <DocumentValidity @document={{content.document}} as |isValid|>
+      {{content.form}}
 
-{{#if this.workItem.canComplete}}
-  <WorkItemButton
-    @mutation="complete"
-    @workItemId={{@model}}
-    @type="submit"
-    @color="primary"
-    @label={{t "workItems.actions.finish"}}
-    @onSuccess={{this.transitionToCase}}
-  />
-{{/if}}
-
-{{#if this.workItem.canSkip}}
-  <WorkItemButton
-    @mutation="skip"
-    @workItemId={{@model}}
-    @type="submit"
-    @label={{t "workItems.actions.skip"}}
-    @onSuccess={{this.transitionToCase}}
-  />
+      {{#if this.workItem.canComplete}}
+        <WorkItemButton
+          @mutation="complete"
+          @workItemId={{@model}}
+          @type="submit"
+          @color="primary"
+          @label={{t "workItems.actions.finish"}}
+          @onSuccess={{this.transitionToCaseTasks}}
+          @disabled={{not isValid}}
+        />
+      {{/if}}
+      {{#if this.workItem.canSkip}}
+        <WorkItemButton
+          @mutation="skip"
+          @workItemId={{@model}}
+          @type="submit"
+          @label={{t "workItems.actions.skip"}}
+          @onSuccess={{this.transitionToCaseTasks}}
+          @disabled={{not isValid}}
+        />
+      {{/if}}
+    </DocumentValidity>
+  </CfContent>
 {{/if}}

@@ -374,6 +374,9 @@ component:
       submit: "Save"
     success: "Snippet {title} saved successfully."
 
+  submit-button:
+    title: "Submit"
+
 workItems:
   name: "Name"
   title: "Open tasks"
