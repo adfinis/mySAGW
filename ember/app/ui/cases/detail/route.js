@@ -5,17 +5,20 @@ import getCaseQuery from "mysagw/gql/queries/get-case.graphql";
 export default class CasesDetailRoute extends Route {
   @queryManager apollo;
 
-  model({ case_id }) {
-    return this.apollo
-      .query(
-        {
-          query: getCaseQuery,
-          variables: { caseId: case_id },
-        },
-        "allCases.edges"
-      )
-      .then(function (value) {
-        return value.mapBy("node").firstObject;
-      });
+  async model({ case_id }) {
+    const caseEdges = await this.apollo.watchQuery(
+      {
+        query: getCaseQuery,
+        variables: { caseId: case_id },
+      },
+      "allCases.edges"
+    );
+
+    return caseEdges.firstObject.node;
+  }
+
+  setupController(controller, model) {
+    super.setupController(controller, model);
+    controller.fetchWorkItems.perform();
   }
 }

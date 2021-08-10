@@ -441,6 +441,29 @@ def test_identity_organisation_filters_distinct(
     assert json["data"][0]["id"] == str(membership.identity.pk)
 
 
+def test_identity_idp_ids_filters(db, client, identity_factory):
+    identities = identity_factory.create_batch(3)
+
+    expected_ids = sorted([str(i.idp_id) for i in identities])
+
+    url = reverse("identity-list")
+
+    print({"filter[idpIds]": ",".join(expected_ids)})
+    response = client.get(url, {"filter[idpIds]": ",".join(expected_ids)})
+
+    assert response.status_code == status.HTTP_200_OK
+
+    json = response.json()
+
+    received_ids = []
+    print(json["data"])
+    for identity in json["data"]:
+        received_ids.append(identity["attributes"]["idp-id"])
+    received_ids = sorted(received_ids)
+
+    assert expected_ids == received_ids
+
+
 def test_identity_export(
     db,
     client,

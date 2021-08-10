@@ -137,6 +137,27 @@ export default class CustomWorkItemModel extends WorkItemModel {
     case {
       id
       meta
+      parentWorkItem {
+        id
+        status
+        task {
+          slug
+        }
+        case {
+          id
+          document {
+            id
+            form {
+              slug
+              name
+            }
+          }
+        }
+        childCase {
+          id
+          status
+        }
+      }
       document {
         id
         form {
@@ -144,6 +165,10 @@ export default class CustomWorkItemModel extends WorkItemModel {
           name
         }
       }
+    }
+    childCase {
+      id
+      status
     }
     task {
       slug

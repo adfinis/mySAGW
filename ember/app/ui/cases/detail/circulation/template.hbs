@@ -32,13 +32,13 @@
 
 {{#if this.circulationActive}}
   <WorkItemButton
-    @workItemId={{this.circulationWorkItem.node.id}}
+    @workItemId={{this.circulationWorkItem.id}}
     @label={{t "page.circulation.skip"}}
     @mutation="skip"
     @onSuccess={{this.transitionToCaseWorkItems}}
   />
   <WorkItemButton
-    @workItemId={{this.circulationWorkItem.node.id}}
+    @workItemId={{this.finishCirculationWorkItem.id}}
     @label={{t "page.circulation.finish"}}
     @mutation="complete"
     @disabled={{not this.canFinishCirculation}}

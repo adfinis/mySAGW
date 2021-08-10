@@ -121,6 +121,7 @@ module.exports = function (environment) {
         submitTaskSlug: "submit-document",
         reviseTaskSlug: "revise-docment",
         skippableTaskSlugs: [],
+        manuallyCompletableTasks: ["complete-document"],
       },
     },
   };

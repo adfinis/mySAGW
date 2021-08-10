@@ -27,7 +27,8 @@ export default class SubmitButtonComponent extends Component {
       .find((workItem) => {
         return (
           workItem.status === "READY" &&
-          workItem.task.slug === "submit-document"
+          (workItem.task.slug === "submit-document" ||
+            workItem.task.slug === "revise-document")
         );
       });
   }

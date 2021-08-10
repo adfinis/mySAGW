@@ -11,6 +11,7 @@ export default class WorkItemsIndexController extends Controller {
   queryParams = ["order", "responsible", "status", "role"];
 
   @service session;
+  @service store;
 
   @queryManager apollo;
 
@@ -32,7 +33,7 @@ export default class WorkItemsIndexController extends Controller {
   get columns() {
     return [
       "task",
-      "instance",
+      "case",
       "description",
       ...(this.status === "open"
         ? ["deadline", "responsible"]
@@ -42,7 +43,7 @@ export default class WorkItemsIndexController extends Controller {
 
   @restartableTask
   *fetchWorkItems() {
-    const filter = [];
+    const filter = [{ hasDeadline: true }];
 
     if (this.responsible === "own") {
       filter.push({
@@ -66,6 +67,28 @@ export default class WorkItemsIndexController extends Controller {
         : [{ attribute: "CREATED_AT", direction: "DESC" }];
 
     yield this.workItemsQuery.fetch({ filter, order });
+    yield this.getIdentities.perform();
+  }
+
+  @restartableTask
+  *getIdentities() {
+    let idpIds = [];
+
+    this.workItemsQuery.value.forEach((workItem) => {
+      idpIds = [
+        ...idpIds,
+        workItem.assignedUsers[0],
+        workItem.raw.closedByUser,
+      ];
+    });
+
+    idpIds = idpIds.compact().uniq();
+
+    if (idpIds.length) {
+      return yield this.store.query("identity", {
+        filter: { idpIds: idpIds.join(",") },
+      });
+    }
   }
 
   @action

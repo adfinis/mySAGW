@@ -6,7 +6,7 @@ from caluma.caluma_workflow import (
     api as caluma_workflow_api,
     models as caluma_workflow_models,
 )
-from caluma.caluma_workflow.events import post_create_work_item
+from caluma.caluma_workflow.events import post_create_work_item, pre_complete_work_item
 
 
 @on(post_create_work_item, raise_exception=True)
@@ -31,4 +31,40 @@ def create_circulation_child_case(sender, work_item, user, **kwargs):
             form=caluma_form_models.Form.objects.get(pk="circulation-form"),
             user=user,
             parent_work_item=work_item,
+        )
+
+
+@on(post_create_work_item, raise_exception=True)
+@transaction.atomic
+def invite_to_circulation(sender, work_item, user, context, **kwargs):
+    if work_item.task_id == "circulation-decision" and context is not None:
+        for index, assign_user in enumerate(context["assign_users"]):
+            if not index:
+                work_item.assigned_users = [assign_user]
+                work_item.save()
+            else:
+                caluma_workflow_models.WorkItem.objects.create(
+                    name=work_item.task.name,
+                    description=work_item.task.description,
+                    task=work_item.task,
+                    status=caluma_workflow_models.WorkItem.STATUS_READY,
+                    assigned_users=[assign_user],
+                    case=work_item.case,
+                    document=caluma_form_models.Document.objects.create(
+                        form=work_item.document.form
+                    ),
+                )
+
+
+@on(pre_complete_work_item, raise_exception=True)
+@transaction.atomic
+def finish_circulation(sender, work_item, user, **kwargs):
+    if work_item.task_id == "finish-circulation":
+        caluma_workflow_api.cancel_work_item(
+            work_item=caluma_workflow_models.WorkItem.objects.get(
+                task_id="invite-to-circulation",
+                case=work_item.case,
+                status=caluma_workflow_models.WorkItem.STATUS_READY,
+            ),
+            user=user,
         )

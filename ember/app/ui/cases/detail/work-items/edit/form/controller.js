@@ -9,11 +9,8 @@ import { restartableTask, lastValue } from "ember-concurrency";
 export default class CasesDetailWorkItemsEditFormController extends Controller {
   @queryManager apollo;
 
-  @service store;
   @service notification;
   @service intl;
-  @service moment;
-  @service session;
 
   @calumaQuery({ query: allWorkItems })
   workItemsQuery;
@@ -33,9 +30,6 @@ export default class CasesDetailWorkItemsEditFormController extends Controller {
 
   @action
   transitionToCaseWorkItems() {
-    this.transitionToRoute(
-      "cases.detail.work-items.index",
-      this.workItem.case.id
-    );
+    this.transitionToRoute("cases.detail.work-items", this.workItem.case.id);
   }
 }

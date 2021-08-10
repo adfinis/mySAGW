@@ -8,7 +8,6 @@ export default class WorkItemListItemComponent extends Component {
   @service router;
   @service intl;
   @service can;
-  @service store;
 
   get actions() {
     if (this.can.cannot("edit work-item")) {
@@ -66,31 +65,5 @@ export default class WorkItemListItemComponent extends Component {
       this.args.workItem.case.id,
       this.args.workItem.id
     );
-  }
-
-  @dropTask
-  *getIdentity() {
-    if (this.can.cannot("edit work-item")) {
-      return;
-    }
-
-    let idpId = null;
-
-    if (
-      !this.args.workItem.assignedUser &&
-      this.args.workItem.assignedUsers[0]
-    ) {
-      idpId = this.args.workItem.assignedUsers[0];
-    }
-
-    if (this.args.workItem.isCompleted && !this.args.workItem.closedByUser) {
-      idpId = this.args.workItem.raw.closedByUser;
-    }
-
-    if (idpId) {
-      return yield this.store.query("identity", {
-        filter: { idpId },
-      });
-    }
   }
 }

@@ -1,7 +1,7 @@
 <DocumentValidity
   @document={{@field.document}}
-  
-  as |isValid|
+  @validateOnEnter={{false}}
+  as |isValid validate|
 >
   <div {{in-viewport onEnter=(perform this.fetchWorkItem)}}></div>
   {{#if this.fetchWorkItem.isRunning}}
@@ -9,12 +9,13 @@
   {{else}}
     <WorkItemButton
       @mutation="complete"
-      @workItemId={{this.workItem}}
+      @workItemId={{this.workItem.id}}
       @filters={{this.submitWorkItemFilters}}
       @label={{t "component.submit-button.title"}}
-      @disabled={{not (and this.workItem isValid)}}
+      @disabled={{not this.workItem}}
       @color="primary"
       @type="button"
+      @beforeMutate={{validate}}
       @onSuccess={{this.transitionToCase}}
     />
   {{/if}}
