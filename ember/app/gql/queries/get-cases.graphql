@@ -34,6 +34,16 @@ query getCasesQuery($cursor: String, $filter: [CaseFilterSetType], $orderBy: [Ca
             name
             description
           }
+          answers(filter: [{question: "dossier-nr"}]) {
+            edges {
+              node {
+                id
+                ... on StringAnswer {
+                  value
+                }
+              }
+            }
+          }
         }
       }
     }

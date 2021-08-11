@@ -86,6 +86,12 @@ module.exports = function (environment) {
         classList: [], // class list for table element
         columns: [
           {
+            classList: ["accent-border-left"],
+            heading: { label: "documents.number" },
+            modelKey: "document.answers.edges.firstObject.node.value",
+            linkTo: "cases.detail.index",
+          },
+          {
             classList: [], // class list for td element
             heading: {
               label: "documents.type",

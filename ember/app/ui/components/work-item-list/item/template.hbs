@@ -47,6 +47,10 @@
         {{if @workItem.closedByUser @workItem.closedByUser.fullName "-"}}
       {{else if (eq column "status")}}
         {{@workItem.statusName}}
+      {{else if (eq column "documentNumber")}}
+        <LinkTo @route="cases.detail" @model={{@workItem.case.id}}>
+          {{@workItem.case.document.answers.edges.firstObject.node.value}}
+        </LinkTo>
       {{/if}}
     </td>
   {{/each}}

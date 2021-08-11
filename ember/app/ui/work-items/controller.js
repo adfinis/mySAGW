@@ -33,6 +33,7 @@ export default class WorkItemsIndexController extends Controller {
   get columns() {
     return [
       "task",
+      "documentNumber",
       "case",
       "description",
       ...(this.status === "open"
