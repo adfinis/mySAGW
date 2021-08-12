@@ -65,13 +65,13 @@ caluma-loadconfig: caluma-load-form caluma-load-workflow ## Load workflow and fo
 caluma-dump-forms: ## dump Caluma form models
 	@docker-compose run --rm caluma python manage.py dumpdata --indent 4 \
 	caluma_form.Form caluma_form.FormQuestion caluma_form.Question \
-	caluma_form.QuestionOption caluma_form.Option
+	caluma_form.QuestionOption caluma_form.Option | sed -e 's/\r$$//'
 
 .PHONY: caluma-dump-workflow
 caluma-dump-workflow: ## dump Caluma workflow models
 	@docker-compose run --rm caluma python manage.py dumpdata --indent 4 \
 	caluma_workflow.Task caluma_workflow.Workflow caluma_workflow.Flow \
-	caluma_workflow.TaskFlow caluma_workflow.Case
+	caluma_workflow.TaskFlow caluma_workflow.Case | sed -e 's/\r$$//'
 
 .PHONY: ember-lint
 ember-lint: ## lint the frontend
