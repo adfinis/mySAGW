@@ -393,7 +393,7 @@
         "created_by_group": null,
         "modified_by_user": null,
         "modified_by_group": null,
-        "label": "{\"de\": \"Dossier-Nummer\", \"fr\": \"N\\\\u00b0 de dossier\", \"en\": \"dossier number\"}",
+        "label": "{\"de\": \"Dossier-Nummer\", \"fr\": \"N\\u00b0 de dossier\", \"en\": \"dossier number\"}",
         "type": "text",
         "is_required": "true",
         "is_hidden": "true",
