@@ -71,7 +71,11 @@ caluma-dump-forms: ## dump Caluma form models
 caluma-dump-workflow: ## dump Caluma workflow models
 	@docker-compose run --rm caluma python manage.py dumpdata --indent 4 \
 	caluma_workflow.Task caluma_workflow.Workflow caluma_workflow.Flow \
-	caluma_workflow.TaskFlow caluma_workflow.Case | sed -e 's/\r$$//'
+	caluma_workflow.TaskFlow | sed -e 's/\r$$//'
+
+.PHONY: caluma-flush
+caluma-flush: ## flush the Caluma database
+	@docker-compose exec caluma python manage.py flush --no-input
 
 .PHONY: ember-lint
 ember-lint: ## lint the frontend

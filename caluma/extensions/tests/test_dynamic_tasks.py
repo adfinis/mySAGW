@@ -1,9 +1,7 @@
 import pytest
 
-from caluma.caluma_form.models import Form
-from caluma.caluma_user.models import BaseUser
-from caluma.caluma_workflow.api import skip_work_item, start_case
-from caluma.caluma_workflow.models import Case, Workflow
+from caluma.caluma_workflow.api import skip_work_item
+from caluma.caluma_workflow.models import Case
 
 
 @pytest.mark.parametrize(
@@ -15,14 +13,15 @@ from caluma.caluma_workflow.models import Case, Workflow
     ],
 )
 def test_dynamic_task_after_review_document(
-    db, caluma_data, decision, expected_case_status, expected_work_item
+    db,
+    caluma_data,
+    user,
+    document_review_case,
+    decision,
+    expected_case_status,
+    expected_work_item,
 ):
-    user = BaseUser(username="name", claims={"sub": "test"})
-    case = start_case(
-        workflow=Workflow.objects.get(pk="document-review"),
-        form=Form.objects.get(pk="circulation-form"),
-        user=user,
-    )
+    case = document_review_case
 
     skip_work_item(case.work_items.get(task_id="submit-document"), user)
 
@@ -51,23 +50,16 @@ def test_dynamic_task_after_review_document(
     ],
 )
 def test_dynamic_task_after_decision_and_credit(
-    db, caluma_data, decision, expected_case_status, expected_work_item
+    db,
+    caluma_data,
+    user,
+    circulation,
+    decision,
+    expected_case_status,
+    expected_work_item,
 ):
-    user = BaseUser(username="name", claims={"sub": "test"})
-    case = start_case(
-        workflow=Workflow.objects.get(pk="document-review"),
-        form=Form.objects.get(pk="circulation-form"),
-        user=user,
-    )
+    case = circulation.parent_work_item.case
 
-    skip_work_item(case.work_items.get(task_id="submit-document"), user)
-
-    case.work_items.get(task_id="review-document").document.answers.create(
-        question_id="review-document-decision",
-        value="review-document-decision-continue",
-    )
-
-    skip_work_item(case.work_items.get(task_id="review-document"), user)
     skip_work_item(case.work_items.get(task_id="circulation"), user)
 
     case.work_items.get(task_id="decision-and-credit").document.answers.create(
@@ -93,23 +85,10 @@ def test_dynamic_task_after_decision_and_credit(
     ],
 )
 def test_dynamic_task_after_define_amount(
-    db, caluma_data, decision, expected_work_item
+    db, caluma_data, user, circulation, decision, expected_work_item
 ):
-    user = BaseUser(username="name", claims={"sub": "test"})
-    case = start_case(
-        workflow=Workflow.objects.get(pk="document-review"),
-        form=Form.objects.get(pk="circulation-form"),
-        user=user,
-    )
+    case = circulation.parent_work_item.case
 
-    skip_work_item(case.work_items.get(task_id="submit-document"), user)
-
-    case.work_items.get(task_id="review-document").document.answers.create(
-        question_id="review-document-decision",
-        value="review-document-decision-continue",
-    )
-
-    skip_work_item(case.work_items.get(task_id="review-document"), user)
     skip_work_item(case.work_items.get(task_id="circulation"), user)
 
     case.work_items.get(task_id="decision-and-credit").document.answers.create(

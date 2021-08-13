@@ -28,7 +28,7 @@ export default class CasesDetailWorkItemsController extends Controller {
   get columns() {
     return [
       "task",
-      "instance",
+      "case",
       "description",
       ...(this.status === "open"
         ? ["deadline", "responsible"]

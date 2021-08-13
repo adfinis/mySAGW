@@ -7,12 +7,14 @@ from django_filters.rest_framework import FilterSet
 from rest_framework.compat import distinct
 from rest_framework.filters import SearchFilter
 
+from mysagw.filters import CharMultiValueFilter
 from mysagw.identity import models
 
 
 class IdentityFilterSet(FilterSet):
     has_idp_id = BooleanFilter(field_name="idp_id", lookup_expr="isnull", exclude=True)
     memberships__organisation__organisation_name = CharFilter(distinct=True)
+    idp_ids = CharMultiValueFilter(field_name="idp_id")
 
     class Meta:
         model = models.Identity

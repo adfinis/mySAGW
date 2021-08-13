@@ -391,7 +391,7 @@ workItems:
   title: "Open tasks"
   completedTitle: "Completed tasks"
   task: "Task"
-  instance: "Document"
+  case: "Document"
   description: "Description"
   closedAt: "Completed on"
   closedBy: "Completed by"

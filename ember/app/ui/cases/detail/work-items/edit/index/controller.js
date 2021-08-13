@@ -6,6 +6,7 @@ import calumaQuery from "ember-caluma/caluma-query";
 import { allWorkItems } from "ember-caluma/caluma-query/queries";
 import { dropTask, lastValue } from "ember-concurrency";
 import moment from "moment";
+import ENV from "mysagw/config/environment";
 import saveWorkItemMutation from "mysagw/gql/mutations/save-work-item.graphql";
 
 export default class CasesDetailWorkItemsEditController extends Controller {
@@ -14,7 +15,6 @@ export default class CasesDetailWorkItemsEditController extends Controller {
   @service store;
   @service notification;
   @service intl;
-  @service moment;
 
   @calumaQuery({ query: allWorkItems, options: "options" })
   workItemsQuery;
@@ -23,6 +23,13 @@ export default class CasesDetailWorkItemsEditController extends Controller {
     return {
       pageSize: 1,
     };
+  }
+
+  get canCompleteTask() {
+    return (
+      !this.workItem?.document &&
+      ENV.APP.caluma.manuallyCompletableTasks.includes(this.workItem?.task.slug)
+    );
   }
 
   @lastValue("fetchWorkItem") workItem;

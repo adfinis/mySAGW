@@ -11,7 +11,11 @@
     @disabled={{not this.workItem.canEdit}}
     as |content|
   >
-    <DocumentValidity @document={{content.document}} as |isValid|>
+    <DocumentValidity
+      @document={{content.document}}
+      @validateOnEnter={{false}}
+      as |isValid validate|
+    >
       {{content.form}}
 
       {{#if this.workItem.canComplete}}
@@ -21,8 +25,8 @@
           @type="submit"
           @color="primary"
           @label={{t "workItems.actions.finish"}}
+          @beforeMutate={{validate}}
           @onSuccess={{this.transitionToCaseWorkItems}}
-          @disabled={{not isValid}}
         />
       {{/if}}
       {{#if this.workItem.canSkip}}
@@ -31,8 +35,8 @@
           @workItemId={{@model}}
           @type="submit"
           @label={{t "workItems.actions.skip"}}
+          @beforeMutate={{validate}}
           @onSuccess={{this.transitionToCaseWorkItems}}
-          @disabled={{not isValid}}
         />
       {{/if}}
     </DocumentValidity>

@@ -145,7 +145,7 @@
       @color="primary"
       @label={{t "global.save"}}
     />
-    {{#unless this.workItem.document}}
+    {{#if this.canCompleteTask}}
       <WorkItemButton
         @mutation="complete"
         @workItemId={{this.workItem.id}}
@@ -155,6 +155,6 @@
         @disabled={{not this.workItem.canComplete}}
         @onSuccess={{this.transitionToWorkItems}}
       />
-    {{/unless}}
+    {{/if}}
   </div>
 </form>

@@ -1,4 +1,4 @@
-<tr class={{this.highlightClasses}} {{did-insert (perform this.getIdentity)}}>
+<tr class={{this.highlightClasses}}>
   {{#if @highlight}}
     <td class="uk-padding-remove-horizontal uk-text-center"></td>
   {{/if}}
@@ -20,7 +20,7 @@
             {{@workItem.name}}
           </LinkTo>
         {{/if}}
-      {{else if (eq column "instance")}}
+      {{else if (eq column "case")}}
         <LinkTo
           @route="cases.detail"
           @model={{@workItem.case.id}}
@@ -45,8 +45,6 @@
         }}
       {{else if (eq column "closedBy")}}
         {{if @workItem.closedByUser @workItem.closedByUser.fullName "-"}}
-      {{else if (eq column "description")}}
-        <span title={{@workItem.instanceDescription}}>{{@workItem.instanceDescription}}</span>
       {{else if (eq column "status")}}
         {{@workItem.statusName}}
       {{/if}}

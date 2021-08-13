@@ -6,8 +6,7 @@ import { queryManager } from "ember-apollo-client";
 import calumaQuery from "ember-caluma/caluma-query";
 import { allWorkItems } from "ember-caluma/caluma-query/queries";
 import { dropTask, lastValue } from "ember-concurrency";
-import moment from "moment";
-import createWorkItem from "mysagw/gql/mutations/create-work-item.graphql";
+import completeWorkItem from "mysagw/gql/mutations/complete-work-item.graphql";
 
 export default class CasesDetailCirculationController extends Controller {
   @queryManager apollo;
@@ -15,15 +14,50 @@ export default class CasesDetailCirculationController extends Controller {
   @service store;
   @service notification;
   @service intl;
-  @service router;
 
   @tracked selectedIdentities = [];
 
   @calumaQuery({ query: allWorkItems })
   workItemsQuery;
 
+  @calumaQuery({ query: allWorkItems })
+  circulationWorkItemsQuery;
+
   get circulationWorkItem() {
-    return this.model.workItems.edges.findBy("node.task.slug", "circulation");
+    return (
+      this.circulationWorkItemsQuery.value.findBy("task.slug", "circulation") ??
+      this.model.workItems.edges.findBy("node.task.slug", "circulation")?.node
+    );
+  }
+
+  get finishCirculationWorkItem() {
+    return this.circulationWorkItemsQuery.value.findBy(
+      "task.slug",
+      "finish-circulation"
+    );
+  }
+
+  get inviteToCirculationWorkItem() {
+    return this.circulationWorkItemsQuery.value.find((workItem) => {
+      return workItem.task.slug === "invite-to-circulation" && workItem.isReady;
+    });
+  }
+
+  get canFinishCirculation() {
+    if (!this.workItemsQuery.value.length) {
+      return false;
+    }
+
+    return this.workItemsQuery.value.every(
+      (workItem) => workItem.raw.status === "COMPLETED"
+    );
+  }
+
+  get circulationActive() {
+    return (
+      (this.circulationWorkItem?.raw?.status ??
+        this.circulationWorkItem?.status) === "READY"
+    );
   }
 
   get identities() {
@@ -35,14 +69,6 @@ export default class CasesDetailCirculationController extends Controller {
     return this._identities?.filter((identity) => {
       return !assignedUsers.includes(identity.idpId);
     });
-  }
-
-  get canFinishCirculation() {
-    return this.circulationWorkItem.node.childCase.status === "COMPLETED";
-  }
-
-  get circulationActive() {
-    return this.circulationWorkItem.node.status === "READY";
   }
 
   @lastValue("fetchIdentities") _identities;
@@ -60,10 +86,14 @@ export default class CasesDetailCirculationController extends Controller {
   @dropTask
   *fetchWorkItems() {
     try {
+      if (!this.circulationWorkItem) {
+        return;
+      }
+
       yield this.workItemsQuery.fetch({
         filter: [
           { task: "circulation-decision" },
-          { case: this.circulationWorkItem.node.childCase.id },
+          { case: this.circulationWorkItem.childCase.id },
         ],
       });
     } catch (error) {
@@ -73,31 +103,37 @@ export default class CasesDetailCirculationController extends Controller {
   }
 
   @dropTask
-  *addToCirculation() {
-    for (const identity of this.selectedIdentities) {
-      yield this.apollo.mutate({
-        mutation: createWorkItem,
-        variables: {
-          input: {
-            case: this.circulationWorkItem.node.childCase.id,
-            multipleInstanceTask: "circulation-decision",
-            assignedUsers: [identity.idpId],
-            deadline: moment().add(5, "d").toISOString(),
-          },
+  *fetchCirculationWorkItems() {
+    yield this.circulationWorkItemsQuery.fetch({
+      filter: [
+        {
+          tasks: ["circulation", "invite-to-circulation", "finish-circulation"],
         },
-      });
-    }
+        { caseFamily: this.model.id },
+      ],
+    });
+  }
+
+  @dropTask
+  *addToCirculation() {
+    yield this.apollo.mutate({
+      mutation: completeWorkItem,
+      variables: {
+        id: this.inviteToCirculationWorkItem.id,
+        context: JSON.stringify({
+          assign_users: this.selectedIdentities.mapBy("idpId"),
+        }),
+      },
+    });
 
     this.selectedIdentities = [];
 
     yield this.fetchWorkItems.perform();
+    yield this.fetchCirculationWorkItems.perform();
   }
 
   @action
   transitionToCaseWorkItems() {
-    this.transitionToRoute(
-      "cases.detail.work-items",
-      this.circulationWorkItem.node.childCase.id
-    );
+    this.transitionToRoute("cases.detail.work-items", this.model.id);
   }
 }
