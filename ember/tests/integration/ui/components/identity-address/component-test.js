@@ -41,6 +41,8 @@ module("Integration | Component | identity-addresses", function (hooks) {
     assert.dom("form").exists();
 
     await fillIn("input[name=streetAndNumber]", "Musterstrasse. 1");
+    await fillIn("input[name=postcode]", "8000");
+    await fillIn("input[name=town]", "Zürich");
     await click("button[type=submit]");
 
     assert.dom("form").doesNotExist();

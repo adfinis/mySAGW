@@ -3,7 +3,9 @@ import { LocalizedModel, localizedAttr } from "ember-localized-model";
 
 export default class IdentityModel extends LocalizedModel {
   @belongsTo("identity") identity;
-  @attr addressAddition;
+  @attr addressAddition1;
+  @attr addressAddition2;
+  @attr addressAddition3;
   @attr streetAndNumber;
   @attr poBox;
   @attr postcode;

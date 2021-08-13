@@ -597,7 +597,7 @@ def test_identity_export_labels_context(
     identities[1].organisation_name = "SAGW"
     identities[1].save()
     identity1_address = identities[1].addresses.first()
-    identity1_address.address_addition = "Haus der Akademien"
+    identity1_address.address_addition_1 = "Haus der Akademien"
     identity1_address.po_box = "23"
     identity1_address.save()
 

@@ -98,14 +98,23 @@
       as |Form|
     >
       <Form.input
-        @label={{t "component.identity-addresses.form.label.addressAddition"}}
-        @name="addressAddition"
+        @label={{t "component.identity-addresses.form.label.addressAddition1"}}
+        @name="addressAddition1"
+      />
+
+      <Form.input
+        @label={{t "component.identity-addresses.form.label.addressAddition2"}}
+        @name="addressAddition2"
+      />
+
+      <Form.input
+        @label={{t "component.identity-addresses.form.label.addressAddition3"}}
+        @name="addressAddition3"
       />
 
       <Form.input
         @label={{t "component.identity-addresses.form.label.streetAndNumber"}}
         @name="streetAndNumber"
-        @required={{false}}
       />
 
       <Form.input
