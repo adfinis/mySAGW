@@ -28,7 +28,9 @@ class IdentityExport:
         "phone_numbers": lambda i, a: "\n".join(
             _fetch_related_strings(i.phone_numbers, "phone")
         ),
-        "address_addition": lambda i, a: "" if not a else a.address_addition,
+        "address_addition_1": lambda i, a: "" if not a else a.address_addition_1,
+        "address_addition_2": lambda i, a: "" if not a else a.address_addition_2,
+        "address_addition_3": lambda i, a: "" if not a else a.address_addition_3,
         "street_and_number": lambda i, a: "" if not a else a.street_and_number,
         "po_box": lambda i, a: "" if not a else a.po_box,
         "postcode": lambda i, a: "" if not a else a.postcode,

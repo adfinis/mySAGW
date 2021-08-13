@@ -284,7 +284,9 @@ component:
         add: "Add address"
         edit: "Edit address"
       label:
-        addressAddition: "Address addition"
+        addressAddition1: "Address addition 1"
+        addressAddition2: "Address addition 2"
+        addressAddition3: "Address addition 3"
         streetAndNumber: "Street and number"
         poBox: "P.O. box"
         postcode: "Postcode"

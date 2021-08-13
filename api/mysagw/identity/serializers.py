@@ -80,7 +80,9 @@ class AddressSerializer(SetModifyingUserOnIdentityMixin, serializers.ModelSerial
         model = models.Address
         fields = (
             "identity",
-            "address_addition",
+            "address_addition_1",
+            "address_addition_2",
+            "address_addition_3",
             "street_and_number",
             "po_box",
             "postcode",

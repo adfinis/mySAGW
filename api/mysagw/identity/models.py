@@ -144,7 +144,9 @@ class Address(UUIDModel, HistoricalModel):
     identity = models.ForeignKey(
         Identity, related_name="addresses", on_delete=models.CASCADE
     )
-    address_addition = models.CharField(max_length=255, null=True, blank=True)
+    address_addition_1 = models.CharField(max_length=255, null=True, blank=True)
+    address_addition_2 = models.CharField(max_length=255, null=True, blank=True)
+    address_addition_3 = models.CharField(max_length=255, null=True, blank=True)
     street_and_number = models.CharField(max_length=255)
     po_box = models.CharField(max_length=255, null=True, blank=True)
     postcode = models.CharField(max_length=255)
