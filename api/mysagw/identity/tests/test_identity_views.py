@@ -375,10 +375,7 @@ def test_identity_search(
 
     json = response.json()
 
-    received_ids = []
-    for snippet in json["data"]:
-        received_ids.append(snippet["id"])
-    received_ids = sorted(received_ids)
+    received_ids = sorted([s["id"] for s in json["data"]])
 
     assert expected_ids == received_ids
 
@@ -410,10 +407,7 @@ def test_identity_organisation_filters(db, client, identity_factory, is_organisa
 
     json = response.json()
 
-    received_ids = []
-    for identity in json["data"]:
-        received_ids.append(identity["id"])
-    received_ids = sorted(received_ids)
+    received_ids = sorted([i["id"] for i in json["data"]])
 
     assert expected_ids == received_ids
 
@@ -448,18 +442,13 @@ def test_identity_idp_ids_filters(db, client, identity_factory):
 
     url = reverse("identity-list")
 
-    print({"filter[idpIds]": ",".join(expected_ids)})
     response = client.get(url, {"filter[idpIds]": ",".join(expected_ids)})
 
     assert response.status_code == status.HTTP_200_OK
 
     json = response.json()
 
-    received_ids = []
-    print(json["data"])
-    for identity in json["data"]:
-        received_ids.append(identity["attributes"]["idp-id"])
-    received_ids = sorted(received_ids)
+    received_ids = sorted([i["attributes"]["idp-id"] for i in json["data"]])
 
     assert expected_ids == received_ids
 

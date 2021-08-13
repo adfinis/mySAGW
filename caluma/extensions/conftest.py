@@ -16,7 +16,7 @@ def caluma_data(db):
 
 
 @pytest.fixture
-def user(db):
+def user():
     return BaseUser(username="name", claims={"sub": "test"})
 
 

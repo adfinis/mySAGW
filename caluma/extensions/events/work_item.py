@@ -37,23 +37,26 @@ def create_circulation_child_case(sender, work_item, user, **kwargs):
 @on(post_create_work_item, raise_exception=True)
 @transaction.atomic
 def invite_to_circulation(sender, work_item, user, context, **kwargs):
-    if work_item.task_id == "circulation-decision" and context is not None:
-        for index, assign_user in enumerate(context["assign_users"]):
-            if not index:
-                work_item.assigned_users = [assign_user]
-                work_item.save()
-            else:
-                caluma_workflow_models.WorkItem.objects.create(
-                    name=work_item.task.name,
-                    description=work_item.task.description,
-                    task=work_item.task,
-                    status=caluma_workflow_models.WorkItem.STATUS_READY,
-                    assigned_users=[assign_user],
-                    case=work_item.case,
-                    document=caluma_form_models.Document.objects.create(
-                        form=work_item.document.form
-                    ),
-                )
+    if work_item.task_id != "circulation-decision" or context is None:
+        return
+
+    for index, assign_user in enumerate(context["assign_users"]):
+        if index == 0:
+            work_item.assigned_users = [assign_user]
+            work_item.save()
+            continue
+
+        caluma_workflow_models.WorkItem.objects.create(
+            name=work_item.task.name,
+            description=work_item.task.description,
+            task=work_item.task,
+            status=caluma_workflow_models.WorkItem.STATUS_READY,
+            assigned_users=[assign_user],
+            case=work_item.case,
+            document=caluma_form_models.Document.objects.create(
+                form=work_item.document.form
+            ),
+        )
 
 
 @on(pre_complete_work_item, raise_exception=True)
