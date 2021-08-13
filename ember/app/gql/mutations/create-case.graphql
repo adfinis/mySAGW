@@ -1,5 +1,5 @@
 mutation($form: ID!, $workflow: ID!) {
-  saveCase(input: { form: $form, workflow: $workflow }) {
+  startCase(input: { form: $form, workflow: $workflow }) {
     case {
       id
       workItems {
