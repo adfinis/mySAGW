@@ -14,6 +14,16 @@ query getCaseQuery($caseId: ID!) {
             name
             description
           }
+          answers(filter: [{ question: "dossier-nr" }]) {
+            edges {
+              node {
+                id
+                ... on StringAnswer {
+                  value
+                }
+              }
+            }
+          }
         }
         workItems {
           edges {

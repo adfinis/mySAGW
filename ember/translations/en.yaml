@@ -403,6 +403,7 @@ workItems:
   createdBy: "Created on"
   createdAt: "Created by"
   status: "Status"
+  documentNumber: "Number"
 
   saveSuccess: "Task successfully saved"
   finishSuccess: "Task successfully completed"

@@ -9,10 +9,10 @@
       <tbody>
         <tr>
           <th class="uk-text-bold uk-width-1-6">
-            {{t "documents.status"}}
+            {{t "documents.number"}}
           </th>
           <td class="uk-width-1-3">
-            <CaseStateLabel @state={{@model.status}} @iconPosition="right" />
+            {{@model.document.answers.edges.firstObject.node.value}}
           </td>
           <th class="uk-text-bold uk-width-1-6">
             {{t "documents.description"}}
@@ -48,6 +48,12 @@
         <tr>
           <th>{{t "workItems.title"}}</th>
           <td>{{this.readyWorkItems}}</td>
+          <th class="uk-text-bold uk-width-1-6">
+            {{t "documents.status"}}
+          </th>
+          <td class="uk-width-1-3">
+            <CaseStateLabel @state={{@model.status}} @iconPosition="right" />
+          </td>
         </tr>
       </tbody>
     </table>

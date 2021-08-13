@@ -164,6 +164,16 @@ export default class CustomWorkItemModel extends WorkItemModel {
           slug
           name
         }
+        answers(filter: [{question: "dossier-nr"}]) {
+          edges {
+            node {
+              id
+              ... on StringAnswer {
+                value
+              }
+            }
+          }
+        }
       }
     }
     childCase {
