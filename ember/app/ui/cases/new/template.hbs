@@ -6,21 +6,25 @@
   {{t "documents.new.type"}}
 </p>
 
-<div class="uk-margin-bottom uk-margin-large-top uk-flex uk-flex-wrap">
-  {{#each this.forms as |form|}}
-    <div class="uk-padding-small uk-width-1-2">
-      <UkButton
-        @width="1-1"
-        @label={{concat form.name}}
-        @color={{
-          if (eq form.slug this.selectedForm) "secondary" "default"
-        }}
-        @on-click={{fn (mut this.selectedForm) form.slug}}
-        class=""
-      />
-    </div>
-  {{/each}}
-</div>
+{{#if this.fetchForms.isRunning}}
+  <LoadingSpinner />
+{{else}}
+  <div class="uk-margin-bottom uk-margin-large-top uk-flex uk-flex-wrap">
+    {{#each this.forms as |form|}}
+      <div class="uk-padding-small uk-width-1-2">
+        <UkButton
+          @width="1-1"
+          @label={{form.name}}
+          @color={{
+            if (eq form.slug this.selectedForm) "secondary" "default"
+          }}
+          @on-click={{fn (mut this.selectedForm) form.slug}}
+          class=""
+        />
+      </div>
+    {{/each}}
+  </div>
+{{/if}}
 
 <div class="uk-text-right">
   <UkButton

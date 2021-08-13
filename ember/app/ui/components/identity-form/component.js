@@ -88,6 +88,8 @@ export default class IdentityFormComponent extends Component {
     try {
       if (!changeset.get("isOrganisation")) {
         changeset.set("organisationName", null);
+        changeset.set("isExpertAssociation", false);
+        changeset.set("isAdvisoryBoard", false);
       }
 
       yield changeset.save({

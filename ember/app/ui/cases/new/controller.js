@@ -42,11 +42,35 @@ export default class CaseNewController extends Controller.extend(
   @lastValue("fetchForms") forms;
   @task
   *fetchForms() {
+    const organisations = (yield this.store.findAll("identity", {
+      adapterOptions: { customEndpoint: "my-orgs" },
+    })).filterBy("isAuthorized");
+
+    const organisationTypeFilter = [];
+    if (!organisations.isAny("isExpertAssociation")) {
+      organisationTypeFilter.push({
+        metaHasKey: "expertAssociationForm",
+        invert: true,
+      });
+    }
+    if (!organisations.isAny("isAdvisoryBoard")) {
+      organisationTypeFilter.push({
+        metaHasKey: "advisoryBoardForm",
+        invert: true,
+      });
+    }
+
     return (yield this.apollo.query(
       {
         query: getRootFormsQuery,
+        variables: {
+          filter: [
+            { isPublished: true },
+            { isArchived: false },
+            ...organisationTypeFilter,
+          ],
+        },
         fetchPolicy: "network-only",
-        variables: { isPublished: true, isArchived: false },
       },
       "allForms.edges"
     )).mapBy("node");

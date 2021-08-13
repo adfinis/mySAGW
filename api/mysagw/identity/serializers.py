@@ -160,6 +160,14 @@ class IdentitySerializer(TrackingSerializer):
             elif not organisation_name:
                 raise ValidationError(no_organisation_name_msg)
 
+        if not self.instance.is_organisation and (
+            validated_data.get("is_expert_association")
+            or validated_data.get("is_advisory_board")
+        ):
+            raise ValidationError(
+                'Can\'t set "is_expert_association" or "is_advisory_board", because it isn\'t a organisation.'
+            )
+
         return validated_data
 
     class Meta:
@@ -177,6 +185,8 @@ class IdentitySerializer(TrackingSerializer):
             "addresses",
             "is_organisation",
             "organisation_name",
+            "is_expert_association",
+            "is_advisory_board",
             "has_memberships",
             "has_members",
         )
@@ -224,6 +234,8 @@ class MyOrgsSerializer(serializers.ModelSerializer):
             "language",
             "is_organisation",
             "organisation_name",
+            "is_expert_association",
+            "is_advisory_board",
             "is_authorized",
             "email",
         )

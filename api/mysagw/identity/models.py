@@ -86,6 +86,8 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
     )
     interests = models.ManyToManyField(Interest, related_name="identities", blank=True)
     is_organisation = models.BooleanField(default=False)
+    is_expert_association = models.BooleanField(default=False)
+    is_advisory_board = models.BooleanField(default=False)
 
     def _get_memberships(self, only_authorized=False):
         memberships = Membership.objects.filter(

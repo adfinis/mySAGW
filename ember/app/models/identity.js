@@ -13,8 +13,11 @@ export default class IdentityModel extends LocalizedModel {
   @hasMany phoneNumbers;
   @hasMany interests;
   @attr isOrganisation;
+  @attr isExpertAssociation;
+  @attr isAdvisoryBoard;
   @attr hasMemberships;
   @attr hasMembers;
+  @attr isAuthorized;
 
   get fullName() {
     return [this.firstName, this.lastName].filter(Boolean).join(" ");
