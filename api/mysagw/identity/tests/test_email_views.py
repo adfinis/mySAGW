@@ -90,7 +90,7 @@ def test_email_identity_filters(db, client, email_factory):
 def test_email_create(db, identity, client, own, expected_status):
     if own:
         client.user.identity = identity
-    assert identity.modified_by_user != client.user.username
+    assert identity.modified_by_user != client.user.id
 
     url = reverse("email-list")
 
@@ -115,7 +115,7 @@ def test_email_create(db, identity, client, own, expected_status):
     email = models.Email.objects.first()
     assert email.email == "test@example.com"
     identity.refresh_from_db()
-    assert identity.modified_by_user == client.user.username
+    assert identity.modified_by_user == client.user.id
 
 
 def test_email_create_with_includes(db, email_factory, client):
@@ -174,7 +174,7 @@ def test_email_update(
     identity_factory,
     membership_factory,
 ):
-    assert email.identity.modified_by_user != client.user.username
+    assert email.identity.modified_by_user != client.user.id
 
     email.description = "Bar"
     if own:
@@ -214,7 +214,7 @@ def test_email_update(
     email.identity.refresh_from_db()
 
     assert email.description.de == "Foo"
-    assert email.identity.modified_by_user == client.user.username
+    assert email.identity.modified_by_user == client.user.id
 
 
 @pytest.mark.parametrize(

@@ -85,7 +85,7 @@ def test_identity_create(db, client, expected_status):
         return
 
     identity = Identity.objects.get(first_name="foo")
-    assert identity.created_by_user == identity.modified_by_user == client.user.username
+    assert identity.created_by_user == identity.modified_by_user == client.user.id
     json = response.json()
     assert (
         json["data"]["attributes"]["created-at"]
@@ -170,7 +170,7 @@ def test_identity_update(db, client, expected_status, identity_factory):
         return
 
     identity.refresh_from_db()
-    assert identity.modified_by_user == client.user.username
+    assert identity.modified_by_user == client.user.id
 
 
 @pytest.mark.parametrize(

@@ -7,8 +7,8 @@ class TrackingSerializer(serializers.ModelSerializer):
 
         user = self.context["request"].user
         if self.instance is None:
-            validated_data["created_by_user"] = user.username
-        validated_data["modified_by_user"] = user.username
+            validated_data["created_by_user"] = user.id
+        validated_data["modified_by_user"] = user.id
 
         return validated_data
 

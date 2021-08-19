@@ -9,7 +9,7 @@ from . import models
 
 class SetModifyingUserOnIdentityMixin:
     def set_modifying_user_on_identity(self, instance):
-        instance.identity.modified_by_user = self.context["request"].user.username
+        instance.identity.modified_by_user = self.context["request"].user.id
         instance.identity.save()
 
     def create(self, validated_data):

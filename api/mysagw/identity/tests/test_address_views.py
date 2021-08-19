@@ -70,7 +70,7 @@ def test_address_create(db, identity, client, own, expected_status):
     if own:
         client.user.identity = identity
 
-    assert identity.modified_by_user != client.user.username
+    assert identity.modified_by_user != client.user.id
 
     url = reverse("address-list")
 
@@ -104,7 +104,7 @@ def test_address_create(db, identity, client, own, expected_status):
     assert address.default is True
 
     identity.refresh_from_db()
-    assert identity.modified_by_user == client.user.username
+    assert identity.modified_by_user == client.user.id
 
 
 def test_address_create_new_default(db, address_factory, client):
@@ -165,7 +165,7 @@ def test_address_create_new_default(db, address_factory, client):
     indirect=["client"],
 )
 def test_address_update(db, client, own, expected_status, address):
-    assert address.identity.modified_by_user != client.user.username
+    assert address.identity.modified_by_user != client.user.id
 
     address.description = "Bar"
     if own:
@@ -200,7 +200,7 @@ def test_address_update(db, client, own, expected_status, address):
     address.identity.refresh_from_db()
 
     assert dict(address.description) == {"de": "Foo", "en": "", "fr": ""}
-    assert address.identity.modified_by_user == client.user.username
+    assert address.identity.modified_by_user == client.user.id
 
 
 @pytest.mark.parametrize(
