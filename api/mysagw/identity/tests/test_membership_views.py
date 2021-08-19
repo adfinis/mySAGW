@@ -203,7 +203,7 @@ def test_membership_create(
     organisation_is_organisation,
 ):
     identity = identity_factory(is_organisation=identity_is_organisation)
-    assert identity.modified_by_user != client.user.username
+    assert identity.modified_by_user != client.user.id
     organisation = identity_factory(is_organisation=organisation_is_organisation)
 
     url = reverse("membership-list")
@@ -242,7 +242,7 @@ def test_membership_create(
     assert membership.organisation == organisation
     assert membership.time_slot == DateRange(start, end, bounds)
     assert membership.next_election == next_election
-    assert membership.identity.modified_by_user == client.user.username
+    assert membership.identity.modified_by_user == client.user.id
 
 
 @pytest.mark.parametrize(

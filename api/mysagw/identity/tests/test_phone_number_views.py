@@ -69,7 +69,7 @@ def test_phone_number_list(db, client, expected_count, phone_number_factory):
 def test_phone_number_create(db, identity, client, own, expected_status):
     if own:
         client.user.identity = identity
-    assert identity.modified_by_user != client.user.username
+    assert identity.modified_by_user != client.user.id
 
     url = reverse("phonenumber-list")
 
@@ -98,7 +98,7 @@ def test_phone_number_create(db, identity, client, own, expected_status):
     assert phone_number.default is True
 
     identity.refresh_from_db()
-    assert identity.modified_by_user == client.user.username
+    assert identity.modified_by_user == client.user.id
 
 
 def test_phone_number_create_new_default(db, phone_number_factory, client):
@@ -156,7 +156,7 @@ def test_phone_number_create_new_default(db, phone_number_factory, client):
     indirect=["client"],
 )
 def test_phone_number_update(db, client, own, expected_status, phone_number):
-    assert phone_number.identity.modified_by_user != client.user.username
+    assert phone_number.identity.modified_by_user != client.user.id
 
     phone_number.description = "Bar"
     if own:
@@ -191,7 +191,7 @@ def test_phone_number_update(db, client, own, expected_status, phone_number):
     phone_number.identity.refresh_from_db()
 
     assert dict(phone_number.description) == {"de": "Foo", "en": "", "fr": ""}
-    assert phone_number.identity.modified_by_user == client.user.username
+    assert phone_number.identity.modified_by_user == client.user.id
 
 
 def test_phone_number_update_unset_default(db, client, phone_number):
