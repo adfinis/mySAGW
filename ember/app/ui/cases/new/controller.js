@@ -40,7 +40,8 @@ export default class CaseNewController extends Controller.extend(
   }
 
   @lastValue("fetchForms") forms;
-  @task *fetchForms() {
+  @task
+  *fetchForms() {
     return (yield this.apollo.query(
       {
         query: getRootFormsQuery,
@@ -51,11 +52,21 @@ export default class CaseNewController extends Controller.extend(
     )).mapBy("node");
   }
 
-  @task *createCase() {
+  @task
+  *createCase() {
     const workflow = (yield this.apollo.query(
-      { query: getWorkflowQuery },
+      {
+        query: getWorkflowQuery,
+        variables: {
+          filter: [
+            {
+              slug: "document-review",
+            },
+          ],
+        },
+      },
       "allWorkflows.edges"
-    )).mapBy("node").firstObject;
+    )).firstObject.node;
 
     const newCase = yield this.apollo.mutate({
       mutation: createCaseMutation,
