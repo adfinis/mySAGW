@@ -1,3 +1,4 @@
+from django.core.mail import send_mail
 from django.db import transaction
 
 from caluma.caluma_core.events import on
@@ -7,6 +8,10 @@ from caluma.caluma_workflow import (
     models as caluma_workflow_models,
 )
 from caluma.caluma_workflow.events import post_create_work_item, pre_complete_work_item
+
+from .. import email_texts
+from ..common import get_api_user_attributes
+from ..settings import settings
 
 
 @on(post_create_work_item, raise_exception=True)
@@ -20,6 +25,37 @@ def set_assigned_user(sender, work_item, user, **kwargs):
         ).assigned_users
 
     work_item.save()
+
+
+@on(post_create_work_item, raise_exception=True)
+def send_new_work_item_mail(sender, work_item, user, **kwargs):
+    if work_item.task_id not in ["revise-document", "additional-data"]:
+        return
+
+    assigned_users = caluma_workflow_models.WorkItem.objects.get(
+        task_id="submit-document", case=work_item.case
+    ).assigned_users
+
+    api_user = get_api_user_attributes(user.token.decode(), assigned_users[0])
+
+    subject = email_texts.EMAIL_SUBJECTS[api_user["language"]]
+    body = email_texts.EMAIL_BODIES[api_user["language"]]
+
+    link = f"{settings.SELF_URI}/cases/{work_item.case.pk}/work-items/{work_item.pk}"
+
+    body = body.format(
+        first_name=api_user["first-name"] or "",
+        last_name=api_user["last-name"] or "",
+        link=link,
+    )
+
+    send_mail(
+        subject,
+        body,
+        settings.MAILING_SENDER,
+        [api_user["email"]],
+        fail_silently=False,
+    )
 
 
 @on(post_create_work_item, raise_exception=True)
