@@ -5,7 +5,7 @@ from caluma.caluma_core.permissions import (
     permission_for,
 )
 from caluma.caluma_form.schema import SaveDocumentAnswer
-from caluma.caluma_workflow.schema import SaveCase
+from caluma.caluma_workflow.schema import CompleteWorkItem, SaveCase, StartCase
 
 
 class MySAGWPermission(BasePermission):
@@ -28,6 +28,8 @@ class MySAGWPermission(BasePermission):
 
     @permission_for(SaveCase)
     @object_permission_for(SaveCase)
+    @permission_for(StartCase)
+    @object_permission_for(StartCase)
     def has_permission_for_save_case(self, mutation, info, case=None):
         return True
 
@@ -43,3 +45,11 @@ class MySAGWPermission(BasePermission):
                 and self._is_assigned(info, answer.document.case.parent_work_item)
             )
         )
+
+    @permission_for(CompleteWorkItem)
+    def has_permission_for_complete_work_item(self, mutation, info):
+        return True
+
+    @object_permission_for(CompleteWorkItem)
+    def has_object_permission_for_complete_work_item(self, mutation, info, work_item):
+        return self._is_admin_or_sagw(info) or self._is_assigned(info, work_item)
