@@ -33,7 +33,7 @@ query getCasesQuery(
             name
             description
           }
-          answers(filter: [{question: "dossier-nr"}]) {
+          answers(filter: [{ question: "dossier-nr" }]) {
             edges {
               node {
                 id

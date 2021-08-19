@@ -35,8 +35,8 @@
     "ember-auto-import": "^1.10.1",
     "ember-caluma": "^7.5.0",
     "ember-can": "^3.0.0",
-    "ember-changeset": "^3.13.8",
-    "ember-changeset-validations": "^3.14.7",
+    "ember-changeset": "^3.15.0",
+    "ember-changeset-validations": "^3.16.0",
     "ember-cli": "~3.24.0",
     "ember-cli-app-version": "^3.2.0",
     "ember-cli-babel": "^7.19.0",
@@ -83,7 +83,6 @@
     "ember-validated-form": "^4.0.1",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-decorator-position": "^2.2.29",
     "eslint-plugin-ember": "^10.5.1",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-node": "^11.1.0",
@@ -99,8 +98,9 @@
     "sass": "^1.36.0"
   },
   "resolutions": {
-    "focus-trap": "6.2.1",
-    "uikit": "3.6.22"
+    "focus-trap": "6.6.1",
+    "uikit": "3.7.2",
+    "validated-changeset": "1.0.0"
   },
   "engines": {
     "node": "10.* || >= 12"
