@@ -4,7 +4,7 @@ import pytest
 
 from caluma.caluma_core.mutation import Mutation
 from caluma.caluma_form.schema import SaveDocumentAnswer
-from caluma.caluma_workflow.schema import SaveCase
+from caluma.caluma_workflow.schema import CompleteWorkItem, SaveCase, StartCase
 from caluma.extensions.permissions import MySAGWPermission
 
 _Fallbackobj = namedtuple("Fallbackobj", ["created_by_user"])
@@ -77,6 +77,7 @@ def test_permission_for_save_document_answer(
     assert perm.has_object_permission(mutation, admin_info, answer) is has_obj_perm
 
 
+@pytest.mark.parametrize("mutation", [SaveCase, StartCase])
 @pytest.mark.parametrize(
     "groups,created_by_user,has_perm,has_obj_perm",
     [
@@ -86,8 +87,8 @@ def test_permission_for_save_document_answer(
         (["foo"], "baz", True, True),
     ],
 )
-def test_permission_for_save_case(
-    db, admin_info, answer, groups, created_by_user, has_perm, has_obj_perm
+def test_permission_for_save_case_and_start_case(
+    db, admin_info, answer, mutation, groups, created_by_user, has_perm, has_obj_perm
 ):
     admin_info.context.user.groups = groups
     admin_info.context.user.claims["sub"] = "baz"
@@ -97,6 +98,29 @@ def test_permission_for_save_case(
 
     perm = MySAGWPermission()
 
-    mutation = SaveCase
     assert perm.has_permission(mutation, admin_info) is has_perm
     assert perm.has_object_permission(mutation, admin_info, answer) is has_obj_perm
+
+
+@pytest.mark.parametrize(
+    "groups,assigned_to_user,has_perm,has_obj_perm",
+    [
+        (["admin"], "bar", True, True),
+        (["sagw"], "bar", True, True),
+        (["foo"], "bar", True, False),
+        (["foo"], "baz", True, True),
+    ],
+)
+def test_permission_for_complete_work_item(
+    db, admin_info, work_item, groups, assigned_to_user, has_perm, has_obj_perm
+):
+    admin_info.context.user.groups = groups
+    admin_info.context.user.claims["sub"] = "baz"
+
+    work_item.assigned_users = [assigned_to_user]
+    work_item.save()
+    perm = MySAGWPermission()
+
+    mutation = CompleteWorkItem
+    assert perm.has_permission(mutation, admin_info) is has_perm
+    assert perm.has_object_permission(mutation, admin_info, work_item) is has_obj_perm
