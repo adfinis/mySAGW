@@ -13,27 +13,6 @@ export default class App extends Application {
     super(...args);
 
     this.engines = {
-      emberEmeis: {
-        dependencies: {
-          services: [
-            { store: "emeis-store" },
-            "intl",
-            "notification",
-            "router",
-          ],
-        },
-      },
-      emberAlexandria: {
-        dependencies: {
-          services: [
-            { store: "alexandria-store" },
-            "intl",
-            "notification",
-            "router",
-            { config: "alexandria-config" },
-          ],
-        },
-      },
       emberCaluma: {
         dependencies: {
           services: [
