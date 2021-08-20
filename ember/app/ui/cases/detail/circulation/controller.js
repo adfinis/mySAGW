@@ -6,6 +6,7 @@ import { queryManager } from "ember-apollo-client";
 import calumaQuery from "ember-caluma/caluma-query";
 import { allWorkItems } from "ember-caluma/caluma-query/queries";
 import { dropTask, lastValue } from "ember-concurrency";
+
 import completeWorkItem from "mysagw/gql/mutations/complete-work-item.graphql";
 
 export default class CasesDetailCirculationController extends Controller {

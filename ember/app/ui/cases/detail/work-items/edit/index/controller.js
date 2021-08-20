@@ -6,6 +6,7 @@ import calumaQuery from "ember-caluma/caluma-query";
 import { allWorkItems } from "ember-caluma/caluma-query/queries";
 import { dropTask, lastValue } from "ember-concurrency";
 import moment from "moment";
+
 import ENV from "mysagw/config/environment";
 import saveWorkItemMutation from "mysagw/gql/mutations/save-work-item.graphql";
 

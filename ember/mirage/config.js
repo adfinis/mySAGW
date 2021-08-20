@@ -1,4 +1,5 @@
 import graphqlHandler from "ember-caluma/mirage-graphql";
+
 import parseFilters from "mysagw/mirage/helpers/parse-filters";
 
 export default function () {

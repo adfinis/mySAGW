@@ -1,5 +1,6 @@
 import Route from "@ember/routing/route";
 import { queryManager } from "ember-apollo-client";
+
 import getCaseQuery from "mysagw/gql/queries/get-case.graphql";
 
 export default class CasesDetailRoute extends Route {

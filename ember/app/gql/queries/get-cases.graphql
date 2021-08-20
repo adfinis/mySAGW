@@ -1,10 +1,9 @@
-query getCasesQuery($cursor: String, $filter: [CaseFilterSetType], $orderBy: [CaseOrdering]!) {
-  allCases(
-    first: 15
-    after: $cursor
-    orderBy: $orderBy
-    filter: $filter
-  ) {
+query getCasesQuery(
+  $cursor: String
+  $filter: [CaseFilterSetType]
+  $orderBy: [CaseOrdering]!
+) {
+  allCases(first: 15, after: $cursor, orderBy: $orderBy, filter: $filter) {
     pageInfo {
       hasNextPage
       endCursor
@@ -34,7 +33,7 @@ query getCasesQuery($cursor: String, $filter: [CaseFilterSetType], $orderBy: [Ca
             name
             description
           }
-          answers(filter: [{question: "dossier-nr"}]) {
+          answers(filter: [{ question: "dossier-nr" }]) {
             edges {
               node {
                 id

@@ -6,9 +6,10 @@ import { Changeset } from "ember-changeset";
 import lookupValidator from "ember-changeset-validations";
 import { dropTask, restartableTask, lastValue } from "ember-concurrency";
 import moment from "moment";
+import UIkit from "uikit";
+
 import applyError from "mysagw/utils/apply-error";
 import MembershipValidations from "mysagw/validations/membership";
-import UIkit from "uikit";
 
 /**
  * @arg identity

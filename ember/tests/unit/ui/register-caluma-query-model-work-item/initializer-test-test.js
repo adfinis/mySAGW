@@ -1,8 +1,9 @@
 import Application from "@ember/application";
 import { run } from "@ember/runloop";
 import Resolver from "ember-resolver";
-import { initialize } from "mysagw/initializers/register-caluma-query-model-work-item";
 import { module, test } from "qunit";
+
+import { initialize } from "mysagw/initializers/register-caluma-query-model-work-item";
 
 module(
   "Unit | Initializer | register-caluma-query-model-work-item",

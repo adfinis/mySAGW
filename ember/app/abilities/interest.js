@@ -1,9 +1,16 @@
-import { readOnly } from "@ember/object/computed";
 import BaseAbility from "mysagw/abilities/-base";
 
 export default class InterestAbility extends BaseAbility {
-  @readOnly("isStaff") canList;
-  @readOnly("isStaff") canAdd;
-  @readOnly("isStaff") canEdit;
-  @readOnly("isStaff") canDelete;
+  get canList() {
+    return this.isStaff;
+  }
+  get canAdd() {
+    return this.isStaff;
+  }
+  get canEdit() {
+    return this.isStaff;
+  }
+  get canDelete() {
+    return this.isStaff;
+  }
 }

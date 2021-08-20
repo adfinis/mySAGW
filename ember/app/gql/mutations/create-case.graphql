@@ -1,4 +1,4 @@
-mutation($form: ID!, $workflow: ID!) {
+mutation ($form: ID!, $workflow: ID!) {
   startCase(input: { form: $form, workflow: $workflow }) {
     case {
       id

@@ -1,6 +1,7 @@
 import { inject as service } from "@ember/service";
 import Component from "@glimmer/component";
-import { dropTask } from "ember-concurrency";
+import { dropTask } from "ember-concurrency-decorators";
+
 import applyError from "mysagw/utils/apply-error";
 
 export default class SnippetFormComponent extends Component {

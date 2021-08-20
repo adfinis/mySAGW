@@ -1,6 +1,5 @@
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
-import { filterBy } from "@ember/object/computed";
 import { inject as service } from "@ember/service";
 import { dropTask, restartableTask, lastValue } from "ember-concurrency";
 import UIkit from "uikit";
@@ -17,8 +16,9 @@ export default class InterestsIndexController extends Controller {
   }
 
   // List
-
-  @filterBy("allCategories", "isNew", false) categories;
+  get categories() {
+    return this.allCategories.filterBy("isNew", false);
+  }
 
   @lastValue("fetchInterests") allCategories;
 

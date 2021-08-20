@@ -1,8 +1,9 @@
-import { readOnly } from "@ember/object/computed";
 import BaseAbility from "mysagw/abilities/-base";
 
 export default class AdditionalEmailAbility extends BaseAbility {
-  @readOnly("isStaff") showMultiLangDescription;
+  get showMultiLangDescription() {
+    return this.isStaff;
+  }
 
   canAdd(identity) {
     return this.isStaffOrOwnIdentity(identity);

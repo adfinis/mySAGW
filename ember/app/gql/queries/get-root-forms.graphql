@@ -1,7 +1,7 @@
 query GetRootForms($filter: [FormFilterSetType]) {
   allForms(
-    orderBy: NAME_ASC,
-    filter: $filter,
+    orderBy: NAME_ASC
+    filter: $filter
   ) {
     edges {
       node {
