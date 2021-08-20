@@ -1,11 +1,11 @@
-<h1>{{t "page.interests.edit.title"}}</h1>
+<h1>{{t "interests.edit.title"}}</h1>
 
 <InterestCategoryForm @category={{this.model}} />
 
 <hr>
 
 <div class="uk-card uk-card-default uk-card-body uk-card-small">
-  <h2>{{t "page.interests.edit.list.title"}}</h2>
+  <h2>{{t "interests.edit.list.title"}}</h2>
   {{#if this.interests.length}}
     <ul
       class="uk-list uk-list-divider"
@@ -29,7 +29,7 @@
                 class="uk-icon-button uk-button-default"
                 type="button"
                 uk-icon="pencil"
-                title={{t "page.interests.edit.list.edit"}}
+                title={{t "interests.edit.list.edit"}}
                 disabled={{this.changeset}}
                 {{on "click" (fn this.edit interest)}}
                 data-test-interest-edit
@@ -41,7 +41,7 @@
                 class="uk-icon-button uk-button-default"
                 type="button"
                 uk-icon="close"
-                title={{t "page.interests.edit.list.delete"}}
+                title={{t "interests.edit.list.delete"}}
                 disabled={{or this.changeset this.delete.isRunning}}
                 {{on "click" (perform this.delete interest)}}
                 data-test-interest-edit
@@ -52,7 +52,7 @@
       {{/each}}
     </ul>
   {{else}}
-    <p>{{t "page.interests.edit.list.empty"}}</p>
+    <p>{{t "interests.edit.list.empty"}}</p>
   {{/if}}
 
   {{#if (can "add interest")}}
@@ -64,7 +64,7 @@
         {{on "click" (fn this.edit null)}}
         data-test-interest-add
       >
-        {{t "page.interests.edit.list.add"}}
+        {{t "interests.edit.list.add"}}
       </button>
     </p>
   {{/if}}
@@ -73,7 +73,7 @@
     <hr>
 
     <h3 class="uk-margin-remove-top">
-      {{t "page.interests.edit.form.title"}}
+      {{t "interests.edit.form.title"}}
     </h3>
 
     <ValidatedForm
@@ -83,12 +83,12 @@
       as |Form|
     >
       <Form.input
-        @label={{t "page.interests.edit.form.label.title"}}
+        @label={{t "interests.edit.form.label.title"}}
         @name="title"
       />
 
       <Form.input
-        @label={{t "page.interests.edit.form.label.description"}}
+        @label={{t "interests.edit.form.label.description"}}
         @name="description"
         @required={{false}}
       />
@@ -99,11 +99,11 @@
           type="button"
           {{on "click" this.cancel}}
         >
-          {{t "page.interests.edit.form.control.cancel"}}
+          {{t "global.cancel"}}
         </button>
 
         <Form.submit
-          @label={{t "page.interests.edit.form.control.submit"}}
+          @label={{t "global.save"}}
         />
       </p>
     </ValidatedForm>

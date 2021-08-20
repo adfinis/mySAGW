@@ -1,0 +1,26 @@
+identity-members:
+  title: "Members"
+  list:
+    empty: "No members yet."
+
+interest-category-form:
+  label:
+    title: "Title"
+    description: "Description"
+  success: "Category {category} saved successfully."
+
+membership-role-form:
+  label:
+    title: "Title ({lang})"
+    description: "Description ({lang})"
+  success: "Role {role} saved successfully."
+
+snippet-form:
+  label:
+    title: "Title"
+    body: "Body ({lang})"
+    archived: "Archived"
+  success: "Snippet {title} saved successfully."
+
+submit-button:
+  title: "Submit"

@@ -54,13 +54,13 @@ export default class InterestsEditController extends Controller {
     try {
       const options = { interest: interest.title };
       yield UIkit.modal.confirm(
-        this.intl.t("page.interests.edit.delete.prompt", options)
+        this.intl.t("interests.edit.delete.prompt", options)
       );
 
       try {
         yield interest.destroyRecord();
         this.notification.success(
-          this.intl.t("page.interests.edit.delete.success", options)
+          this.intl.t("interests.edit.delete.success", options)
         );
       } catch (error) {
         console.error(error);

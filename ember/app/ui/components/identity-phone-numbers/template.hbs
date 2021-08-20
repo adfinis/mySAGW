@@ -3,7 +3,7 @@
   {{did-update this.onUpdate @identity}}
   class="uk-margin-remove-last-child"
 >
-  <h2>{{t "component.identity-phone-numbers.title"}}</h2>
+  <h2>{{t "components.identity-phone-numbers.title"}}</h2>
 
   {{#if this.fetchPhoneNumbers.isRunning}}
     <LoadingSpinner />
@@ -46,7 +46,7 @@
                     type="button"
                     uk-icon="pencil"
                     disabled={{this.changeset}}
-                    title={{t "component.identity-phone-numbers.list.edit"}}
+                    title={{t "components.identity-phone-numbers.list.edit"}}
                     {{on "click" (fn this.edit phoneNumber)}}
                   ></button>
                 {{/if}}
@@ -61,7 +61,7 @@
                       this.delete.isRunning
                       (and phoneNumber.default (gt this.phoneNumbers.length 1))
                     }}
-                    title={{t "component.identity-phone-numbers.list.delete"}}
+                    title={{t "components.identity-phone-numbers.list.delete"}}
                     {{on "click" (perform this.delete phoneNumber)}}
                   ></button>
                 {{/if}}
@@ -71,7 +71,7 @@
         {{/each}}
       </ul>
     {{else}}
-      <p>{{t "component.identity-phone-numbers.list.empty"}}</p>
+      <p>{{t "components.identity-phone-numbers.list.empty"}}</p>
     {{/if}}
 
     {{#if (can "add phone-number")}}
@@ -83,7 +83,7 @@
           {{on "click" (fn this.edit null)}}
           data-test-phone-add
         >
-          {{t "component.identity-phone-numbers.add"}}
+          {{t "components.identity-phone-numbers.add"}}
         </button>
       </p>
     {{/if}}
@@ -94,8 +94,8 @@
 
     <h3 class="uk-margin-remove-top">
       {{if this.changeset.isNew
-        (t "component.identity-phone-numbers.form.title.add")
-        (t "component.identity-phone-numbers.form.title.edit")
+        (t "components.identity-phone-numbers.form.title.add")
+        (t "components.identity-phone-numbers.form.title.edit")
       }}
     </h3>
 
@@ -106,7 +106,7 @@
       as |Form|
     >
       <Form.input
-        @label={{t "component.identity-phone-numbers.form.label.phone"}}
+        @label={{t "components.identity-phone-numbers.form.label.phone"}}
         @name="phone"
       />
 
@@ -114,7 +114,7 @@
         <div class="uk-background-muted uk-padding-small uk-margin uk-margin-remove-last-child">
           {{#each this.intl.locales as |locale|}}
             <Form.input
-              @label={{t "component.identity-phone-numbers.form.label.description" lang=(uppercase locale)}}
+              @label={{t "components.identity-phone-numbers.form.label.description" lang=(uppercase locale)}}
               @name="descriptionObject.{{locale}}"
               @required={{false}}
             />
@@ -122,14 +122,14 @@
         </div>
       {{else}}
         <Form.input
-          @label={{t "component.identity-phone-numbers.form.label.description" lang=(uppercase this.intl.locale.firstObject)}}
+          @label={{t "components.identity-phone-numbers.form.label.description" lang=(uppercase this.intl.locale.firstObject)}}
           @name="descriptionObject.{{this.intl.locale.firstObject}}"
           @required={{false}}
         />
       {{/if}}
 
       <Form.input
-        @label={{t "component.identity-phone-numbers.form.label.default"}}
+        @label={{t "components.identity-phone-numbers.form.label.default"}}
         @type="checkbox"
         @name="default"
         @required={{false}}
@@ -142,11 +142,11 @@
           type="button"
           {{on "click" this.cancel}}
         >
-          {{t "component.identity-phone-numbers.form.control.cancel"}}
+          {{t "global.cancel"}}
         </button>
 
         <Form.submit
-          @label={{t "component.identity-phone-numbers.form.control.submit"}}
+          @label={{t "global.save"}}
         />
       </p>
     </ValidatedForm>

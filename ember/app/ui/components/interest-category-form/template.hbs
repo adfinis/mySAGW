@@ -10,12 +10,12 @@
       as |Form|
     >
       <Form.input
-        @label={{t "component.interest-category-form.label.title"}}
+        @label={{t "components.interest-category-form.label.title"}}
         @name="title"
       />
 
       <Form.input
-        @label={{t "component.interest-category-form.label.description"}}
+        @label={{t "components.interest-category-form.label.description"}}
         @name="description"
         @required={{false}}
       />
@@ -25,11 +25,11 @@
           class="uk-button uk-button-default"
           @route="interests"
         >
-          {{t "component.interest-category-form.control.cancel"}}
+          {{t "global.cancel"}}
         </LinkTo>
 
         <Form.submit
-          @label={{t "component.interest-category-form.control.submit"}}
+          @label={{t "global.save"}}
           @disabled={{cannot "edit interest-category" this.changeset.data}}
         />
       </p>

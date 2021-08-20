@@ -24,7 +24,7 @@ export default class CasesDetailWorkItemsEditFormController extends Controller {
       return this.workItemsQuery.value[0];
     } catch (error) {
       console.error(error);
-      this.notification.danger(this.intl.t("workItems.fetchError"));
+      this.notification.danger(this.intl.t("work-items.fetchError"));
     }
   }
 

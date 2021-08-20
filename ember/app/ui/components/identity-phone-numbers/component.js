@@ -93,14 +93,14 @@ export default class IdentityPhoneNumbersComponent extends Component {
     try {
       const options = { number: phoneNumber.phone };
       yield UIkit.modal.confirm(
-        this.intl.t("component.identity-phone-numbers.delete.prompt", options)
+        this.intl.t("components.identity-phone-numbers.delete.prompt", options)
       );
 
       try {
         yield phoneNumber.destroyRecord();
         this.notification.success(
           this.intl.t(
-            "component.identity-phone-numbers.delete.success",
+            "components.identity-phone-numbers.delete.success",
             options
           )
         );

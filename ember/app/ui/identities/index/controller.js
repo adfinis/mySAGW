@@ -121,7 +121,7 @@ export default class IdentitiesIndexController extends Controller {
       }
 
       const blob = yield response.blob();
-      const filename = `${this.intl.t("page.identities.index.export.filename", {
+      const filename = `${this.intl.t("identities.index.export.filename", {
         date: moment().format("YYYY-MM-DD"),
       })}.${fileExtension}`;
 

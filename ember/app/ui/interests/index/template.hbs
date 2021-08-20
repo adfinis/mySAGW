@@ -3,14 +3,14 @@
   {{did-update this.onUpdate}}
 >
   <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
-    <h1 class="uk-margin-remove">{{t "page.interests.index.title"}}</h1>
+    <h1 class="uk-margin-remove">{{t "interests.index.title"}}</h1>
 
     {{#if (can "add interest-category")}}
       <LinkTo
         @route="interests.add"
         class="uk-button uk-button-default uk-flex-none"
       >
-        {{t "page.interests.index.add"}}
+        {{t "interests.index.add"}}
       </LinkTo>
     {{/if}}
   </div>
@@ -42,7 +42,7 @@
                   <LinkTo
                     class="uk-icon-button uk-button-default"
                     uk-icon="pencil"
-                    title={{t "page.interests.index.list.edit"}}
+                    title={{t "interests.index.list.edit"}}
                     @route="interests.edit"
                     @model={{category.id}}
                     data-test-category-edit
@@ -54,7 +54,7 @@
                     class="uk-icon-button uk-button-default"
                     type="button"
                     uk-icon="close"
-                    title={{t "page.interests.index.list.delete"}}
+                    title={{t "interests.index.list.delete"}}
                     disabled={{or this.delete.isRunning}}
                     {{on "click" (perform this.delete category)}}
                     data-test-category-delete
@@ -80,6 +80,6 @@
       {{/each}}
     </div>
   {{else}}
-    <p>{{t "page.interests.index.list.empty"}}</p>
+    <p>{{t "interests.index.list.empty"}}</p>
   {{/if}}
 </div>

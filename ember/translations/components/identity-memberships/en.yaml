@@ -1,0 +1,27 @@
+title: "Memberships"
+add: "Add membership"
+timeSlotLower: "From"
+timeSlotUpper: "Until"
+
+list:
+  nextElection: "Next election {date}"
+  edit: "Edit membership"
+  delete: "Delete membership"
+  empty: "No memberships yet."
+form:
+  title:
+    add: "Add membership"
+    edit: "Edit membership"
+  label:
+    organisation: "Organisation"
+    role: "Membership role"
+    authorized: "Organisation admin"
+    admin: "Admin"
+    timeFrom: "From"
+    timeUntil: "Until"
+    nextElection: "Next election"
+    comment: "Comment"
+    inactive: "Inactive"
+delete:
+  prompt: "Do you really want to delete the membership {membership}?"
+  success: "Membership {membership} deleted successfully."

@@ -3,14 +3,14 @@
   {{did-update this.onUpdate}}
 >
   <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
-    <h1 class="uk-margin-remove">{{t "page.roles.index.title"}}</h1>
+    <h1 class="uk-margin-remove">{{t "roles.index.title"}}</h1>
 
     {{#if (can "add membership-role")}}
       <LinkTo
         @route="membership-roles.add"
         class="uk-button uk-button-default uk-flex-none"
       >
-        {{t "page.roles.index.add"}}
+        {{t "roles.index.add"}}
       </LinkTo>
     {{/if}}
   </div>
@@ -43,7 +43,7 @@
                     <LinkTo
                       class="uk-icon-button uk-button-default"
                       uk-icon="pencil"
-                      title={{t "page.roles.index.list.edit"}}
+                      title={{t "roles.index.list.edit"}}
                       @route="membership-roles.edit"
                       @model={{role.id}}
                       data-test-role-edit
@@ -55,7 +55,7 @@
                       class="uk-icon-button uk-button-default"
                       type="button"
                       uk-icon="close"
-                      title={{t "page.roles.index.list.delete"}}
+                      title={{t "roles.index.list.delete"}}
                       disabled={{or this.delete.isRunning}}
                       {{on "click" (perform this.delete role)}}
                       data-test-role-delete
@@ -69,6 +69,6 @@
       {{/each}}
     </div>
   {{else}}
-    <p>{{t "page.roles.index.list.empty"}}</p>
+    <p>{{t "roles.index.list.empty"}}</p>
   {{/if}}
 </div>

@@ -19,7 +19,7 @@ export default class WorkItemActions extends Component {
   get editAction() {
     return {
       action: performHelper([this.edit], {}),
-      title: this.intl.t("workItems.actions.edit"),
+      title: this.intl.t("work-items.actions.edit"),
     };
   }
 
@@ -30,7 +30,7 @@ export default class WorkItemActions extends Component {
 
     return {
       action: performHelper([this.assignToMe], {}),
-      title: this.intl.t("workItems.actions.assignToMe"),
+      title: this.intl.t("work-items.actions.assignToMe"),
     };
   }
 

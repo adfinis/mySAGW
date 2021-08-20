@@ -28,30 +28,30 @@ export default class CasesDetailCirculationController extends Controller {
     return {
       columns: [
         {
-          heading: { label: "workItems.responsible" },
+          heading: { label: "work-items.responsible" },
           modelKey: "responsible",
         },
         {
-          heading: { label: "workItems.status" },
+          heading: { label: "work-items.status" },
           modelKey: "status",
         },
         {
-          heading: { label: "workItems.task" },
+          heading: { label: "work-items.task" },
           type: "task-name",
         },
         {
-          heading: { label: "workItems.closedAt" },
+          heading: { label: "work-items.closedAt" },
           modelKey: "closedAt",
           type: "date",
         },
         {
-          heading: { label: "workItems.circulationComment" },
+          heading: { label: "work-items.circulationComment" },
           questionSlug: "circulation-comment",
           answerKey: "document.answers.edges",
           type: "answer-value",
         },
         {
-          heading: { label: "workItems.action" },
+          heading: { label: "work-items.action" },
           type: "work-item-actions",
         },
       ],
@@ -133,7 +133,7 @@ export default class CasesDetailCirculationController extends Controller {
       });
     } catch (error) {
       console.error(error);
-      this.notification.danger(this.intl.t("workItems.fetchError"));
+      this.notification.danger(this.intl.t("work-items.fetchError"));
     }
   }
 

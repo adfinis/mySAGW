@@ -41,7 +41,7 @@ export default class CasesDetailWorkItemsEditController extends Controller {
 
       return this.workItemsQuery.value[0];
     } catch (error) {
-      this.notification.danger(this.intl.t("workItems.fetchError"));
+      this.notification.danger(this.intl.t("work-items.fetchError"));
     }
   }
 
@@ -61,14 +61,14 @@ export default class CasesDetailWorkItemsEditController extends Controller {
         },
       });
 
-      this.notification.success(this.intl.t("workItems.saveSuccess"));
+      this.notification.success(this.intl.t("work-items.saveSuccess"));
 
       this.transitionToRoute(
         "cases.detail.work-items.index",
         this.workItem.case.id
       );
     } catch (error) {
-      this.notification.danger(this.intl.t("workItems.saveError"));
+      this.notification.danger(this.intl.t("work-items.saveError"));
     }
   }
 

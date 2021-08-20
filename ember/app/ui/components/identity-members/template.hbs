@@ -2,7 +2,7 @@
   {{did-insert (perform this.fetchMembers)}}
   class="uk-margin-remove-last-child"
 >
-  <h2>{{t "component.identity-members.title"}}</h2>
+  <h2>{{t "components.identity-members.title"}}</h2>
 
   {{#if this.fetchMembers.isRunning}}
     <LoadingSpinner />
@@ -32,7 +32,7 @@
         {{/each}}
       </ul>
     {{else}}
-      <p>{{t "component.identity-members.list.empty"}}</p>
+      <p>{{t "components.identity-members.list.empty"}}</p>
     {{/if}}
   {{/if}}
 </div>

@@ -14,6 +14,9 @@ export default class CustomCaseModel extends CaseModel {
         node {
           id
           status
+          task {
+            slug
+          }
         }
       }
     }

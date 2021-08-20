@@ -112,7 +112,7 @@ export default class IdentityInterestsComponent extends Component {
     try {
       const options = { interest: interest.title };
       yield UIkit.modal.confirm(
-        this.intl.t("component.identity-interests.delete.prompt", options)
+        this.intl.t("components.identity-interests.delete.prompt", options)
       );
 
       try {
@@ -120,7 +120,7 @@ export default class IdentityInterestsComponent extends Component {
         this.args.identity.save();
 
         this.notification.success(
-          this.intl.t("component.identity-interests.delete.success", options)
+          this.intl.t("components.identity-interests.delete.success", options)
         );
         // Reset list.
         // TODO Update `categories` via Ember Data store.

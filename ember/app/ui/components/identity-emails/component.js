@@ -88,13 +88,13 @@ export default class IdentityEmailsComponent extends Component {
     try {
       const options = { address: email.email };
       yield UIkit.modal.confirm(
-        this.intl.t("component.identity-emails.delete.prompt", options)
+        this.intl.t("components.identity-emails.delete.prompt", options)
       );
 
       try {
         yield email.destroyRecord();
         this.notification.success(
-          this.intl.t("component.identity-emails.delete.success", options)
+          this.intl.t("components.identity-emails.delete.success", options)
         );
       } catch (error) {
         console.error(error);

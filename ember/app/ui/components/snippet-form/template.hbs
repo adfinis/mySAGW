@@ -3,21 +3,21 @@
   @on-submit={{perform this.submit}} as |Form|
 >
   <Form.input
-    @label={{t "component.snippet-form.label.title"}}
+    @label={{t "components.snippet-form.label.title"}}
     @name="title"
     @required={{true}}
   />
 
   {{#each this.intl.locales as |locale|}}
     <Form.input
-      @label={{t "component.snippet-form.label.body" lang=(uppercase locale)}}
+      @label={{t "components.snippet-form.label.body" lang=(uppercase locale)}}
       @name="bodyObject.{{locale}}"
       @type="textarea"
     />
   {{/each}}
 
   <Form.input
-    @label={{t "component.snippet-form.label.archived"}}
+    @label={{t "components.snippet-form.label.archived"}}
     @name="archived"
     @type="checkbox"
   />
@@ -25,11 +25,11 @@
   <p class="uk-flex uk-flex-right">
     <div>
       <LinkTo class="uk-button uk-button-default" @route="snippets">
-        {{t "component.snippet-form.control.cancel"}}
+        {{t "global.cancel"}}
       </LinkTo>
 
       <Form.submit
-        @label={{t "component.snippet-form.control.submit"}}
+        @label={{t "global.save"}}
       />
     </div>
   </p>

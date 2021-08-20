@@ -11,34 +11,34 @@
     >
       <div class="uk-background-muted uk-padding-small uk-margin uk-margin-remove-last-child">
         <Form.input
-          @label={{t "component.membership-role-form.label.title" lang="DE"}}
+          @label={{t "components.membership-role-form.label.title" lang="DE"}}
           @name="titleObject.de"
         />
 
         <Form.input
-          @label={{t "component.membership-role-form.label.title" lang="FR"}}
+          @label={{t "components.membership-role-form.label.title" lang="FR"}}
           @name="titleObject.fr"
         />
 
         <Form.input
-          @label={{t "component.membership-role-form.label.title" lang="EN"}}
+          @label={{t "components.membership-role-form.label.title" lang="EN"}}
           @name="titleObject.en"
         />
       </div>
 
       <div class="uk-background-muted uk-padding-small uk-margin uk-margin-remove-last-child">
         <Form.input
-          @label={{t "component.membership-role-form.label.description" lang="DE"}}
+          @label={{t "components.membership-role-form.label.description" lang="DE"}}
           @name="descriptionObject.de"
         />
 
         <Form.input
-          @label={{t "component.membership-role-form.label.description" lang="FR"}}
+          @label={{t "components.membership-role-form.label.description" lang="FR"}}
           @name="descriptionObject.fr"
         />
 
         <Form.input
-          @label={{t "component.membership-role-form.label.description" lang="EN"}}
+          @label={{t "components.membership-role-form.label.description" lang="EN"}}
           @name="descriptionObject.en"
         />
       </div>
@@ -48,11 +48,11 @@
           class="uk-button uk-button-default"
           @route="membership-roles"
         >
-          {{t "component.membership-role-form.control.cancel"}}
+          {{t "global.cancel"}}
         </LinkTo>
 
         <Form.submit
-          @label={{t "component.membership-role-form.control.submit"}}
+          @label={{t "global.save"}}
           @disabled={{cannot "edit membership-role" this.changeset.data}}
         />
       </p>

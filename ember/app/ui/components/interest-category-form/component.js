@@ -29,7 +29,7 @@ export default class InterestCategoryFormComponent extends Component {
     try {
       yield changeset.save();
       this.notification.success(
-        this.intl.t("component.interest-category-form.success", {
+        this.intl.t("components.interest-category-form.success", {
           category: this.model.title,
         })
       );
