@@ -255,6 +255,34 @@ def test_identity_update_is_organisation_organisation_name_failure(
 
 
 @pytest.mark.parametrize(
+    "identity__is_organisation,field",
+    [
+        (False, "is-expert-association"),
+        (False, "is-advisory-board"),
+    ],
+)
+def test_identity_update_organisation_type_failure(db, client, identity, field):
+    url = reverse("identity-detail", args=[identity.pk])
+
+    data = {
+        "data": {
+            "type": "identities",
+            "id": str(identity.pk),
+            "attributes": {"is-organisation": identity.is_organisation, field: True},
+        }
+    }
+
+    response = client.patch(url, data=data)
+
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+    assert (
+        response.json()["errors"][0]["detail"]
+        == 'Can\'t set "is_expert_association" or "is_advisory_board", because it isn\'t a organisation.'
+    )
+
+
+@pytest.mark.parametrize(
     "client,expected_status",
     [
         ("user", status.HTTP_403_FORBIDDEN),

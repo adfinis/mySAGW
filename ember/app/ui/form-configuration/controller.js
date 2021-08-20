@@ -1,7 +1,11 @@
 import Controller from "@ember/controller";
 import { inject as service } from "@ember/service";
 import { queryManager } from "ember-apollo-client";
-import { lastValue, restartableTask } from "ember-concurrency-decorators";
+import {
+  lastValue,
+  restartableTask,
+  enqueueTask,
+} from "ember-concurrency-decorators";
 import saveFormMutation from "mysagw/gql/mutations/save-form.graphql";
 import getRootFormsQuery from "mysagw/gql/queries/get-root-forms.graphql";
 
@@ -17,7 +21,7 @@ export default class FormConfigurationController extends Controller {
     const forms = yield this.apollo.query(
       {
         query: getRootFormsQuery,
-        variables: { isPublished: true, isArchived: false },
+        variables: { filter: [{ isPublished: true }, { isArchived: false }] },
         fetchPolicy: "network-only",
       },
       "allForms.edges"
@@ -26,12 +30,16 @@ export default class FormConfigurationController extends Controller {
     return forms.mapBy("node");
   }
 
-  @restartableTask
+  @enqueueTask
   *setFormMeta(form, formType) {
     try {
       const meta = Object.assign({}, form.meta);
 
-      meta[formType] = !meta[formType];
+      if (meta[formType]) {
+        delete meta[formType];
+      } else {
+        meta[formType] = true;
+      }
 
       yield this.apollo.mutate({
         mutation: saveFormMutation,
@@ -47,6 +55,8 @@ export default class FormConfigurationController extends Controller {
       this.notification.success(
         this.intl.t("page.form-configuration.saveSuccess", { name: form.name })
       );
+
+      this.fetchForms.perform();
     } catch (error) {
       console.error(error);
       this.notification.fromError(error);

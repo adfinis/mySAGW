@@ -12,9 +12,9 @@ from mysagw.identity import models
 
 
 class IdentityFilterSet(FilterSet):
+    idp_ids = CharMultiValueFilter(field_name="idp_id")
     has_idp_id = BooleanFilter(field_name="idp_id", lookup_expr="isnull", exclude=True)
     memberships__organisation__organisation_name = CharFilter(distinct=True)
-    idp_ids = CharMultiValueFilter(field_name="idp_id")
 
     class Meta:
         model = models.Identity

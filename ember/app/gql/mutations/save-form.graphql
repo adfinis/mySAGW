@@ -2,6 +2,7 @@ mutation saveForm($input: SaveFormInput!) {
   saveForm(input: $input) {
     form {
       slug
+      meta
     }
   }
 }
