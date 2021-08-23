@@ -29,7 +29,11 @@ def set_assigned_user(sender, work_item, user, **kwargs):
 
 @on(post_create_work_item, raise_exception=True)
 def send_new_work_item_mail(sender, work_item, user, **kwargs):
-    if work_item.task_id not in ["revise-document", "additional-data"]:
+    if work_item.task_id not in [
+        "revise-document",
+        "additional-data",
+        "complete-document",
+    ]:
         return
 
     assigned_users = caluma_workflow_models.WorkItem.objects.get(
@@ -42,6 +46,9 @@ def send_new_work_item_mail(sender, work_item, user, **kwargs):
     body = email_texts.EMAIL_BODIES[api_user["language"]]
 
     link = f"{settings.SELF_URI}/cases/{work_item.case.pk}/work-items/{work_item.pk}"
+
+    if work_item.task_id == "complete-document":
+        link = f"{settings.SELF_URI}/cases/{work_item.case.pk}"
 
     body = body.format(
         first_name=api_user["first-name"] or "",
