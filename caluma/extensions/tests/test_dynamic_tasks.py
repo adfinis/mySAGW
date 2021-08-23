@@ -17,6 +17,7 @@ def test_dynamic_task_after_review_document(
     caluma_data,
     user,
     document_review_case,
+    identites_mock_for_mailing,
     decision,
     expected_case_status,
     expected_work_item,
@@ -54,6 +55,7 @@ def test_dynamic_task_after_decision_and_credit(
     caluma_data,
     user,
     circulation,
+    identites_mock_for_mailing,
     decision,
     expected_case_status,
     expected_work_item,
@@ -85,7 +87,13 @@ def test_dynamic_task_after_decision_and_credit(
     ],
 )
 def test_dynamic_task_after_define_amount(
-    db, caluma_data, user, circulation, decision, expected_work_item
+    db,
+    caluma_data,
+    user,
+    circulation,
+    identites_mock_for_mailing,
+    decision,
+    expected_work_item,
 ):
     case = circulation.parent_work_item.case
 

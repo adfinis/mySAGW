@@ -2,8 +2,10 @@ import pytest
 from django.utils import timezone
 
 from caluma.caluma_form.models import Question
-from caluma.caluma_workflow.api import complete_work_item, start_case
+from caluma.caluma_workflow.api import complete_work_item, skip_work_item, start_case
 from caluma.caluma_workflow.models import Workflow, WorkItem
+
+from ..settings import settings
 
 
 def test_work_item_set_assigned_user(db, caluma_data, document_review_case):
@@ -75,3 +77,20 @@ def test_case_number(
     )
 
     assert case.document.answers.get(question=question).value == expected_no
+
+
+def test_send_new_work_item_mail(
+    db, user, caluma_data, document_review_case, identites_mock_for_mailing, mailoutbox
+):
+    case = document_review_case
+
+    skip_work_item(case.work_items.get(task_id="submit-document"), user)
+
+    case.work_items.get(task_id="review-document").document.answers.create(
+        question_id="review-document-decision",
+        value="review-document-decision-reject",
+    )
+
+    skip_work_item(case.work_items.get(task_id="review-document"), user)
+    assert len(mailoutbox) == 1
+    assert mailoutbox[0].from_email == settings.MAILING_SENDER

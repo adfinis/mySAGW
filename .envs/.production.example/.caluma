@@ -13,3 +13,14 @@ MINIO_STORAGE_ENDPOINT=yourdomain.tld
 MINIO_STORAGE_MEDIA_BUCKET_NAME=caluma-media
 MINIO_STORAGE_SECRET_KEY=verysecure
 MINIO_STORAGE_USE_HTTPS=true
+
+# Mailing
+EMAIL_HOST=mail
+EMAIL_PORT=1025
+MAILING_FROM_NAME=mySAGW
+MAILING_FROM_MAIL=noreply@my.yourdomain.tld
+MAILING_SENDER="mySAGW <noreply@my.yourdomain.tld>"
+
+# URIs
+API_BASE_URI=https://my.yourdomain.tld/api/v1
+SELF_URI=https://my.yourdomain.tld
