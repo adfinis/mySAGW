@@ -14,3 +14,12 @@ settings.MAILING_SENDER = f"{from_name} <{from_mail}>"
 # API
 settings.API_BASE_URI = os.environ.get("API_BASE_URI", "http://api:8000/api/v1")
 settings.SELF_URI = os.environ.get("SELF_URI", "https://mysagw.local")
+
+# Case
+
+settings.CASE_STATUS = {
+    "submit-document": "submit",
+    "review-document": "audit",
+    "additional-data": "submit receipts",
+    "define-amount": "decision",
+}

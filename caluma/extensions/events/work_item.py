@@ -7,7 +7,11 @@ from caluma.caluma_workflow import (
     api as caluma_workflow_api,
     models as caluma_workflow_models,
 )
-from caluma.caluma_workflow.events import post_create_work_item, pre_complete_work_item
+from caluma.caluma_workflow.events import (
+    post_complete_case,
+    post_create_work_item,
+    pre_complete_work_item,
+)
 
 from .. import email_texts
 from ..common import get_api_user_attributes
@@ -63,6 +67,23 @@ def send_new_work_item_mail(sender, work_item, user, **kwargs):
         [api_user["email"]],
         fail_silently=False,
     )
+
+
+@on(post_create_work_item, raise_exception=True)
+@transaction.atomic
+def set_case_status(sender, work_item, user, **kwargs):
+    status = settings.CASE_STATUS.get(work_item.task_id)
+    if status is None:
+        return
+    work_item.case.meta["status"] = status
+    work_item.case.save()
+
+
+@on(post_complete_case, raise_exception=True)
+@transaction.atomic
+def set_case_finished_status(sender, case, user, **kwargs):
+    case.meta["status"] = "complete"
+    case.save()
 
 
 @on(post_create_work_item, raise_exception=True)
