@@ -8,7 +8,7 @@ from caluma.caluma_workflow import (
     models as caluma_workflow_models,
 )
 from caluma.caluma_workflow.events import (
-    post_complete_case,
+    post_complete_work_item,
     post_create_work_item,
     pre_complete_work_item,
 )
@@ -79,13 +79,6 @@ def set_case_status(sender, work_item, user, **kwargs):
     work_item.case.save()
 
 
-@on(post_complete_case, raise_exception=True)
-@transaction.atomic
-def set_case_finished_status(sender, case, user, **kwargs):
-    case.meta["status"] = "complete"
-    case.save()
-
-
 @on(post_create_work_item, raise_exception=True)
 @transaction.atomic
 def create_circulation_child_case(sender, work_item, user, **kwargs):
@@ -130,6 +123,20 @@ def finish_circulation(sender, work_item, user, **kwargs):
         caluma_workflow_api.cancel_work_item(
             work_item=caluma_workflow_models.WorkItem.objects.get(
                 task_id="invite-to-circulation",
+                case=work_item.case,
+                status=caluma_workflow_models.WorkItem.STATUS_READY,
+            ),
+            user=user,
+        )
+
+
+@on(post_complete_work_item, raise_exception=True)
+@transaction.atomic
+def finish_additional_data(sender, work_item, user, **kwargs):
+    if work_item.task_id == "additional-data":
+        caluma_workflow_api.complete_work_item(
+            work_item=caluma_workflow_models.WorkItem.objects.get(
+                task_id="advance-credits",
                 case=work_item.case,
                 status=caluma_workflow_models.WorkItem.STATUS_READY,
             ),

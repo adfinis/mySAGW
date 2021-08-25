@@ -16,6 +16,13 @@ def complete_circulation(sender, case, user, **kwargs):
         )
 
 
+@on(post_complete_case, raise_exception=True)
+@transaction.atomic
+def set_case_finished_status(sender, case, user, **kwargs):
+    case.meta["status"] = "complete"
+    case.save()
+
+
 @on(post_create_case, raise_exception=True)
 def create_case_number(sender, case, user, context, **kwargs):
     if (
