@@ -79,6 +79,46 @@ def test_case_number(
     assert case.document.answers.get(question=question).value == expected_no
 
 
+def test_case_status(
+    db,
+    caluma_data,
+    document_review_case,
+    user,
+    identites_mock_for_mailing,
+):
+    case = document_review_case
+    assert case.meta["status"] == "submit"
+
+    skip_work_item(case.work_items.get(task_id="submit-document"), user)
+    assert case.meta["status"] == "audit"
+
+    case.work_items.get(task_id="review-document").document.answers.create(
+        question_id="review-document-decision",
+        value="review-document-decision-continue",
+    )
+    skip_work_item(case.work_items.get(task_id="review-document"), user)
+    assert case.meta["status"] == "audit"
+
+    skip_work_item(case.work_items.get(task_id="circulation"), user)
+    assert case.meta["status"] == "audit"
+
+    case.work_items.get(task_id="decision-and-credit").document.answers.create(
+        question_id="decision-and-credit-decision",
+        value="additional-data",
+    )
+    skip_work_item(case.work_items.get(task_id="decision-and-credit"), user)
+    assert case.meta["status"] == "submit receipts"
+
+    skip_work_item(case.work_items.get(task_id="additional-data"), user)
+    assert case.meta["status"] == "decision"
+
+    skip_work_item(case.work_items.get(task_id="define-amount"), user)
+    assert case.meta["status"] == "decision"
+
+    skip_work_item(case.work_items.get(task_id="complete-document"), user)
+    assert case.meta["status"] == "complete"
+
+
 def test_send_new_work_item_mail(
     db, user, caluma_data, document_review_case, identites_mock_for_mailing, mailoutbox
 ):
