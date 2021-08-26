@@ -35,7 +35,7 @@ from caluma.extensions.visibilities import MySAGWVisibility
             {
                 "Form": 3,
                 "WorkItem": 1,
-                "Document": 0,
+                "Document": 1,
                 "Case": 1,
                 "Question": 1,
                 "Answer": 0,

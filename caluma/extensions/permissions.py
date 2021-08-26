@@ -4,6 +4,7 @@ from caluma.caluma_core.permissions import (
     object_permission_for,
     permission_for,
 )
+from caluma.caluma_form.models import Document
 from caluma.caluma_form.schema import SaveDocumentAnswer
 from caluma.caluma_workflow.schema import CompleteWorkItem, SaveCase, StartCase
 
@@ -14,10 +15,10 @@ class MySAGWPermission(BasePermission):
         return "admin" in groups or "sagw" in groups
 
     def _is_own(self, info, instance):
-        return instance.created_by_user == info.context.user.claims["sub"]
+        return instance.created_by_user == info.context.user.username
 
     def _is_assigned(self, info, instance):
-        return info.context.user.claims["sub"] in instance.assigned_users
+        return info.context.user.username in instance.assigned_users
 
     @permission_for(Mutation)
     @object_permission_for(Mutation)
@@ -36,13 +37,16 @@ class MySAGWPermission(BasePermission):
     @permission_for(SaveDocumentAnswer)
     @object_permission_for(SaveDocumentAnswer)
     def has_permission_for_save_document_answer(self, mutation, info, answer=None):
+        document = Document.objects.get(
+            pk=mutation.get_params(info)["input"]["document"]
+        )
         return (
             self._is_admin_or_sagw(info)
-            or (bool(answer) and self._is_own(info, answer.document))
+            or self._is_own(info, document)
+            or (self._is_assigned(info, document.work_item))
             or (
-                bool(answer)
-                and hasattr(answer.document.case, "parent_work_item")
-                and self._is_assigned(info, answer.document.case.parent_work_item)
+                hasattr(document.case, "parent_work_item")
+                and self._is_assigned(info, document.case.parent_work_item)
             )
         )
 
