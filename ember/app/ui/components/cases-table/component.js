@@ -15,7 +15,7 @@ export default class CasesTableComponent extends Component {
   @tracked order;
 
   get pageInfo() {
-    return this.fetchCases.lastSuccessful.value.pageInfo;
+    return this.fetchCases.lastSuccessful?.value.pageInfo;
   }
 
   orderOptions = ENV.APP.casesTable.orderOptions;

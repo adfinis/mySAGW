@@ -8,8 +8,7 @@ module("Unit | Controller | cases/detail/edit", function (hooks) {
 
   test("it is setup properly", function (assert) {
     ENV.APP.caluma = {};
-    ENV.APP.caluma.submitTaskSlug = "test";
-    ENV.APP.caluma.reviseTaskSlug = "test";
+    ENV.APP.caluma.documentEditableTaskSlugs = ["test"];
     const controller = this.owner.lookup("controller:cases/detail/edit");
     controller.model = {
       workItems: {
