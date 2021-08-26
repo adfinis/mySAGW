@@ -2,7 +2,7 @@ from django.db.models import Q
 
 from caluma.caluma_core.types import Node
 from caluma.caluma_core.visibilities import BaseVisibility, Union, filter_queryset_for
-from caluma.caluma_form.schema import Form, Option, Question
+from caluma.caluma_form.schema import Answer, Document, Form, Option, Question
 from caluma.caluma_workflow.schema import Flow, Task, Workflow, WorkItem
 
 
@@ -21,6 +21,22 @@ class CreateOrAssignVisibility(BaseVisibility):
     def filter_queryset_for_all(self, node, queryset, info):
         user = info.context.user
         return queryset.filter(created_by_user=user.username)
+
+    @filter_queryset_for(Answer)
+    def filter_queryset_for_answer(self, node, queryset, info):
+        user = info.context.user
+        return queryset.filter(
+            Q(created_by_user=user.username)
+            | Q(document__created_by_user=user.username)
+        )
+
+    @filter_queryset_for(Document)
+    def filter_queryset_for_document(self, node, queryset, info):
+        user = info.context.user
+        return queryset.filter(
+            Q(created_by_user=user.username)
+            | Q(work_item__assigned_users__contains=[user.username])
+        )
 
     @filter_queryset_for(WorkItem)
     def filter_queryset_for_workitem(self, node, queryset, info):
