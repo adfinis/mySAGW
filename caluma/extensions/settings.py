@@ -20,6 +20,7 @@ settings.SELF_URI = os.environ.get("SELF_URI", "https://mysagw.local")
 settings.CASE_STATUS = {
     "submit-document": "submit",
     "review-document": "audit",
+    "revise-document": "revise",
     "additional-data": "submit receipts",
     "define-amount": "decision",
 }
