@@ -86,10 +86,10 @@ module.exports = function (environment) {
         classList: [], // class list for table element
         columns: [
           {
-            classList: ["accent-border-left"],
             heading: { label: "documents.number" },
             modelKey: "document.answers.edges.firstObject.node.value",
             linkTo: "cases.detail.index",
+            firstItem: true,
           },
           {
             classList: [], // class list for td element
@@ -102,8 +102,13 @@ module.exports = function (environment) {
           },
           {
             heading: { label: "documents.status" },
-            modelKey: "status",
+            modelKey: "meta.status",
             type: "case-status",
+          },
+          {
+            heading: { label: "documents.createdByUser" },
+            modelKey: "createdByUser",
+            type: "case-user",
           },
           {
             heading: { label: "documents.createdAt" },
@@ -115,22 +120,12 @@ module.exports = function (environment) {
             modelKey: "modifiedAt",
             type: "date",
           },
-          {
-            heading: { label: "documents.description" },
-            modelKey: "document.form.description",
-            truncate: true,
-          },
         ],
       },
 
       caluma: {
-        submitTaskSlug: "submit-document",
         reviseTaskSlug: "revise-document",
-        documentEditableTaskSlugs: [
-          "submit-document",
-          "revise-document",
-          "additional-data",
-        ],
+        documentEditableTaskSlugs: ["submit-document", "revise-document"],
         skippableTaskSlugs: [],
         manuallyCompletableTasks: ["complete-document"],
       },

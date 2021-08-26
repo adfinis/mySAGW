@@ -1,10 +1,10 @@
 <tr class={{this.highlightClasses}}>
-  {{#if @highlight}}
-    <td class="uk-padding-remove-horizontal uk-text-center"></td>
-  {{/if}}
   {{#each @columns as |column|}}
     <td class={{column}}>
       {{#if (eq column "task")}}
+        {{#if @highlight}}
+          <span class="uk-padding-remove-horizontal uk-text-center"></span>
+        {{/if}}
         {{#if @workItem.document}}
           <LinkTo
             @route="cases.detail.work-items.edit.form"
@@ -13,12 +13,7 @@
             {{@workItem.name}}
           </LinkTo>
         {{else}}
-          <LinkTo
-            @route="cases.detail.work-items.edit.index"
-            @models={{array @workItem.case.id @workItem.id}}
-          >
-            {{@workItem.name}}
-          </LinkTo>
+          {{@workItem.name}}
         {{/if}}
       {{else if (eq column "case")}}
         <LinkTo
@@ -45,6 +40,8 @@
         }}
       {{else if (eq column "closedBy")}}
         {{if @workItem.closedByUser @workItem.closedByUser.fullName "-"}}
+      {{else if (eq column "caseCreatedBy")}}
+        {{this.caseCreatedBy.fullName}}
       {{else if (eq column "status")}}
         {{@workItem.statusName}}
       {{else if (eq column "documentNumber")}}

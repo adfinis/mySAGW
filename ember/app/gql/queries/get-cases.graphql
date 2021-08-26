@@ -14,8 +14,10 @@ query getCasesQuery(
         id
         createdAt
         modifiedAt
+        createdByUser
         closedAt
         status
+        meta
         workItems {
           edges {
             node {

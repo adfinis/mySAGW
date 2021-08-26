@@ -107,7 +107,7 @@ def test_case_status(
         value="additional-data",
     )
     skip_work_item(case.work_items.get(task_id="decision-and-credit"), user)
-    assert case.meta["status"] == "submit receipts"
+    assert case.meta["status"] == "submit-receipts"
 
     skip_work_item(case.work_items.get(task_id="additional-data"), user)
     assert case.meta["status"] == "decision"

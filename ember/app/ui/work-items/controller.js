@@ -35,7 +35,7 @@ export default class WorkItemsIndexController extends Controller {
       "task",
       "documentNumber",
       "case",
-      "description",
+      "caseCreatedBy",
       ...(this.status === "open"
         ? ["deadline", "responsible"]
         : ["closedAt", "closedBy"]),
@@ -80,6 +80,7 @@ export default class WorkItemsIndexController extends Controller {
         ...idpIds,
         workItem.assignedUsers[0],
         workItem.raw.closedByUser,
+        workItem.raw.case.createdByUser,
       ];
     });
 

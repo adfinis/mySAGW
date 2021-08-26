@@ -4,6 +4,7 @@
     (if @tdDefinition.truncate "uk-text-truncate")
     " "
     (join " " @tdDefinition.classList)
+    this.showAccent
   }}
   uk-tooltip={{if @tdDefinition.truncate this.value}}
 >

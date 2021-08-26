@@ -1,4 +1,5 @@
 import { action } from "@ember/object";
+import { inject as service } from "@ember/service";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { queryManager } from "ember-apollo-client";
@@ -9,6 +10,8 @@ import getCasesQuery from "mysagw/gql/queries/get-cases.graphql";
 
 export default class CasesTableComponent extends Component {
   @queryManager apollo;
+
+  @service store;
 
   @tracked cases = [];
   @tracked types = [];
@@ -59,6 +62,10 @@ export default class CasesTableComponent extends Component {
       const cases = raw.edges.mapBy("node");
 
       this.cases = [...this.cases, ...cases];
+
+      yield this.store.query("identity", {
+        filter: { idpIds: this.cases.mapBy("createdByUser").join(",") },
+      });
 
       return {
         cases,
