@@ -6,13 +6,12 @@
 
 <WorkItemList
   @query={{this.readyWorkItemsQuery}}
-  @columns={{array "task" "deadline" "responsible"}}
+  @config={{this.readyTableConfig}}
 />
 
 <h3>{{t "workItems.completedTitle"}}</h3>
 
 <WorkItemList
   @query={{this.completedWorkItemsQuery}}
-  @columns={{array "task" "closedAt" "closedBy"}}
-  @highlight={{false}}
+  @config={{this.completedTableConfig}}
 />

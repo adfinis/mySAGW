@@ -30,16 +30,55 @@ export default class WorkItemsIndexController extends Controller {
     };
   }
 
-  get columns() {
-    return [
-      "task",
-      "documentNumber",
-      "case",
-      "caseCreatedBy",
-      ...(this.status === "open"
-        ? ["deadline", "responsible"]
-        : ["closedAt", "closedBy"]),
-    ];
+  get tableConfig() {
+    return {
+      columns: [
+        {
+          heading: { label: "workItems.task" },
+          type: "task-name",
+        },
+        {
+          heading: { label: "workItems.documentNumber" },
+          modelKey: "case.document.answers.edges",
+          linkTo: "cases.detail.index",
+          type: "answer-value",
+          questionSlug: "dossier-nr",
+        },
+        {
+          heading: { label: "workItems.case" },
+          modelKey: "case.document.form.name",
+          linkTo: "cases.detail.index",
+        },
+        {
+          heading: { label: "workItems.caseCreatedBy" },
+          modelKey: "case.createdByUser",
+          type: "case-created-by",
+        },
+        ...(this.status === "open"
+          ? [
+              {
+                heading: { label: "workItems.deadline" },
+                modelKey: "deadline",
+                type: "deadline",
+              },
+              {
+                heading: { label: "workItems.responsible" },
+                modelKey: "responsible",
+              },
+            ]
+          : [
+              {
+                heading: { label: "workItems.closedAt" },
+                modelKey: "closedAt",
+                type: "date",
+              },
+              {
+                heading: { label: "workItems.closedBy" },
+                modelKey: "closedByUser.fullName",
+              },
+            ]),
+      ],
+    };
   }
 
   @restartableTask
@@ -78,7 +117,7 @@ export default class WorkItemsIndexController extends Controller {
     this.workItemsQuery.value.forEach((workItem) => {
       idpIds = [
         ...idpIds,
-        workItem.assignedUsers[0],
+        ...workItem.assignedUsers,
         workItem.raw.closedByUser,
         workItem.raw.case.createdByUser,
       ];

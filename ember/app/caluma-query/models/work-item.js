@@ -170,8 +170,11 @@ export default class CustomWorkItemModel extends WorkItemModel {
           edges {
             node {
               id
+              question {
+                slug
+              }
               ... on StringAnswer {
-                value
+                StringAnswerValue: value
               }
             }
           }

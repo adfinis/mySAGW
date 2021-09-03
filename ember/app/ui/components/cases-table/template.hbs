@@ -27,18 +27,6 @@
     </div>
   {{else}}
     <div uk-grid>
-      <div class="uk-width-expand uk-flex uk-flex-middle uk-text-meta">
-        <span>
-          {{
-            t
-            "documents.pageInfo"
-            length=this.cases.length
-            total=this.pageInfo.totalCount
-            htmlSafe=true
-          }}
-        </span>
-      </div>
-
       <div class="uk-width-auto uk-flex uk-flex-middle">
         <label class="uk-text-meta uk-text-nowrap" for="order">
           {{t "documents.orderBy"}}:
@@ -66,5 +54,16 @@
       @loadMoreData={{perform this.fetchCases this.pageInfo.endCursor}}
       @hasNextPage={{this.pageInfo.hasNextPage}}
     />
+    <div class="uk-width-expand uk-flex uk-flex-middle uk-text-meta">
+      <span>
+        {{
+          t
+          "global.paginationInfo"
+          count=this.cases.length
+          total=this.pageInfo.totalCount
+          htmlSafe=true
+        }}
+      </span>
+    </div>
   {{/if}}
 </div>

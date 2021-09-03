@@ -3,8 +3,11 @@ import { queryManager } from "ember-apollo-client";
 import calumaQuery from "ember-caluma/caluma-query";
 import { allWorkItems } from "ember-caluma/caluma-query/queries";
 import { restartableTask } from "ember-concurrency";
+import { inject as service } from "@ember/service";
 
 export default class CasesDetailWorkItemsController extends Controller {
+  @service store;
+
   @queryManager apollo;
 
   @calumaQuery({
@@ -25,15 +28,51 @@ export default class CasesDetailWorkItemsController extends Controller {
     };
   }
 
-  get columns() {
-    return [
-      "task",
-      "case",
-      "description",
-      ...(this.status === "open"
-        ? ["deadline", "responsible"]
-        : ["closedAt", "closedBy"]),
-    ];
+  get readyTableConfig() {
+    return {
+      columns: [
+        {
+          heading: { label: "workItems.task" },
+          type: "task-name",
+        },
+        {
+          heading: { label: "workItems.deadline" },
+          modelKey: "deadline",
+          type: "deadline",
+        },
+        {
+          heading: { label: "workItems.responsible" },
+          modelKey: "responsible",
+        },
+        {
+          heading: { label: "workItems.action" },
+          type: "work-item-actions",
+        },
+      ],
+    };
+  }
+  get completedTableConfig() {
+    return {
+      columns: [
+        {
+          heading: { label: "workItems.task" },
+          type: "task-name",
+        },
+        {
+          heading: { label: "workItems.closedAt" },
+          modelKey: "closedAt",
+          type: "date",
+        },
+        {
+          heading: { label: "workItems.closedBy" },
+          modelKey: "closedByUser.fullName",
+        },
+        {
+          heading: { label: "workItems.action" },
+          type: "work-item-actions",
+        },
+      ],
+    };
   }
 
   @restartableTask
@@ -49,5 +88,32 @@ export default class CasesDetailWorkItemsController extends Controller {
       filter: [...filter, { status: "COMPLETED" }],
       order: [{ attribute: "CLOSED_AT", direction: "DESC" }],
     });
+
+    yield this.getIdentities.perform();
+  }
+
+  @restartableTask
+  *getIdentities() {
+    let idpIds = [];
+
+    [
+      ...this.readyWorkItemsQuery.value,
+      ...this.completedWorkItemsQuery.value,
+    ].forEach((workItem) => {
+      idpIds = [
+        ...idpIds,
+        ...workItem.assignedUsers,
+        workItem.raw.closedByUser,
+        workItem.raw.case.createdByUser,
+      ];
+    });
+
+    idpIds = idpIds.compact().uniq();
+
+    if (idpIds.length) {
+      return yield this.store.query("identity", {
+        filter: { idpIds: idpIds.join(",") },
+      });
+    }
   }
 }

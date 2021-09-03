@@ -4,7 +4,7 @@
 
 <hr />
 
-<Filters {{did-insert (perform this.fetchWorkItems)}} as |Filter|>
+<Filters as |Filter|>
   <Filter.RadioButtons
     @name="responsible"
     @label={{t "workItems.filters.responsible"}}
@@ -51,8 +51,9 @@
   />
 </Filters>
 
+<SearchBar/>
+
 <WorkItemList
   @query={{this.workItemsQuery}}
-  @columns={{this.columns}}
-  @highlight={{not-eq this.status "closed"}}
+  @config={{this.tableConfig}}
 />

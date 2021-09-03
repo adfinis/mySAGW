@@ -1,5 +1,5 @@
 {{!-- template-lint-disable no-invalid-interactive --}}
-<div class="context-menu-container" {{on "mouseleave" this.handleMouseLeave}} {{on "mouseenter" this.handleMouseEnter}}>
+<div>
   <button
     type="button"
     class="context-menu-trigger"
@@ -9,17 +9,16 @@
     <span hidden>{{t "global.openMenu"}}</span>
     <UkIcon @icon="more-vertical" />
   </button>
-  {{#if this.menuOpen}}
-    <div class="context-menu">
-      <ul class="uk-list uk-list-hyphen uk-padding-remove">
-        {{#each @actions as |action|}}
-          <li>
-            <button type="button" {{on "click" action.action}}>
-              {{action.title}}
-            </button>
-          </li>
-        {{/each}}
-      </ul>
+  <div uk-drop>
+    <div class="uk-card uk-card-body uk-card-default uk-card-hover uk-card-small">
+      {{#each @actions as |action|}}
+        <UkButton
+          @type="button"
+          @color="text"
+          @on-click={{action.action}}
+          @label={{action.title}}
+        />
+      {{/each}}
     </div>
-  {{/if}}
+  </div>
 </div>
