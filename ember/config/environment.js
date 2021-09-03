@@ -51,9 +51,12 @@ module.exports = function (environment) {
       navBarText: "mySAGW",
 
       caseStateIcons: {
-        RUNNING: "clock",
-        CANCELED: "ban",
-        COMPLETED: "check",
+        submit: "clock",
+        audit: "clock",
+        revise: "clock",
+        "submit-receipts": "clock",
+        decision: "clock",
+        completed: "check",
       },
 
       casesTable: {
@@ -83,13 +86,14 @@ module.exports = function (environment) {
       },
 
       dynamicTable: {
-        classList: [], // class list for table element
         columns: [
           {
             heading: { label: "documents.number" },
-            modelKey: "document.answers.edges.firstObject.node.value",
+            modelKey: "document.answers.edges",
             linkTo: "cases.detail.index",
             firstItem: true,
+            type: "answer-value",
+            questionSlug: "dossier-nr",
           },
           {
             classList: [], // class list for td element
@@ -108,7 +112,7 @@ module.exports = function (environment) {
           {
             heading: { label: "documents.createdByUser" },
             modelKey: "createdByUser",
-            type: "case-user",
+            type: "case-created-by",
           },
           {
             heading: { label: "documents.createdAt" },
@@ -119,6 +123,12 @@ module.exports = function (environment) {
             heading: { label: "documents.modifiedAt" },
             modelKey: "modifiedAt",
             type: "date",
+          },
+          {
+            heading: { label: "documents.section" },
+            modelKey: "document.answers.edges",
+            type: "answer-value",
+            questionSlug: "section",
           },
         ],
       },

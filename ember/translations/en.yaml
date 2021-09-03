@@ -58,6 +58,7 @@ documents:
   createdByUser: "Created by"
   description: "Description"
   status: "Status"
+  section: "Section"
 
   general: "General information"
 
