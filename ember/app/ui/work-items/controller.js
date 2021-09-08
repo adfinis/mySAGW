@@ -45,6 +45,7 @@ export default class WorkItemsIndexController extends Controller {
           linkTo: "cases.detail.index",
           linkToModelField: "case.id",
           questionSlug: "dossier-nr",
+          answerKey: "case.document.answers.edges",
           type: "answer-value",
         },
         {
@@ -123,18 +124,21 @@ export default class WorkItemsIndexController extends Controller {
 
   @restartableTask
   *getIdentities() {
-    let idpIds = [];
-
-    this.workItemsQuery.value.forEach((workItem) => {
-      idpIds = [
-        ...idpIds,
-        ...workItem.assignedUsers,
-        workItem.raw.closedByUser,
-        workItem.raw.case.createdByUser,
-      ];
-    });
-
-    idpIds = idpIds.compact().uniq();
+    const idpIds = [
+      ...this.readyWorkItemsQuery.value,
+      ...this.completedWorkItemsQuery.value,
+    ]
+      .reduce(
+        (idpIds, workItem) => [
+          ...idpIds,
+          ...workItem.assignedUsers,
+          workItem.raw.closedByUser,
+          workItem.raw.case.createdByUser,
+        ],
+        []
+      )
+      .compact()
+      .uniq();
 
     if (idpIds.length) {
       return yield this.store.query("identity", {

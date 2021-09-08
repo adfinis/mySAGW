@@ -94,21 +94,21 @@ export default class CasesDetailWorkItemsController extends Controller {
 
   @restartableTask
   *getIdentities() {
-    let idpIds = [];
-
-    [
+    const idpIds = [
       ...this.readyWorkItemsQuery.value,
       ...this.completedWorkItemsQuery.value,
-    ].forEach((workItem) => {
-      idpIds = [
-        ...idpIds,
-        ...workItem.assignedUsers,
-        workItem.raw.closedByUser,
-        workItem.raw.case.createdByUser,
-      ];
-    });
-
-    idpIds = idpIds.compact().uniq();
+    ]
+      .reduce(
+        (idpIds, workItem) => [
+          ...idpIds,
+          ...workItem.assignedUsers,
+          workItem.raw.closedByUser,
+          workItem.raw.case.createdByUser,
+        ],
+        []
+      )
+      .compact()
+      .uniq();
 
     if (idpIds.length) {
       return yield this.store.query("identity", {

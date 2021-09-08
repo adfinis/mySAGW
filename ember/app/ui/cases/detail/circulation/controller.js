@@ -45,6 +45,12 @@ export default class CasesDetailCirculationController extends Controller {
           type: "date",
         },
         {
+          heading: { label: "workItems.circulationComment" },
+          questionSlug: "circulation-comment",
+          answerKey: "document.answers.edges",
+          type: "answer-value",
+        },
+        {
           heading: { label: "workItems.action" },
           type: "work-item-actions",
         },

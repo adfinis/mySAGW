@@ -412,6 +412,7 @@ workItems:
   createdAt: "Created by"
   status: "Status"
   documentNumber: "Number"
+  circulationComment: "Comment"
 
   saveSuccess: "Task successfully saved"
   finishSuccess: "Task successfully completed"

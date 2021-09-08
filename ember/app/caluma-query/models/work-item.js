@@ -134,6 +134,19 @@ export default class CustomWorkItemModel extends WorkItemModel {
       form {
         slug
       }
+      answers(filter: [{question: "circulation-comment"}]) {
+        edges {
+          node {
+            id
+            question {
+              slug
+            }
+            ... on StringAnswer {
+              StringAnswerValue: value
+            }
+          }
+        }
+      }
     }
     case {
       id

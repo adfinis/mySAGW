@@ -1,15 +1,11 @@
+import { get } from "@ember/object";
 import Component from "@glimmer/component";
 
 export default class AnswerValue extends Component {
   get value() {
-    const caseObj = this.args.value?.case ?? this.args.value;
-    let answers = caseObj.document.answers?.edges;
+    const value = this.args.value.parentWorkItem ?? this.args.value;
 
-    if (caseObj.parentWorkItem) {
-      answers = caseObj.parentWorkItem.case.document.answers.edges;
-    }
-
-    const answer = answers
+    const answer = get(value, this.args.tdDefinition.answerKey)
       .mapBy("node")
       .findBy("question.slug", this.args.tdDefinition.questionSlug);
 

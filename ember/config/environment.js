@@ -85,52 +85,6 @@ module.exports = function (environment) {
         ],
       },
 
-      dynamicTable: {
-        columns: [
-          {
-            heading: { label: "documents.number" },
-            linkTo: "cases.detail.index",
-            firstItem: true,
-            type: "answer-value",
-            questionSlug: "dossier-nr",
-          },
-          {
-            classList: [], // class list for td element
-            heading: {
-              label: "documents.type",
-              classList: [], // class list for th element
-            },
-            modelKey: "document.form.name",
-            linkTo: "cases.detail.index",
-          },
-          {
-            heading: { label: "documents.status" },
-            modelKey: "meta.status",
-            type: "case-status",
-          },
-          {
-            heading: { label: "documents.createdByUser" },
-            modelKey: "createdByUser",
-            type: "case-created-by",
-          },
-          {
-            heading: { label: "documents.createdAt" },
-            modelKey: "createdAt",
-            type: "date",
-          },
-          {
-            heading: { label: "documents.modifiedAt" },
-            modelKey: "modifiedAt",
-            type: "date",
-          },
-          {
-            heading: { label: "documents.section" },
-            type: "answer-value",
-            questionSlug: "section",
-          },
-        ],
-      },
-
       caluma: {
         reviseTaskSlug: "revise-document",
         documentEditableTaskSlugs: ["submit-document", "revise-document"],
