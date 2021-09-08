@@ -18,12 +18,12 @@ export default class CasesDetailIndexController extends Controller {
     return this.model.workItems.edges.mapBy("node");
   }
 
-  get isNotSubmitted() {
-    return this.getNodes.find(
-      (workItem) =>
-        workItem.task.slug === ENV.APP.caluma.submitTaskSlug &&
-        workItem.status === "READY"
-    );
+  get isEditable() {
+    return this.getNodes
+      .filter((workItem) =>
+        ENV.APP.caluma.documentEditableTaskSlugs.includes(workItem.task.slug)
+      )
+      .isAny("status", "READY");
   }
 
   get isNotRejected() {
@@ -36,10 +36,6 @@ export default class CasesDetailIndexController extends Controller {
 
   get readyWorkItems() {
     return this.getNodes.filterBy("status", "READY").length;
-  }
-
-  get submitDisabled() {
-    return !(this.isNotRejected || this.isNotSubmitted);
   }
 
   @dropTask

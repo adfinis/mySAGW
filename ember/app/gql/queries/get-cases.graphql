@@ -14,8 +14,10 @@ query getCasesQuery(
         id
         createdAt
         modifiedAt
+        createdByUser
         closedAt
         status
+        meta
         workItems {
           edges {
             node {
@@ -33,12 +35,18 @@ query getCasesQuery(
             name
             description
           }
-          answers(filter: [{ question: "dossier-nr" }]) {
+          answers(filter: [{ questions: ["dossier-nr", "section"] }]) {
             edges {
               node {
                 id
+                question {
+                  slug
+                }
                 ... on StringAnswer {
-                  value
+                  StringAnswerValue: value
+                }
+                ... on IntegerAnswer {
+                  IntegerAnswerValue: value
                 }
               }
             }

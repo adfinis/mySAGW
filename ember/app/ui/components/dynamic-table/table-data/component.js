@@ -17,9 +17,14 @@ export default class DynamicTableTableDataComponent extends Component {
     );
   }
 
-  get hasRunningWorkItem() {
-    return this.args.value.workItems.edges
-      .mapBy("node")
-      .some((workItem) => workItem.status === "READY");
+  get showAccent() {
+    if (
+      this.args.value.status === "RUNNING" &&
+      this.args.tdDefinition.firstItem
+    ) {
+      return "accent-border-left";
+    }
+
+    return "";
   }
 }

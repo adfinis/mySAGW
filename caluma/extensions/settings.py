@@ -21,6 +21,6 @@ settings.CASE_STATUS = {
     "submit-document": "submit",
     "review-document": "audit",
     "revise-document": "revise",
-    "additional-data": "submit receipts",
+    "additional-data": "submit-receipts",
     "define-amount": "decision",
 }

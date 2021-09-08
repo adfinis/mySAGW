@@ -184,14 +184,14 @@
       {{/if}}
       {{#if (can "list form-builder")}}
         <li>
-          <LinkTo @route="form-builder" uk-toggle="target: #offcanvas">
+          <LinkTo @route="form-builder" uk-toggle="target: #offcanvas-nav">
             {{t "nav.form-builder"}}
           </LinkTo>
         </li>
       {{/if}}
       {{#if (can "list form-configuration")}}
         <li>
-          <LinkTo @route="form-configuration" uk-toggle="target: #offcanvas">
+          <LinkTo @route="form-configuration" uk-toggle="target: #offcanvas-nav">
             {{t "nav.form-configuration"}}
           </LinkTo>
         </li>
@@ -199,12 +199,12 @@
 
       <li class="uk-nav-header">{{t "nav.account"}}</li>
       <li>
-        <LinkTo @route="profile" uk-toggle="target: #offcanvas">
+        <LinkTo @route="profile" uk-toggle="target: #offcanvas-nav">
           {{t "nav.profile"}}
         </LinkTo>
       </li>
       <li>
-        <a href="#" {{on "click" this.invalidateSession}} uk-toggle="target: #offcanvas">
+        <a href="#" {{on "click" this.invalidateSession}} uk-toggle="target: #offcanvas-nav">
           <span class="uk-margin-small-right" uk-icon="icon: sign-out"></span>
           {{t "nav.logout"}}
         </a>

@@ -132,7 +132,7 @@
         </div>
 
         <div>
-          {{#unless @hideCancel}}
+          {{#unless @profileView}}
             <LinkTo class="uk-button uk-button-default" @route={{this.cancelRoute}}>
               {{t "component.identity-form.control.cancel"}}
             </LinkTo>
@@ -143,13 +143,15 @@
             @disabled={{cannot "edit identity" this.changeset.data}}
           />
 
-          <UkButton
-            @type="submit"
-            @color="primary"
-            @on-click={{this.setBackToIdentities}}
-            @label={{t "component.identity-form.control.submitBack"}}
-            @disabled={{cannot "edit identity" this.changeset.data}}
-          />
+          {{#unless @profileView}}
+            <UkButton
+              @type="submit"
+              @color="primary"
+              @on-click={{this.setBackToIdentities}}
+              @label={{t "component.identity-form.control.submitBack"}}
+              @disabled={{cannot "edit identity" this.changeset.data}}
+            />
+          {{/unless}}
         </div>
       </p>
     </ValidatedForm>

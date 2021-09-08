@@ -8,6 +8,7 @@ export default class WorkItemListItemComponent extends Component {
   @service router;
   @service intl;
   @service can;
+  @service store;
 
   get actions() {
     if (this.can.cannot("edit work-item")) {
@@ -47,6 +48,12 @@ export default class WorkItemListItemComponent extends Component {
       ...(diff <= 0 ? ["highlight--expired"] : []),
       ...(diff <= 3 && diff > 0 ? ["highlight--expiring"] : []),
     ].join(" ");
+  }
+
+  get caseCreatedBy() {
+    return this.store
+      .peekAll("identity")
+      .findBy("idpId", this.args.workItem.raw.case.createdByUser);
   }
 
   @dropTask

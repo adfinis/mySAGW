@@ -55,12 +55,15 @@ documents:
   modifiedAt: "Last updated"
   desc: "Desc"
   asc: "Asc"
+  createdByUser: "Created by"
   description: "Description"
   status: "Status"
+  section: "Section"
 
   general: "General information"
 
   actions: "Actions"
+  noActions: "No actions available"
   edit: "Edit document"
   editText: "You can modify the document and change your previous data."
   submit: "Submit document"
@@ -72,9 +75,12 @@ documents:
   deleteSuccess: "The document has been deleted."
 
   states:
-    RUNNING: "Running"
-    CANCELED: "Canceled"
-    COMPLETED: "Completed"
+    submit: "Submit"
+    audit: "Audit"
+    revise: "Revise"
+    submit-receipts: "Submit receipts"
+    decision: "Decision"
+    completed: "Completed"
 
   new:
     title: "Create a new document"
@@ -396,7 +402,7 @@ workItems:
   completedTitle: "Completed tasks"
   task: "Task"
   case: "Document"
-  description: "Description"
+  caseCreatedBy: "Document created by"
   closedAt: "Completed on"
   closedBy: "Completed by"
   edit: "Edit task"

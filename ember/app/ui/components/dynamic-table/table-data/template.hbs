@@ -4,10 +4,11 @@
     (if @tdDefinition.truncate "uk-text-truncate")
     " "
     (join " " @tdDefinition.classList)
+    this.showAccent
   }}
   uk-tooltip={{if @tdDefinition.truncate this.value}}
 >
-  {{#let (component this.componentName value=@value) as |Content|}}
+  {{#let (component this.componentName value=@value tdDefinition=@tdDefinition) as |Content|}}
     {{#if @tdDefinition.linkTo}}
       <LinkTo
         @route={{@tdDefinition.linkTo}}
@@ -17,7 +18,7 @@
         <Content @value={{this.value}} />
       </LinkTo>
     {{else}}
-      <Content @value={{this.value}} />
+      <Content @value={{this.value}} @tdDefinition={{@tdDefinition}}/>
     {{/if}}
   {{/let}}
 </td>

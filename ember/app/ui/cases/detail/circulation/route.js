@@ -5,10 +5,10 @@ export default class CasesDetailCirculationRoute extends Route {
     return await this.modelFor("cases.detail");
   }
 
-  setupController(controller, model) {
+  async setupController(controller, model) {
     super.setupController(controller, model);
-    controller.fetchCirculationWorkItems.perform();
-    controller.fetchIdentities.perform();
-    controller.fetchWorkItems.perform();
+    await controller.fetchCirculationWorkItems.perform();
+    await controller.fetchIdentities.perform();
+    await controller.fetchWorkItems.perform();
   }
 }

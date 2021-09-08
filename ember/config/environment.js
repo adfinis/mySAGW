@@ -51,9 +51,12 @@ module.exports = function (environment) {
       navBarText: "mySAGW",
 
       caseStateIcons: {
-        RUNNING: "clock",
-        CANCELED: "ban",
-        COMPLETED: "check",
+        submit: "clock",
+        audit: "clock",
+        revise: "clock",
+        "submit-receipts": "clock",
+        decision: "clock",
+        completed: "check",
       },
 
       casesTable: {
@@ -83,13 +86,14 @@ module.exports = function (environment) {
       },
 
       dynamicTable: {
-        classList: [], // class list for table element
         columns: [
           {
-            classList: ["accent-border-left"],
             heading: { label: "documents.number" },
-            modelKey: "document.answers.edges.firstObject.node.value",
+            modelKey: "document.answers.edges",
             linkTo: "cases.detail.index",
+            firstItem: true,
+            type: "answer-value",
+            questionSlug: "dossier-nr",
           },
           {
             classList: [], // class list for td element
@@ -102,8 +106,13 @@ module.exports = function (environment) {
           },
           {
             heading: { label: "documents.status" },
-            modelKey: "status",
+            modelKey: "meta.status",
             type: "case-status",
+          },
+          {
+            heading: { label: "documents.createdByUser" },
+            modelKey: "createdByUser",
+            type: "case-created-by",
           },
           {
             heading: { label: "documents.createdAt" },
@@ -116,21 +125,17 @@ module.exports = function (environment) {
             type: "date",
           },
           {
-            heading: { label: "documents.description" },
-            modelKey: "document.form.description",
-            truncate: true,
+            heading: { label: "documents.section" },
+            modelKey: "document.answers.edges",
+            type: "answer-value",
+            questionSlug: "section",
           },
         ],
       },
 
       caluma: {
-        submitTaskSlug: "submit-document",
         reviseTaskSlug: "revise-document",
-        documentEditableTaskSlugs: [
-          "submit-document",
-          "revise-document",
-          "additional-data",
-        ],
+        documentEditableTaskSlugs: ["submit-document", "revise-document"],
         skippableTaskSlugs: [],
         manuallyCompletableTasks: ["complete-document"],
       },

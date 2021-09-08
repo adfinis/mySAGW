@@ -138,6 +138,7 @@ export default class CustomWorkItemModel extends WorkItemModel {
     case {
       id
       meta
+      createdByUser
       parentWorkItem {
         id
         status
