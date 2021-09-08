@@ -1,14 +1,16 @@
 <h1>{{t "page.form-configuration.title"}}</h1>
 
-{{#if this.fetchForms.isRunning}}
+{{#if this.formQuery.isLoading}}
   <div class="uk-text-center uk-padding uk-list-large">
     <UkSpinner @ratio={{2}} />
   </div>
 {{else}}
   <ul class="uk-list uk-list-divider">
-    {{#each this.forms as |form|}}
+    {{#each this.formQuery.value as |form|}}
       <li class="uk-flex uk-flex-middle">
-        <span class="uk-text-bold"><LinkTo @route="form-builder.edit" @model={{form.slug}}>{{form.name}}</LinkTo></span>
+        <span class="uk-text-bold">
+          <LinkTo @route="form-builder.edit" @model={{form.slug}}>{{form.name}}</LinkTo>
+        </span>
 
         <span class="uk-width-expand uk-text-muted uk-text-small uk-text-truncate"></span>
 
