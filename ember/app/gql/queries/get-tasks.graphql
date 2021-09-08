@@ -1,0 +1,10 @@
+query getTasks($filter: [TaskFilterSetType]) {
+  allTasks(filter: $filter) {
+    edges{
+      node {
+        slug
+        name
+      }
+    }
+  }
+}

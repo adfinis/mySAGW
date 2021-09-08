@@ -28,6 +28,12 @@
             />
           {{/each}}
         </tr>
+      {{else}}
+        <tr>
+          <td colspan="8" class="uk-text-center">
+            {{t "global.empty"}}
+          </td>
+        </tr>
       {{/each}}
       {{#if @hasNextPage}}
         <tr>

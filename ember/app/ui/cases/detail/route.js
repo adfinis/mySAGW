@@ -1,21 +1,15 @@
 import Route from "@ember/routing/route";
-import { queryManager } from "ember-apollo-client";
-
-import getCaseQuery from "mysagw/gql/queries/get-case.graphql";
+import calumaQuery from "ember-caluma/caluma-query";
+import { allCases } from "ember-caluma/caluma-query/queries";
 
 export default class CasesDetailRoute extends Route {
-  @queryManager apollo;
+  @calumaQuery({ query: allCases })
+  caseQuery;
 
   async model({ case_id }) {
-    const caseEdges = await this.apollo.watchQuery(
-      {
-        query: getCaseQuery,
-        variables: { caseId: case_id },
-      },
-      "allCases.edges"
-    );
+    await this.caseQuery.fetch({ filter: [{ id: case_id }] });
 
-    return caseEdges.firstObject.node;
+    return this.caseQuery.value.firstObject;
   }
 
   setupController(controller, model) {

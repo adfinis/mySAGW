@@ -89,7 +89,6 @@ module.exports = function (environment) {
         columns: [
           {
             heading: { label: "documents.number" },
-            modelKey: "document.answers.edges",
             linkTo: "cases.detail.index",
             firstItem: true,
             type: "answer-value",
@@ -126,7 +125,6 @@ module.exports = function (environment) {
           },
           {
             heading: { label: "documents.section" },
-            modelKey: "document.answers.edges",
             type: "answer-value",
             questionSlug: "section",
           },

@@ -1,5 +1,7 @@
-<div {{did-insert this.setup}} {{did-update this.setup @order}}>
-  {{#if this.noCases}}
+<div {{did-insert (perform this.fetchCases)}}>
+  {{#if this.caseQuery.isLoading}}
+    <LoadingSpinner />
+  {{else if (not this.caseQuery.value.length)}}
     <div class="uk-width-2-3 uk-margin-auto">
       <h1 class="uk-text-center">
         {{t "documents.empty.welcome" appName="mySAGW"}}
@@ -48,19 +50,19 @@
       </div>
     </div>
     <DynamicTable
-      @loading={{and this.fetchCases.isRunning (eq this.cases.length 0)}}
-      @data={{this.cases}}
+      @loading={{and this.caseQuery.isLoading}}
+      @data={{this.caseQuery.value}}
       @config={{this.dynamicTableConfig}}
-      @loadMoreData={{perform this.fetchCases this.pageInfo.endCursor}}
-      @hasNextPage={{this.pageInfo.hasNextPage}}
+      @loadMoreData={{perform this.fetchMoreCases}}
+      @hasNextPage={{this.caseQuery.hasNextPage}}
     />
     <div class="uk-width-expand uk-flex uk-flex-middle uk-text-meta">
       <span>
         {{
           t
           "global.paginationInfo"
-          count=this.cases.length
-          total=this.pageInfo.totalCount
+          count=this.caseQuery.value.length
+          total=this.caseQuery.totalCount
           htmlSafe=true
         }}
       </span>

@@ -1,9 +1,9 @@
 import Controller from "@ember/controller";
+import { inject as service } from "@ember/service";
 import { queryManager } from "ember-apollo-client";
 import calumaQuery from "ember-caluma/caluma-query";
 import { allWorkItems } from "ember-caluma/caluma-query/queries";
 import { restartableTask } from "ember-concurrency";
-import { inject as service } from "@ember/service";
 
 export default class CasesDetailWorkItemsController extends Controller {
   @service store;

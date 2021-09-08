@@ -1,7 +1,7 @@
-import Component from "@glimmer/component";
-import { performHelper } from "ember-concurrency/helpers/perform";
-import { dropTask } from "ember-concurrency";
 import { inject as service } from "@ember/service";
+import Component from "@glimmer/component";
+import { dropTask } from "ember-concurrency";
+import { performHelper } from "ember-concurrency/helpers/perform";
 
 export default class WorkItemActions extends Component {
   @service router;

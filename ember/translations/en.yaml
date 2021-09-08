@@ -431,9 +431,9 @@ workItems:
   filters:
     responsible: "Responsible"
     status: "Status"
-    type: "Type"
     role: "Role"
     order: "Order"
+    taskTypes: "Task"
 
     all: "All"
     own: "Own"

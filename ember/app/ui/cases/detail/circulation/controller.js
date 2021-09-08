@@ -24,6 +24,34 @@ export default class CasesDetailCirculationController extends Controller {
   @calumaQuery({ query: allWorkItems })
   circulationWorkItemsQuery;
 
+  get tableConfig() {
+    return {
+      columns: [
+        {
+          heading: { label: "workItems.responsible" },
+          modelKey: "responsible",
+        },
+        {
+          heading: { label: "workItems.status" },
+          modelKey: "status",
+        },
+        {
+          heading: { label: "workItems.task" },
+          type: "task-name",
+        },
+        {
+          heading: { label: "workItems.closedAt" },
+          modelKey: "closedAt",
+          type: "date",
+        },
+        {
+          heading: { label: "workItems.action" },
+          type: "work-item-actions",
+        },
+      ],
+    };
+  }
+
   get circulationWorkItem() {
     return (
       this.circulationWorkItemsQuery.value.findBy("task.slug", "circulation") ??

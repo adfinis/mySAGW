@@ -7,8 +7,10 @@ import calumaQuery from "ember-caluma/caluma-query";
 import { allWorkItems } from "ember-caluma/caluma-query/queries";
 import { restartableTask } from "ember-concurrency";
 
+import getTasksQuery from "mysagw/gql/queries/get-tasks.graphql";
+
 export default class WorkItemsIndexController extends Controller {
-  queryParams = ["order", "responsible", "status", "role"];
+  queryParams = ["order", "responsible", "status", "role", "taskTypes"];
 
   @service session;
   @service store;
@@ -23,6 +25,7 @@ export default class WorkItemsIndexController extends Controller {
   @tracked responsible = "all";
   @tracked status = "open";
   @tracked role = "active";
+  @tracked taskTypes = [];
 
   get options() {
     return {
@@ -39,15 +42,16 @@ export default class WorkItemsIndexController extends Controller {
         },
         {
           heading: { label: "workItems.documentNumber" },
-          modelKey: "case.document.answers.edges",
           linkTo: "cases.detail.index",
-          type: "answer-value",
+          linkToModelField: "case.id",
           questionSlug: "dossier-nr",
+          type: "answer-value",
         },
         {
           heading: { label: "workItems.case" },
           modelKey: "case.document.form.name",
           linkTo: "cases.detail.index",
+          linkToModelField: "case.id",
         },
         {
           heading: { label: "workItems.caseCreatedBy" },
@@ -77,13 +81,20 @@ export default class WorkItemsIndexController extends Controller {
                 modelKey: "closedByUser.fullName",
               },
             ]),
+        {
+          heading: { label: "workItems.action" },
+          type: "work-item-actions",
+        },
       ],
     };
   }
 
   @restartableTask
   *fetchWorkItems() {
-    const filter = [{ hasDeadline: true }];
+    const filter = [
+      { hasDeadline: true },
+      { tasks: this.taskTypes.mapBy("value") },
+    ];
 
     if (this.responsible === "own") {
       filter.push({
@@ -130,6 +141,21 @@ export default class WorkItemsIndexController extends Controller {
         filter: { idpIds: idpIds.join(",") },
       });
     }
+  }
+
+  @restartableTask
+  *fetchTasks() {
+    return (yield this.apollo.query(
+      {
+        query: getTasksQuery,
+        variables: {
+          filter: [{ isArchived: false }, { orderBy: ["NAME_ASC"] }],
+        },
+      },
+      "allTasks.edges"
+    )).map((task) => {
+      return { value: task.node.slug, label: task.node.name };
+    });
   }
 
   @action

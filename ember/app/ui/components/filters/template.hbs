@@ -1,3 +1,8 @@
 <div class="uk-flex" ...attributes>
-  {{yield (hash RadioButtons=(component "filters/radio-buttons"))}}
+  {{yield
+    (hash
+      RadioButtons=(component "filters/radio-buttons")
+      Dropdown=(component "filters/dropdown")
+    )
+  }}
 </div>
