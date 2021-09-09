@@ -11,7 +11,7 @@ global:
     german: "German"
     french: "French"
   empty: "No entries found"
-  paginationInfo: "<strong>1 - {count}</strong> von {total}"
+  paginationInfo: "<strong>1 - {count}</strong> of {total}"
   openMenu: "Open menu"
   save: "Save"
   cancel: "Cancel"
@@ -412,12 +412,14 @@ workItems:
   createdAt: "Created by"
   status: "Status"
   documentNumber: "Number"
+  circulationComment: "Comment"
 
   saveSuccess: "Task successfully saved"
   finishSuccess: "Task successfully completed"
   fetchError: "Error while loading tasks"
   saveError: "Error while saving the task"
 
+  action: ""
   actions:
     title: "Actions"
     highlight: "Highlight"
@@ -430,9 +432,9 @@ workItems:
   filters:
     responsible: "Responsible"
     status: "Status"
-    type: "Type"
     role: "Role"
     order: "Order"
+    taskTypes: "Task"
 
     all: "All"
     own: "Own"

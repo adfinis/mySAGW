@@ -2,78 +2,97 @@ import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
-import { queryManager } from "ember-apollo-client";
+import calumaQuery from "ember-caluma/caluma-query";
+import { allCases } from "ember-caluma/caluma-query/queries";
 import { restartableTask } from "ember-concurrency-decorators";
 
 import ENV from "mysagw/config/environment";
-import getCasesQuery from "mysagw/gql/queries/get-cases.graphql";
 
 export default class CasesTableComponent extends Component {
-  @queryManager apollo;
-
   @service store;
 
   @tracked cases = [];
   @tracked types = [];
-  @tracked order;
-
-  get pageInfo() {
-    return this.fetchCases.lastSuccessful?.value.pageInfo;
-  }
 
   orderOptions = ENV.APP.casesTable.orderOptions;
-  dynamicTableConfig = ENV.APP.dynamicTable;
+  dynamicTableConfig = {
+    columns: [
+      {
+        heading: { label: "documents.number" },
+        linkTo: "cases.detail.index",
+        firstItem: true,
+        questionSlug: "dossier-nr",
+        answerKey: "document.answers.edges",
+        type: "answer-value",
+      },
+      {
+        heading: {
+          label: "documents.type",
+        },
+        modelKey: "document.form.name",
+        linkTo: "cases.detail.index",
+      },
+      {
+        heading: { label: "documents.status" },
+        modelKey: "meta.status",
+        type: "case-status",
+      },
+      {
+        heading: { label: "documents.createdByUser" },
+        modelKey: "createdByUser",
+        type: "case-created-by",
+      },
+      {
+        heading: { label: "documents.createdAt" },
+        modelKey: "createdAt",
+        type: "date",
+      },
+      {
+        heading: { label: "documents.modifiedAt" },
+        modelKey: "modifiedAt",
+        type: "date",
+      },
+      {
+        heading: { label: "documents.section" },
+        questionSlug: "section",
+        answerKey: "document.answers.edges",
+        type: "answer-value",
+      },
+    ],
+  };
 
-  get noCases() {
-    return (
-      this.fetchCases.lastSuccessful &&
-      !this.fetchCases.isRunning &&
-      !this.cases.length
-    );
-  }
+  @calumaQuery({ query: allCases, options: "options" })
+  caseQuery;
 
-  constructor(...args) {
-    super(...args);
-    this.order = this.args.order || ENV.APP.casesTable.defaultOrder;
-  }
-
-  @action
-  setup() {
-    this.cases = [];
-    this.fetchCases.perform();
+  get options() {
+    return {
+      pageSize: 20,
+    };
   }
 
   @restartableTask
-  *fetchCases(cursor = null) {
+  *fetchCases() {
     try {
-      const raw = yield this.apollo.query(
-        {
-          query: getCasesQuery,
-          variables: {
-            cursor,
-            orderBy: this.order,
-            filter: [{ workflow: "circulation", invert: true }],
-          },
-
-          fetchPolicy: "network-only",
-        },
-        "allCases"
-      );
-      const cases = raw.edges.mapBy("node");
-
-      this.cases = [...this.cases, ...cases];
-
-      yield this.store.query("identity", {
-        filter: { idpIds: this.cases.mapBy("createdByUser").join(",") },
+      yield this.caseQuery.fetch({
+        filter: [
+          { workflow: "circulation", invert: true },
+          { orderBy: [this.args.order || ENV.APP.casesTable.defaultOrder] },
+        ],
       });
 
-      return {
-        cases,
-        pageInfo: { ...raw.pageInfo, totalCount: raw.totalCount },
-      };
+      yield this.store.query("identity", {
+        filter: {
+          idpIds: this.caseQuery.value.mapBy("createdByUser").join(","),
+        },
+      });
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e);
     }
+  }
+
+  @action
+  fetchMoreCases() {
+    this.caseQuery.fetchMore();
   }
 }

@@ -7,8 +7,10 @@ import calumaQuery from "ember-caluma/caluma-query";
 import { allWorkItems } from "ember-caluma/caluma-query/queries";
 import { restartableTask } from "ember-concurrency";
 
+import getTasksQuery from "mysagw/gql/queries/get-tasks.graphql";
+
 export default class WorkItemsIndexController extends Controller {
-  queryParams = ["order", "responsible", "status", "role"];
+  queryParams = ["order", "responsible", "status", "role", "taskTypes"];
 
   @service session;
   @service store;
@@ -23,6 +25,7 @@ export default class WorkItemsIndexController extends Controller {
   @tracked responsible = "all";
   @tracked status = "open";
   @tracked role = "active";
+  @tracked taskTypes = [];
 
   get options() {
     return {
@@ -30,21 +33,69 @@ export default class WorkItemsIndexController extends Controller {
     };
   }
 
-  get columns() {
-    return [
-      "task",
-      "documentNumber",
-      "case",
-      "caseCreatedBy",
-      ...(this.status === "open"
-        ? ["deadline", "responsible"]
-        : ["closedAt", "closedBy"]),
-    ];
+  get tableConfig() {
+    return {
+      columns: [
+        {
+          heading: { label: "workItems.task" },
+          type: "task-name",
+        },
+        {
+          heading: { label: "workItems.documentNumber" },
+          linkTo: "cases.detail.index",
+          linkToModelField: "case.id",
+          questionSlug: "dossier-nr",
+          answerKey: "case.document.answers.edges",
+          type: "answer-value",
+        },
+        {
+          heading: { label: "workItems.case" },
+          modelKey: "case.document.form.name",
+          linkTo: "cases.detail.index",
+          linkToModelField: "case.id",
+        },
+        {
+          heading: { label: "workItems.caseCreatedBy" },
+          modelKey: "case.createdByUser",
+          type: "case-created-by",
+        },
+        ...(this.status === "open"
+          ? [
+              {
+                heading: { label: "workItems.deadline" },
+                modelKey: "deadline",
+                type: "deadline",
+              },
+              {
+                heading: { label: "workItems.responsible" },
+                modelKey: "responsible",
+              },
+            ]
+          : [
+              {
+                heading: { label: "workItems.closedAt" },
+                modelKey: "closedAt",
+                type: "date",
+              },
+              {
+                heading: { label: "workItems.closedBy" },
+                modelKey: "closedByUser.fullName",
+              },
+            ]),
+        {
+          heading: { label: "workItems.action" },
+          type: "work-item-actions",
+        },
+      ],
+    };
   }
 
   @restartableTask
   *fetchWorkItems() {
-    const filter = [{ hasDeadline: true }];
+    const filter = [
+      { hasDeadline: true },
+      { tasks: this.taskTypes.mapBy("value") },
+    ];
 
     if (this.responsible === "own") {
       filter.push({
@@ -73,24 +124,42 @@ export default class WorkItemsIndexController extends Controller {
 
   @restartableTask
   *getIdentities() {
-    let idpIds = [];
-
-    this.workItemsQuery.value.forEach((workItem) => {
-      idpIds = [
-        ...idpIds,
-        workItem.assignedUsers[0],
-        workItem.raw.closedByUser,
-        workItem.raw.case.createdByUser,
-      ];
-    });
-
-    idpIds = idpIds.compact().uniq();
+    const idpIds = [
+      ...this.readyWorkItemsQuery.value,
+      ...this.completedWorkItemsQuery.value,
+    ]
+      .reduce(
+        (idpIds, workItem) => [
+          ...idpIds,
+          ...workItem.assignedUsers,
+          workItem.raw.closedByUser,
+          workItem.raw.case.createdByUser,
+        ],
+        []
+      )
+      .compact()
+      .uniq();
 
     if (idpIds.length) {
       return yield this.store.query("identity", {
         filter: { idpIds: idpIds.join(",") },
       });
     }
+  }
+
+  @restartableTask
+  *fetchTasks() {
+    return (yield this.apollo.query(
+      {
+        query: getTasksQuery,
+        variables: {
+          filter: [{ isArchived: false }, { orderBy: ["NAME_ASC"] }],
+        },
+      },
+      "allTasks.edges"
+    )).map((task) => {
+      return { value: task.node.slug, label: task.node.name };
+    });
   }
 
   @action

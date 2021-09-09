@@ -4,7 +4,7 @@
   </div>
 {{else}}
   <table
-    class="uk-table uk-table-striped uk-table-hover uk-table-responsive {{
+    class="dynamic-table uk-table uk-table-striped uk-table-hover uk-table-responsive {{
       join " " @config.classList
     }}"
     ...attributes
@@ -27,6 +27,12 @@
               @value={{entry}}
             />
           {{/each}}
+        </tr>
+      {{else}}
+        <tr>
+          <td colspan="8" class="uk-text-center">
+            {{t "global.empty"}}
+          </td>
         </tr>
       {{/each}}
       {{#if @hasNextPage}}

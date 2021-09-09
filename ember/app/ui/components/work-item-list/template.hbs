@@ -1,32 +1,19 @@
-<table class="work-item-list uk-table uk-table-striped uk-table-hover uk-table-responsive" ...attributes>
-  <thead>
-    <tr class={{if this.highlight "highlight"}}>
-      {{#each @columns as |column|}}
-        <th>{{t (concat "workItems." column)}}</th>
-      {{/each}}
-      <th>
-        <span hidden>{{t "workItems.actions.title"}}</span>
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each @query.value as |workItem|}}
-      <WorkItemList::Item @workItem={{workItem}} @columns={{@columns}} @highlight={{this.highlight}} />
-    {{else if (not @query.isLoading)}}
-      <tr>
-        <td class="center" colspan={{this.colspan}}>
-          {{t "global.empty"}}
-        </td>
-      </tr>
-    {{/each}}
-    {{#if @query.isLoading}}
-      <tr>
-        <td class="center" colspan={{this.colspan}}>
-          <UkSpinner @ratio={{2}} />
-        </td>
-      </tr>
-    {{/if}}
-  </tbody>
-</table>
+<DynamicTable
+  @loading={{@query.isLoading}}
+  @data={{@query.value}}
+  @config={{@config}}
+  @loadMoreData={{this.fetchMore}}
+  @hasNextPage={{@query.hasNextPage}}
+/>
 
-<Pagination @query={{@query}} @onLoadMore={{this.fetchMore}} />
+<div class="uk-width-expand uk-flex uk-flex-middle uk-text-meta uk-margin">
+  <span>
+    {{
+      t
+      "global.paginationInfo"
+      count=@query.value.length
+      total=@query.totalCount
+      htmlSafe=true
+    }}
+  </span>
+</div>

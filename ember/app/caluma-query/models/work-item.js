@@ -134,6 +134,19 @@ export default class CustomWorkItemModel extends WorkItemModel {
       form {
         slug
       }
+      answers(filter: [{question: "circulation-comment"}]) {
+        edges {
+          node {
+            id
+            question {
+              slug
+            }
+            ... on StringAnswer {
+              StringAnswerValue: value
+            }
+          }
+        }
+      }
     }
     case {
       id
@@ -153,6 +166,19 @@ export default class CustomWorkItemModel extends WorkItemModel {
               slug
               name
             }
+            answers(filter: [{question: "dossier-nr"}]) {
+              edges {
+                node {
+                  id
+                  question {
+                    slug
+                  }
+                  ... on StringAnswer {
+                    StringAnswerValue: value
+                  }
+                }
+              }
+            }
           }
         }
         childCase {
@@ -170,8 +196,11 @@ export default class CustomWorkItemModel extends WorkItemModel {
           edges {
             node {
               id
+              question {
+                slug
+              }
               ... on StringAnswer {
-                value
+                StringAnswerValue: value
               }
             }
           }

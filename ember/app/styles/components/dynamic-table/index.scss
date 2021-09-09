@@ -1,9 +1,9 @@
 $expired-color: #cc0000;
 $expiring-color: #ff8800;
 
-.work-item-list {
-  tr.highlight {
-    td:first-child::before {
+.dynamic-table {
+  .highlight {
+    &:before {
       content: "";
       display: inline-flex;
       width: 12px;
@@ -14,12 +14,12 @@ $expiring-color: #ff8800;
       border: 1px solid lightgrey;
     }
 
-    &--expired td:first-child::before {
+    &--expired::before {
       background-color: $expired-color;
       border-color: darken($expired-color, 10%);
     }
 
-    &--expiring td:first-child::before {
+    &--expiring::before {
       background-color: $expiring-color;
       border-color: darken($expiring-color, 10%);
     }
@@ -27,18 +27,8 @@ $expiring-color: #ff8800;
 
   td {
     white-space: nowrap;
-  }
-
-  td.task,
-  td.responsible,
-  td.description {
     text-overflow: ellipsis;
     overflow: hidden;
     max-width: 200px;
   }
-}
-
-.work-item-attribute {
-  flex: 0 0 25%;
-  margin: 1em 0;
 }

@@ -7,7 +7,10 @@ export default class DynamicTableTableDataComponent extends Component {
   }
 
   get value() {
-    return get(this.args.value, this.args.tdDefinition.modelKey);
+    if (this.args.tdDefinition.modelKey) {
+      return get(this.args.value, this.args.tdDefinition.modelKey);
+    }
+    return this.args.value;
   }
 
   get linkToModel() {

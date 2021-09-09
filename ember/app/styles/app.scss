@@ -9,7 +9,7 @@ $global-primary-background: $app-accent-color;
 @import "ember-caluma";
 
 @import "components/nav-bar";
-@import "components/work-item-list";
+@import "components/dynamic-table";
 @import "components/context-menu";
 
 main {
@@ -25,6 +25,10 @@ main {
   border-left: 3px solid $app-accent-color;
 }
 
+.text-strike-through {
+  text-decoration: line-through;
+}
+
 .ember-power-select-multiple-option {
   margin: 5px 0 0 5px;
 }
@@ -34,6 +38,11 @@ main {
   background-color: rgb(100, 100, 100);
 }
 
-.text-strike-through {
-  text-decoration: line-through;
+.ember-power-select-trigger-multiple-input {
+  height: 40px;
+}
+
+.work-item-attribute {
+  flex: 0 0 25%;
+  margin: 1em 0;
 }
