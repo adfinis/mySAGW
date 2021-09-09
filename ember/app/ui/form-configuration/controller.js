@@ -1,14 +1,11 @@
 import Controller from "@ember/controller";
 import { inject as service } from "@ember/service";
 import { queryManager } from "ember-apollo-client";
-import {
-  lastValue,
-  restartableTask,
-  enqueueTask,
-} from "ember-concurrency-decorators";
+import calumaQuery from "ember-caluma/caluma-query";
+import { allForms } from "ember-caluma/caluma-query/queries";
+import { restartableTask, enqueueTask } from "ember-concurrency-decorators";
 
 import saveFormMutation from "mysagw/gql/mutations/save-form.graphql";
-import getRootFormsQuery from "mysagw/gql/queries/get-root-forms.graphql";
 
 export default class FormConfigurationController extends Controller {
   @service notification;
@@ -16,19 +13,14 @@ export default class FormConfigurationController extends Controller {
 
   @queryManager apollo;
 
-  @lastValue("fetchForms") forms;
+  @calumaQuery({ query: allForms })
+  formQuery;
+
   @restartableTask
   *fetchForms() {
-    const forms = yield this.apollo.query(
-      {
-        query: getRootFormsQuery,
-        variables: { filter: [{ isPublished: true }, { isArchived: false }] },
-        fetchPolicy: "network-only",
-      },
-      "allForms.edges"
-    );
-
-    return forms.mapBy("node");
+    yield this.formQuery.fetch({
+      filter: [{ isPublished: true }, { isArchived: false }],
+    });
   }
 
   @enqueueTask

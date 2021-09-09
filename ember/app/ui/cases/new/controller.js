@@ -2,12 +2,13 @@ import Controller from "@ember/controller";
 import { inject as service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import { queryManager } from "ember-apollo-client";
+import calumaQuery from "ember-caluma/caluma-query";
+import { allForms } from "ember-caluma/caluma-query/queries";
 import { decodeId } from "ember-caluma/helpers/decode-id";
-import { task, lastValue } from "ember-concurrency";
+import { task } from "ember-concurrency";
 import QueryParams from "ember-parachute";
 
 import createCaseMutation from "mysagw/gql/mutations/create-case.graphql";
-import getRootFormsQuery from "mysagw/gql/queries/get-root-forms.graphql";
 import getWorkflowQuery from "mysagw/gql/queries/get-workflow.graphql";
 
 const queryParams = new QueryParams({
@@ -28,6 +29,9 @@ export default class CaseNewController extends Controller.extend(
 
   @tracked selectedForm;
 
+  @calumaQuery({ query: allForms })
+  formQuery;
+
   setup() {
     this.fetchForms.perform();
   }
@@ -40,7 +44,6 @@ export default class CaseNewController extends Controller.extend(
     this.createCase.cancelAll({ reset: true });
   }
 
-  @lastValue("fetchForms") forms;
   @task
   *fetchForms() {
     const organisations = (yield this.store.findAll("identity", {
@@ -61,20 +64,14 @@ export default class CaseNewController extends Controller.extend(
       });
     }
 
-    return (yield this.apollo.query(
-      {
-        query: getRootFormsQuery,
-        variables: {
-          filter: [
-            { isPublished: true },
-            { isArchived: false },
-            ...organisationTypeFilter,
-          ],
-        },
-        fetchPolicy: "network-only",
-      },
-      "allForms.edges"
-    )).mapBy("node");
+    this.formQuery.fetch({
+      filter: [
+        { isPublished: true },
+        { isArchived: false },
+        { orderBy: "NAME_ASC" },
+        ...organisationTypeFilter,
+      ],
+    });
   }
 
   @task

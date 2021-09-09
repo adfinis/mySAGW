@@ -6,11 +6,11 @@
   {{t "documents.new.type"}}
 </p>
 
-{{#if this.fetchForms.isRunning}}
+{{#if this.formQuery.isLoading}}
   <LoadingSpinner />
 {{else}}
   <div class="uk-margin-bottom uk-margin-large-top uk-flex uk-flex-wrap">
-    {{#each this.forms as |form|}}
+    {{#each this.formQuery.value as |form|}}
       <div class="uk-padding-small uk-width-1-2">
         <UkButton
           @width="1-1"
