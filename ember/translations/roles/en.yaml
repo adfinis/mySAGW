@@ -1,0 +1,17 @@
+index:
+  title: "Roles"
+  add: "Add role"
+
+  list:
+    edit: "Edit role"
+    delete: "Delete role"
+    empty: "No roles yet."
+  delete:
+    prompt: "Do you really want to delete the role {role}?"
+    success: "Role {role} deleted successfully."
+
+add:
+  title: "Add role"
+
+edit:
+  title: "Edit role"

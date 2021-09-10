@@ -21,16 +21,6 @@ Router.map(function () {
     this.route("index", { resetNamespace, path: "/" });
 
     // Engines
-    this.mount("ember-emeis", {
-      as: "emeis",
-      path: "/emeis",
-      resetNamespace,
-    });
-    this.mount("ember-alexandria", {
-      as: "alexandria",
-      path: "/alexandria",
-      resetNamespace,
-    });
     this.mount("ember-caluma", {
       as: "form-builder",
       path: "/form-builder",

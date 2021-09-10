@@ -14,7 +14,7 @@ export default class SnippetFormComponent extends Component {
       yield changeset.save();
 
       this.notification.success(
-        this.intl.t("component.snippet-form.success", {
+        this.intl.t("components.snippet-form.success", {
           title: changeset.data.title,
         })
       );

@@ -1,0 +1,16 @@
+index:
+  title: "Identities"
+  add: "Add identity"
+  export:
+    button: "Export"
+    standard: "Standard"
+    email-only: "Email only"
+    address-labels: "Address labels"
+    filename: "identities-{date}"
+  search: "Search"
+
+add:
+  title: "Add identity"
+
+edit:
+  title: "Edit identity"

@@ -32,20 +32,20 @@ export default class CasesDetailWorkItemsController extends Controller {
     return {
       columns: [
         {
-          heading: { label: "workItems.task" },
+          heading: { label: "work-items.task" },
           type: "task-name",
         },
         {
-          heading: { label: "workItems.deadline" },
+          heading: { label: "work-items.deadline" },
           modelKey: "deadline",
           type: "deadline",
         },
         {
-          heading: { label: "workItems.responsible" },
+          heading: { label: "work-items.responsible" },
           modelKey: "responsible",
         },
         {
-          heading: { label: "workItems.action" },
+          heading: { label: "work-items.action" },
           type: "work-item-actions",
         },
       ],
@@ -55,20 +55,20 @@ export default class CasesDetailWorkItemsController extends Controller {
     return {
       columns: [
         {
-          heading: { label: "workItems.task" },
+          heading: { label: "work-items.task" },
           type: "task-name",
         },
         {
-          heading: { label: "workItems.closedAt" },
+          heading: { label: "work-items.closedAt" },
           modelKey: "closedAt",
           type: "date",
         },
         {
-          heading: { label: "workItems.closedBy" },
+          heading: { label: "work-items.closedBy" },
           modelKey: "closedByUser.fullName",
         },
         {
-          heading: { label: "workItems.action" },
+          heading: { label: "work-items.action" },
           type: "work-item-actions",
         },
       ],
@@ -95,8 +95,8 @@ export default class CasesDetailWorkItemsController extends Controller {
   @restartableTask
   *getIdentities() {
     const idpIds = [
-      ...this.readyWorkItemsQuery.value,
-      ...this.completedWorkItemsQuery.value,
+      ...this.readyWorkItemsQuery?.value,
+      ...this.completedWorkItemsQuery?.value,
     ]
       .reduce(
         (idpIds, workItem) => [

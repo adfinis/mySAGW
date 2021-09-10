@@ -1,0 +1,18 @@
+title: "Email addresses"
+add: "Add address"
+
+list:
+  edit: "Edit address"
+  delete: "Delete address"
+  empty: "No addresses yet."
+form:
+  title:
+    add: "Add email address"
+    edit: "Edit email address"
+  label:
+    email: "Email address"
+    description: "Description ({lang})"
+    default: "This is the default address."
+delete:
+  prompt: "Do you really want to delete the address {address}?"
+  success: "Email address {address} deleted successfully."

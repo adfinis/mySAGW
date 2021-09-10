@@ -19,7 +19,7 @@
       @on-click={{perform this.addToCirculation}}
       @class="uk-margin-left"
     >
-      {{t "page.circulation.add"}}
+      {{t "documents.circulation.add"}}
     </UkButton>
   </div>
 {{/if}}
@@ -32,13 +32,13 @@
 {{#if this.circulationActive}}
   <WorkItemButton
     @workItemId={{this.circulationWorkItem.id}}
-    @label={{t "page.circulation.skip"}}
+    @label={{t "documents.circulation.skip"}}
     @mutation="skip"
     @onSuccess={{this.transitionToCaseWorkItems}}
   />
   <WorkItemButton
     @workItemId={{this.finishCirculationWorkItem.id}}
-    @label={{t "page.circulation.finish"}}
+    @label={{t "documents.circulation.finish"}}
     @mutation="complete"
     @disabled={{not this.canFinishCirculation}}
     @color="primary"

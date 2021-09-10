@@ -1,11 +1,11 @@
 <div>
   <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
-    <h1 class="uk-margin-remove">{{t "page.snippets.index.title"}}</h1>
+    <h1 class="uk-margin-remove">{{t "snippets.index.title"}}</h1>
 
     {{#if (can "add snippet")}}
       <div class="uk-flex-none">
         <LinkTo @route="snippets.add" class="uk-button uk-button-default" data-test-snippet-add>
-          {{t "page.snippets.index.add"}}
+          {{t "snippets.index.add"}}
         </LinkTo>
       </div>
     {{/if}}
@@ -13,7 +13,7 @@
 
   <div class="uk-margin">
     <label class="uk-form-label" for="form-search">
-      {{t "page.snippets.index.search"}}
+      {{t "snippets.index.search"}}
     </label>
     <input
       class="uk-input"
@@ -35,7 +35,7 @@
           </LinkTo>
         </li>
       {{else}}
-        <li>{{t "page.snippets.index.empty"}}</li>
+        <li>{{t "snippets.index.empty"}}</li>
       {{/each}}
     </ul>
   {{/if}}

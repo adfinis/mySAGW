@@ -1,5 +1,5 @@
 <h1 class="uk-flex uk-flex-between">
-  {{t "workItems.title"}}
+  {{t "work-items.title"}}
 </h1>
 
 <hr />
@@ -7,51 +7,51 @@
 <Filters as |Filter|>
   <Filter.RadioButtons
     @name="responsible"
-    @label={{t "workItems.filters.responsible"}}
+    @label={{t "work-items.filters.responsible"}}
     @selected={{this.responsible}}
     @options={{
       array
-      (hash value="all" label=(t "workItems.filters.all"))
-      (hash value="own" label=(t "workItems.filters.own"))
+      (hash value="all" label=(t "work-items.filters.all"))
+      (hash value="own" label=(t "work-items.filters.own"))
     }}
     @onChange={{fn this.updateFilter "responsible"}}
   />
   <Filter.RadioButtons
     @name="status"
-    @label={{t "workItems.filters.status"}}
+    @label={{t "work-items.filters.status"}}
     @selected={{this.status}}
     @options={{
       array
-      (hash value="open" label=(t "workItems.filters.open"))
-      (hash value="closed" label=(t "workItems.filters.closed"))
+      (hash value="open" label=(t "work-items.filters.open"))
+      (hash value="closed" label=(t "work-items.filters.closed"))
     }}
     @onChange={{fn this.updateFilter "status"}}
   />
   <Filter.RadioButtons
     @name="role"
-    @label={{t "workItems.filters.role"}}
+    @label={{t "work-items.filters.role"}}
     @selected={{this.role}}
     @options={{
       array
-      (hash value="active" label=(t "workItems.filters.active"))
-      (hash value="control" label=(t "workItems.filters.control"))
+      (hash value="active" label=(t "work-items.filters.active"))
+      (hash value="control" label=(t "work-items.filters.control"))
     }}
     @onChange={{fn this.updateFilter "role"}}
   />
   <Filter.RadioButtons
     @name="order"
-    @label={{t "workItems.filters.order"}}
+    @label={{t "work-items.filters.order"}}
     @selected={{this.order}}
     @options={{
       array
-      (hash value="urgent" label=(t "workItems.filters.urgent"))
-      (hash value="new" label=(t "workItems.filters.new"))
+      (hash value="urgent" label=(t "work-items.filters.urgent"))
+      (hash value="new" label=(t "work-items.filters.new"))
     }}
     @onChange={{fn this.updateFilter "order"}}
   />
   <Filter.Dropdown
     @name="taskTypes"
-    @label={{t "workItems.filters.taskTypes"}}
+    @label={{t "work-items.filters.taskTypes"}}
     @selected={{this.taskTypes}}
     @options={{this.fetchTasks.lastSuccessful.value}}
     @onChange={{fn this.updateFilter "taskTypes"}}

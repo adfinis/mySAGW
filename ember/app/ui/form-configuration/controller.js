@@ -46,7 +46,7 @@ export default class FormConfigurationController extends Controller {
       });
 
       this.notification.success(
-        this.intl.t("page.form-configuration.saveSuccess", { name: form.name })
+        this.intl.t("form-configuration.saveSuccess", { name: form.name })
       );
 
       this.fetchForms.perform();

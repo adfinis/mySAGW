@@ -24,7 +24,7 @@
           @workItemId={{@model}}
           @type="submit"
           @color="primary"
-          @label={{t "workItems.actions.finish"}}
+          @label={{t "work-items.actions.finish"}}
           @beforeMutate={{validate}}
           @onSuccess={{this.transitionToCaseWorkItems}}
         />
@@ -34,7 +34,7 @@
           @mutation="skip"
           @workItemId={{@model}}
           @type="submit"
-          @label={{t "workItems.actions.skip"}}
+          @label={{t "work-items.actions.skip"}}
           @beforeMutate={{validate}}
           @onSuccess={{this.transitionToCaseWorkItems}}
         />

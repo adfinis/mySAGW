@@ -7,7 +7,7 @@
     >
       {{#unless @customEndpoint}}
         <Form.input
-          @label={{t "component.identity-form.label.isOrganisation"}}
+          @label={{t "components.identity-form.label.isOrganisation"}}
           @type="checkbox"
           @name="isOrganisation"
           @on-update={{this.updateOrganisation}}
@@ -21,7 +21,7 @@
 
         {{#if this.changeset.isOrganisation}}
           <Form.input
-            @label={{t "component.identity-form.label.organisationName"}}
+            @label={{t "components.identity-form.label.organisationName"}}
             @name="organisationName"
             @disabled={{cannot "edit identity" this.changeset.data}}
           />
@@ -46,7 +46,7 @@
       {{/unless}}
 
       <Form.input
-        @label={{t "component.identity-form.label.salutation"}}
+        @label={{t "components.identity-form.label.salutation"}}
         @name="salutation"
         @type="select"
         @options={{this.salutations}}
@@ -57,14 +57,14 @@
       <div class="uk-child-width-expand@s" uk-grid>
         <div>
           <Form.input
-            @label={{t "component.identity-form.label.firstName"}}
+            @label={{t "components.identity-form.label.firstName"}}
             @name="firstName"
             @disabled={{cannot "edit identity" this.changeset.data}}
           />
         </div>
         <div>
           <Form.input
-            @label={{t "component.identity-form.label.lastName"}}
+            @label={{t "components.identity-form.label.lastName"}}
             @name="lastName"
             @disabled={{cannot "edit identity" this.changeset.data}}
           />
@@ -73,7 +73,7 @@
 
       <div class="uk-margin">
         <Form.input
-          @label={{t "component.identity-form.label.email"}}
+          @label={{t "components.identity-form.label.email"}}
           @name="email" as |field|
         >
           <div class="uk-form-controls">
@@ -97,7 +97,7 @@
           {{#if this.changeset.idpId}}
             <p class="uk-margin-remove-top">
               <a href={{this.keyCloakAccountUrl}} target="_blank" rel="noopener noreferrer">
-                {{~t "component.identity-form.hint.email"~}}
+                {{~t "components.identity-form.hint.email"~}}
               </a>
             </p>
           {{/if}}
@@ -105,7 +105,7 @@
       </div>
 
       <Form.input
-        @label={{t "component.identity-form.label.language"}}
+        @label={{t "components.identity-form.label.language"}}
         @name="language"
         @type="select"
         @options={{this.languages}}
@@ -126,7 +126,7 @@
               type="button"
               {{on "click" (perform this.delete this.changeset.data)}}
             >
-              {{t "component.identity-form.control.delete"}}
+              {{t "components.identity-form.control.delete"}}
             </button>
           {{/if}}
         </div>
@@ -134,12 +134,12 @@
         <div>
           {{#unless @profileView}}
             <LinkTo class="uk-button uk-button-default" @route={{this.cancelRoute}}>
-              {{t "component.identity-form.control.cancel"}}
+              {{t "global.cancel"}}
             </LinkTo>
           {{/unless}}
 
           <Form.submit
-            @label={{t "component.identity-form.control.submit"}}
+            @label={{t "global.save"}}
             @disabled={{cannot "edit identity" this.changeset.data}}
           />
 

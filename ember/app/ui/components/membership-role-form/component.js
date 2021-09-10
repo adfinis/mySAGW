@@ -32,7 +32,7 @@ export default class MembershipRoleFormComponent extends Component {
     try {
       yield changeset.save();
       this.notification.success(
-        this.intl.t("component.membership-role-form.success", {
+        this.intl.t("components.membership-role-form.success", {
           role: changeset.data.title,
         })
       );

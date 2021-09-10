@@ -3,7 +3,7 @@
   {{did-update this.onUpdate @identity}}
   class="uk-margin-remove-last-child"
 >
-  <h2>{{t "component.identity-interests.title"}}</h2>
+  <h2>{{t "components.identity-interests.title"}}</h2>
 
   {{#if this.fetchInterests.isRunning}}
     <LoadingSpinner />
@@ -26,7 +26,7 @@
                         type="button"
                         disabled={{or this.changeset this.delete.isRunning}}
                         uk-icon="close"
-                        title={{t "component.identity-interests.list.delete"}}
+                        title={{t "components.identity-interests.list.delete"}}
                         {{on "click" (perform this.delete interest)}}
                       ></button>
                     </div>
@@ -38,7 +38,7 @@
         {{/each}}
       </ul>
     {{else}}
-      <p>{{t "component.identity-interests.list.empty"}}</p>
+      <p>{{t "components.identity-interests.list.empty"}}</p>
     {{/if}}
 
     {{#if (can "add interest to identity" this.changeset.data)}}
@@ -49,7 +49,7 @@
           disabled={{this.changeset}}
           {{on "click" (fn this.edit null)}}
         >
-          {{t "component.identity-interests.add"}}
+          {{t "components.identity-interests.add"}}
         </button>
       </p>
     {{/if}}
@@ -59,7 +59,7 @@
     <hr>
 
     <h3 class="uk-margin-remove-top">
-      {{t "component.identity-interests.form.title.add"}}
+      {{t "components.identity-interests.form.title.add"}}
     </h3>
 
     <ValidatedForm
@@ -70,7 +70,7 @@
     >
       <div class="uk-margin">
         <Form.input
-          @label={{t "component.identity-interests.form.label.interest"}}
+          @label={{t "components.identity-interests.form.label.interest"}}
           @name="interest"
           as |field|
         >
@@ -95,11 +95,11 @@
           type="button"
           {{on "click" this.cancel}}
         >
-          {{t "component.identity-interests.form.control.cancel"}}
+          {{t "global.cancel"}}
         </button>
 
         <Form.submit
-          @label={{t "component.identity-interests.form.control.submit"}}
+          @label={{t "global.save"}}
         />
       </p>
     </ValidatedForm>

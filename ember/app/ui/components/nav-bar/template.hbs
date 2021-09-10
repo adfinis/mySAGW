@@ -17,27 +17,27 @@
     <UkTab as |tab|>
       {{#if (can "list work-item")}}
         <tab.link-item @route="work-items">
-          {{t "nav.tasks"}}
+          {{t "components.nav-bar.tasks"}}
         </tab.link-item>
       {{/if}}
       <tab.link-item @route="cases">
-        {{t "nav.documents"}}
+        {{t "components.nav-bar.documents"}}
       </tab.link-item>
 
       {{#if (can "list snippet")}}
         <tab.link-item @route="snippets">
-          {{t "nav.snippets"}}
+          {{t "components.nav-bar.snippets"}}
         </tab.link-item>
       {{/if}}
 
       {{#if (or (can "list identity") (can "list interests") (can "list membership-role"))}}
         <tab.item id="nav-identity-management">
-          {{t "nav.identity-management"}}<span uk-icon="chevron-down"></span>
+          {{t "components.nav-bar.identity-management"}}<span uk-icon="chevron-down"></span>
         </tab.item>
       {{/if}}
       {{#if (or (can "list form-builder") (can "list form-configuration"))}}
         <tab.item id="nav-form-management">
-          {{t "nav.form-management"}}<span uk-icon="chevron-down"></span>
+          {{t "components.nav-bar.form-management"}}<span uk-icon="chevron-down"></span>
         </tab.item>
       {{/if}}
     </UkTab>
@@ -46,17 +46,17 @@
     <ul class="uk-nav uk-dropdown-nav">
       {{#if (can "list identity")}}
         <li>
-          <LinkTo @route="identities">{{t "nav.identities"}}</LinkTo>
+          <LinkTo @route="identities">{{t "components.nav-bar.identities"}}</LinkTo>
         </li>
       {{/if}}
       {{#if (can "list interest")}}
         <li>
-          <LinkTo @route="interests">{{t "nav.interests"}}</LinkTo>
+          <LinkTo @route="interests">{{t "components.nav-bar.interests"}}</LinkTo>
         </li>
       {{/if}}
       {{#if (can "list membership-role")}}
         <li>
-          <LinkTo @route="membership-roles">{{t "nav.roles"}}</LinkTo>
+          <LinkTo @route="membership-roles">{{t "components.nav-bar.roles"}}</LinkTo>
         </li>
       {{/if}}
     </ul>
@@ -65,12 +65,12 @@
     <ul class="uk-nav uk-dropdown-nav">
       {{#if (can "list form-builder")}}
         <li>
-          <LinkTo @route="form-builder">{{t "nav.form-builder"}}</LinkTo>
+          <LinkTo @route="form-builder">{{t "components.nav-bar.form-builder"}}</LinkTo>
         </li>
       {{/if}}
       {{#if (can "list form-configuration")}}
         <li>
-          <LinkTo @route="form-configuration">{{t "nav.form-configuration"}}</LinkTo>
+          <LinkTo @route="form-configuration">{{t "components.nav-bar.form-configuration"}}</LinkTo>
         </li>
       {{/if}}
     </ul>
@@ -79,19 +79,19 @@
     <ul class="uk-navbar-nav">
       <li>
         <LinkTo @route="profile">
-          {{t "nav.profile"}}
+          {{t "components.nav-bar.profile"}}
         </LinkTo>
       </li>
       {{#if this.session.isAuthenticated}}
         <li>
           <a class="uk-padding-remove" {{on "click" this.invalidateSession}} href="#">
-            {{t "nav.logout"}}
+            {{t "components.nav-bar.logout"}}
           </a>
         </li>
       {{else}}
         <li>
           <LinkTo @route="login" class="uk-padding-remove">
-            {{t "nav.login"}}
+            {{t "components.nav-bar.login"}}
           </LinkTo>
         </li>
       {{/if}}
@@ -144,69 +144,69 @@
     <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
       <li>
         <LinkTo @route="cases" uk-toggle="target: #offcanvas-nav">
-          {{t "nav.documents"}}
+          {{t "components.nav-bar.documents"}}
         </LinkTo>
       </li>
       <li>
         <LinkTo @route="work-items" uk-toggle="target: #offcanvas-nav">
-          {{t "nav.tasks"}}
+          {{t "components.nav-bar.tasks"}}
         </LinkTo>
       </li>
 
-      <li class="uk-nav-header">{{t "nav.admin"}}</li>
+      <li class="uk-nav-header">{{t "components.nav-bar.admin"}}</li>
       {{#if (can "list identity")}}
         <li>
           <LinkTo @route="identities" uk-toggle="target: #offcanvas-nav">
-            {{t "nav.identities"}}
+            {{t "components.nav-bar.identities"}}
           </LinkTo>
         </li>
       {{/if}}
       {{#if (can "list interest")}}
         <li>
           <LinkTo @route="interests" uk-toggle="target: #offcanvas-nav">
-            {{t "nav.interests"}}
+            {{t "components.nav-bar.interests"}}
           </LinkTo>
         </li>
       {{/if}}
       {{#if (can "list membership-role")}}
         <li>
           <LinkTo @route="membership-roles" uk-toggle="target: #offcanvas-nav">
-            {{t "nav.roles"}}
+            {{t "components.nav-bar.roles"}}
           </LinkTo>
         </li>
       {{/if}}
       {{#if (can "list snippet")}}
         <li>
           <LinkTo @route="snippets" uk-toggle="target: #offcanvas-nav">
-            {{t "nav.snippets"}}
+            {{t "components.nav-bar.snippets"}}
           </LinkTo>
         </li>
       {{/if}}
       {{#if (can "list form-builder")}}
         <li>
           <LinkTo @route="form-builder" uk-toggle="target: #offcanvas-nav">
-            {{t "nav.form-builder"}}
+            {{t "components.nav-bar.form-builder"}}
           </LinkTo>
         </li>
       {{/if}}
       {{#if (can "list form-configuration")}}
         <li>
           <LinkTo @route="form-configuration" uk-toggle="target: #offcanvas-nav">
-            {{t "nav.form-configuration"}}
+            {{t "components.nav-bar.form-configuration"}}
           </LinkTo>
         </li>
       {{/if}}
 
-      <li class="uk-nav-header">{{t "nav.account"}}</li>
+      <li class="uk-nav-header">{{t "components.nav-bar.account"}}</li>
       <li>
         <LinkTo @route="profile" uk-toggle="target: #offcanvas-nav">
-          {{t "nav.profile"}}
+          {{t "components.nav-bar.profile"}}
         </LinkTo>
       </li>
       <li>
         <a href="#" {{on "click" this.invalidateSession}} uk-toggle="target: #offcanvas-nav">
           <span class="uk-margin-small-right" uk-icon="icon: sign-out"></span>
-          {{t "nav.logout"}}
+          {{t "components.nav-bar.logout"}}
         </a>
       </li>
 
@@ -228,11 +228,11 @@
   <div class="uk-offcanvas-bar uk-flex uk-flex-column" {{did-insert (perform this.fetchSnippets)}}>
     <button class="uk-offcanvas-close" type="button" uk-close></button>
 
-    <h3>{{t "nav.snippets"}}</h3>
+    <h3>{{t "components.nav-bar.snippets"}}</h3>
 
     <div class="uk-margin">
       <label class="uk-form-label" for="form-search">
-        {{t "page.snippets.index.search"}}
+        {{t "snippets.index.search"}}
       </label>
       <input
         class="uk-input"
@@ -259,16 +259,16 @@
                   @error={{this.onCopyError}}
                   class="uk-button uk-width-1-1 uk-button-default uk-margin"
                 >
-                  {{t "nav.snippet.hint" lang=locale}}
+                  {{t "components.nav-bar.snippet.hint" lang=locale}}
                 </CopyButton>
               {{/each}}
             </div>
           </li>
         {{else}}
-          <p>{{t "page.snippets.index.empty"}}</p>
+          <p>{{t "snippets.index.empty"}}</p>
         {{/each}}
         {{#if (not (eq this.pageNumber this.totalPages))}}
-          <a {{on "click" this.loadMoreSnippets}} href="#">{{t "nav.snippet.load-more"}}</a>
+          <a {{on "click" this.loadMoreSnippets}} href="#">{{t "components.nav-bar.snippet.load-more"}}</a>
         {{/if}}
       </ul>
     {{/if}}

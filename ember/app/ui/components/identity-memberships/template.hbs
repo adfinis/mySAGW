@@ -3,7 +3,7 @@
   {{did-update this.onUpdate @identity}}
   class="uk-margin-remove-last-child"
 >
-  <h2>{{t "component.identity-memberships.title"}}</h2>
+  <h2>{{t "components.identity-memberships.title"}}</h2>
 
   {{#if this.fetchMemberships.isRunning}}
     <LoadingSpinner />
@@ -16,7 +16,7 @@
               <span class="uk-text-bold {{if membership.isInactive "text-strike-through"}}">
                 {{membership.organisation.organisationName}}
                 {{#if membership.authorized}}
-                  ({{t "component.identity-memberships.form.label.admin"}})
+                  ({{t "components.identity-memberships.form.label.admin"}})
                 {{/if}}
               </span>
 
@@ -30,19 +30,19 @@
 
               <div class="uk-text-small">
                 {{#if membership.timeSlot.lower}}
-                  {{t "component.identity-memberships.timeSlotLower"}}
+                  {{t "components.identity-memberships.timeSlotLower"}}
                   {{moment-format membership.timeSlot.lower "DD.MM.YYYY" allowEmpty=true}}
                 {{/if}}
 
                 {{#if membership.timeSlot.upper}}
-                  {{t "component.identity-memberships.timeSlotUpper"}}
+                  {{t "components.identity-memberships.timeSlotUpper"}}
                   {{moment-format membership.timeSlot.upper "DD.MM.YYYY" allowEmpty=true}}
                 {{/if}}
               </div>
 
               {{#if membership.nextElection}}
                 <div class="uk-text-small">
-                  {{t "component.identity-memberships.list.nextElection"
+                  {{t "components.identity-memberships.list.nextElection"
                     date=(moment-format membership.nextElection "DD.MM.YYYY")
                   }}
                 </div>
@@ -57,7 +57,7 @@
                 type="button"
                 disabled={{this.changeset}}
                 uk-icon="pencil"
-                title={{t "component.identity-memberships.list.edit"}}
+                title={{t "components.identity-memberships.list.edit"}}
                 {{on "click" (fn this.edit membership)}}
               ></button>
 
@@ -66,7 +66,7 @@
                 type="button"
                 disabled={{or this.changeset this.delete.isRunning}}
                 uk-icon="close"
-                title={{t "component.identity-memberships.list.delete"}}
+                title={{t "components.identity-memberships.list.delete"}}
                 {{on "click" (perform this.delete membership)}}
               ></button>
             </div>
@@ -74,7 +74,7 @@
         {{/each}}
       </ul>
     {{else}}
-      <p>{{t "component.identity-memberships.list.empty"}}</p>
+      <p>{{t "components.identity-memberships.list.empty"}}</p>
     {{/if}}
 
     {{#if (can "add membership-role")}}
@@ -85,7 +85,7 @@
           disabled={{this.changeset}}
           {{on "click" (fn this.edit null)}}
         >
-          {{t "component.identity-memberships.add"}}
+          {{t "components.identity-memberships.add"}}
         </button>
       </p>
     {{/if}}
@@ -96,8 +96,8 @@
 
     <h3 class="uk-margin-remove-top">
       {{if this.changeset.isNew
-        (t "component.identity-memberships.form.title.add")
-        (t "component.identity-memberships.form.title.edit")
+        (t "components.identity-memberships.form.title.add")
+        (t "components.identity-memberships.form.title.edit")
       }}
     </h3>
 
@@ -109,7 +109,7 @@
     >
       <div class="uk-margin">
         <Form.input
-          @label={{t "component.identity-memberships.form.label.organisation"}}
+          @label={{t "components.identity-memberships.form.label.organisation"}}
           @name="organisation"
           as |field|
         >
@@ -130,7 +130,7 @@
 
       <div class="uk-margin">
         <Form.input
-          @label={{t "component.identity-memberships.form.label.role"}}
+          @label={{t "components.identity-memberships.form.label.role"}}
           @name="role"
           as |field|
         >
@@ -151,7 +151,7 @@
       </div>
 
       <Form.input
-        @label={{t "component.identity-memberships.form.label.authorized"}}
+        @label={{t "components.identity-memberships.form.label.authorized"}}
         @type="checkbox"
         @name="authorized"
         @required={{false}}
@@ -163,7 +163,7 @@
           <div>
             <div class="uk-margin">
               <Form.input
-                @label={{t "component.identity-memberships.form.label.timeFrom"}}
+                @label={{t "components.identity-memberships.form.label.timeFrom"}}
                 @name="timeSlot.lower"
                 as |field|
               >
@@ -178,7 +178,7 @@
           <div>
             <div class="uk-margin">
               <Form.input
-                @label={{t "component.identity-memberships.form.label.timeUntil"}}
+                @label={{t "components.identity-memberships.form.label.timeUntil"}}
                 @name="timeSlot.upper"
                 as |field|
               >
@@ -195,7 +195,7 @@
 
       <div class="uk-margin">
         <Form.input
-          @label={{t "component.identity-memberships.form.label.nextElection"}}
+          @label={{t "components.identity-memberships.form.label.nextElection"}}
           @name="nextElection"
           as |field|
         >
@@ -209,13 +209,13 @@
 
       <div class="uk-margin">
         <Form.input
-          @label={{t "component.identity-memberships.form.label.comment"}}
+          @label={{t "components.identity-memberships.form.label.comment"}}
           @name="comment"
         />
       </div>
 
       <Form.input
-        @label={{t "component.identity-memberships.form.label.inactive"}}
+        @label={{t "components.identity-memberships.form.label.inactive"}}
         @type="checkbox"
         @name="inactive"
         @required={{false}}
@@ -228,11 +228,11 @@
           type="button"
           {{on "click" this.cancel}}
         >
-          {{t "component.identity-memberships.form.control.cancel"}}
+          {{t "global.cancel"}}
         </button>
 
         <Form.submit
-          @label={{t "component.identity-memberships.form.control.submit"}}
+          @label={{t "global.save"}}
         />
       </p>
     </ValidatedForm>

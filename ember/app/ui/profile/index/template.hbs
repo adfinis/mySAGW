@@ -1,11 +1,11 @@
-<h1>{{t "page.profile.title"}}</h1>
+<h1>{{t "profile.title"}}</h1>
 
 <UkSwitcher @animation="uk-animation-fade" @active={{this.activeTab}} as |switcher|>
   <switcher.nav @type="tab" as |nav|>
     {{! nav.component is either a uk-tab or a uk-subnav component }}
     <nav.component as |tab|>
-      <tab.item {{on "click" (fn this.setActiveTab 0)}}>{{t "page.profile.switcher.identity"}}</tab.item>
-      <tab.item {{on "click" (fn this.setActiveTab 1)}}>{{t "page.profile.switcher.memberships"}}</tab.item>
+      <tab.item {{on "click" (fn this.setActiveTab 0)}}>{{t "profile.switcher.identity"}}</tab.item>
+      <tab.item {{on "click" (fn this.setActiveTab 1)}}>{{t "profile.switcher.memberships"}}</tab.item>
     </nav.component>
   </switcher.nav>
 
@@ -112,7 +112,7 @@
                 {{/if}}
               </li>
             {{else}}
-              <li>{{t "page.profile.organisation.empty"}}</li>
+              <li>{{t "profile.organisation.empty"}}</li>
             {{/each}}
           </ul>
         {{/if}}

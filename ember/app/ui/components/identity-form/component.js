@@ -98,7 +98,7 @@ export default class IdentityFormComponent extends Component {
       });
 
       this.notification.success(
-        this.intl.t("component.identity-form.success", {
+        this.intl.t("components.identity-form.success", {
           name: changeset.data.fullName,
         })
       );
@@ -118,13 +118,13 @@ export default class IdentityFormComponent extends Component {
   *delete(identity) {
     try {
       yield UIkit.modal.confirm(
-        this.intl.t("component.identity-form.delete.prompt")
+        this.intl.t("components.identity-form.delete.prompt")
       );
 
       try {
         yield identity.destroyRecord();
         this.notification.success(
-          this.intl.t("component.identity-form.delete.success")
+          this.intl.t("components.identity-form.delete.success")
         );
         this.router.transitionTo("identities");
       } catch (error) {

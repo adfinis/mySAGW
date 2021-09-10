@@ -37,11 +37,11 @@ export default class WorkItemsIndexController extends Controller {
     return {
       columns: [
         {
-          heading: { label: "workItems.task" },
+          heading: { label: "work-items.task" },
           type: "task-name",
         },
         {
-          heading: { label: "workItems.documentNumber" },
+          heading: { label: "work-items.documentNumber" },
           linkTo: "cases.detail.index",
           linkToModelField: "case.id",
           questionSlug: "dossier-nr",
@@ -49,41 +49,41 @@ export default class WorkItemsIndexController extends Controller {
           type: "answer-value",
         },
         {
-          heading: { label: "workItems.case" },
+          heading: { label: "work-items.case" },
           modelKey: "case.document.form.name",
           linkTo: "cases.detail.index",
           linkToModelField: "case.id",
         },
         {
-          heading: { label: "workItems.caseCreatedBy" },
+          heading: { label: "work-items.caseCreatedBy" },
           modelKey: "case.createdByUser",
           type: "case-created-by",
         },
         ...(this.status === "open"
           ? [
               {
-                heading: { label: "workItems.deadline" },
+                heading: { label: "work-items.deadline" },
                 modelKey: "deadline",
                 type: "deadline",
               },
               {
-                heading: { label: "workItems.responsible" },
+                heading: { label: "work-items.responsible" },
                 modelKey: "responsible",
               },
             ]
           : [
               {
-                heading: { label: "workItems.closedAt" },
+                heading: { label: "work-items.closedAt" },
                 modelKey: "closedAt",
                 type: "date",
               },
               {
-                heading: { label: "workItems.closedBy" },
+                heading: { label: "work-items.closedBy" },
                 modelKey: "closedByUser.fullName",
               },
             ]),
         {
-          heading: { label: "workItems.action" },
+          heading: { label: "work-items.action" },
           type: "work-item-actions",
         },
       ],
@@ -124,10 +124,7 @@ export default class WorkItemsIndexController extends Controller {
 
   @restartableTask
   *getIdentities() {
-    const idpIds = [
-      ...this.readyWorkItemsQuery.value,
-      ...this.completedWorkItemsQuery.value,
-    ]
+    const idpIds = this.workItemsQuery.value
       .reduce(
         (idpIds, workItem) => [
           ...idpIds,

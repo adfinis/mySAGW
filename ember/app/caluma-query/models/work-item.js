@@ -85,7 +85,7 @@ export default class CustomWorkItemModel extends WorkItemModel {
   }
 
   get statusName() {
-    return this.intl.t(`workItems.statuses.${this.raw.status}`);
+    return this.intl.t(`work-items.statuses.${this.raw.status}`);
   }
 
   async assignToMe() {
@@ -110,7 +110,7 @@ export default class CustomWorkItemModel extends WorkItemModel {
 
       return true;
     } catch (error) {
-      this.notification.danger(this.intl.t("workItems.saveError"));
+      this.notification.danger(this.intl.t("work-items.saveError"));
     }
   }
 
