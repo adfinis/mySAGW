@@ -65,6 +65,8 @@ export default class CustomWorkItemModel extends WorkItemModel {
   get canComplete() {
     if (this.raw.task.slug === "circulation-decision") {
       return this.isReady && this.isAssignedToCurrentUser;
+    } else if (this.raw.task.slug === "advance-credits") {
+      return false;
     }
     return this.isReady;
   }

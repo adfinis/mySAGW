@@ -27,6 +27,27 @@ def test_work_item_finish_circulation(db, caluma_data, user, circulation):
     )
 
 
+def test_work_item_additional_data(
+    db, caluma_data, user, circulation, identites_mock_for_mailing
+):
+    case = circulation.parent_work_item.case
+
+    skip_work_item(case.work_items.get(task_id="circulation"), user)
+
+    case.work_items.get(task_id="decision-and-credit").document.answers.create(
+        question_id="decision-and-credit-decision",
+        value="decision-and-credit-decision-additional-data",
+    )
+
+    skip_work_item(case.work_items.get(task_id="decision-and-credit"), user)
+    complete_work_item(case.work_items.get(task_id="additional-data"), user)
+
+    assert (
+        case.work_items.get(task_id="advance-credits").status
+        == WorkItem.STATUS_COMPLETED
+    )
+
+
 def test_work_item_invite_to_circulation(db, caluma_data, user, circulation):
     complete_work_item(
         circulation.work_items.get(task_id="invite-to-circulation"),
@@ -110,6 +131,9 @@ def test_case_status(
     assert case.meta["status"] == "submit-receipts"
 
     skip_work_item(case.work_items.get(task_id="additional-data"), user)
+    assert case.meta["status"] == "decision"
+
+    skip_work_item(case.work_items.get(task_id="advance-credits"), user)
     assert case.meta["status"] == "decision"
 
     skip_work_item(case.work_items.get(task_id="define-amount"), user)

@@ -1,5 +1,4 @@
 from caluma.caluma_workflow.dynamic_tasks import BaseDynamicTasks, register_dynamic_task
-from caluma.caluma_workflow.models import WorkItem
 
 
 class CustomDynamicTasks(BaseDynamicTasks):
@@ -23,22 +22,10 @@ class CustomDynamicTasks(BaseDynamicTasks):
         )
 
         if "additional-data" in credit_decision.value:
-            return ["additional-data"]
+            return ["additional-data", "advance-credits"]
         elif "define-amount" in credit_decision.value:
             return ["define-amount"]
         elif "complete" in credit_decision.value:
             return ["complete-document"]
 
         return []
-
-    @register_dynamic_task("after-define-amount")
-    def resolve_after_define_amount(self, case, user, prev_work_item, context):
-        work_item = WorkItem.objects.get(case=case, task_id="decision-and-credit")
-        credit_decision = work_item.document.answers.filter(
-            question_id="decision-and-credit-advance-credit",
-        ).first()
-
-        if credit_decision and "approved" in credit_decision.value:
-            return ["additional-data"]
-
-        return ["complete-document"]
