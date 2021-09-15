@@ -57,14 +57,20 @@ class PhoneNumberSerializer(
     UniqueBooleanFieldSerializerMixin,
     serializers.ModelSerializer,
 ):
+    phone_pretty = serializers.SerializerMethodField()
+
     included_serializers = {
         "identity": "mysagw.identity.serializers.IdentitySerializer",
     }
+
+    def get_phone_pretty(self, obj):
+        return obj.phone.as_international
 
     class Meta:
         model = models.PhoneNumber
         fields = (
             "phone",
+            "phone_pretty",
             "identity",
             "description",
             "default",
