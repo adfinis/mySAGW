@@ -105,7 +105,7 @@
         "control_groups": null,
         "is_archived": false,
         "form": null,
-        "lead_time": 432000,
+        "lead_time": null,
         "is_multiple_instance": false
     }
 },
