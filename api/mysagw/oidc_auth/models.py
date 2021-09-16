@@ -44,7 +44,9 @@ class OIDCUser(BaseUser):
 
     def _get_or_create_identity(self):
         try:
-            identity = Identity.objects.get(Q(idp_id=self.id) | Q(email=self.username))
+            identity = Identity.objects.get(
+                Q(idp_id=self.id) | Q(email__iexact=self.username)
+            )
             # we only want to save if necessary in order to prevent adding historical
             # records on every request
             if identity.idp_id != self.id or identity.email != self.username:
