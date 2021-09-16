@@ -4,6 +4,7 @@ import Component from "@glimmer/component";
 import { queryManager } from "ember-apollo-client";
 import { lastValue, restartableTask } from "ember-concurrency-decorators";
 
+import ENV from "mysagw/config/environment";
 import getDocumentsQuery from "mysagw/gql/queries/get-documents.graphql";
 
 export default class SubmitButtonComponent extends Component {
@@ -28,8 +29,7 @@ export default class SubmitButtonComponent extends Component {
       .find((workItem) => {
         return (
           workItem.status === "READY" &&
-          (workItem.task.slug === "submit-document" ||
-            workItem.task.slug === "revise-document")
+          ENV.APP.caluma.documentEditableTaskSlugs.includes(workItem.task.slug)
         );
       });
   }
