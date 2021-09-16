@@ -9,10 +9,17 @@ export default class AnswerValue extends Component {
       .mapBy("node")
       .findBy("question.slug", this.args.tdDefinition.questionSlug);
 
-    if (answer) {
-      return answer[`${answer.__typename}Value`];
+    if (!answer) {
+      return "";
     }
 
-    return "";
+    if (answer.question.__typename === "ChoiceQuestion") {
+      return answer.question.options.edges.findBy(
+        "node.slug",
+        answer[`${answer.__typename}Value`]
+      ).node.label;
+    }
+
+    return answer[`${answer.__typename}Value`];
   }
 }

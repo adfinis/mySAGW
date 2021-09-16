@@ -15,6 +15,7 @@ createdAt: "Created by"
 status: "Status"
 documentNumber: "Number"
 circulationComment: "Comment"
+circulationDecision: "Decision"
 
 saveSuccess: "Task successfully saved"
 finishSuccess: "Task successfully completed"
