@@ -5,8 +5,9 @@ identity-members:
 
 interest-category-form:
   label:
-    title: "Title"
+    title: "Title ({lang})"
     description: "Description"
+    public: "Public"
   success: "Category {category} saved successfully."
 
 membership-role-form:

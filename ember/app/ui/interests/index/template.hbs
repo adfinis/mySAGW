@@ -31,7 +31,7 @@
           <div class="uk-card uk-card-default uk-card-body uk-card-small">
             <div class="uk-flex uk-flex-between uk-flex-middle">
               <div>
-                <strong>{{category.title}}</strong>
+                <strong>{{category.title}}</strong>{{#if category.public}} - <i>{{t "interests.index.list.public"}}</i>{{/if}}
                 {{#if category.description}}
                   <div>{{category.description}}</div>
                 {{/if}}

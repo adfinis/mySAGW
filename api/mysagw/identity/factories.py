@@ -52,6 +52,7 @@ class InterestCategoryFactory(DjangoModelFactory):
     title = Faker("word")
     description = Faker("sentence")
     archived = False
+    public = False
 
     class Meta:
         model = models.InterestCategory

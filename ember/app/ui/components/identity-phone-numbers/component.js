@@ -35,7 +35,6 @@ export default class IdentityPhoneNumbersComponent extends Component {
   @restartableTask *fetchPhoneNumbers(identity) {
     return yield this.store.query("phone-number", {
       filter: { identity: identity.id },
-      include: "identity",
     });
   }
 
@@ -63,9 +62,7 @@ export default class IdentityPhoneNumbersComponent extends Component {
   @dropTask *submit(changeset) {
     try {
       // Apply changes and save.
-      yield changeset.save({
-        adapterOptions: { include: "identity,identity.phone-numbers" },
-      });
+      yield changeset.save();
 
       // Reset form and list.
       // TODO Update `phoneNumbers` via Ember Data store.

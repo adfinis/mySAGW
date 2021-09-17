@@ -11,13 +11,14 @@ from mysagw.models import HistoricalModel, TrackingModel, UniqueBooleanField, UU
 
 
 class InterestCategory(UUIDModel, HistoricalModel):
-    title = models.CharField(max_length=255)
+    title = LocalizedCharField()
     description = models.CharField(max_length=255, blank=True, null=True)
     archived = models.BooleanField(default=False)
+    public = models.BooleanField(default=False)
 
 
 class Interest(UUIDModel, HistoricalModel):
-    title = models.CharField(max_length=255)
+    title = LocalizedCharField()
     description = models.CharField(max_length=255, blank=True, null=True)
     category = models.ForeignKey(
         InterestCategory, related_name="interests", on_delete=models.PROTECT

@@ -36,7 +36,6 @@ export default class IdentityAddressesComponent extends Component {
   @restartableTask *fetchAddresses(identity) {
     return yield this.store.query("address", {
       filter: { identity: identity.id },
-      include: "identity",
     });
   }
 
@@ -64,9 +63,7 @@ export default class IdentityAddressesComponent extends Component {
   @dropTask *submit(changeset) {
     try {
       // Apply changes and save.
-      yield changeset.save({
-        adapterOptions: { include: "identity,identity.addresses" },
-      });
+      yield changeset.save();
 
       // Reset form and list.
       // TODO Update `addresses` via Ember Data store.

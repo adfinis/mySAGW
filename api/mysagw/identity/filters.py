@@ -59,6 +59,24 @@ class MembershipFilterSet(FilterSet):
         ]
 
 
+class InterestFilterSet(FilterSet):
+    public = BooleanFilter(field_name="category__public")
+
+    class Meta:
+        model = models.Interest
+        fields = [
+            "public",
+        ]
+
+
+class InterestCategoryFilterSet(FilterSet):
+    class Meta:
+        model = models.InterestCategory
+        fields = [
+            "public",
+        ]
+
+
 class SAGWSearchFilter(SearchFilter):
     @staticmethod
     def _split(value):

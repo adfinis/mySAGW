@@ -32,7 +32,6 @@ export default class IdentityEmailsComponent extends Component {
   @restartableTask *fetchEmails(identity) {
     return yield this.store.query("additional-email", {
       filter: { identity: identity.id },
-      include: "identity",
     });
   }
 
@@ -58,9 +57,7 @@ export default class IdentityEmailsComponent extends Component {
   @dropTask *submit(changeset) {
     try {
       // Apply changes and save.
-      yield changeset.save({
-        adapterOptions: { include: "identity,identity.additional-emails" },
-      });
+      yield changeset.save();
 
       // Reset form and list.
       // TODO Update `emails` via Ember Data store.

@@ -10,11 +10,11 @@ export default class IdentityAbility extends BaseAbility {
   get canEditOrganisation() {
     return this.isStaff;
   }
-  get canAddInterest() {
-    return this.isStaff;
+  canAddInterest(identity) {
+    return this.isStaffOrOwnIdentity(identity);
   }
-  get canRemoveInterest() {
-    return this.isStaff;
+  canRemoveInterest(identity) {
+    return this.isStaffOrOwnIdentity(identity);
   }
 
   canEdit(identity) {
