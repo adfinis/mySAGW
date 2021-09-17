@@ -118,7 +118,7 @@
           {{#if
             (and
               (not this.changeset.isNew)
-              (can "delete identity" this.changeset.data)
+              (not @profileView)
             )
           }}
             <button
