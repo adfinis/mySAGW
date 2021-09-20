@@ -248,6 +248,8 @@ class MyOrgsSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             "idp_id": {"read_only": True},
             "is_organisation": {"read_only": True},
+            "is_expert_association": {"read_only": True},
+            "is_advisory_board": {"read_only": True},
         }
 
 

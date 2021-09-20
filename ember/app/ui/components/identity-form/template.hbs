@@ -25,17 +25,17 @@
             @name="organisationName"
             @disabled={{cannot "edit identity" this.changeset.data}}
           />
-          
+
           <div class="uk-flex uk-flex-middle">
             <Form.input
-              @label={{t "component.identity-form.label.isExpertAssociation"}}
+              @label={{t "components.identity-form.label.isExpertAssociation"}}
               @type="checkbox"
               @name="isExpertAssociation"
               @disabled={{cannot "edit identity" this.changeset.data}}
               @class="uk-margin-remove-bottom uk-margin-right"
             />
             <Form.input
-              @label={{t "component.identity-form.label.isAdvisoryBoard"}}
+              @label={{t "components.identity-form.label.isAdvisoryBoard"}}
               @type="checkbox"
               @name="isAdvisoryBoard"
               @disabled={{cannot "edit identity" this.changeset.data}}
@@ -118,7 +118,7 @@
           {{#if
             (and
               (not this.changeset.isNew)
-              (can "delete identity" this.changeset.data)
+              (not @profileView)
             )
           }}
             <button
@@ -148,7 +148,7 @@
               @type="submit"
               @color="primary"
               @on-click={{this.setBackToIdentities}}
-              @label={{t "component.identity-form.control.submitBack"}}
+              @label={{t "components.identity-form.control.submitBack"}}
               @disabled={{cannot "edit identity" this.changeset.data}}
             />
           {{/unless}}

@@ -49,7 +49,9 @@ def send_new_work_item_mail(sender, work_item, user, **kwargs):
     subject = email_texts.EMAIL_SUBJECTS[api_user["language"]]
     body = email_texts.EMAIL_BODIES[api_user["language"]]
 
-    link = f"{settings.SELF_URI}/cases/{work_item.case.pk}/work-items/{work_item.pk}"
+    link = (
+        f"{settings.SELF_URI}/cases/{work_item.case.pk}/work-items/{work_item.pk}/form"
+    )
 
     if work_item.task_id == "complete-document":
         link = f"{settings.SELF_URI}/cases/{work_item.case.pk}"
