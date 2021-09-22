@@ -1,6 +1,7 @@
 from django.conf import settings
 from drf_extra_fields.fields import DateRangeField
 from rest_framework.exceptions import ValidationError
+from rest_framework.relations import MANY_RELATION_KWARGS
 from rest_framework_json_api import serializers
 
 from ..serializers import TrackingSerializer
@@ -206,7 +207,46 @@ class IdentitySerializer(TrackingSerializer):
         }
 
 
+class InterestsManyRelatedField(serializers.ManyRelatedField):
+    # overridden for usage in `me` and `my-orgs` views. Non-admin users only have access
+    # to public interests
+    def get_attribute(self, instance):
+        queryset = super().get_attribute(instance)
+        queryset = queryset.filter(category__public=True)
+        return queryset
+
+
+class InterestsResourceRelatedField(serializers.ResourceRelatedField):
+    # overridden for using a custom `ManyRelatedField`
+    @classmethod
+    def many_init(cls, *args, **kwargs):
+        list_kwargs = {"child_relation": cls(*args, **kwargs)}
+        for key in kwargs.keys():
+            if key in MANY_RELATION_KWARGS:
+                list_kwargs[key] = kwargs[key]
+        return InterestsManyRelatedField(**list_kwargs)
+
+
 class MeSerializer(serializers.ModelSerializer):
+    interests = InterestsResourceRelatedField(
+        many=True,
+        queryset=models.Interest.objects.filter(category__public=True),
+        required=False,
+    )
+
+    def validate(self, *args, **kwargs):
+        validated_data = super().validate(*args, **kwargs)
+        if "interests" not in validated_data:
+            return validated_data
+
+        # normal users have no access to their non-public interests. Here we make sure
+        # they are not lost on update
+        for interest in self.instance.interests.iterator():
+            if interest.category.public is False:
+                validated_data["interests"].append(interest)
+
+        return validated_data
+
     class Meta:
         model = models.Identity
         fields = (
@@ -216,6 +256,7 @@ class MeSerializer(serializers.ModelSerializer):
             "salutation",
             "language",
             "email",
+            "interests",
         )
         extra_kwargs = {
             "idp_id": {"read_only": True},
@@ -223,7 +264,7 @@ class MeSerializer(serializers.ModelSerializer):
         }
 
 
-class MyOrgsSerializer(serializers.ModelSerializer):
+class MyOrgsSerializer(MeSerializer):
     is_authorized = serializers.SerializerMethodField()
 
     def get_is_authorized(self, obj):
@@ -244,6 +285,7 @@ class MyOrgsSerializer(serializers.ModelSerializer):
             "is_advisory_board",
             "is_authorized",
             "email",
+            "interests",
         )
         extra_kwargs = {
             "idp_id": {"read_only": True},
@@ -260,7 +302,7 @@ class InterestCategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.InterestCategory
-        fields = ("title", "description", "archived", "interests")
+        fields = ("title", "description", "archived", "interests", "public")
         extra_kwargs = {
             "interests": {"required": False},
         }

@@ -70,13 +70,22 @@ export default class IdentityInterestsComponent extends Component {
     this.changeset = null;
   }
 
+  get endpoint() {
+    if (this.args.endpoint) {
+      return {
+        adapterOptions: { customEndpoint: this.args.endpoint },
+      };
+    }
+    return {};
+  }
+
   @dropTask
   *submit(changeset) {
     try {
       // Apply changes and save.
       changeset.execute();
       this.args.identity.interests.pushObject(changeset.interest);
-      yield this.args.identity.save();
+      yield this.args.identity.save(this.endpoint);
 
       // Reset form and list.
       // TODO Update `categories` via Ember Data store.
@@ -92,7 +101,8 @@ export default class IdentityInterestsComponent extends Component {
   @lastValue("fetchInterestCategories") interestCategories;
   @restartableTask
   *fetchInterestCategories() {
-    const interests = yield this.store.findAll("interest", {
+    const interests = yield this.store.query("interest", {
+      filter: { public: this.args.profileView },
       include: "category",
     });
 
@@ -117,7 +127,7 @@ export default class IdentityInterestsComponent extends Component {
 
       try {
         this.args.identity.interests.removeObject(interest);
-        this.args.identity.save();
+        this.args.identity.save(this.endpoint);
 
         this.notification.success(
           this.intl.t("components.identity-interests.delete.success", options)

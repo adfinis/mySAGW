@@ -9,14 +9,33 @@
       class="uk-margin-remove-last-child"
       as |Form|
     >
-      <Form.input
-        @label={{t "components.interest-category-form.label.title"}}
-        @name="title"
-      />
+      <div class="uk-background-muted uk-padding-small uk-margin uk-margin-remove-last-child">
+        <Form.input
+          @label={{t "components.interest-category-form.label.title" lang="DE"}}
+          @name="titleObject.de"
+        />
+
+        <Form.input
+          @label={{t "components.interest-category-form.label.title" lang="FR"}}
+          @name="titleObject.fr"
+        />
+
+        <Form.input
+          @label={{t "components.interest-category-form.label.title" lang="EN"}}
+          @name="titleObject.en"
+        />
+      </div>
 
       <Form.input
         @label={{t "components.interest-category-form.label.description"}}
         @name="description"
+        @required={{false}}
+      />
+
+      <Form.input
+        @label={{t "components.interest-category-form.label.public"}}
+        @name="public"
+        @type="checkbox"
         @required={{false}}
       />
 

@@ -20,6 +20,8 @@ jobs:
         run: docker-compose up -d --build  api db
       - name: Lint the code
         run: make api-lint
+      - name: Check for missing migrations
+        run: docker-compose exec -T api ./manage.py makemigrations --check --dry-run --no-input
       - name: Run test suite
         run: make api-test
   caluma-tests:

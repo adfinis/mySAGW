@@ -6,6 +6,7 @@ index:
     edit: "Edit category"
     delete: "Delete category"
     empty: "No categories yet."
+    public: "public"
   delete:
     prompt: "Do you really want to delete the category {category}?"
     success: "Category {category} deleted successfully."
@@ -21,11 +22,11 @@ edit:
     edit: "Edit interest"
     delete: "Delete interest"
     add: "Add interest"
-    empty: "No ineterests yet."
+    empty: "No interests yet."
   form:
     title: "Edit interest"
     label:
-      title: "Title"
+      title: "Title ({lang})"
       description: "Description"
   delete:
     prompt: "Do you really want to delete the interest {interest}?"

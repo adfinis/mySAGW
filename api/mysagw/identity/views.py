@@ -239,13 +239,29 @@ class MyOrgsViewSet(
 class InterestCategoryViewSet(views.ModelViewSet):
     serializer_class = serializers.InterestCategorySerializer
     queryset = models.InterestCategory.objects.all()
-    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
+    filterset_class = filters.InterestCategoryFilterSet
+    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff | ReadOnly),)
+
+    def get_queryset(self, *args, **kwargs):
+        qs = super().get_queryset(*args, **kwargs)
+        if self.request.user.is_staff:
+            return qs
+        qs = qs.filter(public=True)
+        return qs
 
 
 class InterestViewSet(views.ModelViewSet):
     serializer_class = serializers.InterestSerializer
     queryset = models.Interest.objects.all()
-    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
+    filterset_class = filters.InterestFilterSet
+    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff | ReadOnly),)
+
+    def get_queryset(self, *args, **kwargs):
+        qs = super().get_queryset(*args, **kwargs)
+        if self.request.user.is_staff:
+            return qs
+        qs = qs.filter(category__public=True)
+        return qs
 
 
 class MembershipRoleViewSet(views.ModelViewSet):

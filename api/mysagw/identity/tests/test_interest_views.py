@@ -8,11 +8,12 @@ def remove_underscore(value):
 
 
 @pytest.mark.parametrize(
-    "client,expected_status",
+    "client,public,expected_status",
     [
-        ("user", status.HTTP_403_FORBIDDEN),
-        ("staff", status.HTTP_200_OK),
-        ("admin", status.HTTP_200_OK),
+        ("user", False, status.HTTP_404_NOT_FOUND),
+        ("user", True, status.HTTP_200_OK),
+        ("staff", False, status.HTTP_200_OK),
+        ("admin", False, status.HTTP_200_OK),
     ],
     indirect=["client"],
 )
@@ -23,9 +24,12 @@ def test_interest_detail(
     expected_status,
     model,
     interest,
+    public,
 ):
     include = {"include": "interests"}
     obj = interest.category
+    obj.public = public
+    obj.save()
     if model == "interest":
         include = {"include": "category"}
         obj = interest
@@ -51,11 +55,12 @@ def test_interest_detail(
 
 
 @pytest.mark.parametrize(
-    "client,expected_status",
+    "client,public,expected_count",
     [
-        ("user", status.HTTP_403_FORBIDDEN),
-        ("staff", status.HTTP_200_OK),
-        ("admin", status.HTTP_200_OK),
+        ("user", False, 0),
+        ("user", True, 3),
+        ("staff", False, 3),
+        ("admin", False, 3),
     ],
     indirect=["client"],
 )
@@ -63,27 +68,27 @@ def test_interest_detail(
 def test_interest_list(
     db,
     client,
-    expected_status,
+    public,
+    expected_count,
     model,
     interest_category_factory,
     interest_factory,
 ):
     factory = interest_category_factory
+    factory_kwargs = {"public": public}
     if model == "interest":
         factory = interest_factory
-    factory.create_batch(3)
+        factory_kwargs = {"category__public": public}
+    factory.create_batch(3, **factory_kwargs)
 
     url = reverse(f"{remove_underscore(model)}-list")
 
     response = client.get(url)
 
-    assert response.status_code == expected_status
-
-    if expected_status != status.HTTP_200_OK:
-        return
+    assert response.status_code == status.HTTP_200_OK
 
     json = response.json()
-    assert len(json["data"]) == 3
+    assert len(json["data"]) == expected_count
 
 
 @pytest.mark.parametrize(
@@ -110,7 +115,9 @@ def test_interest_create(
 
     url = reverse(f"{remove_underscore(model)}-list")
 
-    data = {"data": {"type": "interest-categories", "attributes": {"title": "Foo"}}}
+    data = {
+        "data": {"type": "interest-categories", "attributes": {"title": {"de": "Foo"}}}
+    }
     if model == "interest":
         data["data"]["type"] = "interests"
         data["data"]["relationships"] = {
@@ -127,7 +134,7 @@ def test_interest_create(
         return
 
     json = response.json()
-    assert json["data"]["attributes"]["title"] == "Foo"
+    assert json["data"]["attributes"]["title"] == {"de": "Foo", "en": "", "fr": ""}
 
 
 @pytest.mark.parametrize(
@@ -162,7 +169,7 @@ def test_interest_update(
         "data": {
             "id": str(obj.pk),
             "type": "interest-categories",
-            "attributes": {"title": "Foo"},
+            "attributes": {"title": {"de": "Foo"}},
         }
     }
     if model == "interest":
@@ -182,9 +189,9 @@ def test_interest_update(
         return
 
     json = response.json()
-    assert json["data"]["attributes"]["title"] == "Foo"
+    assert json["data"]["attributes"]["title"] == {"de": "Foo", "en": "", "fr": ""}
     obj.refresh_from_db()
-    assert obj.title == "Foo"
+    assert dict(obj.title) == {"de": "Foo", "en": "", "fr": ""}
 
 
 @pytest.mark.parametrize(

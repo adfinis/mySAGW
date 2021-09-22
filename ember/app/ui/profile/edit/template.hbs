@@ -26,4 +26,10 @@
       <IdentityPhoneNumbers @identity={{this.model}} />
     </div>
   </div>
+
+  <div class="uk-width-1-2@m">
+    <div class="uk-card uk-card-default uk-card-body uk-card-small">
+      <IdentityInterests @identity={{this.model}} @endpoint={{concat '/my-orgs/' this.model.id}} @profileView={{true}} />
+    </div>
+  </div>
 </div>
