@@ -16,7 +16,7 @@ from rest_framework.viewsets import GenericViewSet
 
 from mysagw.accounting.caluma_client import CalumaClient
 from mysagw.dms_client import DMSClient
-from mysagw.identity.permissions import IsAdmin, IsAuthenticated, IsStaff
+from mysagw.oidc_auth.permissions import IsAdmin, IsAuthenticated, IsStaff
 
 GQL_DIR = Path(__file__).parent.resolve() / "queries"
 

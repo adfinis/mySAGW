@@ -28,6 +28,7 @@ def register_module(module):
 
 register_module(importlib.import_module(".identity.factories", "mysagw"))
 register_module(importlib.import_module(".snippets.factories", "mysagw"))
+register_module(importlib.import_module(".case.factories", "mysagw"))
 
 
 def _get_claims(

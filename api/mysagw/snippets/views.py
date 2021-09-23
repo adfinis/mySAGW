@@ -1,6 +1,6 @@
 from rest_framework_json_api import views
 
-from ..identity.permissions import IsAdmin, IsAuthenticated, IsStaff
+from ..oidc_auth.permissions import IsAdmin, IsAuthenticated, IsStaff
 from . import models, serializers
 from .filters import SnippetFilterSet
 

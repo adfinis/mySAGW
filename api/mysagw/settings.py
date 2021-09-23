@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "mysagw.identity.apps.DefaultConfig",
     "mysagw.snippets.apps.SnippetsConfig",
     "mysagw.accounting.apps.AccountingConfig",
+    "mysagw.case.apps.CaseConfig",
 ]
 
 if ENV == "dev":
