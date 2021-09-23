@@ -11,16 +11,11 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework_json_api import views
 
 from ..dms_client import DMSClient
+from ..oidc_auth.permissions import IsAdmin, IsAuthenticated, IsStaff
+from ..permissions import ReadOnly
 from . import filters, models, serializers
 from .export import IdentityExport
-from .permissions import (
-    IsAdmin,
-    IsAuthenticated,
-    IsAuthorized,
-    IsOwn,
-    IsStaff,
-    ReadOnly,
-)
+from .permissions import IsAuthorized, IsOwn
 
 
 class UniqueBooleanFieldViewSetMixin:
