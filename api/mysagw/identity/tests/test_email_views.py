@@ -230,7 +230,7 @@ def test_email_update(
 def test_email_delete(db, client, own, expected_status, email_factory):
     main_email = email_factory()
     other_email = email_factory(identity=main_email.identity)
-    assert other_email.identity.modified_by_user != client.user.username
+    assert other_email.identity.modified_by_user != client.user.id
 
     if own:
         client.user.identity = other_email.identity
@@ -246,4 +246,4 @@ def test_email_delete(db, client, own, expected_status, email_factory):
             other_email.refresh_from_db()
 
         other_email.identity.refresh_from_db()
-        assert other_email.identity.modified_by_user == client.user.username
+        assert other_email.identity.modified_by_user == client.user.id
