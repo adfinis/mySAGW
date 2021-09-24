@@ -71,7 +71,7 @@ class EmailViewSet(IdentityAdditionsViewSetMixin, views.ModelViewSet):
 
     def perform_destroy(self, instance):
         super().perform_destroy(instance)
-        instance.identity.modified_by_user = self.request.user.username
+        instance.identity.modified_by_user = self.request.user.id
         instance.identity.save()
 
 
@@ -85,7 +85,7 @@ class PhoneNumberViewSet(
 
     def perform_destroy(self, instance):
         super().perform_destroy(instance)
-        instance.identity.modified_by_user = self.request.user.username
+        instance.identity.modified_by_user = self.request.user.id
         instance.identity.save()
 
 
@@ -97,7 +97,7 @@ class AddressViewSet(IdentityAdditionsViewSetMixin, views.ModelViewSet):
 
     def perform_destroy(self, instance):
         super().perform_destroy(instance)
-        instance.identity.modified_by_user = self.request.user.username
+        instance.identity.modified_by_user = self.request.user.id
         instance.identity.save()
 
 
@@ -279,7 +279,7 @@ class MembershipViewSet(views.ModelViewSet):
 
     def perform_destroy(self, instance):
         super().perform_destroy(instance)
-        instance.identity.modified_by_user = self.request.user.username
+        instance.identity.modified_by_user = self.request.user.id
         instance.identity.save()
 
 

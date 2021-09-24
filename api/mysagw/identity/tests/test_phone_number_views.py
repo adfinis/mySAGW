@@ -231,7 +231,7 @@ def test_phone_number_delete(db, client, own, expected_status, phone_number_fact
     other_phone_number = phone_number_factory(
         identity=main_phone_number.identity, default=False
     )
-    assert other_phone_number.identity.modified_by_user != client.user.username
+    assert other_phone_number.identity.modified_by_user != client.user.id
 
     if own:
         client.user.identity = other_phone_number.identity
@@ -247,7 +247,7 @@ def test_phone_number_delete(db, client, own, expected_status, phone_number_fact
             other_phone_number.refresh_from_db()
 
         other_phone_number.identity.refresh_from_db()
-        assert other_phone_number.identity.modified_by_user == client.user.username
+        assert other_phone_number.identity.modified_by_user == client.user.id
 
 
 @pytest.mark.parametrize("has_other", [True, False])
