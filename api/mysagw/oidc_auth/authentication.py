@@ -17,7 +17,7 @@ from .models import OIDCUser
 
 
 class MySAGWAuthenticationBackend(OIDCAuthenticationBackend):
-    _HistoricalRequestUser = namedtuple("User", ["username"])
+    _HistoricalRequestUser = namedtuple("User", ["id"])
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -90,7 +90,7 @@ class MySAGWAuthenticationBackend(OIDCAuthenticationBackend):
         # username will be set on the historical record when creating/updating the
         # identity
         HistoricalRecords.thread.request.user = self._HistoricalRequestUser(
-            claims[settings.OIDC_EMAIL_CLAIM]
+            claims[settings.OIDC_ID_CLAIM]
         )
 
         user = OIDCUser(access_token, claims)

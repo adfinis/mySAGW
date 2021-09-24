@@ -55,7 +55,7 @@ def _history_user_setter(historical_instance, user):
     request = getattr(HistoricalRecords.thread, "request", None)
     user = None
     if request is not None:
-        user = request.user.username
+        user = request.user.id
     historical_instance.history_user_id = user
 
 
