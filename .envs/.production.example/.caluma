@@ -5,6 +5,9 @@ ALLOWED_HOSTS=yourdomain.tld,www.yourdomain.tdl
 DATABASE_PASSWORD=alsoverysecure
 OIDC_USERINFO_ENDPOINT=https://yourdomain.tld/auth/realms/mysagw/protocol/openid-connect/userinfo
 ADMINS=Test Example <test@example.com>,Test2 <test2@example.com>
+OIDC_ADMIN_CLIENT_ID=client_id
+OIDC_ADMIN_CLIENT_SECRET=verysecret
+OIDC_TOKEN_ENDPOINT=https://yourdomain.tld/auth/realms/mysagw/protocol/openid-connect/token
 
 # Minio config
 MINIO_PRESIGNED_TTL_MINUTES=30
