@@ -13,6 +13,7 @@ class BaseUser:  # pragma: no cover
         self.email = None
         self.groups = []
         self.group = None
+        self.client_id = None
         self.token = None
         self.claims = {}
         self.is_authenticated = False
@@ -22,7 +23,10 @@ class BaseUser:  # pragma: no cover
 
     @property
     def is_admin(self):
-        return settings.ADMIN_GROUP in self.groups
+        return (
+            self.client_id == settings.OIDC_RP_CLIENT_ID
+            or settings.ADMIN_GROUP in self.groups
+        )
 
     @property
     def is_staff(self):
@@ -35,14 +39,17 @@ class OIDCUser(BaseUser):
 
         self.claims = claims
         self.id = self.claims[settings.OIDC_ID_CLAIM]
-        self.email = self.claims[settings.OIDC_EMAIL_CLAIM]
-        self.groups = self.claims[settings.OIDC_GROUPS_CLAIM]
+        self.email = self.claims.get(settings.OIDC_EMAIL_CLAIM)
+        self.groups = self.claims.get(settings.OIDC_GROUPS_CLAIM, [])
         self.group = self.groups[0] if self.groups else None
+        self.client_id = self.claims.get(settings.OIDC_CLIENT_ID_CLAIM)
         self.token = token
         self.is_authenticated = True
         self.identity = self._get_or_create_identity()
 
     def _get_or_create_identity(self):
+        if self.client_id:
+            return None
         try:
             identity = Identity.objects.get(
                 Q(idp_id=self.id) | Q(email__iexact=self.email)
