@@ -216,7 +216,7 @@ def test_address_update(db, client, own, expected_status, address):
 def test_address_delete(db, client, own, expected_status, address_factory):
     main_address = address_factory()
     other_address = address_factory(identity=main_address.identity, default=False)
-    assert other_address.identity.modified_by_user != client.user.username
+    assert other_address.identity.modified_by_user != client.user.id
 
     if own:
         client.user.identity = other_address.identity
@@ -232,7 +232,7 @@ def test_address_delete(db, client, own, expected_status, address_factory):
             other_address.refresh_from_db()
 
         other_address.identity.refresh_from_db()
-        assert other_address.identity.modified_by_user == client.user.username
+        assert other_address.identity.modified_by_user == client.user.id
 
 
 def test_country_options(client):

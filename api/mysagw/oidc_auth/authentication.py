@@ -84,10 +84,10 @@ class MySAGWAuthenticationBackend(OIDCAuthenticationBackend):
             if claim not in claims:
                 raise SuspiciousOperation(f'Couldn\'t find "{claim}" claim')
 
-        # simple history reads the username from the current user from the request. But
+        # simple history reads the user_id from the current user from the request. But
         # for the user to be available in the request, authentication needs to be
         # completed. That's why we just add a namedtuple to the request, so the correct
-        # username will be set on the historical record when creating/updating the
+        # user_id will be set on the historical record when creating/updating the
         # identity
         HistoricalRecords.thread.request.user = self._HistoricalRequestUser(
             claims[settings.OIDC_ID_CLAIM]
