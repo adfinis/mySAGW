@@ -1,3 +1,4 @@
+import datetime
 from pathlib import Path
 
 import pytest
@@ -8,6 +9,7 @@ from caluma.caluma_user.models import BaseUser
 from caluma.caluma_workflow.api import skip_work_item, start_case
 from caluma.caluma_workflow.models import Workflow
 
+from . import api_client
 from .settings import settings
 
 
@@ -55,7 +57,7 @@ def circulation(db, document_review_case, user):
 
 
 @pytest.fixture
-def identites_mock_for_mailing(requests_mock):
+def identities_mock(requests_mock):
     data = {
         "data": [
             {
@@ -78,3 +80,54 @@ def identites_mock_for_mailing(requests_mock):
     }
 
     return requests_mock.get(f"{settings.API_BASE_URI}/identities", json=data)
+
+
+@pytest.fixture
+def get_token_mock(mocker):
+    data = {
+        "access_token": "eyToken",
+        "expires_in": 300,
+        "refresh_expires_in": 0,
+        "token_type": "Bearer",
+        "not-before-policy": 0,
+        "scope": ["profile", "email"],
+        "expires_at": 1632468505.0576448,
+        "expires_at_dt": datetime.datetime(2021, 9, 24, 7, 28, 25),
+    }
+
+    return mocker.patch.object(
+        api_client.OAuth2Session,
+        "fetch_token",
+        return_value=data,
+    )
+
+
+@pytest.fixture
+def case_access_create_request_mock(requests_mock):
+    data = {
+        "data": {
+            "type": "case-accesses",
+            "id": "ee6f5d24-b351-4b44-9d55-7dbd2c19d16a",
+            "attributes": {
+                "case-id": "97d001cf-8d07-4733-aa17-542ed83e8582",
+                "email": None,
+            },
+            "relationships": {
+                "identity": {
+                    "data": {
+                        "type": "identities",
+                        "id": "d7b118a7-ce53-48b7-9b05-be148f154f14",
+                    }
+                }
+            },
+        }
+    }
+
+    return requests_mock.post(f"{settings.API_BASE_URI}/case/accesses", json=data)
+
+
+@pytest.fixture
+def case_access_event_mock(
+    identities_mock, get_token_mock, case_access_create_request_mock
+):
+    pass

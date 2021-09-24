@@ -8,17 +8,23 @@ from caluma.caluma_workflow.models import Workflow, WorkItem
 from ..settings import settings
 
 
-def test_work_item_set_assigned_user(db, caluma_data, document_review_case):
+def test_work_item_set_assigned_user(
+    db, caluma_data, case_access_event_mock, document_review_case
+):
     assert document_review_case.work_items.get(
         task_id="submit-document"
     ).assigned_users == ["test"]
 
 
-def test_work_item_create_circulation(db, caluma_data, circulation):
+def test_work_item_create_circulation(
+    db, caluma_data, case_access_event_mock, circulation
+):
     assert circulation.workflow_id == "circulation"
 
 
-def test_work_item_finish_circulation(db, caluma_data, user, circulation):
+def test_work_item_finish_circulation(
+    db, caluma_data, user, case_access_event_mock, circulation
+):
     complete_work_item(circulation.work_items.get(task_id="finish-circulation"), user)
 
     assert (
@@ -28,7 +34,7 @@ def test_work_item_finish_circulation(db, caluma_data, user, circulation):
 
 
 def test_work_item_additional_data(
-    db, caluma_data, user, circulation, identites_mock_for_mailing
+    db, caluma_data, user, case_access_event_mock, circulation
 ):
     Question.objects.filter(formquestion__form__pk="additional-data-form").update(
         is_required="false"
@@ -52,7 +58,9 @@ def test_work_item_additional_data(
     )
 
 
-def test_work_item_invite_to_circulation(db, caluma_data, user, circulation):
+def test_work_item_invite_to_circulation(
+    db, caluma_data, user, case_access_event_mock, circulation
+):
     complete_work_item(
         circulation.work_items.get(task_id="invite-to-circulation"),
         user,
@@ -69,7 +77,9 @@ def test_work_item_invite_to_circulation(db, caluma_data, user, circulation):
     ]
 
 
-def test_case_complete_circulation(db, caluma_data, user, circulation):
+def test_case_complete_circulation(
+    db, caluma_data, user, case_access_event_mock, circulation
+):
     complete_work_item(circulation.work_items.get(task_id="finish-circulation"), user)
 
     assert circulation.parent_work_item.status == WorkItem.STATUS_COMPLETED
@@ -79,7 +89,14 @@ def test_case_complete_circulation(db, caluma_data, user, circulation):
     "same_year,first", [(True, False), (False, False), (False, True)]
 )
 def test_case_number(
-    db, caluma_data, user, form_question_factory, answer_factory, same_year, first
+    db,
+    caluma_data,
+    case_access_event_mock,
+    user,
+    form_question_factory,
+    answer_factory,
+    same_year,
+    first,
 ):
     question = Question.objects.get(pk="dossier-nr")
     form_question = form_question_factory(question=question)
@@ -107,9 +124,9 @@ def test_case_number(
 def test_case_status(
     db,
     caluma_data,
+    case_access_event_mock,
     document_review_case,
     user,
-    identites_mock_for_mailing,
 ):
     case = document_review_case
     assert case.meta["status"] == "submit"
@@ -152,7 +169,7 @@ def test_case_status(
 
 
 def test_send_new_work_item_mail(
-    db, user, caluma_data, document_review_case, identites_mock_for_mailing, mailoutbox
+    db, user, caluma_data, case_access_event_mock, document_review_case, mailoutbox
 ):
     case = document_review_case
 
@@ -166,3 +183,22 @@ def test_send_new_work_item_mail(
     skip_work_item(case.work_items.get(task_id="review-document"), user)
     assert len(mailoutbox) == 1
     assert mailoutbox[0].from_email == settings.MAILING_SENDER
+
+
+def test_access_control(
+    db,
+    caluma_data,
+    user,
+    identities_mock,
+    form_question_factory,
+    get_token_mock,
+    case_access_create_request_mock,
+):
+    form_question = form_question_factory()
+
+    start_case(
+        workflow=Workflow.objects.get(pk="document-review"),
+        form=form_question.form,
+        user=user,
+    )
+    assert case_access_create_request_mock.called
