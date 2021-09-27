@@ -134,16 +134,12 @@ class IdentitySerializer(TrackingSerializer):
                 "organisation_name."
             )
 
-    def validate(self, *args, **kwargs):
-        validated_data = super().validate(*args, **kwargs)
-
+    def _handle_organisation_validations(self, validated_data):
         is_organisation = validated_data.get("is_organisation")
         organisation_name = validated_data.get("organisation_name")
         no_organisation_name_msg = (
             'Can\'t set "is_organisation" without an organisation_name.'
         )
-
-        self._ensure_no_empty_identity(validated_data)
 
         if not self.instance:
             if is_organisation and not organisation_name:
@@ -172,8 +168,23 @@ class IdentitySerializer(TrackingSerializer):
             or validated_data.get("is_advisory_board")
         ):
             raise ValidationError(
-                'Can\'t set "is_expert_association" or "is_advisory_board", because it isn\'t a organisation.'
+                'Can\'t set "is_expert_association" or "is_advisory_board", because it '
+                "isn't a organisation."
             )
+
+        return validated_data
+
+    def validate(self, *args, **kwargs):
+        validated_data = super().validate(*args, **kwargs)
+
+        self._ensure_no_empty_identity(validated_data)
+
+        # if email was removed, we unset the email in order to satisfy the unique
+        # constraint
+        if validated_data.get("email") == "":
+            validated_data["email"] = None
+
+        validated_data = self._handle_organisation_validations(validated_data)
 
         return validated_data
 
