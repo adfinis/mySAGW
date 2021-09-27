@@ -17,7 +17,7 @@ export default class IdentitiesIndexController extends Controller {
   @service intl;
 
   queryParams = ["pageSize", "pageNumber"];
-  @tracked pageSize = 10;
+  @tracked pageSize = 25;
   @tracked pageNumber = 1;
   @tracked totalPages;
 
