@@ -62,6 +62,7 @@
   {{#if this.fetchIdentities.isRunning}}
     <LoadingSpinner />
   {{else}}
+    <p>{{this.totalCount}} {{t "identities.index.title"}}</p>
     <ul class="uk-list uk-list-divider">
       {{#each this.identities as |identity|}}
         {{#unless identity.isNew}}
