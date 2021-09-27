@@ -119,7 +119,24 @@ def case_access_create_request_mock(requests_mock):
 
 
 @pytest.fixture
+def case_access_request_mock(requests_mock):
+    data = {
+        "data": [{"attributes": {"case-id": "994b72cc-6556-46e5-baf9-228457fa309f"}}]
+    }
+
+    return requests_mock.get(f"{settings.API_BASE_URI}/case/accesses", json=data)
+
+
+@pytest.fixture
 def case_access_event_mock(
     identities_mock, get_token_mock, case_access_create_request_mock
 ):
     pass
+
+
+@pytest.fixture
+def admin_info(admin_info):
+    # can be removed as soon as this commit is released:
+    # https://github.com/projectcaluma/caluma/commit/e21164a8b8dd43b71bf47ab0be2f40611593079c
+    admin_info.context.user.token = admin_info.context.user.token.encode("utf-8")
+    return admin_info
