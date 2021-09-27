@@ -127,6 +127,15 @@ def case_access_create_request_mock(requests_mock):
 
 
 @pytest.fixture
+def case_access_request_mock(requests_mock):
+    data = {
+        "data": [{"attributes": {"case-id": "994b72cc-6556-46e5-baf9-228457fa309f"}}]
+    }
+
+    return requests_mock.get(f"{settings.API_BASE_URI}/case/accesses", json=data)
+
+
+@pytest.fixture
 def case_access_event_mock(
     identities_mock, get_token_mock, case_access_create_request_mock
 ):

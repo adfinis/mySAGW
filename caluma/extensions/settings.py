@@ -40,6 +40,13 @@ settings.CASE_STATUS = {
     "define-amount": "decision",
 }
 
+settings.APPLICANT_TASK_SLUGS = [
+    "submit-document",
+    "revise-document",
+    "additional-data",
+]
+
+settings.CASE_ID_CACHE_SECONDS = int(os.environ.get("CASE_ID_CACHE_SECONDS", "60"))
 
 # Logging
 
