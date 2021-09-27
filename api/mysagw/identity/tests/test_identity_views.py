@@ -158,7 +158,7 @@ def test_identity_update(db, client, expected_status, identity_factory):
         "data": {
             "type": "identities",
             "id": str(identity.pk),
-            "attributes": {"first-name": "Foo"},
+            "attributes": {"first-name": "Foo", "email": ""},
         }
     }
 
@@ -171,6 +171,7 @@ def test_identity_update(db, client, expected_status, identity_factory):
 
     identity.refresh_from_db()
     assert identity.modified_by_user == client.user.id
+    assert identity.email is None
 
 
 @pytest.mark.parametrize(

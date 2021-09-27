@@ -17,9 +17,10 @@ export default class IdentitiesIndexController extends Controller {
   @service intl;
 
   queryParams = ["pageSize", "pageNumber"];
-  @tracked pageSize = 10;
+  @tracked pageSize = 25;
   @tracked pageNumber = 1;
   @tracked totalPages;
+  @tracked totalCount;
 
   get pages() {
     if (!this.totalPages) {
@@ -86,6 +87,7 @@ export default class IdentitiesIndexController extends Controller {
         },
       });
       this.totalPages = identities.meta.pagination.pages;
+      this.totalCount = identities.meta.pagination.count;
       return identities;
     } catch (error) {
       console.error(error);

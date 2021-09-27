@@ -20,6 +20,6 @@ export default class IdentityModel extends LocalizedModel {
   @attr isAuthorized;
 
   get fullName() {
-    return [this.firstName, this.lastName].filter(Boolean).join(" ");
+    return [this.lastName, this.firstName].filter(Boolean).join(" ");
   }
 }
