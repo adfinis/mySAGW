@@ -45,6 +45,14 @@
         {{/if}}
       {{/unless}}
 
+      {{#if this.changeset.isOrganisation}}
+        <Form.input
+          @label={{t "components.identity-form.label.organisationName"}}
+          @name="organisationName"
+          @disabled={{cannot "edit identity" this.changeset.data}}
+        />
+      {{/if}}
+
       <Form.input
         @label={{t "components.identity-form.label.salutation"}}
         @name="salutation"
