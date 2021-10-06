@@ -8,6 +8,7 @@ index:
     address-labels: "Address labels"
     filename: "identities-{date}"
   search: "Search"
+  identityAmount: "{itemCount, plural, =0 {0 Identities} one {1 Identity} other {# Identities}}"
 
 add:
   title: "Add identity"
