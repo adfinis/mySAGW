@@ -29,7 +29,7 @@ export default class CustomCaseModel extends CaseModel {
         name
         description
       }
-      answers(filter: [{ questions: ["dossier-nr", "section"] }]) {
+      answers(filter: [{ questions: ["dossier-nr"] }]) {
         edges {
           node {
             id
@@ -38,9 +38,6 @@ export default class CustomCaseModel extends CaseModel {
             }
             ... on StringAnswer {
               StringAnswerValue: value
-            }
-            ... on IntegerAnswer {
-              IntegerAnswerValue: value
             }
           }
         }

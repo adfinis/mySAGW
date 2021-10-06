@@ -52,12 +52,6 @@ export default class CasesTableComponent extends Component {
         modelKey: "modifiedAt",
         type: "date",
       },
-      {
-        heading: { label: "documents.section" },
-        questionSlug: "section",
-        answerKey: "document.answers.edges",
-        type: "answer-value",
-      },
     ],
   };
 
