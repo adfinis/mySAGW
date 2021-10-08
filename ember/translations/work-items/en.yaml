@@ -40,6 +40,7 @@ work-items:
     role: "Role"
     order: "Order"
     taskTypes: "Task"
+    documentNumber: "Document number"
 
     all: "All"
     own: "Own"

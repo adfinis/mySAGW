@@ -1,5 +1,6 @@
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
+import { debounce } from "@ember/runloop";
 import { inject as service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import calumaQuery from "@projectcaluma/ember-core/caluma-query";
@@ -10,7 +11,14 @@ import { restartableTask } from "ember-concurrency";
 import getTasksQuery from "mysagw/gql/queries/get-tasks.graphql";
 
 export default class WorkItemsIndexController extends Controller {
-  queryParams = ["order", "responsible", "status", "role", "taskTypes"];
+  queryParams = [
+    "order",
+    "responsible",
+    "status",
+    "role",
+    "taskTypes",
+    "documentNumber",
+  ];
 
   @service session;
   @service store;
@@ -26,6 +34,7 @@ export default class WorkItemsIndexController extends Controller {
   @tracked status = "open";
   @tracked role = "active";
   @tracked taskTypes = [];
+  @tracked documentNumber = "";
 
   get options() {
     return {
@@ -101,6 +110,15 @@ export default class WorkItemsIndexController extends Controller {
     const filter = [
       { hasDeadline: true },
       { tasks: this.taskTypes.mapBy("value") },
+      {
+        caseDocumentHasAnswer: [
+          {
+            question: "dossier-nr",
+            value: this.documentNumber,
+            lookup: "ICONTAINS",
+          },
+        ],
+      },
     ];
 
     if (this.responsible === "own") {
@@ -166,8 +184,9 @@ export default class WorkItemsIndexController extends Controller {
   }
 
   @action
-  updateFilter(type, value) {
-    this[type] = value;
-    this.fetchWorkItems.perform();
+  updateFilter(type, eventValue) {
+    this[type] = eventValue.target ? eventValue.target.value : eventValue;
+
+    debounce({}, this.fetchWorkItems.perform, 300);
   }
 }
