@@ -1,9 +1,10 @@
-index:
-  title: "Snippets"
-  add: "Add snippet"
-  search: "Search"
-  empty: "No snippets yet."
-add:
-  title: "Add snippet"
-edit:
-  title: "Edit snippet"
+snippets:
+  index:
+    title: "Snippets"
+    add: "Add snippet"
+    search: "Search"
+    empty: "No snippets yet."
+  add:
+    title: "Add snippet"
+  edit:
+    title: "Edit snippet"

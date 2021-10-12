@@ -1,20 +1,22 @@
-label:
-  idpId: "IDP ID"
-  organisationName: "Organisation name"
-  isExpertAssociation: "Expert association"
-  isAdvisoryBoard: "Advisory board"
-  salutation: "Salutation"
-  firstName: "First name"
-  lastName: "Last name"
-  email: "Main email address"
-  isOrganisation: "This is an organisation."
-  language: "Correspondence language"
-hint:
-  email: "Managed through KeyCloak."
-control:
-  delete: "Delete"
-  submitBack: "Save and Back"
-delete:
-  prompt: "Do you really want to delete this identity?"
-  success: "Identity deleted successfully."
-success: "Identity {name} saved successfully."
+components:
+  identity-form:
+    label:
+      idpId: "IDP ID"
+      organisationName: "Organisation name"
+      isExpertAssociation: "Expert association"
+      isAdvisoryBoard: "Advisory board"
+      salutation: "Salutation"
+      firstName: "First name"
+      lastName: "Last name"
+      email: "Main email address"
+      isOrganisation: "This is an organisation."
+      language: "Correspondence language"
+    hint:
+      email: "Managed through KeyCloak."
+    control:
+      delete: "Delete"
+      submitBack: "Save and Back"
+    delete:
+      prompt: "Do you really want to delete this identity?"
+      success: "Identity deleted successfully."
+    success: "Identity {name} saved successfully."

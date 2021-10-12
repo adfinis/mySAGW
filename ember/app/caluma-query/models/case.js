@@ -1,4 +1,4 @@
-import CaseModel from "ember-caluma/caluma-query/models/case";
+import CaseModel from "@projectcaluma/ember-core/caluma-query/models/case";
 
 export default class CustomCaseModel extends CaseModel {
   static fragment = `{

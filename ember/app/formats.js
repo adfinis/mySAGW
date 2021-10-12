@@ -23,5 +23,9 @@ export default {
       style: "currency",
       currency: "EUR",
     },
+    USD: {
+      style: "currency",
+      currency: "USD",
+    },
   },
 };

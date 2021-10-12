@@ -1,4 +1,4 @@
-import FormModel from "ember-caluma/caluma-query/models/form";
+import FormModel from "@projectcaluma/ember-core/caluma-query/models/form";
 
 export default class CustomFormModel extends FormModel {
   static fragment = `{

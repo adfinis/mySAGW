@@ -1,14 +1,16 @@
-title: "Interests"
-add: "Add interest"
-
-list:
-  delete: "Delete interest"
-  empty: "No interests yet."
-form:
-  title:
+components:
+  identity-interests:
+    title: "Interests"
     add: "Add interest"
-  label:
-    interest: "Interest"
-delete:
-  prompt: "Do you really want to delete the interest {interest}?"
-  success: "Interest {interest} deleted successfully."
+
+    list:
+      delete: "Delete interest"
+      empty: "No interests yet."
+    form:
+      title:
+        add: "Add interest"
+      label:
+        interest: "Interest"
+    delete:
+      prompt: "Do you really want to delete the interest {interest}?"
+      success: "Interest {interest} deleted successfully."

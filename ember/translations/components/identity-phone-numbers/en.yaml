@@ -1,18 +1,20 @@
-title: "Phone numbers"
-add: "Add numbers"
+components:
+  identity-phone-numbers:
+    title: "Phone numbers"
+    add: "Add numbers"
 
-list:
-  edit: "Edit number"
-  delete: "Delete number"
-  empty: "No numbers yet."
-form:
-  title:
-    add: "Add phone number"
-    edit: "Edit phone number"
-  label:
-    phone: "Phone number"
-    description: "Description ({lang})"
-    default: "This is the default number."
-delete:
-  prompt: "Do you really want to delete the number {number}?"
-  success: "Phone number {number} deleted successfully."
+    list:
+      edit: "Edit number"
+      delete: "Delete number"
+      empty: "No numbers yet."
+    form:
+      title:
+        add: "Add phone number"
+        edit: "Edit phone number"
+      label:
+        phone: "Phone number"
+        description: "Description ({lang})"
+        default: "This is the default number."
+    delete:
+      prompt: "Do you really want to delete the number {number}?"
+      success: "Phone number {number} deleted successfully."
