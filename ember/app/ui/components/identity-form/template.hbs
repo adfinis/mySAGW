@@ -45,7 +45,7 @@
         {{/if}}
       {{/unless}}
 
-      {{#if this.changeset.isOrganisation}}
+      {{#if (and this.changeset.isOrganisation @customEndpoint)}}
         <Form.input
           @label={{t "components.identity-form.label.organisationName"}}
           @name="organisationName"
