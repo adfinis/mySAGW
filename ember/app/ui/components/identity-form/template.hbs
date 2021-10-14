@@ -121,6 +121,14 @@
         @optionTargetPath="value"
       />
 
+      {{#unless @profileView}}
+        <Form.input
+          @label={{t "components.identity-form.label.comment"}}
+          @name="comment"
+          @type="textarea"
+        />
+      {{/unless}}
+
       <p class="uk-flex uk-flex-between">
         <div>
           {{#if

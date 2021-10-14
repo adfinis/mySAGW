@@ -205,6 +205,7 @@ class IdentitySerializer(TrackingSerializer):
             "organisation_name",
             "is_expert_association",
             "is_advisory_board",
+            "comment",
             "has_memberships",
             "has_members",
         )

@@ -15,6 +15,7 @@ export default class IdentityModel extends LocalizedModel {
   @attr isOrganisation;
   @attr isExpertAssociation;
   @attr isAdvisoryBoard;
+  @attr comment;
   @attr hasMemberships;
   @attr hasMembers;
   @attr isAuthorized;

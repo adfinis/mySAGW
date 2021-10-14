@@ -89,6 +89,7 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
     is_organisation = models.BooleanField(default=False)
     is_expert_association = models.BooleanField(default=False)
     is_advisory_board = models.BooleanField(default=False)
+    comment = models.TextField(blank=True, null=True)
 
     def _get_memberships(self, only_authorized=False):
         memberships = Membership.objects.filter(

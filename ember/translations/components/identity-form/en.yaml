@@ -11,6 +11,7 @@ components:
       email: "Main email address"
       isOrganisation: "This is an organisation."
       language: "Correspondence language"
+      comment: "Comment"
     hint:
       email: "Managed through KeyCloak."
     control:
