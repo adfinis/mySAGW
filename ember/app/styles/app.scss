@@ -4,7 +4,8 @@ $global-primary-background: $app-accent-color;
 
 @import "ember-power-select";
 @import "ember-uikit";
-@import "ember-caluma";
+@import "@projectcaluma/ember-form";
+@import "@projectcaluma/ember-form-builder";
 
 @import "components/nav-bar";
 @import "components/dynamic-table";
@@ -44,3 +45,5 @@ main {
   flex: 0 0 25%;
   margin: 1em 0;
 }
+
+@import 'ember-uikit';

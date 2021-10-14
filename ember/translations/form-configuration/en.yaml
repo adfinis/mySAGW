@@ -1,4 +1,5 @@
-title: "Configuration"
-expertAssociationForm: "Expert association form"
-advisoryBoardForm: "Advisory board form"
-saveSuccess: "Form {name} saved successfully"
+form-configuration:
+  title: "Configuration"
+  expertAssociationForm: "Expert association form"
+  advisoryBoardForm: "Advisory board form"
+  saveSuccess: "Form {name} saved successfully"

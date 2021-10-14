@@ -2,8 +2,8 @@ import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
-import calumaQuery from "ember-caluma/caluma-query";
-import { allCases } from "ember-caluma/caluma-query/queries";
+import calumaQuery from "@projectcaluma/ember-core/caluma-query";
+import { allCases } from "@projectcaluma/ember-core/caluma-query/queries";
 import { restartableTask } from "ember-concurrency-decorators";
 
 import ENV from "mysagw/config/environment";

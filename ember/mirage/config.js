@@ -1,4 +1,4 @@
-import graphqlHandler from "ember-caluma/mirage-graphql";
+import graphqlHandler from "@projectcaluma/ember-testing/mirage-graphql";
 
 import parseFilters from "mysagw/mirage/helpers/parse-filters";
 

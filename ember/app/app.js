@@ -13,7 +13,7 @@ export default class App extends Application {
     super(...args);
 
     this.engines = {
-      emberCaluma: {
+      "@projectcaluma/ember-form-builder": {
         dependencies: {
           services: [
             "apollo",

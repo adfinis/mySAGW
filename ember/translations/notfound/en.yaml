@@ -1,4 +1,5 @@
-title: "404"
-subtitle: "Page was not found"
-link: "Back to"
-home: "home page"
+notfound:
+  title: "404"
+  subtitle: "Page was not found"
+  link: "Back to"
+  home: "home page"

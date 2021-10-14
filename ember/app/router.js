@@ -21,7 +21,7 @@ Router.map(function () {
     this.route("index", { resetNamespace, path: "/" });
 
     // Engines
-    this.mount("ember-caluma", {
+    this.mount("@projectcaluma/ember-form-builder", {
       as: "form-builder",
       path: "/form-builder",
       resetNamespace,

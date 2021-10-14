@@ -1,33 +1,34 @@
-index:
-  title: "Interests"
-  add: "Add interest category"
-
-  list:
-    edit: "Edit category"
-    delete: "Delete category"
-    empty: "No categories yet."
-    public: "public"
-  delete:
-    prompt: "Do you really want to delete the category {category}?"
-    success: "Category {category} deleted successfully."
-
-add:
-  title: "Add interest category"
-
-edit:
-  title: "Edit interest category"
-
-  list:
+interests:
+  index:
     title: "Interests"
-    edit: "Edit interest"
-    delete: "Delete interest"
-    add: "Add interest"
-    empty: "No interests yet."
-  form:
-    title: "Edit interest"
-    label:
-      title: "Title ({lang})"
-      description: "Description"
-  delete:
-    prompt: "Do you really want to delete the interest {interest}?"
-    success: "Interest {interest} deleted successfully."
+    add: "Add interest category"
+
+    list:
+      edit: "Edit category"
+      delete: "Delete category"
+      empty: "No categories yet."
+      public: "public"
+    delete:
+      prompt: "Do you really want to delete the category {category}?"
+      success: "Category {category} deleted successfully."
+
+  add:
+    title: "Add interest category"
+
+  edit:
+    title: "Edit interest category"
+
+    list:
+      title: "Interests"
+      edit: "Edit interest"
+      delete: "Delete interest"
+      add: "Add interest"
+      empty: "No interests yet."
+    form:
+      title: "Edit interest"
+      label:
+        title: "Title ({lang})"
+        description: "Description"
+    delete:
+      prompt: "Do you really want to delete the interest {interest}?"
+      success: "Interest {interest} deleted successfully."

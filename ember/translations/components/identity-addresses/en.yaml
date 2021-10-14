@@ -1,25 +1,27 @@
-title: "Addresses"
-add: "Add address"
-
-list:
-  edit: "Edit address"
-  delete: "Delete address"
-  empty: "No addresses yet."
-form:
-  title:
+components:
+  identity-addresses:
+    title: "Addresses"
     add: "Add address"
-    edit: "Edit address"
-  label:
-    addressAddition1: "Address addition 1"
-    addressAddition2: "Address addition 2"
-    addressAddition3: "Address addition 3"
-    streetAndNumber: "Street and number"
-    poBox: "P.O. box"
-    postcode: "Postcode"
-    town: "Town"
-    country: "Country"
-    description: "Description ({lang})"
-    default: "This is the default address."
-delete:
-  prompt: "Do you really want to delete the address {address}?"
-  success: "Address {address} deleted successfully."
+
+    list:
+      edit: "Edit address"
+      delete: "Delete address"
+      empty: "No addresses yet."
+    form:
+      title:
+        add: "Add address"
+        edit: "Edit address"
+      label:
+        addressAddition1: "Address addition 1"
+        addressAddition2: "Address addition 2"
+        addressAddition3: "Address addition 3"
+        streetAndNumber: "Street and number"
+        poBox: "P.O. box"
+        postcode: "Postcode"
+        town: "Town"
+        country: "Country"
+        description: "Description ({lang})"
+        default: "This is the default address."
+    delete:
+      prompt: "Do you really want to delete the address {address}?"
+      success: "Address {address} deleted successfully."

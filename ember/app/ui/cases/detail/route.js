@@ -1,6 +1,6 @@
 import Route from "@ember/routing/route";
-import calumaQuery from "ember-caluma/caluma-query";
-import { allCases } from "ember-caluma/caluma-query/queries";
+import calumaQuery from "@projectcaluma/ember-core/caluma-query";
+import { allCases } from "@projectcaluma/ember-core/caluma-query/queries";
 
 export default class CasesDetailRoute extends Route {
   @calumaQuery({ query: allCases })

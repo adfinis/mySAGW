@@ -1,7 +1,8 @@
-title: "Profile"
-switcher:
-  identity: "Identity"
-  memberships: "Memberships"
-organisation:
-  edit: "Edit organisaton"
-  empty: "No organisations yet."
+profile:
+  title: "Profile"
+  switcher:
+    identity: "Identity"
+    memberships: "Memberships"
+  organisation:
+    edit: "Edit organisaton"
+    empty: "No organisations yet."

@@ -1,10 +1,10 @@
 import Controller from "@ember/controller";
 import { inject as service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
+import calumaQuery from "@projectcaluma/ember-core/caluma-query";
+import { allForms } from "@projectcaluma/ember-core/caluma-query/queries";
+import { decodeId } from "@projectcaluma/ember-core/helpers/decode-id";
 import { queryManager } from "ember-apollo-client";
-import calumaQuery from "ember-caluma/caluma-query";
-import { allForms } from "ember-caluma/caluma-query/queries";
-import { decodeId } from "ember-caluma/helpers/decode-id";
 import { task } from "ember-concurrency";
 import QueryParams from "ember-parachute";
 
