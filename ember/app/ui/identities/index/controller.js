@@ -20,7 +20,7 @@ export default class IdentitiesIndexController extends Controller {
   @tracked pageSize = 25;
   @tracked pageNumber = 1;
   @tracked totalPages;
-  @tracked totalCount;
+  @tracked totalCount = 0;
 
   get pages() {
     if (!this.totalPages) {
