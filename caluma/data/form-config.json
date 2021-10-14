@@ -466,6 +466,39 @@
 },
 {
     "model": "caluma_form.question",
+    "pk": "section",
+    "fields": {
+        "created_at": "2021-08-25T08:47:29.001Z",
+        "modified_at": "2021-08-25T08:47:29.001Z",
+        "created_by_user": null,
+        "created_by_group": null,
+        "modified_by_user": null,
+        "modified_by_group": null,
+        "label": "{\"de\": \"Sektion\", \"fr\": null, \"en\": \"Section\"}",
+        "type": "integer",
+        "is_required": "false",
+        "is_hidden": "false",
+        "is_archived": false,
+        "placeholder": "{\"de\": null, \"fr\": null, \"en\": null}",
+        "info_text": "{\"de\": null, \"fr\": null, \"en\": null}",
+        "static_content": "{\"de\": \"\", \"fr\": \"\", \"en\": \"\"}",
+        "configuration": {
+            "max_value": 7,
+            "min_value": 1
+        },
+        "meta": {},
+        "data_source": null,
+        "row_form": null,
+        "sub_form": null,
+        "source": null,
+        "format_validators": "[]",
+        "default_answer": null,
+        "calc_expression": null,
+        "calc_dependents": "[]"
+    }
+},
+{
+    "model": "caluma_form.question",
     "pk": "submit-button",
     "fields": {
         "created_at": "2021-08-05T12:19:11.910Z",

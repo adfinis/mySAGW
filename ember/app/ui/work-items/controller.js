@@ -83,6 +83,12 @@ export default class WorkItemsIndexController extends Controller {
               },
             ]),
         {
+          heading: { label: "documents.section" },
+          questionSlug: "section",
+          answerKey: "case.document.answers.edges",
+          type: "answer-value",
+        },
+        {
           heading: { label: "work-items.action" },
           type: "work-item-actions",
         },
