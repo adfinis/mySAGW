@@ -3,6 +3,7 @@ documents:
   number: "Number"
   municipality: "Municipality"
   type: "Type"
+  fetchError: "An error has occured while fetching documents."
 
   pageInfo: "Showing {length} of {total} documents"
   orderBy: "Order by"

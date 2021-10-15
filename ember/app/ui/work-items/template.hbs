@@ -6,7 +6,6 @@
 
 <Filters as |Filter|>
   <Filter.RadioButtons
-    @name="responsible"
     @label={{t "work-items.filters.responsible"}}
     @selected={{this.responsible}}
     @options={{
@@ -17,7 +16,6 @@
     @onChange={{fn this.updateFilter "responsible"}}
   />
   <Filter.RadioButtons
-    @name="status"
     @label={{t "work-items.filters.status"}}
     @selected={{this.status}}
     @options={{
@@ -28,7 +26,6 @@
     @onChange={{fn this.updateFilter "status"}}
   />
   <Filter.RadioButtons
-    @name="role"
     @label={{t "work-items.filters.role"}}
     @selected={{this.role}}
     @options={{
@@ -39,7 +36,6 @@
     @onChange={{fn this.updateFilter "role"}}
   />
   <Filter.RadioButtons
-    @name="order"
     @label={{t "work-items.filters.order"}}
     @selected={{this.order}}
     @options={{
@@ -50,11 +46,15 @@
     @onChange={{fn this.updateFilter "order"}}
   />
   <Filter.Dropdown
-    @name="taskTypes"
     @label={{t "work-items.filters.taskTypes"}}
     @selected={{this.taskTypes}}
     @options={{this.fetchTasks.lastSuccessful.value}}
     @onChange={{fn this.updateFilter "taskTypes"}}
+  />
+  <Filter.Input
+    @label={{t "work-items.filters.documentNumber"}}
+    @value={{this.documentNumber}}
+    @onChange={{fn this.updateFilter "documentNumber"}}
   />
 </Filters>
 

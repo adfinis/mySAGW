@@ -1,71 +1,18 @@
-<div {{did-insert (perform this.fetchCases)}}>
-  {{#if this.caseQuery.isLoading}}
-    <LoadingSpinner />
-  {{else if (not this.caseQuery.value.length)}}
-    <div class="uk-width-2-3 uk-margin-auto">
-      <h1 class="uk-text-center">
-        {{t "documents.empty.welcome" appName="mySAGW"}}
-      </h1>
-
-      <p
-        class="uk-text-center uk-text-large uk-margin-large-top uk-margin-medium-bottom"
-      >
-        {{t "documents.empty.no-documents"}}
-      </p>
-
-      <div class="uk-flex uk-flex-center">
-        <div
-          class="uk-flex uk-flex-middle uk-margin-small-left uk-margin-small-right"
-        >
-          <LinkTo
-            @route="cases.new"
-            class="uk-button uk-button-default uk-width-medium uk-height-medium uk-flex uk-flex-middle uk-flex-center uk-flex-column"
-          >
-            <UkIcon @icon="plus" @ratio="3" class="uk-margin" />
-            {{t "documents.new.title"}}
-          </LinkTo>
-        </div>
-      </div>
-    </div>
-  {{else}}
-    <div uk-grid>
-      <div class="uk-width-auto uk-flex uk-flex-middle">
-        <label class="uk-text-meta uk-text-nowrap" for="order">
-          {{t "documents.orderBy"}}:
-        </label>
-        <select
-          class="uk-select uk-form-small uk-margin-small-left"
-          id="order"
-          {{on "change" @updateOrder}}
-        >
-          {{#each this.orderOptions as |orderOption|}}
-            <option
-              value={{orderOption.value}}
-              selected={{eq this.order orderOption.value}}
-            >
-              {{t orderOption.label}} ({{t orderOption.direction}})
-            </option>
-          {{/each}}
-        </select>
-      </div>
-    </div>
-    <DynamicTable
-      @loading={{and this.caseQuery.isLoading}}
-      @data={{this.caseQuery.value}}
-      @config={{this.dynamicTableConfig}}
-      @loadMoreData={{this.fetchMoreCases}}
-      @hasNextPage={{this.caseQuery.hasNextPage}}
-    />
-    <div class="uk-width-expand uk-flex uk-flex-middle uk-text-meta">
-      <span>
-        {{
-          t
-          "global.paginationInfo"
-          count=this.caseQuery.value.length
-          total=this.caseQuery.totalCount
-          htmlSafe=true
-        }}
-      </span>
-    </div>
-  {{/if}}
+<DynamicTable
+  @loading={{@query.isLoading}}
+  @data={{@query.value}}
+  @config={{this.dynamicTableConfig}}
+  @loadMoreData={{this.fetchMoreCases}}
+  @hasNextPage={{@query.hasNextPage}}
+/>
+<div class="uk-width-expand uk-flex uk-flex-middle uk-text-meta">
+  <span>
+    {{
+      t
+      "global.paginationInfo"
+      count=@query.value.length
+      total=@query.totalCount
+      htmlSafe=true
+    }}
+  </span>
 </div>
