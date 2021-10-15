@@ -7,6 +7,8 @@ from caluma.caluma_core.permissions import (
 from caluma.caluma_form.models import Document
 from caluma.caluma_form.schema import SaveDocument, SaveDocumentAnswer
 from caluma.caluma_workflow.schema import CompleteWorkItem, SaveCase
+from caluma.extensions.common import get_cases_for_user
+from caluma.extensions.settings import settings
 
 
 class MySAGWPermission(BasePermission):
@@ -14,11 +16,12 @@ class MySAGWPermission(BasePermission):
         groups = info.context.user.groups
         return "admin" in groups or "sagw" in groups
 
+    def _can_access_case(self, info, case):
+        case_ids = get_cases_for_user(info.context.user)
+        return str(case.pk) in case_ids
+
     def _is_own(self, info, instance):
         return instance.created_by_user == info.context.user.username
-
-    def _is_assigned(self, info, instance):
-        return info.context.user.username in instance.assigned_users
 
     @permission_for(Mutation)
     @object_permission_for(Mutation)
@@ -26,6 +29,34 @@ class MySAGWPermission(BasePermission):
         return self._is_admin_or_sagw(info) or (
             bool(instance) and self._is_own(info, instance)
         )
+
+    def _get_case_for_doc(self, document):
+        """
+        Get case from document.
+
+        Check for case at these locations in this order:
+        1. case on the document
+        2. case on the document.work_item
+        3. case on the document.family
+        4. case on the document.family.work_item
+        """
+
+        def case_lookup(obj, *lookups):
+            for lookup in lookups:
+                obj = getattr(obj, lookup, None)
+            return obj
+
+        case_lookups = [
+            (document, "case"),
+            (document, "work_item", "case"),
+            (document.family, "case"),
+            (document.family, "work_item", "case"),
+        ]
+
+        for lookup_path in case_lookups:
+            case = case_lookup(*lookup_path)
+            if case:
+                return case.family
 
     @permission_for(SaveCase)
     @object_permission_for(SaveCase)
@@ -40,14 +71,12 @@ class MySAGWPermission(BasePermission):
         document = Document.objects.get(
             pk=mutation.get_params(info)["input"]["document"]
         )
-        return (
-            self._is_admin_or_sagw(info)
-            or self._is_own(info, document)
-            or (self._is_assigned(info, document.work_item))
-            or (
-                hasattr(document.case, "parent_work_item")
-                and self._is_assigned(info, document.case.parent_work_item)
-            )
+        case = self._get_case_for_doc(document)
+        return self._is_admin_or_sagw(info) or (
+            (self._can_access_case(info, case) or self._is_own(info, document))
+            and document.case.work_items.filter(
+                status="ready", task__slug__in=settings.APPLICANT_TASK_SLUGS
+            ).exists()
         )
 
     @permission_for(CompleteWorkItem)
@@ -56,4 +85,10 @@ class MySAGWPermission(BasePermission):
 
     @object_permission_for(CompleteWorkItem)
     def has_object_permission_for_complete_work_item(self, mutation, info, work_item):
-        return self._is_admin_or_sagw(info) or self._is_assigned(info, work_item)
+        return self._is_admin_or_sagw(info) or (
+            (
+                self._can_access_case(info, work_item.case)
+                or self._is_own(info, work_item)
+            )
+            and work_item.task.slug in settings.APPLICANT_TASK_SLUGS
+        )

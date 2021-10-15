@@ -40,7 +40,9 @@ class CreateOrAssignVisibility(BaseVisibility):
         return queryset.filter(
             Q(work_item__task__slug__in=settings.APPLICANT_TASK_SLUGS)
             | (Q(work_item__isnull=True) & Q(case__workflow__pk="document-review")),
-            Q(case__pk__in=case_ids) | Q(work_item__case__pk__in=case_ids),
+            Q(case__pk__in=case_ids)
+            | Q(work_item__case__pk__in=case_ids)
+            | Q(created_by_user=user.username),
         )
 
     @filter_queryset_for(WorkItem)
@@ -48,14 +50,15 @@ class CreateOrAssignVisibility(BaseVisibility):
         user = info.context.user
         case_ids = get_cases_for_user(user)
         return queryset.filter(
-            case__pk__in=case_ids, task__slug__in=settings.APPLICANT_TASK_SLUGS
+            Q(case__pk__in=case_ids) | Q(created_by_user=user.username),
+            task__slug__in=settings.APPLICANT_TASK_SLUGS,
         )
 
     @filter_queryset_for(Case)
     def filter_queryset_for_case(self, node, queryset, info):
         user = info.context.user
         case_ids = get_cases_for_user(user)
-        return queryset.filter(pk__in=case_ids)
+        return queryset.filter(Q(pk__in=case_ids) | Q(created_by_user=user.username))
 
     @filter_queryset_for(Task)
     @filter_queryset_for(Flow)
