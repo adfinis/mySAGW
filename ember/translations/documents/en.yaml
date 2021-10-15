@@ -36,7 +36,7 @@ documents:
     revise: "Revise"
     submit-receipts: "Submit receipts"
     decision: "Decision"
-    completed: "Completed"
+    complete: "Completed"
 
   new:
     title: "Create a new document"
