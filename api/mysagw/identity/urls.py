@@ -14,6 +14,7 @@ r.register(r"interests", views.InterestViewSet)
 r.register(r"membership-roles", views.MembershipRoleViewSet)
 r.register(r"memberships", views.MembershipViewSet)
 r.register(r"my-orgs", views.MyOrgsViewSet, basename="my-orgs")
+r.register(r"my-memberships", views.MyMembershipViewSet, basename="my-memberships")
 
 urlpatterns = [
     url(

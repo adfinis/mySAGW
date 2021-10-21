@@ -26,9 +26,9 @@ export default class ProfileIndexController extends Controller.extend(
   @restartableTask
   *fetchMemberships() {
     try {
-      const memberships = yield this.store.query("membership", {
-        filter: { identity: this.model.id },
+      const memberships = yield this.store.findAll("membership", {
         include: "organisation,role",
+        adapterOptions: { customEndpoint: "my-memberships" },
       });
 
       return memberships;

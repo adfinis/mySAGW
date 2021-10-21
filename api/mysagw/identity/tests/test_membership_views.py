@@ -126,6 +126,29 @@ def test_membership_list(db, client, expected_count, membership_factory):
 
 
 @pytest.mark.parametrize(
+    "client,expected_count",
+    [
+        ("user", 1),
+        ("staff", 1),
+        ("admin", 1),
+    ],
+    indirect=["client"],
+)
+def test_my_membership_list(db, client, expected_count, membership_factory):
+    membership_factory.create_batch(2)
+    membership_factory(identity=client.user.identity)
+
+    url = reverse("my-memberships-list")
+
+    response = client.get(url)
+
+    assert response.status_code == status.HTTP_200_OK
+
+    json = response.json()
+    assert len(json["data"]) == expected_count
+
+
+@pytest.mark.parametrize(
     "client,expected_status",
     [
         ("user", status.HTTP_403_FORBIDDEN),
@@ -249,6 +272,48 @@ def test_membership_create(
     "client,expected_status",
     [
         ("user", status.HTTP_403_FORBIDDEN),
+        ("staff", status.HTTP_405_METHOD_NOT_ALLOWED),
+        ("admin", status.HTTP_405_METHOD_NOT_ALLOWED),
+    ],
+    indirect=["client"],
+)
+def test_my_membership_create(
+    db,
+    client,
+    expected_status,
+    identity_factory,
+):
+    identity = identity_factory(is_organisation=False)
+    assert identity.modified_by_user != client.user.id
+    organisation = identity_factory(is_organisation=True)
+
+    url = reverse("my-memberships-list")
+
+    data = {
+        "data": {
+            "type": "memberships",
+            "attributes": {
+                "time-slot": {"lower": None, "upper": None},
+                "next-election": None,
+            },
+            "relationships": {
+                "identity": {"data": {"id": str(identity.pk), "type": "identities"}},
+                "organisation": {
+                    "data": {"id": str(organisation.pk), "type": "identities"}
+                },
+            },
+        }
+    }
+
+    response = client.post(url, data=data)
+
+    assert response.status_code == expected_status
+
+
+@pytest.mark.parametrize(
+    "client,expected_status",
+    [
+        ("user", status.HTTP_403_FORBIDDEN),
         ("staff", status.HTTP_200_OK),
         ("admin", status.HTTP_200_OK),
     ],
@@ -312,6 +377,34 @@ def test_membership_update(db, client, expected_status, membership_factory):
     membership.refresh_from_db()
     assert membership.role is None
     assert membership.comment == "Foo"
+
+
+@pytest.mark.parametrize(
+    "client,expected_status",
+    [
+        ("user", status.HTTP_403_FORBIDDEN),
+        ("staff", status.HTTP_405_METHOD_NOT_ALLOWED),
+        ("admin", status.HTTP_405_METHOD_NOT_ALLOWED),
+    ],
+    indirect=["client"],
+)
+def test_my_membership_update(db, client, expected_status, membership_factory):
+    membership = membership_factory()
+
+    url = reverse("my-memberships-detail", args=[membership.pk])
+
+    data = {
+        "data": {
+            "type": "memberships",
+            "id": str(membership.pk),
+            "attributes": {"comment": "Foo"},
+            "relationships": {"role": {}},
+        },
+    }
+
+    response = client.patch(url, data=data)
+
+    assert response.status_code == expected_status
 
 
 @pytest.mark.parametrize("field", ["identity", "organisation"])
@@ -383,3 +476,16 @@ def test_membership_delete(db, client, expected_status, membership_factory):
             membership.refresh_from_db()
         membership.identity.refresh_from_db()
         assert membership.identity.modified_by_user == client.user.username
+
+
+@pytest.mark.parametrize(
+    "client",
+    ["user"],
+    indirect=["client"],
+)
+def test_my_memberships_delete_failure(db, client):
+    url = reverse("my-memberships-detail", args=["foo"])
+
+    response = client.delete(url)
+
+    assert response.status_code == status.HTTP_403_FORBIDDEN

@@ -1,14 +1,6 @@
 import ApplicationAdapter from "./application";
 
 export default class IdentityAdapter extends ApplicationAdapter {
-  urlForFindAll(modelName, snapshot) {
-    if (snapshot.adapterOptions?.customEndpoint) {
-      return `${this.buildURL()}/${snapshot.adapterOptions.customEndpoint}`;
-    }
-
-    return super.urlForFindAll(modelName, snapshot);
-  }
-
   urlForFindRecord(id, modelName, snapshot) {
     if (snapshot.adapterOptions?.customEndpoint) {
       return `${this.buildURL()}/${

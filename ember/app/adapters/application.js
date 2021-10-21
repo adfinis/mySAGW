@@ -31,4 +31,12 @@ export default class ApplicationAdapter extends JSONAPIAdapter.extend(
       snapshot.adapterOptions
     );
   }
+
+  urlForFindAll(modelName, snapshot) {
+    if (snapshot.adapterOptions?.customEndpoint) {
+      return `${this.buildURL()}/${snapshot.adapterOptions.customEndpoint}`;
+    }
+
+    return super.urlForFindAll(modelName, snapshot);
+  }
 }
