@@ -136,11 +136,14 @@ def finish_circulation(sender, work_item, user, **kwargs):
 @transaction.atomic
 def finish_additional_data(sender, work_item, user, **kwargs):
     if work_item.task_id == "additional-data":
-        caluma_workflow_api.complete_work_item(
-            work_item=caluma_workflow_models.WorkItem.objects.get(
-                task_id="advance-credits",
-                case=work_item.case,
-                status=caluma_workflow_models.WorkItem.STATUS_READY,
-            ),
-            user=user,
+        work_item = caluma_workflow_models.WorkItem.objects.filter(
+            task_id="advance-credits",
+            case=work_item.case,
+            status=caluma_workflow_models.WorkItem.STATUS_READY,
         )
+
+        if work_item.exists():
+            caluma_workflow_api.complete_work_item(
+                work_item=work_item.first(),
+                user=user,
+            )

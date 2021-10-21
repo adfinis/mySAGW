@@ -51,6 +51,7 @@ export default class CasesIndexController extends Controller {
               },
             ],
           },
+          { status: "CANCELED", invert: true },
         ],
       });
 

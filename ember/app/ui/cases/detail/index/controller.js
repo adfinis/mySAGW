@@ -26,10 +26,10 @@ export default class CasesDetailIndexController extends Controller {
       .isAny("status", "READY");
   }
 
-  get isNotRejected() {
+  get isNotSubmitted() {
     return this.getNodes.find(
       (workItem) =>
-        workItem.task.slug === ENV.APP.caluma.reviseTaskSlug &&
+        workItem.task.slug === ENV.APP.caluma.submitTaskSlug &&
         workItem.status === "READY"
     );
   }

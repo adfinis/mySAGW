@@ -29,3 +29,14 @@ class CustomDynamicTasks(BaseDynamicTasks):
             return ["complete-document"]
 
         return []
+
+    @register_dynamic_task("after-define-amount")
+    def resolve_after_define_amount(self, case, user, prev_work_item, context):
+        decision = prev_work_item.document.answers.get(
+            question_id="define-amount-decision",
+        )
+
+        if "reject" in decision.value:
+            return ["additional-data"]
+
+        return ["complete-document"]
