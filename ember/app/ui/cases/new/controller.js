@@ -5,7 +5,7 @@ import calumaQuery from "@projectcaluma/ember-core/caluma-query";
 import { allForms } from "@projectcaluma/ember-core/caluma-query/queries";
 import { decodeId } from "@projectcaluma/ember-core/helpers/decode-id";
 import { queryManager } from "ember-apollo-client";
-import { task } from "ember-concurrency";
+import { restartableTask } from "ember-concurrency";
 import QueryParams from "ember-parachute";
 
 import createCaseMutation from "mysagw/gql/mutations/create-case.graphql";
@@ -32,21 +32,33 @@ export default class CaseNewController extends Controller.extend(
   @calumaQuery({ query: allForms })
   formQuery;
 
-  setup() {
-    this.fetchForms.perform();
+  get forms() {
+    // sort forms, so that the ones without permissions are at the bottom
+    return this.formQuery.value.sort((firstEl, secondEl) => {
+      if (firstEl.isAdvisoryBoardForm || firstEl.isExpertAssociationForm) {
+        return -1;
+      } else if (
+        secondEl.isAdvisoryBoardForm ||
+        secondEl.isExpertAssociationForm
+      ) {
+        return 1;
+      }
+
+      return 0;
+    });
   }
 
-  reset() {
-    this.resetQueryParams();
-    this.selectedForm = null;
-
-    this.fetchForms.cancelAll({ reset: true });
-    this.createCase.cancelAll({ reset: true });
+  reset(_, isExiting) {
+    if (isExiting) {
+      this.resetQueryParams();
+      this.selectedForm = null;
+    }
   }
 
-  @task
+  @restartableTask
   *fetchForms() {
     const organisations = (yield this.store.findAll("identity", {
+      reload: true,
       adapterOptions: { customEndpoint: "my-orgs" },
     })).filterBy("isAuthorized");
 
@@ -64,7 +76,7 @@ export default class CaseNewController extends Controller.extend(
       });
     }
 
-    this.formQuery.fetch({
+    yield this.formQuery.fetch({
       filter: [
         { isPublished: true },
         { isArchived: false },
@@ -74,7 +86,7 @@ export default class CaseNewController extends Controller.extend(
     });
   }
 
-  @task
+  @restartableTask
   *createCase() {
     const workflow = (yield this.apollo.query(
       {
