@@ -55,6 +55,12 @@
           @label={{t "global.save"}}
           @disabled={{cannot "edit membership-role" this.changeset.data}}
         />
+        <UkButton
+          @type="submit"
+          @color="primary"
+          @on-click={{this.setBackToRoles}}
+          @label={{t "global.saveAndBack"}}
+        />
       </p>
     </ValidatedForm>
   {{/if}}

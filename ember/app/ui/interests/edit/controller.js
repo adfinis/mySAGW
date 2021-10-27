@@ -14,13 +14,14 @@ export default class InterestsEditController extends Controller {
   @service store;
   @service intl;
 
+  @tracked changeset = null;
+
   get interests() {
     return this.model.interests.filterBy("isNew", false);
   }
 
-  @tracked changeset = null;
-
-  @action edit(interest) {
+  @action
+  edit(interest) {
     this.changeset = Changeset(
       interest ||
         this.store.createRecord("interest", {
@@ -31,11 +32,13 @@ export default class InterestsEditController extends Controller {
     );
   }
 
-  @action cancel() {
+  @action
+  cancel() {
     this.changeset = null;
   }
 
-  @dropTask *submit(changeset) {
+  @dropTask
+  *submit(changeset) {
     try {
       // Apply changes and save.
       yield changeset.save();
@@ -50,7 +53,8 @@ export default class InterestsEditController extends Controller {
 
   // Delete
 
-  @dropTask *delete(interest) {
+  @dropTask
+  *delete(interest) {
     try {
       const options = { interest: interest.title };
       yield UIkit.modal.confirm(

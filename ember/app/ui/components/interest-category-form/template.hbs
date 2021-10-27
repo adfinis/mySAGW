@@ -51,6 +51,12 @@
           @label={{t "global.save"}}
           @disabled={{cannot "edit interest-category" this.changeset.data}}
         />
+        <UkButton
+          @type="submit"
+          @color="primary"
+          @on-click={{this.setBackToInterests}}
+          @label={{t "global.saveAndBack"}}
+        />
       </p>
     </ValidatedForm>
   {{/if}}
