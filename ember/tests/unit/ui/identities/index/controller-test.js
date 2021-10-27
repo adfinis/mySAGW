@@ -9,11 +9,11 @@ module("Unit | Controller | identities/index", function (hooks) {
     assert.ok(controller);
 
     controller.totalPages = 3;
-    assert.equal(controller.pages.length, 3);
+    assert.strictEqual(controller.pages.length, 3);
 
     controller.pageNumber = 2;
     await controller.search.perform({ target: { value: "test" } });
-    assert.equal(controller.searchTerm, "test");
-    assert.equal(controller.pageNumber, 1);
+    assert.strictEqual(controller.searchTerm, "test");
+    assert.strictEqual(controller.pageNumber, 1);
   });
 });

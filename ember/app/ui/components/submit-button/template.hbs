@@ -1,6 +1,7 @@
 <DocumentValidity
   @document={{@field.document}}
   @validateOnEnter={{false}}
+  @onInvalid={{this.validationError}}
   as |isValid validate|
 >
   <div {{in-viewport onEnter=(perform this.fetchWorkItem)}}></div>

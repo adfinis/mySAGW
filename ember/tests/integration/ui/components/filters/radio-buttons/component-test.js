@@ -12,6 +12,6 @@ module("Integration | Component | filters/radio-buttons", function (hooks) {
 
     await render(hbs`<Filters::RadioButtons />`);
 
-    assert.equal(this.element.textContent.trim(), "");
+    assert.strictEqual(this.element.textContent.trim(), "");
   });
 });
