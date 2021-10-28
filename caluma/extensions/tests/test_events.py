@@ -125,7 +125,7 @@ def test_case_status(
 
     case.work_items.get(task_id="decision-and-credit").document.answers.create(
         question_id="decision-and-credit-decision",
-        value="additional-data",
+        value="decision-and-credit-decision-additional-data",
     )
     skip_work_item(case.work_items.get(task_id="decision-and-credit"), user)
     assert case.meta["status"] == "submit-receipts"
@@ -136,6 +136,10 @@ def test_case_status(
     skip_work_item(case.work_items.get(task_id="advance-credits"), user)
     assert case.meta["status"] == "decision"
 
+    case.work_items.get(task_id="define-amount").document.answers.create(
+        question_id="define-amount-decision",
+        value="define-amount-decision-continue",
+    )
     skip_work_item(case.work_items.get(task_id="define-amount"), user)
     assert case.meta["status"] == "decision"
 

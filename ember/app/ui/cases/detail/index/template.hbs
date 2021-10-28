@@ -94,7 +94,7 @@
         </UkButton>
       {{/if}}
 
-      {{#if (or (not this.isEditable) this.isNotRejected)}}
+      {{#if (not (or this.isEditable this.isNotSubmitted))}}
         <span>{{t "documents.noActions"}}</span>
       {{/if}}
     {{/if}}
