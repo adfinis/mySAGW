@@ -21,10 +21,14 @@ Router.map(function () {
     this.route("index", { resetNamespace, path: "/" });
 
     // Engines
-    this.mount("@projectcaluma/ember-form-builder", {
-      as: "form-builder",
-      path: "/form-builder",
-      resetNamespace,
+    this.route("form", { resetNamespace }, function () {
+      this.route("configuration");
+
+      this.mount("@projectcaluma/ember-form-builder", {
+        as: "form-builder",
+        path: "/builder",
+        resetNamespace,
+      });
     });
 
     // Caluma
@@ -41,6 +45,7 @@ Router.map(function () {
       this.route("new");
     });
     this.route("work-items", { resetNamespace });
+    this.route("form-configuration", { resetNamespace });
 
     // API
     this.route("identities", { resetNamespace }, function () {
@@ -63,5 +68,4 @@ Router.map(function () {
       this.route("edit", { path: "/edit/:snippet" });
     });
   });
-  this.route("form-configuration");
 });
