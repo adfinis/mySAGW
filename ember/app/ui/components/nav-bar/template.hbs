@@ -35,7 +35,7 @@
           {{t "components.nav-bar.identity-management"}}<span uk-icon="chevron-down"></span>
         </tab.item>
       {{/if}}
-      {{#if (or (can "list form-builder") (can "list form-configuration"))}}
+      {{#if (can "list form-builder")}}
         <tab.item id="nav-form-management">
           {{t "components.nav-bar.form-management"}}<span uk-icon="chevron-down"></span>
         </tab.item>
@@ -67,10 +67,8 @@
         <li>
           <LinkTo @route="form-builder">{{t "components.nav-bar.form-builder"}}</LinkTo>
         </li>
-      {{/if}}
-      {{#if (can "list form-configuration")}}
         <li>
-          <LinkTo @route="form-configuration">{{t "components.nav-bar.form-configuration"}}</LinkTo>
+          <LinkTo @route="form.configuration">{{t "components.nav-bar.form-configuration"}}</LinkTo>
         </li>
       {{/if}}
     </ul>
@@ -188,10 +186,8 @@
             {{t "components.nav-bar.form-builder"}}
           </LinkTo>
         </li>
-      {{/if}}
-      {{#if (can "list form-configuration")}}
         <li>
-          <LinkTo @route="form-configuration" uk-toggle="target: #offcanvas-nav">
+          <LinkTo @route="form.configuration" uk-toggle="target: #offcanvas-nav">
             {{t "components.nav-bar.form-configuration"}}
           </LinkTo>
         </li>

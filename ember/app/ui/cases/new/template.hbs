@@ -16,7 +16,7 @@
           @width="1-1"
           @label={{form.name}}
           @color={{
-            if (eq form.slug this.selectedForm) "secondary" "default"
+            if (eq form.slug this.selectedForm) "primary" "default"
           }}
           @on-click={{fn (mut this.selectedForm) form.slug}}
           class=""
