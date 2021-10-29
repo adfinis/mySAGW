@@ -14,3 +14,4 @@ global:
   save: "Save"
   cancel: "Cancel"
   loadMore: "Load more"
+  saveAndBack: "Save and Back"

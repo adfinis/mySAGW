@@ -15,17 +15,25 @@ export default class InterestCategoryFormComponent extends Component {
   @service notification;
   @service store;
   @service intl;
+  @service router;
 
   @tracked model;
+  @tracked validations = InterestCategoryValidations;
+  @tracked backToInterests;
 
-  validations = InterestCategoryValidations;
-
-  @action onUpdate() {
+  @action
+  onUpdate() {
     this.model =
       this.args.category || this.store.createRecord("interest-category");
   }
 
-  @dropTask *submit(changeset) {
+  @action
+  setBackToInterests() {
+    this.backToInterests = true;
+  }
+
+  @dropTask
+  *submit(changeset) {
     try {
       yield changeset.save();
       this.notification.success(
@@ -33,7 +41,12 @@ export default class InterestCategoryFormComponent extends Component {
           category: this.model.title,
         })
       );
+
       this.args.onSave?.(this.model);
+
+      if (this.backToInterests) {
+        this.router.transitionTo("interests");
+      }
     } catch (error) {
       console.error(error);
       this.notification.fromError(error);

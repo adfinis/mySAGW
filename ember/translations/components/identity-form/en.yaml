@@ -16,7 +16,6 @@ components:
       email: "Managed through KeyCloak."
     control:
       delete: "Delete"
-      submitBack: "Save and Back"
     delete:
       prompt: "Do you really want to delete this identity?"
       success: "Identity deleted successfully."

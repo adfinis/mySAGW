@@ -17,10 +17,13 @@ export default class MembershipRoleFormComponent extends Component {
   @service notification;
   @service store;
   @service intl;
+  @service router;
 
   @tracked changeset;
+  @tracked backToRoles;
 
-  @action onUpdate() {
+  @action
+  onUpdate() {
     this.changeset = Changeset(
       this.args.role || this.store.createRecord("membership-role"),
       lookupValidator(MembershipRoleValidations),
@@ -28,7 +31,13 @@ export default class MembershipRoleFormComponent extends Component {
     );
   }
 
-  @dropTask *submit(changeset) {
+  @action
+  setBackToRoles() {
+    this.backToRoles = true;
+  }
+
+  @dropTask
+  *submit(changeset) {
     try {
       yield changeset.save();
       this.notification.success(
@@ -37,6 +46,10 @@ export default class MembershipRoleFormComponent extends Component {
         })
       );
       this.args.onSave?.(changeset.data);
+
+      if (this.backToRoles) {
+        this.router.transitionTo("membership-roles");
+      }
     } catch (error) {
       console.error(error);
       this.notification.fromError(error);
