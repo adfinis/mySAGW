@@ -183,6 +183,17 @@ JSON_API_PLURALIZE_TYPES = True
 ADMIN_GROUP = "admin"
 STAFF_GROUP = "sagw"
 
+# mailing
+EMAIL_HOST = env.str("EMAIL_HOST", "mail")
+EMAIL_PORT = env.int("EMAIL_PORT", 1025)
+EMAIL_HOST_USER = env.str("EMAIL_HOST_USER", "noreply@mysagw.adfinis.com")
+EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD", "")
+EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS", False)
+from_name = env.str("MAILING_FROM_NAME", "mySAGW")
+from_mail = env.str("MAILING_FROM_MAIL", "noreply@mysagw.adfinis.com")
+MAILING = {"from_email": from_mail, "from_name": from_name}
+MAILING_SENDER = f"{from_name} <{from_mail}>"
+
 
 def parse_admins(admins):
     """
