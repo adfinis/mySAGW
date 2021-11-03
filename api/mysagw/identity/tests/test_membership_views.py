@@ -272,8 +272,8 @@ def test_membership_create(
     "client,expected_status",
     [
         ("user", status.HTTP_403_FORBIDDEN),
-        ("staff", status.HTTP_405_METHOD_NOT_ALLOWED),
-        ("admin", status.HTTP_405_METHOD_NOT_ALLOWED),
+        ("staff", status.HTTP_403_FORBIDDEN),
+        ("admin", status.HTTP_403_FORBIDDEN),
     ],
     indirect=["client"],
 )
@@ -383,8 +383,8 @@ def test_membership_update(db, client, expected_status, membership_factory):
     "client,expected_status",
     [
         ("user", status.HTTP_403_FORBIDDEN),
-        ("staff", status.HTTP_405_METHOD_NOT_ALLOWED),
-        ("admin", status.HTTP_405_METHOD_NOT_ALLOWED),
+        ("staff", status.HTTP_403_FORBIDDEN),
+        ("admin", status.HTTP_403_FORBIDDEN),
     ],
     indirect=["client"],
 )

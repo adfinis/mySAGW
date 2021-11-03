@@ -278,7 +278,7 @@ class MembershipRoleViewSet(views.ModelViewSet):
 class MembershipViewSet(views.ModelViewSet):
     serializer_class = serializers.MembershipSerializer
     queryset = models.Membership.objects.all()
-    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff | (IsOwn & ReadOnly)),)
+    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff | ReadOnly),)
     filterset_class = filters.MembershipFilterSet
 
     def get_queryset(self, *args, **kwargs):
@@ -300,7 +300,7 @@ class MyMembershipViewSet(
     GenericViewSet,
 ):
     serializer_class = serializers.MyMembershipsSerializer
-    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff | (IsOwn & ReadOnly)),)
+    permission_classes = (IsAuthenticated & (IsOwn & ReadOnly),)
 
     def get_queryset(self):
         return self.request.user.identity.memberships.all()
