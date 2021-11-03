@@ -1,0 +1,22 @@
+components:
+  identity-form:
+    label:
+      idpId: "IDP ID"
+      organisationName: "Name der Organisation"
+      isExpertAssociation: "Fachgesellschaft"
+      isAdvisoryBoard: "Kommission/Kuratorium"
+      salutation: "Anrede"
+      firstName: "Vorname"
+      lastName: "Name"
+      email: "Primäre E-Mail-Adresse"
+      isOrganisation: "Organsation"
+      language: "Korrespondenzsprache"
+      comment: "Kommentar"
+    hint:
+      email: "Verwaltet durch KeyCloak."
+    control:
+      delete: "Löschen"
+    delete:
+      prompt: "Wollen Sie diese Adressse wirklich löschen?"
+      success: "Adresse wurde erfolgreich gelöscht."
+    success: "Adresse «{name}» wurde erfolgreich abgespeichert."

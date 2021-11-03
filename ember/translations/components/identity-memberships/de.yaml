@@ -1,0 +1,29 @@
+components:
+  identity-memberships:
+    title: "Mitgliedschaften"
+    add: "Mitgliedschaft hinzufügen"
+    timeSlotLower: "Von"
+    timeSlotUpper: "Bis"
+
+    list:
+      nextElection: "Nächste Wiederwahl {date}"
+      edit: "Mitgliedschaft bearbeiten"
+      delete: "Mitgliedschaft löschen"
+      empty: "Bisher wurden keine Mitgliedschaften erfasst."
+    form:
+      title:
+        add: "Mitgliedschaft hinzufügen"
+        edit: "Mitgliedschaft bearbeiten"
+      label:
+        organisation: "Organisation"
+        role: "Rolle innerhalb der Organisation"
+        authorized: "AdministratorIn der Organisation"
+        admin: "AdministratorIn"
+        timeFrom: "Von"
+        timeUntil: "Bis"
+        nextElection: "Nächste Wiederwahl"
+        comment: "Bemerkung"
+        inactive: "Inaktiv"
+    delete:
+      prompt: "Wollen Sie diese Mitgliedschaft «{membership}» wirklich löschen?"
+      success: "Mitgliedschaft «{membership}» wurde erfolgreich gelöscht."

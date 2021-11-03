@@ -1,0 +1,27 @@
+components:
+  identity-addresses:
+    title: "Adressen"
+    add: "Adresse hinzufügen"
+
+    list:
+      edit: "Adresse bearbeiten"
+      delete: "Adresse löschen"
+      empty: "Bisher wurden keine Adressen erfasst."
+    form:
+      title:
+        add: "Adresse hinzufügen"
+        edit: "Adresse bearbeiten"
+      label:
+        addressAddition1: "Adresszusatz 1"
+        addressAddition2: "Adresszusatz 2"
+        addressAddition3: "Adresszusatz 3"
+        streetAndNumber: "Strasse / Nummer"
+        poBox: "Postfach"
+        postcode: "Postleitzahl"
+        town: "Stadt"
+        country: "Land"
+        description: "Beschreibung ({lang})"
+        default: "Korrespondenzadresse"
+    delete:
+      prompt: "Wollen Sie die Adresse «{address}» wirklich löschen?"
+      success: "Adresse «{address}» wurde erfolgreich gelöscht."

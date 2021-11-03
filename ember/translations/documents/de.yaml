@@ -1,0 +1,58 @@
+documents:
+  title: "Gesuche"
+  number: "Referenz"
+  municipality: "Gemeinde"
+  type: "Gesuchstyp"
+  fetchError: "Während des Abfragen der Gesuche ist ein Fehler aufgetreten."
+
+  pageInfo: "{length} von {total} Gesuchen zeigen"
+  orderBy: "Sortieren nach"
+  createdAt: "Erstelldatum"
+  modifiedAt: "Änderungsdatum"
+  desc: "Absteigend"
+  asc: "Aufsteigend"
+  description: "Beschreibung"
+  status: "Status"
+  createdByUser: "Erstellt von"
+  section: "Abschnitt"
+
+  general: "Information"
+
+  actions: "Aktionen"
+  noActions: "Keine Aktionen verfügbar."
+  edit: "Gesuch bearbeiten"
+  editText: "Sie können das Gesuch bearbeiten und ältere Angaben ändern." #
+  submit: "Gesuch absenden"
+  submitText: "Sie können das Gesuch absenden."
+  noSubmitText: "Das Gesuch kann nicht abgesendet werden, da es unvollständig ist." #
+  submitSuccess: "Das Gesuch wurde erfolgreich übermittelt."
+  delete: "Gesuch löschen"
+  deleteText: "Sie können das Gesuch löschen, falls dieses nicht mehr benötigt wird." #
+  deleteSuccess: "Das Gesuch wurde erfolgreich gelöscht."
+
+  states:
+    submit: "Eingereicht"
+    audit: "In Bearbeitung"
+    revise: "Zur Überarbeitung"
+    submit-receipts: "Belege einreichen"
+    decision: "Entscheid"
+    completed: "Abgeschlossen"
+
+  new:
+    title: "Gesuch eröffnen"
+    type: "Wählen Sie den Gesuchstyp aus"
+
+  empty:
+    welcome: "Willkommen bei {appName}"
+    no-documents: "Noch keine Gesuche eröffnet."
+
+  subnav:
+    overview: "Übersicht"
+    document: "Gesuch"
+    work-items: "Aufgaben"
+    circulation: "Zirkulation"
+
+  circulation:
+    add: "In Zirkulation geben"
+    finish: "Zirkulation abschliessen"
+    skip: "Zirkulation überspringen"

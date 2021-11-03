@@ -1,0 +1,10 @@
+snippets:
+  index:
+    title: "Snippets"
+    add: "Snippet hinzufügen"
+    search: "Suche"
+    empty: "Bisher wurden keine Snippets erfasst."
+  add:
+    title: "Snippet hinzufügen"
+  edit:
+    title: "Snippet bearbeiten"

@@ -1,0 +1,8 @@
+profile:
+  title: "Profil"
+  switcher:
+    identity: "Adresse"
+    memberships: "Mitgliedschaften"
+  organisation:
+    edit: "Organisation bearbeiten"
+    empty: "Bisher wurden keine Organisationen erfasst."

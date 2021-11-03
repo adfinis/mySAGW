@@ -1,0 +1,20 @@
+components:
+  identity-emails:
+    title: "E-Mail-Adressen"
+    add: "E-Mail-Adresse hinzufügen"
+
+    list:
+      edit: "E-Mail-Adresse bearbeiten"
+      delete: "E-Mail-Adresse löschen"
+      empty: "Bisher wurden keine E-Mail-Adressen erfasst."
+    form:
+      title:
+        add: "E-Mail-Adresse hinzufügen"
+        edit: "E-Mail-Adresse bearbeiten"
+      label:
+        email: "E-Mail-Adresse"
+        description: "Beschreibung ({lang})"
+        default: "Korrespondenzadresse"
+    delete:
+      prompt: "Wollen Sie die E-Mail-Adresse «{address}» wirklich löschen?"
+      success: "E-Mail-Adresse «{address}» wurde erfolgreich gelöscht."

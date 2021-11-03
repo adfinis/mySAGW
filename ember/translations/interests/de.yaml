@@ -1,0 +1,34 @@
+interests:
+  index:
+    title: "Interessen"
+    add: "Interessenkategorie hinzufügen" #
+
+    list:
+      edit: "Kategorie bearbeiten"
+      delete: "Kategorie löschen"
+      empty: "Bisher wurden keine Kategorien erfasst."
+      public: "Öffentlich"
+    delete:
+      prompt: "Wollen Sie diese Kategorie «{category}» wirklich löschen?"
+      success: "Kategorie {category} wurde erfolgreich gelöscht."
+
+  add:
+    title: "Interessenkategorie hinzufügen" #
+
+  edit:
+    title: "Interessenkategorie bearbeiten" #
+
+    list:
+      title: "Interessen"
+      edit: "Interesse bearbeiten"
+      delete: "Interesse löschen"
+      add: "Interesse hinzufügen"
+      empty: "Bisher wurden keine Interessen erfasst."
+    form:
+      title: "Interesse bearbeiten"
+      label:
+        title: "Titel ({lang})"
+        description: "Beschreibung"
+    delete:
+      prompt: "Wollen Sie dieses Interesse «{interest}» wirklich löschen?"
+      success: "Interesse «{interest}» wurde erfolgreich gelöscht."
