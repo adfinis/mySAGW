@@ -6,3 +6,13 @@ ALLOWED_HOSTS=yourdomain.tld,www.yourdomain.tdl
 DATABASE_PASSWORD=alsoverysecure
 ADMINS=Test Example <test@example.com>,Test2 <test2@example.com>
 OIDC_OP_USER_ENDPOINT=https://yourdomain.tld/auth/realms/mysagw/protocol/openid-connect/userinfo
+
+# Mailing
+EMAIL_HOST=mail
+EMAIL_PORT=25
+EMAIL_HOST_USER=noreply@my.yourdomain.tld
+EMAIL_HOST_PASSWORD=verysecure
+EMAIL_USE_TLS=true
+MAILING_FROM_NAME=mySAGW
+MAILING_FROM_MAIL=noreply@my.yourdomain.tld
+MAILING_SENDER="mySAGW <noreply@my.yourdomain.tld>"

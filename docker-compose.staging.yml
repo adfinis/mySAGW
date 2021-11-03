@@ -32,11 +32,6 @@ services:
         OIDC_HOST: "${OIDC_HOST:?Set OIDC_HOST env variable}"
     restart: unless-stopped
 
-  mail:
-    image: mwader/postfix-relay
-    env_file: ./.envs/.staging/.mail
-    restart: unless-stopped
-
   minio:
     env_file: ./.envs/.staging/.minio
     restart: unless-stopped

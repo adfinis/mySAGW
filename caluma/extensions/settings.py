@@ -4,8 +4,12 @@ from django.conf import settings
 
 # Mailing
 settings.EMAIL_HOST = os.environ.get("EMAIL_HOST", "mail")
-settings.EMAIL_USE_TLS = False
 settings.EMAIL_PORT = os.environ.get("EMAIL_PORT", 1025)
+settings.EMAIL_HOST_USER = os.environ.get(
+    "EMAIL_HOST_USER", "noreply@mysagw.adfinis.com"
+)
+settings.EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
+settings.EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", False)
 from_name = os.environ.get("MAILING_FROM_NAME", "mySAGW")
 from_mail = os.environ.get("MAILING_FROM_MAIL", "noreply@mysagw.adfinis.com")
 settings.MAILING = {"from_email": from_mail, "from_name": from_name}
