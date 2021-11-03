@@ -11,7 +11,7 @@ export default class IdentityModel extends LocalizedModel {
   @attr language;
   @hasMany additionalEmails;
   @hasMany phoneNumbers;
-  @hasMany interests;
+  @hasMany("interest") interests;
   @attr isOrganisation;
   @attr isExpertAssociation;
   @attr isAdvisoryBoard;
