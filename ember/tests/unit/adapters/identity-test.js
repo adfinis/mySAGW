@@ -7,8 +7,11 @@ module("Unit | Adapter | identity", function (hooks) {
   test("urlForFindAll is correct", function (assert) {
     const adapter = this.owner.lookup("adapter:identity");
 
-    assert.equal(adapter.urlForFindAll("identity", {}), "/api/v1/identities");
-    assert.equal(
+    assert.strictEqual(
+      adapter.urlForFindAll("identity", {}),
+      "/api/v1/identities"
+    );
+    assert.strictEqual(
       adapter.urlForFindAll("identity", {
         adapterOptions: { customEndpoint: "my-orgs" },
       }),
@@ -19,11 +22,11 @@ module("Unit | Adapter | identity", function (hooks) {
   test("urlForFindRecord is correct", function (assert) {
     const adapter = this.owner.lookup("adapter:identity");
 
-    assert.equal(
+    assert.strictEqual(
       adapter.urlForFindRecord("1", "identity", {}),
       "/api/v1/identities/1"
     );
-    assert.equal(
+    assert.strictEqual(
       adapter.urlForFindRecord("1", "identity", {
         adapterOptions: { customEndpoint: "my-orgs" },
       }),
@@ -34,17 +37,17 @@ module("Unit | Adapter | identity", function (hooks) {
   test("urlForQueryRecord is correct", function (assert) {
     const adapter = this.owner.lookup("adapter:identity");
 
-    assert.equal(adapter.urlForQueryRecord(), "/api/v1/me");
+    assert.strictEqual(adapter.urlForQueryRecord(), "/api/v1/me");
   });
 
   test("urlForUpdateRecord is correct", function (assert) {
     const adapter = this.owner.lookup("adapter:identity");
 
-    assert.equal(
+    assert.strictEqual(
       adapter.urlForUpdateRecord("1", "identity", {}),
       "/api/v1/identities/1"
     );
-    assert.equal(
+    assert.strictEqual(
       adapter.urlForUpdateRecord("1", "identity", {
         adapterOptions: { customEndpoint: "my-orgs" },
       }),

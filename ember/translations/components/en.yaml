@@ -26,3 +26,4 @@ components:
 
   submit-button:
     title: "Submit"
+    error: "An error has occured while validating the document."

@@ -9,7 +9,7 @@ module("Unit | Adapter | application", function (hooks) {
     assert.ok(adapter);
 
     const url = "http://example.com/api/v1/foo";
-    assert.equal(
+    assert.strictEqual(
       adapter._appendInclude(url, { include: "bar" }),
       `${url}?include=bar`
     );

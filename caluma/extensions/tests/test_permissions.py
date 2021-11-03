@@ -4,7 +4,7 @@ import pytest
 
 from caluma.caluma_core.mutation import Mutation
 from caluma.caluma_form.schema import SaveDocumentAnswer
-from caluma.caluma_workflow.schema import CompleteWorkItem, SaveCase, StartCase
+from caluma.caluma_workflow.schema import CompleteWorkItem, SaveCase
 from caluma.extensions.permissions import MySAGWPermission
 
 _Fallbackobj = namedtuple("Fallbackobj", ["created_by_user"])
@@ -84,7 +84,6 @@ def test_permission_for_save_document_answer(
     assert perm.has_object_permission(mutation, admin_info, answer) is has_obj_perm
 
 
-@pytest.mark.parametrize("mutation", [SaveCase, StartCase])
 @pytest.mark.parametrize(
     "groups,created_by_user,has_perm,has_obj_perm",
     [
@@ -95,7 +94,7 @@ def test_permission_for_save_document_answer(
     ],
 )
 def test_permission_for_save_case_and_start_case(
-    db, admin_info, answer, mutation, groups, created_by_user, has_perm, has_obj_perm
+    db, admin_info, answer, groups, created_by_user, has_perm, has_obj_perm
 ):
     admin_info.context.user.groups = groups
     admin_info.context.user.username = "baz"
@@ -105,8 +104,8 @@ def test_permission_for_save_case_and_start_case(
 
     perm = MySAGWPermission()
 
-    assert perm.has_permission(mutation, admin_info) is has_perm
-    assert perm.has_object_permission(mutation, admin_info, answer) is has_obj_perm
+    assert perm.has_permission(SaveCase, admin_info) is has_perm
+    assert perm.has_object_permission(SaveCase, admin_info, answer) is has_obj_perm
 
 
 @pytest.mark.parametrize(

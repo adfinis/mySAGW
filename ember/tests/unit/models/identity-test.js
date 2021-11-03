@@ -11,6 +11,6 @@ module("Unit | Model | identity", function (hooks) {
       lastName: "Doe",
     });
     assert.ok(model);
-    assert.equal(model.fullName, "Doe John");
+    assert.strictEqual(model.fullName, "Doe John");
   });
 });

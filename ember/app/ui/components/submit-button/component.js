@@ -9,6 +9,8 @@ import getDocumentsQuery from "mysagw/gql/queries/get-documents.graphql";
 
 export default class SubmitButtonComponent extends Component {
   @service router;
+  @service notification;
+  @service intl;
 
   @queryManager apollo;
 
@@ -32,6 +34,11 @@ export default class SubmitButtonComponent extends Component {
           ENV.APP.caluma.documentEditableTaskSlugs.includes(workItem.task.slug)
         );
       });
+  }
+
+  @action
+  validationError() {
+    this.notification.danger(this.intl.t("components.submit-button.error"));
   }
 
   @action
