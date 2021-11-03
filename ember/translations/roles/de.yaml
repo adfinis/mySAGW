@@ -1,0 +1,18 @@
+roles:
+  index:
+    title: "Rollen"
+    add: "Rolle hinzufügen"
+
+    list:
+      edit: "Rolle bearbeiten"
+      delete: "Rolle löschen"
+      empty: "Bisher wurden keine Rollen erfasst."
+    delete:
+      prompt: "Wollen Sie diese Rolle «{role}» wirklich löschen?"
+      success: "Rolle «{role}» wurde erfolgreich gelöscht."
+
+  add:
+    title: "Rolle hinzufügen"
+
+  edit:
+    title: "Rolle bearbeiten"

@@ -1,0 +1,28 @@
+components:
+  identity-members:
+    title: "Mitglieder"
+    list:
+      empty: "Bisher wurden keine Mitglieder erfasst."
+
+  interest-category-form:
+    label:
+      title: "Titel ({lang})"
+      description: "Beschreibung"
+      public: "Public"
+    success: "Kategorie «{category}» wurde erfolgreich gespeichert."
+
+  membership-role-form:
+    label:
+      title: "Titel ({lang})"
+      description: "Beschreibung ({lang})"
+    success: "Rolle «{role}» wurde erfolgreich gespeichert."
+
+  snippet-form:
+    label:
+      title: "Titel"
+      body: "Body ({lang})"
+      archived: "Archiviert"
+    success: "Snippet «{title}» wurde erfolgreich gespeichert."
+
+  submit-button:
+    title: "Absenden"

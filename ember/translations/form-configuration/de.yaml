@@ -1,0 +1,5 @@
+form-configuration:
+  title: "Konfiguration"
+  expertAssociationForm: "Fachgesellschaft"
+  advisoryBoardForm: "Kommission/Kuratorium"
+  saveSuccess: "Formular «{name}» wurde erfolgreich gespeichert."
