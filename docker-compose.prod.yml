@@ -22,8 +22,6 @@ services:
 
   keycloak:
     env_file: ./.envs/.production/.keycloak
-    depends_on:
-      - mail
     restart: unless-stopped
 
   ember:
