@@ -1,12 +1,16 @@
 import Controller from "@ember/controller";
+import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
+import { tracked } from "@glimmer/tracking";
 import { queryManager } from "ember-apollo-client";
-import { dropTask } from "ember-concurrency-decorators";
+import Changeset from "ember-changeset";
+import lookupValidator from "ember-changeset-validations";
+import { dropTask, restartableTask } from "ember-concurrency-decorators";
 import { saveAs } from "file-saver";
+import UIkit from "uikit";
 
-import ENV from "mysagw/config/environment";
 import cancelCaseMutation from "mysagw/gql/mutations/cancel-case.graphql";
-import completeWorkItemMutation from "mysagw/gql/mutations/complete-work-item.graphql";
+import CaseValidations from "mysagw/validations/case";
 
 export default class CasesDetailIndexController extends Controller {
   @service router;
@@ -15,28 +19,10 @@ export default class CasesDetailIndexController extends Controller {
 
   @queryManager apollo;
 
-  get getNodes() {
-    return this.model.workItems.edges.mapBy("node");
-  }
-
-  get isEditable() {
-    return this.getNodes
-      .filter((workItem) =>
-        ENV.APP.caluma.documentEditableTaskSlugs.includes(workItem.task.slug)
-      )
-      .isAny("status", "READY");
-  }
-
-  get isNotSubmitted() {
-    return this.getNodes.find(
-      (workItem) =>
-        workItem.task.slug === ENV.APP.caluma.submitTaskSlug &&
-        workItem.status === "READY"
-    );
-  }
+  @tracked newRow;
 
   get readyWorkItems() {
-    return this.getNodes.filterBy("status", "READY").length;
+    return this.model.workItems.filterBy("status", "READY").length;
   }
 
   @dropTask
@@ -56,21 +42,45 @@ export default class CasesDetailIndexController extends Controller {
     }
   }
 
-  @dropTask
-  *submitCase() {
-    try {
-      yield this.apollo.mutate({
-        mutation: completeWorkItemMutation,
-        variables: { id: this.model.workItems.edges[0].node.id },
-      });
+  @action
+  addRow() {
+    this.newRow = new Changeset(
+      this.store.createRecord("case", {
+        email: undefined,
+        caseId: this.model.id,
+      }),
+      lookupValidator(CaseValidations),
+      CaseValidations
+    );
+  }
 
-      this.notification.success(this.intl.t("documents.submitSuccess"));
-
-      this.router.transitionTo("cases.index");
-    } catch (error) {
-      console.error(error);
-      this.notification.fromError(error);
+  @restartableTask
+  *saveRow() {
+    if (this.model.invitations.findBy("email", this.newRow.email)) {
+      this.notification.danger(
+        this.intl.t("documents.invitations.duplicateEmail")
+      );
+      return;
     }
+
+    if (this.newRow.isValid) {
+      yield this.newRow.save();
+
+      this.newRow = null;
+      UIkit.modal("#modal-invitation").hide();
+    }
+  }
+
+  @dropTask
+  *deleteRow(invitation) {
+    yield this.model.invitations
+      .filterBy("email", invitation.email)[0]
+      .destroyRecord();
+  }
+
+  @dropTask
+  *cancelRow() {
+    yield this.newRow.destroyRecord();
   }
 
   @dropTask
