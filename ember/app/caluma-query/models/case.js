@@ -1,6 +1,41 @@
+import { inject as service } from "@ember/service";
 import CaseModel from "@projectcaluma/ember-core/caluma-query/models/case";
+import { decodeId } from "@projectcaluma/ember-core/helpers/decode-id";
+
+import ENV from "mysagw/config/environment";
 
 export default class CustomCaseModel extends CaseModel {
+  @service store;
+
+  get invitations() {
+    return this.store.peekAll("case").filter((invitation) => {
+      return (
+        invitation.caseId === decodeId(this.raw.id) &&
+        !invitation.hasDirtyAttributes
+      );
+    });
+  }
+
+  get workItems() {
+    return this.raw.workItems.edges.mapBy("node");
+  }
+
+  get hasEditableWorkItem() {
+    return this.workItems
+      .filter((workItem) =>
+        ENV.APP.caluma.documentEditableTaskSlugs.includes(workItem.task.slug)
+      )
+      .isAny("status", "READY");
+  }
+
+  get hasSubmitWorkItem() {
+    return this.workItems.find(
+      (workItem) =>
+        workItem.task.slug === ENV.APP.caluma.submitTaskSlug &&
+        workItem.status === "READY"
+    );
+  }
+
   static fragment = `{
     id
     createdAt
