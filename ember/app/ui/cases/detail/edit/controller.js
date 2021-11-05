@@ -1,16 +1,13 @@
 import Controller from "@ember/controller";
-
-import ENV from "mysagw/config/environment";
+import { inject as service } from "@ember/service";
 
 export default class CasesDetailEditController extends Controller {
   queryParams = ["displayedForm"];
+  @service can;
 
   get disabled() {
-    return !this.model.workItems.edges
-      .mapBy("node")
-      .filter((workItem) =>
-        ENV.APP.caluma.documentEditableTaskSlugs.includes(workItem.task.slug)
-      )
-      .isAny("status", "READY");
+    return !(
+      this.model.hasEditableWorkItem && this.can.can("edit case", this.model)
+    );
   }
 }

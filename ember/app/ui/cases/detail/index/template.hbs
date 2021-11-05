@@ -69,8 +69,51 @@
     </span>
   </div>
   <div class="uk-width-2-3">
+    <h3>{{t "documents.invitations.title"}}</h3>
+    <table class="uk-table uk-table-divider">
+      <thead>
+        <tr>
+          <th>{{t "documents.invitations.email"}}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each @model.invitations as |invitation|}}
+          <tr>
+            <td>{{invitation.email}}</td>
+            <td class="uk-text-right">
+              {{#if (and (gt @model.invitations.length 1) (can "edit case" @model))}}
+                <button
+                  class="uk-icon-button"
+                  uk-icon="trash"
+                  type="button"
+                  title={{t "documents.delete"}}
+                  {{on "click" (perform this.deleteRow invitation)}}
+                ></button>
+              {{/if}}
+            </td>
+          </tr>
+        {{/each}}
+        {{#if (can "edit case" @model)}}
+          <tr class="uk-text-center">
+            <td colspan="2">
+              <div uk-toggle="target: #modal-invitation">
+                <UkButton
+                  @type="button"
+                  @title={{t "documents.invitations.add"}}
+                  @on-click={{this.addRow}}
+                >
+                  <span uk-icon="plus"></span>
+                </UkButton>
+              </div>
+            </td>
+          </tr>
+        {{/if}}
+      </tbody>
+    </table>
+
     {{#if (eq @model.raw.status "RUNNING")}}
-      {{#if this.isEditable}}
+      {{#if @model.hasEditableWorkItem}}
         <h3>{{t "documents.edit"}}</h3>
         <p>{{t "documents.editText"}}</p>
 
@@ -79,8 +122,7 @@
         </LinkTo>
       {{/if}}
 
-      {{#if this.isNotSubmitted}}
-
+      {{#if @model.hasSubmitWorkItem}}
         <h3>{{t "documents.delete"}}</h3>
         <p>{{t "documents.deleteText"}}</p>
 
@@ -103,12 +145,43 @@
           {{t "documents.accountingExport"}}
         </UkButton>
       {{/if}}
-
-      {{#if (not (or this.isEditable this.isNotSubmitted (can "exportForAccounting case")))}}
-        <span>{{t "documents.noActions"}}</span>
-      {{/if}}
     {{/if}}
   </div>
 </div>
 
 <hr />
+
+<div id="modal-invitation" uk-modal>
+  <div class="uk-modal-dialog uk-modal-body">
+    <button type="button" class="uk-modal-close-default" uk-close></button>
+
+    <h2 class="uk-modal-title">
+      {{t "documents.invitations.addTitle"}}
+    </h2>
+
+    <div class="uk-margin">
+      <ValidatedForm
+        @model={{this.newRow}}
+        @on-submit={{perform this.saveRow}}
+        as |Form|
+      >
+        <Form.input
+          @label={{t "documents.invitations.email"}}
+          @name="email"
+        />
+
+        <div class="uk-text-right">
+          <UkButton
+            {{on "click" (perform this.cancelRow)}}
+            class="uk-modal-close"
+          >
+            {{t "global.cancel"}}
+          </UkButton>
+          <Form.submit
+            @label={{t "global.save"}}
+          />
+        </div>
+      </ValidatedForm>
+    </div>
+  </div>
+</div>

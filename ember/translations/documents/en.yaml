@@ -58,3 +58,10 @@ documents:
     add: "Add to circulation"
     finish: "Finish circulation"
     skip: "Skip circulation"
+
+  invitations:
+    title: "Invitations"
+    email: "E-Mail"
+    add: "Invite someone"
+    addTitle: "Add invitation"
+    duplicateEmail: "Duplicate E-Mail"
