@@ -14,4 +14,19 @@ module("Unit | Adapter | application", function (hooks) {
       `${url}?include=bar`
     );
   });
+
+  test("urlForFindAll is correct", function (assert) {
+    const adapter = this.owner.lookup("adapter:application");
+
+    assert.strictEqual(
+      adapter.urlForFindAll("identity", {}),
+      "/api/v1/identities"
+    );
+    assert.strictEqual(
+      adapter.urlForFindAll("identity", {
+        adapterOptions: { customEndpoint: "my-orgs" },
+      }),
+      "/api/v1/my-orgs"
+    );
+  });
 });

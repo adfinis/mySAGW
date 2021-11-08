@@ -3,22 +3,6 @@ import { module, test } from "qunit";
 
 module("Unit | Adapter | identity", function (hooks) {
   setupTest(hooks);
-
-  test("urlForFindAll is correct", function (assert) {
-    const adapter = this.owner.lookup("adapter:identity");
-
-    assert.strictEqual(
-      adapter.urlForFindAll("identity", {}),
-      "/api/v1/identities"
-    );
-    assert.strictEqual(
-      adapter.urlForFindAll("identity", {
-        adapterOptions: { customEndpoint: "my-orgs" },
-      }),
-      "/api/v1/my-orgs"
-    );
-  });
-
   test("urlForFindRecord is correct", function (assert) {
     const adapter = this.owner.lookup("adapter:identity");
 

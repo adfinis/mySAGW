@@ -278,7 +278,7 @@ class MembershipRoleViewSet(views.ModelViewSet):
 class MembershipViewSet(views.ModelViewSet):
     serializer_class = serializers.MembershipSerializer
     queryset = models.Membership.objects.all()
-    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff | (IsOwn & ReadOnly)),)
+    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff | ReadOnly),)
     filterset_class = filters.MembershipFilterSet
 
     def get_queryset(self, *args, **kwargs):
@@ -292,3 +292,15 @@ class MembershipViewSet(views.ModelViewSet):
         super().perform_destroy(instance)
         instance.identity.modified_by_user = self.request.user.username
         instance.identity.save()
+
+
+class MyMembershipViewSet(
+    RetrieveModelMixin,
+    ListModelMixin,
+    GenericViewSet,
+):
+    serializer_class = serializers.MyMembershipsSerializer
+    permission_classes = (IsAuthenticated & (IsOwn & ReadOnly),)
+
+    def get_queryset(self):
+        return self.request.user.identity.memberships.all()

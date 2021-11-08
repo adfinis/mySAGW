@@ -394,3 +394,10 @@ class MembershipSerializer(
             "comment",
             "inactive",
         )
+
+
+class MyMembershipsSerializer(MembershipSerializer):
+    included_serializers = {
+        "role": MembershipRoleSerializer,
+        "organisation": MyOrgsSerializer,
+    }
