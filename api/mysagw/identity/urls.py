@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.urls import re_path
 from rest_framework.routers import SimpleRouter
 
 from . import views
@@ -17,7 +17,7 @@ r.register(r"my-orgs", views.MyOrgsViewSet, basename="my-orgs")
 r.register(r"my-memberships", views.MyMembershipViewSet, basename="my-memberships")
 
 urlpatterns = [
-    url(
+    re_path(
         r"^me/?$",
         views.MeViewSet.as_view({"get": "retrieve", "patch": "update"}),
         name="me",
