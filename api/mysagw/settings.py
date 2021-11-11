@@ -32,7 +32,6 @@ INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.postgres",
-    "psqlextra",
     "localized_fields",
     "phonenumber_field",
     "django_countries",
