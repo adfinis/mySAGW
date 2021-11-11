@@ -2,6 +2,7 @@ import Controller from "@ember/controller";
 import { inject as service } from "@ember/service";
 import { queryManager } from "ember-apollo-client";
 import { dropTask } from "ember-concurrency-decorators";
+import { saveAs } from "file-saver";
 
 import ENV from "mysagw/config/environment";
 import cancelCaseMutation from "mysagw/gql/mutations/cancel-case.graphql";
@@ -66,6 +67,37 @@ export default class CasesDetailIndexController extends Controller {
       this.notification.success(this.intl.t("documents.submitSuccess"));
 
       this.router.transitionTo("cases.index");
+    } catch (error) {
+      console.error(error);
+      this.notification.fromError(error);
+    }
+  }
+
+  @dropTask
+  *exportAccounting() {
+    const adapter = this.store.adapterFor("identity");
+
+    const uri = `${this.store.adapterFor("identity").buildURL("receipts")}/${
+      this.model.id
+    }`;
+    const init = {
+      method: "GET",
+      headers: adapter.headers,
+    };
+    try {
+      const response = yield fetch(uri, init);
+
+      if (!response.ok) {
+        throw new Error(response.statusText || response.status);
+      }
+
+      const blob = yield response.blob();
+      const filename = `${this.intl.t("documents.accountingExportFilename", {
+        dossierNo:
+          this.model.document.answers.edges.firstObject.node.StringAnswerValue,
+      })}`;
+
+      saveAs(blob, filename);
     } catch (error) {
       console.error(error);
       this.notification.fromError(error);

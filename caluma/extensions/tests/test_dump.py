@@ -16,6 +16,7 @@ from django.core.management import call_command
                 "caluma_form.Question",
                 "caluma_form.QuestionOption",
                 "caluma_form.Option",
+                "caluma_form.Answer",
             ],
             Path.cwd() / "caluma" / "data" / "form-config.json",
         ),

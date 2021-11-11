@@ -47,12 +47,12 @@ def test_upload_labels_template_command(requests_mock, args, success):
     )
 
     if success:
-        call_command("upload_labels_template", *args)
+        call_command("upload_template", *args)
         do_assertions(mock_upload)
         do_assertions(mock_update)
     else:
         with pytest.raises(CommandError) as e:
-            call_command("upload_labels_template", *args)
+            call_command("upload_template", *args)
         assert e.value.args[0].startswith(
             "Error: argument -t/--template: Template not found:"
         )

@@ -30,6 +30,10 @@ def test_work_item_finish_circulation(db, caluma_data, user, circulation):
 def test_work_item_additional_data(
     db, caluma_data, user, circulation, identites_mock_for_mailing
 ):
+    Question.objects.filter(formquestion__form__pk="additional-data-form").update(
+        is_required="false"
+    )
+
     case = circulation.parent_work_item.case
 
     skip_work_item(case.work_items.get(task_id="circulation"), user)

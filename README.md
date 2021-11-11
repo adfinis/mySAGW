@@ -57,7 +57,7 @@ cp -r ./.envs/.production.example ./.envs/.production
 
 Then edit the files under `./.envs/.production/` to your needs.
 
-For the staging envireonment, copy to `./.envs/.staging/`.
+For the staging environment, copy to `./.envs/.staging/`.
 
 ```bash
 echo -e "UID=$(id -u)\nCOMPOSE_FILE=docker-compose.yml:docker-compose.prod.yml" > .env
@@ -66,6 +66,9 @@ echo -e "UID=$(id -u)\nCOMPOSE_FILE=docker-compose.yml:docker-compose.prod.yml" 
 # Also in .env file, set OIDC_HOST variable
 docker-compose up -d
 make caluma-loadconfig
+# upload the export templates to DMS (adapt template names, if you don't use the default ones)
+docker-compose run --rm api python manage.py upload_labels_template -t mysagw/identity/templates/identity-labels.docx
+docker-compose run --rm api python manage.py upload_labels_template -t mysagw/accounting/templates/accounting-cover.docx
 ```
 
 ## Contributing
