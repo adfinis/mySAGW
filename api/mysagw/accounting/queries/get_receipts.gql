@@ -1,0 +1,135 @@
+query Receipts($case_id: ID!) {
+  node(id: $case_id) {
+    ... on Case {
+      additionalData: workItems(filter: [{task: "additional-data"}], first: 1) {
+        edges {
+          node {
+            document {
+              quittungen: answers(filter: [{question: "additional-data-quittungen"}]) {
+                edges {
+                  node {
+                    ... on TableAnswer {
+                      value {
+                        answers(filter: [{question: "additional-data-row-quittung"}]) {
+                          edges {
+                            node {
+                              ... on FileAnswer {
+                                file {
+                                  downloadUrl
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              applicant_name: answers(filter: [{question: "additional-data-name"}]) {
+                edges {
+                  node {
+                    ... on StringAnswer {
+                      value
+                    }
+                  }
+                }
+              }
+              applicant_address: answers(filter: [{question: "additional-data-adresse"}]) {
+                edges {
+                  node {
+                    ... on StringAnswer {
+                      value
+                    }
+                  }
+                }
+              }
+              fibu: answers(filter: [{question: "additional-data-fibu"}]) {
+                edges {
+                  node {
+                    ... on StringAnswer {
+                      value
+                    }
+                  }
+                }
+              }
+              iban: answers(filter: [{question: "additional-data-iban"}]) {
+                edges {
+                  node {
+                    ... on StringAnswer {
+                      value
+                    }
+                  }
+                }
+              }
+              bank: answers(filter: [{question: "additional-data-bank"}]) {
+                edges {
+                  node {
+                    ... on StringAnswer {
+                      value
+                    }
+                  }
+                }
+              }
+              bank_town: answers(filter: [{question: "additional-data-bank-town"}]) {
+                edges {
+                  node {
+                    ... on StringAnswer {
+                      value
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      main: document {
+        dossierno: answers(filter: [{question: "dossier-nr"}]) {
+          edges {
+            node {
+              ... on StringAnswer {
+                value
+              }
+            }
+          }
+        }
+        sektion: answers(filter: [{question: "section"}]) {
+          edges {
+            node {
+              ... on StringAnswer {
+                value
+              }
+            }
+          }
+        }
+        vp_year: answers(filter: [{question: "vp-year"}]) {
+          edges {
+            node {
+              ... on StringAnswer {
+                value
+              }
+            }
+          }
+        }
+      }
+      defineAmount: workItems(filter: [{task: "define-amount"}], orderBy: CREATED_AT_DESC, first: 1) {
+        edges {
+          node {
+            document {
+              total: answers(filter: [{question: "define-amount-amount"}]) {
+                edges {
+                  node {
+                    ... on IntegerAnswer {
+                      value
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

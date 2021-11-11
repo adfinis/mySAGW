@@ -1,3 +1,5 @@
+import json
+
 import requests
 from django.conf import settings
 
@@ -31,6 +33,15 @@ class DMSClient:
         files = {"template": file}
 
         return self._request(method, url, data=data, files=files, headers=headers)
+
+    def get_error_content(self, response):
+        if response.headers["Content-Type"].startswith("application/json"):
+            content = response.json()
+            content["source"] = "DMS"
+            return json.dumps({"errors": content})
+        elif response.headers["Content-Type"].startswith("text/plain"):
+            return f"[DMS] {response.content.decode()}".encode("utf-8")
+        return response.content
 
     def merge(
         self,

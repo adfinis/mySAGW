@@ -29,6 +29,8 @@ documents:
   delete: "Gesuch löschen"
   deleteText: "Sie können das Gesuch löschen, falls dieses nicht mehr benötigt wird." #
   deleteSuccess: "Das Gesuch wurde erfolgreich gelöscht."
+  accountingExport: "Export für Buchhaltung"
+  accountingExportFilename: "{dossierNo}.pdf"
 
   states:
     submit: "Eingereicht"

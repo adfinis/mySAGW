@@ -5,11 +5,11 @@ from django.conf import settings
 from django.core.management.base import BaseCommand
 from requests import HTTPError
 
-from mysagw.identity.dms_client import DMSClient
+from mysagw.dms_client import DMSClient
 
 
 class Command(BaseCommand):
-    help = "Upload template for printing address labels"
+    help = "Upload template for exports"
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

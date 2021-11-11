@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "simple_history",
     "mysagw.identity.apps.DefaultConfig",
     "mysagw.snippets.apps.SnippetsConfig",
+    "mysagw.accounting.apps.AccountingConfig",
 ]
 
 if ENV == "dev":
@@ -140,6 +141,12 @@ DOCUMENT_MERGE_SERVICE_ENGINE = env.str(
 DOCUMENT_MERGE_SERVICE_LABELS_TEMPLATE_SLUG = env.str(
     "DOCUMENT_MERGE_SERVICE_LABELS_TEMPLATE_SLUG", default="identity-labels"
 )
+DOCUMENT_MERGE_SERVICE_ACCOUNTING_COVER_TEMPLATE_SLUG = env.str(
+    "DOCUMENT_MERGE_SERVICE_ACCOUNTING_COVER_TEMPLATE_SLUG", default="accounting-cover"
+)
+
+# Caluma
+CALUMA_VERIFY_SSL = env.bool("CALUMA_VERIFY_SSL", default=True)
 
 
 REST_FRAMEWORK = {

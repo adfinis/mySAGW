@@ -1,5 +1,6 @@
 import pytest
 
+from caluma.caluma_form.models import Question
 from caluma.caluma_workflow.api import complete_work_item, skip_work_item
 from caluma.caluma_workflow.models import Case
 
@@ -95,6 +96,10 @@ def test_dynamic_task_after_define_amount(
     decision,
     expected_work_item,
 ):
+    Question.objects.filter(formquestion__form__pk="additional-data-form").update(
+        is_required="false"
+    )
+
     case = circulation.parent_work_item.case
 
     skip_work_item(case.work_items.get(task_id="circulation"), user)

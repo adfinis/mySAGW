@@ -29,6 +29,8 @@ documents:
   delete: "Delete document"
   deleteText: "You can delete the document if its not needed anymore."
   deleteSuccess: "The document has been deleted."
+  accountingExport: "Export for accounting"
+  accountingExportFilename: "{dossierNo}.pdf"
 
   states:
     submit: "Submit"

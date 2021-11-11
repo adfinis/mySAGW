@@ -94,7 +94,17 @@
         </UkButton>
       {{/if}}
 
-      {{#if (not (or this.isEditable this.isNotSubmitted))}}
+      {{#if (can "exportForAccounting case")}}
+        <UkButton
+          @type="button"
+          @on-click={{perform this.exportAccounting @model}}
+          @loading={{this.exportAccounting.isRunning}}
+        >
+          {{t "documents.accountingExport"}}
+        </UkButton>
+      {{/if}}
+
+      {{#if (not (or this.isEditable this.isNotSubmitted (can "accountingExport case")))}}
         <span>{{t "documents.noActions"}}</span>
       {{/if}}
     {{/if}}

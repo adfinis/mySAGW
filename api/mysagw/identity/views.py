@@ -1,5 +1,3 @@
-import json
-
 import django_excel
 from django.conf import settings
 from django.db.models import Q
@@ -12,8 +10,8 @@ from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateMode
 from rest_framework.viewsets import GenericViewSet
 from rest_framework_json_api import views
 
+from ..dms_client import DMSClient
 from . import filters, models, serializers
-from .dms_client import DMSClient
 from .export import IdentityExport
 from .permissions import (
     IsAdmin,
@@ -143,15 +141,6 @@ class IdentityViewSet(views.ModelViewSet):
         response = django_excel.make_response_from_records(records, "xlsx")
         return response
 
-    def _get_dms_error_content(self, response):
-        if response.headers["Content-Type"].startswith("application/json"):
-            content = response.json()
-            content["source"] = "DMS"
-            return json.dumps({"errors": content})
-        elif response.headers["Content-Type"].startswith("text/plain"):
-            return f"[DMS] {response.content.decode()}".encode("utf-8")
-        return response.content
-
     def _merge(self, records):
         client = DMSClient()
         try:
@@ -162,7 +151,7 @@ class IdentityViewSet(views.ModelViewSet):
             )
             return resp.status_code, resp.headers["Content-Type"], resp.content
         except HTTPError as e:
-            content = self._get_dms_error_content(e.response)
+            content = client.get_error_content(e.response)
             return e.response.status_code, e.response.headers["Content-Type"], content
 
     @action(detail=False, methods=["post"], url_path="export-labels")
