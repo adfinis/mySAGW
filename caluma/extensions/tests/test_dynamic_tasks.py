@@ -118,7 +118,5 @@ def test_dynamic_task_after_define_amount(
     )
     complete_work_item(case.work_items.get(task_id="define-amount"), user)
 
-    case.refresh_from_db()
-
     assert case.status == Case.STATUS_RUNNING
     assert case.work_items.filter(task_id=expected_work_item).exists()

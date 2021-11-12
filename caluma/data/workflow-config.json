@@ -11,6 +11,28 @@
         "modified_by_group": null,
         "name": "{\"de\": \"Zur Abrechnung bereit\", \"en\": \"Ready for billing\", \"fr\": \"Pr\\u00eat pour le d\\u00e9compte\"}",
         "description": "{\"de\": null, \"en\": null, \"fr\": null}",
+        "type": "simple",
+        "meta": {},
+        "address_groups": "['applicant']",
+        "control_groups": null,
+        "is_archived": false,
+        "form": null,
+        "lead_time": null,
+        "is_multiple_instance": false
+    }
+},
+{
+    "model": "caluma_workflow.task",
+    "pk": "additional-data-form",
+    "fields": {
+        "created_at": "2021-05-28T11:38:41.503Z",
+        "modified_at": "2021-05-28T11:38:41.503Z",
+        "created_by_user": null,
+        "created_by_group": null,
+        "modified_by_user": null,
+        "modified_by_group": null,
+        "name": "{\"de\": \"Zur Abrechnung bereit\", \"en\": \"Ready for billing\", \"fr\": \"Pr\\u00eat pour le d\\u00e9compte\"}",
+        "description": "{\"de\": null, \"en\": null, \"fr\": null}",
         "type": "complete_task_form",
         "meta": {},
         "address_groups": "['applicant']",
