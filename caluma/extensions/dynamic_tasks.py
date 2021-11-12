@@ -22,7 +22,7 @@ class CustomDynamicTasks(BaseDynamicTasks):
         )
 
         if "additional-data" in credit_decision.value:
-            return ["additional-data", "advance-credits"]
+            return ["additional-data", "additional-data-form", "advance-credits"]
         elif "define-amount" in credit_decision.value:
             return ["define-amount"]
         elif "complete" in credit_decision.value:

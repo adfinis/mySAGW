@@ -14,15 +14,45 @@ export default class CasesDetailWorkItemsEditFormController extends Controller {
   @service router;
 
   @calumaQuery({ query: allWorkItems })
-  workItemsQuery;
+  workItemQuery;
 
-  @lastValue("fetchWorkItems") workItem;
+  @calumaQuery({ query: allWorkItems })
+  additionalWorkItemQuery;
+
+  get completeWorkItem() {
+    return this.workItem.additionalWorkItem
+      ? this.additionalWorkItem
+      : this.model;
+  }
+
+  @lastValue("fetchWorkItem") workItem;
   @restartableTask()
-  *fetchWorkItems(model) {
+  *fetchWorkItem(model) {
     try {
-      yield this.workItemsQuery.fetch({ filter: [{ id: model }] });
+      yield this.workItemQuery.fetch({ filter: [{ id: model }] });
 
-      return this.workItemsQuery.value[0];
+      if (this.workItemQuery.value[0].additionalWorkItem) {
+        this.fetchAdditonalWorkItem.perform(
+          this.workItemQuery.value[0].additionalWorkItem
+        );
+      }
+
+      return this.workItemQuery.value[0];
+    } catch (error) {
+      console.error(error);
+      this.notification.danger(this.intl.t("work-items.fetchError"));
+    }
+  }
+
+  @lastValue("fetchAdditonalWorkItem") additionalWorkItem;
+  @restartableTask()
+  *fetchAdditonalWorkItem(filter) {
+    try {
+      yield this.additionalWorkItemQuery.fetch({
+        filter: [...filter, { case: this.workItemQuery.value[0].raw.case.id }],
+      });
+
+      return this.additionalWorkItemQuery.value[0].id;
     } catch (error) {
       console.error(error);
       this.notification.danger(this.intl.t("work-items.fetchError"));
