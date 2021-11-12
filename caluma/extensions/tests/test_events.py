@@ -50,10 +50,83 @@ def test_work_item_additional_data(
     )
 
     skip_work_item(case.work_items.get(task_id="decision-and-credit"), user)
+
+    assert (
+        case.work_items.get(task_id="additional-data").status == WorkItem.STATUS_READY
+    )
+
     complete_work_item(case.work_items.get(task_id="additional-data"), user)
 
     assert (
         case.work_items.get(task_id="advance-credits").status
+        == WorkItem.STATUS_COMPLETED
+    )
+    assert (
+        case.work_items.get(task_id="additional-data-form").status
+        == WorkItem.STATUS_SUSPENDED
+    )
+
+
+def test_work_item_define_amount(
+    db, caluma_data, user, case_access_event_mock, circulation
+):
+    work_items = circulation.parent_work_item.case.work_items
+
+    skip_work_item(work_items.get(task_id="circulation"), user)
+    work_items.get(task_id="decision-and-credit").document.answers.create(
+        question_id="decision-and-credit-decision",
+        value="decision-and-credit-decision-additional-data",
+    )
+    skip_work_item(work_items.get(task_id="decision-and-credit"), user)
+    complete_work_item(work_items.get(task_id="additional-data"), user)
+    work_items.get(task_id="define-amount").document.answers.create(
+        question_id="define-amount-decision",
+        value="define-amount-decision-reject",
+    )
+    skip_work_item(work_items.get(task_id="define-amount"), user)
+
+    assert (
+        work_items.get(task_id="additional-data-form").status
+        == WorkItem.STATUS_SUSPENDED
+    )
+
+    complete_work_item(
+        work_items.get(task_id="additional-data", status=WorkItem.STATUS_READY),
+        user,
+    )
+
+    define_amount = work_items.get(
+        task_id="define-amount", status=WorkItem.STATUS_READY
+    )
+    answers = define_amount.document.answers
+    print(document.form.questions.all())
+
+    answers.create(
+        question_id="define-amount-decision",
+        value="define-amount-decision-continue",
+    )
+    answers.create(
+        question_id="additional-data-adresse",
+        value="Foo",
+    )
+    answers.create(
+        question_id="additional-data-bank",
+        value="Foo",
+    )
+    answers.create(
+        question_id="additional-data-iban",
+        value="Foo",
+    )
+    answers.create(
+        question_id="additional-data-name",
+        value="Foo",
+    )
+
+    complete_work_item(define_amount, user)
+
+    assert work_items.get(task_id="complete-document").status == WorkItem.STATUS_READY
+    assert (
+        work_items.get(task_id="additional-data-form").status
         == WorkItem.STATUS_COMPLETED
     )
 
@@ -152,6 +225,7 @@ def test_case_status(
     assert case.meta["status"] == "submit-receipts"
 
     skip_work_item(case.work_items.get(task_id="additional-data"), user)
+    skip_work_item(case.work_items.get(task_id="additional-data-form"), user)
     assert case.meta["status"] == "decision"
 
     skip_work_item(case.work_items.get(task_id="advance-credits"), user)

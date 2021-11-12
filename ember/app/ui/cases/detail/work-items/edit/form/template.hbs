@@ -21,7 +21,7 @@
       {{#if this.workItem.canComplete}}
         <WorkItemButton
           @mutation="complete"
-          @workItemId={{@model}}
+          @workItemId={{this.completeWorkItem}}
           @type="submit"
           @color="primary"
           @label={{t "work-items.actions.finish"}}

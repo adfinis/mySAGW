@@ -72,11 +72,20 @@ class MySAGWPermission(BasePermission):
             pk=mutation.get_params(info)["input"]["document"]
         )
         case = self._get_case_for_doc(document)
+        work_item_query = document.case.work_items.filter(
+            status="ready", task__slug__in=settings.APPLICANT_TASK_SLUGS
+        )
+
         return self._is_admin_or_sagw(info) or (
             (self._can_access_case(info, case) or self._is_own(info, document))
-            and document.case.work_items.filter(
-                status="ready", task__slug__in=settings.APPLICANT_TASK_SLUGS
-            ).exists()
+            and (
+                work_item_query.exists()
+                or (
+                    hasattr(document, "work_item")
+                    and document.work_item.task.slug == "additional-data-form"
+                    and work_item_query.filter(task__slug="additonal-data").exists()
+                )
+            )
         )
 
     @permission_for(CompleteWorkItem)
