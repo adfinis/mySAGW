@@ -213,12 +213,19 @@ export default class CustomWorkItemModel extends WorkItemModel {
               id
               question {
                 slug
+                ... on ChoiceQuestion {
+                  options {
+                    edges {
+                      node {
+                        slug
+                        label
+                      }
+                    }
+                  }
+                }
               }
               ... on StringAnswer {
                 StringAnswerValue: value
-              }
-              ... on IntegerAnswer {
-                IntegerAnswerValue: value
               }
             }
           }
