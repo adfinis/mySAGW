@@ -236,7 +236,7 @@ def get_cover_context(data):
                 "node",
                 "value",
             ],
-            lambda x: x.split("-")[2],
+            lambda x: x.split("-")[3],
         ),
     }
 

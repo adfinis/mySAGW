@@ -104,7 +104,7 @@
         </UkButton>
       {{/if}}
 
-      {{#if (not (or this.isEditable this.isNotSubmitted (can "accountingExport case")))}}
+      {{#if (not (or this.isEditable this.isNotSubmitted (can "exportForAccounting case")))}}
         <span>{{t "documents.noActions"}}</span>
       {{/if}}
     {{/if}}

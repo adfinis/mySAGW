@@ -94,7 +94,7 @@ query Receipts($case_id: ID!) {
             }
           }
         }
-        sektion: answers(filter: [{question: "section"}]) {
+        sektion: answers(filter: [{question: "sektion"}]) {
           edges {
             node {
               ... on StringAnswer {
@@ -103,7 +103,7 @@ query Receipts($case_id: ID!) {
             }
           }
         }
-        vp_year: answers(filter: [{question: "vp-year"}]) {
+        vp_year: answers(filter: [{question: "verteilplan-nr"}]) {
           edges {
             node {
               ... on StringAnswer {

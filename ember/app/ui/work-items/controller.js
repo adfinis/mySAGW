@@ -93,7 +93,7 @@ export default class WorkItemsIndexController extends Controller {
             ]),
         {
           heading: { label: "documents.section" },
-          questionSlug: "section",
+          questionSlug: "sektion",
           answerKey: "case.document.answers.edges",
           type: "answer-value",
         },
