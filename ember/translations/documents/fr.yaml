@@ -1,0 +1,60 @@
+documents:
+  title: "Requêtes"
+  number: "Référence"
+  municipality: "Commune"
+  type: "Type de requête"
+  fetchError: "Une erreur s'est produite lors de la récupération des documents."
+
+  pageInfo: "Montrer {length} de {total} requêtes"
+  orderBy: "Trier selon"
+  createdAt: "Date de création"
+  modifiedAt: "Date de modification"
+  desc: "Ordre décroissant"
+  asc: "Ordre croissant"
+  description: "Description"
+  status: "Statut"
+  createdByUser: "Créé par"
+  section: "Segment"
+
+  general: "Information"
+
+  actions: "Actions"
+  noActions: "Aucune action n'est disponible."
+  edit: "Modifier la requête"
+  editText: "Vous pouvez modifier la requête et changer les anciennes données."
+  submit: "Envoyer la requête"
+  submitText: "Vous pouvez envoyer la requête."
+  noSubmitText: "La requête ne peut pas être envoyée car elle est incomplète."
+  submitSuccess: "La requête a été soumise avec succès."
+  delete: "Supprimer la requête"
+  deleteText: "Vous pouvez supprimer la requête au cas où elle ne serait plus nécessaire."
+  deleteSuccess: "La requête a été effacée avec succès."
+  accountingExport: "Exportation pour la comptabilité"
+  accountingExportFilename: "{dossierNo}.pdf"
+
+  states:
+    submit: "Requête soumise"
+    audit: "En traitement"
+    revise: "Pour modification"
+    submit-receipts: "Joindre des annexes"
+    decision: "Décision"
+    completed: "Terminé"
+
+  new:
+    title: "Ouvrir une nouvelle requête"
+    type: "Choisissez le type de requête"
+
+  empty:
+    welcome: "Bienvenue {appName}"
+    no-documents: "Aucune requête n'a encore été ouverte."
+
+  subnav:
+    overview: "Vue d'ensemble"
+    document: "Requête"
+    work-items: "Tâches"
+    circulation: "Circulation"
+
+  circulation:
+    add: "Mettre en circulation"
+    finish: "Terminer la circulation"
+    skip: "Sauter l'étape de la circulation"

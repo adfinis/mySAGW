@@ -1,0 +1,17 @@
+global:
+  continue: "Suivant"
+  salutation:
+    male: "Monsieur"
+    female: "Madame"
+    neutral: "Formulation neutre"
+  languages:
+    english: "English"
+    german: "Deutsch"
+    french: "Français"
+  empty: "Aucune entrée trouvée."
+  paginationInfo: "<strong>1 - {count}</strong> von {total}"
+  openMenu: "Ouvrir le menu"
+  save: "Sauvegarder"
+  cancel: "Annuler"
+  loadMore: "Ajouter d'autres entrées"
+  saveAndBack: "Sauvegarde et retour"

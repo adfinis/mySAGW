@@ -21,13 +21,13 @@ documents:
   actions: "Aktionen"
   noActions: "Keine Aktionen verfügbar."
   edit: "Gesuch bearbeiten"
-  editText: "Sie können das Gesuch bearbeiten und ältere Angaben ändern." #
+  editText: "Sie können das Gesuch bearbeiten und ältere Angaben ändern."
   submit: "Gesuch absenden"
   submitText: "Sie können das Gesuch absenden."
-  noSubmitText: "Das Gesuch kann nicht abgesendet werden, da es unvollständig ist." #
+  noSubmitText: "Das Gesuch kann nicht abgesendet werden, da es unvollständig ist."
   submitSuccess: "Das Gesuch wurde erfolgreich übermittelt."
   delete: "Gesuch löschen"
-  deleteText: "Sie können das Gesuch löschen, falls dieses nicht mehr benötigt wird." #
+  deleteText: "Sie können das Gesuch löschen, falls dieses nicht mehr benötigt wird."
   deleteSuccess: "Das Gesuch wurde erfolgreich gelöscht."
   accountingExport: "Export für Buchhaltung"
   accountingExportFilename: "{dossierNo}.pdf"

@@ -1,0 +1,29 @@
+components:
+  identity-members:
+    title: "Membres"
+    list:
+      empty: "Jusqu'à présent aucun membre n'a été enregistré."
+
+  interest-category-form:
+    label:
+      title: "Titre ({lang})"
+      description: "Description"
+      public: "Public"
+    success: "La catégorie «{category}» a été enregistrée avec succès."
+
+  membership-role-form:
+    label:
+      title: "Titre ({lang})"
+      description: "Description ({lang})"
+    success: "Le rôle «{role}» a été enregistré avec succès."
+
+  snippet-form:
+    label:
+      title: "Titre"
+      body: "Body ({lang})"
+      archived: "Archivé"
+    success: "L'extrait «{title}» a été sauvegardé avec succès."
+
+  submit-button:
+    title: "Soumettre"
+    error: "Une erreur s'est produite lors de la validation du document."

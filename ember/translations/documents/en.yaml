@@ -1,11 +1,11 @@
 documents:
-  title: "Documents"
+  title: "Applications"
   number: "Number"
   municipality: "Municipality"
   type: "Type"
-  fetchError: "An error has occured while fetching documents."
+  fetchError: "An error has occured while fetching applications."
 
-  pageInfo: "Showing {length} of {total} documents"
+  pageInfo: "Showing {length} of {total} applications"
   orderBy: "Order by"
   createdAt: "Created"
   modifiedAt: "Last updated"
@@ -21,14 +21,14 @@ documents:
   actions: "Actions"
   noActions: "No actions available"
   edit: "Edit document"
-  editText: "You can modify the document and change your previous data."
-  submit: "Submit document"
-  submitText: "You can submit the document."
-  noSubmitText: "You can't submit the document, it is incomplete."
-  submitSuccess: "The document was successfully submitted."
-  delete: "Delete document"
-  deleteText: "You can delete the document if its not needed anymore."
-  deleteSuccess: "The document has been deleted."
+  editText: "You can modify the application and change your previous data."
+  submit: "Submit application"
+  submitText: "You can submit the application."
+  noSubmitText: "You can't submit the application, it is incomplete."
+  submitSuccess: "The application was successfully submitted."
+  delete: "Delete application"
+  deleteText: "You can delete the application if its not needed anymore."
+  deleteSuccess: "The application has been deleted."
   accountingExport: "Export for accounting"
   accountingExportFilename: "{dossierNo}.pdf"
 
@@ -41,16 +41,16 @@ documents:
     complete: "Completed"
 
   new:
-    title: "Create a new document"
-    type: "Please select the type of document"
+    title: "Create a new application"
+    type: "Please select the type of application"
 
   empty:
     welcome: "Welcome to {appName}"
-    no-documents: "It looks like you do not have any documents as of yet."
+    no-documents: "It looks like you do not have any application as of yet."
 
   subnav:
     overview: "Overview"
-    document: "Document"
+    document: "Application"
     work-items: "Tasks"
     circulation: "Circulation"
 

@@ -1,0 +1,10 @@
+snippets:
+  index:
+    title: "Blocs de texte"
+    add: "Ajouter un bloc de texte"
+    search: "Recherche"
+    empty: "Jusqu'à présent aucun bloc de texte n'a été saisi."
+  add:
+    title: "Ajouter un bloc de texte"
+  edit:
+    title: "Modifier un bloc de texte"

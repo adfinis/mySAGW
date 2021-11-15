@@ -1,0 +1,29 @@
+components:
+  identity-memberships:
+    title: "Affiliations"
+    add: "Ajouter une affiliation"
+    timeSlotLower: "Depuis"
+    timeSlotUpper: "Jusqu'à"
+
+    list:
+      nextElection: "Prochaine réélection {date}"
+      edit: "Modifier l'affiliation"
+      delete: "Supprimer l'affiliation"
+      empty: "Jusqu'à présent aucune affiliation n'a été enregistrée."
+    form:
+      title:
+        add: "Ajouter une affiliation"
+        edit: "Modifier l'affiliation"
+      label:
+        organisation: "Institution"
+        role: "Rôle au sein de l'institution"
+        authorized: "Administrateur·trice de l'institution"
+        admin: "Administrateur·trice"
+        timeFrom: "Depuis"
+        timeUntil: "Jusqu'à"
+        nextElection: "Prochaine réélection"
+        comment: "Remarque"
+        inactive: "Inactif·ve"
+    delete:
+      prompt: "Souhaitez-vous vraiment supprimer cette affiliation «{membership}»?"
+      success: "L'affiliation «{membership}» a été supprimée avec succès."

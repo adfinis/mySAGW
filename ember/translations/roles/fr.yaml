@@ -1,0 +1,18 @@
+roles:
+  index:
+    title: "Rôles"
+    add: "Ajouter un rôle"
+
+    list:
+      edit: "Modifier un rôle"
+      delete: "Supprimer un rôle"
+      empty: "Jusqu'à présent aucun rôle n'a été saisi."
+    delete:
+      prompt: "Souhaitez-vous vraiment supprimer le rôle «{role}»?"
+      success: "Le rôle «{role}» a été supprimé avec succès."
+
+  add:
+    title: "Ajouter un rôle"
+
+  edit:
+    title: "Modifier un rôle"

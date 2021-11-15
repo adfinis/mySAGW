@@ -1,7 +1,7 @@
 components:
   nav-bar:
     home: "Home"
-    documents: "Documents"
+    documents: "Applications"
     tasks: "Tasks"
     identities: "Identities"
     interests: "Interests"
