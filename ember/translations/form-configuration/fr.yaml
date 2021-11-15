@@ -1,0 +1,5 @@
+form-configuration:
+  title: "Configuration"
+  expertAssociationForm: "Société membre"
+  advisoryBoardForm: "Commission/Curatorium"
+  saveSuccess: "Le formulaire «{name}» a été enregistré avec succès."

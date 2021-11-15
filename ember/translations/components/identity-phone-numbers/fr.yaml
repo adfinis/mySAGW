@@ -1,0 +1,20 @@
+components:
+  identity-phone-numbers:
+    title: "Numéros de téléphone"
+    add: "Ajouter un numéro"
+
+    list:
+      edit: "Modifier un numéro"
+      delete: "Supprimer un numéro"
+      empty: "Jusqu'à présent aucun numéro n'a été enregistré."
+    form:
+      title:
+        add: "Ajouter un numéro"
+        edit: "Modifier un numéro"
+      label:
+        phone: "Numéro de téléphone"
+        description: "Description ({lang})"
+        default: "Numéro principal"
+    delete:
+      prompt: "Souhaitez-vous vraiment supprimer ce numéro «{number}»?"
+      success: "Le numéro «{number}» a été supprimé avec succès."

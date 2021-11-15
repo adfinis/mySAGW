@@ -1,0 +1,8 @@
+profile:
+  title: "Profil"
+  switcher:
+    identity: "Adresse"
+    memberships: "Affiliations"
+  organisation:
+    edit: "Modifier l'institution"
+    empty: "Jusqu'à présent aucune institution n'a été saisie."

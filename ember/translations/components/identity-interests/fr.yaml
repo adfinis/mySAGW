@@ -1,0 +1,16 @@
+components:
+  identity-interests:
+    title: "Intérêts"
+    add: "Ajouter un intérêt"
+
+    list:
+      delete: "Supprimer un intérêt"
+      empty: "Jusqu'à présent aucun intérêt n'a été enregistré."
+    form:
+      title:
+        add: "Ajouter un intérêt"
+      label:
+        interest: "Intérêts"
+    delete:
+      prompt: "Souhaitez-vous vraiment supprimer cet intérêt «{interest}»?"
+      success: "L'intérêt «{interest}» a été supprimé avec succès."

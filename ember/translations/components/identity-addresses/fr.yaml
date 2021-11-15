@@ -1,0 +1,27 @@
+components:
+  identity-addresses:
+    title: "Adresses"
+    add: "Ajouter une adresse"
+
+    list:
+      edit: "Modifier une adresse"
+      delete: "Effacer une adresse"
+      empty: "Jusqu'à présent aucune adresse n'a été enregistrée."
+    form:
+      title:
+        add: "Ajouter une adresse"
+        edit: "Modifier une adresse"
+      label:
+        addressAddition1: "Complément d'adresse 1"
+        addressAddition2: "Complément d'adresse 2"
+        addressAddition3: "Complément d'adresse 3"
+        streetAndNumber: "Rue / Numéro"
+        poBox: "Case postale"
+        postcode: "Code postal"
+        town: "Ville"
+        country: "Pays"
+        description: "Description ({lang})"
+        default: "Adresse de correspondance"
+    delete:
+      prompt: "Souhaitez-vous vraiment supprimer l'adresse «{address}»?"
+      success: "L'adresse «{address}» a été supprimée avec succès."

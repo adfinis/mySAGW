@@ -1,0 +1,34 @@
+interests:
+  index:
+    title: "Intérêts"
+    add: "Ajouter une catégorie d'intérêts"
+
+    list:
+      edit: "Modifier la catégorie"
+      delete: "Supprimer la catégorie"
+      empty: "Jusqu'à présent aucune catégorie n'a été saisie."
+      public: "Public"
+    delete:
+      prompt: "Souhaitez-vous vraiment supprimer la catégorie «{category}»?"
+      success: "La catégorie {category} a été supprimée avec succès."
+
+  add:
+    title: "Ajouter une catégorie d'intérêts"
+
+  edit:
+    title: "Modifier une catégorie d'intérêts"
+
+    list:
+      title: "Intérêts"
+      edit: "Modifier un intérêt"
+      delete: "Supprimer un intérêt"
+      add: "Ajouter un intérêt"
+      empty: "Jusqu'à présent aucun intérêt n'a été saisi."
+    form:
+      title: "Modifier un intérêt"
+      label:
+        title: "Titre ({lang})"
+        description: "Description"
+    delete:
+      prompt: "Souhaitez-vous vraiment supprimer l'intérêt «{interest}»?"
+      success: "L'intérêt «{interest}» a été supprimé avec succès."

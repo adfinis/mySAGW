@@ -1,0 +1,20 @@
+components:
+  identity-emails:
+    title: "Adresses électroniques"
+    add: "Ajouter une adresse électronique"
+
+    list:
+      edit: "Modifier une adresse électronique"
+      delete: "Effacer une adresse électronique"
+      empty: "Jusqu'à présent aucune adresse électronique n'a été saisie."
+    form:
+      title:
+        add: "Ajouter une adresse électronique"
+        edit: "Modifier une adresse électronique"
+      label:
+        email: "Adresse électronique"
+        description: "Description ({lang})"
+        default: "Adresse de correspondance"
+    delete:
+      prompt: "Souhaitez-vous vraiment supprimer l'adresse électronique «{address}»?"
+      success: "L'adresse électronique «{address}» a été supprimée avec succès."

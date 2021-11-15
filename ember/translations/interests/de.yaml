@@ -1,7 +1,7 @@
 interests:
   index:
     title: "Interessen"
-    add: "Interessenkategorie hinzufügen" #
+    add: "Interessenkategorie hinzufügen"
 
     list:
       edit: "Kategorie bearbeiten"
@@ -13,10 +13,10 @@ interests:
       success: "Kategorie {category} wurde erfolgreich gelöscht."
 
   add:
-    title: "Interessenkategorie hinzufügen" #
+    title: "Interessenkategorie hinzufügen"
 
   edit:
-    title: "Interessenkategorie bearbeiten" #
+    title: "Interessenkategorie bearbeiten"
 
     list:
       title: "Interessen"

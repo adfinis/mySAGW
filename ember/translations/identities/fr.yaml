@@ -1,0 +1,18 @@
+identities:
+  index:
+    title: "Adresses"
+    add: "Ajouter une adresse"
+    export:
+      button: "Exporter"
+      standard: "Standard"
+      email-only: "Adresse électronique uniquement"
+      address-labels: "Etiquettes d'adresses"
+      filename: "Identités-{date}"
+    search: "Chercher"
+    identityAmount: "{itemCount, plural, =0 {0 Identités} one {1 Identité} other {# Identités}}"
+
+  add:
+    title: "Ajouter une adresse"
+
+  edit:
+    title: "Modifier une adresse"

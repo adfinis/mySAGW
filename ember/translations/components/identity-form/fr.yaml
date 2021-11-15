@@ -1,0 +1,22 @@
+components:
+  identity-form:
+    label:
+      idpId: "IDP ID"
+      organisationName: "Nom de l'institution"
+      isExpertAssociation: "Société membre"
+      isAdvisoryBoard: "Commission/Curatorium"
+      salutation: "Civilité"
+      firstName: "Prénom"
+      lastName: "Nom"
+      email: "Adresse électronique principale"
+      isOrganisation: "Institution"
+      language: "Langue de correspondance"
+      comment: "Commentaire"
+    hint:
+      email: "Géré par KeyCloak."
+    control:
+      delete: "Supprimer"
+    delete:
+      prompt: "Souhaitez-vous vraiment supprimer cette adresse?"
+      success: "L'adresse a été supprimée avec succès."
+    success: "L'adresse «{name}» a été sauvegardée avec succès."
