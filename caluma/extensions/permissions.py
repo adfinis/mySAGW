@@ -5,7 +5,7 @@ from caluma.caluma_core.permissions import (
     permission_for,
 )
 from caluma.caluma_form.models import Document
-from caluma.caluma_form.schema import SaveDocumentAnswer
+from caluma.caluma_form.schema import SaveDocument, SaveDocumentAnswer
 from caluma.caluma_workflow.schema import CompleteWorkItem, SaveCase
 
 
@@ -29,7 +29,9 @@ class MySAGWPermission(BasePermission):
 
     @permission_for(SaveCase)
     @object_permission_for(SaveCase)
-    def has_permission_for_save_case(self, mutation, info, case=None):
+    @permission_for(SaveDocument)
+    @object_permission_for(SaveDocument)
+    def has_permission_for_save_case_save_document(self, mutation, info, obj=None):
         return True
 
     @permission_for(SaveDocumentAnswer)
