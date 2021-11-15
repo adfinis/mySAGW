@@ -907,7 +907,7 @@
 },
 {
     "model": "caluma_form.question",
-    "pk": "section",
+    "pk": "sektion",
     "fields": {
         "created_at": "2021-11-11T09:56:38.082Z",
         "modified_at": "2021-11-11T09:56:38.082Z",
@@ -915,7 +915,7 @@
         "created_by_group": null,
         "modified_by_user": null,
         "modified_by_group": null,
-        "label": "{\"de\": \"Section\", \"fr\": null, \"en\": \"Section\"}",
+        "label": "{\"de\": \"Sektion\", \"fr\": null, \"en\": \"Section\"}",
         "type": "choice",
         "is_required": "true",
         "is_hidden": "false",
@@ -971,7 +971,7 @@
 },
 {
     "model": "caluma_form.question",
-    "pk": "vp-year",
+    "pk": "verteilplan-nr",
     "fields": {
         "created_at": "2021-11-11T09:53:57.313Z",
         "modified_at": "2021-11-11T09:54:09.806Z",
@@ -1166,7 +1166,7 @@
 },
 {
     "model": "caluma_form.questionoption",
-    "pk": "section.section-1",
+    "pk": "sektion.sektion-1",
     "fields": {
         "created_at": "2021-11-11T09:56:38.116Z",
         "modified_at": "2021-11-11T09:56:38.116Z",
@@ -1174,14 +1174,14 @@
         "created_by_group": null,
         "modified_by_user": null,
         "modified_by_group": null,
-        "question": "section",
-        "option": "section-1",
+        "question": "sektion",
+        "option": "sektion-1",
         "sort": 7
     }
 },
 {
     "model": "caluma_form.questionoption",
-    "pk": "section.section-2",
+    "pk": "sektion.sektion-2",
     "fields": {
         "created_at": "2021-11-11T09:56:38.112Z",
         "modified_at": "2021-11-11T09:56:38.112Z",
@@ -1189,14 +1189,14 @@
         "created_by_group": null,
         "modified_by_user": null,
         "modified_by_group": null,
-        "question": "section",
-        "option": "section-2",
+        "question": "sektion",
+        "option": "sektion-2",
         "sort": 6
     }
 },
 {
     "model": "caluma_form.questionoption",
-    "pk": "section.section-3",
+    "pk": "sektion.sektion-3",
     "fields": {
         "created_at": "2021-11-11T09:56:38.107Z",
         "modified_at": "2021-11-11T09:56:38.107Z",
@@ -1204,14 +1204,14 @@
         "created_by_group": null,
         "modified_by_user": null,
         "modified_by_group": null,
-        "question": "section",
-        "option": "section-3",
+        "question": "sektion",
+        "option": "sektion-3",
         "sort": 5
     }
 },
 {
     "model": "caluma_form.questionoption",
-    "pk": "section.section-4",
+    "pk": "sektion.sektion-4",
     "fields": {
         "created_at": "2021-11-11T09:56:38.104Z",
         "modified_at": "2021-11-11T09:56:38.104Z",
@@ -1219,14 +1219,14 @@
         "created_by_group": null,
         "modified_by_user": null,
         "modified_by_group": null,
-        "question": "section",
-        "option": "section-4",
+        "question": "sektion",
+        "option": "sektion-4",
         "sort": 4
     }
 },
 {
     "model": "caluma_form.questionoption",
-    "pk": "section.section-5",
+    "pk": "sektion.sektion-5",
     "fields": {
         "created_at": "2021-11-11T09:56:38.101Z",
         "modified_at": "2021-11-11T09:56:38.101Z",
@@ -1234,14 +1234,14 @@
         "created_by_group": null,
         "modified_by_user": null,
         "modified_by_group": null,
-        "question": "section",
-        "option": "section-5",
+        "question": "sektion",
+        "option": "sektion-5",
         "sort": 3
     }
 },
 {
     "model": "caluma_form.questionoption",
-    "pk": "section.section-6",
+    "pk": "sektion.sektion-6",
     "fields": {
         "created_at": "2021-11-11T09:56:38.097Z",
         "modified_at": "2021-11-11T09:56:38.097Z",
@@ -1249,14 +1249,14 @@
         "created_by_group": null,
         "modified_by_user": null,
         "modified_by_group": null,
-        "question": "section",
-        "option": "section-6",
+        "question": "sektion",
+        "option": "sektion-6",
         "sort": 2
     }
 },
 {
     "model": "caluma_form.questionoption",
-    "pk": "section.section-7",
+    "pk": "sektion.sektion-7",
     "fields": {
         "created_at": "2021-11-11T09:56:38.092Z",
         "modified_at": "2021-11-11T09:56:38.092Z",
@@ -1264,14 +1264,14 @@
         "created_by_group": null,
         "modified_by_user": null,
         "modified_by_group": null,
-        "question": "section",
-        "option": "section-7",
+        "question": "sektion",
+        "option": "sektion-7",
         "sort": 1
     }
 },
 {
     "model": "caluma_form.questionoption",
-    "pk": "vp-year.vp-year-2021",
+    "pk": "verteilplan-nr.verteilplan-nr-vp-2021",
     "fields": {
         "created_at": "2021-11-11T09:54:09.630Z",
         "modified_at": "2021-11-11T09:54:09.630Z",
@@ -1279,8 +1279,8 @@
         "created_by_group": null,
         "modified_by_user": null,
         "modified_by_group": null,
-        "question": "vp-year",
-        "option": "vp-year-2021",
+        "question": "verteilplan-nr",
+        "option": "verteilplan-nr-vp-2021",
         "sort": 1
     }
 },
@@ -1478,7 +1478,7 @@
 },
 {
     "model": "caluma_form.option",
-    "pk": "section-1",
+    "pk": "sektion-1",
     "fields": {
         "created_at": "2021-11-11T09:56:37.787Z",
         "modified_at": "2021-11-11T09:56:37.788Z",
@@ -1494,7 +1494,7 @@
 },
 {
     "model": "caluma_form.option",
-    "pk": "section-2",
+    "pk": "sektion-2",
     "fields": {
         "created_at": "2021-11-11T09:56:37.857Z",
         "modified_at": "2021-11-11T09:56:37.857Z",
@@ -1510,7 +1510,7 @@
 },
 {
     "model": "caluma_form.option",
-    "pk": "section-3",
+    "pk": "sektion-3",
     "fields": {
         "created_at": "2021-11-11T09:56:37.831Z",
         "modified_at": "2021-11-11T09:56:37.831Z",
@@ -1526,7 +1526,7 @@
 },
 {
     "model": "caluma_form.option",
-    "pk": "section-4",
+    "pk": "sektion-4",
     "fields": {
         "created_at": "2021-11-11T09:56:37.895Z",
         "modified_at": "2021-11-11T09:56:37.895Z",
@@ -1542,7 +1542,7 @@
 },
 {
     "model": "caluma_form.option",
-    "pk": "section-5",
+    "pk": "sektion-5",
     "fields": {
         "created_at": "2021-11-11T09:56:37.902Z",
         "modified_at": "2021-11-11T09:56:37.902Z",
@@ -1558,7 +1558,7 @@
 },
 {
     "model": "caluma_form.option",
-    "pk": "section-6",
+    "pk": "sektion-6",
     "fields": {
         "created_at": "2021-11-11T09:56:37.919Z",
         "modified_at": "2021-11-11T09:56:37.919Z",
@@ -1574,7 +1574,7 @@
 },
 {
     "model": "caluma_form.option",
-    "pk": "section-7",
+    "pk": "sektion-7",
     "fields": {
         "created_at": "2021-11-11T09:56:37.929Z",
         "modified_at": "2021-11-11T09:56:37.929Z",
@@ -1590,7 +1590,7 @@
 },
 {
     "model": "caluma_form.option",
-    "pk": "vp-year-2021",
+    "pk": "verteilplan-nr-vp-2021",
     "fields": {
         "created_at": "2021-11-11T09:53:57.190Z",
         "modified_at": "2021-11-11T09:54:09.507Z",
@@ -1614,8 +1614,8 @@
         "created_by_group": null,
         "modified_by_user": null,
         "modified_by_group": null,
-        "question": "vp-year",
-        "value": "vp-year-2021",
+        "question": "verteilplan-nr",
+        "value": "verteilplan-nr-vp-2021",
         "meta": {},
         "document": null,
         "date": null,

@@ -178,7 +178,7 @@ export default class CustomWorkItemModel extends WorkItemModel {
               slug
               name
             }
-            answers(filter: [{questions: ["dossier-nr", "section"]}]) {
+            answers(filter: [{questions: ["dossier-nr", "sektion"]}]) {
               edges {
                 node {
                   id
@@ -207,7 +207,7 @@ export default class CustomWorkItemModel extends WorkItemModel {
           slug
           name
         }
-        answers(filter: [{questions: ["dossier-nr", "section"]}]) {
+        answers(filter: [{questions: ["dossier-nr", "sektion"]}]) {
           edges {
             node {
               id
