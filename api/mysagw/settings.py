@@ -124,7 +124,7 @@ OIDC_BEARER_TOKEN_REVALIDATION_TIME = env.int(
 OIDC_OP_INTROSPECT_ENDPOINT = env.str("OIDC_OP_INTROSPECT_ENDPOINT", default=None)
 OIDC_RP_CLIENT_ID = env.str("OIDC_RP_CLIENT_ID", default="test_client")
 OIDC_RP_CLIENT_SECRET = env.str(
-    "OIDC_RP_CLIENT_SECRET", default="fb13e564-75dd-4fc3-a993-3dad9064e71e"
+    "OIDC_RP_CLIENT_SECRET", default="5cc7a664-8ad0-4d48-a386-fef6ab7c7dd3"
 )
 OIDC_DRF_AUTH_BACKEND = "mysagw.oidc_auth.authentication.MySAGWAuthenticationBackend"
 

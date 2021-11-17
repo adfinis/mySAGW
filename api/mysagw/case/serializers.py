@@ -6,6 +6,10 @@ from . import models
 
 
 class CaseAccessSerializer(serializers.ModelSerializer):
+    included_serializers = {
+        "identity": "mysagw.identity.serializers.IdentitySerializer",
+    }
+
     class Meta:
         model = models.CaseAccess
         fields = (
