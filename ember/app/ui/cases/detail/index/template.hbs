@@ -80,9 +80,9 @@
       <tbody>
         {{#each @model.invitations as |invitation|}}
           <tr>
-            <td>{{invitation.email}}</td>
+            <td>{{invitation.name}}</td>
             <td class="uk-text-right">
-              {{#if (and (gt @model.invitations.length 1) (can "edit case" @model))}}
+              {{#if (and (gt @model.invitations.length 1) (can "delete case" @model invitation=invitation))}}
                 <button
                   class="uk-icon-button"
                   uk-icon="trash"
@@ -94,7 +94,7 @@
             </td>
           </tr>
         {{/each}}
-        {{#if (can "edit case" @model)}}
+        {{#if (can "add case" @model)}}
           <tr class="uk-text-center">
             <td colspan="2">
               <div uk-toggle="target: #modal-invitation">
