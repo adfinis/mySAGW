@@ -10,7 +10,8 @@ export default class ApplicationRoute extends Route.extend(
 
   beforeModel(...args) {
     super.beforeModel(...args);
-    this.intl.setLocale(["en"]);
+    const locale = window.localStorage.getItem("locale") ?? "en";
+    this.intl.setLocale([locale]);
 
     this.calumaOptions.registerComponentOverride({
       label: "Einreichen Button",
