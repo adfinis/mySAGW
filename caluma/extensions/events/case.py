@@ -63,7 +63,6 @@ def create_case_number(sender, case, user, context, **kwargs):
 def create_case_access_rights(sender, case, user, context, **kwargs):
     if case.workflow.slug != "document-review" or sender != "case_post_create":
         return
-
     client = APIClient()
     token = client.get_admin_token()
 

@@ -14,6 +14,7 @@ export default class CasesDetailRoute extends Route {
 
     await this.store.query("case", {
       filter: { caseId: this.caseQuery.value.firstObject.id },
+      include: "identity",
     });
 
     return this.caseQuery.value.firstObject;

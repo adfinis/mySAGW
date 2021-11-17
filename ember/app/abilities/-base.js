@@ -36,10 +36,10 @@ export default class BaseAbility extends Ability {
     return this.isStaff || this.isOwnIdentity(identity);
   }
 
-  isInvited(document) {
+  hasAccess(document) {
     return !!document.invitations.findBy(
-      "email",
-      this.session.data.authenticated.userinfo.email
+      "identity.idpId",
+      this.session.data.authenticated.userinfo.sub
     );
   }
 }
