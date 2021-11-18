@@ -1,51 +1,45 @@
-{{#if @loading}}
-  <div class="uk-text-center uk-padding">
-    <UkSpinner @ratio={{2}} />
-  </div>
-{{else}}
-  <table
-    class="dynamic-table uk-table uk-table-striped uk-table-hover uk-table-responsive {{
-      join " " @config.classList
-    }}"
-    ...attributes
-  >
-    <thead>
-      <tr>
-        {{#each (map-by "heading" @config.columns) as |header|}}
-          <th class={{join " " header.classList}}>
-            {{t header.label}}
-          </th>
+<table
+  class="dynamic-table uk-table uk-table-striped uk-table-hover uk-table-responsive {{
+    join " " @config.classList
+  }}"
+  ...attributes
+>
+  <thead>
+    <tr>
+      {{#each (map-by "heading" @config.columns) as |header|}}
+        <th class={{join " " header.classList}}>
+          {{t header.label}}
+        </th>
+      {{/each}}
+    </tr>
+  </thead>
+  <tbody class="uk-overflow-auto">
+    {{#each @data as |entry|}}
+      <tr class="uk-table-middle">
+        {{#each @config.columns as |tdDefinition|}}
+          <DynamicTable::TableData
+            @tdDefinition={{tdDefinition}}
+            @value={{entry}}
+          />
         {{/each}}
       </tr>
-    </thead>
-    <tbody class="uk-overflow-auto">
-      {{#each @data as |entry|}}
-        <tr class="uk-table-middle">
-          {{#each @config.columns as |tdDefinition|}}
-            <DynamicTable::TableData
-              @tdDefinition={{tdDefinition}}
-              @value={{entry}}
-            />
-          {{/each}}
-        </tr>
-      {{else}}
-        <tr>
-          <td colspan="8" class="uk-text-center">
-            {{t "global.empty"}}
-          </td>
-        </tr>
-      {{/each}}
-      {{#if @hasNextPage}}
-        <tr>
-          <td
-            colspan="8"
-            class="uk-text-center"
-            {{in-viewport onEnter=@loadMoreData}}
-          >
+    {{else}}
+      <tr>
+        <td colspan="8" class="uk-text-center">
+          {{t "global.empty"}}
+        </td>
+      </tr>
+    {{/each}}
+    {{#if (or @loading @hasNextPage)}}
+      <tr>
+        <td colspan={{@config.columns.length}} class="uk-text-center">
+          {{#if @loading}}
             <UkSpinner />
-          </td>
-        </tr>
-      {{/if}}
-    </tbody>
-  </table>
-{{/if}}
+          {{else}}
+            <UkSpinner {{in-viewport onEnter=@loadMoreData}}/>
+          {{/if}}
+        </td>
+      </tr>
+    {{/if}}
+  </tbody>
+</table>
