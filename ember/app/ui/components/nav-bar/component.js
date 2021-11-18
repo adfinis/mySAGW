@@ -25,6 +25,11 @@ export default class NavbarComponent extends Component {
   @action
   setLocale(locale) {
     this.intl.setLocale(locale);
+    try {
+      window.localStorage.setItem("locale", locale);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   @action
