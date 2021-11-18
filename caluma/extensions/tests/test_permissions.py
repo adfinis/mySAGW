@@ -6,6 +6,7 @@ from caluma.caluma_core.mutation import Mutation
 from caluma.caluma_form.schema import SaveDocumentAnswer
 from caluma.caluma_workflow.schema import CompleteWorkItem, SaveCase
 from caluma.extensions.permissions import MySAGWPermission
+from caluma.extensions.settings import settings
 
 _Fallbackobj = namedtuple("Fallbackobj", ["created_by_user"])
 
@@ -39,37 +40,34 @@ def test_permissions_fallback(
 
 
 @pytest.mark.parametrize(
-    "groups,created_by_user,assigned_users,has_perm,has_obj_perm",
+    "groups,task_slug,has_perm,has_obj_perm",
     [
-        (["admin"], "bar", ["baz"], True, True),
-        (["sagw"], "bar", ["baz"], True, True),
-        (["foo"], "bar", [], False, False),
-        (["foo"], "baz", [], True, True),
+        (["admin"], "bar", True, True),
+        (["sagw"], "bar", True, True),
+        (["foo"], "bar", False, False),
+        (["foo"], settings.APPLICANT_TASK_SLUGS[0], True, True),
     ],
 )
 def test_permission_for_save_document_answer(
     db,
     admin_info,
     answer,
-    work_item,
+    work_item_factory,
     groups,
-    created_by_user,
-    assigned_users,
+    task_slug,
     has_perm,
     has_obj_perm,
     mocker,
+    case_access_request_mock,
 ):
+    work_item = work_item_factory(
+        task__slug=task_slug, case__pk="994b72cc-6556-46e5-baf9-228457fa309f"
+    )
+
     admin_info.context.user.groups = groups
-    admin_info.context.user.username = "baz"
 
-    answer.document.created_by_user = created_by_user
-    answer.document.save()
-
-    answer.document.case.parent_work_item = work_item
-    answer.document.case.save()
-
-    work_item.assigned_users = assigned_users
-    work_item.save()
+    work_item.case.document = answer.document
+    work_item.case.save()
 
     mocker.patch.object(
         Mutation,
@@ -109,22 +107,30 @@ def test_permission_for_save_case_and_start_case(
 
 
 @pytest.mark.parametrize(
-    "groups,assigned_to_user,has_perm,has_obj_perm",
+    "groups,task_slug,has_perm,has_obj_perm",
     [
         (["admin"], "bar", True, True),
         (["sagw"], "bar", True, True),
         (["foo"], "bar", True, False),
-        (["foo"], "baz", True, True),
+        (["foo"], settings.APPLICANT_TASK_SLUGS[0], True, True),
     ],
 )
 def test_permission_for_complete_work_item(
-    db, admin_info, work_item, groups, assigned_to_user, has_perm, has_obj_perm
+    db,
+    admin_info,
+    work_item_factory,
+    groups,
+    task_slug,
+    has_perm,
+    has_obj_perm,
+    case_access_request_mock,
 ):
-    admin_info.context.user.groups = groups
-    admin_info.context.user.username = "baz"
+    work_item = work_item_factory(
+        task__slug=task_slug, case__pk="994b72cc-6556-46e5-baf9-228457fa309f"
+    )
 
-    work_item.assigned_users = [assigned_to_user]
-    work_item.save()
+    admin_info.context.user.groups = groups
+
     perm = MySAGWPermission()
 
     mutation = CompleteWorkItem

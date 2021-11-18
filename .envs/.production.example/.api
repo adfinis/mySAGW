@@ -6,6 +6,7 @@ ALLOWED_HOSTS=yourdomain.tld,www.yourdomain.tdl
 DATABASE_PASSWORD=alsoverysecure
 ADMINS=Test Example <test@example.com>,Test2 <test2@example.com>
 OIDC_OP_USER_ENDPOINT=https://yourdomain.tld/auth/realms/mysagw/protocol/openid-connect/userinfo
+OIDC_OP_INTROSPECT_ENDPOINT=https://yourdomain.tld/auth/realms/mysagw/protocol/openid-connect/token/introspect
 
 # Mailing
 EMAIL_HOST=mail

@@ -464,7 +464,7 @@ def test_membership_role_delete(db, client, expected_status, membership_role_fac
 )
 def test_membership_delete(db, client, expected_status, membership_factory):
     membership = membership_factory()
-    assert membership.identity.modified_by_user != client.user.username
+    assert membership.identity.modified_by_user != client.user.id
     url = reverse("membership-detail", args=[membership.pk])
 
     response = client.delete(url)
@@ -475,7 +475,7 @@ def test_membership_delete(db, client, expected_status, membership_factory):
         with pytest.raises(models.Membership.DoesNotExist):
             membership.refresh_from_db()
         membership.identity.refresh_from_db()
-        assert membership.identity.modified_by_user == client.user.username
+        assert membership.identity.modified_by_user == client.user.id
 
 
 @pytest.mark.parametrize(

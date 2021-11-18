@@ -4,3 +4,4 @@ ENV=dev
 OIDC_VERIFY_SSL=False
 OIDC_OP_USER_ENDPOINT=https://mysagw.local/auth/realms/mysagw/protocol/openid-connect/userinfo
 CALUMA_VERIFY_SSL=False
+OIDC_OP_INTROSPECT_ENDPOINT=https://mysagw.local/auth/realms/mysagw/protocol/openid-connect/token/introspect
