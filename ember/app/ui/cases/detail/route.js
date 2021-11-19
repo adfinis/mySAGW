@@ -12,7 +12,7 @@ export default class CasesDetailRoute extends Route {
   async model({ case_id }) {
     await this.caseQuery.fetch({ filter: [{ id: case_id }] });
 
-    await this.store.query("case", {
+    await this.store.query("case-access", {
       filter: { caseId: this.caseQuery.value.firstObject.id },
       include: "identity",
     });

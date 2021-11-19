@@ -58,3 +58,9 @@ documents:
     add: "Mettre en circulation"
     finish: "Terminer la circulation"
     skip: "Sauter l'étape de la circulation"
+
+  accesses:
+    title: "Accès"
+    email: "E-Mail"
+    add: "Autoriser l'accès"
+    duplicateEmail: "Ce courriel a déjà été donné accès"
