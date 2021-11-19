@@ -7,11 +7,10 @@ import ENV from "mysagw/config/environment";
 export default class CustomCaseModel extends CaseModel {
   @service store;
 
-  get invitations() {
-    return this.store.peekAll("case").filter((invitation) => {
+  get accesses() {
+    return this.store.peekAll("case-access").filter((access) => {
       return (
-        invitation.caseId === decodeId(this.raw.id) &&
-        !invitation.hasDirtyAttributes
+        access.caseId === decodeId(this.raw.id) && !access.hasDirtyAttributes
       );
     });
   }

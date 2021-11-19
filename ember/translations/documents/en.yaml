@@ -59,9 +59,8 @@ documents:
     finish: "Finish circulation"
     skip: "Skip circulation"
 
-  invitations:
-    title: "Invitations"
+  accesses:
+    title: "Accesses"
     email: "E-Mail"
-    add: "Invite someone"
-    addTitle: "Add invitation"
-    duplicateEmail: "Duplicate E-Mail"
+    add: "Add access"
+    duplicateEmail: "This E-Mail was already given access"

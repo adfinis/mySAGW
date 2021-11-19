@@ -7,7 +7,7 @@ from . import models
 
 class CaseAccessSerializer(serializers.ModelSerializer):
     included_serializers = {
-        "identity": "mysagw.identity.serializers.IdentitySerializer",
+        "identity": "mysagw.identity.serializers.PublicIdentitySerializer",
     }
 
     class Meta:

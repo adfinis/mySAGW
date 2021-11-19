@@ -58,3 +58,9 @@ documents:
     add: "In Zirkulation geben"
     finish: "Zirkulation abschliessen"
     skip: "Zirkulation überspringen"
+
+  accesses:
+    title: "Zugriffberechtigungen"
+    email: "E-Mail"
+    add: "Zugriff gewähren"
+    duplicateEmail: "Diese E-Mail wurde schon hinzugefügt"

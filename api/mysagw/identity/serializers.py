@@ -307,6 +307,23 @@ class MyOrgsSerializer(MeSerializer):
         }
 
 
+class PublicIdentitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Identity
+        fields = (
+            "idp_id",
+            "first_name",
+            "last_name",
+            "email",
+        )
+        extra_kwargs = {
+            "idp_id": {"read_only": True},
+            "first_name": {"read_only": True},
+            "last_name": {"read_only": True},
+            "email": {"read_only": True},
+        }
+
+
 class InterestCategorySerializer(serializers.ModelSerializer):
     included_serializers = {
         "interests": "mysagw.identity.serializers.InterestSerializer",

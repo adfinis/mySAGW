@@ -9,17 +9,19 @@ export default class CaseAbility extends BaseAbility {
     return this.hasAccess(this.model) || this.isStaff;
   }
 
-  get canAdd() {
+  get canEdit() {
     return this.hasAccess(this.model);
   }
 
-  get canDelete() {
+  get canAddAccess() {
+    return this.hasAccess(this.model);
+  }
+
+  get canDeleteAccess() {
     return (
-      (this.invitation.email ||
-        this.model.invitations.filter((invitation) => {
-          return (
-            !invitation.email && invitation.caseId === this.invitation.caseId
-          );
+      (this.access.email ||
+        this.model.accesses.filter((access) => {
+          return !access.email && access.caseId === this.access.caseId;
         }).length > 1) &&
       this.hasAccess(this.model)
     );

@@ -27,7 +27,7 @@ module("Unit | Controller | cases/detail/edit", function (hooks) {
     const controller = this.owner.lookup("controller:cases/detail/edit");
     controller.model = {
       hasEditableWorkItem: false,
-      invitations: [{ email: "test@test.com" }],
+      accesses: [{ email: "test@test.com" }],
     };
     assert.true(controller.disabled);
   });
