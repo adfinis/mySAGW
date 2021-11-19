@@ -45,7 +45,7 @@ export default class CasesDetailIndexController extends Controller {
   @action
   addRow() {
     this.newRow = new Changeset(
-      this.store.createRecord("case", {
+      this.store.createRecord("case-access", {
         email: undefined,
         caseId: this.model.id,
       }),
@@ -56,9 +56,9 @@ export default class CasesDetailIndexController extends Controller {
 
   @restartableTask
   *saveRow() {
-    if (this.model.invitations.findBy("email", this.newRow.email)) {
+    if (this.model.accesses.findBy("email", this.newRow.email)) {
       this.notification.danger(
-        this.intl.t("documents.invitations.duplicateEmail")
+        this.intl.t("documents.accesses.duplicateEmail")
       );
       return;
     }
@@ -67,14 +67,14 @@ export default class CasesDetailIndexController extends Controller {
       yield this.newRow.save();
 
       this.newRow = null;
-      UIkit.modal("#modal-invitation").hide();
+      UIkit.modal("#modal-access").hide();
     }
   }
 
   @dropTask
-  *deleteRow(invitation) {
-    yield this.model.invitations
-      .filterBy("email", invitation.email)[0]
+  *deleteRow(access) {
+    yield this.model.accesses
+      .filterBy("email", access.email)[0]
       .destroyRecord();
   }
 

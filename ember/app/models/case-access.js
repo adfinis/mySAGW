@@ -1,6 +1,6 @@
 import Model, { attr, belongsTo } from "@ember-data/model";
 
-export default class CaseModel extends Model {
+export default class CaseAccessModel extends Model {
   @attr caseId;
   @attr email;
   @belongsTo("identity") identity;
