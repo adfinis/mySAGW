@@ -7,7 +7,6 @@ import Changeset from "ember-changeset";
 import lookupValidator from "ember-changeset-validations";
 import { dropTask, restartableTask } from "ember-concurrency-decorators";
 import { saveAs } from "file-saver";
-import UIkit from "uikit";
 
 import cancelCaseMutation from "mysagw/gql/mutations/cancel-case.graphql";
 import CaseValidations from "mysagw/validations/case";
@@ -20,6 +19,7 @@ export default class CasesDetailIndexController extends Controller {
   @queryManager apollo;
 
   @tracked newRow;
+  @tracked modalVisible;
 
   get readyWorkItems() {
     return this.model.workItems.filterBy("status", "READY").length;
@@ -45,20 +45,22 @@ export default class CasesDetailIndexController extends Controller {
   @action
   addRow() {
     this.newRow = new Changeset(
-      this.store.createRecord("case", {
+      this.store.createRecord("case-access", {
         email: undefined,
         caseId: this.model.id,
       }),
       lookupValidator(CaseValidations),
       CaseValidations
     );
+
+    this.modalVisible = true;
   }
 
   @restartableTask
   *saveRow() {
-    if (this.model.invitations.findBy("email", this.newRow.email)) {
+    if (this.model.accesses.findBy("email", this.newRow.email)) {
       this.notification.danger(
-        this.intl.t("documents.invitations.duplicateEmail")
+        this.intl.t("documents.accesses.duplicateEmail")
       );
       return;
     }
@@ -67,20 +69,21 @@ export default class CasesDetailIndexController extends Controller {
       yield this.newRow.save();
 
       this.newRow = null;
-      UIkit.modal("#modal-invitation").hide();
+      this.modalVisible = false;
     }
   }
 
   @dropTask
-  *deleteRow(invitation) {
-    yield this.model.invitations
-      .filterBy("email", invitation.email)[0]
+  *deleteRow(access) {
+    yield this.model.accesses
+      .filterBy("email", access.email)[0]
       .destroyRecord();
   }
 
   @dropTask
   *cancelRow() {
     yield this.newRow.destroyRecord();
+    this.modalVisible = false;
   }
 
   @dropTask

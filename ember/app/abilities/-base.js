@@ -37,9 +37,11 @@ export default class BaseAbility extends Ability {
   }
 
   hasAccess(document) {
-    return !!document.invitations.findBy(
-      "identity.idpId",
-      this.session.data.authenticated.userinfo.sub
+    return Boolean(
+      document.accesses.findBy(
+        "identity.idpId",
+        this.session.data.authenticated.userinfo.sub
+      )
     );
   }
 }

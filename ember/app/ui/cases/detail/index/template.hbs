@@ -69,38 +69,38 @@
     </span>
   </div>
   <div class="uk-width-2-3">
-    <h3>{{t "documents.invitations.title"}}</h3>
+    <h3>{{t "documents.accesses.title"}}</h3>
     <table class="uk-table uk-table-divider">
       <thead>
         <tr>
-          <th>{{t "documents.invitations.email"}}</th>
+          <th>{{t "documents.accesses.email"}}</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
-        {{#each @model.invitations as |invitation|}}
+        {{#each @model.accesses as |access|}}
           <tr>
-            <td>{{invitation.name}}</td>
+            <td>{{access.name}}</td>
             <td class="uk-text-right">
-              {{#if (and (gt @model.invitations.length 1) (can "delete case" @model invitation=invitation))}}
+              {{#if (and (gt @model.accesses.length 1) (can "delete access case" @model access=access))}}
                 <button
                   class="uk-icon-button"
                   uk-icon="trash"
                   type="button"
                   title={{t "documents.delete"}}
-                  {{on "click" (perform this.deleteRow invitation)}}
+                  {{on "click" (perform this.deleteRow access)}}
                 ></button>
               {{/if}}
             </td>
           </tr>
         {{/each}}
-        {{#if (can "add case" @model)}}
+        {{#if (can "add access case" @model)}}
           <tr class="uk-text-center">
             <td colspan="2">
-              <div uk-toggle="target: #modal-invitation">
+              <div>
                 <UkButton
                   @type="button"
-                  @title={{t "documents.invitations.add"}}
+                  @title={{t "documents.accesses.add"}}
                   @on-click={{this.addRow}}
                 >
                   <span uk-icon="plus"></span>
@@ -151,37 +151,32 @@
 
 <hr />
 
-<div id="modal-invitation" uk-modal>
-  <div class="uk-modal-dialog uk-modal-body">
-    <button type="button" class="uk-modal-close-default" uk-close></button>
-
+<UkModal @visible={{this.modalVisible}} @on-hide={{fn (mut this.modalVisible) false}} as |modal|>
+  <modal.header>
     <h2 class="uk-modal-title">
-      {{t "documents.invitations.addTitle"}}
+      {{t "documents.accesses.add"}}
     </h2>
-
-    <div class="uk-margin">
-      <ValidatedForm
-        @model={{this.newRow}}
-        @on-submit={{perform this.saveRow}}
-        as |Form|
+  </modal.header>
+  <ValidatedForm
+    @model={{this.newRow}}
+    @on-submit={{perform this.saveRow}}
+    as |Form|
+  >
+    <modal.body>
+      <Form.input
+        @label={{t "documents.accesses.email"}}
+        @name="email"
+      />
+    </modal.body>
+    <modal.footer class="uk-text-right">
+      <UkButton
+        {{on "click" (perform this.cancelRow)}}
       >
-        <Form.input
-          @label={{t "documents.invitations.email"}}
-          @name="email"
-        />
-
-        <div class="uk-text-right">
-          <UkButton
-            {{on "click" (perform this.cancelRow)}}
-            class="uk-modal-close"
-          >
-            {{t "global.cancel"}}
-          </UkButton>
-          <Form.submit
-            @label={{t "global.save"}}
-          />
-        </div>
-      </ValidatedForm>
-    </div>
-  </div>
-</div>
+        {{t "global.cancel"}}
+      </UkButton>
+      <Form.submit
+        @label={{t "global.save"}}
+      />
+    </modal.footer>
+  </ValidatedForm>
+</UkModal>
