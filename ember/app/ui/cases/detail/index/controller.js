@@ -43,7 +43,7 @@ export default class CasesDetailIndexController extends Controller {
   }
 
   @action
-  addRow() {
+  addAccessRow() {
     this.newRow = new Changeset(
       this.store.createRecord("case-access", {
         email: undefined,
@@ -57,7 +57,7 @@ export default class CasesDetailIndexController extends Controller {
   }
 
   @restartableTask
-  *saveRow() {
+  *saveAccessRow() {
     if (this.model.accesses.findBy("email", this.newRow.email)) {
       this.notification.danger(
         this.intl.t("documents.accesses.duplicateEmail")
@@ -66,7 +66,15 @@ export default class CasesDetailIndexController extends Controller {
     }
 
     if (this.newRow.isValid) {
-      yield this.newRow.save();
+      const email = this.newRow.email;
+
+      this.newRow.save();
+
+      yield this.store.query(
+        "identity",
+        { filter: { email } },
+        { adapterOptions: { customEndpoint: "public-identities" } }
+      );
 
       this.newRow = null;
       this.modalVisible = false;
@@ -74,14 +82,16 @@ export default class CasesDetailIndexController extends Controller {
   }
 
   @dropTask
-  *deleteRow(access) {
-    yield this.model.accesses
-      .filterBy("email", access.email)[0]
-      .destroyRecord();
+  *deleteAccessRow(access) {
+    yield this.model.accesses.findBy("email", access.email).destroyRecord();
+
+    if (this.can.cannot("list case", this.model)) {
+      this.router.transitionTo("cases");
+    }
   }
 
   @dropTask
-  *cancelRow() {
+  *cancelAccessRow() {
     yield this.newRow.destroyRecord();
     this.modalVisible = false;
   }

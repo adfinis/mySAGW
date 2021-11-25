@@ -3,7 +3,7 @@ import Model, { attr, belongsTo } from "@ember-data/model";
 export default class CaseAccessModel extends Model {
   @attr caseId;
   @attr email;
-  @belongsTo("identity") identity;
+  @belongsTo("identity", { async: false }) identity;
 
   get name() {
     return (
