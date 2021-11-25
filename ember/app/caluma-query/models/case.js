@@ -35,6 +35,10 @@ export default class CustomCaseModel extends CaseModel {
     );
   }
 
+  get completeWorkItem() {
+    return this.workItems.findBy("task.slug", ENV.APP.caluma.completeTaskSlug);
+  }
+
   static fragment = `{
     id
     createdAt
