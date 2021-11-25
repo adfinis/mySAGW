@@ -28,14 +28,13 @@ export default class IdentityInterestsComponent extends Component {
 
   @action
   onUpdate() {
-    this.categories = this.parseOwnInterests(this.args.identity);
     this.fetchInterestCategories.perform();
   }
 
   // List
 
-  parseOwnInterests(identity) {
-    return identity.interests
+  async parseOwnInterests(identity) {
+    return await identity.interests
       .getEach("category")
       .uniqBy("id")
       .map((category) => ({
@@ -105,6 +104,8 @@ export default class IdentityInterestsComponent extends Component {
       filter: { public: this.args.profileView },
       include: "category",
     });
+
+    this.categories = yield this.parseOwnInterests(this.args.identity);
 
     return interests
       .getEach("category")

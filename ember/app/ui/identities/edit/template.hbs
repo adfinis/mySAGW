@@ -1,7 +1,7 @@
 <h1>{{t "identities.edit.title"}}</h1>
 
 <IdentityForm
-  @identity={{this.model}}
+  @identity={{@model}}
   @onOrganisationUpdate={{this.onOrganisationUpdate}}
 />
 
@@ -10,38 +10,38 @@
 <div uk-grid>
   <div class="uk-width-1-2@m uk-width-1-3@l">
     <div class="uk-card uk-card-default uk-card-body uk-card-small">
-      <IdentityAddresses @identity={{this.model}} />
+      <IdentityAddresses @identity={{@model}} />
     </div>
   </div>
 
   <div class="uk-width-1-2@m uk-width-1-3@l">
     <div class="uk-card uk-card-default uk-card-body uk-card-small">
-      <IdentityEmails @identity={{this.model}} />
+      <IdentityEmails @identity={{@model}} />
     </div>
   </div>
 
   <div class="uk-width-1-2@m uk-width-1-3@l">
     <div class="uk-card uk-card-default uk-card-body uk-card-small">
-      <IdentityPhoneNumbers @identity={{this.model}} />
+      <IdentityPhoneNumbers @identity={{@model}} />
     </div>
   </div>
 
   <div class="uk-width-1-2@m">
     <div class="uk-card uk-card-default uk-card-body uk-card-small">
-      <IdentityInterests @identity={{this.model}} />
+      <IdentityInterests @identity={{@model}} />
     </div>
   </div>
 
   {{#if this.isOrganisation}}
     <div class="uk-width-1-2@m">
       <div class="uk-card uk-card-default uk-card-body uk-card-small">
-        <IdentityMembers @identity={{this.model}} />
+        <IdentityMembers @identity={{@model}} />
       </div>
     </div>
   {{else}}
     <div class="uk-width-1-2@m">
       <div class="uk-card uk-card-default uk-card-body uk-card-small">
-        <IdentityMemberships @identity={{this.model}} />
+        <IdentityMemberships @identity={{@model}} />
       </div>
     </div>
   {{/if}}

@@ -8,38 +8,36 @@
   {{#if this.fetchInterests.isRunning}}
     <LoadingSpinner />
   {{else}}
-    {{#if this.categories.length}}
-      <ul class="uk-list uk-list-divider">
-        {{#each this.categories as |category|}}
-          <li>
-            <strong>{{category.title}}</strong>
+    <ul class="uk-list uk-list-divider">
+      {{#each this.categories as |category|}}
+        <li>
+          <strong>{{category.title}}</strong>
 
-            <ul class="uk-padding-remove uk-list">
-              {{#each category.interests as |interest|}}
-                <li class="uk-flex uk-flex-between uk-flex-middle">
-                  <div>{{interest.title}}</div>
+          <ul class="uk-padding-remove uk-list">
+            {{#each category.interests as |interest|}}
+              <li class="uk-flex uk-flex-between uk-flex-middle">
+                <div>{{interest.title}}</div>
 
-                  {{#if (can "remove interest from identity" this.changeset.data)}}
-                    <div>
-                      <button
-                        class="uk-icon-button uk-button-default"
-                        type="button"
-                        disabled={{or this.changeset this.delete.isRunning}}
-                        uk-icon="close"
-                        title={{t "components.identity-interests.list.delete"}}
-                        {{on "click" (perform this.delete interest)}}
-                      ></button>
-                    </div>
-                  {{/if}}
-                </li>
-              {{/each}}
-            </ul>
-          </li>
-        {{/each}}
-      </ul>
-    {{else}}
-      <p>{{t "components.identity-interests.list.empty"}}</p>
-    {{/if}}
+                {{#if (can "remove interest from identity" this.changeset.data)}}
+                  <div>
+                    <button
+                      class="uk-icon-button uk-button-default"
+                      type="button"
+                      disabled={{or this.changeset this.delete.isRunning}}
+                      uk-icon="close"
+                      title={{t "components.identity-interests.list.delete"}}
+                      {{on "click" (perform this.delete interest)}}
+                    ></button>
+                  </div>
+                {{/if}}
+              </li>
+            {{/each}}
+          </ul>
+        </li>
+      {{else}}
+        <li>{{t "components.identity-interests.list.empty"}}</li>
+      {{/each}}
+    </ul>
 
     {{#if (can "add interest to identity" this.changeset.data)}}
       <p class="uk-text-right">
