@@ -3,6 +3,8 @@ import Controller from "@ember/controller";
 import ENV from "mysagw/config/environment";
 
 export default class CasesDetailEditController extends Controller {
+  queryParams = ["displayedForm"];
+
   get disabled() {
     return !this.model.workItems.edges
       .mapBy("node")
