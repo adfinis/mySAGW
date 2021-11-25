@@ -61,6 +61,12 @@ documents:
 
   accesses:
     title: "Zugriffberechtigungen"
+    invitations: "Einladungen"
     email: "E-Mail"
     add: "Zugriff gewähren"
     duplicateEmail: "Diese E-Mail wurde schon hinzugefügt"
+
+    table:
+      name: "Name"
+      email: "E-Mail"
+      action: ""

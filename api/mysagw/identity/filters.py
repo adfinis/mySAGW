@@ -19,6 +19,7 @@ class IdentityFilterSet(FilterSet):
     class Meta:
         model = models.Identity
         fields = [
+            "email",
             "idp_id",
             "is_organisation",
             "memberships__organisation__organisation_name",

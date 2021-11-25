@@ -61,6 +61,12 @@ documents:
 
   accesses:
     title: "Accesses"
+    invitations: "Invitations"
     email: "E-Mail"
     add: "Add access"
     duplicateEmail: "This E-Mail was already given access"
+
+    table:
+      name: "Name"
+      email: "E-Mail"
+      action: ""

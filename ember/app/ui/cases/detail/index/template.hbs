@@ -69,48 +69,14 @@
     </span>
   </div>
   <div class="uk-width-2-3">
-    <h3>{{t "documents.accesses.title"}}</h3>
-    <table class="uk-table uk-table-divider">
-      <thead>
-        <tr>
-          <th>{{t "documents.accesses.email"}}</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each @model.accesses as |access|}}
-          <tr>
-            <td>{{access.name}}</td>
-            <td class="uk-text-right">
-              {{#if (and (gt @model.accesses.length 1) (can "delete access case" @model access=access))}}
-                <button
-                  class="uk-icon-button"
-                  uk-icon="trash"
-                  type="button"
-                  title={{t "documents.delete"}}
-                  {{on "click" (perform this.deleteRow access)}}
-                ></button>
-              {{/if}}
-            </td>
-          </tr>
-        {{/each}}
-        {{#if (can "add access case" @model)}}
-          <tr class="uk-text-center">
-            <td colspan="2">
-              <div>
-                <UkButton
-                  @type="button"
-                  @title={{t "documents.accesses.add"}}
-                  @on-click={{this.addRow}}
-                >
-                  <span uk-icon="plus"></span>
-                </UkButton>
-              </div>
-            </td>
-          </tr>
-        {{/if}}
-      </tbody>
-    </table>
+    <CaseAccessTables @case={{@model}}/>
+    {{#if (can "add access case" @model)}}
+      <UkButton
+        @type="button"
+        @label={{t "documents.accesses.add"}}
+        @on-click={{this.addAccessRow}}
+      />
+    {{/if}}
 
     {{#if (eq @model.raw.status "RUNNING")}}
       {{#if @model.hasEditableWorkItem}}
@@ -159,7 +125,7 @@
   </modal.header>
   <ValidatedForm
     @model={{this.newRow}}
-    @on-submit={{perform this.saveRow}}
+    @on-submit={{perform this.saveAccessRow}}
     as |Form|
   >
     <modal.body>
@@ -170,7 +136,7 @@
     </modal.body>
     <modal.footer class="uk-text-right">
       <UkButton
-        {{on "click" (perform this.cancelRow)}}
+        {{on "click" (perform this.cancelAccessRow)}}
       >
         {{t "global.cancel"}}
       </UkButton>

@@ -9,6 +9,9 @@ r.register(r"additional-emails", views.EmailViewSet)
 r.register(r"phone-numbers", views.PhoneNumberViewSet)
 r.register(r"addresses", views.AddressViewSet)
 r.register(r"identities", views.IdentityViewSet)
+r.register(
+    r"public-identities", views.PublicIdentitiesViewSet, basename="public-identities"
+)
 r.register(r"interest-categories", views.InterestCategoryViewSet)
 r.register(r"interests", views.InterestViewSet)
 r.register(r"membership-roles", views.MembershipRoleViewSet)

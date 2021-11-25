@@ -220,6 +220,12 @@ class MyOrgsViewSet(
         return self.request.user.identity.member_of
 
 
+class PublicIdentitiesViewSet(RetrieveModelMixin, ListModelMixin, GenericViewSet):
+    serializer_class = serializers.PublicIdentitySerializer
+    queryset = models.Identity.objects.all()
+    filterset_class = filters.IdentityFilterSet
+
+
 class InterestCategoryViewSet(views.ModelViewSet):
     serializer_class = serializers.InterestCategorySerializer
     queryset = models.InterestCategory.objects.all()
