@@ -1,4 +1,4 @@
-FROM projectcaluma/caluma:version-7.10.0
+FROM ghcr.io/projectcaluma/caluma:latest@sha256:63b09d2e2457b5d2aaadf712b8020ffd611e77c4895e005e2f7def54431542a9
 
 ENV PATH="${HOME}/.local/bin:${PATH}"
 
