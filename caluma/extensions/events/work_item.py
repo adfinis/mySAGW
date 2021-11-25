@@ -2,7 +2,7 @@ from django.core.mail import send_mail
 from django.db import transaction
 
 from caluma.caluma_core.events import on
-from caluma.caluma_form import models as caluma_form_models
+from caluma.caluma_form import api as caluma_form_api,models as caluma_form_models
 from caluma.caluma_workflow import (
     api as caluma_workflow_api,
     models as caluma_workflow_models,
@@ -116,6 +116,21 @@ def invite_to_circulation(sender, work_item, user, context, **kwargs):
                 form=work_item.document.form
             ),
         )
+
+
+@on(post_create_work_item, raise_exception=True)
+@transaction.atomic
+def additional_data_form_document(sender, work_item, user, context, **kwargs):
+    if work_item.task_id != "additional-data-form":
+        return
+
+    form = caluma_form_models.Form.objects.get("additional-data-form")
+
+    if work_item.case.document.form_id == "periodika-antrag":
+        form = caluma_form_models.Form.objects.get("periodika-abrechnung")
+
+    work_item.document = caluma_form_api.save_document(form=form, user=user)
+    work_item.save()
 
 
 @on(pre_complete_work_item, raise_exception=True)

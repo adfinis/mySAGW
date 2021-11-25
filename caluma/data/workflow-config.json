@@ -38,7 +38,7 @@
         "address_groups": "['applicant']",
         "control_groups": null,
         "is_archived": false,
-        "form": "additional-data-form",
+        "form": null,
         "lead_time": 2592000,
         "is_multiple_instance": false
     }
