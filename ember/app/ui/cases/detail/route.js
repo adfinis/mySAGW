@@ -5,6 +5,7 @@ import { allCases } from "@projectcaluma/ember-core/caluma-query/queries";
 
 export default class CasesDetailRoute extends Route {
   @service store;
+  @service can;
 
   @calumaQuery({ query: allCases })
   caseQuery;
@@ -18,6 +19,12 @@ export default class CasesDetailRoute extends Route {
     });
 
     return this.caseQuery.value.firstObject;
+  }
+
+  afterModel(model) {
+    if (this.can.cannot("list case", model)) {
+      this.transitionTo("cases");
+    }
   }
 
   setupController(controller, model) {
