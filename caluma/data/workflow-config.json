@@ -253,7 +253,7 @@
         "modified_by_group": null,
         "name": "{\"de\": \"Gesuch einreichen\", \"fr\": null, \"en\": \"Submit document\"}",
         "description": "{\"de\": null, \"fr\": null, \"en\": null}",
-        "type": "simple",
+        "type": "complete_workflow_form",
         "meta": {},
         "address_groups": "['applicant']",
         "control_groups": null,
