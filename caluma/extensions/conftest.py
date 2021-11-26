@@ -3,7 +3,7 @@ from pathlib import Path
 import pytest
 from django.core.management import call_command
 
-from caluma.caluma_form.models import Form
+from caluma.caluma_form.models import Answer, Form
 from caluma.caluma_user.models import BaseUser
 from caluma.caluma_workflow.api import skip_work_item, start_case
 from caluma.caluma_workflow.models import Workflow
@@ -24,11 +24,19 @@ def user():
 
 @pytest.fixture
 def document_review_case(db, user):
-    return start_case(
+    case = start_case(
         workflow=Workflow.objects.get(pk="document-review"),
         form=Form.objects.get(pk="circulation-form"),
         user=user,
     )
+
+    Answer.objects.create(
+        question_id="circulation-decision",
+        document=case.document,
+        value="circulation-decision-approved",
+    )
+
+    return case
 
 
 @pytest.fixture
