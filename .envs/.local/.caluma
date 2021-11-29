@@ -3,6 +3,8 @@
 ENV=dev
 OIDC_VERIFY_SSL=False
 OIDC_USERINFO_ENDPOINT=https://mysagw.local/auth/realms/mysagw/protocol/openid-connect/userinfo
+# Multiple ADMINS need to be comma separated
+ADMINS=Test Example <test@example.com>
 
 # Minio config
 MINIO_PRESIGNED_TTL_MINUTES=30

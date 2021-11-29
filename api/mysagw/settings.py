@@ -221,3 +221,60 @@ def parse_admins(admins):
 
 
 ADMINS = parse_admins(env.list("ADMINS", default=[]))
+
+# Logging
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+            "style": "{",
+        },
+        "simple": {
+            "format": "{levelname} {message}",
+            "style": "{",
+        },
+    },
+    "filters": {
+        "require_debug_true": {
+            "()": "django.utils.log.RequireDebugTrue",
+        },
+        "require_debug_false": {
+            "()": "django.utils.log.RequireDebugFalse",
+        },
+    },
+    "handlers": {
+        "console": {
+            "level": "INFO",
+            "filters": ["require_debug_true"],
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
+        },
+        "mail_admins": {
+            "level": "WARNING",
+            "filters": ["require_debug_false"],
+            "class": "django.utils.log.AdminEmailHandler",
+            "formatter": "verbose",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console", "mail_admins"],
+            "level": "WARNING" if DEBUG else "ERROR",
+            "propagate": True,
+        },
+        "django.request": {
+            "handlers": ["console", "mail_admins"],
+            "level": "WARNING" if DEBUG else "ERROR",
+            "propagate": False,
+        },
+        "mysagw": {
+            "handlers": ["console", "mail_admins"],
+            "level": "WARNING" if DEBUG else "ERROR",
+            "propagate": True,
+        },
+    },
+}
