@@ -72,7 +72,7 @@ class MySAGWPermission(BasePermission):
             pk=mutation.get_params(info)["input"]["document"]
         )
         case = self._get_case_for_doc(document)
-        work_item_query = document.case.work_items.filter(
+        work_item_query = case.work_items.filter(
             status="ready", task__slug__in=settings.APPLICANT_TASK_SLUGS
         )
 
