@@ -2,7 +2,7 @@
   @document={{@field.document}}
   @validateOnEnter={{false}}
   @onInvalid={{this.validationError}}
-  {{!-- TODO: re-add `as |isValid validate|` --}}
+  as |isValid validate|
 >
   <div {{in-viewport onEnter=(perform this.fetchWorkItem)}}></div>
   {{#if this.fetchWorkItem.isRunning}}
@@ -16,7 +16,7 @@
       @disabled={{not this.workItem}}
       @color="primary"
       @type="button"
-      @beforeMutate="false"  {{!-- TODO: set back to `{{validate}}` --}}
+      @beforeMutate={{validate}}
       @onSuccess={{this.transitionToCase}}
     />
   {{/if}}
