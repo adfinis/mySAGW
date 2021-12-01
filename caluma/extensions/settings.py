@@ -46,7 +46,7 @@ settings.LANGUAGES = [
 ]
 settings.LOCALIZED_FIELDS_FALLBACKS = {
     "de": ["en", "fr"],
-    "fr": ["de", "en"],
+    "fr": ["en", "de"],
     "en": ["de", "fr"],
 }
 settings.LOCALIZED_FIELDS_EXPERIMENTAL = False

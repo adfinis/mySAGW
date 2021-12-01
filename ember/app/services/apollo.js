@@ -1,19 +1,28 @@
 import { setContext } from "@apollo/client/link/context";
+import { onError } from "@apollo/client/link/error";
 import { inject as service } from "@ember/service";
 import CalumaApolloServiceMixin from "@projectcaluma/ember-core/mixins/caluma-apollo-service-mixin";
 import ApolloService from "ember-apollo-client/services/apollo";
 
-export default ApolloService.extend(CalumaApolloServiceMixin, {
-  session: service(),
+export default class CustomApolloService extends ApolloService.extend(
+  CalumaApolloServiceMixin
+) {
+  @service session;
 
   link(...args) {
-    const httpLink = this._super(...args);
+    const httpLink = super.link(...args);
 
     const authMiddleware = setContext(async () => {
       const token = this.session.data.authenticated.access_token;
       return { headers: { authorization: `Bearer ${token}` } };
     });
 
-    return authMiddleware.concat(httpLink);
-  },
-});
+    const afterware = onError((error) => {
+      if (error.networkError && error.networkError.statusCode === 401) {
+        this.session.handleUnauthorized();
+      }
+    });
+
+    return authMiddleware.concat(afterware).concat(httpLink);
+  }
+}
