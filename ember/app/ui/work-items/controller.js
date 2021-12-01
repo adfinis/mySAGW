@@ -63,11 +63,6 @@ export default class WorkItemsIndexController extends Controller {
           linkTo: "cases.detail.index",
           linkToModelField: "case.id",
         },
-        {
-          heading: { label: "work-items.caseCreatedBy" },
-          modelKey: "case.createdByUser",
-          type: "case-created-by",
-        },
         ...(this.status === "open"
           ? [
               {
@@ -154,7 +149,6 @@ export default class WorkItemsIndexController extends Controller {
           ...idpIds,
           ...workItem.assignedUsers,
           workItem.raw.closedByUser,
-          workItem.raw.case.createdByUser,
         ],
         []
       )

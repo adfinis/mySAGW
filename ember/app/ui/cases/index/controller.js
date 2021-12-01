@@ -54,22 +54,6 @@ export default class CasesIndexController extends Controller {
           { status: "CANCELED", invert: true },
         ],
       });
-
-      if (this.caseQuery.value.mapBy("createdByUser").length) {
-        yield this.store.query(
-          "identity",
-          {
-            filter: {
-              idpIds: this.caseQuery.value.mapBy("createdByUser").join(","),
-            },
-          },
-          {
-            adapterOptions: {
-              customEndpoint: "public-identities",
-            },
-          }
-        );
-      }
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e);
