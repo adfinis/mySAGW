@@ -28,8 +28,7 @@ services:
       - VISIBILITY_CLASSES=caluma.caluma_user.visibilities.Authenticated,caluma.extensions.visibilities.MySAGWVisibility
       - PERMISSION_CLASSES=caluma.caluma_user.permissions.IsAuthenticated,caluma.extensions.permissions.MySAGWPermission
       - DYNAMIC_TASKS_CLASSES=caluma.extensions.dynamic_tasks.CustomDynamicTasks
-      - LANGUAGE_CODE=de
-      - LANGUAGES=de,fr,en
+
     depends_on:
       - db
       - keycloak
