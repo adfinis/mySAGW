@@ -68,6 +68,10 @@ settings.APPLICANT_TASK_SLUGS = [
     "additional-data-form",
 ]
 
+settings.ADDITIONAL_DATA_FORM = {
+    "periodika-antrag": "periodika-abrechnung",
+}
+
 settings.CASE_ID_CACHE_SECONDS = int(os.environ.get("CASE_ID_CACHE_SECONDS", "60"))
 
 # Logging

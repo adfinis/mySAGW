@@ -80,7 +80,7 @@ export default class CustomWorkItemModel extends WorkItemModel {
 
   get additionalWorkItem() {
     if (this.raw.task.slug === "additional-data-form") {
-      return [{ task: "additional-data" }];
+      return [{ task: "additional-data" }, { status: "READY" }];
     }
 
     return undefined;
