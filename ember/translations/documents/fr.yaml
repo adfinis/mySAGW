@@ -13,8 +13,8 @@ documents:
   asc: "Ordre croissant"
   description: "Description"
   status: "Statut"
-  createdByUser: "Créé par"
   section: "Segment"
+  distributionPlan: "Plan de distribution"
 
   general: "Information"
 
@@ -36,7 +36,7 @@ documents:
   accountingExportFilename: "{dossierNo}.pdf"
 
   states:
-    submit: "Déposer"
+    submit: "Soumettre la requête"
     audit: "En traitement"
     revise: "Pour modification"
     submit-receipts: "Joindre des annexes"

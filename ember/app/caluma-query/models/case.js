@@ -67,12 +67,22 @@ export default class CustomCaseModel extends CaseModel {
         name
         description
       }
-      answers(filter: [{ questions: ["dossier-nr"] }]) {
+      answers(filter: [{ questions: ["dossier-nr", "verteilplan-nr"] }]) {
         edges {
           node {
             id
             question {
               slug
+              ... on ChoiceQuestion {
+                options {
+                  edges {
+                    node {
+                      slug
+                      label
+                    }
+                  }
+                }
+              }
             }
             ... on StringAnswer {
               StringAnswerValue: value

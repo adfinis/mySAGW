@@ -66,11 +66,6 @@ export default class WorkItemsIndexController extends Controller {
         ...(this.status === "open"
           ? [
               {
-                heading: { label: "work-items.deadline" },
-                modelKey: "deadline",
-                type: "deadline",
-              },
-              {
                 heading: { label: "work-items.responsible" },
                 modelKey: "responsible",
               },
@@ -86,6 +81,12 @@ export default class WorkItemsIndexController extends Controller {
                 modelKey: "closedByUser.fullName",
               },
             ]),
+        {
+          heading: { label: "work-items.distributionPlan" },
+          questionSlug: "verteilplan-nr",
+          answerKey: "case.document.answers.edges",
+          type: "answer-value",
+        },
         {
           heading: { label: "documents.section" },
           questionSlug: "sektion",
@@ -132,12 +133,10 @@ export default class WorkItemsIndexController extends Controller {
       filter.push({ controllingGroups: ["sagw"] });
     }
 
-    const order =
-      this.order === "urgent"
-        ? [{ attribute: "DEADLINE", direction: "ASC" }]
-        : [{ attribute: "CREATED_AT", direction: "DESC" }];
-
-    yield this.workItemsQuery.fetch({ filter, order });
+    yield this.workItemsQuery.fetch({
+      filter,
+      order: [{ attribute: "CREATED_AT", direction: "DESC" }], // todo
+    });
     yield this.getIdentities.perform();
   }
 

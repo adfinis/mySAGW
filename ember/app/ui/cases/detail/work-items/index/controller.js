@@ -36,13 +36,14 @@ export default class CasesDetailWorkItemsController extends Controller {
           type: "task-name",
         },
         {
-          heading: { label: "work-items.deadline" },
-          modelKey: "deadline",
-          type: "deadline",
-        },
-        {
           heading: { label: "work-items.responsible" },
           modelKey: "responsible",
+        },
+        {
+          heading: { label: "work-items.distributionPlan" },
+          questionSlug: "verteilplan-nr",
+          answerKey: "case.document.answers.edges",
+          type: "answer-value",
         },
         {
           heading: { label: "work-items.action" },
