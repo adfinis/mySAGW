@@ -3,6 +3,7 @@ import { inject as service } from "@ember/service";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { timeout, restartableTask } from "ember-concurrency";
+import moment from "moment";
 
 export default class NavbarComponent extends Component {
   @service session;
@@ -25,6 +26,7 @@ export default class NavbarComponent extends Component {
   @action
   setLocale(locale) {
     this.intl.setLocale(locale);
+    moment.locale(locale);
     try {
       window.localStorage.setItem("locale", locale);
     } catch (e) {
