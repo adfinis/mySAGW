@@ -35,4 +35,13 @@ export default class BaseAbility extends Ability {
   isStaffOrOwnIdentity(identity) {
     return this.isStaff || this.isOwnIdentity(identity);
   }
+
+  hasAccess(document) {
+    return Boolean(
+      document.accesses.findBy(
+        "identity.idpId",
+        this.session.data.authenticated.userinfo.sub
+      )
+    );
+  }
 }

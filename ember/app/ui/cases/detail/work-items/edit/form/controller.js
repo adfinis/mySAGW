@@ -11,6 +11,7 @@ export default class CasesDetailWorkItemsEditFormController extends Controller {
 
   @service notification;
   @service intl;
+  @service router;
 
   @calumaQuery({ query: allWorkItems })
   workItemsQuery;
@@ -30,6 +31,6 @@ export default class CasesDetailWorkItemsEditFormController extends Controller {
 
   @action
   transitionToCaseWorkItems() {
-    this.transitionToRoute("cases.detail.work-items", this.workItem.case.id);
+    this.router.transitionTo("cases.detail.work-items", this.workItem.case.id);
   }
 }

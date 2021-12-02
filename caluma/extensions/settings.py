@@ -16,8 +16,19 @@ settings.MAILING = {"from_email": from_mail, "from_name": from_name}
 settings.MAILING_SENDER = f"{from_name} <{from_mail}>"
 
 # API
-settings.API_BASE_URI = os.environ.get("API_BASE_URI", "http://api:8000/api/v1")
+settings.API_BASE_URI = os.environ.get("API_BASE_URI", "https://mysagw.local/api/v1")
 settings.SELF_URI = os.environ.get("SELF_URI", "https://mysagw.local")
+raw_verify_ssl = os.environ.get("API_VERIFY_SSL", "true")
+settings.API_VERIFY_SSL = True if raw_verify_ssl == "true" else False
+
+settings.OIDC_ADMIN_CLIENT_ID = os.environ.get("OIDC_ADMIN_CLIENT_ID", "test_client")
+settings.OIDC_ADMIN_CLIENT_SECRET = os.environ.get(
+    "OIDC_ADMIN_CLIENT_SECRET", "fb13e564-75dd-4fc3-a993-3dad9064e71e"
+)
+settings.OIDC_TOKEN_ENDPOINT = os.environ.get(
+    "OIDC_TOKEN_ENDPOINT",
+    "https://mysagw.local/auth/realms/mysagw/protocol/openid-connect/token",
+)
 
 # Case
 
@@ -29,6 +40,13 @@ settings.CASE_STATUS = {
     "define-amount": "decision",
 }
 
+settings.APPLICANT_TASK_SLUGS = [
+    "submit-document",
+    "revise-document",
+    "additional-data",
+]
+
+settings.CASE_ID_CACHE_SECONDS = int(os.environ.get("CASE_ID_CACHE_SECONDS", "60"))
 
 # Logging
 

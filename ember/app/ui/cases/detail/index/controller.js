@@ -1,12 +1,15 @@
 import Controller from "@ember/controller";
+import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
+import { tracked } from "@glimmer/tracking";
 import { queryManager } from "ember-apollo-client";
-import { dropTask } from "ember-concurrency-decorators";
+import Changeset from "ember-changeset";
+import lookupValidator from "ember-changeset-validations";
+import { dropTask, restartableTask } from "ember-concurrency-decorators";
 import { saveAs } from "file-saver";
 
-import ENV from "mysagw/config/environment";
 import cancelCaseMutation from "mysagw/gql/mutations/cancel-case.graphql";
-import completeWorkItemMutation from "mysagw/gql/mutations/complete-work-item.graphql";
+import CaseValidations from "mysagw/validations/case";
 
 export default class CasesDetailIndexController extends Controller {
   @service router;
@@ -15,28 +18,11 @@ export default class CasesDetailIndexController extends Controller {
 
   @queryManager apollo;
 
-  get getNodes() {
-    return this.model.workItems.edges.mapBy("node");
-  }
-
-  get isEditable() {
-    return this.getNodes
-      .filter((workItem) =>
-        ENV.APP.caluma.documentEditableTaskSlugs.includes(workItem.task.slug)
-      )
-      .isAny("status", "READY");
-  }
-
-  get isNotSubmitted() {
-    return this.getNodes.find(
-      (workItem) =>
-        workItem.task.slug === ENV.APP.caluma.submitTaskSlug &&
-        workItem.status === "READY"
-    );
-  }
+  @tracked newRow;
+  @tracked modalVisible;
 
   get readyWorkItems() {
-    return this.getNodes.filterBy("status", "READY").length;
+    return this.model.workItems.filterBy("status", "READY").length;
   }
 
   @dropTask
@@ -56,21 +42,58 @@ export default class CasesDetailIndexController extends Controller {
     }
   }
 
-  @dropTask
-  *submitCase() {
-    try {
-      yield this.apollo.mutate({
-        mutation: completeWorkItemMutation,
-        variables: { id: this.model.workItems.edges[0].node.id },
-      });
+  @action
+  addAccessRow() {
+    this.newRow = new Changeset(
+      this.store.createRecord("case-access", {
+        email: undefined,
+        caseId: this.model.id,
+      }),
+      lookupValidator(CaseValidations),
+      CaseValidations
+    );
 
-      this.notification.success(this.intl.t("documents.submitSuccess"));
+    this.modalVisible = true;
+  }
 
-      this.router.transitionTo("cases.index");
-    } catch (error) {
-      console.error(error);
-      this.notification.fromError(error);
+  @restartableTask
+  *saveAccessRow() {
+    if (this.model.accesses.findBy("email", this.newRow.email)) {
+      this.notification.danger(
+        this.intl.t("documents.accesses.duplicateEmail")
+      );
+      return;
     }
+
+    if (this.newRow.isValid) {
+      const email = this.newRow.email;
+
+      this.newRow.save();
+
+      yield this.store.query(
+        "identity",
+        { filter: { email } },
+        { adapterOptions: { customEndpoint: "public-identities" } }
+      );
+
+      this.newRow = null;
+      this.modalVisible = false;
+    }
+  }
+
+  @dropTask
+  *deleteAccessRow(access) {
+    yield this.model.accesses.findBy("email", access.email).destroyRecord();
+
+    if (this.can.cannot("list case", this.model)) {
+      this.router.transitionTo("cases");
+    }
+  }
+
+  @dropTask
+  *cancelAccessRow() {
+    yield this.newRow.destroyRecord();
+    this.modalVisible = false;
   }
 
   @dropTask

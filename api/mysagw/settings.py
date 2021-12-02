@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "mysagw.identity.apps.DefaultConfig",
     "mysagw.snippets.apps.SnippetsConfig",
     "mysagw.accounting.apps.AccountingConfig",
+    "mysagw.case.apps.CaseConfig",
 ]
 
 if ENV == "dev":
@@ -116,12 +117,15 @@ OIDC_VERIFY_SSL = env.bool("OIDC_VERIFY_SSL", default=True)
 OIDC_ID_CLAIM = env.str("OIDC_ID_CLAIM", default="sub")
 OIDC_EMAIL_CLAIM = env.str("OIDC_EMAIL_CLAIM", default="email")
 OIDC_GROUPS_CLAIM = env.str("OIDC_GROUPS_CLAIM", default="mysagw_groups")
+OIDC_CLIENT_ID_CLAIM = env.str("OIDC_CLIENT_ID_CLAIM", default="clientId")
 OIDC_BEARER_TOKEN_REVALIDATION_TIME = env.int(
     "OIDC_BEARER_TOKEN_REVALIDATION_TIME", default=0
 )
 OIDC_OP_INTROSPECT_ENDPOINT = env.str("OIDC_OP_INTROSPECT_ENDPOINT", default=None)
-OIDC_RP_CLIENT_ID = env.str("OIDC_RP_CLIENT_ID", default=None)
-OIDC_RP_CLIENT_SECRET = env.str("OIDC_RP_CLIENT_SECRET", default=None)
+OIDC_RP_CLIENT_ID = env.str("OIDC_RP_CLIENT_ID", default="test_client")
+OIDC_RP_CLIENT_SECRET = env.str(
+    "OIDC_RP_CLIENT_SECRET", default="fb13e564-75dd-4fc3-a993-3dad9064e71e"
+)
 OIDC_DRF_AUTH_BACKEND = "mysagw.oidc_auth.authentication.MySAGWAuthenticationBackend"
 
 

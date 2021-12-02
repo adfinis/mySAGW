@@ -69,8 +69,17 @@
     </span>
   </div>
   <div class="uk-width-2-3">
+    <CaseAccessTables @case={{@model}}/>
+    {{#if (can "add access case" @model)}}
+      <UkButton
+        @type="button"
+        @label={{t "documents.accesses.add"}}
+        @on-click={{this.addAccessRow}}
+      />
+    {{/if}}
+
     {{#if (eq @model.raw.status "RUNNING")}}
-      {{#if this.isEditable}}
+      {{#if @model.hasEditableWorkItem}}
         <h3>{{t "documents.edit"}}</h3>
         <p>{{t "documents.editText"}}</p>
 
@@ -79,8 +88,7 @@
         </LinkTo>
       {{/if}}
 
-      {{#if this.isNotSubmitted}}
-
+      {{#if @model.hasSubmitWorkItem}}
         <h3>{{t "documents.delete"}}</h3>
         <p>{{t "documents.deleteText"}}</p>
 
@@ -103,12 +111,38 @@
           {{t "documents.accountingExport"}}
         </UkButton>
       {{/if}}
-
-      {{#if (not (or this.isEditable this.isNotSubmitted (can "exportForAccounting case")))}}
-        <span>{{t "documents.noActions"}}</span>
-      {{/if}}
     {{/if}}
   </div>
 </div>
 
 <hr />
+
+<UkModal @visible={{this.modalVisible}} @on-hide={{fn (mut this.modalVisible) false}} as |modal|>
+  <modal.header>
+    <h2 class="uk-modal-title">
+      {{t "documents.accesses.add"}}
+    </h2>
+  </modal.header>
+  <ValidatedForm
+    @model={{this.newRow}}
+    @on-submit={{perform this.saveAccessRow}}
+    as |Form|
+  >
+    <modal.body>
+      <Form.input
+        @label={{t "documents.accesses.email"}}
+        @name="email"
+      />
+    </modal.body>
+    <modal.footer class="uk-text-right">
+      <UkButton
+        {{on "click" (perform this.cancelAccessRow)}}
+      >
+        {{t "global.cancel"}}
+      </UkButton>
+      <Form.submit
+        @label={{t "global.save"}}
+      />
+    </modal.footer>
+  </ValidatedForm>
+</UkModal>

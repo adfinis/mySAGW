@@ -11,16 +11,11 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework_json_api import views
 
 from ..dms_client import DMSClient
+from ..oidc_auth.permissions import IsAdmin, IsAuthenticated, IsStaff
+from ..permissions import ReadOnly
 from . import filters, models, serializers
 from .export import IdentityExport
-from .permissions import (
-    IsAdmin,
-    IsAuthenticated,
-    IsAuthorized,
-    IsOwn,
-    IsStaff,
-    ReadOnly,
-)
+from .permissions import IsAuthorized, IsOwn
 
 
 class UniqueBooleanFieldViewSetMixin:
@@ -71,7 +66,7 @@ class EmailViewSet(IdentityAdditionsViewSetMixin, views.ModelViewSet):
 
     def perform_destroy(self, instance):
         super().perform_destroy(instance)
-        instance.identity.modified_by_user = self.request.user.username
+        instance.identity.modified_by_user = self.request.user.id
         instance.identity.save()
 
 
@@ -85,7 +80,7 @@ class PhoneNumberViewSet(
 
     def perform_destroy(self, instance):
         super().perform_destroy(instance)
-        instance.identity.modified_by_user = self.request.user.username
+        instance.identity.modified_by_user = self.request.user.id
         instance.identity.save()
 
 
@@ -97,7 +92,7 @@ class AddressViewSet(IdentityAdditionsViewSetMixin, views.ModelViewSet):
 
     def perform_destroy(self, instance):
         super().perform_destroy(instance)
-        instance.identity.modified_by_user = self.request.user.username
+        instance.identity.modified_by_user = self.request.user.id
         instance.identity.save()
 
 
@@ -225,6 +220,12 @@ class MyOrgsViewSet(
         return self.request.user.identity.member_of
 
 
+class PublicIdentitiesViewSet(RetrieveModelMixin, ListModelMixin, GenericViewSet):
+    serializer_class = serializers.PublicIdentitySerializer
+    queryset = models.Identity.objects.all()
+    filterset_class = filters.IdentityFilterSet
+
+
 class InterestCategoryViewSet(views.ModelViewSet):
     serializer_class = serializers.InterestCategorySerializer
     queryset = models.InterestCategory.objects.all()
@@ -279,7 +280,7 @@ class MembershipViewSet(views.ModelViewSet):
 
     def perform_destroy(self, instance):
         super().perform_destroy(instance)
-        instance.identity.modified_by_user = self.request.user.username
+        instance.identity.modified_by_user = self.request.user.id
         instance.identity.save()
 
 

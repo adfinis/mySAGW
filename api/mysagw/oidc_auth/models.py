@@ -10,9 +10,10 @@ logger = logging.getLogger(__name__)
 
 class BaseUser:  # pragma: no cover
     def __init__(self):
-        self.username = None
+        self.email = None
         self.groups = []
         self.group = None
+        self.client_id = None
         self.token = None
         self.claims = {}
         self.is_authenticated = False
@@ -22,7 +23,10 @@ class BaseUser:  # pragma: no cover
 
     @property
     def is_admin(self):
-        return settings.ADMIN_GROUP in self.groups
+        return (
+            self.client_id == settings.OIDC_RP_CLIENT_ID
+            or settings.ADMIN_GROUP in self.groups
+        )
 
     @property
     def is_staff(self):
@@ -35,24 +39,27 @@ class OIDCUser(BaseUser):
 
         self.claims = claims
         self.id = self.claims[settings.OIDC_ID_CLAIM]
-        self.username = self.claims[settings.OIDC_EMAIL_CLAIM]
-        self.groups = self.claims[settings.OIDC_GROUPS_CLAIM]
+        self.email = self.claims.get(settings.OIDC_EMAIL_CLAIM)
+        self.groups = self.claims.get(settings.OIDC_GROUPS_CLAIM, [])
         self.group = self.groups[0] if self.groups else None
+        self.client_id = self.claims.get(settings.OIDC_CLIENT_ID_CLAIM)
         self.token = token
         self.is_authenticated = True
         self.identity = self._get_or_create_identity()
 
     def _get_or_create_identity(self):
+        if self.client_id:
+            return None
         try:
             identity = Identity.objects.get(
-                Q(idp_id=self.id) | Q(email__iexact=self.username)
+                Q(idp_id=self.id) | Q(email__iexact=self.email)
             )
             # we only want to save if necessary in order to prevent adding historical
             # records on every request
-            if identity.idp_id != self.id or identity.email != self.username:
+            if identity.idp_id != self.id or identity.email != self.email:
                 identity.idp_id = self.id
-                identity.email = self.username
-                identity.modified_by_user = self.username
+                identity.email = self.email
+                identity.modified_by_user = self.id
                 identity.save()
         except Identity.MultipleObjectsReturned:
             # TODO: trigger notification for staff members or admins
@@ -64,11 +71,11 @@ class OIDCUser(BaseUser):
         except Identity.DoesNotExist:
             identity = Identity.objects.create(
                 idp_id=self.id,
-                email=self.username,
-                modified_by_user=self.username,
-                created_by_user=self.username,
+                email=self.email,
+                modified_by_user=self.id,
+                created_by_user=self.id,
             )
         return identity
 
     def __str__(self):
-        return self.username
+        return f"{self.email} - {self.id}"

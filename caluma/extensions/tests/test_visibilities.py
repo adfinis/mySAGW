@@ -2,6 +2,7 @@ import pytest
 
 from caluma.caluma_form import models as form_models, schema as form_schema
 from caluma.caluma_workflow import models as workflow_models, schema as workflow_schema
+from caluma.extensions.settings import settings
 from caluma.extensions.visibilities import MySAGWVisibility
 
 
@@ -13,43 +14,21 @@ from caluma.extensions.visibilities import MySAGWVisibility
             {
                 "Form": 3,
                 "WorkItem": 3,
-                "Document": 6,
-                "Case": 3,
+                "Document": 5,
+                "Case": 2,
                 "Question": 1,
                 "Answer": 1,
             },
         ),
         (
-            "test1",
-            {
-                "Form": 3,
-                "WorkItem": 0,
-                "Document": 1,
-                "Case": 1,
-                "Question": 1,
-                "Answer": 1,
-            },
-        ),
-        (
-            "test2",
+            "user",
             {
                 "Form": 3,
                 "WorkItem": 1,
                 "Document": 1,
                 "Case": 1,
                 "Question": 1,
-                "Answer": 0,
-            },
-        ),
-        (
-            "test3",
-            {
-                "Form": 3,
-                "WorkItem": 1,
-                "Document": 0,
-                "Case": 0,
-                "Question": 1,
-                "Answer": 0,
+                "Answer": 1,
             },
         ),
     ],
@@ -60,6 +39,7 @@ def test_visibilities_default(
     form_question_factory,
     answer_factory,
     admin_info,
+    case_access_request_mock,
     name,
     visibility_map,
 ):
@@ -68,23 +48,19 @@ def test_visibilities_default(
     admin_info.context.user.group = name
 
     wi1 = work_item_factory(
-        assigned_users=["foo"],
-        document__created_by_user="test1",
-        case__created_by_user="test2",
+        case__pk="994b72cc-6556-46e5-baf9-228457fa309f",
+        task__slug=settings.APPLICANT_TASK_SLUGS[0],
         child_case=None,
     )
     work_item_factory(
-        assigned_users=["test2"],
-        document__created_by_user="foo",
-        case__created_by_user="test1",
+        case=wi1.case,
+        task__slug="foo",
         document__form=wi1.document.form,
         case__document__form=wi1.document.form,
         task__form=wi1.document.form,
         child_case=None,
     )
-
     work_item_factory(
-        addressed_groups=["test3"],
         document__form=wi1.document.form,
         case__document__form=wi1.document.form,
         task__form=wi1.document.form,
