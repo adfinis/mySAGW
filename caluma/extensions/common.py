@@ -22,3 +22,17 @@ def get_cases_for_user(user):
     case_ids = [case["attributes"]["case-id"] for case in result["data"]]
     cache.set(cache_key, case_ids, settings.CASE_ID_CACHE_SECONDS)
     return case_ids
+
+
+def get_users_for_case(case):
+    client = APIClient()
+    token = client.get_admin_token()
+    result = client.get(
+        f"/case/accesses?filter%5BcaseId%5D={str(case.pk)}&include=identity",
+        token=token,
+    )
+    users = []
+    for include in result["included"]:
+        users.append(include["attributes"])
+
+    return users

@@ -137,6 +137,49 @@ def case_access_request_mock(requests_mock):
 
 @pytest.fixture
 def case_access_event_mock(
-    identities_mock, get_token_mock, case_access_create_request_mock
+    requests_mock, identities_mock, get_token_mock, case_access_create_request_mock
 ):
-    pass
+    data = {
+        "data": [
+            {
+                "type": "case-accesses",
+                "id": "6b27043f-70be-403d-94d4-0b6684f954a3",
+                "attributes": {
+                    "case-id": "994b72cc-6556-46e5-baf9-228457fa309f",
+                    "email": None,
+                },
+                "relationships": {
+                    "identity": {
+                        "data": {
+                            "type": "identities",
+                            "id": "19c90e69-0398-4ed7-9bde-1ed13627b1f7",
+                        }
+                    }
+                },
+            },
+            {
+                "type": "case-accesses",
+                "id": "675c738c-cc3c-4877-97fc-1ac195a8cb2d",
+                "attributes": {
+                    "case-id": "994b72cc-6556-46e5-baf9-228457fa309f",
+                    "email": "test-dont-send@example.com",
+                },
+                "relationships": {"identity": {"data": None}},
+            },
+        ],
+        "included": [
+            {
+                "type": "identities",
+                "id": "19c90e69-0398-4ed7-9bde-1ed13627b1f7",
+                "attributes": {
+                    "idp-id": "267796f2-ae48-4235-93d7-bf26e8ba66bb",
+                    "first-name": "Winston",
+                    "last-name": "Smith",
+                    "email": "test-send@example.com",
+                    "language": "de",
+                },
+            },
+        ],
+    }
+
+    return requests_mock.get(f"{settings.API_BASE_URI}/case/accesses", json=data)

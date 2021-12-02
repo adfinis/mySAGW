@@ -14,7 +14,7 @@ from caluma.caluma_workflow.events import (
 )
 
 from .. import email_texts
-from ..common import get_api_user_attributes
+from ..common import get_users_for_case
 from ..settings import settings
 
 
@@ -40,15 +40,6 @@ def send_new_work_item_mail(sender, work_item, user, **kwargs):
     ]:
         return
 
-    assigned_users = caluma_workflow_models.WorkItem.objects.get(
-        task_id="submit-document", case=work_item.case
-    ).assigned_users
-
-    api_user = get_api_user_attributes(user.token.decode(), assigned_users[0])
-
-    subject = email_texts.EMAIL_SUBJECTS[api_user["language"]]
-    body = email_texts.EMAIL_BODIES[api_user["language"]]
-
     link = (
         f"{settings.SELF_URI}/cases/{work_item.case.pk}/work-items/{work_item.pk}/form"
     )
@@ -56,19 +47,25 @@ def send_new_work_item_mail(sender, work_item, user, **kwargs):
     if work_item.task_id == "complete-document":
         link = f"{settings.SELF_URI}/cases/{work_item.case.pk}"
 
-    body = body.format(
-        first_name=api_user["first-name"] or "",
-        last_name=api_user["last-name"] or "",
-        link=link,
-    )
+    users = get_users_for_case(work_item.case)
 
-    send_mail(
-        subject,
-        body,
-        settings.MAILING_SENDER,
-        [api_user["email"]],
-        fail_silently=False,
-    )
+    for user in users:
+        subject = email_texts.EMAIL_SUBJECTS[user["language"]]
+        body = email_texts.EMAIL_BODIES[user["language"]]
+
+        body = body.format(
+            first_name=user["first-name"] or "",
+            last_name=user["last-name"] or "",
+            link=link,
+        )
+
+        send_mail(
+            subject,
+            body,
+            settings.MAILING_SENDER,
+            [user["email"]],
+            fail_silently=True,
+        )
 
 
 @on(post_create_work_item, raise_exception=True)
