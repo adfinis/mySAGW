@@ -43,6 +43,11 @@ export default class CasesDetailIndexController extends Controller {
   }
 
   @action
+  transtionToCases() {
+    this.router.transtionTo("cases");
+  }
+
+  @action
   addAccessRow() {
     this.newRow = new Changeset(
       this.store.createRecord("case-access", {

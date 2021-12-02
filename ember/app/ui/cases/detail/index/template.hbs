@@ -94,7 +94,7 @@
 
         <UkButton
           @type="button"
-          @on-click={{perform this.closeCase @model}}
+          @on-click={{perform this.closeCase}}
           @disabled={{this.closeCase.isRunning}}
           @loading={{this.closeCase.isRunning}}
         >
@@ -102,7 +102,22 @@
         </UkButton>
       {{/if}}
 
+      {{#if @model.completeWorkItem}}
+        <h3>{{t "documents.complete"}}</h3>
+        <p>{{t "documents.completeText"}}</p>
+
+        <WorkItemButton
+          @mutation="complete"
+          @workItemId={{@model.completeWorkItem.id}}
+          @type="submit"
+          @color="primary"
+          @label={{t "documents.complete"}}
+          @onSuccess={{this.transitionToCases}}
+        />
+      {{/if}}
+
       {{#if (can "exportForAccounting case")}}
+        <h3>{{t "documents.accountingExport"}}</h3>
         <UkButton
           @type="button"
           @on-click={{perform this.exportAccounting @model}}

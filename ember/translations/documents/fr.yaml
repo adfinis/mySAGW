@@ -29,6 +29,9 @@ documents:
   delete: "Supprimer la requête"
   deleteText: "Vous pouvez supprimer la requête au cas où elle ne serait plus nécessaire."
   deleteSuccess: "La requête a été effacée avec succès."
+  complete: "Compléter la requête"
+  completeText: "La requête peut maintenant être complétée."
+  completeSuccess: "La requête a été complétée."
   accountingExport: "Exportation pour la comptabilité"
   accountingExportFilename: "{dossierNo}.pdf"
 
