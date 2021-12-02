@@ -33,7 +33,7 @@ documents:
   accountingExportFilename: "{dossierNo}.pdf"
 
   states:
-    submit: "Eingereicht"
+    submit: "Einreichen"
     audit: "In Bearbeitung"
     revise: "Zur Überarbeitung"
     submit-receipts: "Belege einreichen"

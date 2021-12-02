@@ -33,7 +33,7 @@ documents:
   accountingExportFilename: "{dossierNo}.pdf"
 
   states:
-    submit: "Requête soumise"
+    submit: "Déposer"
     audit: "En traitement"
     revise: "Pour modification"
     submit-receipts: "Joindre des annexes"
