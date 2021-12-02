@@ -25,11 +25,6 @@ export default class CasesTableComponent extends Component {
         type: "case-status",
       },
       {
-        heading: { label: "documents.createdByUser" },
-        modelKey: "createdByUser",
-        type: "case-created-by",
-      },
-      {
         heading: { label: "documents.createdAt" },
         modelKey: "createdAt",
         type: "date",

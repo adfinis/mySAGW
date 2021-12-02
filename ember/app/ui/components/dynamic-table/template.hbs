@@ -24,11 +24,13 @@
         {{/each}}
       </tr>
     {{else}}
-      <tr>
-        <td colspan="8" class="uk-text-center">
-          {{t "global.empty"}}
-        </td>
-      </tr>
+      {{#unless @loading}}
+        <tr>
+          <td colspan="8" class="uk-text-center">
+            {{t "global.empty"}}
+          </td>
+        </tr>
+      {{/unless}}
     {{/each}}
     {{#if (or @loading @hasNextPage)}}
       <tr>

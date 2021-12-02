@@ -95,7 +95,7 @@ LANGUAGES = [
 ]
 LOCALIZED_FIELDS_FALLBACKS = {
     "de": ["en", "fr"],
-    "fr": ["de", "en"],
+    "fr": ["en", "de"],
     "en": ["de", "fr"],
 }
 LOCALIZED_FIELDS_EXPERIMENTAL = False

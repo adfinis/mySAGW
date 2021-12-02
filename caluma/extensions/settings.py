@@ -1,6 +1,11 @@
 import os
 
+import environ
 from django.conf import settings
+from django.utils.translation import gettext_lazy as _
+
+env = environ.Env()
+
 
 # Mailing
 settings.EMAIL_HOST = os.environ.get("EMAIL_HOST", "mail")
@@ -29,6 +34,22 @@ settings.OIDC_TOKEN_ENDPOINT = os.environ.get(
     "OIDC_TOKEN_ENDPOINT",
     "https://mysagw.local/auth/realms/mysagw/protocol/openid-connect/token",
 )
+
+
+# Internationalization
+# https://docs.djangoproject.com/en/3.2/topics/i18n/
+settings.LANGUAGE_CODE = env.str("LANGUAGE_CODE", "de")
+settings.LANGUAGES = [
+    ("de", _("German")),
+    ("en", _("English")),
+    ("fr", _("French")),
+]
+settings.LOCALIZED_FIELDS_FALLBACKS = {
+    "de": ["en", "fr"],
+    "fr": ["en", "de"],
+    "en": ["de", "fr"],
+}
+settings.LOCALIZED_FIELDS_EXPERIMENTAL = False
 
 # Case
 
