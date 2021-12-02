@@ -1,10 +1,11 @@
 from uuid import uuid4
 
 import pytest
+from django.conf import settings
 from django.urls import reverse
 from rest_framework import status
 
-from mysagw.case import models
+from mysagw.case import email_texts, models
 
 
 @pytest.mark.parametrize(
@@ -46,7 +47,14 @@ def test_case_list(
     indirect=["client"],
 )
 def test_case_create(
-    db, case_access, client, identity, has_access, identity_exists, expected_status
+    db,
+    case_access,
+    client,
+    identity,
+    has_access,
+    identity_exists,
+    expected_status,
+    mailoutbox,
 ):
     url = reverse("caseaccess-list")
 
@@ -74,6 +82,7 @@ def test_case_create(
     assert response.status_code == expected_status
 
     if expected_status == status.HTTP_403_FORBIDDEN:
+        assert len(mailoutbox) == 0
         return
 
     assert models.CaseAccess.objects.count() == 2
@@ -88,6 +97,22 @@ def test_case_create(
     else:
         assert case_access.email == "test@example.com"
         assert case_access.identity is None
+        assert len(mailoutbox) == 1
+        expected_body = email_texts.EMAIL_BODY_INVITE_REGISTER.format(
+            link=settings.SELF_URI,
+        )
+        assert mailoutbox[0].body == expected_body
+
+    if identity_exists or has_access:
+        assert len(mailoutbox) == 1
+        expected_body = email_texts.EMAIL_INVITE_BODIES[
+            case_access.identity.language
+        ].format(
+            first_name=case_access.identity.first_name or "",
+            last_name=case_access.identity.last_name or "",
+            link=f"{settings.SELF_URI}/cases/{case_access.case_id}",
+        )
+        assert mailoutbox[0].body == expected_body
 
 
 def test_case_create_already_exists(db, case_access_factory, client):

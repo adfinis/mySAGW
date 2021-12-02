@@ -1,8 +1,10 @@
+from django.conf import settings
+from django.core.mail import send_mail
 from rest_framework.exceptions import ValidationError
 from rest_framework_json_api import serializers
 
 from ..identity.models import Identity
-from . import models
+from . import email_texts, models
 
 
 class CaseAccessSerializer(serializers.ModelSerializer):
@@ -40,3 +42,29 @@ class CaseAccessSerializer(serializers.ModelSerializer):
             raise ValidationError("Case already exists!")
 
         return validated_data
+
+    def create(self, validated_data):
+        instance = super().create(validated_data)
+
+        subject = email_texts.EMAIL_SUBJECT_INVITE_REGISTER
+        body = email_texts.EMAIL_BODY_INVITE_REGISTER.format(link=settings.SELF_URI)
+        email = instance.email
+
+        if instance.identity:
+            subject = email_texts.EMAIL_INVITE_SUBJECTS[instance.identity.language]
+            body = email_texts.EMAIL_INVITE_BODIES[instance.identity.language].format(
+                first_name=instance.identity.first_name or "",
+                last_name=instance.identity.last_name or "",
+                link=f"{settings.SELF_URI}/cases/{instance.case_id}",
+            )
+            email = instance.identity.email
+
+        send_mail(
+            subject,
+            body,
+            settings.MAILING_SENDER,
+            [email],
+            fail_silently=True,
+        )
+
+        return instance
