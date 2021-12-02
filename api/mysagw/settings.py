@@ -204,6 +204,8 @@ from_mail = env.str("MAILING_FROM_MAIL", "noreply@mysagw.adfinis.com")
 MAILING = {"from_email": from_mail, "from_name": from_name}
 MAILING_SENDER = f"{from_name} <{from_mail}>"
 
+SELF_URI = env.str("SELF_URI", "https://mysagw.adfinis.com")
+
 
 def parse_admins(admins):
     """
@@ -258,7 +260,7 @@ LOGGING = {
             "formatter": "simple",
         },
         "mail_admins": {
-            "level": "WARNING",
+            "level": "ERROR",
             "filters": ["require_debug_false"],
             "class": "django.utils.log.AdminEmailHandler",
             "formatter": "verbose",

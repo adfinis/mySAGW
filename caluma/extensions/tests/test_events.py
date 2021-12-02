@@ -183,6 +183,7 @@ def test_send_new_work_item_mail(
     skip_work_item(case.work_items.get(task_id="review-document"), user)
     assert len(mailoutbox) == 1
     assert mailoutbox[0].from_email == settings.MAILING_SENDER
+    assert mailoutbox[0].to == ["test-send@example.com"]
 
 
 def test_access_control(
