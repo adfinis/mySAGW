@@ -104,7 +104,7 @@ export default class WorkItemsIndexController extends Controller {
   @restartableTask
   *fetchWorkItems() {
     const filter = [
-      { hasDeadline: true },
+      { metaHasKey: "hidden", invert: true },
       { tasks: this.taskTypes.mapBy("value") },
       {
         caseDocumentHasAnswer: [
@@ -135,7 +135,7 @@ export default class WorkItemsIndexController extends Controller {
 
     yield this.workItemsQuery.fetch({
       filter,
-      order: [{ attribute: "CREATED_AT", direction: "DESC" }], // todo
+      order: [{ attribute: "CREATED_AT", direction: "DESC" }], // todo order
     });
     yield this.getIdentities.perform();
   }

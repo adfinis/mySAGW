@@ -4,7 +4,6 @@ mutation saveWorkItem($input: SaveWorkItemInput!) {
     workItem {
       id
       assignedUsers
-      deadline
     }
   }
 }

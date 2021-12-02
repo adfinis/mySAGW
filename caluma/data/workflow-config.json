@@ -39,7 +39,7 @@
         "control_groups": null,
         "is_archived": false,
         "form": null,
-        "lead_time": 2592000,
+        "lead_time": null,
         "is_multiple_instance": false
     }
 },
@@ -61,7 +61,7 @@
         "control_groups": null,
         "is_archived": false,
         "form": "advance-credits-form",
-        "lead_time": 2592000,
+        "lead_time": null,
         "is_multiple_instance": false
     }
 },
@@ -83,7 +83,7 @@
         "control_groups": null,
         "is_archived": false,
         "form": null,
-        "lead_time": 1728000,
+        "lead_time": null,
         "is_multiple_instance": false
     }
 },
@@ -105,7 +105,7 @@
         "control_groups": null,
         "is_archived": false,
         "form": "circulation-form",
-        "lead_time": 432000,
+        "lead_time": null,
         "is_multiple_instance": true
     }
 },
@@ -149,7 +149,7 @@
         "control_groups": null,
         "is_archived": false,
         "form": "decision-and-credit-form",
-        "lead_time": 432000,
+        "lead_time": null,
         "is_multiple_instance": false
     }
 },
@@ -171,7 +171,7 @@
         "control_groups": null,
         "is_archived": false,
         "form": "define-amount-form",
-        "lead_time": 432000,
+        "lead_time": null,
         "is_multiple_instance": false
     }
 },
@@ -188,7 +188,7 @@
         "name": "{\"de\": \"Zirkulation abschliessen\", \"en\": \"Finish circulation\", \"fr\": \"Terminer la circulation\"}",
         "description": "{\"de\": null, \"en\": null, \"fr\": null}",
         "type": "simple",
-        "meta": {},
+        "meta": {"hidden": true},
         "address_groups": null,
         "control_groups": null,
         "is_archived": false,
@@ -210,7 +210,7 @@
         "name": "{\"de\": \"Zur Zirkulation einladen\", \"en\": \"Invite to circulation\", \"fr\": \"Inviter \\u00e0 la circulation\"}",
         "description": "{\"de\": null, \"en\": null, \"fr\": null}",
         "type": "simple",
-        "meta": {},
+        "meta": {"hidden": true},
         "address_groups": null,
         "control_groups": null,
         "is_archived": false,
@@ -237,7 +237,7 @@
         "control_groups": null,
         "is_archived": false,
         "form": "review-document-form",
-        "lead_time": 432000,
+        "lead_time": null,
         "is_multiple_instance": false
     }
 },
@@ -259,7 +259,7 @@
         "control_groups": null,
         "is_archived": false,
         "form": null,
-        "lead_time": 432000,
+        "lead_time": null,
         "is_multiple_instance": false
     }
 },
@@ -281,7 +281,7 @@
         "control_groups": null,
         "is_archived": false,
         "form": null,
-        "lead_time": 2592000,
+        "lead_time": null,
         "is_multiple_instance": false
     }
 },

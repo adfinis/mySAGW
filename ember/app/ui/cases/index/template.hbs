@@ -34,8 +34,11 @@
   {{else}}
     <div uk-grid class="uk-flex-between">
       <Filters as |Filter|>
-        <Filter.Input @label={{t "work-items.filters.documentNumber" }} @value={{this.documentNumber}} @onChange={{fn
-          this.updateFilter "documentNumber" }} />
+        <Filter.Input
+          @label={{t "work-items.filters.documentNumber" }}
+          @value={{this.documentNumber}}
+          @onChange={{fn this.updateFilter "documentNumber" }}
+        />
       </Filters>
 
       <div class="uk-width-auto uk-flex uk-flex-middle">
