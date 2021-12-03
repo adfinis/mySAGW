@@ -9,6 +9,6 @@ from mysagw.identity.models import Identity
 def assign_cases(sender, instance, created, **kwargs):
     if not created:
         return
-    CaseAccess.objects.filter(email=instance.email).update(
+    CaseAccess.objects.filter(email=instance.email, email__isnull=False).update(
         email=None, identity=instance
     )
