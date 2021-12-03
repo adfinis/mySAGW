@@ -46,6 +46,9 @@ class CaseAccessSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         instance = super().create(validated_data)
 
+        if models.CaseAccess.objects.filter(case_id=instance.case_id).count() == 1:
+            return instance
+
         subject = email_texts.EMAIL_SUBJECT_INVITE_REGISTER
         body = email_texts.EMAIL_BODY_INVITE_REGISTER.format(link=settings.SELF_URI)
         email = instance.email
