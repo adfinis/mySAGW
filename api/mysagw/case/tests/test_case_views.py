@@ -49,6 +49,7 @@ def test_case_list(
 def test_case_create(
     db,
     case_access,
+    case_access_factory,
     client,
     identity,
     has_access,
@@ -56,12 +57,14 @@ def test_case_create(
     expected_status,
     mailoutbox,
 ):
+    first_case = case_access_factory()
+
     url = reverse("caseaccess-list")
 
     data = {
         "data": {
             "type": "case-accesses",
-            "attributes": {"email": "test@example.com", "case-id": uuid4()},
+            "attributes": {"email": "test@example.com", "case-id": first_case.case_id},
             "relationships": {
                 "identity": {},
             },
@@ -85,7 +88,7 @@ def test_case_create(
         assert len(mailoutbox) == 0
         return
 
-    assert models.CaseAccess.objects.count() == 2
+    assert models.CaseAccess.objects.count() == 3
     result = response.json()
     case_access = models.CaseAccess.objects.get(pk=result["data"]["id"])
     if identity_exists:
@@ -113,6 +116,28 @@ def test_case_create(
             link=f"{settings.SELF_URI}/cases/{case_access.case_id}",
         )
         assert mailoutbox[0].body == expected_body
+
+
+def test_case_create_first(db, client, mailoutbox):
+    data = {
+        "data": {
+            "type": "case-accesses",
+            "attributes": {
+                "email": client.user.identity.email,
+                "case-id": str(uuid4()),
+            },
+            "relationships": {
+                "identity": {},
+            },
+        }
+    }
+
+    url = reverse("caseaccess-list")
+
+    response = client.post(url, data=data)
+
+    assert response.status_code == status.HTTP_201_CREATED
+    assert len(mailoutbox) == 0
 
 
 def test_case_create_already_exists(db, case_access_factory, client):
