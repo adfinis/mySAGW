@@ -4,9 +4,8 @@ from caluma.caluma_core.permissions import (
     object_permission_for,
     permission_for,
 )
-from caluma.caluma_form.models import Document
 from caluma.caluma_form.schema import SaveDocument, SaveDocumentAnswer
-from caluma.caluma_workflow.schema import CompleteWorkItem, SaveCase
+from caluma.caluma_workflow.schema import CancelCase, CompleteWorkItem, SaveCase
 from caluma.extensions.common import get_cases_for_user
 from caluma.extensions.settings import settings
 
@@ -62,24 +61,34 @@ class MySAGWPermission(BasePermission):
     @object_permission_for(SaveCase)
     @permission_for(SaveDocument)
     @object_permission_for(SaveDocument)
+    @permission_for(SaveDocumentAnswer)
     def has_permission_for_save_case_save_document(self, mutation, info, obj=None):
         return True
 
-    @permission_for(SaveDocumentAnswer)
     @object_permission_for(SaveDocumentAnswer)
-    def has_permission_for_save_document_answer(self, mutation, info, answer=None):
-        document = Document.objects.get(
-            pk=mutation.get_params(info)["input"]["document"]
-        )
-        case = self._get_case_for_doc(document)
+    def has_permission_for_save_document_answer(self, mutation, info, answer):
+        if (
+            not answer.document.family.form.is_published
+            and not getattr(answer.document.family, "case", False)
+            and not getattr(answer.document.family, "work_item", False)
+            and self._is_own(info, answer.document.family)
+        ):
+            # is floating row-document
+            return True
+
+        case = self._get_case_for_doc(answer.document)
         return self._is_admin_or_sagw(info) or (
-            (self._can_access_case(info, case) or self._is_own(info, document))
-            and document.case.work_items.filter(
+            (
+                self._can_access_case(info, case)
+                or self._is_own(info, answer.document.family)
+            )
+            and case.work_items.filter(
                 status="ready", task__slug__in=settings.APPLICANT_TASK_SLUGS
             ).exists()
         )
 
     @permission_for(CompleteWorkItem)
+    @permission_for(CancelCase)
     def has_permission_for_complete_work_item(self, mutation, info):
         return True
 
@@ -92,3 +101,12 @@ class MySAGWPermission(BasePermission):
             )
             and work_item.task.slug in settings.APPLICANT_TASK_SLUGS
         )
+
+    @object_permission_for(CancelCase)
+    def has_permission_for_cancel_case(self, mutation, info, case):
+        return (
+            self._is_admin_or_sagw(info)
+            or (self._can_access_case(info, case) or self._is_own(info, case))
+        ) and case.work_items.filter(
+            status="ready", task__slug="submit-document"
+        ).exists()

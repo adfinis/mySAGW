@@ -7,27 +7,27 @@ from caluma.extensions.visibilities import MySAGWVisibility
 
 
 @pytest.mark.parametrize(
-    "name,visibility_map",
+    "user_name,visibility_map",
     [
         (
             "admin",
             {
-                "Form": 3,
-                "WorkItem": 3,
-                "Document": 5,
+                "Form": 7,
+                "WorkItem": 5,
+                "Document": 3,
                 "Case": 2,
-                "Question": 1,
-                "Answer": 1,
+                "Question": 20,
+                "Answer": 3,
             },
         ),
         (
-            "user",
+            "test",
             {
-                "Form": 3,
+                "Form": 7,
                 "WorkItem": 1,
-                "Document": 1,
+                "Document": 2,
                 "Case": 1,
-                "Question": 1,
+                "Question": 20,
                 "Answer": 1,
             },
         ),
@@ -35,45 +35,24 @@ from caluma.extensions.visibilities import MySAGWVisibility
 )
 def test_visibilities_default(
     db,
-    work_item_factory,
-    form_question_factory,
-    answer_factory,
+    caluma_data,
+    case_access_event_mock,
+    circulation,
     admin_info,
-    case_access_request_mock,
-    name,
+    requests_mock,
+    user_name,
     visibility_map,
 ):
-    admin_info.context.user.username = name
-    admin_info.context.user.groups = [name]
-    admin_info.context.user.group = name
+    admin_info.context.user.username = user_name
+    admin_info.context.user.groups = [user_name]
+    admin_info.context.user.group = user_name
 
-    wi1 = work_item_factory(
-        case__pk="994b72cc-6556-46e5-baf9-228457fa309f",
-        task__slug=settings.APPLICANT_TASK_SLUGS[0],
-        child_case=None,
-    )
-    work_item_factory(
-        case=wi1.case,
-        task__slug="foo",
-        document__form=wi1.document.form,
-        case__document__form=wi1.document.form,
-        task__form=wi1.document.form,
-        child_case=None,
-    )
-    work_item_factory(
-        document__form=wi1.document.form,
-        case__document__form=wi1.document.form,
-        task__form=wi1.document.form,
-        child_case=None,
-    )
+    case = workflow_models.Case.objects.get(workflow__slug="document-review")
+    case.document.form.is_published = True
+    case.document.form.save()
 
-    fq = form_question_factory(form=wi1.document.form, question__type="text")
-    answer_factory(
-        document=wi1.document,
-        question=fq.question,
-        value="foo",
-        created_by_user="test1",
-    )
+    data = {"data": [{"attributes": {"case-id": str(case.pk)}}]}
+    requests_mock.get(f"{settings.API_BASE_URI}/case/accesses", json=data)
 
     test_map = [
         (form_models.Form, form_schema.Form),
