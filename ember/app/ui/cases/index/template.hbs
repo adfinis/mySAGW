@@ -11,7 +11,7 @@
 <hr />
 
 <div>
-  {{#if (and (not this.caseQuery.value.length) this.hasFilter)}}
+  {{#if this.showEmpty}}
     <div class="uk-width-2-3 uk-margin-auto">
       <h1 class="uk-text-center">
         {{t "documents.empty.welcome" appName="mySAGW"}}

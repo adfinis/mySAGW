@@ -14,11 +14,12 @@ export default class CasesIndexController extends Controller {
 
   @service store;
   @service notification;
+  @service intl;
 
   @tracked order = ENV.APP.casesTable.defaultOrder;
   @tracked cases = [];
   @tracked types = [];
-  @tracked documentNumber = "";
+  @tracked documentNumber = null;
 
   orderOptions = ENV.APP.casesTable.orderOptions;
 
@@ -31,8 +32,8 @@ export default class CasesIndexController extends Controller {
     };
   }
 
-  get hasFilter() {
-    return this.documentNumber;
+  get showEmpty() {
+    return !this.caseQuery.value.length && this.documentNumber === null;
   }
 
   @restartableTask
@@ -46,7 +47,7 @@ export default class CasesIndexController extends Controller {
             hasAnswer: [
               {
                 question: "dossier-nr",
-                value: this.documentNumber,
+                value: this.documentNumber ?? "",
                 lookup: "ICONTAINS",
               },
             ],
