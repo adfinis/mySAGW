@@ -1,4 +1,4 @@
-from django.core.mail import send_mail
+# from django.core.mail import send_mail
 from django.db import transaction
 
 from caluma.caluma_core.events import on
@@ -13,8 +13,8 @@ from caluma.caluma_workflow.events import (
     pre_complete_work_item,
 )
 
-from .. import email_texts
-from ..common import get_users_for_case
+# from .. import email_texts
+# from ..common import get_users_for_case
 from ..settings import settings
 
 
@@ -23,7 +23,11 @@ from ..settings import settings
 def set_assigned_user(sender, work_item, user, **kwargs):
     if work_item.task_id == "submit-document":
         work_item.assigned_users = [user.claims["sub"]]
-    elif work_item.task_id in ["revise-document", "additional-data"]:
+    elif work_item.task_id in [
+        "revise-document",
+        "additional-data",
+        "additional-data-form",
+    ]:
         work_item.assigned_users = caluma_workflow_models.WorkItem.objects.get(
             task_id="submit-document", case=work_item.case
         ).assigned_users
@@ -31,41 +35,41 @@ def set_assigned_user(sender, work_item, user, **kwargs):
     work_item.save()
 
 
-@on(post_create_work_item, raise_exception=True)
-def send_new_work_item_mail(sender, work_item, user, **kwargs):
-    if work_item.task_id not in [
-        "revise-document",
-        "additional-data",
-        "complete-document",
-    ]:
-        return
-
-    link = (
-        f"{settings.SELF_URI}/cases/{work_item.case.pk}/work-items/{work_item.pk}/form"
-    )
-
-    if work_item.task_id == "complete-document":
-        link = f"{settings.SELF_URI}/cases/{work_item.case.pk}"
-
-    users = get_users_for_case(work_item.case)
-
-    for user in users:
-        subject = email_texts.EMAIL_SUBJECTS[user["language"]]
-        body = email_texts.EMAIL_BODIES[user["language"]]
-
-        body = body.format(
-            first_name=user["first-name"] or "",
-            last_name=user["last-name"] or "",
-            link=link,
-        )
-
-        send_mail(
-            subject,
-            body,
-            settings.MAILING_SENDER,
-            [user["email"]],
-            fail_silently=True,
-        )
+# @on(post_create_work_item, raise_exception=True)
+# def send_new_work_item_mail(sender, work_item, user, **kwargs):
+#     if work_item.task_id not in [
+#         "revise-document",
+#         "additional-data",
+#         "complete-document",
+#     ]:
+#         return
+#
+#     link = (
+#         f"{settings.SELF_URI}/cases/{work_item.case.pk}/work-items/{work_item.pk}/form"
+#     )
+#
+#     if work_item.task_id == "complete-document":
+#         link = f"{settings.SELF_URI}/cases/{work_item.case.pk}"
+#
+#     users = get_users_for_case(work_item.case)
+#
+#     for user in users:
+#         subject = email_texts.EMAIL_SUBJECTS[user["language"]]
+#         body = email_texts.EMAIL_BODIES[user["language"]]
+#
+#         body = body.format(
+#             first_name=user["first-name"] or "",
+#             last_name=user["last-name"] or "",
+#             link=link,
+#         )
+#
+#         send_mail(
+#             subject,
+#             body,
+#             settings.MAILING_SENDER,
+#             [user["email"]],
+#             fail_silently=True,
+#         )
 
 
 @on(post_create_work_item, raise_exception=True)
