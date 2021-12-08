@@ -32,6 +32,9 @@ module.exports = function (environment) {
     apollo: {
       apiURL: "/graphql",
     },
+    moment: {
+      includeLocales: ["de", "fr"],
+    },
 
     EmberENV: {
       FEATURES: {

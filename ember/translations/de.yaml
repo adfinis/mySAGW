@@ -15,3 +15,7 @@ global:
   cancel: "Abbrechen"
   loadMore: "Weitere Einträge laden"
   saveAndBack: "Speichern und zurück"
+
+  moment:
+    previousMonth: "Vorheriger Monat"
+    nextMonth: "Nächster Monat"
