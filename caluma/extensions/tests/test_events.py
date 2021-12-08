@@ -58,8 +58,7 @@ def test_work_item_additional_data(
     complete_work_item(case.work_items.get(task_id="additional-data"), user)
 
     assert (
-        case.work_items.get(task_id="advance-credits").status
-        == WorkItem.STATUS_COMPLETED
+        case.work_items.get(task_id="advance-credits").status == WorkItem.STATUS_READY
     )
     assert (
         case.work_items.get(task_id="additional-data-form").status
@@ -132,6 +131,7 @@ def test_work_item_define_amount(
         work_items.get(task_id="additional-data-form").status
         == WorkItem.STATUS_COMPLETED
     )
+    assert work_items.get(task_id="advance-credits").status == WorkItem.STATUS_COMPLETED
 
 
 def test_work_item_invite_to_circulation(

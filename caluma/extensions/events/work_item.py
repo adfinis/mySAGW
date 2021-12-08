@@ -117,7 +117,7 @@ def invite_to_circulation(sender, work_item, user, context, **kwargs):
 
 @on(post_create_work_item, raise_exception=True)
 @transaction.atomic
-def additional_data_form_document(sender, work_item, user, context, **kwargs):
+def create_additional_data_form_document(sender, work_item, user, context, **kwargs):
     if work_item.task_id != "additional-data-form":
         return
 
@@ -148,18 +148,6 @@ def finish_circulation(sender, work_item, user, **kwargs):
 @transaction.atomic
 def finish_additional_data(sender, work_item, user, **kwargs):
     if work_item.task_id == "additional-data":
-        open_work_item = caluma_workflow_models.WorkItem.objects.filter(
-            task_id="advance-credits",
-            case=work_item.case,
-            status=caluma_workflow_models.WorkItem.STATUS_READY,
-        )
-
-        if open_work_item.exists():
-            caluma_workflow_api.complete_work_item(
-                work_item=open_work_item.first(),
-                user=user,
-            )
-
         form_work_item = caluma_workflow_models.WorkItem.objects.filter(
             task_id="additional-data-form",
             case=work_item.case,
@@ -170,6 +158,22 @@ def finish_additional_data(sender, work_item, user, **kwargs):
             caluma_workflow_api.suspend_work_item(
                 work_item=form_work_item.first(), user=user
             )
+
+
+@on(post_complete_work_item, raise_exception=True)
+@transaction.atomic
+def finish_additional_data_form(sender, work_item, user, **kwargs):
+    if work_item.task_id == "additional-data-form":
+        work_item = caluma_workflow_models.WorkItem.objects.filter(
+            task_id="advance-credits",
+            case=work_item.case,
+            status=caluma_workflow_models.WorkItem.STATUS_READY,
+        )
+
+        caluma_workflow_api.complete_work_item(
+            work_item=work_item.first(),
+            user=user,
+        )
 
 
 @on(post_complete_work_item, raise_exception=True)
