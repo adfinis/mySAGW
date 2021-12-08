@@ -2,7 +2,7 @@ from django.core.mail import send_mail
 from django.db import transaction
 
 from caluma.caluma_core.events import on
-from caluma.caluma_form import models as caluma_form_models
+from caluma.caluma_form import api as caluma_form_api, models as caluma_form_models
 from caluma.caluma_workflow import (
     api as caluma_workflow_api,
     models as caluma_workflow_models,
@@ -115,6 +115,21 @@ def invite_to_circulation(sender, work_item, user, context, **kwargs):
         )
 
 
+@on(post_create_work_item, raise_exception=True)
+@transaction.atomic
+def create_additional_data_form_document(sender, work_item, user, context, **kwargs):
+    if work_item.task_id != "additional-data-form":
+        return
+
+    form_slug = settings.ADDITIONAL_DATA_FORM.get(
+        work_item.case.document.form_id, "additional-data-form"
+    )
+    form = caluma_form_models.Form.objects.get(slug=form_slug)
+
+    work_item.document = caluma_form_api.save_document(form=form, user=user)
+    work_item.save()
+
+
 @on(pre_complete_work_item, raise_exception=True)
 @transaction.atomic
 def finish_circulation(sender, work_item, user, **kwargs):
@@ -133,14 +148,50 @@ def finish_circulation(sender, work_item, user, **kwargs):
 @transaction.atomic
 def finish_additional_data(sender, work_item, user, **kwargs):
     if work_item.task_id == "additional-data":
+        form_work_item = caluma_workflow_models.WorkItem.objects.filter(
+            task_id="additional-data-form",
+            case=work_item.case,
+            status=caluma_workflow_models.WorkItem.STATUS_READY,
+        )
+
+        if form_work_item.exists():
+            caluma_workflow_api.suspend_work_item(
+                work_item=form_work_item.first(), user=user
+            )
+
+
+@on(post_complete_work_item, raise_exception=True)
+@transaction.atomic
+def finish_additional_data_form(sender, work_item, user, **kwargs):
+    if work_item.task_id == "additional-data-form":
         work_item = caluma_workflow_models.WorkItem.objects.filter(
             task_id="advance-credits",
             case=work_item.case,
             status=caluma_workflow_models.WorkItem.STATUS_READY,
         )
 
-        if work_item.exists():
+        caluma_workflow_api.complete_work_item(
+            work_item=work_item.first(),
+            user=user,
+        )
+
+
+@on(post_complete_work_item, raise_exception=True)
+@transaction.atomic
+def finish_define_amount(sender, work_item, user, **kwargs):
+    if work_item.task_id == "define-amount":
+        decision = work_item.document.answers.get(
+            question_id="define-amount-decision",
+        )
+        form_work_item = caluma_workflow_models.WorkItem.objects.filter(
+            task_id="additional-data-form",
+            case=work_item.case,
+        ).first()
+
+        caluma_workflow_api.resume_work_item(work_item=form_work_item, user=user)
+
+        if "continue" in decision.value:
             caluma_workflow_api.complete_work_item(
-                work_item=work_item.first(),
+                work_item=form_work_item,
                 user=user,
             )

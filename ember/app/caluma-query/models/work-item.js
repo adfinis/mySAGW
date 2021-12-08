@@ -65,7 +65,7 @@ export default class CustomWorkItemModel extends WorkItemModel {
   get canComplete() {
     if (this.raw.task.slug === "circulation-decision") {
       return this.isReady && this.isAssignedToCurrentUser;
-    } else if (this.raw.task.slug === "advance-credits") {
+    } else if (["advance-credits"].includes(this.raw.task.slug)) {
       return false;
     }
     return this.isReady;
@@ -76,6 +76,14 @@ export default class CustomWorkItemModel extends WorkItemModel {
       this.isReady &&
       ENV.APP.caluma.skippableTaskSlugs.includes(this.raw.task.slug)
     );
+  }
+
+  get additionalWorkItem() {
+    if (this.raw.task.slug === "additional-data-form") {
+      return [{ task: "additional-data" }, { status: "READY" }];
+    }
+
+    return undefined;
   }
 
   get responsible() {

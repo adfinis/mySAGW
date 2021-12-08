@@ -1,44 +1,37 @@
-<h3>{{this.workItem.name}}</h3>
+<h3>{{@model.workItem.name}}</h3>
 
-{{#if this.fetchWorkItems.isRunning}}
-  <div class="uk-text-center uk-padding">
-    <UkSpinner @ratio={{2}} />
-  </div>
-{{else}}
-  <CfContent
-    @documentId={{this.workItem.document.id}}
-    @context={{hash completeCallback=(perform this.completeWorkItem)}}
-    @disabled={{not this.workItem.canEdit}}
-    as |content|
+<CfContent
+  @documentId={{@model.workItem.document.id}}
+  @disabled={{not @model.workItem.canEdit}}
+  as |content|
+>
+  <DocumentValidity
+    @document={{content.document}}
+    @validateOnEnter={{false}}
+    as |isValid validate|
   >
-    <DocumentValidity
-      @document={{content.document}}
-      @validateOnEnter={{false}}
-      as |isValid validate|
-    >
-      {{content.form}}
+    {{content.form}}
 
-      {{#if this.workItem.canComplete}}
-        <WorkItemButton
-          @mutation="complete"
-          @workItemId={{@model}}
-          @type="submit"
-          @color="primary"
-          @label={{t "work-items.actions.finish"}}
-          @beforeMutate={{validate}}
-          @onSuccess={{this.transitionToCaseWorkItems}}
-        />
-      {{/if}}
-      {{#if this.workItem.canSkip}}
-        <WorkItemButton
-          @mutation="skip"
-          @workItemId={{@model}}
-          @type="submit"
-          @label={{t "work-items.actions.skip"}}
-          @beforeMutate={{validate}}
-          @onSuccess={{this.transitionToCaseWorkItems}}
-        />
-      {{/if}}
-    </DocumentValidity>
-  </CfContent>
-{{/if}}
+    {{#if @model.workItem.canComplete}}
+      <WorkItemButton
+        @mutation="complete"
+        @workItemId={{@model.workItemToComplete.id}}
+        @type="submit"
+        @color="primary"
+        @label={{t "work-items.actions.finish"}}
+        @beforeMutate={{validate}}
+        @onSuccess={{this.transitionToCaseWorkItems}}
+      />
+    {{/if}}
+    {{#if @model.workItem.canSkip}}
+      <WorkItemButton
+        @mutation="skip"
+        @workItemId={{@model.workItem.id}}
+        @type="submit"
+        @label={{t "work-items.actions.skip"}}
+        @beforeMutate={{validate}}
+        @onSuccess={{this.transitionToCaseWorkItems}}
+      />
+    {{/if}}
+  </DocumentValidity>
+</CfContent>

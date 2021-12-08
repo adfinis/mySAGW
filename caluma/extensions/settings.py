@@ -65,7 +65,12 @@ settings.APPLICANT_TASK_SLUGS = [
     "submit-document",
     "revise-document",
     "additional-data",
+    "additional-data-form",
 ]
+
+settings.ADDITIONAL_DATA_FORM = {
+    "periodika-antrag": "periodika-abrechnung",
+}
 
 settings.CASE_ID_CACHE_SECONDS = int(os.environ.get("CASE_ID_CACHE_SECONDS", "60"))
 

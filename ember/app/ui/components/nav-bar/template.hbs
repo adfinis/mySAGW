@@ -151,7 +151,9 @@
         </LinkTo>
       </li>
 
-      <li class="uk-nav-header">{{t "components.nav-bar.admin"}}</li>
+      {{#if (can "list identity")}}
+        <li class="uk-nav-header">{{t "components.nav-bar.admin"}}</li>
+      {{/if}}
       {{#if (can "list identity")}}
         <li>
           <LinkTo @route="identities" uk-toggle="target: #offcanvas-nav">
