@@ -1,5 +1,6 @@
 profile:
   title: "Profil"
+  noNameSet: "Bitte tragen Sie ihren Vor- und Nachnamen ein."
   switcher:
     identity: "Adresse"
     memberships: "Mitgliedschaften"
