@@ -23,7 +23,11 @@ from ..settings import settings
 def set_assigned_user(sender, work_item, user, **kwargs):
     if work_item.task_id == "submit-document":
         work_item.assigned_users = [user.claims["sub"]]
-    elif work_item.task_id in ["revise-document", "additional-data"]:
+    elif work_item.task_id in [
+        "revise-document",
+        "additional-data",
+        "additional-data-form",
+    ]:
         work_item.assigned_users = caluma_workflow_models.WorkItem.objects.get(
             task_id="submit-document", case=work_item.case
         ).assigned_users
