@@ -63,7 +63,13 @@ export default class CasesDetailIndexController extends Controller {
 
   @restartableTask
   *saveAccessRow() {
-    if (this.model.accesses.findBy("email", this.newRow.email)) {
+    if (
+      this.model.accesses.find((access) => {
+        return (
+          (access.email ?? access.identity.get("email")) === this.newRow.email
+        );
+      })
+    ) {
       this.notification.danger(
         this.intl.t("documents.accesses.duplicateEmail")
       );

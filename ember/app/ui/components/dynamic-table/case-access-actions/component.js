@@ -11,8 +11,9 @@ export default class CaseAccessActionsComponent extends Component {
     yield this.args.tdDefinition.additionalInfo.accesses
       .find((a) => {
         return (
-          a.identity.get("id") === access.identity.get("id") ||
-          (a.email === access.email && access.email !== null)
+          (access.identity &&
+            a.identity?.get("id") === access.identity.get("id")) ||
+          (a.email === access.email && !access.identity)
         );
       })
       .destroyRecord();
