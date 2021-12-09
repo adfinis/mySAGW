@@ -2,8 +2,6 @@ version: "3"
 services:
   db:
     env_file: ./.envs/.local/.postgres
-    ports:
-      - "5432:5432"
 
   api:
     build:
