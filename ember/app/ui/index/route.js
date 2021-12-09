@@ -12,7 +12,7 @@ export default class IndexRoute extends Route {
   }
 
   afterModel(model) {
-    if (!(model.firstName || model.lastName)) {
+    if (!(model.firstName && model.lastName)) {
       this.notification.warning(this.intl.t("profile.noNameSet"));
       return this.transitionTo("profile");
     }
