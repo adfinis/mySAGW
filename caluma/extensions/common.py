@@ -24,15 +24,15 @@ def get_cases_for_user(user):
     return case_ids
 
 
-# def get_users_for_case(case):
-#     client = APIClient()
-#     token = client.get_admin_token()
-#     result = client.get(
-#         f"/case/accesses?filter%5BcaseId%5D={str(case.pk)}&include=identity",
-#         token=token,
-#     )
-#     users = []
-#     for include in result["included"]:
-#         users.append(include["attributes"])
-#
-#     return users
+def get_users_for_case(case):
+    client = APIClient()
+    token = client.get_admin_token()
+    result = client.get(
+        f"/case/accesses?filter%5BcaseId%5D={str(case.pk)}&include=identity",
+        token=token,
+    )
+    users = []
+    for include in result["included"]:
+        users.append(include["attributes"])
+
+    return users

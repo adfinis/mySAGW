@@ -5,7 +5,7 @@ from caluma.caluma_form.models import Question
 from caluma.caluma_workflow.api import complete_work_item, skip_work_item, start_case
 from caluma.caluma_workflow.models import Workflow, WorkItem
 
-# from ..settings import settings
+from ..settings import settings
 
 
 def test_work_item_set_assigned_user(
@@ -245,22 +245,22 @@ def test_case_status(
     assert case.meta["status"] == "complete"
 
 
-# def test_send_new_work_item_mail(
-#     db, user, caluma_data, case_access_event_mock, document_review_case, mailoutbox
-# ):
-#     case = document_review_case
-#
-#     skip_work_item(case.work_items.get(task_id="submit-document"), user)
-#
-#     case.work_items.get(task_id="review-document").document.answers.create(
-#         question_id="review-document-decision",
-#         value="review-document-decision-reject",
-#     )
-#
-#     skip_work_item(case.work_items.get(task_id="review-document"), user)
-#     assert len(mailoutbox) == 1
-#     assert mailoutbox[0].from_email == settings.MAILING_SENDER
-#     assert mailoutbox[0].to == ["test-send@example.com"]
+def test_send_new_work_item_mail(
+    db, user, caluma_data, case_access_event_mock, document_review_case, mailoutbox
+):
+    case = document_review_case
+
+    skip_work_item(case.work_items.get(task_id="submit-document"), user)
+
+    case.work_items.get(task_id="review-document").document.answers.create(
+        question_id="review-document-decision",
+        value="review-document-decision-reject",
+    )
+
+    skip_work_item(case.work_items.get(task_id="review-document"), user)
+    assert len(mailoutbox) == 1
+    assert mailoutbox[0].from_email == settings.MAILING_SENDER
+    assert mailoutbox[0].to == ["test-send@example.com"]
 
 
 def test_access_control(
