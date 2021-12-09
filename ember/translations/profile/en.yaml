@@ -1,5 +1,6 @@
 profile:
   title: "Profile"
+  noNameSet: "Please enter your first and last name."
   switcher:
     identity: "Identity"
     memberships: "Memberships"
