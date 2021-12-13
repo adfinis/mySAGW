@@ -107,7 +107,7 @@ export default class IdentitiesIndexController extends Controller {
       .buildURL("identity")}/${endpoint}`;
 
     if (this.searchTerm) {
-      uri += `?filter[search]=${this.searchTerm}`;
+      uri += `?filter[search]=${encodeURIComponent(this.searchTerm)}`;
     }
 
     const init = {
