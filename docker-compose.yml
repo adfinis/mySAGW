@@ -12,8 +12,6 @@ services:
 
   api:
     image: adfinis-sygroup/mysagw
-    ports:
-      - "8000:8000"
     depends_on:
       - db
 
@@ -81,8 +79,6 @@ services:
     volumes:
       - minio_data:/data
     command: server data
-    ports:
-      - "9000:9000"
 
   mc:
     image: minio/mc:RELEASE.2021-02-19T05-34-40Z
