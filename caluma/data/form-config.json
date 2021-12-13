@@ -247,7 +247,7 @@
 },
 {
     "model": "caluma_form.formquestion",
-    "pk": "advance-credits-form.advance-credit-amount",
+    "pk": "advance-credits-form.advance-credit-amount-float",
     "fields": {
         "created_at": "2021-08-25T08:47:29.058Z",
         "modified_at": "2021-08-25T08:47:29.058Z",
@@ -256,7 +256,7 @@
         "modified_by_user": null,
         "modified_by_group": null,
         "form": "advance-credits-form",
-        "question": "advance-credit-amount",
+        "question": "advance-credit-amount-float",
         "sort": 1
     }
 },
@@ -658,7 +658,7 @@
 },
 {
     "model": "caluma_form.question",
-    "pk": "advance-credit-amount",
+    "pk": "advance-credit-amount-float",
     "fields": {
         "created_at": "2021-08-25T08:47:29.001Z",
         "modified_at": "2021-08-25T08:47:29.001Z",
@@ -667,7 +667,7 @@
         "modified_by_user": null,
         "modified_by_group": null,
         "label": "{\"de\": null, \"en\": \"Vorschusszahlungbetrag\", \"fr\": null}",
-        "type": "integer",
+        "type": "float",
         "is_required": "false",
         "is_hidden": "false",
         "is_archived": false,
