@@ -20,8 +20,8 @@ documents:
 
   actions: "Actions"
   noActions: "Aucune action n'est disponible."
-  edit: "Modifier la requête"
-  editText: "Vous pouvez modifier la requête et changer les anciennes données."
+  edit: "Saisir / modifier la requête"
+  editText: "Vous pouvez saisir / modifier la requête et changer les anciennes données."
   submit: "Envoyer la requête"
   submitText: "Vous pouvez envoyer la requête."
   noSubmitText: "La requête ne peut pas être envoyée car elle est incomplète."
