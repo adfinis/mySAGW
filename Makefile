@@ -77,6 +77,13 @@ caluma-dump-workflow: ## dump Caluma workflow models
 caluma-flush: ## flush the Caluma database
 	@docker-compose exec caluma python manage.py flush --no-input
 
+.PHONY: caluma-foreground
+caluma-foreground: ## run caluma in foreground with dev server for debugging
+	@docker-compose stop caluma
+	@docker-compose run --rm -u root --use-aliases --service-ports caluma bash -c \
+	'pip install pdbpp && python ./manage.py runserver 0.0.0.0:8000'
+
+
 .PHONY: ember-lint
 ember-lint: ## lint the frontend
 	@docker-compose run --rm ember yarn lint
