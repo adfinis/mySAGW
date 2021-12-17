@@ -13,6 +13,7 @@ settings.EMAIL_PORT = os.environ.get("EMAIL_PORT", 1025)
 settings.EMAIL_HOST_USER = os.environ.get(
     "EMAIL_HOST_USER", "noreply@mysagw.adfinis.com"
 )
+settings.SERVER_EMAIL = os.environ.get("SERVER_EMAIL", settings.EMAIL_HOST_USER)
 settings.EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
 settings.EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", False)
 from_name = os.environ.get("MAILING_FROM_NAME", "mySAGW")

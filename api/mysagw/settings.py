@@ -197,6 +197,7 @@ STAFF_GROUP = "sagw"
 EMAIL_HOST = env.str("EMAIL_HOST", "mail")
 EMAIL_PORT = env.int("EMAIL_PORT", 1025)
 EMAIL_HOST_USER = env.str("EMAIL_HOST_USER", "noreply@mysagw.adfinis.com")
+SERVER_EMAIL = env.str("SERVER_EMAIL", EMAIL_HOST_USER)
 EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD", "")
 EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS", False)
 from_name = env.str("MAILING_FROM_NAME", "mySAGW")
