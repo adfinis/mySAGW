@@ -9,6 +9,6 @@ module("Integration | Component | case-access-actions", function (hooks) {
   test("it renders", async function (assert) {
     await render(hbs`<DynamicTable::CaseAccessActions />`);
 
-    assert.strictEqual(this.element.textContent.trim(), "");
+    assert.dom(this.element).hasText("");
   });
 });

@@ -12,6 +12,6 @@ module("Integration | Component | pagination", function (hooks) {
 
     await render(hbs`<Pagination />`);
 
-    assert.strictEqual(this.element.textContent.trim(), "");
+    assert.dom(this.element).hasText("");
   });
 });

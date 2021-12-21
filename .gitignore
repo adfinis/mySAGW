@@ -75,3 +75,6 @@ target/
 
 # git
 *.orig
+
+.vscode/
+caluma/data
