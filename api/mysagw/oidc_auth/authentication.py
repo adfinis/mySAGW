@@ -1,3 +1,4 @@
+import binascii
 import functools
 import hashlib
 import json
@@ -52,9 +53,12 @@ class MySAGWAuthenticationBackend(OIDCAuthenticationBackend):
 
     @staticmethod
     def _client_id_from_token(token):
-        return json.loads(b64decode(token.split(".")[1])).get(
-            settings.OIDC_CLIENT_ID_CLAIM
-        )
+        try:
+            return json.loads(b64decode(token.split(".")[1])).get(
+                settings.OIDC_CLIENT_ID_CLAIM
+            )
+        except (IndexError, binascii.Error):
+            return None
 
     def get_userinfo_or_introspection(self, access_token) -> dict:
         client_id = self._client_id_from_token(access_token)
