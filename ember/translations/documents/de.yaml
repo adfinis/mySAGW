@@ -13,8 +13,8 @@ documents:
   asc: "Aufsteigend"
   description: "Beschreibung"
   status: "Status"
-  createdByUser: "Erstellt von"
   section: "Abschnitt"
+  distributionPlan: "Verteilplan"
 
   general: "Information"
 

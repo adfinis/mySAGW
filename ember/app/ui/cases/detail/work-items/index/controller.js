@@ -36,13 +36,14 @@ export default class CasesDetailWorkItemsController extends Controller {
           type: "task-name",
         },
         {
-          heading: { label: "work-items.deadline" },
-          modelKey: "deadline",
-          type: "deadline",
-        },
-        {
           heading: { label: "work-items.responsible" },
           modelKey: "responsible",
+        },
+        {
+          heading: { label: "work-items.distributionPlan" },
+          questionSlug: "verteilplan-nr",
+          answerKey: "case.document.answers.edges",
+          type: "answer-value",
         },
         {
           heading: { label: "work-items.action" },
@@ -77,11 +78,14 @@ export default class CasesDetailWorkItemsController extends Controller {
 
   @restartableTask
   *fetchWorkItems() {
-    const filter = [{ hasDeadline: true }, { case: this.model.id }];
+    const filter = [
+      { metaHasKey: "hidden", invert: true },
+      { case: this.model.id },
+    ];
 
     yield this.readyWorkItemsQuery.fetch({
       filter: [...filter, { status: "READY" }],
-      order: [{ attribute: "DEADLINE", direction: "ASC" }],
+      order: [], // todo order
     });
 
     yield this.completedWorkItemsQuery.fetch({

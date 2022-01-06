@@ -25,6 +25,12 @@ export default class CasesTableComponent extends Component {
         type: "case-status",
       },
       {
+        heading: { label: "documents.distributionPlan" },
+        questionSlug: "verteilplan-nr",
+        answerKey: "document.answers.edges",
+        type: "answer-value",
+      },
+      {
         heading: { label: "documents.createdAt" },
         modelKey: "createdAt",
         type: "date",

@@ -2,7 +2,6 @@ import { inject as service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import WorkItemModel from "@projectcaluma/ember-core/caluma-query/models/work-item";
 import { queryManager } from "ember-apollo-client";
-import moment from "moment";
 
 import ENV from "mysagw/config/environment";
 import saveWorkItemMutation from "mysagw/gql/mutations/save-work-item.graphql";
@@ -18,7 +17,6 @@ export default class CustomWorkItemModel extends WorkItemModel {
 
   @tracked meta = this.raw.meta;
   @tracked assignedUsers = this.raw.assignedUsers;
-  @tracked deadline = moment(this.raw.deadline);
 
   get assignedUser() {
     return this.store
@@ -137,7 +135,6 @@ export default class CustomWorkItemModel extends WorkItemModel {
     controllingGroups
     assignedUsers
     name
-    deadline
     description
     document {
       id
@@ -186,12 +183,22 @@ export default class CustomWorkItemModel extends WorkItemModel {
               slug
               name
             }
-            answers(filter: [{questions: ["dossier-nr", "sektion"]}]) {
+            answers(filter: [{questions: ["dossier-nr", "sektion", "verteilplan-nr"]}]) {
               edges {
                 node {
                   id
                   question {
                     slug
+                    ... on ChoiceQuestion {
+                      options {
+                        edges {
+                          node {
+                            slug
+                            label
+                          }
+                        }
+                      }
+                    }
                   }
                   ... on StringAnswer {
                     StringAnswerValue: value
@@ -215,7 +222,7 @@ export default class CustomWorkItemModel extends WorkItemModel {
           slug
           name
         }
-        answers(filter: [{questions: ["dossier-nr", "sektion"]}]) {
+        answers(filter: [{questions: ["dossier-nr", "sektion", "verteilplan-nr"]}]) {
           edges {
             node {
               id
@@ -234,6 +241,9 @@ export default class CustomWorkItemModel extends WorkItemModel {
               }
               ... on StringAnswer {
                 StringAnswerValue: value
+              }
+              ... on IntegerAnswer {
+                IntegerAnswerValue: value
               }
             }
           }

@@ -114,25 +114,6 @@
     </div>
   </div>
 
-  <div class="uk-margin">
-    <label class="uk-form-label" for="deadline">
-      {{t "work-items.deadline"}}
-      <span class="mandatory">
-        *
-      </span>
-    </label>
-    <div class="uk-form-controls">
-      <PikadayInput
-        id="deadline"
-        class="uk-input"
-        @value={{this.workItem.deadline}}
-        @useUTC={{true}}
-        @onSelection={{this.setDeadline}}
-        @disabled={{this.workItem.isCompleted}}
-      />
-    </div>
-  </div>
-
   <div class="uk-text-right">
     <LinkTo
       @route="cases.detail.work-items"

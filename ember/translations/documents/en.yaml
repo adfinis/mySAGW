@@ -13,8 +13,8 @@ documents:
   asc: "Asc"
   description: "Description"
   status: "Status"
-  createdByUser: "Created by"
   section: "Section"
+  distributionPlan: "Distribution plan"
 
   general: "General information"
 

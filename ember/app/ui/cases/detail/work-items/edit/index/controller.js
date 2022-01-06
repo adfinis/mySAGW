@@ -5,7 +5,6 @@ import calumaQuery from "@projectcaluma/ember-core/caluma-query";
 import { allWorkItems } from "@projectcaluma/ember-core/caluma-query/queries";
 import { queryManager } from "ember-apollo-client";
 import { dropTask, lastValue } from "ember-concurrency";
-import moment from "moment";
 
 import ENV from "mysagw/config/environment";
 import saveWorkItemMutation from "mysagw/gql/mutations/save-work-item.graphql";
@@ -55,7 +54,6 @@ export default class CasesDetailWorkItemsEditController extends Controller {
         variables: {
           input: {
             workItem: this.workItem.id,
-            deadline: this.workItem.deadline,
             assignedUsers: this.workItem.assignedUsers,
           },
         },
@@ -82,11 +80,6 @@ export default class CasesDetailWorkItemsEditController extends Controller {
         hasIdpId: true,
       },
     });
-  }
-
-  @action
-  setDeadline(value) {
-    this.workItem.deadline = moment(value);
   }
 
   @action
