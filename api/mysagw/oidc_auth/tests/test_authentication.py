@@ -216,6 +216,7 @@ def test_authentication_no_client(db, rf, requests_mock, mocker, settings, claim
     [
         ("e30.ewogICJjbGllbnRJZCI6ICJmb28iCn0", "foo"),
         ("e30.ewogICJub3RjbGllbnRJZCI6ICJiYXIiCn0", None),
+        ("undefined", None),
     ],
 )
 def test_client_id_from_token(token, claim):
