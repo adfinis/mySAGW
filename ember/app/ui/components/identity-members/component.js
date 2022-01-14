@@ -1,6 +1,8 @@
+import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import Component from "@glimmer/component";
-import { restartableTask, lastValue } from "ember-concurrency";
+import { tracked } from "@glimmer/tracking";
+import { restartableTask } from "ember-concurrency";
 
 /**
  * @arg identity
@@ -10,13 +12,26 @@ export default class IdentityMembersComponent extends Component {
   @service intl;
   @service notification;
 
-  @lastValue("fetchMembers") members;
+  @tracked pageSize = 10;
+  @tracked pageNumber = 1;
+  @tracked totalPages = 1;
+  @tracked members = [];
+
+  get hasNextPage() {
+    return this.pageNumber < this.totalPages;
+  }
+
   @restartableTask *fetchMembers() {
     const members = yield this.store.query("membership", {
       filter: { organisation: this.args.identity.id },
       include: "role",
+      page: {
+        number: this.pageNumber,
+        size: this.pageSize,
+      },
     });
 
+    this.totalPages = members.meta.pagination?.pages;
     const membersDeduped = [];
 
     members.forEach((member) => {
@@ -37,6 +52,14 @@ export default class IdentityMembersComponent extends Component {
       }
     });
 
+    this.members = [...this.members, ...members.toArray()];
+
     return membersDeduped;
+  }
+
+  @action
+  loadMoreMembers() {
+    this.pageNumber += 1;
+    this.fetchMembers.perform();
   }
 }
