@@ -33,7 +33,11 @@ export default class CasesIndexController extends Controller {
   }
 
   get showEmpty() {
-    return !this.caseQuery.value.length && this.documentNumber === null;
+    return (
+      !this.caseQuery.value.length &&
+      this.documentNumber === null &&
+      !this.fetchCases.isRunning
+    );
   }
 
   @restartableTask

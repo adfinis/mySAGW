@@ -8,6 +8,7 @@ import lookupValidator from "ember-changeset-validations";
 import { dropTask, restartableTask } from "ember-concurrency-decorators";
 import { saveAs } from "file-saver";
 
+import ENV from "mysagw/config/environment";
 import cancelCaseMutation from "mysagw/gql/mutations/cancel-case.graphql";
 import CaseValidations from "mysagw/validations/case";
 
@@ -23,6 +24,48 @@ export default class CasesDetailIndexController extends Controller {
 
   get readyWorkItems() {
     return this.model.workItems.filterBy("status", "READY").length;
+  }
+
+  get remarks() {
+    return this.model.workItems
+      .reduce((workItems, workItem) => {
+        if (
+          !Object.keys(ENV.APP.caluma.displayedAnswers).includes(
+            workItem.task.slug
+          )
+        ) {
+          return workItems;
+        }
+
+        if (!workItems.length) {
+          return [...workItems, workItem];
+        }
+        const duplicateIndex = workItems.findIndex(
+          (item) => item.task.slug === workItem.task.slug
+        );
+
+        if (duplicateIndex < 0) {
+          return workItems;
+        }
+
+        if (
+          new Date(workItems[duplicateIndex].createdAt) <
+          new Date(workItem.createdAt)
+        ) {
+          workItems.splice(duplicateIndex, 1);
+          return [...workItems, workItem];
+        }
+
+        return workItems;
+      }, [])
+      .map((workItem) => {
+        return workItem.document.answers.edges.filter((answer) => {
+          return Object.values(ENV.APP.caluma.displayedAnswers)
+            .flat()
+            .includes(answer.node.question.slug);
+        });
+      })
+      .flat();
   }
 
   @dropTask

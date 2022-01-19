@@ -18,6 +18,9 @@ documents:
 
   general: "General information"
 
+  remarks:
+    title: "Remarks"
+
   actions: "Actions"
   noActions: "No actions available"
   edit: "Edit document"

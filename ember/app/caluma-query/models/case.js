@@ -52,8 +52,24 @@ export default class CustomCaseModel extends CaseModel {
         node {
           id
           status
+          createdAt
           task {
             slug
+          }
+          document {
+            answers {
+              edges {
+                node {
+                  ... on StringAnswer {
+                    value
+                  }
+                  question {
+                    slug
+                    label
+                  }
+                }
+              }
+            }
           }
         }
       }

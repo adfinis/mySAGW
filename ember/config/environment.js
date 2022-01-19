@@ -95,6 +95,11 @@ module.exports = function (environment) {
         documentEditableTaskSlugs: ["submit-document", "revise-document"],
         skippableTaskSlugs: [],
         manuallyCompletableTasks: ["complete-document"],
+        displayedAnswers: {
+          "review-document": ["priorisierung-der-antrage-kommentar"],
+          "decision-and-credit": ["gesprochener-rahmenkredit"],
+          "define-amount": ["define-amount-amount", "todo-remark"],
+        },
       },
     },
   };
