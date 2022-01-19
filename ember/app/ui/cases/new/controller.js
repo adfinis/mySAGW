@@ -1,14 +1,13 @@
 import Controller from "@ember/controller";
 import { inject as service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
-import calumaQuery from "@projectcaluma/ember-core/caluma-query";
-import { allForms } from "@projectcaluma/ember-core/caluma-query/queries";
 import { decodeId } from "@projectcaluma/ember-core/helpers/decode-id";
 import { queryManager } from "ember-apollo-client";
-import { restartableTask } from "ember-concurrency";
+import { lastValue, restartableTask } from "ember-concurrency";
 import QueryParams from "ember-parachute";
 
 import createCaseMutation from "mysagw/gql/mutations/create-case.graphql";
+import getFormsQuery from "mysagw/gql/queries/get-form.graphql";
 import getWorkflowQuery from "mysagw/gql/queries/get-workflow.graphql";
 
 const queryParams = new QueryParams({
@@ -29,23 +28,18 @@ export default class CaseNewController extends Controller.extend(
 
   @tracked selectedForm;
 
-  @calumaQuery({ query: allForms })
-  formQuery;
-
   get forms() {
     // sort forms, so that the ones without permissions are at the bottom
-    return this.formQuery.value.sort((firstEl, secondEl) => {
-      if (firstEl.isAdvisoryBoardForm || firstEl.isExpertAssociationForm) {
-        return -1;
-      } else if (
-        secondEl.isAdvisoryBoardForm ||
-        secondEl.isExpertAssociationForm
-      ) {
-        return 1;
-      }
-
-      return 0;
-    });
+    return [
+      this.allForms?.expertAssociation,
+      this.allForms?.advisoryBoard,
+      this.allForms?.bothTypes,
+      this.allForms.public,
+    ]
+      .map((forms) => {
+        return forms?.edges ?? [];
+      })
+      .flat();
   }
 
   reset(_, isExiting) {
@@ -55,6 +49,7 @@ export default class CaseNewController extends Controller.extend(
     }
   }
 
+  @lastValue("fetchForms") allForms;
   @restartableTask
   *fetchForms() {
     const organisations = (yield this.store.findAll("identity", {
@@ -62,28 +57,26 @@ export default class CaseNewController extends Controller.extend(
       adapterOptions: { customEndpoint: "my-orgs" },
     })).filterBy("isAuthorized");
 
-    const organisationTypeFilter = [];
-    if (!organisations.isAny("isExpertAssociation")) {
-      organisationTypeFilter.push({
-        metaHasKey: "expertAssociationForm",
-        invert: true,
-      });
+    const isExpertAssociation = organisations.isAny("isExpertAssociation");
+    const isAdvisoryBoard = organisations.isAny("isAdvisoryBoard");
+
+    const allForms = {
+      ...(yield this.apollo.query({
+        query: getFormsQuery,
+      })),
+    };
+
+    if (!isExpertAssociation) {
+      delete allForms.expertAssociation;
     }
-    if (!organisations.isAny("isAdvisoryBoard")) {
-      organisationTypeFilter.push({
-        metaHasKey: "advisoryBoardForm",
-        invert: true,
-      });
+    if (!isAdvisoryBoard) {
+      delete allForms.advisoryBoard;
+    }
+    if (!isExpertAssociation && !isAdvisoryBoard) {
+      delete allForms.bothTypes;
     }
 
-    yield this.formQuery.fetch({
-      filter: [
-        { isPublished: true },
-        { isArchived: false },
-        { orderBy: "NAME_ASC" },
-        ...organisationTypeFilter,
-      ],
-    });
+    return allForms;
   }
 
   @restartableTask
