@@ -28,19 +28,38 @@ class CreateOrAssignVisibility(BaseVisibility):
     @filter_queryset_for(Answer)
     def filter_queryset_for_answer(self, node, queryset, info):
         return queryset.filter(
-            document__family__in=self.filter_queryset_for_document(
-                None, form_models.Document.objects, info
+            Q(
+                document__family__in=self.filter_queryset_for_document(
+                    None, form_models.Document.objects, info
+                )
+            )
+            | (
+                Q(
+                    question__slug__in=[
+                        question
+                        for sublist in settings.REVISION_QUESTIONS.values()
+                        for question in sublist
+                    ]
+                )
+                & Q(
+                    document__family__in=self.filter_queryset_for_document(
+                        None,
+                        form_models.Document.objects,
+                        info,
+                        list(settings.REVISION_QUESTIONS.keys()),
+                    )
+                )
             )
         )
 
     @filter_queryset_for(Document)
-    def filter_queryset_for_document(self, node, queryset, info):
+    def filter_queryset_for_document(
+        self, node, queryset, info, tasks=settings.APPLICANT_TASK_SLUGS
+    ):
         user = info.context.user
         case_ids = get_cases_for_user(user)
 
-        applicant_work_item = Q(
-            family__work_item__task__slug__in=settings.APPLICANT_TASK_SLUGS
-        ) | (
+        applicant_work_item = Q(family__work_item__task__slug__in=tasks) | (
             Q(family__work_item__isnull=True)
             & Q(family__case__workflow__pk="document-review")
         )
@@ -60,9 +79,8 @@ class CreateOrAssignVisibility(BaseVisibility):
         )
 
         row_document_on_applicant_form = Q(family__form__is_published=True) | Q(
-            family__work_item__task__slug__in=settings.APPLICANT_TASK_SLUGS
+            family__work_item__task__slug__in=tasks
         )
-
         return queryset.filter(
             Q(applicant_work_item & access_to_case)
             | floating_row_document
@@ -75,7 +93,10 @@ class CreateOrAssignVisibility(BaseVisibility):
         case_ids = get_cases_for_user(user)
         return queryset.filter(
             Q(case__pk__in=case_ids) | Q(created_by_user=user.username),
-            task__slug__in=settings.APPLICANT_TASK_SLUGS,
+            task__slug__in=[
+                *settings.APPLICANT_TASK_SLUGS,
+                *list(settings.REVISION_QUESTIONS.keys()),
+            ],
         )
 
     @filter_queryset_for(Case)
