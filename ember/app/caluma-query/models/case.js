@@ -61,7 +61,10 @@ export default class CustomCaseModel extends CaseModel {
               edges {
                 node {
                   ... on StringAnswer {
-                    value
+                    StringAnswerValue: value
+                  }
+                  ... on IntegerAnswer {
+                    IntegerAnswerValue: value
                   }
                   question {
                     slug

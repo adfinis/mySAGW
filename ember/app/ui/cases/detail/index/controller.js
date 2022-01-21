@@ -35,20 +35,16 @@ export default class CasesDetailIndexController extends Controller {
           )
         ) {
           return workItems;
-        }
-
-        if (!workItems.length) {
+        } else if (!workItems.length) {
           return [...workItems, workItem];
         }
         const duplicateIndex = workItems.findIndex(
           (item) => item.task.slug === workItem.task.slug
         );
 
-        if (duplicateIndex < 0) {
-          return workItems;
-        }
-
-        if (
+        if (duplicateIndex === -1) {
+          return [...workItems, workItem];
+        } else if (
           new Date(workItems[duplicateIndex].createdAt) <
           new Date(workItem.createdAt)
         ) {
@@ -65,7 +61,13 @@ export default class CasesDetailIndexController extends Controller {
             .includes(answer.node.question.slug);
         });
       })
-      .flat();
+      .flat()
+      .map((answer) => {
+        return {
+          label: answer.node.question.label,
+          value: answer.node[`${answer.node.__typename}Value`],
+        };
+      });
   }
 
   @dropTask
