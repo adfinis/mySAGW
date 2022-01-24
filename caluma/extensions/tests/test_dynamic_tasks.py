@@ -81,10 +81,11 @@ def test_dynamic_task_after_decision_and_credit(
 
 
 @pytest.mark.parametrize(
-    "decision,expected_work_item",
+    "decision,expected_work_item_task,expected_work_item_form,internal_periodics",
     [
-        ("continue", "complete-document"),
-        ("reject", "additional-data"),
+        ("continue", "complete-document", None, False),
+        ("reject", "additional-data-form", "additional-data-form", False),
+        ("reject", "additional-data-form", "periodika-abrechnung", True),
     ],
 )
 def test_dynamic_task_after_define_amount(
@@ -93,14 +94,30 @@ def test_dynamic_task_after_define_amount(
     user,
     case_access_event_mock,
     circulation,
+    answer_factory,
+    form_factory,
     decision,
-    expected_work_item,
+    expected_work_item_form,
+    expected_work_item_task,
+    internal_periodics,
 ):
     Question.objects.filter(formquestion__form__pk="additional-data-form").update(
         is_required="false"
     )
 
     case = circulation.parent_work_item.case
+
+    if internal_periodics:
+        form_factory(slug="periodika-abrechnung")
+        case.document.form.slug = "intern"
+        case.document.form.save()
+        case.document.form_id = "intern"
+        case.document.save()
+        answer_factory(
+            value="intern-gesuchsart-intern-abrechnung-periodika",
+            question__slug="intern-gesuchsart",
+            document=case.document,
+        )
 
     skip_work_item(case.work_items.get(task_id="circulation"), user)
 
@@ -119,4 +136,11 @@ def test_dynamic_task_after_define_amount(
     complete_work_item(case.work_items.get(task_id="define-amount"), user)
 
     assert case.status == Case.STATUS_RUNNING
-    assert case.work_items.filter(task_id=expected_work_item).exists()
+    assert case.work_items.filter(task_id=expected_work_item_task).exists()
+    if expected_work_item_form:
+        assert (
+            case.work_items.filter(task_id=expected_work_item_task)
+            .first()
+            .document.form.slug
+            == expected_work_item_form
+        )
