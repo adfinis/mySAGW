@@ -1,6 +1,10 @@
+import datetime
+
 import pyexcel
 import pytest
 from django.urls import reverse
+from django.utils import timezone
+from psycopg2._range import DateRange
 from rest_framework import status
 
 from mysagw.identity.models import Identity
@@ -375,6 +379,27 @@ def test_identity_search(
     )
     identities.append(membership.identity)
     identities.append(membership.organisation)
+
+    membership_factory(  # inactive, must not show up
+        organisation=membership.organisation,
+        inactive=True,
+    )
+    membership_factory(  # expired, must not show up
+        organisation=membership.organisation,
+        inactive=False,
+        time_slot=DateRange(
+            lower=datetime.date(2020, 1, 1),
+            upper=(timezone.now() - timezone.timedelta(days=1)).date(),
+        ),
+    )
+
+    membership_factory(  # expired, must not show up
+        organisation=membership.organisation,
+        inactive=False,
+        time_slot=DateRange(
+            upper=(timezone.now() - timezone.timedelta(days=1)).date(),
+        ),
+    )
 
     email = email_factory(email="test@sagw.ch")
     identities.append(email.identity)
