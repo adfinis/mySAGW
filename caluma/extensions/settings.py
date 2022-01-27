@@ -73,6 +73,13 @@ settings.ADDITIONAL_DATA_FORM = {
     "periodika-antrag": "periodika-abrechnung",
 }
 
+settings.INTERNAL_APPLICATION_FORM_SLUG = "intern"
+settings.INTERNAL_APPLICATION_TYPE_QUESTION_SLUG = "intern-gesuchsart"
+settings.INTERNAL_APPLICATION_PERIODICS_CHOICES = (
+    "intern-gesuchsart-intern-abrechnung-periodika",
+    "intern-gesuchsart-intern-antrag-periodika",
+)
+
 settings.CASE_ID_CACHE_SECONDS = int(os.environ.get("CASE_ID_CACHE_SECONDS", "60"))
 
 # Logging
