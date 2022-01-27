@@ -59,7 +59,7 @@ class CreateOrAssignVisibility(BaseVisibility):
         user = info.context.user
         case_ids = get_cases_for_user(user)
 
-        applicant_work_item = Q(family__work_item__task__slug__in=tasks) | (
+        work_item = Q(family__work_item__task__slug__in=tasks) | (
             Q(family__work_item__isnull=True)
             & Q(family__case__workflow__pk="document-review")
         )
@@ -79,10 +79,10 @@ class CreateOrAssignVisibility(BaseVisibility):
         )
 
         row_document_on_applicant_form = Q(family__form__is_published=True) | Q(
-            family__work_item__task__slug__in=tasks
+            family__work_item__task__slug__in=settings.APPLICANT_TASK_SLUGS
         )
         return queryset.filter(
-            Q(applicant_work_item & access_to_case)
+            Q(work_item & access_to_case)
             | floating_row_document
             | Q(row_document_on_applicant_form & access_to_case)
         )
