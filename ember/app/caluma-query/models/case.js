@@ -39,6 +39,13 @@ export default class CustomCaseModel extends CaseModel {
     return this.workItems.findBy("task.slug", ENV.APP.caluma.completeTaskSlug);
   }
 
+  get documentNumber() {
+    return this.document.answers.edges.findBy(
+      "node.question.slug",
+      "dossier-nr"
+    ).node.StringAnswerValue;
+  }
+
   static fragment = `{
     id
     createdAt
