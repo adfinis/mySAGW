@@ -128,6 +128,16 @@ def create_additional_data_form_document(sender, work_item, user, context, **kwa
     form_slug = settings.ADDITIONAL_DATA_FORM.get(
         work_item.case.document.form_id, "additional-data-form"
     )
+    if work_item.case.document.form_id == settings.INTERNAL_APPLICATION_FORM_SLUG:
+        answer = work_item.case.document.answers.filter(
+            question__slug=settings.INTERNAL_APPLICATION_TYPE_QUESTION_SLUG
+        )
+        if (
+            answer
+            and answer.first().value in settings.INTERNAL_APPLICATION_PERIODICS_CHOICES
+        ):
+            form_slug = settings.ADDITIONAL_DATA_FORM["periodika-antrag"]
+
     form = caluma_form_models.Form.objects.get(slug=form_slug)
 
     work_item.document = caluma_form_api.save_document(form=form, user=user)

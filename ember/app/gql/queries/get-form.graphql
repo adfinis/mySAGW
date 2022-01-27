@@ -1,0 +1,71 @@
+fragment formFields on Form {
+  name
+  slug
+  description
+  isArchived
+  isPublished
+  meta
+}
+
+query getFormsQuery {
+  public: allForms(
+    filter: [
+      { isPublished: true }
+      { isArchived: false }
+      { orderBy: NAME_ASC }
+      { metaHasKey: "expertAssociationForm", invert: true }
+      { metaHasKey: "advisoryBoardForm", invert: true }
+    ]
+  ) {
+    edges {
+      node {
+        ...formFields
+      }
+    }
+  }
+  expertAssociation: allForms(
+    filter: [
+      { isPublished: true }
+      { isArchived: false }
+      { orderBy: NAME_ASC }
+      { metaHasKey: "expertAssociationForm" }
+      { metaHasKey: "advisoryBoardForm", invert: true }
+    ]
+  ) {
+    edges {
+      node {
+        ...formFields
+      }
+    }
+  }
+  advisoryBoard: allForms(
+    filter: [
+      { isPublished: true }
+      { isArchived: false }
+      { orderBy: NAME_ASC }
+      { metaHasKey: "advisoryBoardForm" }
+      { metaHasKey: "expertAssociationForm", invert: true }
+    ]
+  ) {
+    edges {
+      node {
+        ...formFields
+      }
+    }
+  }
+  bothTypes: allForms(
+    filter: [
+      { isPublished: true }
+      { isArchived: false }
+      { orderBy: NAME_ASC }
+      { metaHasKey: "advisoryBoardForm" }
+      { metaHasKey: "expertAssociationForm" }
+    ]
+  ) {
+    edges {
+      node {
+        ...formFields
+      }
+    }
+  }
+}

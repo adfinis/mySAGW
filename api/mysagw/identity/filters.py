@@ -2,6 +2,7 @@ import operator
 import shlex
 from functools import reduce
 
+from django.utils import timezone
 from django_filters import BooleanFilter, CharFilter
 from django_filters.rest_framework import FilterSet
 from rest_framework.compat import distinct
@@ -116,9 +117,19 @@ class SAGWSearchFilter(SearchFilter):
                 method = queryset.exclude
                 search_term = search_term.lstrip("-")
 
-            queries = [
-                models.Q(**{orm_lookup: search_term}) for orm_lookup in orm_lookups
-            ]
+            queries = []
+            for orm_lookup in orm_lookups:
+                lookup = models.Q(**{orm_lookup: search_term})
+                if orm_lookup.startswith("memberships_"):
+                    lookup = models.Q(**{orm_lookup: search_term}) & (
+                        (
+                            models.Q(memberships__time_slot__isnull=True)
+                            | models.Q(memberships__time_slot__contains=timezone.now())
+                        )
+                        & models.Q(memberships__inactive=False)
+                    )
+                queries.append(lookup)
+
             condition = reduce(operator.or_, queries)
             queryset = method(condition)
 
