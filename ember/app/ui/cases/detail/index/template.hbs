@@ -115,17 +115,16 @@
           @onSuccess={{this.transitionToCases}}
         />
       {{/if}}
-
-      {{#if (can "exportForAccounting case")}}
-        <h3>{{t "documents.accountingExport"}}</h3>
-        <UkButton
-          @type="button"
-          @on-click={{perform this.exportAccounting @model}}
-          @loading={{this.exportAccounting.isRunning}}
-        >
-          {{t "documents.accountingExport"}}
-        </UkButton>
-      {{/if}}
+    {{/if}}
+    {{#if (can "exportForAccounting case")}}
+      <h3>{{t "documents.accountingExport"}}</h3>
+      <UkButton
+        @type="button"
+        @on-click={{perform this.exportAccounting @model}}
+        @loading={{this.exportAccounting.isRunning}}
+      >
+        {{t "documents.accountingExport"}}
+      </UkButton>
     {{/if}}
   </div>
 </div>
