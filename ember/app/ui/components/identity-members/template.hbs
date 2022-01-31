@@ -12,13 +12,17 @@
         {{#each this.members as |member|}}
           <li class="uk-flex uk-flex-between uk-flex-middle">
             <div>
-              <LinkTo
-                @route="identities.edit"
-                @model={{member.identity.id}}
-                class="uk-text-bold"
-              >
-                {{member.identity.fullName}}
-              </LinkTo>
+              {{#if @hideIdentityLink}}
+                <span class="uk-text-bold">{{member.identity.fullName}}</span>
+              {{else}}
+                <LinkTo
+                  @route="identities.edit"
+                  @model={{member.identity.id}}
+                  class="uk-text-bold"
+                >
+                  {{member.identity.fullName}}
+                </LinkTo>
+              {{/if}}
 
               <div class="uk-text-meta">
                 {{#each member.roles as |role index|}}
@@ -30,6 +34,15 @@
             </div>
           </li>
         {{/each}}
+        {{#if this.hasNextPage}}
+          <li class="uk-text-center">
+            <UkButton
+              @on-click={{this.loadMoreMembers}}
+              @color="link"
+              @label={{t "global.loadMore"}}
+            />
+          </li>
+        {{/if}}
       </ul>
     {{else}}
       <p>{{t "components.identity-members.list.empty"}}</p>

@@ -32,4 +32,12 @@
       <IdentityInterests @identity={{this.model}} @endpoint={{concat '/my-orgs/' this.model.id}} @profileView={{true}} />
     </div>
   </div>
+
+  {{#if this.model.isAuthorized}}
+    <div class="uk-width-1-2@m">
+      <div class="uk-card uk-card-default uk-card-body uk-card-small">
+        <IdentityMembers @identity={{@model}} @hideIdentityLink={{true}}/>
+      </div>
+    </div>
+  {{/if}}
 </div>

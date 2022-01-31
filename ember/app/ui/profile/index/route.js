@@ -12,5 +12,6 @@ export default class ProfileIndexRoute extends Route {
     super.setupController(controller, post);
 
     controller.fetchMemberships.perform();
+    controller.memberships = [];
   }
 }

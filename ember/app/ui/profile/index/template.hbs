@@ -120,6 +120,11 @@
             {{else}}
               <li>{{t "profile.organisation.empty"}}</li>
             {{/each}}
+            {{#if (and this.hasNextPage (not this.fetchMemberships.isRunning))}}
+              <li>
+                <UkSpinner {{in-viewport onEnter=this.loadMoreMemberships}}/>
+              </li>
+            {{/if}}
           </ul>
         {{/if}}
       </div>
