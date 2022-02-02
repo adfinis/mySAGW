@@ -1,5 +1,5 @@
 -r requirements-base.txt
-black==21.9b0
+black==22.1.0
 django_extensions==3.1.5
 factory-boy==3.2.1
 flake8==4.0.1
@@ -21,6 +21,6 @@ pytest-env==0.6.2
 pytest-factoryboy==2.1.0
 pytest-freezegun==0.4.2
 pytest-mock==3.6.1
-pytest-randomly==3.10.2
+pytest-randomly==3.11.0
 requests-mock==1.9.3
 snapshottest==0.6.0
