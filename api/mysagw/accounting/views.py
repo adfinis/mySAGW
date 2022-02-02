@@ -7,6 +7,7 @@ from django.conf import settings
 from django.http import FileResponse, HttpResponse
 from django.utils import timezone
 from PyPDF2 import PdfFileMerger
+from PyPDF2.utils import PdfReadError
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.utils import ImageReader
 from reportlab.pdfgen import canvas
@@ -304,7 +305,11 @@ class ReceiptViewSet(GenericViewSet):
         merger.append(cover)
 
         for file in get_files_to_merge(files):
-            merger.append(file)
+            try:
+                merger.append(file)
+            except PdfReadError:
+                ## faulty pdf or AES encrypted
+                pass
 
         result = io.BytesIO()
 
