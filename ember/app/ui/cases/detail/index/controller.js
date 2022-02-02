@@ -27,47 +27,78 @@ export default class CasesDetailIndexController extends Controller {
   }
 
   get remarks() {
-    return this.model.workItems
-      .reduce((workItems, workItem) => {
-        if (
-          !Object.keys(ENV.APP.caluma.displayedAnswers).includes(
-            workItem.task.slug
-          )
-        ) {
+    return (
+      this.model.workItems
+        /*
+         * This filters the queried workItems for only the ones
+         * which contain answers to be displayed as configured in displayedAnswers
+         * and the most recent workItem if there are multiple of the same task.
+         */
+        .reduce((workItems, workItem) => {
+          if (
+            !Object.keys(ENV.APP.caluma.displayedAnswers).includes(
+              workItem.task.slug
+            )
+          ) {
+            return workItems;
+          } else if (!workItems.length) {
+            return [...workItems, workItem];
+          }
+          const duplicateIndex = workItems.findIndex(
+            (item) => item.task.slug === workItem.task.slug
+          );
+
+          if (duplicateIndex === -1) {
+            return [...workItems, workItem];
+          } else if (
+            new Date(workItems[duplicateIndex].createdAt) <
+            new Date(workItem.createdAt)
+          ) {
+            workItems.splice(duplicateIndex, 1);
+            return [...workItems, workItem];
+          }
+
           return workItems;
-        } else if (!workItems.length) {
-          return [...workItems, workItem];
-        }
-        const duplicateIndex = workItems.findIndex(
-          (item) => item.task.slug === workItem.task.slug
-        );
+        }, [])
+        /*
+         * This filters the answers of the workItem document,
+         * only the configured answers in displayedAnswers should remain
+         * and based on another configured questions answer the answer will be filtered or not
+         */
+        .map((workItem) => {
+          return workItem.document.answers.edges.reduce(
+            (filteredAnswers, answer, _, answers) => {
+              Object.keys(ENV.APP.caluma.displayedAnswers).forEach(
+                (taskSlug) => {
+                  if (!workItem.task.slug.includes(taskSlug)) {
+                    return;
+                  }
 
-        if (duplicateIndex === -1) {
-          return [...workItems, workItem];
-        } else if (
-          new Date(workItems[duplicateIndex].createdAt) <
-          new Date(workItem.createdAt)
-        ) {
-          workItems.splice(duplicateIndex, 1);
-          return [...workItems, workItem];
-        }
+                  const decision = answers.find(
+                    (a) => a.node.question.slug === `${taskSlug}-decision`
+                  );
+                  const value =
+                    decision.node[`${decision.node.__typename}Value`];
 
-        return workItems;
-      }, [])
-      .map((workItem) => {
-        return workItem.document.answers.edges.filter((answer) => {
-          return Object.values(ENV.APP.caluma.displayedAnswers)
-            .flat()
-            .includes(answer.node.question.slug);
-        });
-      })
-      .flat()
-      .map((answer) => {
-        return {
-          label: answer.node.question.label,
-          value: answer.node[`${answer.node.__typename}Value`],
-        };
-      });
+                  if (
+                    answer.node.question.slug ===
+                    ENV.APP.caluma.displayedAnswers[taskSlug][value]
+                  ) {
+                    filteredAnswers.push({
+                      label: answer.node.question.label,
+                      value: answer.node[`${answer.node.__typename}Value`],
+                    });
+                  }
+                }
+              );
+
+              return filteredAnswers;
+            },
+            []
+          );
+        })
+        .flat()
+    );
   }
 
   @dropTask

@@ -96,9 +96,21 @@ module.exports = function (environment) {
         skippableTaskSlugs: [],
         manuallyCompletableTasks: ["complete-document"],
         displayedAnswers: {
-          "review-document": ["priorisierung-der-antrage-kommentar"],
-          "decision-and-credit": ["gesprochener-rahmenkredit"],
-          "define-amount": ["define-amount-amount", "todo-remark"],
+          // task slug
+          "review-document": {
+            // conditional answer
+            "review-document-decision-reject":
+              // displayed answer
+              "priorisierung-der-antrage-kommentar",
+          },
+          "decision-and-credit": {
+            "decision-and-credit-decision-additional-data":
+              "gesprochener-rahmenkredit",
+          },
+          "define-amount": {
+            "define-amount-decision-continue": "define-amount-amount",
+            "define-amount-decision-reject": "define-amount-remark",
+          },
         },
       },
     },
