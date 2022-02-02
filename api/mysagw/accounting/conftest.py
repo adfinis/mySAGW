@@ -51,6 +51,19 @@ def receipt_mock(requests_mock):
                                                                 ]
                                                             }
                                                         },
+                                                        {
+                                                            "answers": {
+                                                                "edges": [
+                                                                    {
+                                                                        "node": {
+                                                                            "file": {
+                                                                                "downloadUrl": "https://mysagw.local/caluma-media/download-url-pdf-encrypted"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            }
+                                                        },
                                                         {"answers": {"edges": []}},
                                                     ]
                                                 }
@@ -118,6 +131,9 @@ def receipt_mock(requests_mock):
     with (FILES_DIR / "test.pdf").open("rb") as f:
         pdf = f.read()
 
+    with (FILES_DIR / "test_encrypted.pdf").open("rb") as f:
+        pdf_encrypted = f.read()
+
     with (FILES_DIR / "test_cover.pdf").open("rb") as f:
         cover = f.read()
 
@@ -132,6 +148,13 @@ def receipt_mock(requests_mock):
         "https://mysagw.local/caluma-media/download-url-pdf",
         status_code=status.HTTP_200_OK,
         content=pdf,
+        headers={"CONTENT-TYPE": "application/pdf"},
+    )
+
+    requests_mock.get(
+        "https://mysagw.local/caluma-media/download-url-pdf-encrypted",
+        status_code=status.HTTP_200_OK,
+        content=pdf_encrypted,
         headers={"CONTENT-TYPE": "application/pdf"},
     )
 
