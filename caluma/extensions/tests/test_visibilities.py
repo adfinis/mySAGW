@@ -28,7 +28,7 @@ from caluma.extensions.visibilities import MySAGWVisibility
                 "Document": 2,
                 "Case": 1,
                 "Question": 20,
-                "Answer": 1,
+                "Answer": 2,
             },
         ),
     ],

@@ -70,9 +70,20 @@ settings.APPLICANT_TASK_SLUGS = [
 ]
 
 settings.REVISION_QUESTIONS = {
-    "review-document": ["priorisierung-der-antrage-kommentar"],
-    "decision-and-credit": ["gesprochener-rahmenkredit"],
-    "define-amount": ["define-amount-amount", "define-amount-remark"],
+    "review-document": [
+        "priorisierung-der-antrage-kommentar",
+        "review-document-decision",
+    ],
+    "decision-and-credit": [
+        "gesprochener-rahmenkredit",
+        "decision-and-credit-remark",
+        "decision-and-credit-decision",
+    ],
+    "define-amount": [
+        "define-amount-amount",
+        "define-amount-remark",
+        "define-amount-decision",
+    ],
 }
 
 settings.ADDITIONAL_DATA_FORM = {
