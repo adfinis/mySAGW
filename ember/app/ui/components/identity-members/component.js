@@ -22,23 +22,24 @@ export default class IdentityMembersComponent extends Component {
   }
 
   @restartableTask *fetchMembers() {
-    const members = yield this.store.query("membership", {
-      filter: { organisation: this.args.identity.id },
-      include: "role",
-      page: {
-        number: this.pageNumber,
-        size: this.pageSize,
+    const members = yield this.store.query(
+      "membership",
+      {
+        filter: { organisation: this.args.identity.id },
+        include: "role,identity",
+        page: {
+          number: this.pageNumber,
+          size: this.pageSize,
+        },
       },
-    });
+      { adapterOptions: { customEndpoint: "org-memberships" } }
+    );
 
     this.totalPages = members.meta.pagination?.pages;
     const membersDeduped = [];
 
     members.forEach((member) => {
-      const existingMember = membersDeduped.findBy(
-        "identity.id",
-        member.identity.get("id")
-      );
+      const existingMember = member.identity;
 
       member.roles = [
         { title: member.role.get("title"), inactive: member.isInactive },

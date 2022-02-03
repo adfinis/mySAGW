@@ -419,3 +419,19 @@ class MyMembershipsSerializer(MembershipSerializer):
         "role": MembershipRoleSerializer,
         "organisation": MyOrgsSerializer,
     }
+
+
+class OrganisationAdminMembersSerializer(MembershipSerializer):
+    included_serializers = {
+        "identity": PublicIdentitySerializer,
+        "role": MembershipRoleSerializer,
+        "organisation": IdentitySerializer,
+    }
+
+    class Meta:
+        model = models.Membership
+        fields = (
+            "identity",
+            "organisation",
+            "role",
+        )
