@@ -18,6 +18,9 @@ documents:
 
   general: "Information"
 
+  remarks:
+    title: "Bemerkungen"
+
   actions: "Aktionen"
   noActions: "Keine Aktionen verfügbar."
   edit: "Gesuch bearbeiten"

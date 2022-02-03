@@ -69,6 +69,12 @@ settings.APPLICANT_TASK_SLUGS = [
     "additional-data-form",
 ]
 
+settings.REVISION_QUESTIONS = {
+    "review-document": ["priorisierung-der-antrage-kommentar"],
+    "decision-and-credit": ["gesprochener-rahmenkredit"],
+    "define-amount": ["define-amount-amount", "define-amount-remark"],
+}
+
 settings.ADDITIONAL_DATA_FORM = {
     "periodika-antrag": "periodika-abrechnung",
 }
