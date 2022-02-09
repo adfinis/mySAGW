@@ -312,10 +312,13 @@ class PublicIdentitySerializer(serializers.ModelSerializer):
         model = models.Identity
         fields = (
             "idp_id",
+            "email",
+            "organisation_name",
             "first_name",
             "last_name",
-            "email",
+            "salutation",
             "language",
+            "is_organisation",
         )
         extra_kwargs = {
             "idp_id": {"read_only": True},
@@ -425,7 +428,7 @@ class OrganisationAdminMembersSerializer(MembershipSerializer):
     included_serializers = {
         "identity": PublicIdentitySerializer,
         "role": MembershipRoleSerializer,
-        "organisation": IdentitySerializer,
+        "organisation": PublicIdentitySerializer,
     }
 
     class Meta:
