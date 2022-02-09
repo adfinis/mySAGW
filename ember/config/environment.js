@@ -102,10 +102,14 @@ module.exports = function (environment) {
             "review-document-decision-reject":
               // displayed answer
               "priorisierung-der-antrage-kommentar",
+            "review-document-decision-complete":
+              "priorisierung-der-antrage-kommentar",
           },
           "decision-and-credit": {
             "decision-and-credit-decision-additional-data":
               "gesprochener-rahmenkredit",
+            "decision-and-credit-decision-complete":
+              "decision-and-credit-remark",
           },
           "define-amount": {
             "define-amount-decision-continue": "define-amount-amount",
