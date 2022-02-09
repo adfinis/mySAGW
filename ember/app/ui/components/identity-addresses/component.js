@@ -2,6 +2,7 @@ import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
+import countries from "countries-list";
 import { Changeset } from "ember-changeset";
 import lookupValidator from "ember-changeset-validations";
 import {
@@ -21,21 +22,27 @@ export default class IdentityAddressesComponent extends Component {
   @service notification;
   @service store;
   @service intl;
-  // @service can;
 
   // Lifecycle
 
-  @action onUpdate() {
+  @action
+  onUpdate() {
     this.fetchAddresses.perform(this.args.identity);
   }
 
   // List
 
   @lastValue("fetchAddresses") addresses;
-
-  @restartableTask *fetchAddresses(identity) {
+  @restartableTask
+  *fetchAddresses(identity) {
     return yield this.store.query("address", {
       filter: { identity: identity.id },
+    });
+  }
+
+  get countries() {
+    return Object.entries(countries.countries).map(([code, { native }]) => {
+      return { code, name: native };
     });
   }
 
@@ -56,11 +63,13 @@ export default class IdentityAddressesComponent extends Component {
     );
   }
 
-  @action cancel() {
+  @action
+  cancel() {
     this.changeset = null;
   }
 
-  @dropTask *submit(changeset) {
+  @dropTask
+  *submit(changeset) {
     try {
       // Apply changes and save.
       yield changeset.save();
@@ -78,7 +87,8 @@ export default class IdentityAddressesComponent extends Component {
 
   // Delete
 
-  @dropTask *delete(address) {
+  @dropTask
+  *delete(address) {
     try {
       const options = { address: address.label };
       yield UIkit.modal.confirm(

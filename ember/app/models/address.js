@@ -17,4 +17,10 @@ export default class IdentityModel extends LocalizedModel {
   get label() {
     return [this.streetAndNumber, this.town].join(", ");
   }
+
+  get countryName() {
+    const locale = window.localStorage.getItem("locale") ?? "en";
+    const countries = new Intl.DisplayNames([locale], { type: "region" });
+    return countries.of(this.country);
+  }
 }

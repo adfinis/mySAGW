@@ -4,6 +4,12 @@ global:
     male: "Mr."
     female: "Mrs."
     neutral: "Neutral salutation"
+  title:
+    none: "Kein Titel"
+    dr: "Dr."
+    prof: "Prof."
+    profDr: "Prof. Dr."
+    pdDr: "PD Dr."
   languages:
     english: "English"
     german: "German"

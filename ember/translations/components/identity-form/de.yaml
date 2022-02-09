@@ -6,6 +6,7 @@ components:
       isExpertAssociation: "Fachgesellschaft"
       isAdvisoryBoard: "Kommission/Kuratorium"
       salutation: "Anrede"
+      title: "Titel"
       firstName: "Vorname"
       lastName: "Name"
       email: "Primäre E-Mail-Adresse"
