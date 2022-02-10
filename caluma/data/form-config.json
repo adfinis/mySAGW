@@ -307,7 +307,7 @@
 },
 {
     "model": "caluma_form.formquestion",
-    "pk": "define-amount-form.define-amount-amount",
+    "pk": "define-amount-form.define-amount-amount-float",
     "fields": {
         "created_at": "2021-05-31T16:05:05.820Z",
         "modified_at": "2021-05-31T16:05:05.820Z",
@@ -316,7 +316,7 @@
         "modified_by_user": null,
         "modified_by_group": null,
         "form": "define-amount-form",
-        "question": "define-amount-amount",
+        "question": "define-amount-amount-float",
         "sort": 4
     }
 },
@@ -784,7 +784,7 @@
 },
 {
     "model": "caluma_form.question",
-    "pk": "define-amount-amount",
+    "pk": "define-amount-amount-float",
     "fields": {
         "created_at": "2021-05-31T16:05:05.729Z",
         "modified_at": "2021-08-05T12:18:20.850Z",
@@ -793,7 +793,7 @@
         "modified_by_user": null,
         "modified_by_group": null,
         "label": "{\"de\": \"Betrag\", \"en\": null, \"fr\": null}",
-        "type": "integer",
+        "type": "float",
         "is_required": "false",
         "is_hidden": "false",
         "is_archived": false,
