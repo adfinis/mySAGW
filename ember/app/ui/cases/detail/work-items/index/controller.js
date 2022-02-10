@@ -5,8 +5,11 @@ import { allWorkItems } from "@projectcaluma/ember-core/caluma-query/queries";
 import { queryManager } from "ember-apollo-client";
 import { restartableTask } from "ember-concurrency";
 
+import ENV from "mysagw/config/environment";
+
 export default class CasesDetailWorkItemsController extends Controller {
   @service store;
+  @service can;
 
   @queryManager apollo;
 
@@ -82,6 +85,10 @@ export default class CasesDetailWorkItemsController extends Controller {
       { metaHasKey: "hidden", invert: true },
       { case: this.model.id },
     ];
+
+    if (this.can.cannot("show all work-item")) {
+      filter.push({ tasks: ENV.APP.caluma.documentEditableTaskSlugs });
+    }
 
     yield this.readyWorkItemsQuery.fetch({
       filter: [...filter, { status: "READY" }],

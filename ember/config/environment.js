@@ -92,7 +92,11 @@ module.exports = function (environment) {
         submitTaskSlug: "submit-document",
         reviseTaskSlug: "revise-document",
         completeTaskSlug: "complete-document",
-        documentEditableTaskSlugs: ["submit-document", "revise-document"],
+        documentEditableTaskSlugs: [
+          "submit-document",
+          "revise-document",
+          "additional-data-form",
+        ],
         skippableTaskSlugs: [],
         manuallyCompletableTasks: ["complete-document"],
         displayedAnswers: {
