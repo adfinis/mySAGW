@@ -171,6 +171,7 @@ class IdentityViewSet(views.ModelViewSet):
         records = ex.export(
             queryset,
             include_fields=[
+                "localized_title",
                 "first_name",
                 "last_name",
                 "organisation_name",

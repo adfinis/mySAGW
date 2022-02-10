@@ -138,6 +138,10 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
     def localized_salutation(self):
         return self.SALUTATION_LOCALIZED_MAP[self.salutation][self.language]
 
+    @property
+    def localized_title(self):
+        return self.TITLE_LOCALIZED_MAP[self.title][self.language]
+
     class Meta:
         ordering = ("last_name", "first_name", "email")
 

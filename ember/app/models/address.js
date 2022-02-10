@@ -1,7 +1,10 @@
 import { attr, belongsTo } from "@ember-data/model";
+import { inject as service } from "@ember/service";
 import { LocalizedModel, localizedAttr } from "ember-localized-model";
 
 export default class IdentityModel extends LocalizedModel {
+  @service intl;
+
   @belongsTo("identity") identity;
   @attr addressAddition1;
   @attr addressAddition2;
@@ -19,8 +22,9 @@ export default class IdentityModel extends LocalizedModel {
   }
 
   get countryName() {
-    const locale = window.localStorage.getItem("locale") ?? "en";
-    const countries = new Intl.DisplayNames([locale], { type: "region" });
+    const countries = new Intl.DisplayNames(this.intl.locale, {
+      type: "region",
+    });
     return countries.of(this.country);
   }
 }

@@ -2,7 +2,6 @@ import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
-import countries from "countries-list";
 import { Changeset } from "ember-changeset";
 import lookupValidator from "ember-changeset-validations";
 import {
@@ -10,6 +9,7 @@ import {
   restartableTask,
   lastValue,
 } from "ember-concurrency-decorators";
+import fetch from "fetch";
 import UIkit from "uikit";
 
 import applyError from "mysagw/utils/apply-error";
@@ -27,6 +27,7 @@ export default class IdentityAddressesComponent extends Component {
 
   @action
   onUpdate() {
+    this.fetchCountries.perform();
     this.fetchAddresses.perform(this.args.identity);
   }
 
@@ -40,10 +41,18 @@ export default class IdentityAddressesComponent extends Component {
     });
   }
 
-  get countries() {
-    return Object.entries(countries.countries).map(([code, { native }]) => {
-      return { code, name: native };
+  @lastValue("fetchCountries") countries;
+  @restartableTask
+  *fetchCountries() {
+    const adapter = this.store.adapterFor("identity");
+    adapter.headers["Accept-Language"] = localStorage.getItem("locale") ?? "en";
+    const response = yield fetch(adapter.buildURL("address"), {
+      method: "OPTIONS",
+      headers: adapter.headers,
     });
+    const data = yield response.json();
+
+    return data.data.actions.POST.country.choices;
   }
 
   // Add / Edit

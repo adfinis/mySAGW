@@ -105,6 +105,8 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+COUNTRIES_FIRST = ["CH", "DE", "FR", "IT", "AT"]
+
 # Phonenumbers
 
 PHONENUMBER_DEFAULT_REGION = "CH"

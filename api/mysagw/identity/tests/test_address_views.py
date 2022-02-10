@@ -240,6 +240,6 @@ def test_country_options(client):
     response = client.options(url)
     json = response.json()
     assert json["data"]["actions"]["POST"]["country"]["choices"][0] == {
-        "value": "AF",
-        "display_name": "Afghanistan",
+        "value": "CH",
+        "display_name": "Schweiz",
     }

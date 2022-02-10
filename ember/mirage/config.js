@@ -44,6 +44,24 @@ export default function () {
   this.get("/addresses/:id");
   this.patch("/addresses/:id");
   this.delete("/addresses/:id");
+  this.options("/addresses", () => {
+    return {
+      data: {
+        actions: {
+          POST: {
+            country: {
+              choices: [
+                {
+                  value: "CH",
+                  display_name: "Schweiz",
+                },
+              ],
+            },
+          },
+        },
+      },
+    };
+  });
 
   this.get("/identities", (schema, request) => {
     const query = parseFilters(request, [
