@@ -24,11 +24,11 @@ from caluma.extensions.visibilities import MySAGWVisibility
             "test",
             {
                 "Form": 7,
-                "WorkItem": 1,
+                "WorkItem": 2,
                 "Document": 2,
                 "Case": 1,
                 "Question": 20,
-                "Answer": 1,
+                "Answer": 2,
             },
         ),
     ],

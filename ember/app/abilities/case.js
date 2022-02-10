@@ -14,16 +14,17 @@ export default class CaseAbility extends BaseAbility {
   }
 
   get canAddAccess() {
-    return this.hasAccess(this.model);
+    return this.hasAccess(this.model) || this.isAdmin;
   }
 
   get canDeleteAccess() {
     return (
-      (this.access.email ||
+      ((this.access.email ||
         this.model.accesses.filter((access) => {
           return !access.email && access.caseId === this.access.caseId;
         }).length > 1) &&
-      this.hasAccess(this.model)
+        this.hasAccess(this.model)) ||
+      this.isAdmin
     );
   }
 }

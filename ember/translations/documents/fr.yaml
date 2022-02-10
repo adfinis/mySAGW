@@ -18,6 +18,9 @@ documents:
 
   general: "Information"
 
+  remarks:
+    title: "Remarques"
+
   actions: "Actions"
   noActions: "Aucune action n'est disponible."
   edit: "Saisir / modifier la requête"
