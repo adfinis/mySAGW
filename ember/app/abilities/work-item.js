@@ -7,4 +7,7 @@ export default class WorkItemAbility extends BaseAbility {
   get canEdit() {
     return this.isStaff;
   }
+  get canShowAll() {
+    return this.isStaff;
+  }
 }
