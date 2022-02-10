@@ -116,7 +116,7 @@ module.exports = function (environment) {
               "decision-and-credit-remark",
           },
           "define-amount": {
-            "define-amount-decision-continue": "define-amount-amount",
+            "define-amount-decision-continue": "define-amount-amount-float",
             "define-amount-decision-reject": "define-amount-remark",
           },
         },
