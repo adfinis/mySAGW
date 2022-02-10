@@ -80,7 +80,7 @@ settings.REVISION_QUESTIONS = {
         "decision-and-credit-decision",
     ],
     "define-amount": [
-        "define-amount-amount",
+        "define-amount-amount-float",
         "define-amount-remark",
         "define-amount-decision",
     ],
