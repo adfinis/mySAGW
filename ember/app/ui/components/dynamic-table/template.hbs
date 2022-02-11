@@ -32,16 +32,13 @@
         </tr>
       {{/unless}}
     {{/each}}
-    {{#if (or @loading @hasNextPage)}}
-      <tr>
-        <td colspan={{@config.columns.length}} class="uk-text-center">
-          {{#if @loading}}
-            <UkSpinner />
-          {{else}}
-            <UkSpinner {{in-viewport onEnter=@loadMoreData}}/>
-          {{/if}}
-        </td>
-      </tr>
-    {{/if}}
   </tbody>
 </table>
+
+{{#if @loading}}
+  <LoadingSpinner/>
+{{else if @hasNextPage}}
+  <div {{in-viewport onEnter=@loadMoreData}}>
+    <LoadingSpinner />
+  </div>
+{{/if}}
