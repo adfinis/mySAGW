@@ -21,7 +21,6 @@ export default class App extends Application {
             { "host-router": "router" },
             "intl",
             "caluma-options",
-            "validator",
           ],
         },
       },

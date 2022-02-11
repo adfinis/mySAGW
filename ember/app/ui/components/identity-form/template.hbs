@@ -175,7 +175,7 @@
             <UkButton
               @type="submit"
               @color="primary"
-              @on-click={{this.setBackToIdentities}}
+              @onClick={{this.setBackToIdentities}}
               @label={{t "global.saveAndBack"}}
               @disabled={{cannot "edit identity" this.changeset.data}}
             />
