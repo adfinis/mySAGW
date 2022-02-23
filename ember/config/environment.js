@@ -53,6 +53,9 @@ module.exports = function (environment) {
       navBarLogo: "/assets/logo-header.svg",
       navBarText: "mySAGW",
 
+      staffOrganisationName:
+        "Schweizerische Akademie der Geistes- und Sozialwissenschaften (SAGW)",
+
       caseStateIcons: {
         submit: "clock",
         audit: "clock",
@@ -116,7 +119,7 @@ module.exports = function (environment) {
               "decision-and-credit-remark",
           },
           "define-amount": {
-            "define-amount-decision-continue": "define-amount-amount",
+            "define-amount-decision-continue": "define-amount-amount-float",
             "define-amount-decision-reject": "define-amount-remark",
           },
         },

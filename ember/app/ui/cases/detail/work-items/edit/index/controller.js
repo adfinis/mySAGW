@@ -15,6 +15,7 @@ export default class CasesDetailWorkItemsEditController extends Controller {
   @service store;
   @service notification;
   @service intl;
+  @service router;
 
   @calumaQuery({ query: allWorkItems, options: "options" })
   workItemsQuery;
@@ -61,7 +62,7 @@ export default class CasesDetailWorkItemsEditController extends Controller {
 
       this.notification.success(this.intl.t("work-items.saveSuccess"));
 
-      this.transitionToRoute(
+      this.router.transitionTo(
         "cases.detail.work-items.index",
         this.workItem.case.id
       );
@@ -77,7 +78,7 @@ export default class CasesDetailWorkItemsEditController extends Controller {
       filter: {
         isOrganisation: false,
         memberships__organisation__organisationName:
-          "Schweizerische Akademie der Geistes- und Sozialwissenschaften (SAGW)",
+          ENV.APP.staffOrganisationName,
         hasIdpId: true,
       },
     });
@@ -90,6 +91,6 @@ export default class CasesDetailWorkItemsEditController extends Controller {
 
   @action
   transitionToWorkItems() {
-    this.transitionToRoute("work-items");
+    this.router.transitionTo("work-items");
   }
 }

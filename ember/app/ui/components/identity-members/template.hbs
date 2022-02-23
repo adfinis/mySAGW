@@ -7,45 +7,43 @@
   {{#if this.fetchMembers.isRunning}}
     <LoadingSpinner />
   {{else}}
-    {{#if this.members.length}}
-      <ul class="uk-list uk-list-divider">
-        {{#each this.members as |member|}}
-          <li class="uk-flex uk-flex-between uk-flex-middle">
-            <div>
-              {{#if @hideIdentityLink}}
-                <span class="uk-text-bold">{{member.identity.fullName}}</span>
-              {{else}}
-                <LinkTo
-                  @route="identities.edit"
-                  @model={{member.identity.id}}
-                  class="uk-text-bold"
-                >
-                  {{member.identity.fullName}}
-                </LinkTo>
-              {{/if}}
+    <ul class="uk-list uk-list-divider">
+      {{#each this.members as |member|}}
+        <li class="uk-flex uk-flex-between uk-flex-middle">
+          <div>
+            {{#if @hideIdentityLink}}
+              <span class="uk-text-bold">{{member.identity.fullName}}</span>
+            {{else}}
+              <LinkTo
+                @route="identities.edit"
+                @model={{member.identity.id}}
+                class="uk-text-bold"
+              >
+                {{member.identity.fullName}}
+              </LinkTo>
+            {{/if}}
 
-              <div class="uk-text-meta">
-                {{#each member.roles as |role index|}}
-                  <span class={{if role.inactive "text-strike-through"}}>
-                    {{role.title}}{{if (not (eq index (sub member.roles.length 1))) ","}}
-                  </span>
-                {{/each}}
-              </div>
+            <div class="uk-text-meta">
+              {{#each member.roles as |role index|}}
+                <span class={{if role.inactive "text-strike-through"}}>
+                  {{role.title}}{{if (not (eq index (sub member.roles.length 1))) ","}}
+                </span>
+              {{/each}}
             </div>
-          </li>
-        {{/each}}
-        {{#if this.hasNextPage}}
-          <li class="uk-text-center">
-            <UkButton
-              @on-click={{this.loadMoreMembers}}
-              @color="link"
-              @label={{t "global.loadMore"}}
-            />
-          </li>
-        {{/if}}
-      </ul>
-    {{else}}
-      <p>{{t "components.identity-members.list.empty"}}</p>
-    {{/if}}
+          </div>
+        </li>
+      {{else}}
+        <p>{{t "components.identity-members.list.empty"}}</p>
+      {{/each}}
+      {{#if this.hasNextPage}}
+        <li class="uk-text-center">
+          <UkButton
+            @on-click={{this.loadMoreMembers}}
+            @color="link"
+            @label={{t "global.loadMore"}}
+          />
+        </li>
+      {{/if}}
+    </ul>
   {{/if}}
 </div>

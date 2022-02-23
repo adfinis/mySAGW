@@ -138,4 +138,11 @@ export default function () {
   this.post("/snippets");
   this.get("/snippets/:id");
   this.patch("/snippets/:id");
+
+  this.get("/org-memberships", (schema, request) => {
+    const query = parseFilters(request, [
+      { source: "identity", target: "identityId" },
+    ]);
+    return schema.memberships.where(query);
+  });
 }
