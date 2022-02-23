@@ -7,6 +7,7 @@ import { allWorkItems } from "@projectcaluma/ember-core/caluma-query/queries";
 import { queryManager } from "ember-apollo-client";
 import { dropTask, lastValue } from "ember-concurrency";
 
+import ENV from "mysagw/config/environment";
 import completeWorkItem from "mysagw/gql/mutations/complete-work-item.graphql";
 
 export default class CasesDetailCirculationController extends Controller {
@@ -15,6 +16,7 @@ export default class CasesDetailCirculationController extends Controller {
   @service store;
   @service notification;
   @service intl;
+  @service router;
 
   @tracked selectedIdentities = [];
 
@@ -120,7 +122,7 @@ export default class CasesDetailCirculationController extends Controller {
       filter: {
         isOrganisation: false,
         memberships__organisation__organisationName:
-          "Schweizerische Akademie der Geistes- und Sozialwissenschaften (SAGW)",
+          ENV.APP.staffOrganisationName,
         hasIdpId: true,
       },
     });
@@ -177,6 +179,6 @@ export default class CasesDetailCirculationController extends Controller {
 
   @action
   transitionToCaseWorkItems() {
-    this.transitionToRoute("cases.detail.work-items", this.model.id);
+    this.router.transitionTo("cases.detail.work-items", this.model.id);
   }
 }
