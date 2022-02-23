@@ -73,6 +73,9 @@ export default class CustomCaseModel extends CaseModel {
                   ... on IntegerAnswer {
                     IntegerAnswerValue: value
                   }
+                  ... on FloatAnswer {
+                    FloatAnswerValue: value
+                  }
                   question {
                     slug
                     label
