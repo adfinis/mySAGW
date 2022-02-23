@@ -294,3 +294,13 @@ class MyMembershipViewSet(
 
     def get_queryset(self):
         return self.request.user.identity.memberships.all()
+
+
+class OrganisationAdminMembersViewSet(
+    RetrieveModelMixin,
+    ListModelMixin,
+    GenericViewSet,
+):
+    queryset = models.Membership.objects.all()
+    serializer_class = serializers.OrganisationAdminMembersSerializer
+    filterset_class = filters.MembershipFilterSet
