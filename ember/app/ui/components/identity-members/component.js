@@ -21,8 +21,9 @@ export default class IdentityMembersComponent extends Component {
     return this.pageNumber < this.totalPages;
   }
 
-  @restartableTask *fetchMembers() {
-    const members = yield this.store.query(
+  @restartableTask
+  *fetchMembers() {
+    const membershipResponse = yield this.store.query(
       "membership",
       {
         filter: { organisation: this.args.identity.id },
@@ -35,27 +36,34 @@ export default class IdentityMembersComponent extends Component {
       { adapterOptions: { customEndpoint: "org-memberships" } }
     );
 
-    this.totalPages = members.meta.pagination?.pages;
-    const membersDeduped = [];
+    this.totalPages = membershipResponse.meta.pagination?.pages;
 
-    members.forEach((member) => {
-      const existingMember = member.identity;
+    membershipResponse.forEach((membership) => {
+      const identity = membership.identity;
+      const duplicateMembership = this.members.findBy(
+        "identity.id",
+        identity.get("id")
+      );
 
-      member.roles = [
-        { title: member.role.get("title"), inactive: member.isInactive },
+      membership.roles = [
+        {
+          title: membership.role.get("title"),
+          inactive: membership.isInactive,
+        },
       ];
-      if (existingMember && member.role.get("title")) {
-        existingMember.roles = [...existingMember.roles, ...member.roles];
+      if (duplicateMembership && membership.role.get("title")) {
+        duplicateMembership.roles = [
+          ...duplicateMembership.roles,
+          ...membership.roles,
+        ];
       }
 
-      if (!existingMember) {
-        membersDeduped.push(member);
+      if (!duplicateMembership) {
+        this.members.push(membership);
       }
     });
 
-    this.members = [...this.members, ...members.toArray()];
-
-    return membersDeduped;
+    return membershipResponse;
   }
 
   @action
