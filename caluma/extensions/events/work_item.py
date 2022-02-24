@@ -85,7 +85,7 @@ def set_case_status(sender, work_item, user, **kwargs):
 @on(post_create_work_item, raise_exception=True)
 @transaction.atomic
 def create_circulation_child_case(sender, work_item, user, **kwargs):
-    if work_item.task_id == "circulation":
+    if work_item.task_id == "circulation" and not work_item.child_case:
         caluma_workflow_api.start_case(
             workflow=caluma_workflow_models.Workflow.objects.get(pk="circulation"),
             form=caluma_form_models.Form.objects.get(pk="circulation-form"),
