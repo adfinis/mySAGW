@@ -47,23 +47,27 @@ def set_assigned_user(sender, work_item, user, **kwargs):
     ]
 )
 def send_new_work_item_mail(sender, work_item, user, **kwargs):
-    link = (
-        f"{settings.SELF_URI}/cases/{work_item.case.pk}/work-items/{work_item.pk}/form"
-    )
+    link = f"{settings.SELF_URI}/cases/{work_item.case.pk}"
 
-    if work_item.task_id == "complete-document":
-        link = f"{settings.SELF_URI}/cases/{work_item.case.pk}"
+    try:
+        dossier_nr = work_item.case.document.answers.get(question_id="dossier-nr").value
+    except caluma_form_models.Answer.DoesNotExist:
+        dossier_nr = "Not found"
 
     users = get_users_for_case(work_item.case)
 
     for user in users:
         subject = email_texts.EMAIL_SUBJECTS[user["language"]]
+
+        subject = subject.format(dossier_nr=dossier_nr)
+
         body = email_texts.EMAIL_BODIES[user["language"]]
 
         body = body.format(
             first_name=user["first-name"] or "",
             last_name=user["last-name"] or "",
             link=link,
+            dossier_nr=dossier_nr,
         )
 
         send_mail(
