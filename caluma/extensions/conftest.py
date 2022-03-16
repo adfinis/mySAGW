@@ -6,7 +6,7 @@ from django.core.management import call_command
 
 from caluma.caluma_form.models import Answer, Form
 from caluma.caluma_user.models import BaseUser
-from caluma.caluma_workflow.api import skip_work_item, start_case
+from caluma.caluma_workflow.api import complete_work_item, skip_work_item, start_case
 from caluma.caluma_workflow.models import Workflow
 
 from . import api_client
@@ -51,7 +51,7 @@ def circulation(db, document_review_case, user):
         value="review-document-decision-continue",
     )
 
-    skip_work_item(case.work_items.get(task_id="review-document"), user)
+    complete_work_item(case.work_items.get(task_id="review-document"), user)
 
     return case.work_items.get(task_id="circulation").child_case
 

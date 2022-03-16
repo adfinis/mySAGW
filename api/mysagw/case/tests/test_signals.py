@@ -4,7 +4,8 @@ from mysagw.identity.models import Identity
 
 
 @pytest.mark.parametrize(
-    "identity_email,assigned", [("foo@example.com", True), ("bar@example.com", False)]
+    "identity_email,assigned",
+    [("foo@example.com", True), ("foO@eXample.cOm", True), ("bar@example.com", False)],
 )
 def test_assign_cases(db, case_access_factory, identity_email, assigned):
     case_access = case_access_factory(
