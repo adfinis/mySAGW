@@ -76,7 +76,7 @@ def test_work_item_define_amount(
         question_id="decision-and-credit-decision",
         value="decision-and-credit-decision-additional-data",
     )
-    skip_work_item(work_items.get(task_id="decision-and-credit"), user)
+    complete_work_item(work_items.get(task_id="decision-and-credit"), user)
     complete_work_item(work_items.get(task_id="additional-data"), user)
     work_items.get(task_id="define-amount").document.answers.create(
         question_id="define-amount-decision",
@@ -257,7 +257,7 @@ def test_send_new_work_item_mail(
         value="review-document-decision-reject",
     )
 
-    skip_work_item(case.work_items.get(task_id="review-document"), user)
+    complete_work_item(case.work_items.get(task_id="review-document"), user)
     assert len(mailoutbox) == 1
     assert mailoutbox[0].from_email == settings.MAILING_SENDER
     assert mailoutbox[0].to == ["test-send@example.com"]
