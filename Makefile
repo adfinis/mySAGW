@@ -66,7 +66,7 @@ caluma-dump-forms: ## dump Caluma form models including default answers
 	@docker-compose run --rm caluma python manage.py dumpdata --indent 4 \
 	caluma_form.Form caluma_form.FormQuestion caluma_form.Question \
 	caluma_form.QuestionOption caluma_form.Option caluma_form.Answer | sed -e \
-	's/\r$$//' | jq '.[] | select(.fields.document == null)' | jq -s '.'
+	's/\r$$//' | jq '.[] | select(.fields.document == null)' | jq -s '.' --indent 4
 
 .PHONY: caluma-dump-workflow
 caluma-dump-workflow: ## dump Caluma workflow models
