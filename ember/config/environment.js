@@ -121,6 +121,8 @@ module.exports = function (environment) {
           "define-amount": {
             "define-amount-decision-continue": "define-amount-amount-float",
             "define-amount-decision-reject": "define-amount-remark",
+            "define-amount-decision-zuruckgezogen": "define-amount-remark",
+            "define-amount-decision-dismissed": "define-amount-remark",
           },
         },
       },
