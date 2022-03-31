@@ -108,21 +108,44 @@ module.exports = function (environment) {
             // conditional answer
             "review-document-decision-reject":
               // displayed answer
+              ["priorisierung-der-antrage-kommentar"],
+            "review-document-decision-complete": [
               "priorisierung-der-antrage-kommentar",
-            "review-document-decision-complete":
+            ],
+            "review-document-decision-continue": [
               "priorisierung-der-antrage-kommentar",
+            ],
+            "review-document-decision-zurueckgezogen": [
+              "priorisierung-der-antrage-kommentar",
+            ],
           },
           "decision-and-credit": {
-            "decision-and-credit-decision-additional-data":
+            "decision-and-credit-decision-additional-data": [
               "gesprochener-rahmenkredit",
-            "decision-and-credit-decision-complete":
               "decision-and-credit-remark",
+            ],
+            "decision-and-credit-decision-complete": [
+              "decision-and-credit-remark",
+            ],
+            "decision-and-credit-decision-close": [
+              "decision-and-credit-remark",
+            ],
+            "decision-and-credit-decision-define-amount": [
+              "gesprochener-rahmenkredit",
+              "decision-and-credit-remark",
+            ],
+            "decision-and-credit-decision-zurueckgezogen": [
+              "decision-and-credit-remark",
+            ],
           },
           "define-amount": {
-            "define-amount-decision-continue": "define-amount-amount-float",
-            "define-amount-decision-reject": "define-amount-remark",
-            "define-amount-decision-zuruckgezogen": "define-amount-remark",
-            "define-amount-decision-dismissed": "define-amount-remark",
+            "define-amount-decision-continue": [
+              "define-amount-amount-float",
+              "define-amount-remark",
+            ],
+            "define-amount-decision-reject": ["define-amount-remark"],
+            "define-amount-decision-zurueckgezogen": ["define-amount-remark"],
+            "define-amount-decision-dismissed": ["define-amount-remark"],
           },
         },
       },

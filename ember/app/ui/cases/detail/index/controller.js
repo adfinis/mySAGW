@@ -44,18 +44,9 @@ export default class CasesDetailIndexController extends Controller {
           } else if (!workItems.length) {
             return [...workItems, workItem];
           }
-          const duplicateIndex = workItems.findIndex(
-            (item) => item.task.slug === workItem.task.slug
-          );
 
-          if (duplicateIndex === -1) {
-            return [...workItems, workItem];
-          } else if (
-            new Date(workItems[duplicateIndex].createdAt) <
-            new Date(workItem.createdAt)
-          ) {
-            workItems.splice(duplicateIndex, 1);
-            return [...workItems, workItem];
+          if (new Date(workItem.createdAt) > new Date(workItems[0].createdAt)) {
+            return [workItem];
           }
 
           return workItems;
@@ -81,8 +72,9 @@ export default class CasesDetailIndexController extends Controller {
                     decision.node[`${decision.node.__typename}Value`];
 
                   if (
-                    answer.node.question.slug ===
-                    ENV.APP.caluma.displayedAnswers[taskSlug][value]
+                    ENV.APP.caluma.displayedAnswers[taskSlug][value].includes(
+                      answer.node.question.slug
+                    )
                   ) {
                     filteredAnswers.push({
                       label: answer.node.question.label,
