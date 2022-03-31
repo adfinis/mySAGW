@@ -3,7 +3,7 @@ version: "3"
 services:
 
   db:
-    image: postgres:alpine
+    image: postgres:13-alpine
     volumes:
       - dbdata:/var/lib/postgresql/data
       - ./postgres/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh:ro
@@ -16,7 +16,7 @@ services:
       - db
 
   caluma:
-    image: ghcr.io/projectcaluma/caluma:dev
+    image: ghcr.io/projectcaluma/caluma:7.15.2
     build:
       context: caluma
     environment:
