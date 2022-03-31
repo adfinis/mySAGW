@@ -107,7 +107,7 @@ module.exports = function (environment) {
           "review-document": {
             // conditional answer
             "review-document-decision-reject":
-              // displayed answer
+              // displayed answers
               ["priorisierung-der-antrage-kommentar"],
             "review-document-decision-complete": [
               "priorisierung-der-antrage-kommentar",
@@ -121,7 +121,6 @@ module.exports = function (environment) {
           },
           "decision-and-credit": {
             "decision-and-credit-decision-additional-data": [
-              "gesprochener-rahmenkredit",
               "decision-and-credit-remark",
             ],
             "decision-and-credit-decision-complete": [
@@ -131,7 +130,6 @@ module.exports = function (environment) {
               "decision-and-credit-remark",
             ],
             "decision-and-credit-decision-define-amount": [
-              "gesprochener-rahmenkredit",
               "decision-and-credit-remark",
             ],
             "decision-and-credit-decision-zurueckgezogen": [
@@ -147,6 +145,9 @@ module.exports = function (environment) {
             "define-amount-decision-zurueckgezogen": ["define-amount-remark"],
             "define-amount-decision-dismissed": ["define-amount-remark"],
           },
+        },
+        alwaysDisplayedAnswers: {
+          "decision-and-credit": ["gesprochener-rahmenkredit"],
         },
       },
     },
