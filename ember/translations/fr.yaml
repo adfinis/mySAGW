@@ -5,7 +5,7 @@ global:
     female: "Madame"
     neutral: "Formulation neutre"
   title:
-    none: "Kein Titel"
+    none: "Aucun titre"
     dr: "Dr"
     prof: "Prof."
     profDr: "Prof. Dr"

@@ -5,7 +5,7 @@ global:
     female: "Mrs."
     neutral: "Neutral salutation"
   title:
-    none: "Kein Titel"
+    none: "No title"
     dr: "Dr."
     prof: "Prof."
     profDr: "Prof. Dr."

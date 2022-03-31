@@ -50,9 +50,13 @@ export default class IdentityAddressesComponent extends Component {
       method: "OPTIONS",
       headers: adapter.headers,
     });
-    const data = yield response.json();
 
-    return data.data.actions.POST.country.choices;
+    if (response.ok) {
+      const data = yield response.json();
+      return data.data.actions.POST.country.choices;
+    }
+
+    return [];
   }
 
   // Add / Edit
