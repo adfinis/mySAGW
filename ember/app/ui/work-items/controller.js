@@ -39,6 +39,7 @@ export default class WorkItemsIndexController extends Controller {
   get options() {
     return {
       pageSize: 20,
+      processNew: this.processNew,
     };
   }
 
@@ -135,19 +136,18 @@ export default class WorkItemsIndexController extends Controller {
 
     yield this.workItemsQuery.fetch({
       filter,
-      order: [{ attribute: "CREATED_AT", direction: "DESC" }], // todo order
+      order: [{ attribute: "CREATED_AT", direction: "DESC" }],
     });
-    yield this.getIdentities.perform();
   }
 
   @restartableTask
-  *getIdentities() {
-    const idpIds = this.workItemsQuery.value
+  *getIdentities(workItems) {
+    const idpIds = workItems
       .reduce(
         (idpIds, workItem) => [
           ...idpIds,
           ...workItem.assignedUsers,
-          workItem.raw.closedByUser,
+          workItem.closedByUser,
         ],
         []
       )
@@ -174,6 +174,12 @@ export default class WorkItemsIndexController extends Controller {
     )).map((task) => {
       return { value: task.node.slug, label: task.node.name };
     });
+  }
+
+  @action
+  processNew(workItems) {
+    this.getIdentities.perform(workItems);
+    return workItems;
   }
 
   @action
