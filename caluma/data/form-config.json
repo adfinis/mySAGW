@@ -1,1625 +1,1707 @@
 [
-{
-    "model": "caluma_form.form",
-    "pk": "additional-data-form",
-    "fields": {
-        "created_at": "2021-05-31T11:30:26.207Z",
-        "modified_at": "2021-05-31T11:30:26.207Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "name": "{\"de\": \"Weitere Daten\", \"en\": null, \"fr\": null}",
-        "description": "{\"de\": \"\", \"en\": null, \"fr\": null}",
-        "meta": {},
-        "is_published": false,
-        "is_archived": false,
-        "source": null
+    {
+        "model": "caluma_form.form",
+        "pk": "additional-data-form",
+        "fields": {
+            "created_at": "2021-05-31T11:30:26.207Z",
+            "modified_at": "2021-05-31T11:30:26.207Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "name": "{\"de\": \"Weitere Daten\", \"en\": null, \"fr\": null}",
+            "description": "{\"de\": \"\", \"en\": null, \"fr\": null}",
+            "meta": {},
+            "is_published": false,
+            "is_archived": false,
+            "source": null
+        }
+    },
+    {
+        "model": "caluma_form.form",
+        "pk": "advance-credits-form",
+        "fields": {
+            "created_at": "2021-08-25T08:41:53.249Z",
+            "modified_at": "2021-08-25T08:41:53.249Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "name": "{\"de\": null, \"en\": \"Vorschusszahlung\", \"fr\": null}",
+            "description": "{\"de\": null, \"en\": \"\", \"fr\": null}",
+            "meta": {},
+            "is_published": false,
+            "is_archived": false,
+            "source": null
+        }
+    },
+    {
+        "model": "caluma_form.form",
+        "pk": "circulation-form",
+        "fields": {
+            "created_at": "2021-05-31T11:28:57.077Z",
+            "modified_at": "2021-05-31T11:28:57.077Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "name": "{\"de\": \"Zirkulation\", \"en\": null, \"fr\": null}",
+            "description": "{\"de\": \"\", \"en\": null, \"fr\": null}",
+            "meta": {},
+            "is_published": false,
+            "is_archived": false,
+            "source": null
+        }
+    },
+    {
+        "model": "caluma_form.form",
+        "pk": "decision-and-credit-form",
+        "fields": {
+            "created_at": "2021-05-31T11:30:53.267Z",
+            "modified_at": "2021-05-31T11:30:53.267Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "name": "{\"de\": \"Entscheid und Kredit\", \"en\": null, \"fr\": null}",
+            "description": "{\"de\": \"\", \"en\": null, \"fr\": null}",
+            "meta": {},
+            "is_published": false,
+            "is_archived": false,
+            "source": null
+        }
+    },
+    {
+        "model": "caluma_form.form",
+        "pk": "define-amount-form",
+        "fields": {
+            "created_at": "2021-05-31T11:31:25.240Z",
+            "modified_at": "2021-05-31T11:31:25.240Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "name": "{\"de\": \"Betrag festlegen\", \"en\": null, \"fr\": null}",
+            "description": "{\"de\": \"\", \"en\": null, \"fr\": null}",
+            "meta": {},
+            "is_published": false,
+            "is_archived": false,
+            "source": null
+        }
+    },
+    {
+        "model": "caluma_form.form",
+        "pk": "quittungen",
+        "fields": {
+            "created_at": "2021-11-11T10:37:35.334Z",
+            "modified_at": "2021-11-11T10:37:35.334Z",
+            "created_by_user": null,
+            "created_by_group": "admin",
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "name": "{\"de\": null, \"en\": \"Quittungen\", \"fr\": null}",
+            "description": "{\"de\": null, \"en\": \"\", \"fr\": null}",
+            "meta": {},
+            "is_published": false,
+            "is_archived": false,
+            "source": null
+        }
+    },
+    {
+        "model": "caluma_form.form",
+        "pk": "review-document-form",
+        "fields": {
+            "created_at": "2021-05-31T08:19:43.129Z",
+            "modified_at": "2021-05-31T08:19:43.129Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "name": "{\"de\": \"Pr\\u00fcfung\", \"en\": null, \"fr\": null}",
+            "description": "{\"de\": \"\", \"en\": null, \"fr\": null}",
+            "meta": {},
+            "is_published": false,
+            "is_archived": false,
+            "source": null
+        }
+    },
+    {
+        "model": "caluma_form.formquestion",
+        "pk": "additional-data-form.additional-data-adresse",
+        "fields": {
+            "created_at": "2021-11-11T09:49:55.647Z",
+            "modified_at": "2021-11-11T09:49:55.647Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "form": "additional-data-form",
+            "question": "additional-data-adresse",
+            "sort": 6
+        }
+    },
+    {
+        "model": "caluma_form.formquestion",
+        "pk": "additional-data-form.additional-data-bank",
+        "fields": {
+            "created_at": "2021-11-11T09:51:02.955Z",
+            "modified_at": "2021-11-11T09:51:02.955Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "form": "additional-data-form",
+            "question": "additional-data-bank",
+            "sort": 3
+        }
+    },
+    {
+        "model": "caluma_form.formquestion",
+        "pk": "additional-data-form.additional-data-bank-town",
+        "fields": {
+            "created_at": "2021-11-11T09:51:23.947Z",
+            "modified_at": "2021-11-11T09:51:23.947Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "form": "additional-data-form",
+            "question": "additional-data-bank-town",
+            "sort": 2
+        }
+    },
+    {
+        "model": "caluma_form.formquestion",
+        "pk": "additional-data-form.additional-data-fibu",
+        "fields": {
+            "created_at": "2021-11-11T09:50:16.820Z",
+            "modified_at": "2021-11-11T09:50:16.820Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "form": "additional-data-form",
+            "question": "additional-data-fibu",
+            "sort": 5
+        }
+    },
+    {
+        "model": "caluma_form.formquestion",
+        "pk": "additional-data-form.additional-data-iban",
+        "fields": {
+            "created_at": "2021-11-11T09:50:33.504Z",
+            "modified_at": "2021-11-11T09:50:33.504Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "form": "additional-data-form",
+            "question": "additional-data-iban",
+            "sort": 4
+        }
+    },
+    {
+        "model": "caluma_form.formquestion",
+        "pk": "additional-data-form.additional-data-name",
+        "fields": {
+            "created_at": "2021-11-11T09:49:35.474Z",
+            "modified_at": "2021-11-11T09:49:35.474Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "form": "additional-data-form",
+            "question": "additional-data-name",
+            "sort": 7
+        }
+    },
+    {
+        "model": "caluma_form.formquestion",
+        "pk": "additional-data-form.additional-data-quittungen",
+        "fields": {
+            "created_at": "2021-11-11T10:39:19.436Z",
+            "modified_at": "2021-11-11T10:39:19.436Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "form": "additional-data-form",
+            "question": "additional-data-quittungen",
+            "sort": 1
+        }
+    },
+    {
+        "model": "caluma_form.formquestion",
+        "pk": "additional-data-form.additional-data-text",
+        "fields": {
+            "created_at": "2021-05-31T16:04:15.518Z",
+            "modified_at": "2021-05-31T16:04:15.518Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "form": "additional-data-form",
+            "question": "additional-data-text",
+            "sort": 8
+        }
+    },
+    {
+        "model": "caluma_form.formquestion",
+        "pk": "advance-credits-form.advance-credit-amount-float",
+        "fields": {
+            "created_at": "2021-08-25T08:47:29.058Z",
+            "modified_at": "2021-08-25T08:47:29.058Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "form": "advance-credits-form",
+            "question": "advance-credit-amount-float",
+            "sort": 1
+        }
+    },
+    {
+        "model": "caluma_form.formquestion",
+        "pk": "circulation-form.circulation-comment",
+        "fields": {
+            "created_at": "2021-05-31T16:01:25.864Z",
+            "modified_at": "2021-05-31T16:01:25.864Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "form": "circulation-form",
+            "question": "circulation-comment",
+            "sort": 1
+        }
+    },
+    {
+        "model": "caluma_form.formquestion",
+        "pk": "circulation-form.circulation-decision",
+        "fields": {
+            "created_at": "2021-06-25T13:19:22.324Z",
+            "modified_at": "2021-06-25T13:19:22.324Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "form": "circulation-form",
+            "question": "circulation-decision",
+            "sort": 2
+        }
+    },
+    {
+        "model": "caluma_form.formquestion",
+        "pk": "decision-and-credit-form.decision-and-credit-decision",
+        "fields": {
+            "created_at": "2021-05-31T16:03:29.194Z",
+            "modified_at": "2021-05-31T16:03:29.194Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "form": "decision-and-credit-form",
+            "question": "decision-and-credit-decision",
+            "sort": 1
+        }
+    },
+    {
+        "model": "caluma_form.formquestion",
+        "pk": "define-amount-form.define-amount-amount-float",
+        "fields": {
+            "created_at": "2021-05-31T16:05:05.820Z",
+            "modified_at": "2021-05-31T16:05:05.820Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "form": "define-amount-form",
+            "question": "define-amount-amount-float",
+            "sort": 4
+        }
+    },
+    {
+        "model": "caluma_form.formquestion",
+        "pk": "define-amount-form.define-amount-decision",
+        "fields": {
+            "created_at": "2021-10-21T09:22:40.006Z",
+            "modified_at": "2021-10-21T09:22:40.006Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "form": "define-amount-form",
+            "question": "define-amount-decision",
+            "sort": 1
+        }
+    },
+    {
+        "model": "caluma_form.formquestion",
+        "pk": "quittungen.additional-data-row-quittung",
+        "fields": {
+            "created_at": "2021-11-11T10:38:12.521Z",
+            "modified_at": "2021-11-11T10:38:12.521Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "form": "quittungen",
+            "question": "additional-data-row-quittung",
+            "sort": 1
+        }
+    },
+    {
+        "model": "caluma_form.formquestion",
+        "pk": "review-document-form.review-document-decision",
+        "fields": {
+            "created_at": "2021-05-31T09:41:37.989Z",
+            "modified_at": "2021-05-31T09:41:37.989Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "form": "review-document-form",
+            "question": "review-document-decision",
+            "sort": 1
+        }
+    },
+    {
+        "model": "caluma_form.question",
+        "pk": "additional-data-adresse",
+        "fields": {
+            "created_at": "2021-11-11T09:49:55.534Z",
+            "modified_at": "2021-11-11T09:49:55.534Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": null, \"en\": \"Adresse\", \"fr\": null}",
+            "type": "textarea",
+            "is_required": "true",
+            "is_hidden": "false",
+            "is_archived": false,
+            "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "hint_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "info_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
+            "configuration": {
+                "max_length": null,
+                "min_length": null
+            },
+            "meta": {},
+            "data_source": null,
+            "row_form": null,
+            "sub_form": null,
+            "source": null,
+            "format_validators": "[]",
+            "default_answer": null,
+            "calc_expression": null,
+            "calc_dependents": "[]"
+        }
+    },
+    {
+        "model": "caluma_form.question",
+        "pk": "additional-data-bank",
+        "fields": {
+            "created_at": "2021-11-11T09:51:02.834Z",
+            "modified_at": "2021-11-11T09:51:02.834Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": null, \"en\": \"Bank\", \"fr\": null}",
+            "type": "text",
+            "is_required": "true",
+            "is_hidden": "false",
+            "is_archived": false,
+            "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "hint_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "info_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
+            "configuration": {
+                "max_length": null,
+                "min_length": null
+            },
+            "meta": {},
+            "data_source": null,
+            "row_form": null,
+            "sub_form": null,
+            "source": null,
+            "format_validators": "[]",
+            "default_answer": null,
+            "calc_expression": null,
+            "calc_dependents": "[]"
+        }
+    },
+    {
+        "model": "caluma_form.question",
+        "pk": "additional-data-bank-town",
+        "fields": {
+            "created_at": "2021-11-11T09:51:23.794Z",
+            "modified_at": "2021-11-11T09:51:23.794Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": null, \"en\": \"Bank Ort\", \"fr\": null}",
+            "type": "text",
+            "is_required": "false",
+            "is_hidden": "false",
+            "is_archived": false,
+            "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "hint_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "info_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
+            "configuration": {
+                "max_length": null,
+                "min_length": null
+            },
+            "meta": {},
+            "data_source": null,
+            "row_form": null,
+            "sub_form": null,
+            "source": null,
+            "format_validators": "[]",
+            "default_answer": null,
+            "calc_expression": null,
+            "calc_dependents": "[]"
+        }
+    },
+    {
+        "model": "caluma_form.question",
+        "pk": "additional-data-fibu",
+        "fields": {
+            "created_at": "2021-11-11T09:50:16.695Z",
+            "modified_at": "2021-11-11T09:50:16.695Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": null, \"en\": \"Fibukonto\", \"fr\": null}",
+            "type": "text",
+            "is_required": "false",
+            "is_hidden": "false",
+            "is_archived": false,
+            "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "hint_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "info_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
+            "configuration": {
+                "max_length": null,
+                "min_length": null
+            },
+            "meta": {},
+            "data_source": null,
+            "row_form": null,
+            "sub_form": null,
+            "source": null,
+            "format_validators": "[]",
+            "default_answer": null,
+            "calc_expression": null,
+            "calc_dependents": "[]"
+        }
+    },
+    {
+        "model": "caluma_form.question",
+        "pk": "additional-data-iban",
+        "fields": {
+            "created_at": "2021-11-11T09:50:33.352Z",
+            "modified_at": "2021-11-11T09:50:33.352Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": null, \"en\": \"IBAN\", \"fr\": null}",
+            "type": "text",
+            "is_required": "true",
+            "is_hidden": "false",
+            "is_archived": false,
+            "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "hint_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "info_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
+            "configuration": {
+                "max_length": null,
+                "min_length": null
+            },
+            "meta": {},
+            "data_source": null,
+            "row_form": null,
+            "sub_form": null,
+            "source": null,
+            "format_validators": "[]",
+            "default_answer": null,
+            "calc_expression": null,
+            "calc_dependents": "[]"
+        }
+    },
+    {
+        "model": "caluma_form.question",
+        "pk": "additional-data-name",
+        "fields": {
+            "created_at": "2021-11-11T09:49:35.356Z",
+            "modified_at": "2021-11-11T09:49:35.356Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": null, \"en\": \"Name\", \"fr\": null}",
+            "type": "text",
+            "is_required": "true",
+            "is_hidden": "false",
+            "is_archived": false,
+            "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "hint_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "info_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
+            "configuration": {
+                "max_length": null,
+                "min_length": null
+            },
+            "meta": {},
+            "data_source": null,
+            "row_form": null,
+            "sub_form": null,
+            "source": null,
+            "format_validators": "[]",
+            "default_answer": null,
+            "calc_expression": null,
+            "calc_dependents": "[]"
+        }
+    },
+    {
+        "model": "caluma_form.question",
+        "pk": "additional-data-quittungen",
+        "fields": {
+            "created_at": "2021-11-11T10:39:19.333Z",
+            "modified_at": "2021-11-11T10:39:19.333Z",
+            "created_by_user": null,
+            "created_by_group": "admin",
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": null, \"en\": \"Quittungen\", \"fr\": null}",
+            "type": "table",
+            "is_required": "false",
+            "is_hidden": "false",
+            "is_archived": false,
+            "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "hint_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "info_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
+            "configuration": {},
+            "meta": {},
+            "data_source": null,
+            "row_form": "quittungen",
+            "sub_form": null,
+            "source": null,
+            "format_validators": "[]",
+            "default_answer": null,
+            "calc_expression": null,
+            "calc_dependents": "[]"
+        }
+    },
+    {
+        "model": "caluma_form.question",
+        "pk": "additional-data-row-quittung",
+        "fields": {
+            "created_at": "2021-11-11T10:38:12.447Z",
+            "modified_at": "2021-11-11T10:38:12.447Z",
+            "created_by_user": null,
+            "created_by_group": "admin",
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": null, \"en\": \"Quittung\", \"fr\": null}",
+            "type": "file",
+            "is_required": "false",
+            "is_hidden": "false",
+            "is_archived": false,
+            "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "hint_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "info_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
+            "configuration": {},
+            "meta": {},
+            "data_source": null,
+            "row_form": null,
+            "sub_form": null,
+            "source": null,
+            "format_validators": "[]",
+            "default_answer": null,
+            "calc_expression": null,
+            "calc_dependents": "[]"
+        }
+    },
+    {
+        "model": "caluma_form.question",
+        "pk": "additional-data-text",
+        "fields": {
+            "created_at": "2021-05-31T16:04:15.425Z",
+            "modified_at": "2021-05-31T16:04:15.425Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": \"Text\", \"en\": null, \"fr\": null}",
+            "type": "text",
+            "is_required": "false",
+            "is_hidden": "false",
+            "is_archived": false,
+            "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "hint_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "info_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
+            "configuration": {
+                "max_length": null,
+                "min_length": null
+            },
+            "meta": {},
+            "data_source": null,
+            "row_form": null,
+            "sub_form": null,
+            "source": null,
+            "format_validators": "[]",
+            "default_answer": null,
+            "calc_expression": null,
+            "calc_dependents": "[]"
+        }
+    },
+    {
+        "model": "caluma_form.question",
+        "pk": "advance-credit-amount-float",
+        "fields": {
+            "created_at": "2021-08-25T08:47:29.001Z",
+            "modified_at": "2021-08-25T08:47:29.001Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": null, \"en\": \"Vorschusszahlungbetrag\", \"fr\": null}",
+            "type": "float",
+            "is_required": "false",
+            "is_hidden": "false",
+            "is_archived": false,
+            "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "hint_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "info_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
+            "configuration": {
+                "max_value": null,
+                "min_value": null
+            },
+            "meta": {},
+            "data_source": null,
+            "row_form": null,
+            "sub_form": null,
+            "source": null,
+            "format_validators": "[]",
+            "default_answer": null,
+            "calc_expression": null,
+            "calc_dependents": "[]"
+        }
+    },
+    {
+        "model": "caluma_form.question",
+        "pk": "circulation-comment",
+        "fields": {
+            "created_at": "2021-05-31T16:01:25.772Z",
+            "modified_at": "2021-05-31T16:01:25.772Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": \"Kommentar\", \"en\": null, \"fr\": null}",
+            "type": "textarea",
+            "is_required": "false",
+            "is_hidden": "false",
+            "is_archived": false,
+            "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "hint_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "info_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
+            "configuration": {
+                "max_length": null,
+                "min_length": null
+            },
+            "meta": {},
+            "data_source": null,
+            "row_form": null,
+            "sub_form": null,
+            "source": null,
+            "format_validators": "[]",
+            "default_answer": null,
+            "calc_expression": null,
+            "calc_dependents": "[]"
+        }
+    },
+    {
+        "model": "caluma_form.question",
+        "pk": "circulation-decision",
+        "fields": {
+            "created_at": "2021-06-25T13:19:22.232Z",
+            "modified_at": "2021-06-25T13:19:30.433Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": \"Entscheid\", \"en\": null, \"fr\": null}",
+            "type": "choice",
+            "is_required": "true",
+            "is_hidden": "false",
+            "is_archived": false,
+            "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "hint_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "info_text": "{\"de\": \"\", \"en\": null, \"fr\": null}",
+            "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
+            "configuration": {},
+            "meta": {},
+            "data_source": null,
+            "row_form": null,
+            "sub_form": null,
+            "source": null,
+            "format_validators": "[]",
+            "default_answer": null,
+            "calc_expression": null,
+            "calc_dependents": "[]"
+        }
+    },
+    {
+        "model": "caluma_form.question",
+        "pk": "decision-and-credit-decision",
+        "fields": {
+            "created_at": "2021-05-31T16:03:29.087Z",
+            "modified_at": "2021-08-05T12:18:00.612Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": \"Entscheid\", \"en\": null, \"fr\": null}",
+            "type": "choice",
+            "is_required": "true",
+            "is_hidden": "false",
+            "is_archived": false,
+            "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "hint_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "info_text": "{\"de\": \"\", \"en\": null, \"fr\": null}",
+            "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
+            "configuration": {},
+            "meta": {},
+            "data_source": null,
+            "row_form": null,
+            "sub_form": null,
+            "source": null,
+            "format_validators": "[]",
+            "default_answer": null,
+            "calc_expression": null,
+            "calc_dependents": "[]"
+        }
+    },
+    {
+        "model": "caluma_form.question",
+        "pk": "define-amount-amount-float",
+        "fields": {
+            "created_at": "2021-05-31T16:05:05.729Z",
+            "modified_at": "2021-08-05T12:18:20.850Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": \"Betrag\", \"en\": null, \"fr\": null}",
+            "type": "float",
+            "is_required": "false",
+            "is_hidden": "false",
+            "is_archived": false,
+            "placeholder": "{\"de\": \"\", \"en\": null, \"fr\": null}",
+            "hint_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "info_text": "{\"de\": \"\", \"en\": null, \"fr\": null}",
+            "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
+            "configuration": {
+                "max_value": null,
+                "min_value": null
+            },
+            "meta": {},
+            "data_source": null,
+            "row_form": null,
+            "sub_form": null,
+            "source": null,
+            "format_validators": "[]",
+            "default_answer": null,
+            "calc_expression": null,
+            "calc_dependents": "[]"
+        }
+    },
+    {
+        "model": "caluma_form.question",
+        "pk": "define-amount-decision",
+        "fields": {
+            "created_at": "2021-10-21T09:22:39.897Z",
+            "modified_at": "2021-10-21T09:22:39.897Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": null, \"en\": \"Entscheid\", \"fr\": null}",
+            "type": "choice",
+            "is_required": "true",
+            "is_hidden": "false",
+            "is_archived": false,
+            "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "hint_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "info_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
+            "configuration": {},
+            "meta": {},
+            "data_source": null,
+            "row_form": null,
+            "sub_form": null,
+            "source": null,
+            "format_validators": "[]",
+            "default_answer": null,
+            "calc_expression": null,
+            "calc_dependents": "[]"
+        }
+    },
+    {
+        "model": "caluma_form.question",
+        "pk": "dossier-nr",
+        "fields": {
+            "created_at": "2021-05-31T09:41:37.767Z",
+            "modified_at": "2021-06-03T09:17:44.911Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": \"Dossier-Nummer\", \"en\": \"dossier number\", \"fr\": \"N\\u00b0 de dossier\"}",
+            "type": "text",
+            "is_required": "true",
+            "is_hidden": "true",
+            "is_archived": false,
+            "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "hint_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "info_text": "{\"de\": \"\", \"en\": null, \"fr\": null}",
+            "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
+            "configuration": {},
+            "meta": {},
+            "data_source": null,
+            "row_form": null,
+            "sub_form": null,
+            "source": null,
+            "format_validators": "[]",
+            "default_answer": null,
+            "calc_expression": null,
+            "calc_dependents": "[]"
+        }
+    },
+    {
+        "model": "caluma_form.question",
+        "pk": "review-document-decision",
+        "fields": {
+            "created_at": "2021-05-31T09:41:37.767Z",
+            "modified_at": "2021-06-03T09:17:44.911Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": \"Entscheid\", \"en\": null, \"fr\": null}",
+            "type": "choice",
+            "is_required": "true",
+            "is_hidden": "false",
+            "is_archived": false,
+            "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "hint_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "info_text": "{\"de\": \"\", \"en\": null, \"fr\": null}",
+            "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
+            "configuration": {},
+            "meta": {},
+            "data_source": null,
+            "row_form": null,
+            "sub_form": null,
+            "source": null,
+            "format_validators": "[]",
+            "default_answer": null,
+            "calc_expression": null,
+            "calc_dependents": "[]"
+        }
+    },
+    {
+        "model": "caluma_form.question",
+        "pk": "sektion",
+        "fields": {
+            "created_at": "2021-11-11T09:56:38.082Z",
+            "modified_at": "2021-11-11T09:56:38.082Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": \"Sektion\", \"en\": \"Section\", \"fr\": null}",
+            "type": "choice",
+            "is_required": "true",
+            "is_hidden": "false",
+            "is_archived": false,
+            "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "hint_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "info_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
+            "configuration": {},
+            "meta": {
+                "widgetOverride": "cf-field/input/powerselect"
+            },
+            "data_source": null,
+            "row_form": null,
+            "sub_form": null,
+            "source": null,
+            "format_validators": "[]",
+            "default_answer": null,
+            "calc_expression": null,
+            "calc_dependents": "[]"
+        }
+    },
+    {
+        "model": "caluma_form.question",
+        "pk": "submit-button",
+        "fields": {
+            "created_at": "2021-08-05T12:19:11.910Z",
+            "modified_at": "2021-08-05T12:19:11.910Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": \"Submit button\", \"en\": null, \"fr\": null}",
+            "type": "static",
+            "is_required": "false",
+            "is_hidden": "false",
+            "is_archived": false,
+            "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "hint_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "info_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
+            "configuration": {},
+            "meta": {
+                "widgetOverride": "submit-button"
+            },
+            "data_source": null,
+            "row_form": null,
+            "sub_form": null,
+            "source": null,
+            "format_validators": "[]",
+            "default_answer": null,
+            "calc_expression": null,
+            "calc_dependents": "[]"
+        }
+    },
+    {
+        "model": "caluma_form.question",
+        "pk": "verteilplan-nr",
+        "fields": {
+            "created_at": "2021-11-11T09:53:57.313Z",
+            "modified_at": "2021-11-11T09:54:09.806Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": null, \"en\": \"Verteilplan\", \"fr\": null}",
+            "type": "choice",
+            "is_required": "true",
+            "is_hidden": "false",
+            "is_archived": false,
+            "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "hint_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "info_text": "{\"de\": null, \"en\": \"\", \"fr\": null}",
+            "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
+            "configuration": {},
+            "meta": {},
+            "data_source": null,
+            "row_form": null,
+            "sub_form": null,
+            "source": null,
+            "format_validators": "[]",
+            "default_answer": "28f701ec-dbb6-4a56-85d0-567255c871d4",
+            "calc_expression": null,
+            "calc_dependents": "[]"
+        }
+    },
+    {
+        "model": "caluma_form.questionoption",
+        "pk": "circulation-decision.circulation-decision-approved",
+        "fields": {
+            "created_at": "2021-06-03T09:17:44.922Z",
+            "modified_at": "2021-06-03T09:17:44.922Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "question": "circulation-decision",
+            "option": "circulation-decision-approved",
+            "sort": 1
+        }
+    },
+    {
+        "model": "caluma_form.questionoption",
+        "pk": "circulation-decision.circulation-decision-declined",
+        "fields": {
+            "created_at": "2021-06-03T09:17:44.931Z",
+            "modified_at": "2021-06-03T09:17:44.931Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "question": "circulation-decision",
+            "option": "circulation-decision-declined",
+            "sort": 2
+        }
+    },
+    {
+        "model": "caluma_form.questionoption",
+        "pk": "decision-and-credit-decision.decision-and-credit-decision-additional-data",
+        "fields": {
+            "created_at": "2021-08-05T12:18:00.631Z",
+            "modified_at": "2021-08-05T12:18:00.631Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "question": "decision-and-credit-decision",
+            "option": "decision-and-credit-decision-additional-data",
+            "sort": 4
+        }
+    },
+    {
+        "model": "caluma_form.questionoption",
+        "pk": "decision-and-credit-decision.decision-and-credit-decision-close",
+        "fields": {
+            "created_at": "2021-08-05T12:18:00.628Z",
+            "modified_at": "2021-08-05T12:18:00.628Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "question": "decision-and-credit-decision",
+            "option": "decision-and-credit-decision-close",
+            "sort": 3
+        }
+    },
+    {
+        "model": "caluma_form.questionoption",
+        "pk": "decision-and-credit-decision.decision-and-credit-decision-complete",
+        "fields": {
+            "created_at": "2021-08-05T12:18:00.622Z",
+            "modified_at": "2021-08-05T12:18:00.622Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "question": "decision-and-credit-decision",
+            "option": "decision-and-credit-decision-complete",
+            "sort": 1
+        }
+    },
+    {
+        "model": "caluma_form.questionoption",
+        "pk": "decision-and-credit-decision.decision-and-credit-decision-define-amount",
+        "fields": {
+            "created_at": "2021-08-05T12:18:00.625Z",
+            "modified_at": "2021-08-05T12:18:00.625Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "question": "decision-and-credit-decision",
+            "option": "decision-and-credit-decision-define-amount",
+            "sort": 2
+        }
+    },
+    {
+        "model": "caluma_form.questionoption",
+        "pk": "define-amount-decision.define-amount-decision-continue",
+        "fields": {
+            "created_at": "2021-10-21T09:22:39.928Z",
+            "modified_at": "2021-10-21T09:22:39.928Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": "052a564b-6616-4178-89fc-fd1a29ae1dc5",
+            "modified_by_group": null,
+            "question": "define-amount-decision",
+            "option": "define-amount-decision-continue",
+            "sort": 4
+        }
+    },
+    {
+        "model": "caluma_form.questionoption",
+        "pk": "define-amount-decision.define-amount-decision-dismissed",
+        "fields": {
+            "created_at": "2021-10-21T09:22:39.919Z",
+            "modified_at": "2021-10-21T09:22:39.919Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "question": "define-amount-decision",
+            "option": "define-amount-decision-dismissed",
+            "sort": 1
+        }
+    },
+    {
+        "model": "caluma_form.questionoption",
+        "pk": "define-amount-decision.define-amount-decision-reject",
+        "fields": {
+            "created_at": "2021-10-21T09:22:39.919Z",
+            "modified_at": "2021-10-21T09:22:39.919Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": "052a564b-6616-4178-89fc-fd1a29ae1dc5",
+            "modified_by_group": null,
+            "question": "define-amount-decision",
+            "option": "define-amount-decision-reject",
+            "sort": 3
+        }
+    },
+    {
+        "model": "caluma_form.questionoption",
+        "pk": "define-amount-decision.define-amount-decision-zurueckgezogen",
+        "fields": {
+            "created_at": "2021-10-21T09:22:39.919Z",
+            "modified_at": "2021-10-21T09:22:39.919Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "question": "define-amount-decision",
+            "option": "define-amount-decision-zurueckgezogen",
+            "sort": 2
+        }
+    },
+    {
+        "model": "caluma_form.questionoption",
+        "pk": "review-document-decision.review-document-decision-complete",
+        "fields": {
+            "created_at": "2021-06-03T09:17:44.928Z",
+            "modified_at": "2021-06-03T09:17:44.928Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "question": "review-document-decision",
+            "option": "review-document-decision-complete",
+            "sort": 2
+        }
+    },
+    {
+        "model": "caluma_form.questionoption",
+        "pk": "review-document-decision.review-document-decision-continue",
+        "fields": {
+            "created_at": "2021-06-03T09:17:44.922Z",
+            "modified_at": "2021-06-03T09:17:44.922Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "question": "review-document-decision",
+            "option": "review-document-decision-continue",
+            "sort": 1
+        }
+    },
+    {
+        "model": "caluma_form.questionoption",
+        "pk": "review-document-decision.review-document-decision-reject",
+        "fields": {
+            "created_at": "2021-06-03T09:17:44.931Z",
+            "modified_at": "2021-06-03T09:17:44.931Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "question": "review-document-decision",
+            "option": "review-document-decision-reject",
+            "sort": 3
+        }
+    },
+    {
+        "model": "caluma_form.questionoption",
+        "pk": "sektion.sektion-1",
+        "fields": {
+            "created_at": "2021-11-11T09:56:38.116Z",
+            "modified_at": "2021-11-11T09:56:38.116Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "question": "sektion",
+            "option": "sektion-1",
+            "sort": 7
+        }
+    },
+    {
+        "model": "caluma_form.questionoption",
+        "pk": "sektion.sektion-2",
+        "fields": {
+            "created_at": "2021-11-11T09:56:38.112Z",
+            "modified_at": "2021-11-11T09:56:38.112Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "question": "sektion",
+            "option": "sektion-2",
+            "sort": 6
+        }
+    },
+    {
+        "model": "caluma_form.questionoption",
+        "pk": "sektion.sektion-3",
+        "fields": {
+            "created_at": "2021-11-11T09:56:38.107Z",
+            "modified_at": "2021-11-11T09:56:38.107Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "question": "sektion",
+            "option": "sektion-3",
+            "sort": 5
+        }
+    },
+    {
+        "model": "caluma_form.questionoption",
+        "pk": "sektion.sektion-4",
+        "fields": {
+            "created_at": "2021-11-11T09:56:38.104Z",
+            "modified_at": "2021-11-11T09:56:38.104Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "question": "sektion",
+            "option": "sektion-4",
+            "sort": 4
+        }
+    },
+    {
+        "model": "caluma_form.questionoption",
+        "pk": "sektion.sektion-5",
+        "fields": {
+            "created_at": "2021-11-11T09:56:38.101Z",
+            "modified_at": "2021-11-11T09:56:38.101Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "question": "sektion",
+            "option": "sektion-5",
+            "sort": 3
+        }
+    },
+    {
+        "model": "caluma_form.questionoption",
+        "pk": "sektion.sektion-6",
+        "fields": {
+            "created_at": "2021-11-11T09:56:38.097Z",
+            "modified_at": "2021-11-11T09:56:38.097Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "question": "sektion",
+            "option": "sektion-6",
+            "sort": 2
+        }
+    },
+    {
+        "model": "caluma_form.questionoption",
+        "pk": "sektion.sektion-7",
+        "fields": {
+            "created_at": "2021-11-11T09:56:38.092Z",
+            "modified_at": "2021-11-11T09:56:38.092Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "question": "sektion",
+            "option": "sektion-7",
+            "sort": 1
+        }
+    },
+    {
+        "model": "caluma_form.questionoption",
+        "pk": "verteilplan-nr.verteilplan-nr-vp-2021",
+        "fields": {
+            "created_at": "2021-11-11T09:54:09.630Z",
+            "modified_at": "2021-11-11T09:54:09.630Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "question": "verteilplan-nr",
+            "option": "verteilplan-nr-vp-2021",
+            "sort": 1
+        }
+    },
+    {
+        "model": "caluma_form.option",
+        "pk": "circulation-decision-approved",
+        "fields": {
+            "created_at": "2021-06-25T13:19:30.349Z",
+            "modified_at": "2021-06-25T13:19:30.349Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": \"Genehmigt\", \"en\": null, \"fr\": null}",
+            "is_archived": false,
+            "meta": {},
+            "source": null
+        }
+    },
+    {
+        "model": "caluma_form.option",
+        "pk": "circulation-decision-declined",
+        "fields": {
+            "created_at": "2021-06-25T13:19:30.354Z",
+            "modified_at": "2021-06-25T13:19:30.354Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": \"Abgelehnt\", \"en\": null, \"fr\": null}",
+            "is_archived": false,
+            "meta": {},
+            "source": null
+        }
+    },
+    {
+        "model": "caluma_form.option",
+        "pk": "decision-and-credit-decision-additional-data",
+        "fields": {
+            "created_at": "2021-06-04T07:25:30.776Z",
+            "modified_at": "2021-08-05T12:18:00.453Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": \"Weitere Daten\", \"en\": null, \"fr\": null}",
+            "is_archived": false,
+            "meta": {},
+            "source": null
+        }
+    },
+    {
+        "model": "caluma_form.option",
+        "pk": "decision-and-credit-decision-close",
+        "fields": {
+            "created_at": "2021-05-31T16:03:28.978Z",
+            "modified_at": "2021-08-05T12:18:00.433Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": \"Negativ Entscheid\", \"en\": null, \"fr\": null}",
+            "is_archived": false,
+            "meta": {},
+            "source": null
+        }
+    },
+    {
+        "model": "caluma_form.option",
+        "pk": "decision-and-credit-decision-complete",
+        "fields": {
+            "created_at": "2021-06-04T07:27:34.604Z",
+            "modified_at": "2021-08-05T12:18:00.437Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": \"Abschluss\", \"en\": null, \"fr\": null}",
+            "is_archived": false,
+            "meta": {},
+            "source": null
+        }
+    },
+    {
+        "model": "caluma_form.option",
+        "pk": "decision-and-credit-decision-define-amount",
+        "fields": {
+            "created_at": "2021-05-31T16:03:28.962Z",
+            "modified_at": "2021-08-05T12:18:00.439Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": \"Betrag festlegen\", \"en\": null, \"fr\": null}",
+            "is_archived": false,
+            "meta": {},
+            "source": null
+        }
+    },
+    {
+        "model": "caluma_form.option",
+        "pk": "define-amount-decision-continue",
+        "fields": {
+            "created_at": "2021-10-21T09:22:39.768Z",
+            "modified_at": "2021-10-21T09:22:39.768Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": null, \"en\": \"Weiterf\\u00fchrung\", \"fr\": null}",
+            "is_archived": false,
+            "meta": {},
+            "source": null
+        }
+    },
+    {
+        "model": "caluma_form.option",
+        "pk": "define-amount-decision-dismissed",
+        "fields": {
+            "created_at": "2021-10-21T09:22:39.771Z",
+            "modified_at": "2021-10-21T09:22:39.771Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": \"Abgewiesen\", \"en\": \"Dismissed\", \"fr\": \"Rejet\\u00e9\"}",
+            "is_archived": false,
+            "meta": {},
+            "source": null
+        }
+    },
+    {
+        "model": "caluma_form.option",
+        "pk": "define-amount-decision-reject",
+        "fields": {
+            "created_at": "2021-10-21T09:22:39.771Z",
+            "modified_at": "2021-10-21T09:22:39.771Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": null, \"en\": \"R\\u00fcckweisung\", \"fr\": null}",
+            "is_archived": false,
+            "meta": {},
+            "source": null
+        }
+    },
+    {
+        "model": "caluma_form.option",
+        "pk": "define-amount-decision-zurueckgezogen",
+        "fields": {
+            "created_at": "2021-10-21T09:22:39.771Z",
+            "modified_at": "2021-10-21T09:22:39.771Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": \"Zur\\u00fcckgezogen\", \"en\": \"Withdrawn\", \"fr\": \"Retir\\u00e9\"}",
+            "is_archived": false,
+            "meta": {},
+            "source": null
+        }
+    },
+    {
+        "model": "caluma_form.option",
+        "pk": "review-document-decision-",
+        "fields": {
+            "created_at": "2021-05-31T08:31:45.938Z",
+            "modified_at": "2021-05-31T08:32:03.185Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": \"Abschluss\", \"en\": null, \"fr\": null}",
+            "is_archived": false,
+            "meta": {},
+            "source": null
+        }
+    },
+    {
+        "model": "caluma_form.option",
+        "pk": "review-document-decision-complete",
+        "fields": {
+            "created_at": "2021-05-31T09:54:31.474Z",
+            "modified_at": "2021-06-03T09:17:44.753Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": \"Abschluss\", \"en\": null, \"fr\": null}",
+            "is_archived": false,
+            "meta": {},
+            "source": null
+        }
+    },
+    {
+        "model": "caluma_form.option",
+        "pk": "review-document-decision-continue",
+        "fields": {
+            "created_at": "2021-05-31T09:54:31.456Z",
+            "modified_at": "2021-06-03T09:17:44.755Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": \"Weiterf\\u00fchrung\", \"en\": null, \"fr\": null}",
+            "is_archived": false,
+            "meta": {},
+            "source": null
+        }
+    },
+    {
+        "model": "caluma_form.option",
+        "pk": "review-document-decision-reject",
+        "fields": {
+            "created_at": "2021-05-31T09:41:37.580Z",
+            "modified_at": "2021-06-03T09:17:44.758Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": \"R\\u00fcckweisung\", \"en\": null, \"fr\": null}",
+            "is_archived": false,
+            "meta": {},
+            "source": null
+        }
+    },
+    {
+        "model": "caluma_form.option",
+        "pk": "sektion-1",
+        "fields": {
+            "created_at": "2021-11-11T09:56:37.787Z",
+            "modified_at": "2021-11-11T09:56:37.788Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": null, \"en\": \"1\", \"fr\": null}",
+            "is_archived": false,
+            "meta": {},
+            "source": null
+        }
+    },
+    {
+        "model": "caluma_form.option",
+        "pk": "sektion-2",
+        "fields": {
+            "created_at": "2021-11-11T09:56:37.857Z",
+            "modified_at": "2021-11-11T09:56:37.857Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": null, \"en\": \"2\", \"fr\": null}",
+            "is_archived": false,
+            "meta": {},
+            "source": null
+        }
+    },
+    {
+        "model": "caluma_form.option",
+        "pk": "sektion-3",
+        "fields": {
+            "created_at": "2021-11-11T09:56:37.831Z",
+            "modified_at": "2021-11-11T09:56:37.831Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": null, \"en\": \"3\", \"fr\": null}",
+            "is_archived": false,
+            "meta": {},
+            "source": null
+        }
+    },
+    {
+        "model": "caluma_form.option",
+        "pk": "sektion-4",
+        "fields": {
+            "created_at": "2021-11-11T09:56:37.895Z",
+            "modified_at": "2021-11-11T09:56:37.895Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": null, \"en\": \"4\", \"fr\": null}",
+            "is_archived": false,
+            "meta": {},
+            "source": null
+        }
+    },
+    {
+        "model": "caluma_form.option",
+        "pk": "sektion-5",
+        "fields": {
+            "created_at": "2021-11-11T09:56:37.902Z",
+            "modified_at": "2021-11-11T09:56:37.902Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": null, \"en\": \"5\", \"fr\": null}",
+            "is_archived": false,
+            "meta": {},
+            "source": null
+        }
+    },
+    {
+        "model": "caluma_form.option",
+        "pk": "sektion-6",
+        "fields": {
+            "created_at": "2021-11-11T09:56:37.919Z",
+            "modified_at": "2021-11-11T09:56:37.919Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": null, \"en\": \"6\", \"fr\": null}",
+            "is_archived": false,
+            "meta": {},
+            "source": null
+        }
+    },
+    {
+        "model": "caluma_form.option",
+        "pk": "sektion-7",
+        "fields": {
+            "created_at": "2021-11-11T09:56:37.929Z",
+            "modified_at": "2021-11-11T09:56:37.929Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": null, \"en\": \"7\", \"fr\": null}",
+            "is_archived": false,
+            "meta": {},
+            "source": null
+        }
+    },
+    {
+        "model": "caluma_form.option",
+        "pk": "verteilplan-nr-vp-2021",
+        "fields": {
+            "created_at": "2021-11-11T09:53:57.190Z",
+            "modified_at": "2021-11-11T09:54:09.507Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": null, \"en\": \"2021\", \"fr\": null}",
+            "is_archived": false,
+            "meta": {},
+            "source": null
+        }
+    },
+    {
+        "model": "caluma_form.answer",
+        "pk": "28f701ec-dbb6-4a56-85d0-567255c871d4",
+        "fields": {
+            "created_at": "2021-11-11T09:54:09.790Z",
+            "modified_at": "2021-11-11T09:54:09.790Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "question": "verteilplan-nr",
+            "value": "verteilplan-nr-vp-2021",
+            "meta": {},
+            "document": null,
+            "date": null,
+            "file": null
+        }
     }
-},
-{
-    "model": "caluma_form.form",
-    "pk": "advance-credits-form",
-    "fields": {
-        "created_at": "2021-08-25T08:41:53.249Z",
-        "modified_at": "2021-08-25T08:41:53.249Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "name": "{\"de\": null, \"en\": \"Vorschusszahlung\", \"fr\": null}",
-        "description": "{\"de\": null, \"en\": \"\", \"fr\": null}",
-        "meta": {},
-        "is_published": false,
-        "is_archived": false,
-        "source": null
-    }
-},
-{
-    "model": "caluma_form.form",
-    "pk": "circulation-form",
-    "fields": {
-        "created_at": "2021-05-31T11:28:57.077Z",
-        "modified_at": "2021-05-31T11:28:57.077Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "name": "{\"de\": \"Zirkulation\", \"en\": null, \"fr\": null}",
-        "description": "{\"de\": \"\", \"en\": null, \"fr\": null}",
-        "meta": {},
-        "is_published": false,
-        "is_archived": false,
-        "source": null
-    }
-},
-{
-    "model": "caluma_form.form",
-    "pk": "decision-and-credit-form",
-    "fields": {
-        "created_at": "2021-05-31T11:30:53.267Z",
-        "modified_at": "2021-05-31T11:30:53.267Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "name": "{\"de\": \"Entscheid und Kredit\", \"en\": null, \"fr\": null}",
-        "description": "{\"de\": \"\", \"en\": null, \"fr\": null}",
-        "meta": {},
-        "is_published": false,
-        "is_archived": false,
-        "source": null
-    }
-},
-{
-    "model": "caluma_form.form",
-    "pk": "define-amount-form",
-    "fields": {
-        "created_at": "2021-05-31T11:31:25.240Z",
-        "modified_at": "2021-05-31T11:31:25.240Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "name": "{\"de\": \"Betrag festlegen\", \"en\": null, \"fr\": null}",
-        "description": "{\"de\": \"\", \"en\": null, \"fr\": null}",
-        "meta": {},
-        "is_published": false,
-        "is_archived": false,
-        "source": null
-    }
-},
-{
-    "model": "caluma_form.form",
-    "pk": "quittungen",
-    "fields": {
-        "created_at": "2021-11-11T10:37:35.334Z",
-        "modified_at": "2021-11-11T10:37:35.334Z",
-        "created_by_user": null,
-        "created_by_group": "admin",
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "name": "{\"de\": null, \"en\": \"Quittungen\", \"fr\": null}",
-        "description": "{\"de\": null, \"en\": \"\", \"fr\": null}",
-        "meta": {},
-        "is_published": false,
-        "is_archived": false,
-        "source": null
-    }
-},
-{
-    "model": "caluma_form.form",
-    "pk": "review-document-form",
-    "fields": {
-        "created_at": "2021-05-31T08:19:43.129Z",
-        "modified_at": "2021-05-31T08:19:43.129Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "name": "{\"de\": \"Pr\\u00fcfung\", \"en\": null, \"fr\": null}",
-        "description": "{\"de\": \"\", \"en\": null, \"fr\": null}",
-        "meta": {},
-        "is_published": false,
-        "is_archived": false,
-        "source": null
-    }
-},
-{
-    "model": "caluma_form.formquestion",
-    "pk": "additional-data-form.additional-data-adresse",
-    "fields": {
-        "created_at": "2021-11-11T09:49:55.647Z",
-        "modified_at": "2021-11-11T09:49:55.647Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "form": "additional-data-form",
-        "question": "additional-data-adresse",
-        "sort": 6
-    }
-},
-{
-    "model": "caluma_form.formquestion",
-    "pk": "additional-data-form.additional-data-bank",
-    "fields": {
-        "created_at": "2021-11-11T09:51:02.955Z",
-        "modified_at": "2021-11-11T09:51:02.955Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "form": "additional-data-form",
-        "question": "additional-data-bank",
-        "sort": 3
-    }
-},
-{
-    "model": "caluma_form.formquestion",
-    "pk": "additional-data-form.additional-data-bank-town",
-    "fields": {
-        "created_at": "2021-11-11T09:51:23.947Z",
-        "modified_at": "2021-11-11T09:51:23.947Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "form": "additional-data-form",
-        "question": "additional-data-bank-town",
-        "sort": 2
-    }
-},
-{
-    "model": "caluma_form.formquestion",
-    "pk": "additional-data-form.additional-data-fibu",
-    "fields": {
-        "created_at": "2021-11-11T09:50:16.820Z",
-        "modified_at": "2021-11-11T09:50:16.820Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "form": "additional-data-form",
-        "question": "additional-data-fibu",
-        "sort": 5
-    }
-},
-{
-    "model": "caluma_form.formquestion",
-    "pk": "additional-data-form.additional-data-iban",
-    "fields": {
-        "created_at": "2021-11-11T09:50:33.504Z",
-        "modified_at": "2021-11-11T09:50:33.504Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "form": "additional-data-form",
-        "question": "additional-data-iban",
-        "sort": 4
-    }
-},
-{
-    "model": "caluma_form.formquestion",
-    "pk": "additional-data-form.additional-data-name",
-    "fields": {
-        "created_at": "2021-11-11T09:49:35.474Z",
-        "modified_at": "2021-11-11T09:49:35.474Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "form": "additional-data-form",
-        "question": "additional-data-name",
-        "sort": 7
-    }
-},
-{
-    "model": "caluma_form.formquestion",
-    "pk": "additional-data-form.additional-data-quittungen",
-    "fields": {
-        "created_at": "2021-11-11T10:39:19.436Z",
-        "modified_at": "2021-11-11T10:39:19.436Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "form": "additional-data-form",
-        "question": "additional-data-quittungen",
-        "sort": 1
-    }
-},
-{
-    "model": "caluma_form.formquestion",
-    "pk": "additional-data-form.additional-data-text",
-    "fields": {
-        "created_at": "2021-05-31T16:04:15.518Z",
-        "modified_at": "2021-05-31T16:04:15.518Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "form": "additional-data-form",
-        "question": "additional-data-text",
-        "sort": 8
-    }
-},
-{
-    "model": "caluma_form.formquestion",
-    "pk": "advance-credits-form.advance-credit-amount-float",
-    "fields": {
-        "created_at": "2021-08-25T08:47:29.058Z",
-        "modified_at": "2021-08-25T08:47:29.058Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "form": "advance-credits-form",
-        "question": "advance-credit-amount-float",
-        "sort": 1
-    }
-},
-{
-    "model": "caluma_form.formquestion",
-    "pk": "circulation-form.circulation-comment",
-    "fields": {
-        "created_at": "2021-05-31T16:01:25.864Z",
-        "modified_at": "2021-05-31T16:01:25.864Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "form": "circulation-form",
-        "question": "circulation-comment",
-        "sort": 1
-    }
-},
-{
-    "model": "caluma_form.formquestion",
-    "pk": "circulation-form.circulation-decision",
-    "fields": {
-        "created_at": "2021-06-25T13:19:22.324Z",
-        "modified_at": "2021-06-25T13:19:22.324Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "form": "circulation-form",
-        "question": "circulation-decision",
-        "sort": 2
-    }
-},
-{
-    "model": "caluma_form.formquestion",
-    "pk": "decision-and-credit-form.decision-and-credit-decision",
-    "fields": {
-        "created_at": "2021-05-31T16:03:29.194Z",
-        "modified_at": "2021-05-31T16:03:29.194Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "form": "decision-and-credit-form",
-        "question": "decision-and-credit-decision",
-        "sort": 1
-    }
-},
-{
-    "model": "caluma_form.formquestion",
-    "pk": "define-amount-form.define-amount-amount-float",
-    "fields": {
-        "created_at": "2021-05-31T16:05:05.820Z",
-        "modified_at": "2021-05-31T16:05:05.820Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "form": "define-amount-form",
-        "question": "define-amount-amount-float",
-        "sort": 4
-    }
-},
-{
-    "model": "caluma_form.formquestion",
-    "pk": "define-amount-form.define-amount-decision",
-    "fields": {
-        "created_at": "2021-10-21T09:22:40.006Z",
-        "modified_at": "2021-10-21T09:22:40.006Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "form": "define-amount-form",
-        "question": "define-amount-decision",
-        "sort": 1
-    }
-},
-{
-    "model": "caluma_form.formquestion",
-    "pk": "quittungen.additional-data-row-quittung",
-    "fields": {
-        "created_at": "2021-11-11T10:38:12.521Z",
-        "modified_at": "2021-11-11T10:38:12.521Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "form": "quittungen",
-        "question": "additional-data-row-quittung",
-        "sort": 1
-    }
-},
-{
-    "model": "caluma_form.formquestion",
-    "pk": "review-document-form.review-document-decision",
-    "fields": {
-        "created_at": "2021-05-31T09:41:37.989Z",
-        "modified_at": "2021-05-31T09:41:37.989Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "form": "review-document-form",
-        "question": "review-document-decision",
-        "sort": 1
-    }
-},
-{
-    "model": "caluma_form.question",
-    "pk": "additional-data-adresse",
-    "fields": {
-        "created_at": "2021-11-11T09:49:55.534Z",
-        "modified_at": "2021-11-11T09:49:55.534Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": null, \"en\": \"Adresse\", \"fr\": null}",
-        "type": "textarea",
-        "is_required": "true",
-        "is_hidden": "false",
-        "is_archived": false,
-        "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "info_text": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
-        "configuration": {
-            "max_length": null,
-            "min_length": null
-        },
-        "meta": {},
-        "data_source": null,
-        "row_form": null,
-        "sub_form": null,
-        "source": null,
-        "format_validators": "[]",
-        "default_answer": null,
-        "calc_expression": null,
-        "calc_dependents": "[]"
-    }
-},
-{
-    "model": "caluma_form.question",
-    "pk": "additional-data-bank",
-    "fields": {
-        "created_at": "2021-11-11T09:51:02.834Z",
-        "modified_at": "2021-11-11T09:51:02.834Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": null, \"en\": \"Bank\", \"fr\": null}",
-        "type": "text",
-        "is_required": "true",
-        "is_hidden": "false",
-        "is_archived": false,
-        "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "info_text": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
-        "configuration": {
-            "max_length": null,
-            "min_length": null
-        },
-        "meta": {},
-        "data_source": null,
-        "row_form": null,
-        "sub_form": null,
-        "source": null,
-        "format_validators": "[]",
-        "default_answer": null,
-        "calc_expression": null,
-        "calc_dependents": "[]"
-    }
-},
-{
-    "model": "caluma_form.question",
-    "pk": "additional-data-bank-town",
-    "fields": {
-        "created_at": "2021-11-11T09:51:23.794Z",
-        "modified_at": "2021-11-11T09:51:23.794Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": null, \"en\": \"Bank Ort\", \"fr\": null}",
-        "type": "text",
-        "is_required": "false",
-        "is_hidden": "false",
-        "is_archived": false,
-        "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "info_text": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
-        "configuration": {
-            "max_length": null,
-            "min_length": null
-        },
-        "meta": {},
-        "data_source": null,
-        "row_form": null,
-        "sub_form": null,
-        "source": null,
-        "format_validators": "[]",
-        "default_answer": null,
-        "calc_expression": null,
-        "calc_dependents": "[]"
-    }
-},
-{
-    "model": "caluma_form.question",
-    "pk": "additional-data-fibu",
-    "fields": {
-        "created_at": "2021-11-11T09:50:16.695Z",
-        "modified_at": "2021-11-11T09:50:16.695Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": null, \"en\": \"Fibukonto\", \"fr\": null}",
-        "type": "text",
-        "is_required": "false",
-        "is_hidden": "false",
-        "is_archived": false,
-        "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "info_text": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
-        "configuration": {
-            "max_length": null,
-            "min_length": null
-        },
-        "meta": {},
-        "data_source": null,
-        "row_form": null,
-        "sub_form": null,
-        "source": null,
-        "format_validators": "[]",
-        "default_answer": null,
-        "calc_expression": null,
-        "calc_dependents": "[]"
-    }
-},
-{
-    "model": "caluma_form.question",
-    "pk": "additional-data-iban",
-    "fields": {
-        "created_at": "2021-11-11T09:50:33.352Z",
-        "modified_at": "2021-11-11T09:50:33.352Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": null, \"en\": \"IBAN\", \"fr\": null}",
-        "type": "text",
-        "is_required": "true",
-        "is_hidden": "false",
-        "is_archived": false,
-        "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "info_text": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
-        "configuration": {
-            "max_length": null,
-            "min_length": null
-        },
-        "meta": {},
-        "data_source": null,
-        "row_form": null,
-        "sub_form": null,
-        "source": null,
-        "format_validators": "[]",
-        "default_answer": null,
-        "calc_expression": null,
-        "calc_dependents": "[]"
-    }
-},
-{
-    "model": "caluma_form.question",
-    "pk": "additional-data-name",
-    "fields": {
-        "created_at": "2021-11-11T09:49:35.356Z",
-        "modified_at": "2021-11-11T09:49:35.356Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": null, \"en\": \"Name\", \"fr\": null}",
-        "type": "text",
-        "is_required": "true",
-        "is_hidden": "false",
-        "is_archived": false,
-        "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "info_text": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
-        "configuration": {
-            "max_length": null,
-            "min_length": null
-        },
-        "meta": {},
-        "data_source": null,
-        "row_form": null,
-        "sub_form": null,
-        "source": null,
-        "format_validators": "[]",
-        "default_answer": null,
-        "calc_expression": null,
-        "calc_dependents": "[]"
-    }
-},
-{
-    "model": "caluma_form.question",
-    "pk": "additional-data-quittungen",
-    "fields": {
-        "created_at": "2021-11-11T10:39:19.333Z",
-        "modified_at": "2021-11-11T10:39:19.333Z",
-        "created_by_user": null,
-        "created_by_group": "admin",
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": null, \"en\": \"Quittungen\", \"fr\": null}",
-        "type": "table",
-        "is_required": "false",
-        "is_hidden": "false",
-        "is_archived": false,
-        "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "info_text": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
-        "configuration": {},
-        "meta": {},
-        "data_source": null,
-        "row_form": "quittungen",
-        "sub_form": null,
-        "source": null,
-        "format_validators": "[]",
-        "default_answer": null,
-        "calc_expression": null,
-        "calc_dependents": "[]"
-    }
-},
-{
-    "model": "caluma_form.question",
-    "pk": "additional-data-row-quittung",
-    "fields": {
-        "created_at": "2021-11-11T10:38:12.447Z",
-        "modified_at": "2021-11-11T10:38:12.447Z",
-        "created_by_user": null,
-        "created_by_group": "admin",
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": null, \"en\": \"Quittung\", \"fr\": null}",
-        "type": "file",
-        "is_required": "false",
-        "is_hidden": "false",
-        "is_archived": false,
-        "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "info_text": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
-        "configuration": {},
-        "meta": {},
-        "data_source": null,
-        "row_form": null,
-        "sub_form": null,
-        "source": null,
-        "format_validators": "[]",
-        "default_answer": null,
-        "calc_expression": null,
-        "calc_dependents": "[]"
-    }
-},
-{
-    "model": "caluma_form.question",
-    "pk": "additional-data-text",
-    "fields": {
-        "created_at": "2021-05-31T16:04:15.425Z",
-        "modified_at": "2021-05-31T16:04:15.425Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": \"Text\", \"en\": null, \"fr\": null}",
-        "type": "text",
-        "is_required": "false",
-        "is_hidden": "false",
-        "is_archived": false,
-        "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "info_text": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
-        "configuration": {
-            "max_length": null,
-            "min_length": null
-        },
-        "meta": {},
-        "data_source": null,
-        "row_form": null,
-        "sub_form": null,
-        "source": null,
-        "format_validators": "[]",
-        "default_answer": null,
-        "calc_expression": null,
-        "calc_dependents": "[]"
-    }
-},
-{
-    "model": "caluma_form.question",
-    "pk": "advance-credit-amount-float",
-    "fields": {
-        "created_at": "2021-08-25T08:47:29.001Z",
-        "modified_at": "2021-08-25T08:47:29.001Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": null, \"en\": \"Vorschusszahlungbetrag\", \"fr\": null}",
-        "type": "float",
-        "is_required": "false",
-        "is_hidden": "false",
-        "is_archived": false,
-        "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "info_text": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
-        "configuration": {
-            "max_value": null,
-            "min_value": null
-        },
-        "meta": {},
-        "data_source": null,
-        "row_form": null,
-        "sub_form": null,
-        "source": null,
-        "format_validators": "[]",
-        "default_answer": null,
-        "calc_expression": null,
-        "calc_dependents": "[]"
-    }
-},
-{
-    "model": "caluma_form.question",
-    "pk": "circulation-comment",
-    "fields": {
-        "created_at": "2021-05-31T16:01:25.772Z",
-        "modified_at": "2021-05-31T16:01:25.772Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": \"Kommentar\", \"en\": null, \"fr\": null}",
-        "type": "textarea",
-        "is_required": "false",
-        "is_hidden": "false",
-        "is_archived": false,
-        "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "info_text": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
-        "configuration": {
-            "max_length": null,
-            "min_length": null
-        },
-        "meta": {},
-        "data_source": null,
-        "row_form": null,
-        "sub_form": null,
-        "source": null,
-        "format_validators": "[]",
-        "default_answer": null,
-        "calc_expression": null,
-        "calc_dependents": "[]"
-    }
-},
-{
-    "model": "caluma_form.question",
-    "pk": "circulation-decision",
-    "fields": {
-        "created_at": "2021-06-25T13:19:22.232Z",
-        "modified_at": "2021-06-25T13:19:30.433Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": \"Entscheid\", \"en\": null, \"fr\": null}",
-        "type": "choice",
-        "is_required": "true",
-        "is_hidden": "false",
-        "is_archived": false,
-        "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "info_text": "{\"de\": \"\", \"en\": null, \"fr\": null}",
-        "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
-        "configuration": {},
-        "meta": {},
-        "data_source": null,
-        "row_form": null,
-        "sub_form": null,
-        "source": null,
-        "format_validators": "[]",
-        "default_answer": null,
-        "calc_expression": null,
-        "calc_dependents": "[]"
-    }
-},
-{
-    "model": "caluma_form.question",
-    "pk": "decision-and-credit-decision",
-    "fields": {
-        "created_at": "2021-05-31T16:03:29.087Z",
-        "modified_at": "2021-08-05T12:18:00.612Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": \"Entscheid\", \"en\": null, \"fr\": null}",
-        "type": "choice",
-        "is_required": "true",
-        "is_hidden": "false",
-        "is_archived": false,
-        "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "info_text": "{\"de\": \"\", \"en\": null, \"fr\": null}",
-        "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
-        "configuration": {},
-        "meta": {},
-        "data_source": null,
-        "row_form": null,
-        "sub_form": null,
-        "source": null,
-        "format_validators": "[]",
-        "default_answer": null,
-        "calc_expression": null,
-        "calc_dependents": "[]"
-    }
-},
-{
-    "model": "caluma_form.question",
-    "pk": "define-amount-amount-float",
-    "fields": {
-        "created_at": "2021-05-31T16:05:05.729Z",
-        "modified_at": "2021-08-05T12:18:20.850Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": \"Betrag\", \"en\": null, \"fr\": null}",
-        "type": "float",
-        "is_required": "false",
-        "is_hidden": "false",
-        "is_archived": false,
-        "placeholder": "{\"de\": \"\", \"en\": null, \"fr\": null}",
-        "info_text": "{\"de\": \"\", \"en\": null, \"fr\": null}",
-        "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
-        "configuration": {
-            "max_value": null,
-            "min_value": null
-        },
-        "meta": {},
-        "data_source": null,
-        "row_form": null,
-        "sub_form": null,
-        "source": null,
-        "format_validators": "[]",
-        "default_answer": null,
-        "calc_expression": null,
-        "calc_dependents": "[]"
-    }
-},
-{
-    "model": "caluma_form.question",
-    "pk": "define-amount-decision",
-    "fields": {
-        "created_at": "2021-10-21T09:22:39.897Z",
-        "modified_at": "2021-10-21T09:22:39.897Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": null, \"en\": \"Entscheid\", \"fr\": null}",
-        "type": "choice",
-        "is_required": "true",
-        "is_hidden": "false",
-        "is_archived": false,
-        "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "info_text": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
-        "configuration": {},
-        "meta": {},
-        "data_source": null,
-        "row_form": null,
-        "sub_form": null,
-        "source": null,
-        "format_validators": "[]",
-        "default_answer": null,
-        "calc_expression": null,
-        "calc_dependents": "[]"
-    }
-},
-{
-    "model": "caluma_form.question",
-    "pk": "dossier-nr",
-    "fields": {
-        "created_at": "2021-05-31T09:41:37.767Z",
-        "modified_at": "2021-06-03T09:17:44.911Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": \"Dossier-Nummer\", \"en\": \"dossier number\", \"fr\": \"N\\u00b0 de dossier\"}",
-        "type": "text",
-        "is_required": "true",
-        "is_hidden": "true",
-        "is_archived": false,
-        "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "info_text": "{\"de\": \"\", \"en\": null, \"fr\": null}",
-        "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
-        "configuration": {},
-        "meta": {},
-        "data_source": null,
-        "row_form": null,
-        "sub_form": null,
-        "source": null,
-        "format_validators": "[]",
-        "default_answer": null,
-        "calc_expression": null,
-        "calc_dependents": "[]"
-    }
-},
-{
-    "model": "caluma_form.question",
-    "pk": "review-document-decision",
-    "fields": {
-        "created_at": "2021-05-31T09:41:37.767Z",
-        "modified_at": "2021-06-03T09:17:44.911Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": \"Entscheid\", \"en\": null, \"fr\": null}",
-        "type": "choice",
-        "is_required": "true",
-        "is_hidden": "false",
-        "is_archived": false,
-        "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "info_text": "{\"de\": \"\", \"en\": null, \"fr\": null}",
-        "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
-        "configuration": {},
-        "meta": {},
-        "data_source": null,
-        "row_form": null,
-        "sub_form": null,
-        "source": null,
-        "format_validators": "[]",
-        "default_answer": null,
-        "calc_expression": null,
-        "calc_dependents": "[]"
-    }
-},
-{
-    "model": "caluma_form.question",
-    "pk": "sektion",
-    "fields": {
-        "created_at": "2021-11-11T09:56:38.082Z",
-        "modified_at": "2021-11-11T09:56:38.082Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": \"Sektion\", \"en\": \"Section\", \"fr\": null}",
-        "type": "choice",
-        "is_required": "true",
-        "is_hidden": "false",
-        "is_archived": false,
-        "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "info_text": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
-        "configuration": {},
-        "meta": {
-            "widgetOverride": "cf-field/input/powerselect"
-        },
-        "data_source": null,
-        "row_form": null,
-        "sub_form": null,
-        "source": null,
-        "format_validators": "[]",
-        "default_answer": null,
-        "calc_expression": null,
-        "calc_dependents": "[]"
-    }
-},
-{
-    "model": "caluma_form.question",
-    "pk": "submit-button",
-    "fields": {
-        "created_at": "2021-08-05T12:19:11.910Z",
-        "modified_at": "2021-08-05T12:19:11.910Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": \"Submit button\", \"en\": null, \"fr\": null}",
-        "type": "static",
-        "is_required": "false",
-        "is_hidden": "false",
-        "is_archived": false,
-        "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "info_text": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
-        "configuration": {},
-        "meta": {
-            "widgetOverride": "submit-button"
-        },
-        "data_source": null,
-        "row_form": null,
-        "sub_form": null,
-        "source": null,
-        "format_validators": "[]",
-        "default_answer": null,
-        "calc_expression": null,
-        "calc_dependents": "[]"
-    }
-},
-{
-    "model": "caluma_form.question",
-    "pk": "verteilplan-nr",
-    "fields": {
-        "created_at": "2021-11-11T09:53:57.313Z",
-        "modified_at": "2021-11-11T09:54:09.806Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": null, \"en\": \"Verteilplan\", \"fr\": null}",
-        "type": "choice",
-        "is_required": "true",
-        "is_hidden": "false",
-        "is_archived": false,
-        "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
-        "info_text": "{\"de\": null, \"en\": \"\", \"fr\": null}",
-        "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
-        "configuration": {},
-        "meta": {},
-        "data_source": null,
-        "row_form": null,
-        "sub_form": null,
-        "source": null,
-        "format_validators": "[]",
-        "default_answer": "28f701ec-dbb6-4a56-85d0-567255c871d4",
-        "calc_expression": null,
-        "calc_dependents": "[]"
-    }
-},
-{
-    "model": "caluma_form.questionoption",
-    "pk": "circulation-decision.circulation-decision-approved",
-    "fields": {
-        "created_at": "2021-06-03T09:17:44.922Z",
-        "modified_at": "2021-06-03T09:17:44.922Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "question": "circulation-decision",
-        "option": "circulation-decision-approved",
-        "sort": 1
-    }
-},
-{
-    "model": "caluma_form.questionoption",
-    "pk": "circulation-decision.circulation-decision-declined",
-    "fields": {
-        "created_at": "2021-06-03T09:17:44.931Z",
-        "modified_at": "2021-06-03T09:17:44.931Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "question": "circulation-decision",
-        "option": "circulation-decision-declined",
-        "sort": 2
-    }
-},
-{
-    "model": "caluma_form.questionoption",
-    "pk": "decision-and-credit-decision.decision-and-credit-decision-additional-data",
-    "fields": {
-        "created_at": "2021-08-05T12:18:00.631Z",
-        "modified_at": "2021-08-05T12:18:00.631Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "question": "decision-and-credit-decision",
-        "option": "decision-and-credit-decision-additional-data",
-        "sort": 4
-    }
-},
-{
-    "model": "caluma_form.questionoption",
-    "pk": "decision-and-credit-decision.decision-and-credit-decision-close",
-    "fields": {
-        "created_at": "2021-08-05T12:18:00.628Z",
-        "modified_at": "2021-08-05T12:18:00.628Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "question": "decision-and-credit-decision",
-        "option": "decision-and-credit-decision-close",
-        "sort": 3
-    }
-},
-{
-    "model": "caluma_form.questionoption",
-    "pk": "decision-and-credit-decision.decision-and-credit-decision-complete",
-    "fields": {
-        "created_at": "2021-08-05T12:18:00.622Z",
-        "modified_at": "2021-08-05T12:18:00.622Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "question": "decision-and-credit-decision",
-        "option": "decision-and-credit-decision-complete",
-        "sort": 1
-    }
-},
-{
-    "model": "caluma_form.questionoption",
-    "pk": "decision-and-credit-decision.decision-and-credit-decision-define-amount",
-    "fields": {
-        "created_at": "2021-08-05T12:18:00.625Z",
-        "modified_at": "2021-08-05T12:18:00.625Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "question": "decision-and-credit-decision",
-        "option": "decision-and-credit-decision-define-amount",
-        "sort": 2
-    }
-},
-{
-    "model": "caluma_form.questionoption",
-    "pk": "define-amount-decision.define-amount-decision-continue",
-    "fields": {
-        "created_at": "2021-10-21T09:22:39.928Z",
-        "modified_at": "2021-10-21T09:22:39.928Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": "052a564b-6616-4178-89fc-fd1a29ae1dc5",
-        "modified_by_group": null,
-        "question": "define-amount-decision",
-        "option": "define-amount-decision-continue",
-        "sort": 2
-    }
-},
-{
-    "model": "caluma_form.questionoption",
-    "pk": "define-amount-decision.define-amount-decision-reject",
-    "fields": {
-        "created_at": "2021-10-21T09:22:39.919Z",
-        "modified_at": "2021-10-21T09:22:39.919Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": "052a564b-6616-4178-89fc-fd1a29ae1dc5",
-        "modified_by_group": null,
-        "question": "define-amount-decision",
-        "option": "define-amount-decision-reject",
-        "sort": 1
-    }
-},
-{
-    "model": "caluma_form.questionoption",
-    "pk": "review-document-decision.review-document-decision-complete",
-    "fields": {
-        "created_at": "2021-06-03T09:17:44.928Z",
-        "modified_at": "2021-06-03T09:17:44.928Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "question": "review-document-decision",
-        "option": "review-document-decision-complete",
-        "sort": 2
-    }
-},
-{
-    "model": "caluma_form.questionoption",
-    "pk": "review-document-decision.review-document-decision-continue",
-    "fields": {
-        "created_at": "2021-06-03T09:17:44.922Z",
-        "modified_at": "2021-06-03T09:17:44.922Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "question": "review-document-decision",
-        "option": "review-document-decision-continue",
-        "sort": 1
-    }
-},
-{
-    "model": "caluma_form.questionoption",
-    "pk": "review-document-decision.review-document-decision-reject",
-    "fields": {
-        "created_at": "2021-06-03T09:17:44.931Z",
-        "modified_at": "2021-06-03T09:17:44.931Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "question": "review-document-decision",
-        "option": "review-document-decision-reject",
-        "sort": 3
-    }
-},
-{
-    "model": "caluma_form.questionoption",
-    "pk": "sektion.sektion-1",
-    "fields": {
-        "created_at": "2021-11-11T09:56:38.116Z",
-        "modified_at": "2021-11-11T09:56:38.116Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "question": "sektion",
-        "option": "sektion-1",
-        "sort": 7
-    }
-},
-{
-    "model": "caluma_form.questionoption",
-    "pk": "sektion.sektion-2",
-    "fields": {
-        "created_at": "2021-11-11T09:56:38.112Z",
-        "modified_at": "2021-11-11T09:56:38.112Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "question": "sektion",
-        "option": "sektion-2",
-        "sort": 6
-    }
-},
-{
-    "model": "caluma_form.questionoption",
-    "pk": "sektion.sektion-3",
-    "fields": {
-        "created_at": "2021-11-11T09:56:38.107Z",
-        "modified_at": "2021-11-11T09:56:38.107Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "question": "sektion",
-        "option": "sektion-3",
-        "sort": 5
-    }
-},
-{
-    "model": "caluma_form.questionoption",
-    "pk": "sektion.sektion-4",
-    "fields": {
-        "created_at": "2021-11-11T09:56:38.104Z",
-        "modified_at": "2021-11-11T09:56:38.104Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "question": "sektion",
-        "option": "sektion-4",
-        "sort": 4
-    }
-},
-{
-    "model": "caluma_form.questionoption",
-    "pk": "sektion.sektion-5",
-    "fields": {
-        "created_at": "2021-11-11T09:56:38.101Z",
-        "modified_at": "2021-11-11T09:56:38.101Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "question": "sektion",
-        "option": "sektion-5",
-        "sort": 3
-    }
-},
-{
-    "model": "caluma_form.questionoption",
-    "pk": "sektion.sektion-6",
-    "fields": {
-        "created_at": "2021-11-11T09:56:38.097Z",
-        "modified_at": "2021-11-11T09:56:38.097Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "question": "sektion",
-        "option": "sektion-6",
-        "sort": 2
-    }
-},
-{
-    "model": "caluma_form.questionoption",
-    "pk": "sektion.sektion-7",
-    "fields": {
-        "created_at": "2021-11-11T09:56:38.092Z",
-        "modified_at": "2021-11-11T09:56:38.092Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "question": "sektion",
-        "option": "sektion-7",
-        "sort": 1
-    }
-},
-{
-    "model": "caluma_form.questionoption",
-    "pk": "verteilplan-nr.verteilplan-nr-vp-2021",
-    "fields": {
-        "created_at": "2021-11-11T09:54:09.630Z",
-        "modified_at": "2021-11-11T09:54:09.630Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "question": "verteilplan-nr",
-        "option": "verteilplan-nr-vp-2021",
-        "sort": 1
-    }
-},
-{
-    "model": "caluma_form.option",
-    "pk": "circulation-decision-approved",
-    "fields": {
-        "created_at": "2021-06-25T13:19:30.349Z",
-        "modified_at": "2021-06-25T13:19:30.349Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": \"Genehmigt\", \"en\": null, \"fr\": null}",
-        "is_archived": false,
-        "meta": {},
-        "source": null
-    }
-},
-{
-    "model": "caluma_form.option",
-    "pk": "circulation-decision-declined",
-    "fields": {
-        "created_at": "2021-06-25T13:19:30.354Z",
-        "modified_at": "2021-06-25T13:19:30.354Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": \"Abgelehnt\", \"en\": null, \"fr\": null}",
-        "is_archived": false,
-        "meta": {},
-        "source": null
-    }
-},
-{
-    "model": "caluma_form.option",
-    "pk": "decision-and-credit-decision-additional-data",
-    "fields": {
-        "created_at": "2021-06-04T07:25:30.776Z",
-        "modified_at": "2021-08-05T12:18:00.453Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": \"Weitere Daten\", \"en\": null, \"fr\": null}",
-        "is_archived": false,
-        "meta": {},
-        "source": null
-    }
-},
-{
-    "model": "caluma_form.option",
-    "pk": "decision-and-credit-decision-close",
-    "fields": {
-        "created_at": "2021-05-31T16:03:28.978Z",
-        "modified_at": "2021-08-05T12:18:00.433Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": \"Negativ Entscheid\", \"en\": null, \"fr\": null}",
-        "is_archived": false,
-        "meta": {},
-        "source": null
-    }
-},
-{
-    "model": "caluma_form.option",
-    "pk": "decision-and-credit-decision-complete",
-    "fields": {
-        "created_at": "2021-06-04T07:27:34.604Z",
-        "modified_at": "2021-08-05T12:18:00.437Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": \"Abschluss\", \"en\": null, \"fr\": null}",
-        "is_archived": false,
-        "meta": {},
-        "source": null
-    }
-},
-{
-    "model": "caluma_form.option",
-    "pk": "decision-and-credit-decision-define-amount",
-    "fields": {
-        "created_at": "2021-05-31T16:03:28.962Z",
-        "modified_at": "2021-08-05T12:18:00.439Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": \"Betrag festlegen\", \"en\": null, \"fr\": null}",
-        "is_archived": false,
-        "meta": {},
-        "source": null
-    }
-},
-{
-    "model": "caluma_form.option",
-    "pk": "define-amount-decision-continue",
-    "fields": {
-        "created_at": "2021-10-21T09:22:39.768Z",
-        "modified_at": "2021-10-21T09:22:39.768Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": null, \"en\": \"Weiterf\\u00fchrung\", \"fr\": null}",
-        "is_archived": false,
-        "meta": {},
-        "source": null
-    }
-},
-{
-    "model": "caluma_form.option",
-    "pk": "define-amount-decision-reject",
-    "fields": {
-        "created_at": "2021-10-21T09:22:39.771Z",
-        "modified_at": "2021-10-21T09:22:39.771Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": null, \"en\": \"R\\u00fcckweisung\", \"fr\": null}",
-        "is_archived": false,
-        "meta": {},
-        "source": null
-    }
-},
-{
-    "model": "caluma_form.option",
-    "pk": "review-document-decision-",
-    "fields": {
-        "created_at": "2021-05-31T08:31:45.938Z",
-        "modified_at": "2021-05-31T08:32:03.185Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": \"Abschluss\", \"en\": null, \"fr\": null}",
-        "is_archived": false,
-        "meta": {},
-        "source": null
-    }
-},
-{
-    "model": "caluma_form.option",
-    "pk": "review-document-decision-complete",
-    "fields": {
-        "created_at": "2021-05-31T09:54:31.474Z",
-        "modified_at": "2021-06-03T09:17:44.753Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": \"Abschluss\", \"en\": null, \"fr\": null}",
-        "is_archived": false,
-        "meta": {},
-        "source": null
-    }
-},
-{
-    "model": "caluma_form.option",
-    "pk": "review-document-decision-continue",
-    "fields": {
-        "created_at": "2021-05-31T09:54:31.456Z",
-        "modified_at": "2021-06-03T09:17:44.755Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": \"Weiterf\\u00fchrung\", \"en\": null, \"fr\": null}",
-        "is_archived": false,
-        "meta": {},
-        "source": null
-    }
-},
-{
-    "model": "caluma_form.option",
-    "pk": "review-document-decision-reject",
-    "fields": {
-        "created_at": "2021-05-31T09:41:37.580Z",
-        "modified_at": "2021-06-03T09:17:44.758Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": \"R\\u00fcckweisung\", \"en\": null, \"fr\": null}",
-        "is_archived": false,
-        "meta": {},
-        "source": null
-    }
-},
-{
-    "model": "caluma_form.option",
-    "pk": "sektion-1",
-    "fields": {
-        "created_at": "2021-11-11T09:56:37.787Z",
-        "modified_at": "2021-11-11T09:56:37.788Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": null, \"en\": \"1\", \"fr\": null}",
-        "is_archived": false,
-        "meta": {},
-        "source": null
-    }
-},
-{
-    "model": "caluma_form.option",
-    "pk": "sektion-2",
-    "fields": {
-        "created_at": "2021-11-11T09:56:37.857Z",
-        "modified_at": "2021-11-11T09:56:37.857Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": null, \"en\": \"2\", \"fr\": null}",
-        "is_archived": false,
-        "meta": {},
-        "source": null
-    }
-},
-{
-    "model": "caluma_form.option",
-    "pk": "sektion-3",
-    "fields": {
-        "created_at": "2021-11-11T09:56:37.831Z",
-        "modified_at": "2021-11-11T09:56:37.831Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": null, \"en\": \"3\", \"fr\": null}",
-        "is_archived": false,
-        "meta": {},
-        "source": null
-    }
-},
-{
-    "model": "caluma_form.option",
-    "pk": "sektion-4",
-    "fields": {
-        "created_at": "2021-11-11T09:56:37.895Z",
-        "modified_at": "2021-11-11T09:56:37.895Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": null, \"en\": \"4\", \"fr\": null}",
-        "is_archived": false,
-        "meta": {},
-        "source": null
-    }
-},
-{
-    "model": "caluma_form.option",
-    "pk": "sektion-5",
-    "fields": {
-        "created_at": "2021-11-11T09:56:37.902Z",
-        "modified_at": "2021-11-11T09:56:37.902Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": null, \"en\": \"5\", \"fr\": null}",
-        "is_archived": false,
-        "meta": {},
-        "source": null
-    }
-},
-{
-    "model": "caluma_form.option",
-    "pk": "sektion-6",
-    "fields": {
-        "created_at": "2021-11-11T09:56:37.919Z",
-        "modified_at": "2021-11-11T09:56:37.919Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": null, \"en\": \"6\", \"fr\": null}",
-        "is_archived": false,
-        "meta": {},
-        "source": null
-    }
-},
-{
-    "model": "caluma_form.option",
-    "pk": "sektion-7",
-    "fields": {
-        "created_at": "2021-11-11T09:56:37.929Z",
-        "modified_at": "2021-11-11T09:56:37.929Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": null, \"en\": \"7\", \"fr\": null}",
-        "is_archived": false,
-        "meta": {},
-        "source": null
-    }
-},
-{
-    "model": "caluma_form.option",
-    "pk": "verteilplan-nr-vp-2021",
-    "fields": {
-        "created_at": "2021-11-11T09:53:57.190Z",
-        "modified_at": "2021-11-11T09:54:09.507Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "label": "{\"de\": null, \"en\": \"2021\", \"fr\": null}",
-        "is_archived": false,
-        "meta": {},
-        "source": null
-    }
-},
-{
-    "model": "caluma_form.answer",
-    "pk": "28f701ec-dbb6-4a56-85d0-567255c871d4",
-    "fields": {
-        "created_at": "2021-11-11T09:54:09.790Z",
-        "modified_at": "2021-11-11T09:54:09.790Z",
-        "created_by_user": null,
-        "created_by_group": null,
-        "modified_by_user": null,
-        "modified_by_group": null,
-        "question": "verteilplan-nr",
-        "value": "verteilplan-nr-vp-2021",
-        "meta": {},
-        "document": null,
-        "date": null,
-        "file": null
-    }
-}
 ]
