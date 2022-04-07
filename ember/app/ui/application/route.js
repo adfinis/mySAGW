@@ -11,7 +11,7 @@ export default class ApplicationRoute extends Route.extend(
 
   beforeModel(...args) {
     super.beforeModel(...args);
-    const locale = window.localStorage.getItem("locale") ?? "en";
+    const locale = localStorage.getItem("locale") ?? "en";
     this.intl.setLocale([locale]);
     moment.locale(locale);
 

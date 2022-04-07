@@ -115,6 +115,12 @@ class IdentityViewSet(views.ModelViewSet):
         "memberships__organisation__organisation_name",
         "memberships__organisation__first_name",
         "memberships__organisation__last_name",
+        "addresses__address_addition_1",
+        "addresses__address_addition_2",
+        "addresses__address_addition_3",
+        "addresses__street_and_number",
+        "addresses__postcode",
+        "addresses__town",
     )
 
     @action(detail=False, methods=["post"])
@@ -171,6 +177,7 @@ class IdentityViewSet(views.ModelViewSet):
         records = ex.export(
             queryset,
             include_fields=[
+                "localized_title",
                 "first_name",
                 "last_name",
                 "organisation_name",

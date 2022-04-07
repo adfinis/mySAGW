@@ -52,16 +52,28 @@
           @disabled={{cannot "edit identity" this.changeset.data}}
         />
       {{/if}}
-
-      <Form.input
-        @label={{t "components.identity-form.label.salutation"}}
-        @name="salutation"
-        @type="select"
-        @options={{this.salutations}}
-        @optionLabelPath="label"
-        @optionTargetPath="value"
-      />
-
+      <div class="uk-child-width-expand@s" uk-grid>
+        <div>
+          <Form.input
+            @label={{t "components.identity-form.label.salutation"}}
+            @name="salutation"
+            @type="select"
+            @options={{this.salutations}}
+            @optionLabelPath="label"
+            @optionTargetPath="value"
+          />
+        </div>
+        <div>
+          <Form.input
+            @label={{t "components.identity-form.label.title"}}
+            @name="title"
+            @type="select"
+            @options={{this.titles}}
+            @optionLabelPath="label"
+            @optionTargetPath="value"
+          />
+        </div>
+      </div>
       <div class="uk-child-width-expand@s" uk-grid>
         <div>
           <Form.input
