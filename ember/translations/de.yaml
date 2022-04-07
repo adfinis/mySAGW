@@ -4,6 +4,12 @@ global:
     male: "Herr"
     female: "Frau"
     neutral: "Neutrale Anrede"
+  title:
+    none: "Kein Titel"
+    dr: "Dr."
+    prof: "Prof."
+    profDr: "Prof. Dr."
+    pdDr: "PD Dr."
   languages:
     english: "Englisch"
     german: "Deutsch"

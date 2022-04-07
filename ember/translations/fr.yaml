@@ -4,6 +4,12 @@ global:
     male: "Monsieur"
     female: "Madame"
     neutral: "Formulation neutre"
+  title:
+    none: "Aucun titre"
+    dr: "Dr"
+    prof: "Prof."
+    profDr: "Prof. Dr"
+    pdDr: "PD Dr"
   languages:
     english: "English"
     german: "Deutsch"

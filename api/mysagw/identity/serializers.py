@@ -195,6 +195,7 @@ class IdentitySerializer(TrackingSerializer):
             "first_name",
             "last_name",
             "salutation",
+            "title",
             "language",
             "interests",
             "email",
