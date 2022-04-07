@@ -85,6 +85,7 @@ def test_dynamic_task_after_decision_and_credit(
     [
         ("continue", "complete-document", None, False),
         ("reject", "additional-data-form", "additional-data-form", False),
+        ("dismissed", None, None, False),
         ("reject", "additional-data-form", "periodika-abrechnung", True),
     ],
 )
@@ -135,12 +136,15 @@ def test_dynamic_task_after_define_amount(
     )
     complete_work_item(case.work_items.get(task_id="define-amount"), user)
 
-    assert case.status == Case.STATUS_RUNNING
-    assert case.work_items.filter(task_id=expected_work_item_task).exists()
-    if expected_work_item_form:
-        assert (
-            case.work_items.filter(task_id=expected_work_item_task)
-            .first()
-            .document.form.slug
-            == expected_work_item_form
-        )
+    if expected_work_item_task:
+        assert case.status == Case.STATUS_RUNNING
+        assert case.work_items.filter(task_id=expected_work_item_task).exists()
+        if expected_work_item_form:
+            assert (
+                case.work_items.filter(task_id=expected_work_item_task)
+                .first()
+                .document.form.slug
+                == expected_work_item_form
+            )
+    else:
+        assert case.status == Case.STATUS_COMPLETED

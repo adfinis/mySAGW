@@ -225,16 +225,26 @@ def finish_additional_data_form(sender, work_item, user, **kwargs):
 )
 @transaction.atomic
 def finish_define_amount(sender, work_item, user, **kwargs):
+    decision = work_item.document.answers.get(
+        question_id="define-amount-decision",
+    )
+
+    if any(state in decision.value for state in ["zurueckgezogen", "dismissed"]):
+        for sibling in work_item.case.work_items.filter(
+            status=caluma_workflow_models.WorkItem.STATUS_READY
+        ):
+            caluma_workflow_api.complete_work_item(
+                work_item=sibling,
+                user=user,
+            )
+        return
+
     form_work_item = caluma_workflow_models.WorkItem.objects.filter(
         task_id="additional-data-form",
         case=work_item.case,
     ).first()
 
     if form_work_item:
-        decision = work_item.document.answers.get(
-            question_id="define-amount-decision",
-        )
-
         caluma_workflow_api.resume_work_item(work_item=form_work_item, user=user)
 
         if "continue" in decision.value:

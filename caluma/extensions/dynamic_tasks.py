@@ -38,5 +38,7 @@ class CustomDynamicTasks(BaseDynamicTasks):
 
         if "reject" in decision.value:
             return ["additional-data"]
+        elif "continue" in decision.value:
+            return ["complete-document"]
 
-        return ["complete-document"]
+        return []
