@@ -48,7 +48,7 @@ def test_dynamic_task_after_review_document(
         ("close", Case.STATUS_COMPLETED, ""),
         ("additional-data", Case.STATUS_RUNNING, "additional-data"),
         ("define-amount", Case.STATUS_RUNNING, "define-amount"),
-        ("complete", Case.STATUS_RUNNING, "complete-document"),
+        ("complete", Case.STATUS_COMPLETED, ""),
     ],
 )
 def test_dynamic_task_after_decision_and_credit(

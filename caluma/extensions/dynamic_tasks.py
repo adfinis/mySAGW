@@ -25,8 +25,6 @@ class CustomDynamicTasks(BaseDynamicTasks):
             return ["additional-data", "additional-data-form", "advance-credits"]
         elif "define-amount" in credit_decision.value:
             return ["define-amount"]
-        elif "complete" in credit_decision.value:
-            return ["complete-document"]
 
         return []
 
