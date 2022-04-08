@@ -31,6 +31,16 @@ export default class IdentityFormComponent extends Component {
     ];
   }
 
+  get titles() {
+    return [
+      { label: this.intl.t("global.title.none"), value: "none" },
+      { label: this.intl.t("global.title.dr"), value: "dr" },
+      { label: this.intl.t("global.title.prof"), value: "prof" },
+      { label: this.intl.t("global.title.profDr"), value: "prof-dr" },
+      { label: this.intl.t("global.title.pdDr"), value: "pd-dr" },
+    ];
+  }
+
   get languages() {
     return [
       { label: this.intl.t("global.languages.german"), value: "de" },

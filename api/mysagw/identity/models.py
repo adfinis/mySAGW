@@ -74,6 +74,28 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
         (SALUTATION_NEUTRAL, SALUTATION_NEUTRAL),
     )
 
+    TITLE_DR = "dr"
+    TITLE_PROF = "prof"
+    TITLE_PROF_DR = "prof-dr"
+    TITLE_PD_DR = "pd-dr"
+    TITLE_NONE = "none"
+
+    TITLE_LOCALIZED_MAP = {
+        TITLE_DR: {"de": "Dr.", "en": "Dr.", "fr": "Dr"},
+        TITLE_PROF: {"de": "Prof.", "en": "Prof.", "fr": "Prof."},
+        TITLE_PROF_DR: {"de": "Prof. Dr.", "en": "Prof. Dr.", "fr": "Prof. Dr"},
+        TITLE_PD_DR: {"de": "PD Dr.", "en": "PD Dr.", "fr": "PD Dr"},
+        TITLE_NONE: {"de": "", "en": "", "fr": ""},
+    }
+
+    TITLE_CHOICES = (
+        (TITLE_DR, TITLE_DR),
+        (TITLE_PROF, TITLE_PROF),
+        (TITLE_PROF_DR, TITLE_PROF_DR),
+        (TITLE_PD_DR, TITLE_PD_DR),
+        (TITLE_NONE, TITLE_NONE),
+    )
+
     idp_id = models.CharField(max_length=255, unique=True, null=True, blank=False)
     email = models.EmailField(unique=True, null=True, blank=True)
     organisation_name = models.CharField(max_length=255, null=True, blank=True)
@@ -82,6 +104,7 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
     salutation = models.CharField(
         choices=SALUTATION_CHOICES, default=SALUTATION_NEUTRAL, max_length=7
     )
+    title = models.CharField(choices=TITLE_CHOICES, default=TITLE_NONE, max_length=9)
     language = models.CharField(
         max_length=2, choices=settings.LANGUAGES, default=settings.LANGUAGE_CODE
     )
@@ -114,6 +137,10 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
     @property
     def localized_salutation(self):
         return self.SALUTATION_LOCALIZED_MAP[self.salutation][self.language]
+
+    @property
+    def localized_title(self):
+        return self.TITLE_LOCALIZED_MAP[self.title][self.language]
 
     class Meta:
         ordering = ("last_name", "first_name", "email")

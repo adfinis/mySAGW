@@ -26,79 +26,100 @@ export default class CasesDetailIndexController extends Controller {
     return this.model.workItems.filterBy("status", "READY").length;
   }
 
+  /*
+   * This filters the queried work items for only the ones
+   * which contain answers to be displayed as configured in displayedAnswers
+   * and the most recent workItem of them all.
+   * Also returns the most recent of each alwaysDisplayedAnswers work item to the list.
+   */
+  get remarkWorkItems() {
+    const configuredWorkItems = this.model.workItems
+      .filter(
+        (workItem) =>
+          [
+            ...Object.keys(ENV.APP.caluma.displayedAnswers),
+            ...Object.keys(ENV.APP.caluma.alwaysDisplayedAnswers),
+          ].includes(workItem.task.slug) && workItem.status === "COMPLETED"
+      )
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+    const newestWorkItem = configuredWorkItems[0];
+
+    const alwaysDisplayedWorkItem = Object.keys(
+      ENV.APP.caluma.alwaysDisplayedAnswers
+    )
+      .map((slug) => configuredWorkItems.findBy("task.slug", slug))
+      .compact();
+
+    return { newest: newestWorkItem, always: alwaysDisplayedWorkItem };
+  }
+
+  /*
+   * This filters the answers of the workItem document,
+   * only the configured answers in displayedAnswers should remain
+   * and based on another configured questions answer the answer will be filtered or not.
+   * Answers in alwaysDisplayedAnswers should always be displayed.
+   */
   get remarks() {
-    return (
-      this.model.workItems
-        /*
-         * This filters the queried workItems for only the ones
-         * which contain answers to be displayed as configured in displayedAnswers
-         * and the most recent workItem if there are multiple of the same task.
-         */
-        .reduce((workItems, workItem) => {
-          if (
-            !Object.keys(ENV.APP.caluma.displayedAnswers).includes(
-              workItem.task.slug
-            )
-          ) {
-            return workItems;
-          } else if (!workItems.length) {
-            return [...workItems, workItem];
-          }
-          const duplicateIndex = workItems.findIndex(
-            (item) => item.task.slug === workItem.task.slug
-          );
+    const newestAnswer =
+      this.remarkWorkItems.newest?.document.answers.edges.reduce(
+        (filteredAnswers, answer, _, answers) => {
+          Object.keys(ENV.APP.caluma.displayedAnswers).forEach((taskSlug) => {
+            if (!this.remarkWorkItems.newest.task.slug.includes(taskSlug)) {
+              return;
+            }
 
-          if (duplicateIndex === -1) {
-            return [...workItems, workItem];
-          } else if (
-            new Date(workItems[duplicateIndex].createdAt) <
-            new Date(workItem.createdAt)
-          ) {
-            workItems.splice(duplicateIndex, 1);
-            return [...workItems, workItem];
-          }
+            const decision = answers.find(
+              (a) => a.node.question.slug === `${taskSlug}-decision`
+            );
+            const value = decision.node[`${decision.node.__typename}Value`];
 
-          return workItems;
-        }, [])
-        /*
-         * This filters the answers of the workItem document,
-         * only the configured answers in displayedAnswers should remain
-         * and based on another configured questions answer the answer will be filtered or not
-         */
-        .map((workItem) => {
-          return workItem.document.answers.edges.reduce(
-            (filteredAnswers, answer, _, answers) => {
-              Object.keys(ENV.APP.caluma.displayedAnswers).forEach(
-                (taskSlug) => {
-                  if (!workItem.task.slug.includes(taskSlug)) {
-                    return;
-                  }
+            if (
+              ENV.APP.caluma.displayedAnswers[taskSlug][value].includes(
+                answer.node.question.slug
+              ) &&
+              answer.node[`${answer.node.__typename}Value`]
+            ) {
+              filteredAnswers.push({
+                label: answer.node.question.label,
+                value: answer.node[`${answer.node.__typename}Value`],
+              });
+            }
+          });
 
-                  const decision = answers.find(
-                    (a) => a.node.question.slug === `${taskSlug}-decision`
-                  );
-                  const value =
-                    decision.node[`${decision.node.__typename}Value`];
+          return filteredAnswers;
+        },
+        []
+      );
 
-                  if (
-                    answer.node.question.slug ===
-                    ENV.APP.caluma.displayedAnswers[taskSlug][value]
-                  ) {
-                    filteredAnswers.push({
-                      label: answer.node.question.label,
-                      value: answer.node[`${answer.node.__typename}Value`],
-                    });
-                  }
+    const alwaysDisplayedAnswers = this.remarkWorkItems.always.map(
+      (workItem) => {
+        return workItem.document.answers.edges.reduce(
+          (filteredAnswers, answer) => {
+            Object.keys(ENV.APP.caluma.alwaysDisplayedAnswers).forEach(
+              (taskSlug) => {
+                if (
+                  ENV.APP.caluma.alwaysDisplayedAnswers[taskSlug].includes(
+                    answer.node.question.slug
+                  ) &&
+                  answer.node[`${answer.node.__typename}Value`]
+                ) {
+                  filteredAnswers.push({
+                    label: answer.node.question.label,
+                    value: answer.node[`${answer.node.__typename}Value`],
+                  });
                 }
-              );
+              }
+            );
 
-              return filteredAnswers;
-            },
-            []
-          );
-        })
-        .flat()
+            return filteredAnswers;
+          },
+          []
+        );
+      }
     );
+
+    return [...(newestAnswer ?? []), ...alwaysDisplayedAnswers].flat();
   }
 
   @dropTask

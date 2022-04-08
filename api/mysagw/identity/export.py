@@ -18,6 +18,7 @@ class IdentityExport:
         "first_name": lambda i, a: i.first_name,
         "last_name": lambda i, a: i.last_name,
         "localized_salutation": lambda i, a: i.localized_salutation,
+        "localized_title": lambda i, a: i.localized_title,
         "language": lambda i, a: i.language,
         "is_organisation": lambda i, a: i.is_organisation,
         "organisation_name": lambda i, a: i.organisation_name,

@@ -44,7 +44,7 @@ documents:
     revise: "Zur Überarbeitung"
     submit-receipts: "Belege einreichen"
     decision: "Entscheid"
-    completed: "Abgeschlossen"
+    complete: "Abgeschlossen"
 
   new:
     title: "Gesuch eröffnen"

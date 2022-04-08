@@ -132,6 +132,15 @@
         @name="town"
       />
 
+      <Form.input
+        @type="select"
+        @label={{t "components.identity-addresses.form.label.country"}}
+        @name="country"
+        @options={{this.countries}}
+        @optionLabelPath="display_name"
+        @optionTargetPath="value"
+      />
+
       {{#if (can "show multi-lang-description address")}}
         <div class="uk-background-muted uk-padding-small uk-margin uk-margin-remove-last-child">
           {{#each this.intl.locales as |locale|}}

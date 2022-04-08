@@ -447,6 +447,7 @@
         "modified_by_user": null,
         "modified_by_group": null,
         "workflow": "document-review",
+        "redoable": null,
         "task": "additional-data",
         "flow": "576262fc-1f01-4f82-a64c-9bcaefa71938"
     }
@@ -462,6 +463,7 @@
         "modified_by_user": null,
         "modified_by_group": null,
         "workflow": "document-review",
+        "redoable": null,
         "task": "review-document",
         "flow": "1ee5288e-73b6-4946-9b2a-13dd5d55163f"
     }
@@ -477,6 +479,7 @@
         "modified_by_user": null,
         "modified_by_group": null,
         "workflow": "document-review",
+        "redoable": null,
         "task": "decision-and-credit",
         "flow": "4f66a0b3-b5e6-445e-8ae3-9ac1c2ced929"
     }
@@ -492,6 +495,7 @@
         "modified_by_user": null,
         "modified_by_group": null,
         "workflow": "document-review",
+        "redoable": null,
         "task": "revise-document",
         "flow": "af4400ac-4a04-412a-9689-baee1fb608a8"
     }
@@ -507,6 +511,7 @@
         "modified_by_user": null,
         "modified_by_group": null,
         "workflow": "document-review",
+        "redoable": null,
         "task": "define-amount",
         "flow": "e65b9815-21b5-4667-836e-b7bea8b66302"
     }
@@ -522,6 +527,7 @@
         "modified_by_user": null,
         "modified_by_group": null,
         "workflow": "document-review",
+        "redoable": null,
         "task": "circulation",
         "flow": "e9540a87-6999-4c88-ad3c-7ec190f0b0de"
     }
@@ -537,6 +543,7 @@
         "modified_by_user": null,
         "modified_by_group": null,
         "workflow": "document-review",
+        "redoable": null,
         "task": "submit-document",
         "flow": "5b55683e-a1f5-4f77-9498-cc7748967eb3"
     }
@@ -552,6 +559,7 @@
         "modified_by_user": null,
         "modified_by_group": null,
         "workflow": "circulation",
+        "redoable": null,
         "task": "invite-to-circulation",
         "flow": "36b7ae99-e189-41be-ba5e-ddfc67d14b5c"
     }

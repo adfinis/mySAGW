@@ -102,9 +102,7 @@ export default class IdentitiesIndexController extends Controller {
   @dropTask *exportSearch(endpoint, fileExtension) {
     const adapter = this.store.adapterFor("identity");
 
-    let uri = `${this.store
-      .adapterFor("identity")
-      .buildURL("identity")}/${endpoint}`;
+    let uri = `${adapter.buildURL("identity")}/${endpoint}`;
 
     if (this.searchTerm) {
       uri += `?filter[search]=${encodeURIComponent(this.searchTerm)}`;

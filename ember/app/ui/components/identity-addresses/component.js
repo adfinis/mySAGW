@@ -9,6 +9,7 @@ import {
   restartableTask,
   lastValue,
 } from "ember-concurrency-decorators";
+import fetch from "fetch";
 import UIkit from "uikit";
 
 import applyError from "mysagw/utils/apply-error";
@@ -21,22 +22,41 @@ export default class IdentityAddressesComponent extends Component {
   @service notification;
   @service store;
   @service intl;
-  // @service can;
 
   // Lifecycle
 
-  @action onUpdate() {
+  @action
+  onUpdate() {
+    this.fetchCountries.perform();
     this.fetchAddresses.perform(this.args.identity);
   }
 
   // List
 
   @lastValue("fetchAddresses") addresses;
-
-  @restartableTask *fetchAddresses(identity) {
+  @restartableTask
+  *fetchAddresses(identity) {
     return yield this.store.query("address", {
       filter: { identity: identity.id },
     });
+  }
+
+  @lastValue("fetchCountries") countries;
+  @restartableTask
+  *fetchCountries() {
+    const adapter = this.store.adapterFor("identity");
+    adapter.headers["Accept-Language"] = localStorage.getItem("locale") ?? "en";
+    const response = yield fetch(adapter.buildURL("address"), {
+      method: "OPTIONS",
+      headers: adapter.headers,
+    });
+
+    if (response.ok) {
+      const data = yield response.json();
+      return data.data.actions.POST.country.choices;
+    }
+
+    return [];
   }
 
   // Add / Edit
@@ -56,11 +76,13 @@ export default class IdentityAddressesComponent extends Component {
     );
   }
 
-  @action cancel() {
+  @action
+  cancel() {
     this.changeset = null;
   }
 
-  @dropTask *submit(changeset) {
+  @dropTask
+  *submit(changeset) {
     try {
       // Apply changes and save.
       yield changeset.save();
@@ -78,7 +100,8 @@ export default class IdentityAddressesComponent extends Component {
 
   // Delete
 
-  @dropTask *delete(address) {
+  @dropTask
+  *delete(address) {
     try {
       const options = { address: address.label };
       yield UIkit.modal.confirm(

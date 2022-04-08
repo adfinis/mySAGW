@@ -6,6 +6,7 @@ components:
       isExpertAssociation: "Expert association"
       isAdvisoryBoard: "Advisory board"
       salutation: "Salutation"
+      title: "Title"
       firstName: "First name"
       lastName: "Last name"
       email: "Main email address"

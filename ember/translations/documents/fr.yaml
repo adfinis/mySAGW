@@ -44,7 +44,7 @@ documents:
     revise: "Pour modification"
     submit-receipts: "Joindre des annexes"
     decision: "Décision"
-    completed: "Terminé"
+    complete: "Bouclée"
 
   new:
     title: "Ouvrir une nouvelle requête"
