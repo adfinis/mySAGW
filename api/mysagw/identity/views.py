@@ -157,7 +157,7 @@ class IdentityViewSet(views.ModelViewSet):
 
     @action(detail=False, methods=["post"], url_path="export-labels")
     def export_labels(self, request, *args, **kwargs):
-        def group_records(records, group_size=3):
+        def group_records(records, group_size=2):
             grouped_records = []
             addrs = []
             ct = None
@@ -168,6 +168,15 @@ class IdentityViewSet(views.ModelViewSet):
                     addrs = []
             if ct is not None and (ct + 1) % group_size > 0:
                 grouped_records.append(list(addrs))
+            if len(grouped_records[-1]) < group_size:
+                # make sure the last row has also a length of `group_size`
+                placeholders = [
+                    {} for _ in range(group_size - len(grouped_records[-1]))
+                ]
+                grouped_records[-1] = [
+                    *grouped_records[-1],
+                    *placeholders,
+                ]
             return grouped_records
 
         queryset = self.filter_queryset(self.get_queryset()).prefetch_related(

@@ -642,7 +642,7 @@ def test_identity_export_labels_context(
     mocker,
     snapshot,
 ):
-    identities = identity_factory.create_batch(10)
+    identities = identity_factory.create_batch(11)
     for i in identities:
         phone_number_factory.create_batch(3, identity=i)
         email_factory.create_batch(3, identity=i)
