@@ -42,7 +42,8 @@ dbshell: ## Start a psql shell
 
 .PHONY: caluma-test
 caluma-test: ## test caluma config and extensions
-	@docker-compose exec -T caluma python manage.py check
+	@docker-compose exec -T caluma poetry run python manage.py check
+	@docker-compose exec -T -u root caluma poetry install --no-root
 	@docker-compose exec -T caluma ./caluma/ci/test.sh
 
 .PHONY: caluma-lint
@@ -63,26 +64,26 @@ caluma-loadconfig: caluma-load-form caluma-load-workflow ## Load workflow and fo
 
 .PHONY: caluma-dump-forms
 caluma-dump-forms: ## dump Caluma form models including default answers
-	@docker-compose run --rm caluma python manage.py dumpdata --indent 4 \
+	@docker-compose run --rm caluma poetry run python manage.py dumpdata --indent 4 \
 	caluma_form.Form caluma_form.FormQuestion caluma_form.Question \
 	caluma_form.QuestionOption caluma_form.Option caluma_form.Answer | sed -e \
 	's/\r$$//' | jq '.[] | select(.fields.document == null)' | jq -s '.' --indent 4
 
 .PHONY: caluma-dump-workflow
 caluma-dump-workflow: ## dump Caluma workflow models
-	@docker-compose run --rm caluma python manage.py dumpdata --indent 4 \
+	@docker-compose run --rm caluma poetry run python manage.py dumpdata --indent 4 \
 	caluma_workflow.Task caluma_workflow.Workflow caluma_workflow.Flow \
 	caluma_workflow.TaskFlow | sed -e 's/\r$$//'
 
 .PHONY: caluma-flush
 caluma-flush: ## flush the Caluma database
-	@docker-compose exec caluma python manage.py flush --no-input
+	@docker-compose exec caluma poetry run python manage.py flush --no-input
 
 .PHONY: caluma-foreground
 caluma-foreground: ## run caluma in foreground with dev server for debugging
 	@docker-compose stop caluma
 	@docker-compose run --rm -u root --use-aliases --service-ports caluma bash -c \
-	'pip install pdbpp && python ./manage.py runserver 0.0.0.0:8000'
+	'poetry add --lock pdbpp && poetry install --no-dev --no-root && poetry run python ./manage.py runserver 0.0.0.0:8000'
 
 
 .PHONY: ember-lint

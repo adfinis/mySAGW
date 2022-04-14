@@ -31,7 +31,7 @@ services:
       [
         "/bin/sh",
         "-c",
-        "wait-for-it.sh db:5432 -- ./manage.py migrate && ./manage.py runserver 0.0.0.0:8000",
+        "wait-for-it.sh db:5432 -- poetry run python ./manage.py migrate && poetry run python ./manage.py runserver 0.0.0.0:8000",
       ]
 
   caddy:
