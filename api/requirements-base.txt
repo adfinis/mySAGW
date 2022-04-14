@@ -1,4 +1,4 @@
-django==3.2.9
+django==3.2.13
 django-countries==7.2.1
 django-environ==0.8.1
 django-excel==0.0.10
