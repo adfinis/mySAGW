@@ -53,11 +53,11 @@ caluma-lint: ## lint caluma extensions
 
 .PHONY: caluma-load-workflow
 caluma-load-workflow: ## Load workflow config from JSON
-	@docker-compose exec caluma python manage.py loaddata caluma/data/workflow-config.json
+	@docker-compose exec caluma poetry run python manage.py loaddata caluma/data/workflow-config.json
 
 .PHONY: caluma-load-form
 caluma-load-form: ## Load form config from JSON
-	@docker-compose exec caluma python manage.py loaddata caluma/data/form-config.json
+	@docker-compose exec caluma poetry run python manage.py loaddata caluma/data/form-config.json
 
 .PHONY: caluma-loadconfig
 caluma-loadconfig: caluma-load-form caluma-load-workflow ## Load workflow and form config from JSON
