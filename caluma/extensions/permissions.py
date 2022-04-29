@@ -104,9 +104,9 @@ class MySAGWPermission(BasePermission):
 
     @object_permission_for(CancelCase)
     def has_permission_for_cancel_case(self, mutation, info, case):
-        return (
-            self._is_admin_or_sagw(info)
-            or (self._can_access_case(info, case) or self._is_own(info, case))
-        ) and case.work_items.filter(
-            status="ready", task__slug="submit-document"
-        ).exists()
+        return self._is_admin_or_sagw(info) or (
+            (self._can_access_case(info, case) or self._is_own(info, case))
+            and case.work_items.filter(
+                status="ready", task__slug="submit-document"
+            ).exists()
+        )

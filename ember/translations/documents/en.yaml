@@ -32,6 +32,8 @@ documents:
   delete: "Delete application"
   deleteText: "You can delete the application if its not needed anymore."
   deleteSuccess: "The application has been deleted."
+  deleteConfirmation: "Are you sure that this application should be deleted?"
+  deleteConfirm: "Confirm"
   complete: "Complete application"
   completeText: "The application can now be completed."
   completeSuccess: "The application has been completed."
