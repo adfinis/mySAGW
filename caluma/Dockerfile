@@ -8,6 +8,5 @@ COPY data /app/caluma/data
 COPY requirements.txt /app/sagw-requirements.txt
 
 USER root
-RUN cat /app/sagw-requirements.txt | xargs poetry add --lock && \
-    poetry install --no-dev --no-root
+RUN poetry run pip install -r /app/sagw-requirements.txt
 USER caluma
