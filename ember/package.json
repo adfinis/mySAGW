@@ -101,7 +101,7 @@
     "qunit": "^2.17.2",
     "qunit-dom": "^2.0.0",
     "sass": "^1.43.4",
-    "webpack": "^5.60.0"
+    "webpack": "^5.72.1"
   },
   "resolutions": {
     "validated-changeset": "^1.3.2",
