@@ -438,4 +438,6 @@ class OrganisationAdminMembersSerializer(MembershipSerializer):
             "identity",
             "organisation",
             "role",
+            "inactive",
+            "time_slot",
         )

@@ -9,7 +9,7 @@
   {{else}}
     <ul class="uk-list uk-list-divider">
       {{#each this.members as |member|}}
-        <li class="uk-flex uk-flex-between uk-flex-middle">
+        <li class="uk-flex uk-flex-between uk-flex-middle {{if member.inactive "text-strike-through"}}">
           <div>
             {{#if @hideIdentityLink}}
               <span class="uk-text-bold">{{member.identity.fullName}}</span>
@@ -24,9 +24,9 @@
             {{/if}}
 
             <div class="uk-text-meta">
-              {{#each member.roles as |role index|}}
+              {{#each member.roles as |role|}}
                 <span class={{if role.inactive "text-strike-through"}}>
-                  {{role.title}}{{if (not (eq index (sub member.roles.length 1))) ","}}
+                  {{role.title}}
                 </span>
               {{/each}}
             </div>
