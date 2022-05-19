@@ -189,14 +189,14 @@
   <modal.footer class="uk-text-right">
     <UkButton
       @type="button"
-      @on-click={{fn (mut this.isDeleteConfirmationShown) false}}
+      @onClick={{fn (mut this.isDeleteConfirmationShown) false}}
     >
       {{t "global.cancel"}}
     </UkButton>
     <UkButton
       @type="button"
       @color="primary"
-      @on-click={{perform this.closeCase}}
+      @onClick={{perform this.closeCase}}
       @disabled={{this.closeCase.isRunning}}
       @loading={{this.closeCase.isRunning}}
     >
