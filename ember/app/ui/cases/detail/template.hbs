@@ -7,21 +7,29 @@
   {{@model.document.form.name}}
 </h2>
 
-<UkTab as |tab|>
-  <tab.link-item @route="cases.detail.index" @model={{@model}}>
-    {{t "documents.subnav.overview"}}
-  </tab.link-item>
-  <tab.link-item @route="cases.detail.work-items" @model={{@model}}>
-    {{t "documents.subnav.work-items"}}
-  </tab.link-item>
-  <tab.link-item @route="cases.detail.edit" @model={{@model}}>
-    {{t "documents.subnav.document"}}
-  </tab.link-item>
-  {{#if this.circulation}}
-    <tab.link-item @route="cases.detail.circulation" @model={{@model}}>
-      {{t "documents.subnav.circulation"}}
-    </tab.link-item>
-  {{/if}}
-</UkTab>
+<ul uk-tab>
+  <li>
+    <LinkTo @route="cases.detail.index" @model={{@model}}>
+      {{t "documents.subnav.overview"}}
+    </LinkTo>
+  </li>
+  <li>
+    <LinkTo @route="cases.detail.work-items" @model={{@model}}>
+      {{t "documents.subnav.work-items"}}
+    </LinkTo>
+  </li>
+  <li>
+    <LinkTo @route="cases.detail.edit" @model={{@model}}>
+      {{t "documents.subnav.document"}}
+    </LinkTo>
+  </li>
+  <li>
+    {{#if this.circulation}}
+      <LinkTo @route="cases.detail.circulation" @model={{@model}}>
+        {{t "documents.subnav.circulation"}}
+      </LinkTo>
+    {{/if}}
+  </li>
+</ul>
 
 {{outlet}}

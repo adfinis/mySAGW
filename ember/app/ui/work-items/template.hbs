@@ -50,5 +50,6 @@
 
 <WorkItemList
   @query={{this.workItemsQuery}}
+  @fetchMoreSupplement={{perform this.getIdentities this.workItemsQuery.value}}
   @config={{this.tableConfig}}
 />

@@ -16,7 +16,7 @@
       @color="primary"
       @disabled={{or this.addToCirculation.isRunning (not this.selectedIdentities.length)}}
       @loading={{this.addToCirculation.isRunning}}
-      @on-click={{perform this.addToCirculation}}
+      @onClick={{perform this.addToCirculation}}
       @class="uk-margin-left"
     >
       {{t "documents.circulation.add"}}

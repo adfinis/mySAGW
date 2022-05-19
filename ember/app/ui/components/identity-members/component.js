@@ -38,16 +38,21 @@ export default class IdentityMembersComponent extends Component {
 
     this.totalPages = membershipResponse.meta.pagination?.pages;
 
-    membershipResponse.forEach((membership) => {
+    membershipResponse.filterBy("role.title").forEach((membership, i, a) => {
       const identity = membership.identity;
       const duplicateMembership = this.members.findBy(
         "identity.id",
         identity.get("id")
       );
 
+      let title = membership.role.get("title");
+      if (title && a.length !== i + 1) {
+        title += ",";
+      }
+
       membership.roles = [
         {
-          title: membership.role.get("title"),
+          title,
           inactive: membership.isInactive,
         },
       ];
@@ -61,6 +66,10 @@ export default class IdentityMembersComponent extends Component {
       if (!duplicateMembership) {
         this.members.push(membership);
       }
+    });
+
+    this.members.forEach((member) => {
+      member.inactive = member.roles.every((role) => role.inactive);
     });
 
     return membershipResponse;

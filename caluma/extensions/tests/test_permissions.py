@@ -168,9 +168,9 @@ def test_permission_for_complete_work_item(
 @pytest.mark.parametrize(
     "groups,task_slug,has_case_access,has_perm,has_obj_perm",
     [
-        (["admin"], "bar", True, True, False),
+        (["admin"], "bar", True, True, True),
         (["admin"], settings.APPLICANT_TASK_SLUGS[0], True, True, True),
-        (["sagw"], "bar", True, True, False),
+        (["sagw"], "bar", True, True, True),
         (["sagw"], settings.APPLICANT_TASK_SLUGS[0], True, True, True),
         (["foo"], "bar", True, True, False),
         (["foo"], settings.APPLICANT_TASK_SLUGS[0], True, True, True),

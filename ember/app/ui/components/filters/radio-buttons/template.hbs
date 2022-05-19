@@ -4,7 +4,7 @@
     {{#each @options as |option|}}
       <UkButton
         @color={{if (eq @selected option.value) "primary" "default"}}
-        @on-click={{fn @onChange option.value}}
+        @onClick={{fn @onChange option.value}}
       >
         {{option.label}}
       </UkButton>

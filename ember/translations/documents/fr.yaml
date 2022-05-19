@@ -32,6 +32,8 @@ documents:
   delete: "Supprimer la requête"
   deleteText: "Vous pouvez supprimer la requête au cas où elle ne serait plus nécessaire."
   deleteSuccess: "La requête a été effacée avec succès."
+  deleteConfirmation: "Êtes-vous sûr que cette requête doit être supprimée?"
+  deleteConfirm: "Confirmer"
   complete: "Compléter la requête"
   completeText: "La requête peut maintenant être complétée."
   completeSuccess: "La requête a été complétée."
