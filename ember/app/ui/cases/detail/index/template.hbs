@@ -95,7 +95,7 @@
       <UkButton
         @type="button"
         @label={{t "documents.accesses.add"}}
-        @on-click={{this.addAccessRow}}
+        @onClick={{this.addAccessRow}}
       />
     {{/if}}
 
@@ -115,7 +115,9 @@
 
         <UkButton
           @type="button"
-          @on-click={{fn (mut this.isDeleteConfirmationShown) true}}
+          @onClick={{fn (mut this.isDeleteConfirmationShown) true}}
+          @disabled={{this.closeCase.isRunning}}
+          @loading={{this.closeCase.isRunning}}
         >
           {{t "documents.delete"}}
         </UkButton>
@@ -139,7 +141,7 @@
       <h3>{{t "documents.accountingExport"}}</h3>
       <UkButton
         @type="button"
-        @on-click={{perform this.exportAccounting @model}}
+        @onClick={{perform this.exportAccounting @model}}
         @loading={{this.exportAccounting.isRunning}}
       >
         {{t "documents.accountingExport"}}
@@ -150,7 +152,7 @@
 
 <hr />
 
-<UkModal @visible={{this.modalVisible}} @on-hide={{fn (mut this.modalVisible) false}} as |modal|>
+<UkModal @visible={{this.modalVisible}} @onHide={{fn (mut this.modalVisible) false}} as |modal|>
   <modal.header>
     <h2 class="uk-modal-title">
       {{t "documents.accesses.add"}}

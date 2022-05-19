@@ -14,65 +14,72 @@
   </LinkTo>
 
   <div class="uk-navbar-left uk-visible@l">
-    <UkTab as |tab|>
+    <ul class="uk-navbar-nav uk-text-uppercase">
       {{#if (can "list work-item")}}
-        <tab.link-item @route="work-items">
-          {{t "components.nav-bar.tasks"}}
-        </tab.link-item>
+        <li>
+          <LinkTo @route="work-items">
+            {{t "components.nav-bar.tasks"}}
+          </LinkTo>
+        </li>
       {{/if}}
-      <tab.link-item @route="cases">
-        {{t "components.nav-bar.documents"}}
-      </tab.link-item>
+      <li>
+        <LinkTo @route="cases">
+          {{t "components.nav-bar.documents"}}
+        </LinkTo>
+      </li>
 
       {{#if (can "list snippet")}}
-        <tab.link-item @route="snippets">
-          {{t "components.nav-bar.snippets"}}
-        </tab.link-item>
+        <li>
+          <LinkTo @route="snippets">
+            {{t "components.nav-bar.snippets"}}
+          </LinkTo>
+        </li>
       {{/if}}
 
       {{#if (or (can "list identity") (can "list interests") (can "list membership-role"))}}
-        <tab.item id="nav-identity-management">
-          {{t "components.nav-bar.identity-management"}}<span uk-icon="chevron-down"></span>
-        </tab.item>
+        <li id="nav-identity-management">
+          <a href="#">{{t "components.nav-bar.identity-management"}}<span uk-icon="chevron-down"></span></a>
+          <div class="uk-navbar-dropdown uk-margin-remove">
+            <ul class="uk-nav uk-navbar-dropdown-nav">
+              {{#if (can "list identity")}}
+                <li>
+                  <LinkTo @route="identities">{{t "components.nav-bar.identities"}}</LinkTo>
+                </li>
+              {{/if}}
+              {{#if (can "list interest")}}
+                <li>
+                  <LinkTo @route="interests">{{t "components.nav-bar.interests"}}</LinkTo>
+                </li>
+              {{/if}}
+              {{#if (can "list membership-role")}}
+                <li>
+                  <LinkTo @route="membership-roles">{{t "components.nav-bar.roles"}}</LinkTo>
+                </li>
+              {{/if}}
+            </ul>
+          </div>
+        </li>
       {{/if}}
       {{#if (can "list form-builder")}}
-        <tab.item id="nav-form-management">
-          {{t "components.nav-bar.form-management"}}<span uk-icon="chevron-down"></span>
-        </tab.item>
-      {{/if}}
-    </UkTab>
-  </div>
-  <div uk-dropdown="toggle: #nav-identity-management" class="uk-margin-remove uk-text-uppercase">
-    <ul class="uk-nav uk-dropdown-nav">
-      {{#if (can "list identity")}}
         <li>
-          <LinkTo @route="identities">{{t "components.nav-bar.identities"}}</LinkTo>
-        </li>
-      {{/if}}
-      {{#if (can "list interest")}}
-        <li>
-          <LinkTo @route="interests">{{t "components.nav-bar.interests"}}</LinkTo>
-        </li>
-      {{/if}}
-      {{#if (can "list membership-role")}}
-        <li>
-          <LinkTo @route="membership-roles">{{t "components.nav-bar.roles"}}</LinkTo>
+          <a href="#">{{t "components.nav-bar.form-management"}}<span uk-icon="chevron-down"></span></a>
+          <div class="uk-navbar-dropdown uk-margin-remove">
+            <ul class="uk-nav uk-dropdown-nav">
+              {{#if (can "list form-builder")}}
+                <li>
+                  <LinkTo @route="form-builder">{{t "components.nav-bar.form-builder"}}</LinkTo>
+                </li>
+                <li>
+                  <LinkTo @route="form.configuration">{{t "components.nav-bar.form-configuration"}}</LinkTo>
+                </li>
+              {{/if}}
+            </ul>
+          </div>
         </li>
       {{/if}}
     </ul>
   </div>
-  <div uk-dropdown="toggle: #nav-form-management" class="uk-margin-remove uk-text-uppercase">
-    <ul class="uk-nav uk-dropdown-nav">
-      {{#if (can "list form-builder")}}
-        <li>
-          <LinkTo @route="form-builder">{{t "components.nav-bar.form-builder"}}</LinkTo>
-        </li>
-        <li>
-          <LinkTo @route="form.configuration">{{t "components.nav-bar.form-configuration"}}</LinkTo>
-        </li>
-      {{/if}}
-    </ul>
-  </div>
+
   <div class="uk-navbar-right uk-visible@l">
     <ul class="uk-navbar-nav">
       <li>

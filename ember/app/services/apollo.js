@@ -1,13 +1,10 @@
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
 import { inject as service } from "@ember/service";
-import CalumaApolloServiceMixin from "@projectcaluma/ember-core/mixins/caluma-apollo-service-mixin";
-import ApolloService from "ember-apollo-client/services/apollo";
+import CalumaApolloService from "@projectcaluma/ember-core/services/apollo";
 import { handleUnauthorized } from "ember-simple-auth-oidc";
 
-export default class CustomApolloService extends ApolloService.extend(
-  CalumaApolloServiceMixin
-) {
+export default class CustomApolloService extends CalumaApolloService {
   @service session;
 
   link(...args) {
