@@ -109,15 +109,13 @@
         </LinkTo>
       {{/if}}
 
-      {{#if @model.hasSubmitWorkItem}}
+      {{#if (can "delete case" @model)}}
         <h3>{{t "documents.delete"}}</h3>
         <p>{{t "documents.deleteText"}}</p>
 
         <UkButton
           @type="button"
-          @on-click={{perform this.closeCase}}
-          @disabled={{this.closeCase.isRunning}}
-          @loading={{this.closeCase.isRunning}}
+          @on-click={{fn (mut this.isDeleteConfirmationShown) true}}
         >
           {{t "documents.delete"}}
         </UkButton>
@@ -171,6 +169,7 @@
     </modal.body>
     <modal.footer class="uk-text-right">
       <UkButton
+        @type="button"
         {{on "click" (perform this.cancelAccessRow)}}
       >
         {{t "global.cancel"}}
@@ -180,4 +179,26 @@
       />
     </modal.footer>
   </ValidatedForm>
+</UkModal>
+
+<UkModal @visible={{this.isDeleteConfirmationShown}} as |modal|>
+  <modal.header>{{t "documents.delete"}}</modal.header>
+  <modal.body>{{t "documents.deleteConfirmation"}}</modal.body>
+  <modal.footer class="uk-text-right">
+    <UkButton
+      @type="button"
+      @on-click={{fn (mut this.isDeleteConfirmationShown) false}}
+    >
+      {{t "global.cancel"}}
+    </UkButton>
+    <UkButton
+      @type="button"
+      @color="primary"
+      @on-click={{perform this.closeCase}}
+      @disabled={{this.closeCase.isRunning}}
+      @loading={{this.closeCase.isRunning}}
+    >
+      {{t "documents.deleteConfirm"}}
+    </UkButton>
+  </modal.footer>
 </UkModal>
