@@ -138,6 +138,7 @@ export default class WorkItemsIndexController extends Controller {
       filter,
       order: [{ attribute: "CREATED_AT", direction: "DESC" }],
     });
+    yield this.getIdentities.perform(this.workItemsQuery.value);
   }
 
   @restartableTask
