@@ -73,7 +73,7 @@
     "ember-maybe-import-regenerator": "^1.0.0",
     "ember-moment": "^8.0.2",
     "ember-parachute": "^1.0.2",
-    "ember-pikaday": "^3.0.0",
+    "ember-pikaday": "^4.0.0",
     "ember-power-select": "^4.1.6",
     "ember-promise-helpers": "^1.0.9",
     "ember-qunit": "^5.1.5",
