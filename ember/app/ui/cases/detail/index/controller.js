@@ -21,6 +21,7 @@ export default class CasesDetailIndexController extends Controller {
 
   @tracked newRow;
   @tracked modalVisible;
+  @tracked isDeleteConfirmationShown = false;
 
   get readyWorkItems() {
     return this.model.workItems.filterBy("status", "READY").length;
@@ -130,6 +131,7 @@ export default class CasesDetailIndexController extends Controller {
         variables: { case: this.model.id },
       });
 
+      this.isDeleteConfirmationShown = false;
       this.notification.success(this.intl.t("documents.deleteSuccess"));
 
       this.router.transitionTo("cases.index");

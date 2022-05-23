@@ -95,7 +95,7 @@
       <UkButton
         @type="button"
         @label={{t "documents.accesses.add"}}
-        @on-click={{this.addAccessRow}}
+        @onClick={{this.addAccessRow}}
       />
     {{/if}}
 
@@ -109,13 +109,13 @@
         </LinkTo>
       {{/if}}
 
-      {{#if @model.hasSubmitWorkItem}}
+      {{#if (can "delete case" @model)}}
         <h3>{{t "documents.delete"}}</h3>
         <p>{{t "documents.deleteText"}}</p>
 
         <UkButton
           @type="button"
-          @on-click={{perform this.closeCase}}
+          @onClick={{fn (mut this.isDeleteConfirmationShown) true}}
           @disabled={{this.closeCase.isRunning}}
           @loading={{this.closeCase.isRunning}}
         >
@@ -141,7 +141,7 @@
       <h3>{{t "documents.accountingExport"}}</h3>
       <UkButton
         @type="button"
-        @on-click={{perform this.exportAccounting @model}}
+        @onClick={{perform this.exportAccounting @model}}
         @loading={{this.exportAccounting.isRunning}}
       >
         {{t "documents.accountingExport"}}
@@ -152,7 +152,7 @@
 
 <hr />
 
-<UkModal @visible={{this.modalVisible}} @on-hide={{fn (mut this.modalVisible) false}} as |modal|>
+<UkModal @visible={{this.modalVisible}} @onHide={{fn (mut this.modalVisible) false}} as |modal|>
   <modal.header>
     <h2 class="uk-modal-title">
       {{t "documents.accesses.add"}}
@@ -171,6 +171,7 @@
     </modal.body>
     <modal.footer class="uk-text-right">
       <UkButton
+        @type="button"
         {{on "click" (perform this.cancelAccessRow)}}
       >
         {{t "global.cancel"}}
@@ -180,4 +181,26 @@
       />
     </modal.footer>
   </ValidatedForm>
+</UkModal>
+
+<UkModal @visible={{this.isDeleteConfirmationShown}} as |modal|>
+  <modal.header>{{t "documents.delete"}}</modal.header>
+  <modal.body>{{t "documents.deleteConfirmation"}}</modal.body>
+  <modal.footer class="uk-text-right">
+    <UkButton
+      @type="button"
+      @onClick={{fn (mut this.isDeleteConfirmationShown) false}}
+    >
+      {{t "global.cancel"}}
+    </UkButton>
+    <UkButton
+      @type="button"
+      @color="primary"
+      @onClick={{perform this.closeCase}}
+      @disabled={{this.closeCase.isRunning}}
+      @loading={{this.closeCase.isRunning}}
+    >
+      {{t "documents.deleteConfirm"}}
+    </UkButton>
+  </modal.footer>
 </UkModal>

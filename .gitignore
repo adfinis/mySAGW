@@ -75,3 +75,5 @@ target/
 
 # git
 *.orig
+
+.vscode/

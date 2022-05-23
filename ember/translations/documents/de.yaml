@@ -32,6 +32,8 @@ documents:
   delete: "Gesuch löschen"
   deleteText: "Sie können das Gesuch löschen, falls dieses nicht mehr benötigt wird."
   deleteSuccess: "Das Gesuch wurde erfolgreich gelöscht."
+  deleteConfirmation: "Sind Sie sicher, dass dieses Gesuch gelöscht werden soll?"
+  deleteConfirm: "Bestätigen"
   complete: "Gesuch abschliessen"
   completeText: "Das Gesuch kann abgeschlossen werden."
   completeSuccess: "Das Gesuch wurde abgeschlossen."
