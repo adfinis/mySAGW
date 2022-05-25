@@ -69,7 +69,7 @@
     "ember-intl": "^5.7.2",
     "ember-load-initializers": "^2.1.2",
     "ember-localized-model": "^1.2.1",
-    "ember-math-helpers": "^2.17.3",
+    "ember-math-helpers": "^2.18.2",
     "ember-maybe-import-regenerator": "^1.0.0",
     "ember-moment": "^8.0.2",
     "ember-parachute": "^1.0.2",
