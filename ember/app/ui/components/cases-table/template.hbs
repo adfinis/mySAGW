@@ -1,6 +1,6 @@
 <DynamicTable
-  @loading={{@query.isLoading}}
-  @data={{@query.value}}
+  @loading={{or @query.isLoading @loading}}
+  @data={{this.data}}
   @config={{this.dynamicTableConfig}}
   @loadMoreData={{this.fetchMoreCases}}
   @hasNextPage={{@query.hasNextPage}}

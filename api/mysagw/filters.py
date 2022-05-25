@@ -1,7 +1,7 @@
 from django.db.models import Q
 from django.db.models.constants import LOOKUP_SEP
 from django_filters.constants import EMPTY_VALUES
-from django_filters.rest_framework import BaseInFilter, CharFilter
+from django_filters.rest_framework import BaseInFilter, CharFilter, UUIDFilter
 
 
 class BaseMultiValueFilter(BaseInFilter):
@@ -38,4 +38,8 @@ class BaseMultiValueFilter(BaseInFilter):
 
 
 class CharMultiValueFilter(BaseMultiValueFilter, CharFilter):
+    pass
+
+
+class UUIDMultiValueFilter(BaseMultiValueFilter, UUIDFilter):
     pass

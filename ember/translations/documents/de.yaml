@@ -86,3 +86,6 @@ documents:
       name: "Name"
       email: "E-Mail"
       action: ""
+
+  filters:
+    identity: "Identität"
