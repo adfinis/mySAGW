@@ -22,6 +22,7 @@ export default class IdentityFormComponent extends Component {
   @service router;
 
   @tracked changeset;
+  @tracked backToIdentities;
 
   get salutations() {
     return [
@@ -92,6 +93,7 @@ export default class IdentityFormComponent extends Component {
   @action
   setBackToIdentities() {
     this.backToIdentities = true;
+    this.submit.perform(this.changeset);
   }
 
   @dropTask
@@ -112,6 +114,7 @@ export default class IdentityFormComponent extends Component {
           name: changeset.data.fullName,
         })
       );
+
       this.args.onSave?.(changeset.data);
 
       if (this.backToIdentities) {
