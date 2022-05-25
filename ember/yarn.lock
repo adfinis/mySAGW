@@ -7576,7 +7576,7 @@ ember-cli-get-component-path-option@^1.0.0:
   resolved "https://registry.yarnpkg.com/ember-cli-get-component-path-option/-/ember-cli-get-component-path-option-1.0.0.tgz#0d7b595559e2f9050abed804f1d8eff1b08bc771"
   integrity sha1-DXtZVVni+QUKvtgE8djv8bCLx3E=
 
-ember-cli-htmlbars@^4.2.2, ember-cli-htmlbars@^4.3.1:
+ember-cli-htmlbars@^4.3.1:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/ember-cli-htmlbars/-/ember-cli-htmlbars-4.5.0.tgz#d299e4f7eba6f30dc723ee086906cc550beb252e"
   integrity sha512-bYJpK1pqFu9AadDAGTw05g2LMNzY8xTCIqQm7dMJmKEoUpLRFbPf4SfHXrktzDh7Q5iggl6Skzf1M0bPlIxARw==
@@ -7696,7 +7696,7 @@ ember-cli-mirage@^3.0.0-alpha.2:
     lodash-es "^4.17.11"
     miragejs "^0.1.43"
 
-ember-cli-moment-shim@^3.7.1, ember-cli-moment-shim@^3.8.0:
+ember-cli-moment-shim@^3.8.0:
   version "3.8.0"
   resolved "https://registry.yarnpkg.com/ember-cli-moment-shim/-/ember-cli-moment-shim-3.8.0.tgz#dc61bbac9dce4963394e60dd42726d4ba38e2bc1"
   integrity sha512-dN5ImjrjZevEqB7xhwFXaPWwxdKGSFiR1kqy9gDVB+A5EGnhCL1uveKugcyJE/MICVhXUAHBUu6G2LFWEPF2YA==
@@ -8455,18 +8455,7 @@ ember-modifier-manager-polyfill@^1.2.0:
     ember-cli-version-checker "^2.1.2"
     ember-compatibility-helpers "^1.2.0"
 
-"ember-modifier@^2.1.2 || ^3.0.0", ember-modifier@^3.0.0, ember-modifier@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/ember-modifier/-/ember-modifier-3.1.0.tgz#ba5b0941302accd787ed3dcfc8d20400b77ffc41"
-  integrity sha512-G5Lj9jVFsD2sVJcRNQfaGKG1p81wT4LGfClBhCuB4TgwP1NGJKdqI+Q8BW2MptONxQt/71UjjUH0YK7Gm9eahg==
-  dependencies:
-    ember-cli-babel "^7.26.6"
-    ember-cli-normalize-entity-name "^1.0.0"
-    ember-cli-string-utils "^1.1.0"
-    ember-cli-typescript "^4.2.1"
-    ember-compatibility-helpers "^1.2.5"
-
-ember-modifier@^3.2.7:
+"ember-modifier@^2.1.2 || ^3.0.0", ember-modifier@^3.0.0, ember-modifier@^3.1.0, ember-modifier@^3.2.7:
   version "3.2.7"
   resolved "https://registry.yarnpkg.com/ember-modifier/-/ember-modifier-3.2.7.tgz#f2d35b7c867cbfc549e1acd8d8903c5ecd02ea4b"
   integrity sha512-ezcPQhH8jUfcJQbbHji4/ZG/h0yyj1jRDknfYue/ypQS8fM8LrGcCMo0rjDZLzL1Vd11InjNs3BD7BdxFlzGoA==
@@ -8492,16 +8481,6 @@ ember-parachute@^1.0.2:
   integrity sha512-wpTn179au/BE2+p4z9mQRh2Cy/a5J038oPpY2Buja3gDO/Qh64ny3klr4dxMRQ5GePniglkWK/LW3qitcs902A==
   dependencies:
     ember-cli-babel "^7.1.2"
-
-ember-pikaday@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/ember-pikaday/-/ember-pikaday-3.0.0.tgz#c80c215174cc103fd9324188e00e21f4fc00c9e0"
-  integrity sha512-qn8qOadxA/afFraiEKjrRnkzNDWcbs+vBzcEhBs+Jr8KHd7Bjv4BFzgEe9r1euDXZsurYUN2z1gbyQ++rB4rCQ==
-  dependencies:
-    ember-cli-babel "^7.17.2"
-    ember-cli-htmlbars "^4.2.2"
-    ember-cli-moment-shim "^3.7.1"
-    pikaday "^1.8.0"
 
 ember-pikaday@^4.0.0:
   version "4.0.0"
@@ -14977,11 +14956,6 @@ pify@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/pify/-/pify-4.0.1.tgz#4b2cd25c50d598735c50292224fd8c6df41e3231"
   integrity sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==
-
-pikaday@^1.8.0:
-  version "1.8.2"
-  resolved "https://registry.yarnpkg.com/pikaday/-/pikaday-1.8.2.tgz#72cc73fab7ccc068cbdf7dcaa1ce400fcfd894e3"
-  integrity sha512-TNtsE+34BIax3WtkB/qqu5uepV1McKYEgvL3kWzU7aqPCpMEN6rBF3AOwu4WCwAealWlBGobXny/9kJb49C1ew==
 
 pinkie-promise@^2.0.0:
   version "2.0.1"
