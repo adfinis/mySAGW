@@ -40,3 +40,35 @@ class CustomDynamicTasks(BaseDynamicTasks):
             return ["complete-document"]
 
         return []
+
+    @register_dynamic_task("redo-define-amount")
+    def redo_from_define_amount(self, case, user, prev_work_item, context):
+        credit_decision = (
+            case.work_items.filter(task_id="decision-and-credit")
+            .order_by("-created_at")
+            .first()
+            .document.answers.get(
+                question_id="decision-and-credit-decision",
+            )
+        )
+
+        if "define-amount" in credit_decision.value:
+            return ["decision-and-credit"]
+
+        return []
+
+    @register_dynamic_task("redo-complete-document")
+    def redo_from_complete_document(self, case, user, prev_work_item, context):
+        credit_decision = (
+            case.work_items.filter(task_id="decision-and-credit")
+            .order_by("-created_at")
+            .first()
+            .document.answers.get(
+                question_id="decision-and-credit-decision",
+            )
+        )
+
+        if "additional-data" in credit_decision.value:
+            return ["define-amount", "additional-data-form", "advance-credits"]
+
+        return ["define-amount"]

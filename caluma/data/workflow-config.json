@@ -14,12 +14,12 @@
         "type": "simple",
         "meta": {},
         "address_groups": "['applicant']",
-        "continue_async": false,
         "control_groups": null,
         "is_archived": false,
         "form": null,
         "lead_time": null,
-        "is_multiple_instance": false
+        "is_multiple_instance": false,
+        "continue_async": false
     }
 },
 {
@@ -37,12 +37,12 @@
         "type": "complete_task_form",
         "meta": {},
         "address_groups": "['applicant']",
-        "continue_async": false,
         "control_groups": null,
         "is_archived": false,
         "form": null,
         "lead_time": null,
-        "is_multiple_instance": false
+        "is_multiple_instance": false,
+        "continue_async": false
     }
 },
 {
@@ -60,12 +60,12 @@
         "type": "complete_task_form",
         "meta": {},
         "address_groups": null,
-        "continue_async": false,
         "control_groups": null,
         "is_archived": false,
         "form": "advance-credits-form",
         "lead_time": null,
-        "is_multiple_instance": false
+        "is_multiple_instance": false,
+        "continue_async": false
     }
 },
 {
@@ -83,12 +83,12 @@
         "type": "simple",
         "meta": {},
         "address_groups": "['sagw']",
-        "continue_async": false,
         "control_groups": null,
         "is_archived": false,
         "form": null,
         "lead_time": null,
-        "is_multiple_instance": false
+        "is_multiple_instance": false,
+        "continue_async": false
     }
 },
 {
@@ -106,12 +106,12 @@
         "type": "complete_task_form",
         "meta": {},
         "address_groups": null,
-        "continue_async": false,
         "control_groups": null,
         "is_archived": false,
         "form": "circulation-form",
         "lead_time": null,
-        "is_multiple_instance": true
+        "is_multiple_instance": true,
+        "continue_async": false
     }
 },
 {
@@ -129,12 +129,12 @@
         "type": "simple",
         "meta": {},
         "address_groups": "['sagw']",
-        "continue_async": false,
         "control_groups": null,
         "is_archived": false,
         "form": null,
         "lead_time": null,
-        "is_multiple_instance": false
+        "is_multiple_instance": false,
+        "continue_async": false
     }
 },
 {
@@ -152,12 +152,12 @@
         "type": "complete_task_form",
         "meta": {},
         "address_groups": "['sagw']",
-        "continue_async": false,
         "control_groups": null,
         "is_archived": false,
         "form": "decision-and-credit-form",
         "lead_time": null,
-        "is_multiple_instance": false
+        "is_multiple_instance": false,
+        "continue_async": false
     }
 },
 {
@@ -175,12 +175,12 @@
         "type": "complete_task_form",
         "meta": {},
         "address_groups": "['sagw']",
-        "continue_async": false,
         "control_groups": null,
         "is_archived": false,
         "form": "define-amount-form",
         "lead_time": null,
-        "is_multiple_instance": false
+        "is_multiple_instance": false,
+        "continue_async": false
     }
 },
 {
@@ -196,14 +196,16 @@
         "name": "{\"de\": \"Zirkulation abschliessen\", \"en\": \"Finish circulation\", \"fr\": \"Terminer la circulation\"}",
         "description": "{\"de\": null, \"en\": null, \"fr\": null}",
         "type": "simple",
-        "meta": {"hidden": true},
+        "meta": {
+            "hidden": true
+        },
         "address_groups": null,
-        "continue_async": false,
         "control_groups": null,
         "is_archived": false,
         "form": null,
         "lead_time": null,
-        "is_multiple_instance": false
+        "is_multiple_instance": false,
+        "continue_async": false
     }
 },
 {
@@ -219,14 +221,16 @@
         "name": "{\"de\": \"Zur Zirkulation einladen\", \"en\": \"Invite to circulation\", \"fr\": \"Inviter \\u00e0 la circulation\"}",
         "description": "{\"de\": null, \"en\": null, \"fr\": null}",
         "type": "simple",
-        "meta": {"hidden": true},
+        "meta": {
+            "hidden": true
+        },
         "address_groups": null,
-        "continue_async": false,
         "control_groups": null,
         "is_archived": false,
         "form": null,
         "lead_time": null,
-        "is_multiple_instance": false
+        "is_multiple_instance": false,
+        "continue_async": false
     }
 },
 {
@@ -244,12 +248,12 @@
         "type": "complete_task_form",
         "meta": {},
         "address_groups": "['sagw']",
-        "continue_async": false,
         "control_groups": null,
         "is_archived": false,
         "form": "review-document-form",
         "lead_time": null,
-        "is_multiple_instance": false
+        "is_multiple_instance": false,
+        "continue_async": false
     }
 },
 {
@@ -267,12 +271,12 @@
         "type": "simple",
         "meta": {},
         "address_groups": "['applicant']",
-        "continue_async": false,
         "control_groups": null,
         "is_archived": false,
         "form": null,
         "lead_time": null,
-        "is_multiple_instance": false
+        "is_multiple_instance": false,
+        "continue_async": false
     }
 },
 {
@@ -290,12 +294,12 @@
         "type": "complete_workflow_form",
         "meta": {},
         "address_groups": "['applicant']",
-        "continue_async": false,
         "control_groups": null,
         "is_archived": false,
         "form": null,
         "lead_time": null,
-        "is_multiple_instance": false
+        "is_multiple_instance": false,
+        "continue_async": false
     }
 },
 {
@@ -460,9 +464,9 @@
         "modified_by_user": null,
         "modified_by_group": null,
         "workflow": "document-review",
-        "redoable": null,
         "task": "additional-data",
-        "flow": "576262fc-1f01-4f82-a64c-9bcaefa71938"
+        "flow": "576262fc-1f01-4f82-a64c-9bcaefa71938",
+        "redoable": "'decision-and-credit'|task"
     }
 },
 {
@@ -476,9 +480,9 @@
         "modified_by_user": null,
         "modified_by_group": null,
         "workflow": "document-review",
-        "redoable": null,
         "task": "review-document",
-        "flow": "1ee5288e-73b6-4946-9b2a-13dd5d55163f"
+        "flow": "1ee5288e-73b6-4946-9b2a-13dd5d55163f",
+        "redoable": null
     }
 },
 {
@@ -492,9 +496,9 @@
         "modified_by_user": null,
         "modified_by_group": null,
         "workflow": "document-review",
-        "redoable": null,
         "task": "decision-and-credit",
-        "flow": "4f66a0b3-b5e6-445e-8ae3-9ac1c2ced929"
+        "flow": "4f66a0b3-b5e6-445e-8ae3-9ac1c2ced929",
+        "redoable": "'circulation'|task"
     }
 },
 {
@@ -508,9 +512,9 @@
         "modified_by_user": null,
         "modified_by_group": null,
         "workflow": "document-review",
-        "redoable": null,
         "task": "revise-document",
-        "flow": "af4400ac-4a04-412a-9689-baee1fb608a8"
+        "flow": "af4400ac-4a04-412a-9689-baee1fb608a8",
+        "redoable": null
     }
 },
 {
@@ -524,9 +528,9 @@
         "modified_by_user": null,
         "modified_by_group": null,
         "workflow": "document-review",
-        "redoable": null,
         "task": "define-amount",
-        "flow": "e65b9815-21b5-4667-836e-b7bea8b66302"
+        "flow": "e65b9815-21b5-4667-836e-b7bea8b66302",
+        "redoable": "'redo-define-amount'|task"
     }
 },
 {
@@ -540,9 +544,9 @@
         "modified_by_user": null,
         "modified_by_group": null,
         "workflow": "document-review",
-        "redoable": null,
         "task": "circulation",
-        "flow": "e9540a87-6999-4c88-ad3c-7ec190f0b0de"
+        "flow": "e9540a87-6999-4c88-ad3c-7ec190f0b0de",
+        "redoable": "'review-document'|task"
     }
 },
 {
@@ -556,9 +560,9 @@
         "modified_by_user": null,
         "modified_by_group": null,
         "workflow": "document-review",
-        "redoable": null,
         "task": "submit-document",
-        "flow": "5b55683e-a1f5-4f77-9498-cc7748967eb3"
+        "flow": "5b55683e-a1f5-4f77-9498-cc7748967eb3",
+        "redoable": null
     }
 },
 {
@@ -572,9 +576,25 @@
         "modified_by_user": null,
         "modified_by_group": null,
         "workflow": "circulation",
-        "redoable": null,
         "task": "invite-to-circulation",
-        "flow": "36b7ae99-e189-41be-ba5e-ddfc67d14b5c"
+        "flow": "36b7ae99-e189-41be-ba5e-ddfc67d14b5c",
+        "redoable": null
+    }
+},
+{
+    "model": "caluma_workflow.taskflow",
+    "pk": "fd552f63-054b-4ea7-8b42-a291431e218a",
+    "fields": {
+        "created_at": "2021-01-11T13:47:44.537Z",
+        "modified_at": "2021-01-11T13:47:44.537Z",
+        "created_by_user": null,
+        "created_by_group": null,
+        "modified_by_user": null,
+        "modified_by_group": null,
+        "workflow": "document-review",
+        "task": "complete-document",
+        "flow": null,
+        "redoable": "['redo-complete-document']|tasks"
     }
 }
 ]

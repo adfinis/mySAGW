@@ -191,12 +191,10 @@ def finish_additional_data(sender, work_item, user, **kwargs):
         task_id="additional-data-form",
         case=work_item.case,
         status=caluma_workflow_models.WorkItem.STATUS_READY,
-    )
+    ).first()
 
-    if form_work_item.exists():
-        caluma_workflow_api.suspend_work_item(
-            work_item=form_work_item.first(), user=user
-        )
+    if form_work_item:
+        caluma_workflow_api.suspend_work_item(work_item=form_work_item, user=user)
 
 
 @on(post_complete_work_item, raise_exception=True)
@@ -210,12 +208,14 @@ def finish_additional_data_form(sender, work_item, user, **kwargs):
         task_id="advance-credits",
         case=work_item.case,
         status=caluma_workflow_models.WorkItem.STATUS_READY,
-    )
+    ).first()
 
     caluma_workflow_api.complete_work_item(
-        work_item=work_item.first(),
+        work_item=work_item,
         user=user,
     )
+
+    assert work_item.case.status == caluma_workflow_models.Case.STATUS_RUNNING
 
 
 @on(post_complete_work_item, raise_exception=True)
@@ -242,6 +242,7 @@ def finish_define_amount(sender, work_item, user, **kwargs):
     form_work_item = caluma_workflow_models.WorkItem.objects.filter(
         task_id="additional-data-form",
         case=work_item.case,
+        status=caluma_workflow_models.WorkItem.STATUS_SUSPENDED,
     ).first()
 
     if form_work_item:

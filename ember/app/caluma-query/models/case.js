@@ -7,6 +7,14 @@ import ENV from "mysagw/config/environment";
 export default class CustomCaseModel extends CaseModel {
   @service store;
 
+  get isRunning() {
+    return this.raw.status === "RUNNING";
+  }
+
+  get isCompleted() {
+    return this.raw.status === "COMPLETED";
+  }
+
   get accesses() {
     return this.store.peekAll("case-access").filter((access) => {
       return (
@@ -35,6 +43,28 @@ export default class CustomCaseModel extends CaseModel {
     );
   }
 
+  get sortedWorkItems() {
+    return this.workItems.sort(
+      (a, b) => new Date(b.closedAt) - new Date(a.closedAt)
+    );
+  }
+
+  get redoWorkItem() {
+    return this.sortedWorkItems.find(
+      (workItem) =>
+        (workItem.status === "COMPLETED" || workItem.status === "SKIPPED") &&
+        ENV.APP.caluma.redoableTaskSlugs.includes(workItem.task.slug)
+    );
+  }
+
+  get canRedoWorkItem() {
+    return this.workItems.find(
+      (workItem) =>
+        workItem.status === "READY" &&
+        ENV.APP.caluma.canRedoTaskSlug.includes(workItem.task.slug)
+    );
+  }
+
   get completeWorkItem() {
     return this.workItems.findBy("task.slug", ENV.APP.caluma.completeTaskSlug);
   }
@@ -54,12 +84,13 @@ export default class CustomCaseModel extends CaseModel {
     closedAt
     status
     meta
-    workItems {
+    workItems(filter: [{status: REDO, invert: true}], order: [{attribute: CLOSED_AT, direction: DESC}]) {
       edges {
         node {
           id
           status
           createdAt
+          closedAt
           task {
             slug
           }

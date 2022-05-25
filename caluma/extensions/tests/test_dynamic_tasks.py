@@ -1,8 +1,13 @@
 import pytest
+from django.core.exceptions import ValidationError
 
 from caluma.caluma_form.models import Question
-from caluma.caluma_workflow.api import complete_work_item, skip_work_item
-from caluma.caluma_workflow.models import Case
+from caluma.caluma_workflow.api import (
+    complete_work_item,
+    redo_work_item,
+    skip_work_item,
+)
+from caluma.caluma_workflow.models import Case, WorkItem
 
 
 @pytest.mark.parametrize(
@@ -148,3 +153,112 @@ def test_dynamic_task_after_define_amount(
             )
     else:
         assert case.status == Case.STATUS_COMPLETED
+
+
+@pytest.mark.parametrize(
+    "decision,expected_work_item_task",
+    [
+        (
+            "define-amount",
+            "decision-and-credit",
+        ),
+        (
+            "additional-data",
+            None,
+        ),
+    ],
+)
+def test_dynamic_task_redo_define_amount(
+    db,
+    caluma_data,
+    user,
+    case_access_event_mock,
+    circulation,
+    answer_factory,
+    form_factory,
+    decision,
+    expected_work_item_task,
+):
+    Question.objects.filter(formquestion__form__pk="additional-data-form").update(
+        is_required="false"
+    )
+
+    case = circulation.parent_work_item.case
+
+    skip_work_item(case.work_items.get(task_id="circulation"), user)
+
+    case.work_items.get(task_id="decision-and-credit").document.answers.create(
+        question_id="decision-and-credit-decision",
+        value=f"decision-and-credit-decision-{decision}",
+    )
+
+    complete_work_item(case.work_items.get(task_id="decision-and-credit"), user)
+
+    if decision != "define-amount":
+        complete_work_item(case.work_items.get(task_id="additional-data"), user)
+
+    if expected_work_item_task:
+        redo_work_item(case.work_items.get(task_id="decision-and-credit"), user)
+
+        assert case.status == Case.STATUS_RUNNING
+        assert case.work_items.filter(
+            task_id=expected_work_item_task, status=WorkItem.STATUS_READY
+        ).exists()
+    else:
+        with pytest.raises(ValidationError):
+            redo_work_item(case.work_items.get(task_id="decision-and-credit"), user)
+
+
+@pytest.mark.parametrize(
+    "decision,expected_work_item_task",
+    [
+        (
+            "define-amount",
+            "define-amount",
+        ),
+        (
+            "additional-data",
+            "define-amount",
+        ),
+    ],
+)
+def test_dynamic_task_redo_complete_document(
+    db,
+    caluma_data,
+    user,
+    case_access_event_mock,
+    circulation,
+    answer_factory,
+    form_factory,
+    decision,
+    expected_work_item_task,
+):
+    Question.objects.filter(formquestion__form__pk="additional-data-form").update(
+        is_required="false"
+    )
+
+    case = circulation.parent_work_item.case
+
+    skip_work_item(case.work_items.get(task_id="circulation"), user)
+
+    case.work_items.get(task_id="decision-and-credit").document.answers.create(
+        question_id="decision-and-credit-decision",
+        value=f"decision-and-credit-decision-{decision}",
+    )
+
+    complete_work_item(case.work_items.get(task_id="decision-and-credit"), user)
+    if decision != "define-amount":
+        complete_work_item(case.work_items.get(task_id="additional-data"), user)
+
+    case.work_items.get(task_id="define-amount").document.answers.create(
+        question_id="define-amount-decision", value="define-amount-decision-continue"
+    )
+
+    complete_work_item(case.work_items.get(task_id="define-amount"), user)
+
+    redo_work_item(case.work_items.get(task_id="define-amount"), user)
+
+    assert case.status == Case.STATUS_RUNNING
+    assert case.work_items.filter(
+        task_id=expected_work_item_task, status=WorkItem.STATUS_READY
+    ).exists()
