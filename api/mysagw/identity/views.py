@@ -14,7 +14,7 @@ from ..dms_client import DMSClient
 from ..oidc_auth.permissions import IsAdmin, IsAuthenticated, IsStaff
 from ..permissions import ReadOnly
 from . import filters, models, serializers
-from .export import IdentityExport
+from .export import IdentityExport, MembershipExport
 from .permissions import IsAuthorized, IsOwn
 
 
@@ -130,6 +130,21 @@ class IdentityViewSet(views.ModelViewSet):
         )
 
         ex = IdentityExport()
+        records = ex.export(queryset)
+        response = django_excel.make_response_from_records(records, "xlsx")
+        return response
+
+    @action(detail=False, methods=["post"], url_path="export-memberships")
+    def export_memberships(self, request, *args, **kwargs):
+        identity_queryset = self.filter_queryset(self.get_queryset())
+
+        queryset = (
+            models.Membership.objects.filter(organisation__in=identity_queryset)
+            .select_related("identity", "role")
+            .prefetch_related("identity__additional_emails", "identity__addresses")
+        )
+
+        ex = MembershipExport()
         records = ex.export(queryset)
         response = django_excel.make_response_from_records(records, "xlsx")
         return response

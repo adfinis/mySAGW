@@ -5,6 +5,7 @@ identities:
     export:
       button: "Exporter"
       standard: "Standard"
+      "memberships": "Membres de l'organisation"
       email-only: "Adresse électronique uniquement"
       address-labels: "Etiquettes d'adresses"
       filename: "Identités-{date}"
