@@ -23,6 +23,11 @@
                 </a>
               </li>
               <li>
+                <a href="#" {{on "click" (perform this.exportSearch "export-memberships" "xlsx")}}>
+                  {{t "identities.index.export.memberships"}}
+                </a>
+              </li>
+              <li>
                 <a href="#" {{on "click" (perform this.exportSearch "export-email" "xlsx")}}>
                   {{t "identities.index.export.email-only"}}
                 </a>
