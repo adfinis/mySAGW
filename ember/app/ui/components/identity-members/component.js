@@ -38,15 +38,15 @@ export default class IdentityMembersComponent extends Component {
 
     this.totalPages = membershipResponse.meta.pagination?.pages;
 
-    membershipResponse.filterBy("role.title").forEach((membership, i, a) => {
+    membershipResponse.forEach((membership, i, a) => {
       const identity = membership.identity;
       const duplicateMembership = this.members.findBy(
         "identity.id",
         identity.get("id")
       );
 
-      let title = membership.role.get("title");
-      if (title && a.length !== i + 1) {
+      let title = membership.role?.get("title") ?? "";
+      if (title && a.filterBy("role.title").length !== i + 1) {
         title += ",";
       }
 
