@@ -111,6 +111,19 @@ class SAGWSearchFilter(SearchFilter):
         ]
 
         base = queryset
+        # we're only interested in active memberships
+        membership_base_query = models.Membership.objects.filter(
+            (
+                (
+                    models.Q(time_slot__isnull=True)
+                    | models.Q(time_slot__contains=timezone.now())
+                )
+                & models.Q(inactive=False)
+            )
+        )
+        membership_base_subquery = membership_base_query.filter(
+            identity_id=OuterRef("pk")
+        )
 
         for search_term in search_terms:
             method = queryset.filter
@@ -121,21 +134,23 @@ class SAGWSearchFilter(SearchFilter):
             queries = []
             for orm_lookup in orm_lookups:
                 lookup = models.Q(**{orm_lookup: search_term})
+
                 if orm_lookup.startswith("memberships__"):
-                    membership_subquery = models.Membership.objects.filter(
-                        models.Q(
-                            **{orm_lookup.replace("memberships__", ""): search_term}
-                        )
-                        & models.Q(identity_id=OuterRef("pk"))
-                        & (
-                            models.Q(time_slot__isnull=True)
-                            | models.Q(time_slot__contains=timezone.now())
-                        )
-                        & models.Q(inactive=False)
+                    membership_orm_lookup = orm_lookup.replace("memberships__", "")
+                    if not membership_base_query.filter(
+                        **{membership_orm_lookup: search_term}
+                    ).exists():
+                        # short circuiting in order to save ~75% of processing time
+                        continue
+
+                    membership_subquery = membership_base_subquery.filter(
+                        **{membership_orm_lookup: search_term}
                     )
+                    # first Q object short circuits again, for a performance gain
                     lookup = models.Q(**{orm_lookup: search_term}) & models.Q(
                         memberships__id=Subquery(membership_subquery.values("id")[:1])
                     )
+
                 queries.append(lookup)
 
             condition = reduce(operator.or_, queries)
