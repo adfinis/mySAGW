@@ -434,6 +434,44 @@ def test_identity_search(
     assert expected_ids == received_ids
 
 
+def test_identity_search_membership_handling(
+    db,
+    client,
+    identity_factory,
+    membership_role_factory,
+    membership_factory,
+):
+    identity = identity_factory(first_name="Winston", email="sagw@sagw.ch")
+
+    membership = membership_factory(
+        role=membership_role_factory(title={"de": "Präsident·in"}),
+        organisation__organisation_name="SAGW",
+        organisation__is_organisation=True,
+        identity=identity,
+    )
+
+    membership_factory(
+        role=membership_role_factory(title={"de": "Vizepräsident·in"}),
+        organisation=membership.organisation,
+        organisation__is_organisation=True,
+        inactive=True,
+        identity=identity,
+    )
+
+    url = reverse("identity-list")
+
+    response = client.get(url, {"filter[search]": "Präsident·in -Vizepräsident·in"})
+
+    assert response.status_code == status.HTTP_200_OK
+
+    json = response.json()
+
+    received_ids = sorted([s["id"] for s in json["data"]])
+    assert len(received_ids) == 1
+
+    assert received_ids == [str(identity.pk)]
+
+
 @pytest.mark.parametrize("is_organisation", [True, False, None])
 def test_identity_organisation_filters(db, client, identity_factory, is_organisation):
     identities = list(Identity.objects.all())  # created by the `client` fixture
@@ -554,6 +592,71 @@ def test_identity_export(
 
     assert len(sheet.array) == len(identities) + 2
     snapshot.assert_match(sheet.array)
+
+
+def test_membership_export(
+    db,
+    client,
+    identity_factory,
+    phone_number_factory,
+    email_factory,
+    membership_factory,
+    address_factory,
+    snapshot,
+):
+    identities = sorted(
+        identity_factory.create_batch(
+            9,
+        ),
+        key=lambda item: (
+            item.last_name,
+            item.first_name,
+            item.email,
+        ),  # use same ordering as the model
+    )
+    org1 = identity_factory(is_organisation=True, organisation_name="E Corp")
+    org2 = identity_factory(is_organisation=True, organisation_name="Allsafe")
+    org3 = identity_factory(is_organisation=True, organisation_name="Nonsafe")
+    memberships = []
+
+    for c, i in enumerate(identities):
+        phone_number_factory.create_batch(3, identity=i)
+        email_factory.create_batch(3, identity=i)
+        address_factory(identity=i)
+        org = org2
+        if c < 3:
+            org = org1
+        elif c > 5:
+            org = org3
+        memberships.append(membership_factory(identity=i, organisation=org))
+
+    memberships[4].role = None
+    memberships[4].time_slot = DateRange(
+        lower=datetime.date(2020, 1, 1), upper=datetime.date(2020, 1, 2)
+    )
+    memberships[4].next_election = datetime.date(2020, 11, 23)
+    memberships[4].save()
+    memberships[5].inactive = True
+    memberships[5].time_slot = DateRange(lower=datetime.date(2020, 1, 1))
+    memberships[5].save()
+
+    identities[1].salutation = Identity.SALUTATION_MR
+    identities[1].language = "fr"
+    identities[1].save()
+    identities[2].salutation = Identity.SALUTATION_MRS
+    identities[2].language = "en"
+    identities[2].save()
+
+    url = reverse("identity-export-memberships")
+
+    response = client.post(url, QUERY_STRING="filter[search]=safe")
+
+    assert response.status_code == status.HTTP_200_OK
+
+    sheet = pyexcel.get_sheet(file_type="xlsx", file_content=response.content)
+
+    assert len(sheet.array) == org2.members.count() + org3.members.count() + 1
+    snapshot.assert_match(sorted(sheet.array, reverse=True))
 
 
 def test_identity_export_email(
