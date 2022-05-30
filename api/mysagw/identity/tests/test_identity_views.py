@@ -434,6 +434,44 @@ def test_identity_search(
     assert expected_ids == received_ids
 
 
+def test_identity_search_membership_handling(
+    db,
+    client,
+    identity_factory,
+    membership_role_factory,
+    membership_factory,
+):
+    identity = identity_factory(first_name="Winston", email="sagw@sagw.ch")
+
+    membership = membership_factory(
+        role=membership_role_factory(title={"de": "Präsident·in"}),
+        organisation__organisation_name="SAGW",
+        organisation__is_organisation=True,
+        identity=identity,
+    )
+
+    membership_factory(
+        role=membership_role_factory(title={"de": "Vizepräsident·in"}),
+        organisation=membership.organisation,
+        organisation__is_organisation=True,
+        inactive=True,
+        identity=identity,
+    )
+
+    url = reverse("identity-list")
+
+    response = client.get(url, {"filter[search]": "Präsident·in -Vizepräsident·in"})
+
+    assert response.status_code == status.HTTP_200_OK
+
+    json = response.json()
+
+    received_ids = sorted([s["id"] for s in json["data"]])
+    assert len(received_ids) == 1
+
+    assert received_ids == [str(identity.pk)]
+
+
 @pytest.mark.parametrize("is_organisation", [True, False, None])
 def test_identity_organisation_filters(db, client, identity_factory, is_organisation):
     identities = list(Identity.objects.all())  # created by the `client` fixture

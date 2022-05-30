@@ -2,6 +2,7 @@ import operator
 import shlex
 from functools import reduce
 
+from django.db.models import OuterRef, Subquery
 from django.utils import timezone
 from django_filters import BooleanFilter, CharFilter
 from django_filters.rest_framework import FilterSet
@@ -120,13 +121,20 @@ class SAGWSearchFilter(SearchFilter):
             queries = []
             for orm_lookup in orm_lookups:
                 lookup = models.Q(**{orm_lookup: search_term})
-                if orm_lookup.startswith("memberships_"):
-                    lookup = models.Q(**{orm_lookup: search_term}) & (
-                        (
-                            models.Q(memberships__time_slot__isnull=True)
-                            | models.Q(memberships__time_slot__contains=timezone.now())
+                if orm_lookup.startswith("memberships__"):
+                    membership_subquery = models.Membership.objects.filter(
+                        models.Q(
+                            **{orm_lookup.replace("memberships__", ""): search_term}
                         )
-                        & models.Q(memberships__inactive=False)
+                        & models.Q(identity_id=OuterRef("pk"))
+                        & (
+                            models.Q(time_slot__isnull=True)
+                            | models.Q(time_slot__contains=timezone.now())
+                        )
+                        & models.Q(inactive=False)
+                    )
+                    lookup = models.Q(**{orm_lookup: search_term}) & models.Q(
+                        memberships__id=Subquery(membership_subquery.values("id")[:1])
                     )
                 queries.append(lookup)
 
