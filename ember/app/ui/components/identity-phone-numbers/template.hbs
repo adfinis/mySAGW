@@ -40,7 +40,7 @@
               ></a>
 
               <div class="uk-margin-left">
-                {{#if (can "edit phone-number" phoneNumber)}}
+                {{#if (can "edit phone-number" @identity)}}
                   <button
                     class="uk-icon-button uk-button-default"
                     type="button"
@@ -51,7 +51,7 @@
                   ></button>
                 {{/if}}
 
-                {{#if (can "delete phone-number" phoneNumber)}}
+                {{#if (can "delete phone-number" @identity)}}
                   <button
                     class="uk-icon-button uk-button-default"
                     type="button"
@@ -74,7 +74,7 @@
       <p>{{t "components.identity-phone-numbers.list.empty"}}</p>
     {{/if}}
 
-    {{#if (can "add phone-number")}}
+    {{#if (can "add phone-number" @identity)}}
       <p class="uk-text-right">
         <button
           class="uk-button uk-button-default"
