@@ -5,15 +5,15 @@ export default class AdditionalEmailAbility extends BaseAbility {
     return this.isStaff;
   }
 
-  canAdd(identity) {
-    return this.isStaffOrOwnIdentity(identity);
+  canAdd() {
+    return this.isStaffOrOwnIdentity(this.model);
   }
 
-  canEdit(identity) {
-    return this.isStaffOrOwnIdentity(identity);
+  canEdit() {
+    return this.isStaffOrOwnIdentity(this.model);
   }
 
-  canDelete(identity) {
-    return this.isStaffOrOwnIdentity(identity);
+  canDelete() {
+    return this.isStaffOrOwnIdentity(this.model);
   }
 }

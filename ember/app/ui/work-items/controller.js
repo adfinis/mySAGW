@@ -156,9 +156,13 @@ export default class WorkItemsIndexController extends Controller {
       .uniq();
 
     if (idpIds.length) {
-      return yield this.store.query("identity", {
-        filter: { idpIds: idpIds.join(",") },
-      });
+      return yield this.store.query(
+        "identity",
+        {
+          filter: { idpIds: idpIds.join(",") },
+        },
+        { adapterOptions: { customEndpoint: "public-identities" } }
+      );
     }
   }
 
