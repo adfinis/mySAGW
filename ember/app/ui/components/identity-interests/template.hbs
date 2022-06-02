@@ -18,7 +18,7 @@
               <li class="uk-flex uk-flex-between uk-flex-middle">
                 <div>{{interest.title}}</div>
 
-                {{#if (can "remove interest from identity" this.changeset.data)}}
+                {{#if (can "remove interest from identity" @identity)}}
                   <div>
                     <button
                       class="uk-icon-button uk-button-default"
@@ -39,7 +39,7 @@
       {{/each}}
     </ul>
 
-    {{#if (can "add interest to identity" this.changeset.data)}}
+    {{#if (can "add interest to identity" @identity)}}
       <p class="uk-text-right">
         <button
           class="uk-button uk-button-default"

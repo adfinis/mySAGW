@@ -36,7 +36,7 @@
               ></a>
 
               <div class="uk-margin-left">
-                {{#if (can "edit additional-email" email)}}
+                {{#if (can "edit additional-email" @identity)}}
                   <button
                     class="uk-icon-button uk-button-default"
                     type="button"
@@ -47,7 +47,7 @@
                   ></button>
                 {{/if}}
 
-                {{#if (can "delete additional-email" email)}}
+                {{#if (can "delete additional-email" @identity)}}
                   <button
                     class="uk-icon-button uk-button-default"
                     type="button"
@@ -66,7 +66,7 @@
       <p>{{t "components.identity-emails.list.empty"}}</p>
     {{/if}}
 
-    {{#if (can "add additional-email")}}
+    {{#if (can "add additional-email" @identity)}}
       <p class="uk-text-right">
         <button
           class="uk-button uk-button-default"
