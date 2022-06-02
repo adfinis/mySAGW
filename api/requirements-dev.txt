@@ -1,15 +1,15 @@
 -r requirements-base.txt
-black==21.9b0
+black==22.3.0
 django_extensions==3.1.5
 factory-boy==3.2.1
 flake8==4.0.1
-flake8-blind-except==0.2.0
+flake8-blind-except==0.2.1
 flake8-debugger==4.0.0
 flake8-docstrings==1.6.0
 flake8-isort==4.1.1
 flake8-string-format==0.3.0
 flake8-tuple==0.4.1
-gitlint==0.16.0
+gitlint==0.17.0
 isort==5.10.1
 pdbpp==0.10.3
 pre_commit==2.15.0
