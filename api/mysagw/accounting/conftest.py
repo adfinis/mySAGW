@@ -113,7 +113,7 @@ def receipt_mock(requests_mock):
                         {
                             "node": {
                                 "document": {
-                                    "total": {"edges": [{"node": {"value": 5000}}]}
+                                    "total": {"edges": [{"node": {"value": 5000.0}}]}
                                 }
                             }
                         },
