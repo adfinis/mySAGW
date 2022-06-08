@@ -66,25 +66,25 @@ module.exports = function (environment) {
       },
 
       casesTable: {
-        defaultOrder: "CREATED_AT_DESC",
+        defaultOrder: "CREATED_AT-DESC",
         orderOptions: [
           {
-            value: "CREATED_AT_DESC",
+            value: "CREATED_AT-DESC",
             label: "documents.createdAt",
             direction: "documents.desc",
           },
           {
-            value: "CREATED_AT_ASC",
+            value: "CREATED_AT-ASC",
             label: "documents.createdAt",
             direction: "documents.asc",
           },
           {
-            value: "MODIFIED_AT_DESC",
+            value: "MODIFIED_AT-DESC",
             label: "documents.modifiedAt",
             direction: "documents.desc",
           },
           {
-            value: "MODIFIED_AT_ASC",
+            value: "MODIFIED_AT-ASC",
             label: "documents.modifiedAt",
             direction: "documents.asc",
           },

@@ -24,6 +24,11 @@ export default class App extends Application {
           ],
         },
       },
+      "@projectcaluma/ember-analytics": {
+        dependencies: {
+          services: ["apollo", "notification", "intl", "router"],
+        },
+      },
     };
   }
 }

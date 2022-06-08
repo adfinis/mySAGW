@@ -2,10 +2,11 @@ $app-accent-color: #002596;
 
 $global-primary-background: $app-accent-color;
 
-@import "ember-power-select";
 @import "ember-uikit";
 @import "@projectcaluma/ember-form";
 @import "@projectcaluma/ember-form-builder";
+@import "@projectcaluma/ember-analytics";
+@import "ember-power-select";
 
 @import "components/nav-bar";
 @import "components/dynamic-table";

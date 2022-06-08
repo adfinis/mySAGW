@@ -172,7 +172,8 @@ export default class WorkItemsIndexController extends Controller {
       {
         query: getTasksQuery,
         variables: {
-          filter: [{ isArchived: false }, { orderBy: ["NAME_ASC"] }],
+          filter: [{ isArchived: false }],
+          order: [{ attribute: "NAME" }],
         },
       },
       "allTasks.edges"
