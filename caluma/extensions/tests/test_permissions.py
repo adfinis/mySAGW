@@ -3,6 +3,7 @@ from uuid import uuid4
 
 import pytest
 
+from caluma.caluma_analytics.schema import SaveAnalyticsTable
 from caluma.caluma_core.mutation import Mutation
 from caluma.caluma_form.schema import SaveDocumentAnswer
 from caluma.caluma_workflow.models import Task, Workflow
@@ -212,4 +213,27 @@ def test_permission_for_cancel_case(
     assert perm.has_permission(mutation, admin_info) is has_perm
     assert (
         perm.has_object_permission(mutation, admin_info, work_item.case) is has_obj_perm
+    )
+
+
+@pytest.mark.parametrize(
+    "groups,has_perm,has_obj_perm",
+    [
+        (["admin"], True, True),
+        (["sagw"], True, True),
+        (["foo"], False, False),
+    ],
+)
+def test_analytics_permissions(
+    db, admin_info, analytics_table, groups, has_perm, has_obj_perm
+):
+    admin_info.context.user.groups = groups
+
+    perm = MySAGWPermission()
+
+    mutation = SaveAnalyticsTable
+    assert perm.has_permission(mutation, admin_info) is has_perm
+    assert (
+        perm.has_object_permission(mutation, admin_info, analytics_table)
+        is has_obj_perm
     )

@@ -1,3 +1,9 @@
+from caluma.caluma_analytics.schema import (
+    RemoveAnalyticsField,
+    RemoveAnalyticsTable,
+    SaveAnalyticsField,
+    SaveAnalyticsTable,
+)
 from caluma.caluma_core.mutation import Mutation
 from caluma.caluma_core.permissions import (
     BasePermission,
@@ -110,3 +116,14 @@ class MySAGWPermission(BasePermission):
                 status="ready", task__slug="submit-document"
             ).exists()
         )
+
+    @permission_for(RemoveAnalyticsField)
+    @object_permission_for(RemoveAnalyticsField)
+    @permission_for(RemoveAnalyticsTable)
+    @object_permission_for(RemoveAnalyticsTable)
+    @permission_for(SaveAnalyticsField)
+    @object_permission_for(SaveAnalyticsField)
+    @permission_for(SaveAnalyticsTable)
+    @object_permission_for(SaveAnalyticsTable)
+    def has_permission_for_analytics(self, mutation, info, _=None):
+        return self._is_admin_or_sagw(info)
