@@ -59,6 +59,7 @@ class MembershipFilterSet(FilterSet):
             "identity",
             "organisation",
             "authorized",
+            "inactive",
         ]
 
 
