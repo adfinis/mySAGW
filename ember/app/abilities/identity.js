@@ -4,20 +4,24 @@ export default class IdentityAbility extends BaseAbility {
   get canList() {
     return this.isStaff;
   }
+
   get canAdd() {
     return this.isStaff;
   }
-  get canEditOrganisation() {
-    return this.isStaff;
-  }
-  canAddInterest(identity) {
-    return this.isStaffOrOwnIdentity(identity);
-  }
-  canRemoveInterest(identity) {
-    return this.isStaffOrOwnIdentity(identity);
+
+  canEdit() {
+    return this.isStaffOrOwnIdentity(this.model);
   }
 
-  canEdit(identity) {
-    return this.isStaffOrOwnIdentity(identity);
+  get canEditOrganisation() {
+    return this.isStaff || this.model;
+  }
+
+  canAddInterest() {
+    return this.isStaffOrOwnIdentity(this.model);
+  }
+
+  canRemoveInterest() {
+    return this.isStaffOrOwnIdentity(this.model);
   }
 }

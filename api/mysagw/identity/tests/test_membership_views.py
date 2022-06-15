@@ -32,8 +32,8 @@ def test_membership_role_detail(db, membership_role, client, expected_status):
 @pytest.mark.parametrize(
     "client,own,expected_status",
     [
-        ("user", False, status.HTTP_404_NOT_FOUND),
-        ("user", True, status.HTTP_200_OK),
+        ("user", False, status.HTTP_403_FORBIDDEN),
+        ("user", True, status.HTTP_403_FORBIDDEN),
         ("staff", False, status.HTTP_200_OK),
         ("admin", False, status.HTTP_200_OK),
     ],
@@ -103,15 +103,17 @@ def test_membership_role_list_ordering(db, client, lang, membership_role_factory
 
 
 @pytest.mark.parametrize(
-    "client,expected_count",
+    "client,expected_count,expected_status",
     [
-        ("user", 1),
-        ("staff", 3),
-        ("admin", 3),
+        ("user", 0, status.HTTP_403_FORBIDDEN),
+        ("staff", 3, status.HTTP_200_OK),
+        ("admin", 3, status.HTTP_200_OK),
     ],
     indirect=["client"],
 )
-def test_membership_list(db, client, expected_count, membership_factory):
+def test_membership_list(
+    db, client, expected_count, expected_status, membership_factory
+):
     membership_factory.create_batch(2)
     membership_factory(identity=client.user.identity)
 
@@ -119,10 +121,11 @@ def test_membership_list(db, client, expected_count, membership_factory):
 
     response = client.get(url)
 
-    assert response.status_code == status.HTTP_200_OK
+    assert response.status_code == expected_status
 
-    json = response.json()
-    assert len(json["data"]) == expected_count
+    if expected_status == status.HTTP_200_OK:
+        json = response.json()
+        assert len(json["data"]) == expected_count
 
 
 @pytest.mark.parametrize(

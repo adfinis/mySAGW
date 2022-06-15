@@ -117,10 +117,10 @@ query Receipts($case_id: ID!) {
         edges {
           node {
             document {
-              total: answers(filter: [{question: "define-amount-amount"}]) {
+              total: answers(filter: [{question: "define-amount-amount-float"}]) {
                 edges {
                   node {
-                    ... on IntegerAnswer {
+                    ... on FloatAnswer {
                       value
                     }
                   }

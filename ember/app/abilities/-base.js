@@ -29,11 +29,17 @@ export default class BaseAbility extends Ability {
       return false;
     }
 
-    return identity.idpId === this.session.data.authenticated.userinfo.sub;
+    return (
+      identity.get("idpId") === this.session.data.authenticated.userinfo.sub
+    );
   }
 
   isStaffOrOwnIdentity(identity) {
-    return this.isStaff || this.isOwnIdentity(identity);
+    if (identity) {
+      return this.isStaff || this.isOwnIdentity(identity);
+    }
+
+    return false;
   }
 
   hasAccess(document) {
