@@ -66,7 +66,7 @@
       <p>{{t "components.identity-addresses.list.empty"}}</p>
     {{/if}}
 
-    {{#if (can "add address" @identity)}}
+    {{#if (and (can "add address" @identity) (not @readOnlyView))}}
       <p class="uk-text-right">
         <button
           class="uk-button uk-button-default"

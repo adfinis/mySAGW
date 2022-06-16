@@ -5,5 +5,5 @@ profile:
     identity: "Identity"
     memberships: "Memberships"
   organisation:
-    edit: "Edit organisaton"
+    edit: "Organisaton"
     empty: "No organisations yet."
