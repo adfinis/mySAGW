@@ -318,7 +318,6 @@ class MyMembershipViewSet(
 ):
     serializer_class = serializers.MyMembershipsSerializer
     permission_classes = (IsAuthenticated & (IsOwn & ReadOnly),)
-    filterset_class = filters.MembershipFilterSet
 
     def get_queryset(self):
         return self.request.user.identity.memberships.all()
