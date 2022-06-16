@@ -1,0 +1,9 @@
+query getCase($filter: [CaseFilterSetType]) {
+  allCases(filter: $filter) {
+    edges{
+      node {
+        id
+      }
+    }
+  }
+}
