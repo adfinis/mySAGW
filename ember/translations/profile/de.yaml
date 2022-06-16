@@ -5,5 +5,5 @@ profile:
     identity: "Adresse"
     memberships: "Mitgliedschaften"
   organisation:
-    edit: "Organisation bearbeiten"
+    edit: "Organisation"
     empty: "Bisher wurden keine Organisationen erfasst."

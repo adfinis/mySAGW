@@ -1,9 +1,10 @@
 <h1>{{t "profile.organisation.edit"}}</h1>
 
 <IdentityForm
-  @identity={{this.model}}
-  @customEndpoint="my-orgs/{{this.model.id}}"
+  @identity={{@model}}
+  @customEndpoint="my-orgs/{{@model.id}}"
   @cancelRouteOverride="profile"
+  @readOnlyView={{true}}
 />
 
 <hr>
@@ -11,29 +12,29 @@
 <div uk-grid class="uk-margin-bottom">
   <div class="uk-width-1-2@m uk-width-1-3@l">
     <div class="uk-card uk-card-default uk-card-body uk-card-small">
-      <IdentityAddresses @identity={{this.model}} />
+      <IdentityAddresses @identity={{@model}} @readOnlyView={{true}} />
     </div>
   </div>
 
   <div class="uk-width-1-2@m uk-width-1-3@l">
     <div class="uk-card uk-card-default uk-card-body uk-card-small">
-      <IdentityEmails @identity={{this.model}} />
+      <IdentityEmails @identity={{@model}} @readOnlyView={{true}} />
     </div>
   </div>
 
   <div class="uk-width-1-2@m uk-width-1-3@l">
     <div class="uk-card uk-card-default uk-card-body uk-card-small">
-      <IdentityPhoneNumbers @identity={{this.model}} />
+      <IdentityPhoneNumbers @identity={{@model}} @readOnlyView={{true}} />
     </div>
   </div>
 
   <div class="uk-width-1-2@m">
     <div class="uk-card uk-card-default uk-card-body uk-card-small">
-      <IdentityInterests @identity={{this.model}} @endpoint={{concat '/my-orgs/' this.model.id}} @profileView={{true}} />
+      <IdentityInterests @identity={{@model}} @endpoint={{concat '/my-orgs/' @model.id}} @profileView={{true}} @readOnlyView={{true}} />
     </div>
   </div>
 
-  {{#if this.model.isAuthorized}}
+  {{#if @model.isAuthorized}}
     <div class="uk-width-1-2@m">
       <div class="uk-card uk-card-default uk-card-body uk-card-small">
         <IdentityMembers @identity={{@model}} @hideIdentityLink={{true}}/>
