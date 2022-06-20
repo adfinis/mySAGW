@@ -62,6 +62,14 @@ jobs:
       - name: Run tests
         run: yarn test:ember
         working-directory: ${{env.ember-dir}}
+  ember-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set UID
+        run: echo "UID=$(id --user)" > .env
+      - name: Build and start the container
+        run: docker-compose up -d --build ember
   commit-lint:
     runs-on: ubuntu-latest
     steps:
