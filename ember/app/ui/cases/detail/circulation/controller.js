@@ -155,7 +155,9 @@ export default class CasesDetailCirculationController extends Controller {
           tasks: ["circulation", "invite-to-circulation", "finish-circulation"],
         },
         { caseFamily: this.model.id },
+        { status: "REDO", invert: true },
       ],
+      order: [{ attribute: "CREATED_AT", direction: "DESC" }],
     });
   }
 

@@ -24,6 +24,10 @@ export default class BaseAbility extends Ability {
     return this.userGroups.includes("sagw");
   }
 
+  get isStaffOrAdmin() {
+    return this.isStaff || this.isAdmin;
+  }
+
   isOwnIdentity(identity) {
     if (!this.session.isAuthenticated) {
       return false;
