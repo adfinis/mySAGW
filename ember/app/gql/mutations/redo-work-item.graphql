@@ -1,0 +1,7 @@
+mutation redoWorkItemMutation($input: RedoWorkItemInput) {
+  redoWorkItem(input: $input) {
+    workItem {
+      id
+    }
+  }
+}

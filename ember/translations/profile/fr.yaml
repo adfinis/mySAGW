@@ -5,5 +5,5 @@ profile:
     identity: "Adresse"
     memberships: "Affiliations"
   organisation:
-    edit: "Modifier l'institution"
+    edit: "Institution"
     empty: "Jusqu'à présent aucune institution n'a été saisie."

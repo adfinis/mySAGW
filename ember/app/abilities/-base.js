@@ -24,22 +24,20 @@ export default class BaseAbility extends Ability {
     return this.userGroups.includes("sagw");
   }
 
+  get isStaffOrAdmin() {
+    return this.isStaff || this.isAdmin;
+  }
+
   isOwnIdentity(identity) {
     if (!this.session.isAuthenticated) {
       return false;
     }
 
-    return (
-      identity.get("idpId") === this.session.data.authenticated.userinfo.sub
-    );
+    return identity.idpId === this.session.data.authenticated.userinfo.sub;
   }
 
   isStaffOrOwnIdentity(identity) {
-    if (identity) {
-      return this.isStaff || this.isOwnIdentity(identity);
-    }
-
-    return false;
+    return this.isStaff || this.isOwnIdentity(identity);
   }
 
   hasAccess(document) {

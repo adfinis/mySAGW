@@ -15,7 +15,7 @@
             or
             this.changeset.hasMembers
             this.changeset.hasMemberships
-            (cannot "edit organisation identity" this.abilityModel)
+            (cannot "edit organisation identity" this.changeset.data)
           }}
         />
 
@@ -23,7 +23,7 @@
           <Form.input
             @label={{t "components.identity-form.label.organisationName"}}
             @name="organisationName"
-            @disabled={{cannot "edit identity" this.abilityModel}}
+            @disabled={{or (cannot "edit identity" this.changeset.data) @readOnlyView}}
           />
 
           <div uk-grid>
@@ -32,7 +32,7 @@
                 @label={{t "components.identity-form.label.isExpertAssociation"}}
                 @type="checkbox"
                 @name="isExpertAssociation"
-                @disabled={{cannot "edit identity" this.abilityModel}}
+                @disabled={{or (cannot "edit identity" this.changeset.data) @readOnlyView}}
               />
             </div>
             <div>
@@ -40,7 +40,7 @@
                 @label={{t "components.identity-form.label.isAdvisoryBoard"}}
                 @type="checkbox"
                 @name="isAdvisoryBoard"
-                @disabled={{cannot "edit identity" this.abilityModel}}
+                @disabled={{or (cannot "edit identity" this.changeset.data) @readOnlyView}}
               />
             </div>
           </div>
@@ -51,7 +51,7 @@
         <Form.input
           @label={{t "components.identity-form.label.organisationName"}}
           @name="organisationName"
-          @disabled={{cannot "edit identity" this.abilityModel}}
+          @disabled={{or (cannot "edit identity" this.changeset.data) @readOnlyView}}
         />
       {{/if}}
       <div class="uk-child-width-expand@s" uk-grid>
@@ -63,7 +63,7 @@
             @options={{this.salutations}}
             @optionLabelPath="label"
             @optionTargetPath="value"
-            @disabled={{cannot "edit identity" this.abilityModel}}
+            @disabled={{or (cannot "edit identity" this.changeset.data) @readOnlyView}}
           />
         </div>
         <div>
@@ -74,7 +74,7 @@
             @options={{this.titles}}
             @optionLabelPath="label"
             @optionTargetPath="value"
-            @disabled={{cannot "edit identity" this.abilityModel}}
+            @disabled={{or (cannot "edit identity" this.changeset.data) @readOnlyView}}
           />
         </div>
       </div>
@@ -83,14 +83,14 @@
           <Form.input
             @label={{t "components.identity-form.label.firstName"}}
             @name="firstName"
-            @disabled={{cannot "edit identity" this.abilityModel}}
+            @disabled={{or (cannot "edit identity" this.changeset.data) @readOnlyView}}
           />
         </div>
         <div>
           <Form.input
             @label={{t "components.identity-form.label.lastName"}}
             @name="lastName"
-            @disabled={{cannot "edit identity" this.abilityModel}}
+            @disabled={{or (cannot "edit identity" this.changeset.data) @readOnlyView}}
           />
         </div>
       </div>
@@ -98,7 +98,8 @@
       <div class="uk-margin">
         <Form.input
           @label={{t "components.identity-form.label.email"}}
-          @name="email" as |field|
+          @name="email"
+          as |field|
         >
           <div class="uk-form-controls">
             <input
@@ -111,7 +112,8 @@
               disabled={{
                 or
                 this.changeset.idpId
-                (cannot "edit identity" this.abilityModel)
+                (cannot "edit identity" this.changeset.data)
+                @readOnlyView
               }}
               value={{field.value}}
               {{on "input" (fn this.eventTarget field.update)}}
@@ -135,59 +137,56 @@
         @options={{this.languages}}
         @optionLabelPath="label"
         @optionTargetPath="value"
-        @disabled={{cannot "edit identity" this.abilityModel}}
+        @disabled={{or (cannot "edit identity" this.changeset.data) @readOnlyView}}
       />
 
-      {{#unless @profileView}}
+      {{#if @profileView}}
+        <div class="uk-flex uk-flex-right">
+          <Form.submit
+            @label={{t "global.save"}}
+            @disabled={{cannot "edit identity" this.changeset.data}}
+          />
+        </div>
+      {{else if @readOnlyView}}
+      {{else}}
         <Form.input
           @label={{t "components.identity-form.label.comment"}}
           @name="comment"
           @type="textarea"
-          @disabled={{cannot "edit identity" this.abilityModel}}
         />
-      {{/unless}}
 
-      <p class="uk-flex uk-flex-between">
-        <div>
-          {{#if
-            (and
-              (not this.changeset.isNew)
-              (not @profileView)
-            )
-          }}
-            <button
-              class="uk-button uk-button-danger"
-              type="button"
-              {{on "click" (perform this.delete this.changeset.data)}}
-            >
-              {{t "components.identity-form.control.delete"}}
-            </button>
-          {{/if}}
-        </div>
+        <p class="uk-flex uk-flex-between">
+          <div>
+            {{#unless this.changeset.isNew}}
+              <button
+                class="uk-button uk-button-danger"
+                type="button"
+                {{on "click" (perform this.delete this.changeset.data)}}
+              >
+                {{t "components.identity-form.control.delete"}}
+              </button>
+            {{/unless}}
+          </div>
 
-        <div>
-          {{#unless @profileView}}
+          <div>
             <LinkTo class="uk-button uk-button-default" @route={{this.cancelRoute}}>
               {{t "global.cancel"}}
             </LinkTo>
-          {{/unless}}
 
-          <Form.submit
-            @label={{t "global.save"}}
-            @disabled={{cannot "edit identity" this.abilityModel}}
-          />
-
-          {{#unless @profileView}}
+            <Form.submit
+              @label={{t "global.save"}}
+              @disabled={{cannot "edit identity" this.changeset.data}}
+            />
             <UkButton
               @type="button"
               @color="primary"
               @onClick={{this.setBackToIdentities}}
               @label={{t "global.saveAndBack"}}
-              @disabled={{cannot "edit identity" this.abilityModel}}
+              @disabled={{cannot "edit identity" this.changeset.data}}
             />
-          {{/unless}}
-        </div>
-      </p>
+          </div>
+        </p>
+      {{/if}}
     </ValidatedForm>
   {{/if}}
 </div>

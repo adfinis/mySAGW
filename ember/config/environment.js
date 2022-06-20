@@ -101,6 +101,18 @@ module.exports = function (environment) {
           "additional-data-form",
         ],
         skippableTaskSlugs: [],
+        redoableTaskSlugs: [
+          "review-document",
+          "circulation",
+          "decision-and-credit",
+          "define-amount",
+        ],
+        canRedoTaskSlug: [
+          "circulation",
+          "decision-and-credit",
+          "additional-data",
+          "complete-document",
+        ],
         manuallyCompletableTasks: ["complete-document"],
         displayedAnswers: {
           // task slug

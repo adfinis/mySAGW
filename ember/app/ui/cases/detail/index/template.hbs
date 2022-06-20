@@ -12,13 +12,13 @@
             {{t "documents.number"}}
           </th>
           <td class="uk-width-1-3">
-            {{@model.documentNumber}}
+            {{this.case.documentNumber}}
           </td>
           <th class="uk-text-bold uk-width-1-6">
             {{t "documents.description"}}
           </th>
           <td class="uk-width-1-3">
-            {{or @model.form.description "-"}}
+            {{or this.case.form.description "-"}}
           </td>
         </tr>
         <tr>
@@ -28,8 +28,8 @@
           <td class="uk-width-1-3">
             {{
               if
-              @model.createdAt
-              (moment-format @model.createdAt "DD.MM.YYYY")
+              this.case.createdAt
+              (moment-format this.case.createdAt "DD.MM.YYYY")
               "-"
             }}
           </td>
@@ -39,8 +39,8 @@
           <td class="uk-width-1-3">
             {{
               if
-              @model.modifiedAt
-              (moment-format @model.modifiedAt "DD.MM.YYYY")
+              this.case.modifiedAt
+              (moment-format this.case.modifiedAt "DD.MM.YYYY")
               "-"
             }}
           </td>
@@ -52,7 +52,7 @@
             {{t "documents.status"}}
           </th>
           <td class="uk-width-1-3">
-            <CaseStateLabel @state={{@model.meta.status}} @iconPosition="right" />
+            <CaseStateLabel @state={{this.case.meta.status}} @iconPosition="right" />
           </td>
         </tr>
       </tbody>
@@ -89,9 +89,9 @@
       {{t "documents.actions"}}
     </span>
   </div>
-  <div class="uk-width-2-3">
-    <CaseAccessTables @case={{@model}}/>
-    {{#if (can "add access case" @model)}}
+  <div class="uk-width-2-3" {{did-insert (perform this.getCase)}}>
+    <CaseAccessTables @case={{this.case}}/>
+    {{#if (can "add access case" this.case)}}
       <UkButton
         @type="button"
         @label={{t "documents.accesses.add"}}
@@ -99,8 +99,8 @@
       />
     {{/if}}
 
-    {{#if (eq @model.raw.status "RUNNING")}}
-      {{#if @model.hasEditableWorkItem}}
+    {{#if (eq this.case.raw.status "RUNNING")}}
+      {{#if this.case.hasEditableWorkItem}}
         <h3>{{t "documents.edit"}}</h3>
         <p>{{t "documents.editText"}}</p>
 
@@ -109,7 +109,7 @@
         </LinkTo>
       {{/if}}
 
-      {{#if (can "delete case" @model)}}
+      {{#if (can "delete case" this.case)}}
         <h3>{{t "documents.delete"}}</h3>
         <p>{{t "documents.deleteText"}}</p>
 
@@ -123,13 +123,13 @@
         </UkButton>
       {{/if}}
 
-      {{#if @model.completeWorkItem}}
+      {{#if this.case.completeWorkItem}}
         <h3>{{t "documents.complete"}}</h3>
         <p>{{t "documents.completeText"}}</p>
 
         <WorkItemButton
           @mutation="complete"
-          @workItemId={{@model.completeWorkItem.id}}
+          @workItemId={{this.case.completeWorkItem.id}}
           @type="submit"
           @color="primary"
           @label={{t "documents.complete"}}
@@ -137,11 +137,34 @@
         />
       {{/if}}
     {{/if}}
+    {{#if (can "redo case" this.case)}}
+      <h3>{{t "documents.redo"}}</h3>
+      <p>{{t "documents.redoText"}}</p>
+      <UkButton
+        @type="button"
+        @onClick={{perform this.redoLastWorkItem}}
+        @loading={{or this.redoLastWorkItem.isRunning this.caseQuery.isLoading}}
+      >
+        {{t "documents.redo"}}
+      </UkButton>
+    {{/if}}
+    {{#if (can "reopen case" this.case)}}
+      <h3>{{t "documents.reopen"}}</h3>
+      <p>{{t "documents.reopenText"}}</p>
+      <UkButton
+        @type="button"
+        @onClick={{perform this.reopenCase}}
+        @loading={{this.reopenCase.isRunning}}
+      >
+        {{t "documents.reopen"}}
+      </UkButton>
+    {{/if}}
+
     {{#if (can "exportForAccounting case")}}
       <h3>{{t "documents.accountingExport"}}</h3>
       <UkButton
         @type="button"
-        @onClick={{perform this.exportAccounting @model}}
+        @onClick={{perform this.exportAccounting this.case}}
         @loading={{this.exportAccounting.isRunning}}
       >
         {{t "documents.accountingExport"}}
