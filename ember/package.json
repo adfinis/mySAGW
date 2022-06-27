@@ -29,7 +29,6 @@
     "@ember/test-helpers": "^2.8.0",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
-    "@projectcaluma/ember-analytics": "https://gitpkg.now.sh/derrabauke/ember-caluma/packages/analytics?4f1ba68d387a294d3fdbd40e0614ed4ad5159b72",
     "@projectcaluma/ember-core": "^11.0.0-beta.7",
     "@projectcaluma/ember-form": "^11.0.0-beta.21",
     "@projectcaluma/ember-form-builder": "^11.0.0-beta.14",
