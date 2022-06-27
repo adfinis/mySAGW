@@ -17,6 +17,7 @@ components:
     profile: "Profil"
     identity-management: "Gestion des adresses"
     form-management: "Gestion du formulaire"
+    analytics: "Évaluation"
     snippet:
       hint: "Copier «{lang}» dans le presse-papier."
       load-more: "Charger d'autres blocs de texte"

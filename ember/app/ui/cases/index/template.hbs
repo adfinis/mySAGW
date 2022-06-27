@@ -47,7 +47,7 @@
         </label>
         <select class="uk-select uk-form-small uk-margin-small-left" id="order" {{on "change" this.updateOrder}}>
           {{#each this.orderOptions as |orderOption|}}
-            <option value={{orderOption.value}} selected={{eq this.order orderOption.value}}>
+            <option value={{orderOption.value}} selected={{eq (concat this.orderAttr "-" this.orderDirection) orderOption.value}}>
               {{t orderOption.label}} ({{t orderOption.direction}})
             </option>
           {{/each}}

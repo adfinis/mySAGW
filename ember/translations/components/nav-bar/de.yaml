@@ -17,6 +17,7 @@ components:
     profile: "Profil"
     identity-management: "Adressverwaltung"
     form-management: "Formularverwaltung"
+    analytics: "Auswertung"
     snippet:
       hint: "«{lang}» in die Zwischenablage kopieren."
       load-more: "Weitere Snippets laden"

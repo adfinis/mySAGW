@@ -17,6 +17,7 @@ components:
     profile: "Profile"
     identity-management: "Identity management"
     form-management: "Form management"
+    analytics: "Analytics"
     snippet:
       hint: "Copy {lang} to clipboard"
       load-more: "Load more snippets"

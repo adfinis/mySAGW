@@ -12,10 +12,10 @@ query getFormsQuery {
     filter: [
       { isPublished: true }
       { isArchived: false }
-      { orderBy: NAME_ASC }
       { metaHasKey: "expertAssociationForm", invert: true }
       { metaHasKey: "advisoryBoardForm", invert: true }
     ]
+    order: [{attribute: NAME, direction: ASC}]
   ) {
     edges {
       node {
@@ -27,10 +27,10 @@ query getFormsQuery {
     filter: [
       { isPublished: true }
       { isArchived: false }
-      { orderBy: NAME_ASC }
       { metaHasKey: "expertAssociationForm" }
       { metaHasKey: "advisoryBoardForm", invert: true }
     ]
+    order: [{attribute: NAME, direction: ASC}]
   ) {
     edges {
       node {
@@ -42,10 +42,10 @@ query getFormsQuery {
     filter: [
       { isPublished: true }
       { isArchived: false }
-      { orderBy: NAME_ASC }
       { metaHasKey: "advisoryBoardForm" }
       { metaHasKey: "expertAssociationForm", invert: true }
     ]
+    order: [{attribute: NAME, direction: ASC}]
   ) {
     edges {
       node {
@@ -57,10 +57,10 @@ query getFormsQuery {
     filter: [
       { isPublished: true }
       { isArchived: false }
-      { orderBy: NAME_ASC }
       { metaHasKey: "advisoryBoardForm" }
       { metaHasKey: "expertAssociationForm" }
     ]
+    order: [{attribute: NAME, direction: ASC}]
   ) {
     edges {
       node {

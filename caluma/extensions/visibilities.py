@@ -1,5 +1,14 @@
 from django.db.models import F, Q
 
+from caluma.caluma_analytics.schema import (
+    AnalyticsCell,
+    AnalyticsField,
+    AnalyticsOutput,
+    AnalyticsRow,
+    AnalyticsTable,
+    AnalyticsTableContent,
+    AvailableField,
+)
 from caluma.caluma_core.types import Node
 from caluma.caluma_core.visibilities import BaseVisibility, Union, filter_queryset_for
 from caluma.caluma_form import models as form_models
@@ -113,6 +122,16 @@ class CreateOrAssignVisibility(BaseVisibility):
     @filter_queryset_for(Question)
     def filter_queryset_for_blueprints(self, node, queryset, info):
         return queryset
+
+    @filter_queryset_for(AnalyticsCell)
+    @filter_queryset_for(AnalyticsField)
+    @filter_queryset_for(AnalyticsOutput)
+    @filter_queryset_for(AnalyticsRow)
+    @filter_queryset_for(AnalyticsTable)
+    @filter_queryset_for(AnalyticsTableContent)
+    @filter_queryset_for(AvailableField)
+    def filter_queryset_for_analytics(self, node, queryset, info):
+        return queryset.none()
 
 
 class MySAGWVisibility(Union):

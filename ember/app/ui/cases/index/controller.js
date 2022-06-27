@@ -16,7 +16,8 @@ export default class CasesIndexController extends Controller {
   @service notification;
   @service intl;
 
-  @tracked order = ENV.APP.casesTable.defaultOrder;
+  @tracked orderAttr = ENV.APP.casesTable.defaultOrder.split("-")[0];
+  @tracked orderDirection = ENV.APP.casesTable.defaultOrder.split("-")[1];
   @tracked cases = [];
   @tracked types = [];
   @tracked documentNumber = null;
@@ -46,7 +47,6 @@ export default class CasesIndexController extends Controller {
       yield this.caseQuery.fetch({
         filter: [
           { workflow: "circulation", invert: true },
-          { orderBy: [this.order] },
           {
             hasAnswer: [
               {
@@ -58,6 +58,7 @@ export default class CasesIndexController extends Controller {
           },
           { status: "CANCELED", invert: true },
         ],
+        order: [{ attribute: this.orderAttr, direction: this.orderDirection }],
       });
     } catch (e) {
       // eslint-disable-next-line no-console
@@ -68,7 +69,8 @@ export default class CasesIndexController extends Controller {
 
   @action
   updateOrder(event) {
-    this.order = event.target.value;
+    this.orderAttr = event.target.value.split("-")[0];
+    this.orderDirection = event.target.value.split("-")[1];
 
     this.fetchCases.perform();
   }

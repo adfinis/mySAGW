@@ -1,5 +1,9 @@
 import pytest
 
+from caluma.caluma_analytics import (
+    models as analytics_models,
+    schema as analytics_schema,
+)
 from caluma.caluma_form import models as form_models, schema as form_schema
 from caluma.caluma_workflow import models as workflow_models, schema as workflow_schema
 from caluma.extensions.settings import settings
@@ -18,6 +22,7 @@ from caluma.extensions.visibilities import MySAGWVisibility
                 "Case": 2,
                 "Question": 20,
                 "Answer": 3,
+                "AnalyticsTable": 1,
             },
         ),
         (
@@ -29,6 +34,7 @@ from caluma.extensions.visibilities import MySAGWVisibility
                 "Case": 1,
                 "Question": 20,
                 "Answer": 2,
+                "AnalyticsTable": 0,
             },
         ),
     ],
@@ -40,6 +46,7 @@ def test_visibilities_default(
     circulation,
     admin_info,
     requests_mock,
+    analytics_table,
     user_name,
     visibility_map,
 ):
@@ -61,6 +68,7 @@ def test_visibilities_default(
         (workflow_models.Case, workflow_schema.Case),
         (form_models.Question, form_schema.Question),
         (form_models.Answer, form_schema.Answer),
+        (analytics_models.AnalyticsTable, analytics_schema.AnalyticsTable),
     ]
 
     vis = MySAGWVisibility()
