@@ -1,10 +1,14 @@
-import JSONAPIAdapter from "@ember-data/adapter/json-api";
-import OIDCAdapterMixin from "ember-simple-auth-oidc/mixins/oidc-adapter-mixin";
+import { inject as service } from "@ember/service";
+import OIDCJSONAPIAdapter from "ember-simple-auth-oidc/adapters/oidc-json-api-adapter";
 
-export default class ApplicationAdapter extends JSONAPIAdapter.extend(
-  OIDCAdapterMixin
-) {
+export default class ApplicationAdapter extends OIDCJSONAPIAdapter {
   namespace = "api/v1";
+
+  @service session;
+
+  get headers() {
+    return { ...this.session.headers };
+  }
 
   /**
    * This adds the value of adapterOptions.include as a query parameter.
