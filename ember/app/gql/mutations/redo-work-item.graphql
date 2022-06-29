@@ -1,4 +1,4 @@
-mutation redoWorkItemMutation($input: RedoWorkItemInput) {
+mutation redoWorkItemMutation($input: RedoWorkItemInput!) {
   redoWorkItem(input: $input) {
     workItem {
       id
