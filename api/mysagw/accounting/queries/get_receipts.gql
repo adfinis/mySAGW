@@ -113,7 +113,7 @@ query Receipts($case_id: ID!) {
           }
         }
       }
-      defineAmount: workItems(filter: [{task: "define-amount"}], orderBy: CREATED_AT_DESC, first: 1) {
+      defineAmount: workItems(filter: [{task: "define-amount"}], order: [{attribute: CREATED_AT, direction: DESC}], first: 1) {
         edges {
           node {
             document {

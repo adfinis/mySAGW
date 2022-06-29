@@ -30,6 +30,13 @@ Router.map(function () {
         resetNamespace,
       });
     });
+    /* 
+    this.mount("@projectcaluma/ember-analytics", {
+      as: "analytics",
+      path: "/analytics",
+      resetNamespace,
+    });
+    */
 
     // Caluma
     this.route("cases", { resetNamespace }, function () {
