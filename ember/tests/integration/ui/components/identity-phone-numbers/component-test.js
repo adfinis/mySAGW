@@ -2,21 +2,15 @@ import { render, click, fillIn } from "@ember/test-helpers";
 import { hbs } from "ember-cli-htmlbars";
 import { setupMirage } from "ember-cli-mirage/test-support";
 import { setupRenderingTest } from "ember-qunit";
+import { authenticateSession } from "ember-simple-auth/test-support";
 import { module, test } from "qunit";
 
 module("Integration | Component | identity-phone-numbers", function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(function () {
-    this.owner.register(
-      "service:session",
-      {
-        isAuthenticated: true,
-        data: { authenticated: { userinfo: { mysagw_groups: ["sagw"] } } },
-      },
-      { instantiate: false }
-    );
+  hooks.beforeEach(async function () {
+    await authenticateSession({ userinfo: { mysagw_groups: ["sagw"] } });
   });
 
   test("it renders", async function (assert) {

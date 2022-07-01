@@ -1,16 +1,17 @@
 import Route from "@ember/routing/route";
 import { inject as service } from "@ember/service";
-import OIDCApplicationRouteMixin from "ember-simple-auth-oidc/mixins/oidc-application-route-mixin";
 import moment from "moment";
 
-export default class ApplicationRoute extends Route.extend(
-  OIDCApplicationRouteMixin
-) {
+export default class ApplicationRoute extends Route {
   @service intl;
   @service calumaOptions;
+  @service session;
 
-  beforeModel(...args) {
+  async beforeModel(...args) {
     super.beforeModel(...args);
+
+    await this.session.setup();
+
     const locale = localStorage.getItem("locale") ?? "en";
     this.intl.setLocale([locale]);
     moment.locale(locale);
