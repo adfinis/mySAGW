@@ -58,11 +58,22 @@ export default class CustomCaseModel extends CaseModel {
   }
 
   get canRedoWorkItem() {
-    return this.workItems.find(
+    const workItem = this.workItems.find(
       (workItem) =>
         workItem.status === "READY" &&
         ENV.APP.caluma.canRedoTaskSlug.includes(workItem.task.slug)
     );
+    if (
+      workItem.task.slug === "additional-data" &&
+      this.workItems.find(
+        (workItem) =>
+          workItem.status === "COMPLETED" &&
+          workItem.task.slug === "define-amount"
+      )
+    ) {
+      return null;
+    }
+    return workItem;
   }
 
   get completeWorkItem() {
