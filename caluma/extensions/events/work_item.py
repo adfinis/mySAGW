@@ -10,6 +10,7 @@ from caluma.caluma_workflow import (
 from caluma.caluma_workflow.events import (
     post_complete_work_item,
     post_create_work_item,
+    post_redo_work_item,
     pre_complete_work_item,
 )
 
@@ -262,3 +263,16 @@ def complete_additional_data_form(sender, work_item, user, **kwargs):
             work_item=form_work_item,
             user=user,
         )
+
+
+@on(post_redo_work_item, raise_exception=True)
+@filter_events(lambda sender, work_item: work_item.task_id == "circulation")
+@transaction.atomic
+def redo_circulation(sender, work_item, user, **kwargs):
+    work_item.child_case = caluma_workflow_api.start_case(
+        workflow=caluma_workflow_models.Workflow.objects.get(pk="circulation"),
+        form=caluma_form_models.Form.objects.get(pk="circulation-form"),
+        user=user,
+        parent_work_item=work_item,
+    )
+    work_item.save()

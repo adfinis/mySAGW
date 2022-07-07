@@ -5390,7 +5390,7 @@ broccoli-builder@^0.18.14:
 broccoli-caching-writer@^2.2.0:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/broccoli-caching-writer/-/broccoli-caching-writer-2.3.1.tgz#b93cf58f9264f003075868db05774f4e7f25bd07"
-  integrity sha1-uTz1j5Jk8AMHWGjbBXdPTn8lvQc=
+  integrity sha512-lfoDx98VaU8tG4mUXCxKdKyw2Lr+iSIGUjCgV83KC2zRC07SzYTGuSsMqpXFiOQlOGuoJxG3NRoyniBa1BWOqA==
   dependencies:
     broccoli-kitchen-sink-helpers "^0.2.5"
     broccoli-plugin "1.1.0"
@@ -5598,7 +5598,7 @@ broccoli-graphql-filter@^1.0.0:
 broccoli-kitchen-sink-helpers@^0.2.5:
   version "0.2.9"
   resolved "https://registry.yarnpkg.com/broccoli-kitchen-sink-helpers/-/broccoli-kitchen-sink-helpers-0.2.9.tgz#a5e0986ed8d76fb5984b68c3f0450d3a96e36ecc"
-  integrity sha1-peCYbtjXb7WYS2jD8EUNOpbjbsw=
+  integrity sha512-C+oEqivDofZv/h80rgN4WJkbZkbfwkrIeu8vFn4bb4m4jPd3ICNNplhkXGl3ps439pzc2yjZ1qIwz0yy8uHcQg==
   dependencies:
     glob "^5.0.10"
     mkdirp "^0.5.1"
@@ -5758,7 +5758,7 @@ broccoli-plugin@*, broccoli-plugin@^4.0.0, broccoli-plugin@^4.0.1, broccoli-plug
 broccoli-plugin@1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/broccoli-plugin/-/broccoli-plugin-1.1.0.tgz#73e2cfa05f8ea1e3fc1420c40c3d9e7dc724bf02"
-  integrity sha1-c+LPoF+OoeP8FCDEDD2efcckvwI=
+  integrity sha512-dY1QsA20of9wWEto8yhN7JQjpfjySmgeIMsvnQ9aBAv1wEJJCe04B0ekdgq7Bduyx9yWXdoC5CngGy81swmp2w==
   dependencies:
     promise-map-series "^0.2.1"
     quick-temp "^0.1.3"
@@ -5883,7 +5883,7 @@ broccoli-source@^3.0.0:
 broccoli-sri-hash@^2.1.0:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/broccoli-sri-hash/-/broccoli-sri-hash-2.1.2.tgz#bc69905ed7a381ad325cc0d02ded071328ebf3f3"
-  integrity sha1-vGmQXtejga0yXMDQLe0HEyjr8/M=
+  integrity sha512-toLD/v7ut2ajcH8JsdCMG2Bpq2qkwTcKM6CMzVMSAJjaz/KpK69fR+gSqe1dsjh+QTdxG0yVvkq3Sij/XMzV6A==
   dependencies:
     broccoli-caching-writer "^2.2.0"
     mkdirp "^0.5.1"
@@ -8386,7 +8386,7 @@ ember-cli-showdown@^6.0.0, ember-cli-showdown@^6.0.1:
 ember-cli-sri@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/ember-cli-sri/-/ember-cli-sri-2.1.1.tgz#971620934a4b9183cf7923cc03e178b83aa907fd"
-  integrity sha1-lxYgk0pLkYPPeSPMA+F4uDqpB/0=
+  integrity sha512-YG/lojDxkur9Bnskt7xB6gUOtJ6aPl/+JyGYm9HNDk3GECVHB3SMN3rlGhDKHa1ndS5NK2W2TSLb9bzRbGlMdg==
   dependencies:
     broccoli-sri-hash "^2.1.0"
 
@@ -17359,7 +17359,7 @@ sprintf-js@~1.0.2:
 sri-toolbox@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/sri-toolbox/-/sri-toolbox-0.2.0.tgz#a7fea5c3fde55e675cf1c8c06f3ebb5c2935835e"
-  integrity sha1-p/6lw/3lXmdc8cjAbz67XCk1g14=
+  integrity sha512-DQIMWCAr/M7phwo+d3bEfXwSBEwuaJL+SJx9cuqt1Ty7K96ZFoHpYnSbhrQZEr0+0/GtmpKECP8X/R4RyeTAfw==
 
 sshpk@^1.7.0:
   version "1.17.0"
@@ -18695,7 +18695,7 @@ w3c-xmlserializer@^2.0.0:
 walk-sync@^0.2.5:
   version "0.2.7"
   resolved "https://registry.yarnpkg.com/walk-sync/-/walk-sync-0.2.7.tgz#b49be4ee6867657aeb736978b56a29d10fa39969"
-  integrity sha1-tJvk7mhnZXrrc2l4tWop0Q+jmWk=
+  integrity sha512-OH8GdRMowEFr0XSHQeX5fGweO6zSVHo7bG/0yJQx6LAj9Oukz0C8heI3/FYectT66gY0IPGe89kOvU410/UNpg==
   dependencies:
     ensure-posix-path "^1.0.0"
     matcher-collection "^1.0.0"
