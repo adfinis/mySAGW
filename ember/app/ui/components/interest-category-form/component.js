@@ -2,6 +2,8 @@ import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
+import Changeset from "ember-changeset";
+import lookupValidator from "ember-changeset-validations";
 import { dropTask } from "ember-concurrency-decorators";
 
 import applyError from "mysagw/utils/apply-error";
@@ -17,19 +19,23 @@ export default class InterestCategoryFormComponent extends Component {
   @service intl;
   @service router;
 
-  @tracked model;
-  @tracked validations = InterestCategoryValidations;
+  @tracked changeset;
   @tracked backToInterests;
 
   @action
   onUpdate() {
-    this.model =
-      this.args.category || this.store.createRecord("interest-category");
+    this.changeset = new Changeset(
+      this.args.category || this.store.createRecord("interest-category"),
+      lookupValidator(InterestCategoryValidations),
+      InterestCategoryValidations
+    );
   }
 
   @action
-  setBackToInterests() {
+  setBackToInterests(event) {
+    event.preventDefault();
     this.backToInterests = true;
+    this.submit.perform(this.changeset);
   }
 
   @dropTask
@@ -38,11 +44,11 @@ export default class InterestCategoryFormComponent extends Component {
       yield changeset.save();
       this.notification.success(
         this.intl.t("components.interest-category-form.success", {
-          category: this.model.title,
+          category: changeset.title,
         })
       );
 
-      this.args.onSave?.(this.model);
+      this.args.onSave?.(this.changeset);
 
       if (this.backToInterests) {
         this.router.transitionTo("interests");
