@@ -32,8 +32,10 @@ export default class MembershipRoleFormComponent extends Component {
   }
 
   @action
-  setBackToRoles() {
+  setBackToRoles(event) {
+    event.preventDefault();
     this.backToRoles = true;
+    this.submit.perform(this.changeset);
   }
 
   @dropTask
@@ -42,10 +44,11 @@ export default class MembershipRoleFormComponent extends Component {
       yield changeset.save();
       this.notification.success(
         this.intl.t("components.membership-role-form.success", {
-          role: changeset.data.title,
+          role: changeset.title,
         })
       );
-      this.args.onSave?.(changeset.data);
+
+      this.args.onSave?.(changeset);
 
       if (this.backToRoles) {
         this.router.transitionTo("membership-roles");
