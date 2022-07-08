@@ -64,7 +64,7 @@ export default class CustomCaseModel extends CaseModel {
         ENV.APP.caluma.canRedoTaskSlug.includes(workItem.task.slug)
     );
     if (
-      workItem.task.slug === "additional-data" &&
+      workItem?.task.slug === "additional-data" &&
       this.workItems.find(
         (workItem) =>
           workItem.status === "COMPLETED" &&
