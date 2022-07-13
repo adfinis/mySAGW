@@ -48,4 +48,8 @@ export default class CaseAbility extends BaseAbility {
       this.isStaffOrAdmin
     );
   }
+
+  get canFilterAccess() {
+    return this.isStaffOrAdmin;
+  }
 }

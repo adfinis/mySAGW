@@ -24,4 +24,8 @@ export default class IdentityModel extends LocalizedModel {
   get fullName() {
     return [this.lastName, this.firstName].filter(Boolean).join(" ");
   }
+
+  get label() {
+    return this.fullName;
+  }
 }
