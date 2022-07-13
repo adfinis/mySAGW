@@ -76,7 +76,6 @@ export default class IdentitiesIndexController extends Controller {
   }
 
   @lastValue("fetchIdentities") identities;
-
   @restartableTask *fetchIdentities() {
     try {
       const identities = yield this.store.query("identity", {

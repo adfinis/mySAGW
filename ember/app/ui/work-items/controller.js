@@ -18,6 +18,7 @@ export default class WorkItemsIndexController extends Controller {
     "role",
     "taskTypes",
     "documentNumber",
+    "answer",
   ];
 
   @service session;

@@ -5,9 +5,12 @@
       @options={{@options}}
       @selected={{this.selection}}
       @onChange={{this.setSelection}}
+      @onInput={{@onInput}}
       @searchEnabled={{true}}
       @searchField="label"
-      @triggerClass="uk-select" as |option|
+      @triggerClass="uk-select"
+      @loadingMessage={{t "components.filters.dropdown.loading"}}
+      as |option|
     >
       {{option.label}}
     </PowerSelectMultiple>
