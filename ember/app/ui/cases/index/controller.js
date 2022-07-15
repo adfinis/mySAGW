@@ -88,7 +88,7 @@ export default class CasesIndexController extends Controller {
   @lastValue("fetchIdentities") identities;
   @restartableTask
   *fetchIdentities() {
-    yield timeout(1000);
+    yield timeout(400);
 
     try {
       const identities = yield this.store.query(
@@ -97,6 +97,7 @@ export default class CasesIndexController extends Controller {
           filter: {
             search: this.identitySearch,
             isOrganisation: false,
+            has_idp_id: true,
           },
           page: {
             number: 1,
