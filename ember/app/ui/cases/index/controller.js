@@ -100,7 +100,7 @@ export default class CasesIndexController extends Controller {
           },
           page: {
             number: 1,
-            size: 10,
+            size: 20,
           },
         },
         { adapterOptions: { customEndpoint: "public-identities" } }
@@ -155,9 +155,9 @@ export default class CasesIndexController extends Controller {
   }
 
   @action
-  async updateIdentitySearch(value) {
+  updateIdentitySearch(value) {
     this.identitySearch = value;
 
-    await this.fetchIdentities.perform();
+    this.fetchIdentities.perform();
   }
 }
