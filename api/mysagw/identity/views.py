@@ -255,6 +255,10 @@ class PublicIdentitiesViewSet(RetrieveModelMixin, ListModelMixin, GenericViewSet
     serializer_class = serializers.PublicIdentitySerializer
     queryset = models.Identity.objects.all()
     filterset_class = filters.IdentityFilterSet
+    search_fields = (
+        "first_name",
+        "last_name",
+    )
 
 
 class InterestCategoryViewSet(views.ModelViewSet):
