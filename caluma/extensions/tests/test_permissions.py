@@ -45,8 +45,8 @@ def test_permissions_fallback(
 @pytest.mark.parametrize(
     "groups,task_slug,has_perm,has_obj_perm",
     [
-        (["admin"], "bar", True, True),
-        (["sagw"], "bar", True, True),
+        (["admin"], settings.APPLICANT_TASK_SLUGS[0], True, True),
+        (["sagw"], settings.APPLICANT_TASK_SLUGS[0], True, True),
         (["foo"], "bar", True, False),
         (["foo"], settings.APPLICANT_TASK_SLUGS[0], True, True),
     ],
@@ -64,7 +64,9 @@ def test_permission_for_save_document_answer(
     case_access_request_mock,
 ):
     work_item = work_item_factory(
-        task__slug=task_slug, case__pk="994b72cc-6556-46e5-baf9-228457fa309f"
+        task__slug=task_slug,
+        case__pk="994b72cc-6556-46e5-baf9-228457fa309f",
+        status="ready",
     )
 
     admin_info.context.user.groups = groups
@@ -108,6 +110,29 @@ def test_permission_for_save_document_answer_floating_row_document(
     mutation = SaveDocumentAnswer
     assert perm.has_permission(mutation, admin_info) is True
     assert perm.has_object_permission(mutation, admin_info, answer) is True
+
+
+def test_permission_for_save_document_answer_no_access(
+    db,
+    admin_info,
+    answer,
+    case,
+    mocker,
+    case_access_request_mock,
+):
+    admin_info.context.user.groups = ["test"]
+
+    mocker.patch.object(
+        Mutation,
+        "get_params",
+        return_value={"input": {"document": str(case.document.pk)}},
+    )
+
+    perm = MySAGWPermission()
+
+    mutation = SaveDocumentAnswer
+    assert perm.has_permission(mutation, admin_info) is True
+    assert perm.has_object_permission(mutation, admin_info, answer) is False
 
 
 @pytest.mark.parametrize(
