@@ -7,6 +7,14 @@ import ENV from "mysagw/config/environment";
 export default class CustomCaseModel extends CaseModel {
   @service store;
 
+  get isRunning() {
+    return this.raw.status === "RUNNING";
+  }
+
+  get isCompleted() {
+    return this.raw.status === "COMPLETED";
+  }
+
   get accesses() {
     return this.store.peekAll("case-access").filter((access) => {
       return (
@@ -27,12 +35,46 @@ export default class CustomCaseModel extends CaseModel {
       .isAny("status", "READY");
   }
 
-  get hasSubmitWorkItem() {
+  get hasSubmitOrReviseWorkItem() {
     return this.workItems.find(
       (workItem) =>
-        workItem.task.slug === ENV.APP.caluma.submitTaskSlug &&
+        (workItem.task.slug === ENV.APP.caluma.submitTaskSlug ||
+          workItem.task.slug === ENV.APP.caluma.reviseTaskSlug) &&
         workItem.status === "READY"
     );
+  }
+
+  get sortedWorkItems() {
+    return this.workItems.sort(
+      (a, b) => new Date(b.closedAt) - new Date(a.closedAt)
+    );
+  }
+
+  get redoWorkItem() {
+    return this.sortedWorkItems.find(
+      (workItem) =>
+        (workItem.status === "COMPLETED" || workItem.status === "SKIPPED") &&
+        ENV.APP.caluma.redoableTaskSlugs.includes(workItem.task.slug)
+    );
+  }
+
+  get canRedoWorkItem() {
+    const workItem = this.workItems.find(
+      (workItem) =>
+        workItem.status === "READY" &&
+        ENV.APP.caluma.canRedoTaskSlug.includes(workItem.task.slug)
+    );
+    if (
+      workItem?.task.slug === "additional-data" &&
+      this.workItems.find(
+        (workItem) =>
+          workItem.status === "COMPLETED" &&
+          workItem.task.slug === "define-amount"
+      )
+    ) {
+      return null;
+    }
+    return workItem;
   }
 
   get completeWorkItem() {
@@ -54,12 +96,13 @@ export default class CustomCaseModel extends CaseModel {
     closedAt
     status
     meta
-    workItems {
+    workItems(filter: [{status: REDO, invert: true}], order: [{attribute: CLOSED_AT, direction: DESC}]) {
       edges {
         node {
           id
           status
           createdAt
+          closedAt
           task {
             slug
           }

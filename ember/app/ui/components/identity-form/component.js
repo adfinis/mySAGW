@@ -4,7 +4,6 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { Changeset } from "ember-changeset";
 import lookupValidator from "ember-changeset-validations";
-import { lastValue } from "ember-concurrency";
 import { dropTask } from "ember-concurrency-decorators";
 import UIkit from "uikit";
 
@@ -70,12 +69,6 @@ export default class IdentityFormComponent extends Component {
     return this.args.cancelRouteOverride || "identities";
   }
 
-  get abilityModel() {
-    return this.args.profileEditRoute
-      ? this.membership?.firstObject.identity
-      : this.changeset.data;
-  }
-
   @action
   eventTarget(handler, event) {
     handler(event.target.value);
@@ -88,10 +81,6 @@ export default class IdentityFormComponent extends Component {
       lookupValidator(IdentityValidations),
       IdentityValidations
     );
-
-    if (this.args.profileEditRoute) {
-      this.fetchAuthorizedMemberships.perform();
-    }
   }
 
   @action
@@ -160,21 +149,5 @@ export default class IdentityFormComponent extends Component {
       // Log the error anyway in case something else broke in the try.
       console.error(error);
     }
-  }
-
-  @lastValue("fetchAuthorizedMemberships") membership;
-  @dropTask
-  *fetchAuthorizedMemberships() {
-    return yield this.store.query(
-      "membership",
-      {
-        filter: {
-          organisation: this.changeset.id,
-          inactive: false,
-          authorized: true,
-        },
-      },
-      { adapterOptions: { customEndpoint: "my-memberships" } }
-    );
   }
 }

@@ -7,7 +7,8 @@ export default class CasesDetailEditController extends Controller {
 
   get disabled() {
     return !(
-      this.model.hasEditableWorkItem && this.can.can("edit case", this.model)
+      this.model.hasSubmitOrReviseWorkItem &&
+      this.can.can("edit case", this.model)
     );
   }
 }

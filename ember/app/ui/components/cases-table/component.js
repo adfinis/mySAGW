@@ -43,6 +43,10 @@ export default class CasesTableComponent extends Component {
     ],
   };
 
+  get data() {
+    return this.args.dataOverride ?? this.args.query.value;
+  }
+
   @action
   fetchMoreCases() {
     this.args.query.fetchMore();

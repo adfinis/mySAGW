@@ -1,5 +1,5 @@
+import { faker } from "@faker-js/faker";
 import { Factory } from "ember-cli-mirage";
-import faker from "faker";
 
 export default Factory.extend({
   idpId: () => faker.name.firstName(),
@@ -15,7 +15,7 @@ export default Factory.extend({
     }
 
     const interests = server.schema.interests.all();
-    interests.models = faker.random.arrayElements(
+    interests.models = faker.helpers.arrayElements(
       interests.models,
       faker.datatype.number({ min: 0, max: 5 })
     );

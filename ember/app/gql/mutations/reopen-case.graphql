@@ -1,0 +1,7 @@
+mutation reopenCaseMutation($input: ReopenCaseInput!) {
+  reopenCase(input: $input) {
+    case {
+      id
+    }
+  }
+}

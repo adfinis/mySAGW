@@ -3,6 +3,7 @@ from uuid import uuid4
 
 import pytest
 
+from caluma.caluma_analytics.schema import SaveAnalyticsTable
 from caluma.caluma_core.mutation import Mutation
 from caluma.caluma_form.schema import SaveDocumentAnswer
 from caluma.caluma_workflow.models import Task, Workflow
@@ -44,8 +45,8 @@ def test_permissions_fallback(
 @pytest.mark.parametrize(
     "groups,task_slug,has_perm,has_obj_perm",
     [
-        (["admin"], "bar", True, True),
-        (["sagw"], "bar", True, True),
+        (["admin"], settings.APPLICANT_TASK_SLUGS[0], True, True),
+        (["sagw"], settings.APPLICANT_TASK_SLUGS[0], True, True),
         (["foo"], "bar", True, False),
         (["foo"], settings.APPLICANT_TASK_SLUGS[0], True, True),
     ],
@@ -63,7 +64,9 @@ def test_permission_for_save_document_answer(
     case_access_request_mock,
 ):
     work_item = work_item_factory(
-        task__slug=task_slug, case__pk="994b72cc-6556-46e5-baf9-228457fa309f"
+        task__slug=task_slug,
+        case__pk="994b72cc-6556-46e5-baf9-228457fa309f",
+        status="ready",
     )
 
     admin_info.context.user.groups = groups
@@ -107,6 +110,29 @@ def test_permission_for_save_document_answer_floating_row_document(
     mutation = SaveDocumentAnswer
     assert perm.has_permission(mutation, admin_info) is True
     assert perm.has_object_permission(mutation, admin_info, answer) is True
+
+
+def test_permission_for_save_document_answer_no_access(
+    db,
+    admin_info,
+    answer,
+    case,
+    mocker,
+    case_access_request_mock,
+):
+    admin_info.context.user.groups = ["test"]
+
+    mocker.patch.object(
+        Mutation,
+        "get_params",
+        return_value={"input": {"document": str(case.document.pk)}},
+    )
+
+    perm = MySAGWPermission()
+
+    mutation = SaveDocumentAnswer
+    assert perm.has_permission(mutation, admin_info) is True
+    assert perm.has_object_permission(mutation, admin_info, answer) is False
 
 
 @pytest.mark.parametrize(
@@ -212,4 +238,27 @@ def test_permission_for_cancel_case(
     assert perm.has_permission(mutation, admin_info) is has_perm
     assert (
         perm.has_object_permission(mutation, admin_info, work_item.case) is has_obj_perm
+    )
+
+
+@pytest.mark.parametrize(
+    "groups,has_perm,has_obj_perm",
+    [
+        (["admin"], True, True),
+        (["sagw"], True, True),
+        (["foo"], False, False),
+    ],
+)
+def test_analytics_permissions(
+    db, admin_info, analytics_table, groups, has_perm, has_obj_perm
+):
+    admin_info.context.user.groups = groups
+
+    perm = MySAGWPermission()
+
+    mutation = SaveAnalyticsTable
+    assert perm.has_permission(mutation, admin_info) is has_perm
+    assert (
+        perm.has_object_permission(mutation, admin_info, analytics_table)
+        is has_obj_perm
     )

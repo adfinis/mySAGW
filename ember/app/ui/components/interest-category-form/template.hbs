@@ -2,9 +2,9 @@
   {{did-insert this.onUpdate}}
   {{did-update this.onUpdate @identity}}
 >
-  {{#if this.model}}
+  {{#if this.changeset}}
     <ValidatedForm
-      @model={{changeset this.model this.validations}}
+      @model={{this.changeset}}
       @on-submit={{perform this.submit}}
       class="uk-margin-remove-last-child"
       as |Form|
@@ -39,7 +39,7 @@
         @required={{false}}
       />
 
-      <p class="uk-text-right">
+      <div class="uk-text-right">
         <LinkTo
           class="uk-button uk-button-default"
           @route="interests"
@@ -57,7 +57,7 @@
           @onClick={{this.setBackToInterests}}
           @label={{t "global.saveAndBack"}}
         />
-      </p>
+      </div>
     </ValidatedForm>
   {{/if}}
 </div>

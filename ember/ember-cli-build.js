@@ -20,6 +20,9 @@ module.exports = function (defaults) {
     "ember-fetch": {
       preferNative: true,
     },
+    "ember-simple-auth": {
+      useSessionSetupMethod: true,
+    },
   });
 
   // Use `app.import` to add additional libraries to the generated

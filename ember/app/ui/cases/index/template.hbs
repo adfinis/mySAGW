@@ -39,6 +39,16 @@
           @value={{this.documentNumber}}
           @onChange={{fn this.updateFilter "documentNumber" }}
         />
+
+<!--        {{#if (can "filter access case")}}-->
+<!--          <Filter.Dropdown-->
+<!--            @label={{t "documents.filters.identity"}}-->
+<!--            @selected={{this.selectedOptions}}-->
+<!--            @options={{this.identities}}-->
+<!--            @onChange={{fn this.updateFilter "selectedIdentities"}}-->
+<!--            @onInput={{this.updateIdentitySearch}}-->
+<!--          />-->
+<!--        {{/if}}-->
       </Filters>
 
       <div class="uk-width-auto uk-flex uk-flex-middle">
@@ -47,7 +57,7 @@
         </label>
         <select class="uk-select uk-form-small uk-margin-small-left" id="order" {{on "change" this.updateOrder}}>
           {{#each this.orderOptions as |orderOption|}}
-            <option value={{orderOption.value}} selected={{eq this.order orderOption.value}}>
+            <option value={{orderOption.value}} selected={{eq (concat this.orderAttr "-" this.orderDirection) orderOption.value}}>
               {{t orderOption.label}} ({{t orderOption.direction}})
             </option>
           {{/each}}
@@ -55,6 +65,6 @@
       </div>
     </div>
 
-    <CasesTable @query={{this.caseQuery}}/>
+    <CasesTable @query={{this.caseQuery}} @dataOverride={{this.cases}} @loading={{this.fetchCaseAccesses.isRunning}}/>
   {{/if}}
 </div>

@@ -2,6 +2,8 @@ import Controller from "@ember/controller";
 import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
+import calumaQuery from "@projectcaluma/ember-core/caluma-query";
+import { allCases } from "@projectcaluma/ember-core/caluma-query/queries";
 import { queryManager } from "ember-apollo-client";
 import Changeset from "ember-changeset";
 import lookupValidator from "ember-changeset-validations";
@@ -10,12 +12,15 @@ import { saveAs } from "file-saver";
 
 import ENV from "mysagw/config/environment";
 import cancelCaseMutation from "mysagw/gql/mutations/cancel-case.graphql";
+import redoWorkItemMutation from "mysagw/gql/mutations/redo-work-item.graphql";
+import reopenCaseMutation from "mysagw/gql/mutations/reopen-case.graphql";
 import CaseValidations from "mysagw/validations/case";
 
 export default class CasesDetailIndexController extends Controller {
   @service router;
   @service notification;
   @service intl;
+  @service apollo;
 
   @queryManager apollo;
 
@@ -24,7 +29,7 @@ export default class CasesDetailIndexController extends Controller {
   @tracked isDeleteConfirmationShown = false;
 
   get readyWorkItems() {
-    return this.model.workItems.filterBy("status", "READY").length;
+    return this.case.workItems.filterBy("status", "READY").length;
   }
 
   /*
@@ -34,7 +39,7 @@ export default class CasesDetailIndexController extends Controller {
    * Also returns the most recent of each alwaysDisplayedAnswers work item to the list.
    */
   get remarkWorkItems() {
-    const configuredWorkItems = this.model.workItems
+    const configuredWorkItems = this.case.workItems
       .filter(
         (workItem) =>
           [
@@ -128,7 +133,7 @@ export default class CasesDetailIndexController extends Controller {
     try {
       yield this.apollo.mutate({
         mutation: cancelCaseMutation,
-        variables: { case: this.model.id },
+        variables: { case: this.case.id },
       });
 
       this.isDeleteConfirmationShown = false;
@@ -142,8 +147,8 @@ export default class CasesDetailIndexController extends Controller {
   }
 
   @action
-  transtionToCases() {
-    this.router.transtionTo("cases");
+  transitionToCases() {
+    this.router.transitionTo("cases");
   }
 
   @action
@@ -151,7 +156,7 @@ export default class CasesDetailIndexController extends Controller {
     this.newRow = new Changeset(
       this.store.createRecord("case-access", {
         email: undefined,
-        caseId: this.model.id,
+        caseId: this.case.id,
       }),
       lookupValidator(CaseValidations),
       CaseValidations
@@ -163,7 +168,7 @@ export default class CasesDetailIndexController extends Controller {
   @restartableTask
   *saveAccessRow() {
     if (
-      this.model.accesses.find((access) => {
+      this.case.accesses.find((access) => {
         return (
           (access.email ?? access.identity.get("email")) === this.newRow.email
         );
@@ -193,9 +198,9 @@ export default class CasesDetailIndexController extends Controller {
 
   @dropTask
   *deleteAccessRow(access) {
-    yield this.model.accesses.findBy("email", access.email).destroyRecord();
+    yield this.case.accesses.findBy("email", access.email).destroyRecord();
 
-    if (this.can.cannot("list case", this.model)) {
+    if (this.can.cannot("list case", this.case)) {
       this.router.transitionTo("cases");
     }
   }
@@ -211,7 +216,7 @@ export default class CasesDetailIndexController extends Controller {
     const adapter = this.store.adapterFor("identity");
 
     const uri = `${this.store.adapterFor("identity").buildURL("receipts")}/${
-      this.model.id
+      this.case.id
     }`;
     const init = {
       method: "GET",
@@ -227,7 +232,7 @@ export default class CasesDetailIndexController extends Controller {
       const blob = yield response.blob();
       const filename = `${this.intl.t("documents.accountingExportFilename", {
         dossierNo:
-          this.model.document.answers.edges.firstObject.node.StringAnswerValue,
+          this.case.document.answers.edges.firstObject.node.StringAnswerValue,
       })}`;
 
       saveAs(blob, filename);
@@ -235,5 +240,56 @@ export default class CasesDetailIndexController extends Controller {
       console.error(error);
       this.notification.fromError(error);
     }
+  }
+
+  @dropTask
+  *redoLastWorkItem() {
+    try {
+      yield this.apollo.mutate({
+        mutation: redoWorkItemMutation,
+        variables: { input: { id: this.case.redoWorkItem.id } },
+      });
+
+      yield this.getCase.perform();
+
+      this.notification.success(this.intl.t("documents.redoSuccess"));
+    } catch (error) {
+      console.error(error);
+      this.notification.danger(this.intl.t("documents.redoError"));
+    }
+  }
+
+  @dropTask
+  *reopenCase() {
+    try {
+      yield this.apollo.mutate({
+        mutation: reopenCaseMutation,
+        variables: {
+          input: {
+            id: this.case.id,
+            workItems: [this.case.redoWorkItem.id],
+          },
+        },
+      });
+
+      yield this.getCase.perform();
+
+      this.notification.success(this.intl.t("documents.reopenSuccess"));
+    } catch (error) {
+      console.error(error);
+      this.notification.danger(this.intl.t("documents.reopenError"));
+    }
+  }
+
+  @calumaQuery({ query: allCases })
+  caseQuery;
+
+  @dropTask
+  *getCase() {
+    yield this.caseQuery.fetch({ filter: [{ id: this.model.id }] });
+  }
+
+  get case() {
+    return this.caseQuery.value.firstObject ?? this.model;
   }
 }

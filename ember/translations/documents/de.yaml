@@ -37,6 +37,14 @@ documents:
   complete: "Gesuch abschliessen"
   completeText: "Das Gesuch kann abgeschlossen werden."
   completeSuccess: "Das Gesuch wurde abgeschlossen."
+  redo: "Aufgabe wiederherstellen"
+  redoText: "Die vorherige Aufgabe wird wiederhergestellt."
+  redoSuccess: "Aufgabe wiederherstellt"
+  redoError: "Aufgabe wiederherstellen fehlgeschlagen"
+  reopen: "Gesuch wiedereröffnen"
+  reopenText: "Das Gesuch wird mit der letzten Aufgabe wiedereröffnet."
+  reopenSuccess: "Gesuch wiedereröffnet"
+  reopenError: "Gesuch wiedereröffnen fehlgeschlagen"
   accountingExport: "Export für Buchhaltung"
   accountingExportFilename: "{dossierNo}.pdf"
 
@@ -78,3 +86,6 @@ documents:
       name: "Name"
       email: "E-Mail"
       action: ""
+
+  filters:
+    identity: "Identität"

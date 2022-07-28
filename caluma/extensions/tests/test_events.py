@@ -2,8 +2,13 @@ import pytest
 from django.utils import timezone
 
 from caluma.caluma_form.models import Question
-from caluma.caluma_workflow.api import complete_work_item, skip_work_item, start_case
-from caluma.caluma_workflow.models import Workflow, WorkItem
+from caluma.caluma_workflow.api import (
+    complete_work_item,
+    redo_work_item,
+    skip_work_item,
+    start_case,
+)
+from caluma.caluma_workflow.models import Case, Workflow, WorkItem
 
 from ..settings import settings
 
@@ -132,6 +137,7 @@ def test_work_item_define_amount(
         == WorkItem.STATUS_COMPLETED
     )
     assert work_items.get(task_id="advance-credits").status == WorkItem.STATUS_COMPLETED
+    assert circulation.parent_work_item.case.status == Case.STATUS_RUNNING
 
 
 def test_work_item_invite_to_circulation(
@@ -280,3 +286,32 @@ def test_access_control(
         user=user,
     )
     assert case_access_create_request_mock.called
+
+
+def test_redo_circulation(
+    db,
+    caluma_data,
+    user,
+    case_access_event_mock,
+    circulation,
+):
+    Question.objects.filter(formquestion__form__pk="additional-data-form").update(
+        is_required="false"
+    )
+
+    circ_work_item = circulation.parent_work_item
+
+    skip_work_item(circ_work_item.case.work_items.get(task_id="circulation"), user)
+
+    assert (
+        circ_work_item.child_case.work_items.get(task_id="finish-circulation").status
+        == WorkItem.STATUS_CANCELED
+    )
+
+    redo_work_item(circ_work_item.case.work_items.get(task_id="circulation"), user)
+
+    circ_work_item.refresh_from_db()
+    assert (
+        circ_work_item.child_case.work_items.get(task_id="finish-circulation").status
+        == WorkItem.STATUS_READY
+    )

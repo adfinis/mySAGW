@@ -2,10 +2,11 @@ $app-accent-color: #002596;
 
 $global-primary-background: $app-accent-color;
 
-@import "ember-power-select";
 @import "ember-uikit";
 @import "@projectcaluma/ember-form";
 @import "@projectcaluma/ember-form-builder";
+//@import "@projectcaluma/ember-analytics";
+@import "ember-power-select";
 
 @import "components/nav-bar";
 @import "components/dynamic-table";
@@ -25,10 +26,6 @@ main {
 
 .text-strike-through {
   text-decoration: line-through;
-}
-
-.ember-power-select-multiple-option {
-  margin: 5px 0 0 5px;
 }
 
 .ember-power-select-trigger[aria-disabled="true"]

@@ -255,6 +255,10 @@ class PublicIdentitiesViewSet(RetrieveModelMixin, ListModelMixin, GenericViewSet
     serializer_class = serializers.PublicIdentitySerializer
     queryset = models.Identity.objects.all()
     filterset_class = filters.IdentityFilterSet
+    search_fields = (
+        "first_name",
+        "last_name",
+    )
 
 
 class InterestCategoryViewSet(views.ModelViewSet):
@@ -318,7 +322,6 @@ class MyMembershipViewSet(
 ):
     serializer_class = serializers.MyMembershipsSerializer
     permission_classes = (IsAuthenticated & (IsOwn & ReadOnly),)
-    filterset_class = filters.MembershipFilterSet
 
     def get_queryset(self):
         return self.request.user.identity.memberships.all()

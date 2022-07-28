@@ -66,25 +66,25 @@ module.exports = function (environment) {
       },
 
       casesTable: {
-        defaultOrder: "CREATED_AT_DESC",
+        defaultOrder: "CREATED_AT-DESC",
         orderOptions: [
           {
-            value: "CREATED_AT_DESC",
+            value: "CREATED_AT-DESC",
             label: "documents.createdAt",
             direction: "documents.desc",
           },
           {
-            value: "CREATED_AT_ASC",
+            value: "CREATED_AT-ASC",
             label: "documents.createdAt",
             direction: "documents.asc",
           },
           {
-            value: "MODIFIED_AT_DESC",
+            value: "MODIFIED_AT-DESC",
             label: "documents.modifiedAt",
             direction: "documents.desc",
           },
           {
-            value: "MODIFIED_AT_ASC",
+            value: "MODIFIED_AT-ASC",
             label: "documents.modifiedAt",
             direction: "documents.asc",
           },
@@ -101,6 +101,18 @@ module.exports = function (environment) {
           "additional-data-form",
         ],
         skippableTaskSlugs: [],
+        redoableTaskSlugs: [
+          "review-document",
+          "circulation",
+          "decision-and-credit",
+          "define-amount",
+        ],
+        canRedoTaskSlug: [
+          "circulation",
+          "decision-and-credit",
+          "additional-data",
+          "complete-document",
+        ],
         manuallyCompletableTasks: ["complete-document"],
         displayedAnswers: {
           // task slug

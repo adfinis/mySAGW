@@ -1,5 +1,5 @@
+import { faker } from "@faker-js/faker";
 import { Factory } from "ember-cli-mirage";
-import faker from "faker";
 
 export default Factory.extend({
   title: () => faker.random.word(),
