@@ -83,15 +83,22 @@ class MySAGWPermission(BasePermission):
             return True
 
         case = self._get_case_for_doc(answer.document)
-        return self._is_admin_or_sagw(info) or (
-            (
-                self._can_access_case(info, case)
-                or self._is_own(info, answer.document.family)
-            )
-            and case.work_items.filter(
-                status="ready", task__slug__in=settings.APPLICANT_TASK_SLUGS
-            ).exists()
+
+        if not self._is_admin_or_sagw(info) and not (
+            self._can_access_case(info, case)
+            or self._is_own(info, answer.document.family)
+        ):
+            return False
+
+        work_item = (
+            answer.document.family.work_item
+            if hasattr(answer.document.family, "work_item")
+            else case.work_items.filter(
+                task__slug__in=["submit-document", "revise-document"], status="ready"
+            ).first()
         )
+
+        return work_item is not None and work_item.status == "ready"
 
     @permission_for(CompleteWorkItem)
     @permission_for(CancelCase)

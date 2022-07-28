@@ -35,10 +35,11 @@ export default class CustomCaseModel extends CaseModel {
       .isAny("status", "READY");
   }
 
-  get hasSubmitWorkItem() {
+  get hasSubmitOrReviseWorkItem() {
     return this.workItems.find(
       (workItem) =>
-        workItem.task.slug === ENV.APP.caluma.submitTaskSlug &&
+        (workItem.task.slug === ENV.APP.caluma.submitTaskSlug ||
+          workItem.task.slug === ENV.APP.caluma.reviseTaskSlug) &&
         workItem.status === "READY"
     );
   }

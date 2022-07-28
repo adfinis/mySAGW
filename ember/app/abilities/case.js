@@ -15,7 +15,7 @@ export default class CaseAbility extends BaseAbility {
   }
 
   get canDelete() {
-    return this.model.hasSubmitWorkItem || this.isStaffOrAdmin;
+    return this.model.hasSubmitOrReviseWorkItem || this.isStaffOrAdmin;
   }
 
   get canRedo() {
