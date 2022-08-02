@@ -5,7 +5,7 @@ $global-primary-background: $app-accent-color;
 @import "ember-uikit";
 @import "@projectcaluma/ember-form";
 @import "@projectcaluma/ember-form-builder";
-//@import "@projectcaluma/ember-analytics";
+@import "@projectcaluma/ember-analytics";
 @import "ember-power-select";
 
 @import "components/nav-bar";
