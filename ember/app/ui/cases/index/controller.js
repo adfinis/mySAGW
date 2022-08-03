@@ -35,6 +35,7 @@ export default class CasesIndexController extends Controller {
         ],
       },
       { status: "CANCELED", invert: true },
+      { ids: this.caseAccesses?.mapBy("caseId") ?? [] },
     ],
     order: [this.order],
   }));
@@ -45,15 +46,6 @@ export default class CasesIndexController extends Controller {
       this.documentNumber === null &&
       !this.caseQuery.isLoading
     );
-  }
-
-  get cases() {
-    if (this.selectedIdentities.length) {
-      const caseIds = this.caseAccesses?.mapBy("caseId") ?? [];
-      return this.caseQuery.value.filter(({ id }) => caseIds.includes(id));
-    }
-
-    return this.caseQuery.value;
   }
 
   get selectedOptions() {

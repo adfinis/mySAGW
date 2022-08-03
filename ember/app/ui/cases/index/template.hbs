@@ -40,7 +40,6 @@
           @onChange={{perform this.updateFilter "documentNumber"}}
         />
 
-        <!--    
         {{#if (can "filter access case")}}
           <Filter.Dropdown
             @label={{t "documents.filters.identity"}}
@@ -50,13 +49,11 @@
             @onInput={{this.updateIdentitySearch}}
           />
         {{/if}}
-        -->
       </Filters>
     </div>
 
     <CasesTable
       @query={{this.caseQuery}}
-      @dataOverride={{this.cases}}
       @loading={{this.fetchCaseAccesses.isRunning}}
       @setOrder={{this.setOrder}}
     />
