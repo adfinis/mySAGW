@@ -31,7 +31,8 @@ export default class SubmitButtonComponent extends Component {
       .find((workItem) => {
         return (
           workItem.status === "READY" &&
-          ENV.APP.caluma.documentEditableTaskSlugs.includes(workItem.task.slug)
+          (workItem.task.slug === ENV.APP.caluma.submitTaskSlug ||
+            workItem.task.slug === ENV.APP.caluma.reviseTaskSlug)
         );
       });
   }
