@@ -3,12 +3,12 @@ import { inject as service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import { decodeId } from "@projectcaluma/ember-core/helpers/decode-id";
 import { queryManager } from "ember-apollo-client";
-import { lastValue, restartableTask } from "ember-concurrency";
+import { restartableTask } from "ember-concurrency";
 import QueryParams from "ember-parachute";
 
 import createCaseMutation from "mysagw/gql/mutations/create-case.graphql";
-import getFormsQuery from "mysagw/gql/queries/get-form.graphql";
 import getWorkflowQuery from "mysagw/gql/queries/get-workflow.graphql";
+import { FilteredForms } from "mysagw/utils/filtered-forms";
 
 const queryParams = new QueryParams({
   selectedForm: {
@@ -28,55 +28,13 @@ export default class CaseNewController extends Controller.extend(
 
   @tracked selectedForm;
 
-  get forms() {
-    // sort forms, so that the ones without permissions are at the bottom
-    return [
-      this.allForms?.expertAssociation,
-      this.allForms?.advisoryBoard,
-      this.allForms?.bothTypes,
-      this.allForms.public,
-    ]
-      .map((forms) => {
-        return forms?.edges ?? [];
-      })
-      .flat();
-  }
+  filteredForms = FilteredForms.from(this);
 
   reset(_, isExiting) {
     if (isExiting) {
       this.resetQueryParams();
       this.selectedForm = null;
     }
-  }
-
-  @lastValue("fetchForms") allForms;
-  @restartableTask
-  *fetchForms() {
-    const organisations = (yield this.store.findAll("identity", {
-      reload: true,
-      adapterOptions: { customEndpoint: "my-orgs" },
-    })).filterBy("isAuthorized");
-
-    const isExpertAssociation = organisations.isAny("isExpertAssociation");
-    const isAdvisoryBoard = organisations.isAny("isAdvisoryBoard");
-
-    const allForms = {
-      ...(yield this.apollo.query({
-        query: getFormsQuery,
-      })),
-    };
-
-    if (!isExpertAssociation) {
-      delete allForms.expertAssociation;
-    }
-    if (!isAdvisoryBoard) {
-      delete allForms.advisoryBoard;
-    }
-    if (!isExpertAssociation && !isAdvisoryBoard) {
-      delete allForms.bothTypes;
-    }
-
-    return allForms;
   }
 
   @restartableTask

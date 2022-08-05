@@ -6,6 +6,7 @@ import { useCalumaQuery } from "@projectcaluma/ember-core/caluma-query";
 import { allCases } from "@projectcaluma/ember-core/caluma-query/queries";
 import { lastValue, restartableTask, timeout } from "ember-concurrency";
 
+import { FilteredForms } from "mysagw/utils/filtered-forms";
 export default class CasesIndexController extends Controller {
   queryParams = ["order", "documentNumber", "selectedIdentities"];
 
@@ -18,27 +19,17 @@ export default class CasesIndexController extends Controller {
   @tracked documentNumber = "";
   @tracked identitySearch = "";
   @tracked selectedIdentities = [];
+  @tracked answerSearch = "";
 
   caseQuery = useCalumaQuery(this, allCases, () => ({
     options: {
       pageSize: 20,
     },
-    filter: [
-      { workflow: "circulation", invert: true },
-      {
-        hasAnswer: [
-          {
-            question: "dossier-nr",
-            value: this.documentNumber,
-            lookup: "ICONTAINS",
-          },
-        ],
-      },
-      { status: "CANCELED", invert: true },
-      { ids: this.caseAccesses?.mapBy("caseId") ?? [] },
-    ],
+    filter: this.caseFilters,
     order: [this.order],
   }));
+
+  filteredForms = FilteredForms.from(this);
 
   get showEmpty() {
     return (
@@ -52,6 +43,36 @@ export default class CasesIndexController extends Controller {
     return this.identities?.filter((i) =>
       this.selectedIdentities.includes(i.idpId)
     );
+  }
+
+  get caseFilters() {
+    const filters = [
+      { workflow: "circulation", invert: true },
+      {
+        hasAnswer: [
+          {
+            question: "dossier-nr",
+            value: this.documentNumber,
+            lookup: "ICONTAINS",
+          },
+        ],
+      },
+      { status: "CANCELED", invert: true },
+      { ids: this.caseAccesses?.mapBy("caseId") ?? [] },
+    ];
+
+    if (this.filteredForms.value.length) {
+      filters.push({
+        searchAnswers: [
+          {
+            forms: this.filteredForms.value.mapBy("node.slug"),
+            value: this.answerSearch,
+          },
+        ],
+      });
+    }
+
+    return filters;
   }
 
   @lastValue("fetchIdentities") identities;

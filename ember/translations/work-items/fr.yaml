@@ -40,6 +40,7 @@ work-items:
     order: "Tri"
     taskTypes: "Tâche"
     documentNumber: "Numéro du document"
+    answer: "Response"
 
     all: "Tous"
     own: "Propre"
