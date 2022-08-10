@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "mysagw.snippets.apps.SnippetsConfig",
     "mysagw.accounting.apps.AccountingConfig",
     "mysagw.case.apps.CaseConfig",
+    "mysagw.healthz.apps.HealthzConfig",
 ]
 
 if ENV == "dev":
@@ -128,11 +129,25 @@ OIDC_RP_CLIENT_ID = env.str("OIDC_RP_CLIENT_ID", default="test_client")
 OIDC_RP_CLIENT_SECRET = env.str(
     "OIDC_RP_CLIENT_SECRET", default="fb13e564-75dd-4fc3-a993-3dad9064e71e"
 )
+OIDC_MONITORING_CLIENT_ID = env.str(
+    "OIDC_MONITORING_CLIENT_ID", default="monitoring_client"
+)
 OIDC_DRF_AUTH_BACKEND = "mysagw.oidc_auth.authentication.MySAGWAuthenticationBackend"
-
 
 # simple history
 SIMPLE_HISTORY_HISTORY_ID_USE_UUID = True
+
+# watchman
+WATCHMAN_CHECKS = env.list(
+    "WATCHMAN_CHECKS",
+    default=(
+        "mysagw.healthz.health_checks.check_migrations",
+        "mysagw.healthz.health_checks.check_models",
+        "watchman.checks.caches",
+        "watchman.checks.databases",
+    ),
+)
+WATCHMAN_ERROR_CODE = 503
 
 
 # Document Merge Service
