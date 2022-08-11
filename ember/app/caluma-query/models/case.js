@@ -24,7 +24,9 @@ export default class CustomCaseModel extends CaseModel {
   }
 
   get workItems() {
-    return this.raw.workItems.edges.mapBy("node");
+    return this.raw.workItems.edges
+      .mapBy("node")
+      .filter((workItem) => workItem.status !== "REDO");
   }
 
   get hasEditableWorkItem() {
@@ -44,14 +46,16 @@ export default class CustomCaseModel extends CaseModel {
     );
   }
 
-  get sortedWorkItems() {
-    return this.workItems.sort(
-      (a, b) => new Date(b.closedAt) - new Date(a.closedAt)
-    );
-  }
-
   get redoWorkItem() {
-    return this.sortedWorkItems.find(
+    if (this.canRedoWorkItem?.task.slug === "additional-data") {
+      return this.workItems.find(
+        (workItem) =>
+          workItem.status === "COMPLETED" &&
+          workItem.task.slug === "decision-and-credit"
+      );
+    }
+
+    return this.workItems.find(
       (workItem) =>
         (workItem.status === "COMPLETED" || workItem.status === "SKIPPED") &&
         ENV.APP.caluma.redoableTaskSlugs.includes(workItem.task.slug)
@@ -59,22 +63,11 @@ export default class CustomCaseModel extends CaseModel {
   }
 
   get canRedoWorkItem() {
-    const workItem = this.workItems.find(
+    return this.workItems.find(
       (workItem) =>
         workItem.status === "READY" &&
         ENV.APP.caluma.canRedoTaskSlug.includes(workItem.task.slug)
     );
-    if (
-      workItem?.task.slug === "additional-data" &&
-      this.workItems.find(
-        (workItem) =>
-          workItem.status === "COMPLETED" &&
-          workItem.task.slug === "define-amount"
-      )
-    ) {
-      return null;
-    }
-    return workItem;
   }
 
   get completeWorkItem() {

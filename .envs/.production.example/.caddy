@@ -1,3 +1,4 @@
 # Caddy
 # ------------------------------------------------------------------------------
 DOMAIN_NAME=mysagw.tld
+MONITORING_IPS=space separated IP addresses/CIDR ranges that are allowed to call the healthz endpoint. private_ranges are included automatically
