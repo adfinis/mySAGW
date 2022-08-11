@@ -96,7 +96,11 @@ export default class CasesDetailWorkItemsController extends Controller {
     });
 
     yield this.completedWorkItemsQuery.fetch({
-      filter: [...filter, { status: "READY", invert: true }],
+      filter: [
+        ...filter,
+        { status: "READY", invert: true },
+        { status: "REDO", invert: true },
+      ],
       order: [{ attribute: "CLOSED_AT", direction: "DESC" }],
     });
 

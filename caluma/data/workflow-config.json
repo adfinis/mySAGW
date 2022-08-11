@@ -594,7 +594,7 @@
         "workflow": "document-review",
         "task": "complete-document",
         "flow": null,
-        "redoable": "['redo-complete-document']|tasks"
+        "redoable": "['define-amount']|tasks"
     }
 }
 ]

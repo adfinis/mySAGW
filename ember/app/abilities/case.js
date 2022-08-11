@@ -19,6 +19,11 @@ export default class CaseAbility extends BaseAbility {
   }
 
   get canRedo() {
+    /*
+     * Only when additional-data-form isnt present can define-amount be redone,
+     * as it means the additional-data step was skipped.
+     * Otherwise canRedoWorkItem returns the work item which can be redone.
+     */
     return (
       ENV.APP.caluma.redoableTaskSlugs.includes(
         this.model.redoWorkItem?.task.slug
@@ -26,7 +31,7 @@ export default class CaseAbility extends BaseAbility {
       this.isStaffOrAdmin &&
       (this.model.canRedoWorkItem ||
         (!this.model.workItems.findBy("task.slug", "additional-data-form") &&
-          this.model.sortedWorkItems[0].task.slug === "define-amount"))
+          this.model.workItems[0].task.slug === "define-amount"))
     );
   }
 

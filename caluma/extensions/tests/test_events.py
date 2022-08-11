@@ -315,3 +315,56 @@ def test_redo_circulation(
         circ_work_item.child_case.work_items.get(task_id="finish-circulation").status
         == WorkItem.STATUS_READY
     )
+
+
+@pytest.mark.parametrize(
+    "decision,expected_work_item_task",
+    [
+        (
+            "define-amount",
+            "define-amount",
+        ),
+        (
+            "additional-data",
+            "advance-credits",
+        ),
+    ],
+)
+def test_redo_define_amount(
+    db,
+    caluma_data,
+    user,
+    case_access_event_mock,
+    circulation,
+    decision,
+    expected_work_item_task,
+):
+    Question.objects.filter(formquestion__form__pk="additional-data-form").update(
+        is_required="false"
+    )
+
+    case = circulation.parent_work_item.case
+
+    skip_work_item(case.work_items.get(task_id="circulation"), user)
+
+    case.work_items.get(task_id="decision-and-credit").document.answers.create(
+        question_id="decision-and-credit-decision",
+        value=f"decision-and-credit-decision-{decision}",
+    )
+
+    complete_work_item(case.work_items.get(task_id="decision-and-credit"), user)
+    if decision != "define-amount":
+        complete_work_item(case.work_items.get(task_id="additional-data"), user)
+
+    case.work_items.get(task_id="define-amount").document.answers.create(
+        question_id="define-amount-decision", value="define-amount-decision-continue"
+    )
+
+    complete_work_item(case.work_items.get(task_id="define-amount"), user)
+
+    redo_work_item(case.work_items.get(task_id="define-amount"), user)
+
+    assert case.status == Case.STATUS_RUNNING
+    assert case.work_items.filter(
+        task_id=expected_work_item_task, status=WorkItem.STATUS_READY
+    ).exists()
