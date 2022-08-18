@@ -40,6 +40,7 @@ work-items:
     order: "Sortierung"
     taskTypes: "Aufgabe"
     documentNumber: "Dossiernummer"
+    answer: "Antwort"
 
     all: "Alle"
     own: "Eigene"

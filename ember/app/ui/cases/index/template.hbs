@@ -39,6 +39,11 @@
           @value={{this.documentNumber}}
           @onChange={{perform this.updateFilter "documentNumber"}}
         />
+        <Filter.Input
+          @label={{t "work-items.filters.answer" }}
+          @value={{this.answerSearch}}
+          @onChange={{perform this.updateFilter "answerSearch"}}
+        />
 
         {{#if (can "filter access case")}}
           <Filter.Dropdown
