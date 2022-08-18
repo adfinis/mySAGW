@@ -1,14 +1,25 @@
 <table
-  class="dynamic-table uk-table uk-table-striped uk-table-hover uk-table-responsive {{
-    join " " @config.classList
-  }}"
+  class="dynamic-table uk-table uk-table-striped uk-table-hover uk-table-responsive
+    {{join ' ' @config.classList}}"
   ...attributes
 >
   <thead>
     <tr>
       {{#each (map-by "heading" @config.columns) as |header|}}
         <th class={{join " " header.classList}}>
-          {{t header.label}}
+          {{#if header.sortKey}}
+            <UkButton
+              @color="text"
+              @onClick={{fn this.updateOrder header.sortKey}}
+            >
+              {{t header.label}}
+              {{#if (eq this.orderKey header.sortKey)}}
+                <span uk-icon="icon: {{this.sortIcon}}"></span>
+              {{/if}}
+            </UkButton>
+          {{else}}
+            {{t header.label}}
+          {{/if}}
         </th>
       {{/each}}
     </tr>
@@ -36,7 +47,7 @@
 </table>
 
 {{#if @loading}}
-  <LoadingSpinner/>
+  <LoadingSpinner />
 {{else if @hasNextPage}}
   <div {{in-viewport onEnter=@loadMoreData}}>
     <LoadingSpinner />

@@ -2,11 +2,9 @@ import Controller from "@ember/controller";
 import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
-import calumaQuery from "@projectcaluma/ember-core/caluma-query";
+import { useCalumaQuery } from "@projectcaluma/ember-core/caluma-query";
 import { allCases } from "@projectcaluma/ember-core/caluma-query/queries";
 import { lastValue, restartableTask, timeout } from "ember-concurrency";
-
-import ENV from "mysagw/config/environment";
 
 export default class CasesIndexController extends Controller {
   queryParams = ["order", "documentNumber", "selectedIdentities"];
@@ -15,28 +13,37 @@ export default class CasesIndexController extends Controller {
   @service notification;
   @service intl;
 
-  @tracked orderAttr = ENV.APP.casesTable.defaultOrder.split("-")[0];
-  @tracked orderDirection = ENV.APP.casesTable.defaultOrder.split("-")[1];
-  @tracked documentNumber = null;
+  @tracked order = { attribute: "CREATED_AT", direction: "DESC" };
+  @tracked types = [];
+  @tracked documentNumber = "";
   @tracked identitySearch = "";
   @tracked selectedIdentities = [];
 
-  orderOptions = ENV.APP.casesTable.orderOptions;
-
-  @calumaQuery({ query: allCases, options: "options" })
-  caseQuery;
-
-  get options() {
-    return {
+  caseQuery = useCalumaQuery(this, allCases, () => ({
+    options: {
       pageSize: 20,
-    };
-  }
+    },
+    filter: [
+      { workflow: "circulation", invert: true },
+      {
+        hasAnswer: [
+          {
+            question: "dossier-nr",
+            value: this.documentNumber,
+            lookup: "ICONTAINS",
+          },
+        ],
+      },
+      { status: "CANCELED", invert: true },
+    ],
+    order: [this.order],
+  }));
 
   get showEmpty() {
     return (
       !this.caseQuery.value.length &&
       this.documentNumber === null &&
-      !this.fetchCases.isRunning
+      !this.caseQuery.isLoading
     );
   }
 
@@ -53,36 +60,6 @@ export default class CasesIndexController extends Controller {
     return this.identities?.filter((i) =>
       this.selectedIdentities.includes(i.idpId)
     );
-  }
-
-  @restartableTask
-  *fetchCases() {
-    yield timeout(1000);
-
-    try {
-      yield this.caseQuery.fetch({
-        filter: [
-          { workflow: "circulation", invert: true },
-          {
-            hasAnswer: [
-              {
-                question: "dossier-nr",
-                value: this.documentNumber ?? "",
-                lookup: "ICONTAINS",
-              },
-            ],
-          },
-          { status: "CANCELED", invert: true },
-        ],
-        order: [{ attribute: this.orderAttr, direction: this.orderDirection }],
-      });
-
-      yield this.fetchCaseAccesses.perform();
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e);
-      this.notification.danger(this.intl.t("documents.fetchError"));
-    }
   }
 
   @lastValue("fetchIdentities") identities;
@@ -132,27 +109,21 @@ export default class CasesIndexController extends Controller {
     }
   }
 
-  @action
-  updateOrder(event) {
-    this.orderAttr = event.target.value.split("-")[0];
-    this.orderDirection = event.target.value.split("-")[1];
+  @restartableTask
+  *updateFilter(type, eventOrValue) {
+    yield timeout(2000);
 
-    this.fetchCases.perform();
-  }
-
-  @action
-  updateFilter(type, eventOrValue) {
     /*
      * Set filter from type argument, if eventOrValue is a event it is from an input field
      * if its selectedIdentites an array is to be expected
      */
-    if (eventOrValue.target) {
-      this[type] = eventOrValue.target.value;
-    } else if (type === "selectedIdentities") {
+    if (type === "selectedIdentities") {
       this[type] = eventOrValue.filterBy("idpId").mapBy("idpId");
+    } else {
+      this[type] = eventOrValue.target.value;
     }
 
-    this.fetchCases.perform();
+    this.fetchCaseAccesses.perform();
   }
 
   @action
@@ -160,5 +131,10 @@ export default class CasesIndexController extends Controller {
     this.identitySearch = value;
 
     this.fetchIdentities.perform();
+  }
+
+  @action
+  setOrder(order) {
+    this.order = order;
   }
 }
