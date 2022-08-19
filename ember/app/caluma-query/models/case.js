@@ -132,7 +132,7 @@ export default class CustomCaseModel extends CaseModel {
         name
         description
       }
-      answers(filter: [{ questions: ["dossier-nr", "verteilplan-nr"] }]) {
+      answers(filter: [{ questions: ["dossier-nr", "verteilplan-nr", "sektion", "mitgliedinstitution"] }]) {
         edges {
           node {
             id
