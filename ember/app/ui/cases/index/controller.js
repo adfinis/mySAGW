@@ -82,18 +82,24 @@ export default class CasesIndexController extends Controller {
 
   @lastValue("fetchIdentities") identities;
   @restartableTask
-  *fetchIdentities() {
+  *fetchIdentities(initial = false) {
     yield timeout(500);
 
     try {
+      const filter = {
+        search: this.identitySearch,
+        isOrganisation: false,
+        has_idp_id: true,
+      };
+
+      if (initial) {
+        filter.idpIds = this.selectedIdentities.join(",");
+      }
+
       const identities = yield this.store.query(
         "identity",
         {
-          filter: {
-            search: this.identitySearch,
-            isOrganisation: false,
-            has_idp_id: true,
-          },
+          filter,
           page: {
             number: 1,
             size: 20,
@@ -114,10 +120,8 @@ export default class CasesIndexController extends Controller {
   *fetchCaseAccesses() {
     try {
       if (this.selectedIdentities.length) {
-        const idpIds = this.selectedIdentities.join(",");
-
         return yield this.store.query("case-access", {
-          filter: { idpIds },
+          filter: { idpIds: this.selectedIdentities.join(",") },
         });
       }
     } catch (error) {

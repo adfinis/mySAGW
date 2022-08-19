@@ -3,7 +3,7 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 
 export default class FiltersDropdownComponent extends Component {
-  @tracked selection = [];
+  @tracked selection = this.args.selected;
 
   @action
   setSelection(value) {
