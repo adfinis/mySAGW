@@ -8,7 +8,12 @@ import { lastValue, restartableTask, timeout } from "ember-concurrency";
 
 import { FilteredForms } from "mysagw/utils/filtered-forms";
 export default class CasesIndexController extends Controller {
-  queryParams = ["order", "documentNumber", "selectedIdentities"];
+  queryParams = [
+    "order",
+    "documentNumber",
+    "selectedIdentities",
+    "answerSearch",
+  ];
 
   @service store;
   @service notification;
@@ -78,7 +83,7 @@ export default class CasesIndexController extends Controller {
   @lastValue("fetchIdentities") identities;
   @restartableTask
   *fetchIdentities() {
-    yield timeout(400);
+    yield timeout(500);
 
     try {
       const identities = yield this.store.query(
@@ -109,11 +114,10 @@ export default class CasesIndexController extends Controller {
   *fetchCaseAccesses() {
     try {
       if (this.selectedIdentities.length) {
-        const caseIds = this.caseQuery.value.mapBy("id").join(",");
         const idpIds = this.selectedIdentities.join(",");
 
         return yield this.store.query("case-access", {
-          filter: { caseIds, idpIds },
+          filter: { idpIds },
         });
       }
     } catch (error) {
@@ -124,8 +128,7 @@ export default class CasesIndexController extends Controller {
 
   @restartableTask
   *updateFilter(type, eventOrValue) {
-    yield timeout(2000);
-
+    yield timeout(500);
     /*
      * Set filter from type argument, if eventOrValue is a event it is from an input field
      * if its selectedIdentites an array is to be expected

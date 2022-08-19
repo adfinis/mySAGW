@@ -46,8 +46,8 @@ export default class CasesTableComponent extends Component {
         type: "answer-value",
       },
       {
-        heading: { label: "documents.society", sortKey: "fachgesellschaft" },
-        questionSlug: "fachgesellschaft",
+        heading: { label: "documents.society", sortKey: "mitgliedinstitution" },
+        questionSlug: "mitgliedinstitution",
         answerKey: "document.answers.edges",
         type: "answer-value",
       },
