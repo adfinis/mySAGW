@@ -92,7 +92,7 @@ export default class CasesIndexController extends Controller {
         has_idp_id: true,
       };
 
-      if (initial) {
+      if (initial && this.selectedIdentities.length) {
         filter.idpIds = this.selectedIdentities.join(",");
       }
 
