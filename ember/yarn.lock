@@ -21,7 +21,7 @@
   dependencies:
     "@jridgewell/trace-mapping" "^0.3.0"
 
-"@apollo/client@3.6.2", "@apollo/client@^3.5.10", "@apollo/client@^3.6.2", "@apollo/client@^3.6.6", "@apollo/client@^3.6.9":
+"@apollo/client@3.6.2", "@apollo/client@^3.5.10", "@apollo/client@^3.6.2", "@apollo/client@^3.6.9":
   version "3.6.2"
   resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.6.2.tgz#0418bfa6358dd117894c8af396706cfa2b186032"
   integrity sha512-DNWyl+NNU2VsfHtXwOr4rV9hnQFPkl2/dNXeouhk9q7bXCWdEh3K8YTt/frULGVKbQjtnlPmz8C+LFI/JZ2N3w==
@@ -3030,54 +3030,7 @@
     ember-validated-form "^5.3.0"
     graphql "^15.6.1"
 
-"@projectcaluma/ember-core@^11.0.0-beta.7":
-  version "11.0.0-beta.7"
-  resolved "https://gitpkg.now.sh/derrabauke/ember-caluma/packages/core?4f1ba68d387a294d3fdbd40e0614ed4ad5159b72#ea255f2753dbf4abced4adf4279105d019851b3a"
-  dependencies:
-    "@apollo/client" "^3.6.6"
-    "@ember/string" "^3.0.0"
-    "@glimmer/tracking" "^1.1.2"
-    ember-apollo-client "^4.0.2"
-    ember-auto-import "^2.4.2"
-    ember-cli-babel "^7.26.11"
-    ember-cli-htmlbars "^6.0.1"
-    ember-concurrency "^2.2.1"
-    ember-fetch "^8.1.1"
-    ember-inflector "^4.0.2"
-    ember-intl "^5.7.2"
-    ember-resources "^4.8.2"
-    ember-uikit "^5.1.3"
-    graphql "^15.8.0"
-    graphql-tag "^2.12.6"
-    jexl "^2.3.0"
-    lodash.clonedeep "^4.5.0"
-    slugify "^1.6.5"
-
-"@projectcaluma/ember-core@^11.0.0-beta.8":
-  version "11.0.0-beta.8"
-  resolved "https://registry.yarnpkg.com/@projectcaluma/ember-core/-/ember-core-11.0.0-beta.8.tgz#cd12cc3bfcee812e9d37bd306a078e749e5a1d54"
-  integrity sha512-fmvOwCGcz9r3ES/kWrosl4vqMM8gx7R0+bLOsZMG0F1t0rOnLef2oVMQhomjbJSdCQ39N2J3QlKY5WhRdmws9Q==
-  dependencies:
-    "@apollo/client" "^3.6.9"
-    "@ember/string" "^3.0.0"
-    "@glimmer/tracking" "^1.1.2"
-    ember-apollo-client "~4.0.2"
-    ember-auto-import "^2.4.2"
-    ember-cli-babel "^7.26.11"
-    ember-cli-htmlbars "^6.1.0"
-    ember-concurrency "^2.2.1"
-    ember-fetch "^8.1.1"
-    ember-inflector "^4.0.2"
-    ember-intl "^5.7.2"
-    ember-resources "^5.0.2"
-    ember-uikit "^5.1.3"
-    graphql "^15.8.0"
-    graphql-tag "^2.12.6"
-    jexl "^2.3.0"
-    lodash.clonedeep "^4.5.0"
-    slugify "^1.6.5"
-
-"@projectcaluma/ember-core@^11.0.0-beta.9":
+"@projectcaluma/ember-core@^11.0.0-beta.7", "@projectcaluma/ember-core@^11.0.0-beta.8", "@projectcaluma/ember-core@^11.0.0-beta.9":
   version "11.0.0-beta.9"
   resolved "https://registry.yarnpkg.com/@projectcaluma/ember-core/-/ember-core-11.0.0-beta.9.tgz#088f99b39e6f92ac8003082b55b2e1a3033f3d36"
   integrity sha512-I01vj+vk8HyZ21pWhYToQZSdADupYvu+J/L2DY6CTo52vMPRX/f6YuKfdkmK3Do/wgyoHjgUS3TlTvgXIZUMMg==
@@ -9318,7 +9271,7 @@ ember-resolver@^8.0.3:
     ember-cli-version-checker "^5.1.2"
     resolve "^1.20.0"
 
-ember-resources@5.1.1, ember-resources@^4.7.1, ember-resources@^4.8.2, ember-resources@^5.0.1, ember-resources@^5.0.2, ember-resources@^5.1.1, ember-resources@^5.2.1:
+ember-resources@5.1.1, ember-resources@^4.7.1, ember-resources@^5.0.1, ember-resources@^5.1.1, ember-resources@^5.2.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/ember-resources/-/ember-resources-5.1.1.tgz#1575f32501dff402f6cb994ac7945a2f953b5e6b"
   integrity sha512-QQRmvB9IC1F8NusaU54yrStEKXp6M4XHYCp6uChcI4aUS20X13wLax3734SbOyqhnHSNRQeMCGEFwziN4LOMxQ==
