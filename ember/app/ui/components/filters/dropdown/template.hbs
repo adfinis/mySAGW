@@ -3,12 +3,12 @@
     {{@label}}
     <PowerSelectMultiple
       @options={{@options}}
-      @selected={{this.selection}}
+      @selected={{@selected}}
       @onChange={{this.setSelection}}
       @onInput={{@onInput}}
       @searchEnabled={{true}}
       @searchField="label"
-      @triggerClass="uk-select"
+      @triggerClass="uk-select height-auto"
       @loadingMessage={{t "components.filters.dropdown.loading"}}
       as |option|
     >
