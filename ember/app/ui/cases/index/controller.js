@@ -22,7 +22,6 @@ export default class CasesIndexController extends Controller {
   @tracked order = { attribute: "CREATED_AT", direction: "DESC" };
   @tracked types = [];
   @tracked documentNumber = "";
-  @tracked identitySearch = "";
   @tracked selectedIdentities = [];
   @tracked answerSearch = "";
 
@@ -41,12 +40,6 @@ export default class CasesIndexController extends Controller {
       !this.caseQuery.value.length &&
       this.documentNumber === null &&
       !this.caseQuery.isLoading
-    );
-  }
-
-  get selectedOptions() {
-    return this.identities?.filter((i) =>
-      this.selectedIdentities.includes(i.idpId)
     );
   }
 
@@ -80,41 +73,6 @@ export default class CasesIndexController extends Controller {
     return filters;
   }
 
-  @lastValue("fetchIdentities") identities;
-  @restartableTask
-  *fetchIdentities(initial = false) {
-    yield timeout(500);
-
-    try {
-      const filter = {
-        search: this.identitySearch,
-        isOrganisation: false,
-        has_idp_id: true,
-      };
-
-      if (initial && this.selectedIdentities.length) {
-        filter.idpIds = this.selectedIdentities.join(",");
-      }
-
-      const identities = yield this.store.query(
-        "identity",
-        {
-          filter,
-          page: {
-            number: 1,
-            size: 20,
-          },
-        },
-        { adapterOptions: { customEndpoint: "public-identities" } }
-      );
-
-      return identities;
-    } catch (error) {
-      console.error(error);
-      this.notification.fromError(error);
-    }
-  }
-
   @lastValue("fetchCaseAccesses") caseAccesses;
   @restartableTask
   *fetchCaseAccesses() {
@@ -144,13 +102,6 @@ export default class CasesIndexController extends Controller {
     }
 
     this.fetchCaseAccesses.perform();
-  }
-
-  @action
-  updateIdentitySearch(value) {
-    this.identitySearch = value;
-
-    this.fetchIdentities.perform();
   }
 
   @action

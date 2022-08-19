@@ -46,12 +46,9 @@
         />
 
         {{#if (can "filter access case")}}
-          <Filter.Dropdown
-            @label={{t "documents.filters.identity"}}
-            @selected={{this.selectedOptions}}
-            @options={{this.identities}}
+          <Filter.Identity
             @onChange={{perform this.updateFilter "selectedIdentities"}}
-            @onInput={{this.updateIdentitySearch}}
+            @selectedIdentities={{this.selectedIdentities}}
           />
         {{/if}}
       </Filters>
