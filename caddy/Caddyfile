@@ -7,6 +7,13 @@
     reverse_proxy /* http://ember:80
     {$GRAPHIQL_PROXY}
 
+    @monitoring {
+        remote_ip forwarded private_ranges {$MONITORING_IPS}
+    }
+    handle @monitoring {
+        reverse_proxy /healthz* http://caluma:8000
+    }
+
     log {
         output stdout
     }

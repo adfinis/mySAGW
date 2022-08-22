@@ -83,7 +83,12 @@ def send_new_work_item_mail(sender, work_item, user, **kwargs):
 @on(post_create_work_item, raise_exception=True)
 @filter_events(
     lambda sender: sender
-    in ["post_complete_work_item", "post_skip_work_item", "case_post_create"]
+    in [
+        "post_complete_work_item",
+        "post_skip_work_item",
+        "case_post_create",
+        "post_redo_work_item",
+    ]
 )
 @transaction.atomic
 def set_case_status(sender, work_item, user, **kwargs):
@@ -276,3 +281,36 @@ def redo_circulation(sender, work_item, user, **kwargs):
         parent_work_item=work_item,
     )
     work_item.save()
+
+
+@on(post_redo_work_item, raise_exception=True)
+@filter_events(lambda sender, work_item: work_item.task_id == "define-amount")
+@transaction.atomic
+def redo_define_amount(sender, work_item, user, **kwargs):
+    credit_decision = (
+        work_item.case.work_items.filter(task_id="decision-and-credit")
+        .order_by("-created_at")
+        .first()
+        .document.answers.get(
+            question_id="decision-and-credit-decision",
+        )
+    )
+
+    if "additional-data" in credit_decision.value:
+        advance_credits = (
+            work_item.case.work_items.filter(task__slug="advance-credits")
+            .order_by("-created_at")
+            .first()
+        )
+        data_form = (
+            work_item.case.work_items.filter(task__slug="additional-data-form")
+            .order_by("-created_at")
+            .first()
+        )
+
+        # This cant be done over caluma_workflow_api because they are the last work items of a "branch",
+        # consequently they dont have another following work item which defines redoable for them.
+        advance_credits.status = caluma_workflow_models.WorkItem.STATUS_READY
+        advance_credits.save()
+        data_form.status = caluma_workflow_models.WorkItem.STATUS_SUSPENDED
+        data_form.save()

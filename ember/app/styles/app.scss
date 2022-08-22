@@ -46,4 +46,8 @@ main {
   row-gap: 5px;
 }
 
+.height-auto {
+  height: auto !important;
+}
+
 @import 'ember-uikit';

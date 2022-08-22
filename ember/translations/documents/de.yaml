@@ -13,8 +13,9 @@ documents:
   asc: "Aufsteigend"
   description: "Beschreibung"
   status: "Status"
-  section: "Abschnitt"
+  section: "Sektion"
   distributionPlan: "Verteilplan"
+  society: "Fachgesellschaft"
 
   general: "Information"
 

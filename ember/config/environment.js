@@ -65,32 +65,6 @@ module.exports = function (environment) {
         completed: "check",
       },
 
-      casesTable: {
-        defaultOrder: "CREATED_AT-DESC",
-        orderOptions: [
-          {
-            value: "CREATED_AT-DESC",
-            label: "documents.createdAt",
-            direction: "documents.desc",
-          },
-          {
-            value: "CREATED_AT-ASC",
-            label: "documents.createdAt",
-            direction: "documents.asc",
-          },
-          {
-            value: "MODIFIED_AT-DESC",
-            label: "documents.modifiedAt",
-            direction: "documents.desc",
-          },
-          {
-            value: "MODIFIED_AT-ASC",
-            label: "documents.modifiedAt",
-            direction: "documents.asc",
-          },
-        ],
-      },
-
       caluma: {
         submitTaskSlug: "submit-document",
         reviseTaskSlug: "revise-document",
@@ -160,6 +134,9 @@ module.exports = function (environment) {
         },
         alwaysDisplayedAnswers: {
           "decision-and-credit": ["gesprochener-rahmenkredit"],
+        },
+        orderTypeKeys: {
+          attribute: ["DOCUMENT__FORM__NAME", "MODIFIED_AT", "CREATED_AT"],
         },
       },
     },

@@ -1,9 +1,10 @@
 <DynamicTable
   @loading={{or @query.isLoading @loading}}
-  @data={{this.data}}
+  @data={{@query.value}}
   @config={{this.dynamicTableConfig}}
   @loadMoreData={{this.fetchMoreCases}}
   @hasNextPage={{@query.hasNextPage}}
+  @setOrder={{@setOrder}}
 />
 <div class="uk-width-expand uk-flex uk-flex-middle uk-text-meta">
   <span>

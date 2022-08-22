@@ -16,7 +16,7 @@ services:
       - db
 
   caluma:
-    image: ghcr.io/projectcaluma/caluma:8.0.0-beta.9
+    image: ghcr.io/projectcaluma/caluma:8.0.0-beta.14
     build:
       context: caluma
     environment:
@@ -28,6 +28,7 @@ services:
       - VISIBILITY_CLASSES=caluma.caluma_user.visibilities.Authenticated,caluma.extensions.visibilities.MySAGWVisibility
       - PERMISSION_CLASSES=caluma.caluma_user.permissions.IsAuthenticated,caluma.extensions.permissions.MySAGWPermission
       - DYNAMIC_TASKS_CLASSES=caluma.extensions.dynamic_tasks.CustomDynamicTasks
+      - ENABLE_HEALTHZ_ENDPOINT=true
 
     depends_on:
       - db
@@ -75,13 +76,13 @@ services:
       context: ./ember/
 
   minio:
-    image: minio/minio:RELEASE.2021-03-04T00-53-13Z
+    image: minio/minio:RELEASE.2022-08-13T21-54-44Z
     volumes:
       - minio_data:/data
     command: server data
 
   mc:
-    image: minio/mc:RELEASE.2021-02-19T05-34-40Z
+    image: minio/mc:RELEASE.2022-08-11T00-30-48Z
     restart: on-failure
     entrypoint: >
       /bin/sh -c "
@@ -92,7 +93,7 @@ services:
       - minio
 
   dms:
-    image: ghcr.io/adfinis-sygroup/document-merge-service:4.6.3
+    image: ghcr.io/adfinis/document-merge-service:5.0.1
     depends_on:
       - db
     volumes:

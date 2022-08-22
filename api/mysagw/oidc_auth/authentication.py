@@ -63,7 +63,10 @@ class MySAGWAuthenticationBackend(OIDCAuthenticationBackend):
     def get_userinfo_or_introspection(self, access_token) -> dict:
         client_id = self._client_id_from_token(access_token)
 
-        if client_id == settings.OIDC_RP_CLIENT_ID:
+        if client_id in [
+            settings.OIDC_RP_CLIENT_ID,
+            settings.OIDC_MONITORING_CLIENT_ID,
+        ]:
             # check introspection (confidental client)
             claims = self.cached_request(
                 self.get_introspection, access_token, "auth.introspection"
@@ -89,7 +92,10 @@ class MySAGWAuthenticationBackend(OIDCAuthenticationBackend):
             settings.OIDC_GROUPS_CLAIM,
         ]
 
-        if claims.get(settings.OIDC_CLIENT_ID_CLAIM) == settings.OIDC_RP_CLIENT_ID:
+        if claims.get(settings.OIDC_CLIENT_ID_CLAIM) in [
+            settings.OIDC_RP_CLIENT_ID,
+            settings.OIDC_MONITORING_CLIENT_ID,
+        ]:
             claims_to_verify = [
                 settings.OIDC_ID_CLAIM,
             ]

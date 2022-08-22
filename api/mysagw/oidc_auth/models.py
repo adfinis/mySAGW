@@ -32,6 +32,10 @@ class BaseUser:  # pragma: no cover
     def is_staff(self):
         return self.is_admin or settings.STAFF_GROUP in self.groups
 
+    @property
+    def is_monitoring_member(self):
+        return self.is_staff or self.client_id == settings.OIDC_MONITORING_CLIENT_ID
+
 
 class OIDCUser(BaseUser):
     def __init__(self, token: str, claims: dict):
