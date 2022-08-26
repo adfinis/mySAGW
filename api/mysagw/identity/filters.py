@@ -121,14 +121,18 @@ class SAGWSearchFilter(SearchFilter):
                 & models.Q(inactive=False)
             )
         )
+
         membership_base_subquery = membership_base_query.filter(
             identity_id=OuterRef("pk")
         )
 
+        filters = []
+        excludes = []
+
         for search_term in search_terms:
-            method = queryset.filter
+            exclude = False
             if search_term.startswith("-"):
-                method = queryset.exclude
+                exclude = True
                 search_term = search_term.lstrip("-")
 
             queries = []
@@ -148,13 +152,27 @@ class SAGWSearchFilter(SearchFilter):
                     )
                     # first Q object short circuits again, for a performance gain
                     lookup = models.Q(**{orm_lookup: search_term}) & models.Q(
-                        memberships__id=Subquery(membership_subquery.values("id")[:1])
+                        memberships__id__in=Subquery(membership_subquery.values("id"))
                     )
 
                 queries.append(lookup)
 
             condition = reduce(operator.or_, queries)
-            queryset = method(condition)
+            if exclude:
+                excludes.append(condition)
+            else:
+                filters.append(condition)
+
+        needed = [set(queryset.filter(f).values_list("pk", flat=True)) for f in filters]
+        needed_pks = reduce(lambda a, b: a.intersection(b), needed)
+
+        excluded = [
+            pk
+            for f in excludes
+            for pk in queryset.filter(f).values_list("pk", flat=True)
+        ]
+
+        queryset = queryset.filter(pk__in=needed_pks).exclude(pk__in=excluded)
 
         if self.must_call_distinct(queryset, search_fields):
             # Filtering against a many-to-many field requires us to
