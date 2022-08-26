@@ -33,7 +33,7 @@ def get_receipt_urls(data):
     result = []
     for row in rows:
         try:
-            result.append(row["answers"]["edges"][0]["node"]["file"]["downloadUrl"])
+            result.append(row["answers"]["edges"][0]["node"]["value"][0]["downloadUrl"])
         except (KeyError, TypeError, IndexError):
             continue
     return result
