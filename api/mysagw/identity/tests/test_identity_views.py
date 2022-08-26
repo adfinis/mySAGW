@@ -408,14 +408,14 @@ def test_identity_search(
     identities.append(phone.identity)
 
     phil_interest_identity = identity_factory()
-    phil_interest = interest_factory(title={"en": "philosophy"})
-    class_interest = interest_factory(title={"en": "class"})
+    phil_interest = interest_factory(title={"de": "philosophy"})
+    class_interest = interest_factory(title={"de": "class"})
     phil_interest_identity.interests.add(phil_interest)
     phil_interest_identity.interests.add(class_interest)
     identities.append(phil_interest_identity)
 
     phil_class_interest_identity = identity_factory()
-    phil_class_interest = interest_factory(title={"en": "philosophy class"})
+    phil_class_interest = interest_factory(title={"de": "philosophy class"})
     phil_class_interest_identity.interests.add(phil_class_interest)
     identities.append(phil_class_interest_identity)
 
