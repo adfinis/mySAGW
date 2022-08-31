@@ -23,18 +23,19 @@
   },
   "devDependencies": {
     "@adfinis-sygroup/eslint-config": "^1.5.0",
-    "@apollo/client": "^3.6.2",
+    "@apollo/client": "^3.6.9",
     "@ember/optional-features": "^2.0.0",
     "@ember/render-modifiers": "^2.0.4",
     "@ember/test-helpers": "^2.8.1",
+    "@faker-js/faker": "^7.3.0",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
-    "@projectcaluma/ember-analytics": "^1.0.0-beta.1",
-    "@projectcaluma/ember-core": "^11.0.0-beta.9",
-    "@projectcaluma/ember-form": "^11.0.0-beta.23",
-    "@projectcaluma/ember-form-builder": "^11.0.0-beta.16",
-    "@projectcaluma/ember-testing": "^11.0.0-beta.11",
-    "@projectcaluma/ember-workflow": "^11.0.0-beta.7",
+    "@projectcaluma/ember-analytics": "^11.0.0-beta.26",
+    "@projectcaluma/ember-core": "^11.0.0-beta.26",
+    "@projectcaluma/ember-form": "^11.0.0-beta.26",
+    "@projectcaluma/ember-form-builder": "^11.0.0-beta.26",
+    "@projectcaluma/ember-testing": "^11.0.0-beta.26",
+    "@projectcaluma/ember-workflow": "^11.0.0-beta.26",
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
     "ember-apollo-client": "^4.1.0",
@@ -82,9 +83,9 @@
     "ember-set-helper": "^2.0.1",
     "ember-simple-auth-oidc": "^4.1.1",
     "ember-source": "~3.28.9",
-    "ember-template-lint": "^4.10.1",
+    "ember-template-lint": "^4.13.0",
     "ember-truth-helpers": "^3.0.0",
-    "ember-uikit": "^5.0.0",
+    "ember-uikit": "^5.1.3",
     "ember-validated-form": "^5.3.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
@@ -93,7 +94,6 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-qunit": "^7.2.0",
-    "@faker-js/faker": "^7.3.0",
     "file-saver": "^2.0.5",
     "graphql": "^15.7.1",
     "loader.js": "^4.7.0",
@@ -101,17 +101,15 @@
     "prettier": "^2.7.1",
     "qunit": "^2.19.1",
     "qunit-dom": "^2.0.0",
-    "sass": "^1.53.0",
-    "webpack": "^5.72.1"
+    "sass": "^1.54.7",
+    "webpack": "^5.74.0"
   },
   "//": [
     "TODO: remove validated-changeset resolution when https://github.com/poteto/ember-changeset/issues/650 is addressed"
   ],
   "resolutions": {
-    "validated-changeset": "^1.3.2",
-    "@embroider/macros": "^1.6.0",
-    "@apollo/client": "3.6.2",
-    "ember-resources": "5.1.1"
+    "validated-changeset": "^1.3.3",
+    "@embroider/macros": "^1.6.0"
   },
   "engines": {
     "node": "12.* || 14.* || >= 16"
