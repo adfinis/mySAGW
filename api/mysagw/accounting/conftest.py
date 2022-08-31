@@ -30,9 +30,11 @@ def receipt_mock(requests_mock):
                                                                 "edges": [
                                                                     {
                                                                         "node": {
-                                                                            "file": {
-                                                                                "downloadUrl": "https://mysagw.local/caluma-media/download-url-png"
-                                                                            }
+                                                                            "value": [
+                                                                                {
+                                                                                    "downloadUrl": "https://mysagw.local/caluma-media/download-url-png"
+                                                                                }
+                                                                            ]
                                                                         }
                                                                     }
                                                                 ]
@@ -43,9 +45,11 @@ def receipt_mock(requests_mock):
                                                                 "edges": [
                                                                     {
                                                                         "node": {
-                                                                            "file": {
-                                                                                "downloadUrl": "https://mysagw.local/caluma-media/download-url-pdf"
-                                                                            }
+                                                                            "value": [
+                                                                                {
+                                                                                    "downloadUrl": "https://mysagw.local/caluma-media/download-url-pdf"
+                                                                                }
+                                                                            ]
                                                                         }
                                                                     }
                                                                 ]
@@ -56,9 +60,11 @@ def receipt_mock(requests_mock):
                                                                 "edges": [
                                                                     {
                                                                         "node": {
-                                                                            "file": {
-                                                                                "downloadUrl": "https://mysagw.local/caluma-media/download-url-pdf-encrypted"
-                                                                            }
+                                                                            "value": [
+                                                                                {
+                                                                                    "downloadUrl": "https://mysagw.local/caluma-media/download-url-pdf-encrypted"
+                                                                                }
+                                                                            ]
                                                                         }
                                                                     }
                                                                 ]

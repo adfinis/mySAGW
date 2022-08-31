@@ -13,8 +13,8 @@ query Receipts($case_id: ID!) {
                         answers(filter: [{question: "additional-data-row-quittung"}]) {
                           edges {
                             node {
-                              ... on FileAnswer {
-                                file {
+                              ... on FilesAnswer {
+                                value {
                                   downloadUrl
                                 }
                               }
