@@ -33,7 +33,10 @@ def receipt_mock(requests_mock):
                                                                             "value": [
                                                                                 {
                                                                                     "downloadUrl": "https://mysagw.local/caluma-media/download-url-png"
-                                                                                }
+                                                                                },
+                                                                                {
+                                                                                    "downloadUrl": "https://mysagw.local/caluma-media/download-url-png2"
+                                                                                },
                                                                             ]
                                                                         }
                                                                     }
@@ -145,6 +148,13 @@ def receipt_mock(requests_mock):
 
     requests_mock.get(
         "https://mysagw.local/caluma-media/download-url-png",
+        status_code=status.HTTP_200_OK,
+        content=png,
+        headers={"content-type": "image/png"},
+    )
+
+    requests_mock.get(
+        "https://mysagw.local/caluma-media/download-url-png2",
         status_code=status.HTTP_200_OK,
         content=png,
         headers={"content-type": "image/png"},
