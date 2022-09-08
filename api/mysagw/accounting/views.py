@@ -6,14 +6,14 @@ import requests
 from django.conf import settings
 from django.http import FileResponse, HttpResponse
 from django.utils import timezone
-from PyPDF2 import PdfFileMerger
-from PyPDF2.utils import PdfReadError
+from PyPDF2 import PdfMerger
+from PyPDF2.errors import DependencyError, PdfReadError
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.utils import ImageReader
 from reportlab.pdfgen import canvas
 from requests import HTTPError
 from rest_framework import status
-from rest_framework.viewsets import GenericViewSet
+from rest_framework.views import APIView
 
 from mysagw.accounting.caluma_client import CalumaClient
 from mysagw.dms_client import DMSClient
@@ -33,7 +33,10 @@ def get_receipt_urls(data):
     result = []
     for row in rows:
         try:
-            result.append(row["answers"]["edges"][0]["node"]["value"][0]["downloadUrl"])
+            result += [
+                url["downloadUrl"]
+                for url in row["answers"]["edges"][0]["node"]["value"]
+            ]
         except (KeyError, TypeError, IndexError):
             continue
     return result
@@ -284,10 +287,10 @@ def get_files_to_merge(files):
             yield page
 
 
-class ReceiptViewSet(GenericViewSet):
+class ReceiptView(APIView):
     permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
 
-    def retrieve(self, request, pk, **kwargs):
+    def get(self, request, pk, **kwargs):
         raw_data = get_data(pk, request)
 
         cover_context = get_cover_context(raw_data)
@@ -301,15 +304,22 @@ class ReceiptViewSet(GenericViewSet):
 
         files = [get_receipt(url) for url in receipt_urls]
 
-        merger = PdfFileMerger()
+        merger = PdfMerger()
         merger.append(cover)
 
         for file in get_files_to_merge(files):
             try:
                 merger.append(file)
-            except PdfReadError:
-                ## faulty pdf or AES encrypted
+            except PdfReadError:  # pragma: no cover
+                ## faulty pdf
                 pass
+            except DependencyError as e:
+                # we don't support AES encrypted PDFs
+                if (
+                    not e.args
+                    or not e.args[0] == "PyCryptodome is required for AES algorithm"
+                ):  # pragma: no cover
+                    raise
 
         result = io.BytesIO()
 

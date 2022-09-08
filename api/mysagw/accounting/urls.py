@@ -1,9 +1,7 @@
-from rest_framework.routers import SimpleRouter
+from django.urls import path
 
 from . import views
 
-r = SimpleRouter(trailing_slash=False)
-
-r.register(r"receipts", views.ReceiptViewSet, basename="receipts")
-
-urlpatterns = r.urls
+urlpatterns = [
+    path("receipts/<uuid:pk>", views.ReceiptView.as_view(), name="receipts"),
+]
