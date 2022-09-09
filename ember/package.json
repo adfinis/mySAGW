@@ -73,7 +73,7 @@
     "ember-localized-model": "^1.2.1",
     "ember-math-helpers": "^2.18.2",
     "ember-maybe-import-regenerator": "^1.0.0",
-    "ember-moment": "^9.0.0",
+    "ember-moment": "^10.0.0",
     "ember-parachute": "^1.0.2",
     "ember-pikaday": "^4.0.0",
     "ember-power-select": "^6.0.1",
