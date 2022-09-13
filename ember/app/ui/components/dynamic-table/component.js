@@ -16,7 +16,7 @@ export default class DynamicTable extends Component {
   }
 
   get orderKey() {
-    return this.order.attribute ?? this.order.documentAnswer;
+    return this.order.attribute ?? this.order[this.args.orderKey];
   }
 
   swapDirection(order) {
@@ -41,7 +41,7 @@ export default class DynamicTable extends Component {
     if (ENV.APP.caluma.orderTypeKeys.attribute.includes(key)) {
       this.order.attribute = key;
     } else {
-      this.order.documentAnswer = key;
+      this.order[this.args.orderKey] = key;
     }
 
     this.args.setOrder(this.order);
