@@ -14,7 +14,7 @@ drf-extra-fields==3.4.0
 mozilla-django-oidc==2.0.0
 pyexcel==0.7.0
 pyexcel-xlsx==0.6.0
-pypdf2==2.10.4
+pypdf2==2.10.8
 requests==2.28.1
 reportlab==3.6.11
 uwsgi==2.0.20
