@@ -27,12 +27,12 @@
   />
   <Filter.Dropdown
     @label={{t "work-items.filters.taskTypes"}}
-    @selected={{this.taskTypes}}
-    @options={{this.fetchTasks.lastSuccessful.value}}
+    @selected={{this.selectedTaskTypes}}
+    @options={{this.allTaskTypes.value}}
     @onChange={{perform this.updateFilter "taskTypes"}}
   />
   <Filter.Identity
-    @onChange={{perform this.updateFilter "selectedIdentities"}}
+    @onChange={{perform this.updateFilter "identities"}}
     @selectedIdentities={{this.selectedIdentities}}
   />
   <Filter.Input
@@ -47,8 +47,10 @@
   />
 </Filters>
 
-<WorkItemList
-  @query={{this.workItemsQuery}}
-  @config={{this.tableConfig}}
-  @setOrder={{this.setOrder}}
-/>
+{{#if (is-array this.workItemsFilter.value)}}
+  <WorkItemList
+    @query={{this.workItemsQuery}}
+    @config={{this.tableConfig}}
+    @setOrder={{fn (mut this.order)}}
+  />
+{{/if}}

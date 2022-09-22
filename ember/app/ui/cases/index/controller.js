@@ -1,39 +1,30 @@
 import Controller from "@ember/controller";
-import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
-import { tracked } from "@glimmer/tracking";
 import { useCalumaQuery } from "@projectcaluma/ember-core/caluma-query";
 import { allCases } from "@projectcaluma/ember-core/caluma-query/queries";
-import { lastValue, restartableTask, timeout } from "ember-concurrency";
+import { restartableTask, timeout } from "ember-concurrency";
+import { trackedFunction } from "ember-resources/util/function";
+import { dedupeTracked } from "tracked-toolbox";
 
-import { FilteredForms } from "mysagw/utils/filtered-forms";
+import { arrayFromString, stringFromArray } from "mysagw/utils/query-params";
 export default class CasesIndexController extends Controller {
-  queryParams = [
-    "order",
-    "documentNumber",
-    "selectedIdentities",
-    "answerSearch",
-  ];
+  queryParams = ["order", "documentNumber", "identities", "answerSearch"];
 
   @service store;
   @service notification;
   @service intl;
+  @service filteredForms;
 
-  @tracked order = { attribute: "CREATED_AT", direction: "DESC" };
-  @tracked types = [];
-  @tracked documentNumber = "";
-  @tracked selectedIdentities = [];
-  @tracked answerSearch = "";
+  @dedupeTracked order = { attribute: "CREATED_AT", direction: "DESC" };
+  @dedupeTracked documentNumber = "";
+  @dedupeTracked identities = "";
+  @dedupeTracked answerSearch = "";
 
   caseQuery = useCalumaQuery(this, allCases, () => ({
-    options: {
-      pageSize: 20,
-    },
-    filter: this.caseFilters,
+    options: { pageSize: 20 },
+    filter: this.caseFilters.value,
     order: [this.order],
   }));
-
-  filteredForms = FilteredForms.from(this);
 
   get showEmpty() {
     return (
@@ -43,45 +34,71 @@ export default class CasesIndexController extends Controller {
     );
   }
 
-  get caseFilters() {
+  get selectedIdentities() {
+    return arrayFromString(this.identities);
+  }
+
+  caseFilters = trackedFunction(this, async () => {
+    // This is necessary to trigger a re-run if identities changed and an answer
+    // search is given. If an answer search is given, we await the fetching of
+    // the filtered forms which uses `await Promise.resolve()` to avoid an
+    // infinite loop. However, all tracked properties used after that await
+    // statement won't trigger a re-run if changed.
+    const { documentNumber, answerSearch, identities } = this;
+
     const filters = [
       { workflow: "circulation", invert: true },
+      { status: "CANCELED", invert: true },
       {
         hasAnswer: [
           {
             question: "dossier-nr",
-            value: this.documentNumber,
+            value: documentNumber,
             lookup: "ICONTAINS",
           },
         ],
       },
-      { status: "CANCELED", invert: true },
-      { ids: this.caseAccesses?.mapBy("caseId") ?? [] },
     ];
 
-    if (this.filteredForms.value.length) {
+    if (answerSearch) {
       filters.push({
         searchAnswers: [
           {
-            forms: this.filteredForms.value.mapBy("node.slug"),
-            value: this.answerSearch,
+            forms: (await this.filteredForms.fetch()).map((form) => form.slug),
+            value: answerSearch,
           },
         ],
       });
     }
 
-    return filters;
-  }
+    if (identities) {
+      filters.push({
+        ids: await this.fetchAccesses(arrayFromString(identities)),
+      });
+    }
 
-  @lastValue("fetchCaseAccesses") caseAccesses;
-  @restartableTask
-  *fetchCaseAccesses() {
+    return filters;
+  });
+
+  async fetchAccesses(idpIds) {
+    if (!idpIds) {
+      return [];
+    }
+
+    await Promise.resolve();
+
     try {
-      if (this.selectedIdentities.length) {
-        return yield this.store.query("case-access", {
-          filter: { idpIds: this.selectedIdentities.join(",") },
-        });
-      }
+      const accesses = (
+        await this.store.query("case-access", {
+          filter: { idpIds: idpIds.join(",") },
+        })
+      ).map((access) => access.get("caseId"));
+
+      // TODO: this needs to be fixed in the backend: empty lists of ids will
+      // result in not filtering at all!
+      return accesses.length
+        ? accesses
+        : ["5131f81b-2fca-4b95-9b46-8b9d3997e665"];
     } catch (error) {
       console.error(error);
       this.notification.fromError(error);
@@ -90,22 +107,15 @@ export default class CasesIndexController extends Controller {
 
   @restartableTask
   *updateFilter(type, eventOrValue) {
-    yield timeout(500);
     /*
      * Set filter from type argument, if eventOrValue is a event it is from an input field
-     * if its selectedIdentites an array is to be expected
+     * if its identities an array is to be expected
      */
-    if (type === "selectedIdentities") {
-      this[type] = eventOrValue.filterBy("idpId").mapBy("idpId");
+    if (type === "identities") {
+      this[type] = stringFromArray(eventOrValue, "idpId");
     } else {
+      yield timeout(500);
       this[type] = eventOrValue.target.value;
     }
-
-    this.fetchCaseAccesses.perform();
-  }
-
-  @action
-  setOrder(order) {
-    this.order = order;
   }
 }
