@@ -1,9 +1,8 @@
 <div class="uk-flex uk-flex-middle">
-  <span>
-    {{t (concat "documents.states." @state)}}
-  </span>
-  <span
-    uk-icon={{get this.icons @state}}
-    class={{if this.iconLeft "uk-flex-first uk-margin-small-right" "uk-margin-small-left"}}
-  ></span>
+  {{t (concat "documents.states." @state)}}
+  {{#let (get this.icons @state) as |icon|}}
+    {{#if icon}}
+      <UkIcon @icon={{icon}} class={{if this.iconLeft "uk-flex-first uk-margin-small-right" "uk-margin-small-left"}} />
+    {{/if}}
+  {{/let}}
 </div>
