@@ -27,3 +27,9 @@ components:
   submit-button:
     title: "Soumettre"
     error: "Une erreur s'est produite lors de la validation du document."
+
+  filters:
+    dropdown:
+      loading: "Chargement..."
+      empty: "Aucune entrée trouvée"
+      search: "Tapez pour rechercher"

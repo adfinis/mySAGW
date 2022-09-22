@@ -1,73 +1,66 @@
-import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import Component from "@glimmer/component";
-import { restartableTask, lastValue, timeout } from "ember-concurrency";
+import { restartableTask, timeout } from "ember-concurrency";
+import { trackedFunction } from "ember-resources/util/function";
 
 export default class FiltersIdentityComponent extends Component {
   @service store;
   @service notification;
 
-  constructor(...args) {
-    super(...args);
-    this.searchIdentities.perform("", true);
-  }
-
   get selectedIdentityOptions() {
-    return this.searchedIdentites?.filter((i) =>
+    return this.selectedIdentities.value?.filter((i) =>
       this.args.selectedIdentities.includes(i.idpId)
     );
   }
 
-  @lastValue("searchIdentities") searchedIdentites;
-  @restartableTask
-  *searchIdentities(identitySearch, initial = false) {
-    yield timeout(500);
+  selectedIdentities = trackedFunction(this, async () => {
+    if (!this.args.selectedIdentities.length) {
+      return [];
+    }
 
     try {
-      const filter = {
-        search: identitySearch,
-        isOrganisation: false,
-        has_idp_id: true,
-      };
+      await Promise.resolve();
 
-      if (initial && this.args.selectedIdentities.length) {
-        filter.idpIds = this.args.selectedIdentities.join(",");
-      }
-
-      const identities = yield this.store.query(
-        "identity",
-        {
-          filter,
-          page: {
-            number: 1,
-            size: 20,
+      return (
+        await this.store.query(
+          "identity",
+          {
+            filter: { idpIds: this.args.selectedIdentities.join(",") },
           },
-        },
-        { adapterOptions: { customEndpoint: "public-identities" } }
-      );
-
-      const cachedIdentites = yield this.store
-        .peekAll("identity")
-        .filter((identity) =>
-          this.args.selectedIdentities.includes(identity.idpId)
-        );
-
-      return [...cachedIdentites.toArray(), ...identities.toArray()].uniqBy(
-        "idpId"
-      );
+          { adapterOptions: { customEndpoint: "public-identities" } }
+        )
+      ).toArray();
     } catch (error) {
       console.error(error);
       this.notification.fromError(error);
     }
-  }
+  });
 
-  @action
-  updateIdentitySearch(value) {
-    this.searchIdentities.perform(value);
-  }
+  @restartableTask
+  *search(search) {
+    yield timeout(500);
 
-  @action
-  onChange(identities) {
-    this.args.onChange(identities);
+    if (!search) {
+      return [];
+    }
+
+    try {
+      yield Promise.resolve();
+
+      return (yield this.store.query(
+        "identity",
+        {
+          filter: {
+            search,
+            isOrganisation: false,
+            has_idp_id: true,
+          },
+        },
+        { adapterOptions: { customEndpoint: "public-identities" } }
+      )).toArray();
+    } catch (error) {
+      console.error(error);
+      this.notification.fromError(error);
+    }
   }
 }
