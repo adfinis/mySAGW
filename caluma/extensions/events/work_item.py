@@ -216,10 +216,11 @@ def finish_additional_data_form(sender, work_item, user, **kwargs):
         status=caluma_workflow_models.WorkItem.STATUS_READY,
     ).first()
 
-    caluma_workflow_api.complete_work_item(
-        work_item=work_item,
-        user=user,
-    )
+    if work_item:
+        caluma_workflow_api.complete_work_item(
+            work_item=work_item,
+            user=user,
+        )
 
 
 @on(post_complete_work_item, raise_exception=True)

@@ -6,23 +6,23 @@
   {{t "documents.new.type"}}
 </p>
 
-{{#if this.filteredForms.fetch.isRunning}}
-  <LoadingSpinner />
-{{else}}
+{{#if this.forms.value}}
   <div class="uk-margin-bottom uk-margin-large-top uk-flex uk-flex-wrap">
-    {{#each this.filteredForms.value as |form|}}
+    {{#each this.forms.value as |form|}}
       <div class="uk-padding-small uk-width-1-2">
         <UkButton
           @width="1-1"
-          @label={{form.node.name}}
+          @label={{form.name}}
           @color={{
-            if (eq form.node.slug this.selectedForm) "primary" "default"
+            if (eq form.slug this.selectedForm) "primary" "default"
           }}
-          @onClick={{fn (mut this.selectedForm) form.node.slug}}
+          @onClick={{fn (mut this.selectedForm) form.slug}}
         />
       </div>
     {{/each}}
   </div>
+{{else}}
+  <LoadingSpinner />
 {{/if}}
 
 <div class="uk-text-right">

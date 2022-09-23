@@ -10,8 +10,8 @@
 
 <hr />
 
-<div>
-  {{#if this.showEmpty}}
+{{#if this.showEmpty.isResolved}}
+  {{#if this.showEmpty.value}}
     <div class="uk-width-2-3 uk-margin-auto">
       <h1 class="uk-text-center">
         {{t "documents.empty.welcome" appName="mySAGW"}}
@@ -46,21 +46,21 @@
         />
 
         {{#if (can "filter access case")}}
-          <Filter.Dropdown
-            @label={{t "documents.filters.identity"}}
-            @selected={{this.selectedOptions}}
-            @options={{this.identities}}
-            @onChange={{perform this.updateFilter "selectedIdentities"}}
-            @onInput={{this.updateIdentitySearch}}
+          <Filter.Identity
+            @onChange={{perform this.updateFilter "identities"}}
+            @selectedIdentities={{this.selectedIdentities}}
           />
         {{/if}}
       </Filters>
     </div>
 
-    <CasesTable
-      @query={{this.caseQuery}}
-      @loading={{this.fetchCaseAccesses.isRunning}}
-      @setOrder={{this.setOrder}}
-    />
+    {{#if this.caseFilters.value}}
+      <CasesTable
+        @query={{this.caseQuery}}
+        @loading={{this.caseQuery.isLoading}}
+        @setOrder={{fn (mut this.order)}}
+        @order={{this.order}}
+      />
+    {{/if}}
   {{/if}}
-</div>
+{{/if}}
