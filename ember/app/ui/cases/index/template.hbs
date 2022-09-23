@@ -10,7 +10,7 @@
 
 <hr />
 
-{{#if (not-eq this.showEmpty null)}}
+{{#if this.showEmpty.isResolved}}
   {{#if this.showEmpty.value}}
     <div class="uk-width-2-3 uk-margin-auto">
       <h1 class="uk-text-center">
@@ -54,7 +54,7 @@
       </Filters>
     </div>
 
-    {{#if (is-array this.caseFilters.value)}}
+    {{#if this.caseFilters.value}}
       <CasesTable
         @query={{this.caseQuery}}
         @loading={{this.caseQuery.isLoading}}

@@ -47,7 +47,7 @@
   />
 </Filters>
 
-{{#if (is-array this.workItemsFilter.value)}}
+{{#if this.workItemsFilter.value}}
   <WorkItemList
     @query={{this.workItemsQuery}}
     @config={{this.tableConfig}}
