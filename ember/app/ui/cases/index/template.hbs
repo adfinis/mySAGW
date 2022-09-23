@@ -10,51 +10,51 @@
 
 <hr />
 
-<div>
-  {{#if (is-array this.caseFilters.value)}}
-    {{#if this.showEmpty}}
-      <div class="uk-width-2-3 uk-margin-auto">
-        <h1 class="uk-text-center">
-          {{t "documents.empty.welcome" appName="mySAGW"}}
-        </h1>
+{{#if (not-eq this.showEmpty null)}}
+  {{#if this.showEmpty.value}}
+    <div class="uk-width-2-3 uk-margin-auto">
+      <h1 class="uk-text-center">
+        {{t "documents.empty.welcome" appName="mySAGW"}}
+      </h1>
 
-        <p class="uk-text-center uk-text-large uk-margin-large-top uk-margin-medium-bottom">
-          {{t "documents.empty.no-documents"}}
-        </p>
+      <p class="uk-text-center uk-text-large uk-margin-large-top uk-margin-medium-bottom">
+        {{t "documents.empty.no-documents"}}
+      </p>
 
-        <div class="uk-flex uk-flex-center">
-          <div class="uk-flex uk-flex-middle uk-margin-small-left uk-margin-small-right">
-            <LinkTo @route="cases.new"
-              class="uk-button uk-button-default uk-width-medium uk-height-medium uk-flex uk-flex-middle uk-flex-center uk-flex-column">
-              <UkIcon @icon="plus" @ratio="3" class="uk-margin" />
-              {{t "documents.new.title"}}
-            </LinkTo>
-          </div>
+      <div class="uk-flex uk-flex-center">
+        <div class="uk-flex uk-flex-middle uk-margin-small-left uk-margin-small-right">
+          <LinkTo @route="cases.new"
+            class="uk-button uk-button-default uk-width-medium uk-height-medium uk-flex uk-flex-middle uk-flex-center uk-flex-column">
+            <UkIcon @icon="plus" @ratio="3" class="uk-margin" />
+            {{t "documents.new.title"}}
+          </LinkTo>
         </div>
       </div>
-    {{else}}
-      <div uk-grid class="uk-flex-between">
-        <Filters as |Filter|>
-          <Filter.Input
-            @label={{t "work-items.filters.documentNumber" }}
-            @value={{this.documentNumber}}
-            @onChange={{perform this.updateFilter "documentNumber"}}
-          />
-          <Filter.Input
-            @label={{t "work-items.filters.answer" }}
-            @value={{this.answerSearch}}
-            @onChange={{perform this.updateFilter "answerSearch"}}
-          />
+    </div>
+  {{else}}
+    <div uk-grid class="uk-flex-between">
+      <Filters as |Filter|>
+        <Filter.Input
+          @label={{t "work-items.filters.documentNumber" }}
+          @value={{this.documentNumber}}
+          @onChange={{perform this.updateFilter "documentNumber"}}
+        />
+        <Filter.Input
+          @label={{t "work-items.filters.answer" }}
+          @value={{this.answerSearch}}
+          @onChange={{perform this.updateFilter "answerSearch"}}
+        />
 
-          {{#if (can "filter access case")}}
-            <Filter.Identity
-              @onChange={{perform this.updateFilter "identities"}}
-              @selectedIdentities={{this.selectedIdentities}}
-            />
-          {{/if}}
-        </Filters>
-      </div>
+        {{#if (can "filter access case")}}
+          <Filter.Identity
+            @onChange={{perform this.updateFilter "identities"}}
+            @selectedIdentities={{this.selectedIdentities}}
+          />
+        {{/if}}
+      </Filters>
+    </div>
 
+    {{#if (is-array this.caseFilters.value)}}
       <CasesTable
         @query={{this.caseQuery}}
         @loading={{this.caseQuery.isLoading}}
@@ -63,4 +63,4 @@
       />
     {{/if}}
   {{/if}}
-</div>
+{{/if}}

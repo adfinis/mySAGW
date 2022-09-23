@@ -2,15 +2,18 @@ import Controller from "@ember/controller";
 import { inject as service } from "@ember/service";
 import { useCalumaQuery } from "@projectcaluma/ember-core/caluma-query";
 import { allCases } from "@projectcaluma/ember-core/caluma-query/queries";
+import { queryManager } from "ember-apollo-client";
 import { restartableTask, timeout } from "ember-concurrency";
 import { trackedFunction } from "ember-resources/util/function";
 import { dedupeTracked } from "tracked-toolbox";
 
+import casesCountQuery from "mysagw/gql/queries/cases-count.graphql";
 import {
   arrayFromString,
   stringFromArray,
   serializeOrder,
 } from "mysagw/utils/query-params";
+
 export default class CasesIndexController extends Controller {
   queryParams = ["order", "documentNumber", "identities", "answerSearch"];
 
@@ -18,6 +21,8 @@ export default class CasesIndexController extends Controller {
   @service notification;
   @service intl;
   @service filteredForms;
+
+  @queryManager apollo;
 
   @dedupeTracked order = "-CREATED_AT";
   @dedupeTracked documentNumber = "";
@@ -30,13 +35,11 @@ export default class CasesIndexController extends Controller {
     order: [serializeOrder(this.order, "documentAnswer")],
   }));
 
-  get showEmpty() {
+  showEmpty = trackedFunction(this, async () => {
     return (
-      !this.caseQuery.value.length &&
-      this.documentNumber === null &&
-      !this.caseQuery.isLoading
+      this.apollo.query({ query: casesCountQuery }, "allCases.totalCount") === 0
     );
-  }
+  });
 
   get selectedIdentities() {
     return arrayFromString(this.identities);
