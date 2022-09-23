@@ -9,21 +9,18 @@
     <span hidden>{{t "global.openMenu"}}</span>
     <UkIcon @icon="more-vertical" />
   </button>
-  <div uk-drop="pos: bottom-left">
-    <div class="uk-card uk-card-body uk-card-default uk-card-hover uk-card-small">
-      <ul class="uk-list">
-        {{#each @actions as |action|}}
-          <li>
-            <UkButton
-              @type="button"
-              @color="text"
-              @onClick={{action.action}}
-              @label={{action.title}}
-            />
-          </li>
-        {{/each}}
-      </ul>
-
-    </div>
+  <div uk-dropdown pos="bottom-right" class="uk-padding-small">
+    <ul class="uk-list uk-text-left uk-margin-remove">
+      {{#each @actions as |action|}}
+        <li>
+          <UkButton
+            @type="button"
+            @color="text"
+            @onClick={{action.action}}
+            @label={{action.title}}
+          />
+        </li>
+      {{/each}}
+    </ul>
   </div>
 </div>

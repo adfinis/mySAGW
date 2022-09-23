@@ -1,0 +1,11 @@
+query CasesCount {
+  allCases(
+    filter: [
+      { workflow: "circulation", invert: true }
+      { status: CANCELED, invert: true }
+      { hasAnswer: [{ question: "dossier-nr", value: "", lookup: ICONTAINS }] }
+    ]
+  ) {
+    totalCount
+  }
+}

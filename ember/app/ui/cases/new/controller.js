@@ -5,10 +5,10 @@ import { decodeId } from "@projectcaluma/ember-core/helpers/decode-id";
 import { queryManager } from "ember-apollo-client";
 import { restartableTask } from "ember-concurrency";
 import QueryParams from "ember-parachute";
+import { trackedFunction } from "ember-resources/util/function";
 
 import createCaseMutation from "mysagw/gql/mutations/create-case.graphql";
 import getWorkflowQuery from "mysagw/gql/queries/get-workflow.graphql";
-import { FilteredForms } from "mysagw/utils/filtered-forms";
 
 const queryParams = new QueryParams({
   selectedForm: {
@@ -25,10 +25,9 @@ export default class CaseNewController extends Controller.extend(
   @service router;
   @service store;
   @service session;
+  @service filteredForms;
 
   @tracked selectedForm;
-
-  filteredForms = FilteredForms.from(this);
 
   reset(_, isExiting) {
     if (isExiting) {
@@ -36,6 +35,10 @@ export default class CaseNewController extends Controller.extend(
       this.selectedForm = null;
     }
   }
+
+  forms = trackedFunction(this, async () => {
+    return await this.filteredForms.fetch();
+  });
 
   @restartableTask
   *createCase() {

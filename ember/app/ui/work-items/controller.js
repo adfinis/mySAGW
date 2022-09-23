@@ -1,14 +1,19 @@
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
-import { tracked } from "@glimmer/tracking";
 import { useCalumaQuery } from "@projectcaluma/ember-core/caluma-query";
 import { allWorkItems } from "@projectcaluma/ember-core/caluma-query/queries";
 import { queryManager } from "ember-apollo-client";
 import { restartableTask, timeout } from "ember-concurrency";
+import { trackedFunction } from "ember-resources/util/function";
+import { dedupeTracked } from "tracked-toolbox";
 
 import getTasksQuery from "mysagw/gql/queries/get-tasks.graphql";
-import { FilteredForms } from "mysagw/utils/filtered-forms";
+import {
+  arrayFromString,
+  stringFromArray,
+  serializeOrder,
+} from "mysagw/utils/query-params";
 
 export default class WorkItemsIndexController extends Controller {
   queryParams = [
@@ -17,39 +22,52 @@ export default class WorkItemsIndexController extends Controller {
     "role",
     "taskTypes",
     "documentNumber",
-    "selectedIdentities",
+    "identities",
     "answerSearch",
   ];
 
   @service session;
   @service store;
+  @service filteredForms;
 
   @queryManager apollo;
 
   // Filters
-  @tracked order = { attribute: "CREATED_AT", direction: "DESC" };
-  @tracked status = "open";
-  @tracked role = "active";
-  @tracked taskTypes = [];
-  @tracked documentNumber = "";
-  @tracked selectedIdentities = [];
-  @tracked answerSearch = "";
+  @dedupeTracked order = "-CREATED_AT";
+  @dedupeTracked status = "open";
+  @dedupeTracked role = "active";
+  @dedupeTracked taskTypes = "";
+  @dedupeTracked documentNumber = "";
+  @dedupeTracked identities = "";
+  @dedupeTracked answerSearch = "";
 
   workItemsQuery = useCalumaQuery(this, allWorkItems, () => ({
     options: {
       pageSize: 20,
       processNew: this.processNew,
     },
-    filter: this.workItemsFilter,
-    order: [this.order],
+    filter: this.workItemsFilter.value,
+    order: [serializeOrder(this.order, "caseDocumentAnswer")],
   }));
 
-  filteredForms = FilteredForms.from(this);
+  get selectedTaskTypes() {
+    const taskTypes = arrayFromString(this.taskTypes);
 
-  get workItemsFilter() {
+    return (
+      this.allTaskTypes.value?.filter((taskType) =>
+        taskTypes.includes(taskType.value)
+      ) ?? []
+    );
+  }
+
+  get selectedIdentities() {
+    return arrayFromString(this.identities);
+  }
+
+  workItemsFilter = trackedFunction(this, async () => {
     const filter = [
       { metaHasKey: "hidden", invert: true },
-      { tasks: this.taskTypes.mapBy("value") },
+      { status: this.status === "closed" ? "COMPLETED" : "READY" },
       {
         caseDocumentHasAnswer: [
           {
@@ -59,24 +77,25 @@ export default class WorkItemsIndexController extends Controller {
           },
         ],
       },
-      {
-        assignedUsers: this.selectedIdentities,
-      },
     ];
 
-    if (this.status === "closed") {
-      filter.push({ status: "COMPLETED" });
-    } else {
-      filter.push({ status: "READY" });
+    if (this.taskTypes) {
+      filter.push({ tasks: arrayFromString(this.taskTypes) });
     }
+
+    if (this.identities) {
+      filter.push({ assignedUsers: arrayFromString(this.identities) });
+    }
+
     if (this.role === "control") {
       filter.push({ controllingGroups: ["sagw"] });
     }
-    if (this.filteredForms.value.length) {
+
+    if (this.answerSearch) {
       filter.push({
         caseSearchAnswers: [
           {
-            forms: this.filteredForms.value.mapBy("node.slug"),
+            forms: (await this.filteredForms.fetch()).map((form) => form.slug),
             value: this.answerSearch,
           },
         ],
@@ -84,40 +103,10 @@ export default class WorkItemsIndexController extends Controller {
     }
 
     return filter;
-  }
+  });
 
-  @restartableTask
-  *getWorkItemIdentities(workItems) {
-    const idpIds = workItems
-      .reduce(
-        (idpIds, workItem) => [
-          ...idpIds,
-          ...workItem.assignedUsers,
-          workItem.closedByUser,
-        ],
-        []
-      )
-      .compact()
-      .uniq();
-
-    if (idpIds.length) {
-      return yield this.store.query(
-        "identity",
-        {
-          filter: { idpIds: idpIds.join(",") },
-          page: {
-            number: 1,
-            size: 20,
-          },
-        },
-        { adapterOptions: { customEndpoint: "public-identities" } }
-      );
-    }
-  }
-
-  @restartableTask
-  *fetchTasks() {
-    return (yield this.apollo.query(
+  allTaskTypes = trackedFunction(this, async () => {
+    const response = await this.apollo.query(
       {
         query: getTasksQuery,
         variables: {
@@ -126,36 +115,63 @@ export default class WorkItemsIndexController extends Controller {
         },
       },
       "allTasks.edges"
-    )).map((task) => {
-      return { value: task.node.slug, label: task.node.name };
-    });
-  }
+    );
+
+    return response.map((edge) => ({
+      value: edge.node.slug,
+      label: edge.node.name,
+    }));
+  });
 
   @action
-  processNew(workItems) {
-    this.getWorkItemIdentities.perform(workItems);
+  async processNew(workItems) {
+    const idpIds = [
+      ...new Set(
+        workItems
+          .flatMap((workItem) => [
+            ...workItem.assignedUsers,
+            workItem.closedByUser,
+          ])
+          .filter(Boolean)
+      ),
+    ];
+
+    const cachedIdpIds = this.store
+      .peekAll("identity")
+      .map((identity) => identity.get("idpId"));
+
+    const uncachedIdpIds = idpIds.filter(
+      (idpId) => cachedIdpIds.indexOf(idpId) === -1
+    );
+
+    if (uncachedIdpIds.length) {
+      await this.store.query(
+        "identity",
+        { filter: { idpIds: uncachedIdpIds.join(",") } },
+        { adapterOptions: { customEndpoint: "public-identities" } }
+      );
+    }
+
     return workItems;
   }
 
   @restartableTask
   *updateFilter(type, eventOrValue) {
-    yield timeout(500);
-    /*
-     * Set filter from type argument, if eventOrValue is a event it is from an input field
-     * if its selectedIdentites an array of identities is to be expected
-     */
-    if (type === "selectedIdentities") {
-      this[type] = eventOrValue.filterBy("idpId").mapBy("idpId");
-    } else if (eventOrValue.target) {
-      this[type] = eventOrValue.target.value;
-    } else {
-      this[type] = eventOrValue;
+    if (["documentNumber", "answerSearch"].includes(type)) {
+      // debounce only input filters by 500ms to prevent too many requests when
+      // typing into a search field
+      yield timeout(500);
     }
-  }
 
-  @action
-  setOrder(order) {
-    this.order = order;
+    // Update the filter with the passed value. This can either be an array of
+    // objects (task types or identities), and event or a plain value
+    if (type === "identities") {
+      this[type] = stringFromArray(eventOrValue, "idpId");
+    } else if (type === "taskTypes") {
+      this[type] = stringFromArray(eventOrValue, "value");
+    } else {
+      this[type] = eventOrValue.target?.value ?? eventOrValue;
+    }
   }
 
   get tableConfig() {

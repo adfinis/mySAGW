@@ -8,8 +8,9 @@
       @onInput={{@onInput}}
       @searchEnabled={{true}}
       @searchField="label"
-      @triggerClass="uk-select height-auto"
       @loadingMessage={{t "components.filters.dropdown.loading"}}
+      @searchMessage={{t "components.filters.dropdown.search"}}
+      @noMatchesMessage={{t "components.filters.dropdown.empty"}}
       as |option|
     >
       {{option.label}}

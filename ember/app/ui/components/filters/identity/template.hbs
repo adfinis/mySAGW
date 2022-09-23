@@ -1,7 +1,18 @@
-<Filters::Dropdown
-  @label={{t "documents.filters.identity"}}
-  @selected={{this.selectedIdentityOptions}}
-  @options={{this.searchedIdentites}}
-  @onChange={{this.onChange}}
-  @onInput={{this.updateIdentitySearch}}
-/>
+<div class="uk-margin-small-right uk-width-medium">
+  <label class="uk-display-block">
+    {{t "documents.filters.identity"}}
+    <PowerSelectMultiple
+      @options={{this.selectedIdentities.value}}
+      @selected={{this.selectedIdentityOptions}}
+      @onChange={{@onChange}}
+      @searchEnabled={{true}}
+      @search={{perform this.search}}
+      @loadingMessage={{t "components.filters.dropdown.loading"}}
+      @searchMessage={{t "components.filters.dropdown.search"}}
+      @noMatchesMessage={{t "components.filters.dropdown.empty"}}
+      as |option|
+    >
+      {{option.label}}
+    </PowerSelectMultiple>
+  </label>
+</div>
