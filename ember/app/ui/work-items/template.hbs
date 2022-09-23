@@ -6,16 +6,6 @@
 
 <Filters as |Filter|>
   <Filter.RadioButtons
-    @label={{t "work-items.filters.responsible"}}
-    @selected={{this.responsible}}
-    @options={{
-      array
-      (hash value="all" label=(t "work-items.filters.all"))
-      (hash value="own" label=(t "work-items.filters.own"))
-    }}
-    @onChange={{fn this.updateFilter "responsible"}}
-  />
-  <Filter.RadioButtons
     @label={{t "work-items.filters.status"}}
     @selected={{this.status}}
     @options={{
@@ -23,7 +13,7 @@
       (hash value="open" label=(t "work-items.filters.open"))
       (hash value="closed" label=(t "work-items.filters.closed"))
     }}
-    @onChange={{fn this.updateFilter "status"}}
+    @onChange={{perform this.updateFilter "status"}}
   />
   <Filter.RadioButtons
     @label={{t "work-items.filters.role"}}
@@ -33,23 +23,35 @@
       (hash value="active" label=(t "work-items.filters.active"))
       (hash value="control" label=(t "work-items.filters.control"))
     }}
-    @onChange={{fn this.updateFilter "role"}}
+    @onChange={{perform this.updateFilter "role"}}
   />
   <Filter.Dropdown
     @label={{t "work-items.filters.taskTypes"}}
-    @selected={{this.taskTypes}}
-    @options={{this.fetchTasks.lastSuccessful.value}}
-    @onChange={{fn this.updateFilter "taskTypes"}}
+    @selected={{this.selectedTaskTypes}}
+    @options={{this.allTaskTypes.value}}
+    @onChange={{perform this.updateFilter "taskTypes"}}
+  />
+  <Filter.Identity
+    @onChange={{perform this.updateFilter "identities"}}
+    @selectedIdentities={{this.selectedIdentities}}
   />
   <Filter.Input
     @label={{t "work-items.filters.documentNumber"}}
     @value={{this.documentNumber}}
-    @onChange={{fn this.updateFilter "documentNumber"}}
+    @onChange={{perform this.updateFilter "documentNumber"}}
+  />
+  <Filter.Input
+    @label={{t "work-items.filters.answer" }}
+    @value={{this.answerSearch}}
+    @onChange={{perform this.updateFilter "answerSearch"}}
   />
 </Filters>
 
-<WorkItemList
-  @query={{this.workItemsQuery}}
-  @fetchMoreSupplement={{perform this.getIdentities this.workItemsQuery.value}}
-  @config={{this.tableConfig}}
-/>
+{{#if this.workItemsFilter.value}}
+  <WorkItemList
+    @query={{this.workItemsQuery}}
+    @config={{this.tableConfig}}
+    @setOrder={{fn (mut this.order)}}
+    @order={{this.order}}
+  />
+{{/if}}

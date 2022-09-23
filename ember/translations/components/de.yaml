@@ -26,3 +26,9 @@ components:
 
   submit-button:
     title: "Absenden"
+
+  filters:
+    dropdown:
+      loading: "Lädt..."
+      empty: "Keine Einträge gefunden"
+      search: "Tippen um zu suchen"

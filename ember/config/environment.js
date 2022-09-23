@@ -63,7 +63,7 @@ module.exports = function (environment) {
         revise: "clock",
         "submit-receipts": "clock",
         decision: "clock",
-        completed: "check",
+        complete: "check",
       },
 
       caluma: {
@@ -137,7 +137,13 @@ module.exports = function (environment) {
           "decision-and-credit": ["gesprochener-rahmenkredit"],
         },
         orderTypeKeys: {
-          attribute: ["DOCUMENT__FORM__NAME", "MODIFIED_AT", "CREATED_AT"],
+          attribute: [
+            "DOCUMENT__FORM__NAME",
+            "CASE__DOCUMENT__FORM__NAME",
+            "MODIFIED_AT",
+            "CREATED_AT",
+            "CLOSED_AT",
+          ],
         },
       },
     },

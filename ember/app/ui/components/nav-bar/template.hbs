@@ -17,20 +17,20 @@
     <ul class="uk-navbar-nav uk-text-uppercase">
       {{#if (can "list work-item")}}
         <li>
-          <LinkTo @route="work-items">
+          <LinkTo @route="work-items" @activeClass="uk-active">
             {{t "components.nav-bar.tasks"}}
           </LinkTo>
         </li>
       {{/if}}
       <li>
-        <LinkTo @route="cases">
+        <LinkTo @route="cases" @activeClass="uk-active">
           {{t "components.nav-bar.documents"}}
         </LinkTo>
       </li>
 
       {{#if (can "list snippet")}}
         <li>
-          <LinkTo @route="snippets">
+          <LinkTo @route="snippets" @activeClass="uk-active">
             {{t "components.nav-bar.snippets"}}
           </LinkTo>
         </li>
@@ -86,7 +86,7 @@
   <div class="uk-navbar-right uk-visible@l">
     <ul class="uk-navbar-nav">
       <li>
-        <LinkTo @route="profile">
+        <LinkTo @route="profile" @activeClass="uk-active">
           {{t "components.nav-bar.profile"}}
         </LinkTo>
       </li>
