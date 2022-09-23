@@ -2,7 +2,10 @@
   {{t (concat "documents.states." @state)}}
   {{#let (get this.icons @state) as |icon|}}
     {{#if icon}}
-      <UkIcon @icon={{icon}} class={{if this.iconLeft "uk-flex-first uk-margin-small-right" "uk-margin-small-left"}} />
+      <UkIcon
+        @icon={{icon}}
+        class="case-state-label__icon {{if this.iconLeft "uk-flex-first uk-margin-small-right" "uk-margin-small-left"}}"
+      />
     {{/if}}
   {{/let}}
 </div>
