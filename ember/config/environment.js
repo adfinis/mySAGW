@@ -63,7 +63,7 @@ module.exports = function (environment) {
         revise: "clock",
         "submit-receipts": "clock",
         decision: "clock",
-        completed: "check",
+        complete: "check",
       },
 
       caluma: {
