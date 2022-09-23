@@ -9,7 +9,11 @@ import { trackedFunction } from "ember-resources/util/function";
 import { dedupeTracked } from "tracked-toolbox";
 
 import getTasksQuery from "mysagw/gql/queries/get-tasks.graphql";
-import { arrayFromString, stringFromArray } from "mysagw/utils/query-params";
+import {
+  arrayFromString,
+  stringFromArray,
+  serializeOrder,
+} from "mysagw/utils/query-params";
 
 export default class WorkItemsIndexController extends Controller {
   queryParams = [
@@ -29,7 +33,7 @@ export default class WorkItemsIndexController extends Controller {
   @queryManager apollo;
 
   // Filters
-  @dedupeTracked order = { attribute: "CREATED_AT", direction: "DESC" };
+  @dedupeTracked order = "-CREATED_AT";
   @dedupeTracked status = "open";
   @dedupeTracked role = "active";
   @dedupeTracked taskTypes = "";
@@ -43,7 +47,7 @@ export default class WorkItemsIndexController extends Controller {
       processNew: this.processNew,
     },
     filter: this.workItemsFilter.value,
-    order: [this.order],
+    order: [serializeOrder(this.order, "caseDocumentAnswer")],
   }));
 
   get selectedTaskTypes() {

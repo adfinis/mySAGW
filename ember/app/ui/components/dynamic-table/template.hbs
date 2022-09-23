@@ -6,20 +6,11 @@
   <thead>
     <tr>
       {{#each (map-by "heading" @config.columns) as |header|}}
-        <th
-          class={{join " " header.classList}}
-        >
-          {{#if header.sortKey}}
-            <UkButton @color="text" @onClick={{fn this.updateOrder header.sortKey}}>
-              {{t header.label}}
-              {{#if (eq this.orderKey header.sortKey)}}
-                <span uk-icon="icon: {{this.sortIcon}}"></span>
-              {{/if}}
-            </UkButton>
-          {{else}}
-            {{t header.label}}
-          {{/if}}
-        </th>
+        <DynamicTable::Header
+          @config={{header}}
+          @order={{@order}}
+          @setOrder={{@setOrder}}
+        />
       {{/each}}
     </tr>
   </thead>

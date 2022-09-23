@@ -6,7 +6,11 @@ import { restartableTask, timeout } from "ember-concurrency";
 import { trackedFunction } from "ember-resources/util/function";
 import { dedupeTracked } from "tracked-toolbox";
 
-import { arrayFromString, stringFromArray } from "mysagw/utils/query-params";
+import {
+  arrayFromString,
+  stringFromArray,
+  serializeOrder,
+} from "mysagw/utils/query-params";
 export default class CasesIndexController extends Controller {
   queryParams = ["order", "documentNumber", "identities", "answerSearch"];
 
@@ -15,7 +19,7 @@ export default class CasesIndexController extends Controller {
   @service intl;
   @service filteredForms;
 
-  @dedupeTracked order = { attribute: "CREATED_AT", direction: "DESC" };
+  @dedupeTracked order = "-CREATED_AT";
   @dedupeTracked documentNumber = "";
   @dedupeTracked identities = "";
   @dedupeTracked answerSearch = "";
@@ -23,7 +27,7 @@ export default class CasesIndexController extends Controller {
   caseQuery = useCalumaQuery(this, allCases, () => ({
     options: { pageSize: 20 },
     filter: this.caseFilters.value,
-    order: [this.order],
+    order: [serializeOrder(this.order, "documentAnswer")],
   }));
 
   get showEmpty() {
