@@ -34,7 +34,7 @@ main {
 }
 
 .ember-power-select-trigger-multiple-input {
-  height: 40px;
+  padding: 0 10px;
 }
 
 .work-item-attribute {
@@ -44,10 +44,6 @@ main {
 
 .filters-gap {
   row-gap: 5px;
-}
-
-.height-auto {
-  height: auto !important;
 }
 
 @import 'ember-uikit';
