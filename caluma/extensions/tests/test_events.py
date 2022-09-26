@@ -72,7 +72,7 @@ def test_work_item_additional_data(
 
 
 def test_work_item_define_amount(
-    db, caluma_data, user, case_access_event_mock, circulation
+    db, caluma_data, user, case_access_event_mock, circulation, send_mail_mock
 ):
     work_items = circulation.parent_work_item.case.work_items
 
@@ -251,22 +251,112 @@ def test_case_status(
     assert case.meta["status"] == "complete"
 
 
+@pytest.mark.parametrize("lang", ["de", "en", "fr"])
+@pytest.mark.parametrize(
+    "task_slug",
+    [
+        "revise-document",
+        "additional-data",
+        "complete-document",
+    ],
+)
 def test_send_new_work_item_mail(
-    db, user, caluma_data, case_access_event_mock, document_review_case, mailoutbox
+    db,
+    user,
+    caluma_data,
+    case_access_event_mock,
+    document_review_case,
+    mailoutbox,
+    task_slug,
+    lang,
+    snapshot,
+    mocker,
 ):
+    if lang != "de":
+        mock = mocker.patch("caluma.extensions.events.work_item.get_users_for_case")
+        mock.return_value = [
+            {
+                "idp-id": "267796f2-ae48-4235-93d7-bf26e8ba66bb",
+                "first-name": "Winston",
+                "last-name": "Smith",
+                "email": "test-send@example.com",
+                "language": lang,
+            }
+        ]
     case = document_review_case
 
-    skip_work_item(case.work_items.get(task_id="submit-document"), user)
+    review_document_decision_answer = "review-document-decision-continue"
 
-    case.work_items.get(task_id="review-document").document.answers.create(
-        question_id="review-document-decision",
-        value="review-document-decision-reject",
+    if task_slug == "revise-document":
+        review_document_decision_answer = "review-document-decision-reject"
+
+    case.document.answers.create(
+        question_id="dossier-nr",
+        value="1984-0023",
     )
 
-    complete_work_item(case.work_items.get(task_id="review-document"), user)
-    assert len(mailoutbox) == 1
-    assert mailoutbox[0].from_email == settings.MAILING_SENDER
-    assert mailoutbox[0].to == ["test-send@example.com"]
+    skip_work_item(case.work_items.get(task_id="submit-document"), user)
+    review_work_item = case.work_items.get(task_id="review-document")
+    review_work_item.document.answers.create(
+        question_id="review-document-decision",
+        value=review_document_decision_answer,
+    )
+    complete_work_item(review_work_item, user)
+
+    if task_slug in ["additional-data", "complete-document"]:
+        skip_work_item(case.work_items.get(task_id="circulation"), user)
+        decision_credit_work_item = case.work_items.get(task_id="decision-and-credit")
+        decision_credit_work_item.document.answers.create(
+            question_id="decision-and-credit-decision",
+            value="decision-and-credit-decision-additional-data",
+        )
+        decision_credit_work_item.document.answers.create(
+            question_id="gesprochener-rahmenkredit",
+            value="23",
+        )
+        complete_work_item(decision_credit_work_item, user)
+
+    if task_slug == "complete-document":
+        additional_data_work_item = case.work_items.get(task_id="additional-data")
+        additional_data_form_work_item = case.work_items.get(
+            task_id="additional-data-form"
+        )
+        additional_data_form_work_item.document.answers.create(
+            question_id="additional-data-adresse",
+            value="street",
+        )
+        additional_data_form_work_item.document.answers.create(
+            question_id="additional-data-bank",
+            value="bank",
+        )
+        additional_data_form_work_item.document.answers.create(
+            question_id="additional-data-iban",
+            value="iban",
+        )
+        additional_data_form_work_item.document.answers.create(
+            question_id="additional-data-name",
+            value="name",
+        )
+        complete_work_item(additional_data_form_work_item, user)
+        complete_work_item(additional_data_work_item, user)
+
+        define_amount_work_item = case.work_items.get(task_id="define-amount")
+        define_amount_work_item.document.answers.create(
+            question_id="define-amount-amount-float",
+            value=23.0,
+        )
+        define_amount_work_item.document.answers.create(
+            question_id="define-amount-decision",
+            value="define-amount-decision-continue",
+        )
+        complete_work_item(define_amount_work_item, user)
+
+    assert len(mailoutbox) == 2 if task_slug == "complete-document" else 1
+    mail = mailoutbox[1] if task_slug == "complete-document" else mailoutbox[0]
+    assert mail.from_email == settings.MAILING_SENDER
+    assert mail.to == ["test-send@example.com"]
+    snapshot.assert_match(mail.subject)
+    snapshot.assert_match(mail.body.replace(str(case.pk), "my-case-id"))
 
 
 def test_access_control(
@@ -338,6 +428,7 @@ def test_redo_define_amount(
     circulation,
     decision,
     expected_work_item_task,
+    send_mail_mock,
 ):
     Question.objects.filter(formquestion__form__pk="additional-data-form").update(
         is_required="false"
@@ -353,6 +444,7 @@ def test_redo_define_amount(
     )
 
     complete_work_item(case.work_items.get(task_id="decision-and-credit"), user)
+
     if decision != "define-amount":
         complete_work_item(case.work_items.get(task_id="additional-data"), user)
 
