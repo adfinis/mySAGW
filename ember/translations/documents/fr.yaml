@@ -47,7 +47,7 @@ documents:
   reopenSuccess: "Application réouverte"
   reopenError: "La réouverture de l'application a échoué"
   accountingExport: "Exportation pour la comptabilité"
-  accountingExportFilename: "{dossierNo}.pdf"
+  accountingExportFilename: "{dossierNo}-comptabilité.pdf"
 
   states:
     submit: "Soumettre la requête"
@@ -70,6 +70,7 @@ documents:
     document: "Requête"
     work-items: "Tâches"
     circulation: "Circulation"
+    download: "Télécharger"
 
   circulation:
     add: "Mettre en circulation"
@@ -90,3 +91,12 @@ documents:
 
   filters:
     identity: "Identité"
+
+  download:
+    button: "Télécharger"
+    document: "Requête"
+    acknowledgement: "Accusé de réception"
+    creditApproval: "Accord de crédit"
+    documentFilename: "{dossierNo}-Requête.pdf"
+    acknowledgementFilename: "{dossierNo}-accusé-de-réception.pdf"
+    creditApprovalFilename: "{dossierNo}-accord-de-crédit.pdf"

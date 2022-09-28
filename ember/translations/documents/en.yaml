@@ -47,7 +47,7 @@ documents:
   reopenSuccess: "Application reopened"
   reopenError: "Reopen application failed"
   accountingExport: "Export for accounting"
-  accountingExportFilename: "{dossierNo}.pdf"
+  accountingExportFilename: "accounting-{dossierNo}.pdf"
 
   states:
     submit: "Submit"
@@ -70,6 +70,7 @@ documents:
     document: "Application"
     work-items: "Tasks"
     circulation: "Circulation"
+    download: "Download"
 
   circulation:
     add: "Add to circulation"
@@ -90,3 +91,12 @@ documents:
 
   filters:
     identity: "Identity"
+
+  download:
+    button: "Download"
+    document: "Application"
+    acknowledgement: "Acknowledgement of receipt"
+    creditApproval: "Credit approval"
+    documentFilename: "{dossierNo}-document.pdf"
+    acknowledgementFilename: "{dossierNo}-acknowledgement-of-receipt.pdf"
+    creditApprovalFilename: "{dossierNo}-credit-approval.pdf"
