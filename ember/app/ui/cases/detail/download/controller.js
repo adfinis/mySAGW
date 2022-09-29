@@ -12,7 +12,9 @@ export default class CasesDetailDownloadController extends Controller {
   *download() {
     const adapter = this.store.adapterFor("identity");
 
-    const uri = `${adapter.buildURL("case-export")}/${this.model.id}`;
+    const uri = `${adapter.buildURL("download")}/${
+      this.model.id
+    }/acknowledgement`;
     const init = {
       method: "GET",
       headers: adapter.headers,

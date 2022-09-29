@@ -1,3 +1,4 @@
+import re
 from uuid import uuid4
 
 import pytest
@@ -6,6 +7,7 @@ from django.urls import reverse
 from rest_framework import status
 
 from mysagw.case import email_texts, models
+from mysagw.utils import build_url
 
 
 @pytest.mark.parametrize(
@@ -191,3 +193,52 @@ def test_case_delete(db, client, has_access, expected_status, case_access_factor
     if expected_status == status.HTTP_204_NO_CONTENT:
         with pytest.raises(models.CaseAccess.DoesNotExist):
             case_access.refresh_from_db()
+
+
+@pytest.mark.parametrize(
+    "client,dms_failure,expected_status",
+    [
+        ("user", False, status.HTTP_200_OK),
+        ("staff", False, status.HTTP_200_OK),
+        ("admin", False, status.HTTP_200_OK),
+        ("admin", True, status.HTTP_400_BAD_REQUEST),
+        ("admin", False, status.HTTP_200_OK),
+    ],
+    indirect=["client"],
+)
+def test_download(
+    db,
+    client,
+    dms_failure,
+    expected_status,
+    requests_mock,
+    snapshot,
+):
+    if dms_failure:
+        matcher = re.compile(
+            build_url(
+                settings.DOCUMENT_MERGE_SERVICE_URL,
+                "template",
+                ".*",
+                "merge",
+                trailing=True,
+            )
+        )
+        requests_mock.post(
+            matcher,
+            status_code=status.HTTP_400_BAD_REQUEST,
+            json={"error": "something went wrong"},
+            headers={"CONTENT-TYPE": "application/json"},
+        )
+
+    case_id = "e535ac0c-f3be-4a36-b2d4-1ef405ec71c8"
+    url = reverse("downloads-acknowledgement", args=[case_id])
+
+    response = client.get(url)
+
+    assert response.status_code == expected_status
+
+    if expected_status != status.HTTP_200_OK:
+        return
+
+    snapshot.assert_match(response.getvalue())

@@ -1,0 +1,17 @@
+query Acknowledgement ($case_id: ID!) {
+  node(id: $case_id) {
+    ... on Case {
+      main: document {
+        dossier_nr: answers(filter: [{question: "dossier-nr"}]) {
+          edges {
+            node {
+              ... on StringAnswer {
+                value
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
