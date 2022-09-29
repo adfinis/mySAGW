@@ -1,32 +1,12 @@
-<div class="uk-column-1-3 uk-column-divider">
-  <div class="uk-flex uk-flex-center uk-flex-column">
-    <h3 class="uk-text-center">{{t "documents.download.document"}}</h3>
+<div class="uk-flex uk-flex-center uk-flex-column">
+  {{#each this.activeDownloads as |downloadType|}}
     <UkButton
-      @disabled={{this.download.isRunning}}
-      @loading={{this.download.isRunning}}
-      @onClick={{perform this.download}}
+      @disabled={{downloadType.isRunning}}
+      @loading={{downloadType.isRunning}}
+      @onClick={{perform downloadType}}
+      class="uk-width-1-3"
     >
-      {{t "documents.download.button"}}
+      {{t (concat "documents.download." downloadType.name)}}
     </UkButton>
-  </div>
-  <div class="uk-flex uk-flex-center uk-flex-column">
-    <h3 class="uk-text-center">{{t "documents.download.acknowledgement"}}</h3>
-    <UkButton
-      @disabled={{this.download.isRunning}}
-      @loading={{this.download.isRunning}}
-      @onClick={{perform this.download}}
-    >
-      {{t "documents.download.button"}}
-    </UkButton>
-  </div>
-  <div class="uk-flex uk-flex-center uk-flex-column">
-    <h3 class="uk-text-center">{{t "documents.download.creditApproval"}}</h3>
-    <UkButton
-      @disabled={{this.download.isRunning}}
-      @loading={{this.download.isRunning}}
-      @onClick={{perform this.download}}
-    >
-      {{t "documents.download.button"}}
-    </UkButton>
-  </div>
+  {{/each}}
 </div>

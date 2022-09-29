@@ -1,4 +1,3 @@
-import io
 from base64 import urlsafe_b64encode
 from pathlib import Path
 
@@ -42,10 +41,6 @@ class CaseAccessViewSet(
 class CaseDownloadViewSet(GenericViewSet):
     serializer_class = BaseSerializer
     permission_classes = (IsAuthenticated & (IsAdmin | HasCaseAccess),)
-
-    document_fields = {
-        # serialize slugs into placeholders
-    }
 
     acknowledgement_fields = {
         "dossier_nr": (
@@ -128,19 +123,17 @@ class CaseDownloadViewSet(GenericViewSet):
         return result
 
     def get_merged_document(self, context, name):
-        document = io.BytesIO()
         client = DMSClient()
+        # add identity data to context
         try:
             resp = client.merge(
                 settings.DOCUMENT_MERGE_SERVICE_ACCOUNTING_COVER_TEMPLATE_SLUG,
                 data=context,
                 convert="pdf",
             )
-            document.write(resp.content)
-            document.seek(0)
 
             return FileResponse(
-                document,
+                resp.content,
                 content_type="application/pdf",
                 filename=f"{context.get('dossier_no')}.pdf",
             )
@@ -152,10 +145,10 @@ class CaseDownloadViewSet(GenericViewSet):
             )
 
     @action(detail=True)
-    def document(self, request, pk=None):
-        name = "document"
-        raw_data = self.get_data(pk, request, name)
-        data = self.get_formatted_data(raw_data, name)
+    def application(self, request, pk=None):
+        pass
+        name = "application"
+        # prepare all answers for dms
         response = self.get_merged_document(data, name)
 
         return response

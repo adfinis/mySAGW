@@ -94,7 +94,7 @@ documents:
 
   download:
     button: "Télécharger"
-    document: "Requête"
+    application: "Requête"
     acknowledgement: "Accusé de réception"
     creditApproval: "Accord de crédit"
     documentFilename: "{dossierNo}-Requête.pdf"

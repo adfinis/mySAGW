@@ -94,7 +94,7 @@ documents:
 
   download:
     button: "Herunterladen"
-    document: "Gesuch"
+    application: "Gesuch"
     acknowledgement: "Eingangsbestätigung"
     creditApproval: "Kreditgutsprache"
     documentFilename: "{dossierNo}-gesuch.pdf"

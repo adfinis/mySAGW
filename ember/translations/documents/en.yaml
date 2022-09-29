@@ -94,7 +94,7 @@ documents:
 
   download:
     button: "Download"
-    document: "Application"
+    application: "Application"
     acknowledgement: "Acknowledgement of receipt"
     creditApproval: "Credit approval"
     documentFilename: "{dossierNo}-document.pdf"
