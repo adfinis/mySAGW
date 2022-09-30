@@ -1,5 +1,6 @@
 from base64 import urlsafe_b64encode
 from pathlib import Path
+import io
 
 from django.conf import settings
 from django.http import FileResponse, HttpResponse
@@ -123,23 +124,27 @@ class CaseDownloadViewSet(GenericViewSet):
         return result
 
     def get_merged_document(self, context, name):
+        document = io.BytesIO()
         client = DMSClient()
         # add identity data to context
+        # use different dms template based on identity language
         try:
             resp = client.merge(
-                settings.DOCUMENT_MERGE_SERVICE_ACCOUNTING_COVER_TEMPLATE_SLUG,
+                getattr(settings, f"DOCUMENT_MERGE_SERVICE_{name.upper()}_TEMPLATE_SLUG"),
                 data=context,
                 convert="pdf",
             )
+            document.write(resp.content)
+            document.seek(0)
 
             return FileResponse(
-                resp.content,
+                document,
                 content_type="application/pdf",
                 filename=f"{context.get('dossier_no')}.pdf",
             )
         except HTTPError as e:
             return HttpResponse(
-                document,
+                e.response.content,
                 status=e.response.status_code,
                 content_type=e.response.headers["Content-Type"],
             )
