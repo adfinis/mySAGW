@@ -8,6 +8,7 @@ from rest_framework import status
 from mysagw.utils import build_url
 
 
+@pytest.mark.freeze_time("1970-01-01")
 @pytest.mark.parametrize(
     "client,dms_failure,missing_receipts,expected_status",
     [
@@ -60,4 +61,6 @@ def test_get_receipts(
     if expected_status != status.HTTP_200_OK:
         return
 
-    snapshot.assert_match(response.getvalue())
+    assert receipt_mock.called_once
+
+    snapshot.assert_match(receipt_mock.request_history[0].json())
