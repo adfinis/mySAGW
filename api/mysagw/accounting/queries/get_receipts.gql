@@ -44,7 +44,43 @@ query Receipts($case_id: ID!) {
                   }
                 }
               }
+              applicant_postcode: answers(filter: [{question: "additional-data-postleitzahl"}]) {
+                edges {
+                  node {
+                    ... on StringAnswer {
+                      value
+                    }
+                  }
+                }
+              }
+              applicant_city: answers(filter: [{question: "additional-data-ort"}]) {
+                edges {
+                  node {
+                    ... on StringAnswer {
+                      value
+                    }
+                  }
+                }
+              }
+              applicant_land: answers(filter: [{question: "additional-data-land"}]) {
+                edges {
+                  node {
+                    ... on StringAnswer {
+                      value
+                    }
+                  }
+                }
+              }
               fibu: answers(filter: [{question: "additional-data-fibu"}]) {
+                edges {
+                  node {
+                    ... on StringAnswer {
+                      value
+                    }
+                  }
+                }
+              }
+              zahlungszweck: answers(filter: [{question: "additional-data-zahlungszweck"}]) {
                 edges {
                   node {
                     ... on StringAnswer {

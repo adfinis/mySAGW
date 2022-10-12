@@ -83,15 +83,21 @@ def receipt_mock(requests_mock):
                                         "edges": [{"node": {"value": "Winston Smith"}}]
                                     },
                                     "applicant_address": {
-                                        "edges": [
-                                            {
-                                                "node": {
-                                                    "value": "Dorfplatz 1\n8000Zürich"
-                                                }
-                                            }
-                                        ]
+                                        "edges": [{"node": {"value": "Dorfplatz 1"}}]
+                                    },
+                                    "applicant_postcode": {
+                                        "edges": [{"node": {"value": "8000"}}]
+                                    },
+                                    "applicant_city": {
+                                        "edges": [{"node": {"value": "Zürich"}}]
+                                    },
+                                    "applicant_land": {
+                                        "edges": [{"node": {"value": "Schweiz"}}]
                                     },
                                     "fibu": {"edges": [{"node": {"value": "2021"}}]},
+                                    "zahlungszweck": {
+                                        "edges": [{"node": {"value": "Foo Bar"}}]
+                                    },
                                     "iban": {
                                         "edges": [
                                             {
@@ -184,7 +190,7 @@ def receipt_mock(requests_mock):
         )
     )
 
-    requests_mock.post(
+    return requests_mock.post(
         matcher,
         status_code=status.HTTP_200_OK,
         content=cover,
