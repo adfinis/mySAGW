@@ -81,6 +81,7 @@ module.exports = function (environment) {
           "circulation",
           "decision-and-credit",
           "define-amount",
+          "complete-document",
         ],
         canRedoTaskSlug: [
           "circulation",
