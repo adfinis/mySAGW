@@ -69,8 +69,12 @@ make caluma-loadconfig
 # upload the export templates to DMS (adapt template names, if you don't use the default ones)
 docker-compose run --rm api python manage.py upload_template -t mysagw/identity/templates/identity-labels.docx
 docker-compose run --rm api python manage.py upload_template -t mysagw/accounting/templates/accounting-cover.docx
-docker-compose run --rm api python manage.py upload_template -t mysagw/case/templates/acknowledgement.docx
-docker-compose run --rm api python manage.py upload_template -t mysagw/case/templates/credit-approval.docx
+docker-compose run --rm api python manage.py upload_template -t mysagw/case/templates/acknowledgement-de.docx
+docker-compose run --rm api python manage.py upload_template -t mysagw/case/templates/acknowledgement-fr.docx
+docker-compose run --rm api python manage.py upload_template -t mysagw/case/templates/acknowledgement-en.docx
+docker-compose run --rm api python manage.py upload_template -t mysagw/case/templates/credit-approval-de.docx
+docker-compose run --rm api python manage.py upload_template -t mysagw/case/templates/credit-approval-fr.docx
+docker-compose run --rm api python manage.py upload_template -t mysagw/case/templates/credit-approval-en.docx
 ```
 
 ## Contributing

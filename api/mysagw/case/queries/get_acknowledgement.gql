@@ -1,6 +1,7 @@
 query Acknowledgement ($case_id: ID!) {
   node(id: $case_id) {
     ... on Case {
+      createdByUser
       main: document {
         dossier_nr: answers(filter: [{question: "dossier-nr"}]) {
           edges {

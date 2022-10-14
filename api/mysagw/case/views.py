@@ -1,9 +1,12 @@
-from base64 import urlsafe_b64encode
-from pathlib import Path
 import io
+from base64 import urlsafe_b64encode
+from datetime import datetime
+from pathlib import Path
 
 from django.conf import settings
+from django.forms.models import model_to_dict
 from django.http import FileResponse, HttpResponse
+from django.utils import formats
 from requests import HTTPError
 from rest_framework.decorators import action
 from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, ListModelMixin
@@ -14,6 +17,7 @@ from mysagw.accounting.caluma_client import CalumaClient
 from mysagw.case import filters, models, serializers
 from mysagw.case.permissions import HasCaseAccess
 from mysagw.dms_client import DMSClient
+from mysagw.identity.models import Address, Identity
 from mysagw.oidc_auth.permissions import IsAdmin, IsAuthenticated
 
 GQL_DIR = Path(__file__).parent.resolve() / "queries"
@@ -44,6 +48,7 @@ class CaseDownloadViewSet(GenericViewSet):
     permission_classes = (IsAuthenticated & (IsAdmin | HasCaseAccess),)
 
     acknowledgement_fields = {
+        "identity": (["data", "node", "createdByUser"], None),
         "dossier_nr": (
             [
                 "data",
@@ -60,6 +65,7 @@ class CaseDownloadViewSet(GenericViewSet):
     }
 
     credit_approval_fields = {
+        "identity": (["data", "node", "createdByUser"], None),
         "dossier_nr": (
             [
                 "data",
@@ -119,19 +125,36 @@ class CaseDownloadViewSet(GenericViewSet):
                     break
             if value and path[1] is not None:
                 value = path[1](value)
+
+            if field == "identity":
+                identity = Identity.objects.get(idp_id=value)
+                address = model_to_dict(
+                    Address.objects.get(identity=identity, default=True)
+                )
+                identity = model_to_dict(identity)
+
+                # remove objects which cannot be turned into json
+                del address["identity"]
+                del address["country"]
+                del identity["interests"]
+
+                identity["address"] = address
+                value = identity
+
             result[field] = value
 
+        result["date"] = formats.date_format(datetime.now())
         return result
 
-    def get_merged_document(self, context, name):
+    def get_merged_document(self, request, data, name):
         document = io.BytesIO()
         client = DMSClient()
-        # add identity data to context
-        # use different dms template based on identity language
+        # add identity data to data
+        # use different dms template based on case submitter identity language
         try:
             resp = client.merge(
-                getattr(settings, f"DOCUMENT_MERGE_SERVICE_{name.upper()}_TEMPLATE_SLUG"),
-                data=context,
+                f'{getattr(settings, f"DOCUMENT_MERGE_SERVICE_{name.upper()}_TEMPLATE_SLUG")}-{data["identity"]["language"]}',
+                data=data,
                 convert="pdf",
             )
             document.write(resp.content)
@@ -140,7 +163,7 @@ class CaseDownloadViewSet(GenericViewSet):
             return FileResponse(
                 document,
                 content_type="application/pdf",
-                filename=f"{context.get('dossier_no')}.pdf",
+                filename=f"{data.get('dossier_no')}.pdf",
             )
         except HTTPError as e:
             return HttpResponse(
@@ -152,18 +175,20 @@ class CaseDownloadViewSet(GenericViewSet):
     @action(detail=True)
     def application(self, request, pk=None):
         pass
+        """
         name = "application"
         # prepare all answers for dms
         response = self.get_merged_document(data, name)
 
         return response
+        """
 
     @action(detail=True)
     def acknowledgement(self, request, pk=None):
         name = "acknowledgement"
         raw_data = self.get_data(pk, request, name)
         data = self.get_formatted_data(raw_data, name)
-        response = self.get_merged_document(data, name)
+        response = self.get_merged_document(request, data, name)
 
         return response
 
@@ -172,6 +197,6 @@ class CaseDownloadViewSet(GenericViewSet):
         name = "credit_approval"
         raw_data = self.get_data(pk, request, name)
         data = self.get_formatted_data(raw_data, name)
-        response = self.get_merged_document(data, name)
+        response = self.get_merged_document(request, data, name)
 
         return response

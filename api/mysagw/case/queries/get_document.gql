@@ -1,6 +1,7 @@
 query Document ($case_id: ID!) {
   node(id: $case_id) {
     ... on Case {
+      createdByUser
       document {
         answers {
           edges {

@@ -7,7 +7,10 @@ export default class ApplicationAdapter extends OIDCJSONAPIAdapter {
   @service session;
 
   get headers() {
-    return { ...this.session.headers };
+    return {
+      "Accept-Language": localStorage.getItem("locale") ?? "en",
+      ...this.session.headers,
+    };
   }
 
   /**
