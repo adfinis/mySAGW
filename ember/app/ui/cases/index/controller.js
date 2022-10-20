@@ -71,7 +71,7 @@ export default class CasesIndexController extends Controller {
       filters.push({
         searchAnswers: [
           {
-            forms: (await this.filteredForms.fetch()).map((form) => form.slug),
+            forms: await this.filteredForms.mainFormSlugs(),
             value: answerSearch,
           },
         ],
