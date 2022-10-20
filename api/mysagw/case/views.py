@@ -1,19 +1,16 @@
-import io
-from base64 import urlsafe_b64encode
 from datetime import datetime
 from pathlib import Path
 
 from django.conf import settings
-from django.forms.models import model_to_dict
 from django.http import FileResponse, HttpResponse
 from django.utils import formats
-from requests import HTTPError
+from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, ListModelMixin
 from rest_framework.serializers import BaseSerializer
 from rest_framework.viewsets import GenericViewSet
 
-from mysagw.accounting.caluma_client import CalumaClient
+from mysagw.caluma_client import CalumaClient
 from mysagw.case import filters, models, serializers
 from mysagw.case.permissions import HasCaseAccess
 from mysagw.dms_client import DMSClient
@@ -47,74 +44,98 @@ class CaseDownloadViewSet(GenericViewSet):
     serializer_class = BaseSerializer
     permission_classes = (IsAuthenticated & (IsAdmin | HasCaseAccess),)
 
-    acknowledgement_fields = {
-        "identity": (["data", "node", "createdByUser"], None),
-        "dossier_nr": (
-            [
-                "data",
-                "node",
-                "main",
-                "dossier_nr",
-                "edges",
-                0,
-                "node",
-                "value",
-            ],
-            None,
-        ),
+    ACKNOWLEDGEMENT_FIELDS = {
+        "identity_submit": [
+            "data",
+            "node",
+            "submit",
+            "edges",
+            0,
+            "node",
+            "closedByUser",
+        ],
+        "identity_revise": [
+            "data",
+            "node",
+            "revise",
+            "edges",
+            0,
+            "node",
+            "closedByUser",
+        ],
+        "dossier_nr": [
+            "data",
+            "node",
+            "main",
+            "dossier_nr",
+            "edges",
+            0,
+            "node",
+            "value",
+        ],
     }
 
-    credit_approval_fields = {
-        "identity": (["data", "node", "createdByUser"], None),
-        "dossier_nr": (
-            [
-                "data",
-                "node",
-                "main",
-                "dossier_nr",
-                "edges",
-                0,
-                "node",
-                "value",
-            ],
-            None,
-        ),
-        "rahmenkredit": (
-            [
-                "data",
-                "node",
-                "decisionAndCredit",
-                "credit",
-                "edges",
-                0,
-                "node",
-                "value",
-            ],
-            None,
-        ),
+    CREDIT_APPROVAL_FIELDS = {
+        "identity_submit": [
+            "data",
+            "node",
+            "submit",
+            "edges",
+            0,
+            "node",
+            "closedByUser",
+        ],
+        "identity_revise": [
+            "data",
+            "node",
+            "revise",
+            "edges",
+            0,
+            "node",
+            "closedByUser",
+        ],
+        "dossier_nr": [
+            "data",
+            "node",
+            "main",
+            "dossier_nr",
+            "edges",
+            0,
+            "node",
+            "value",
+        ],
+        "rahmenkredit": [
+            "data",
+            "node",
+            "decisionAndCredit",
+            "edges",
+            0,
+            "node",
+            "document",
+            "credit",
+            "edges",
+            0,
+            "node",
+            "value",
+        ],
     }
 
-    def get_data(self, case_id, request, name):
-        with (GQL_DIR / f"get_{name}.gql").open("r") as f:
-            query = f.read()
-        global_id = urlsafe_b64encode(f"Case:{case_id}".encode("utf-8")).decode("utf-8")
-        client = CalumaClient(
+    @staticmethod
+    def get_caluma_client(request):
+        return CalumaClient(
             endpoint=f"{request.scheme}://{request.get_host()}/graphql",
             token=request.META.get("HTTP_AUTHORIZATION"),
             # For local testing:
             # endpoint="http://caluma:8000/graphql",
             # token="Bearer ey...",
         )
-        variables = {"case_id": global_id}
-        resp = client.execute(query, variables)
-        return resp
 
     def get_formatted_data(self, data, name):
         result = {}
 
-        for field, path in getattr(self, f"{name}_fields").items():
+        for field, path in getattr(self, f"{name.upper()}_FIELDS").items():
             value = None
-            for node in path[0]:
+            for node in path:
                 if value is None:
                     value = data[node]
                     continue
@@ -123,80 +144,98 @@ class CaseDownloadViewSet(GenericViewSet):
                 except (KeyError, TypeError, IndexError):
                     value = ""
                     break
-            if value and path[1] is not None:
-                value = path[1](value)
-
-            if field == "identity":
-                identity = Identity.objects.get(idp_id=value)
-                address = model_to_dict(
-                    Address.objects.get(identity=identity, default=True)
-                )
-                identity = model_to_dict(identity)
-
-                # remove objects which cannot be turned into json
-                del address["identity"]
-                del address["country"]
-                del identity["interests"]
-
-                identity["address"] = address
-                value = identity
 
             result[field] = value
+
+        # Identity has two possible sources
+        identity_id = result["identity_submit"]
+        if result["identity_revise"]:
+            identity_id = result["identity_revise"]
+
+        identity = Identity.objects.get(idp_id=identity_id)
+        identity_dict = {
+            "address_block": identity.address_block,
+            "greeting_salutation_and_name": identity.greeting_salutation_and_name(),
+            "language": identity.language,
+        }
+
+        result["identity"] = identity_dict
+        del result["identity_submit"]
+        del result["identity_revise"]
 
         result["date"] = formats.date_format(datetime.now())
         return result
 
-    def get_merged_document(self, request, data, name):
-        document = io.BytesIO()
-        client = DMSClient()
-        # add identity data to data
-        # use different dms template based on case submitter identity language
+    # @action(detail=True)
+    # def application(self, request, pk=None):
+    #     pass
+    #     """
+    #     name = "application"
+    #     # prepare all answers for dms
+    #     response = self.get_merged_document(data, name)
+    #
+    #     return response
+    #     """
+
+    def get_filename_translation(self, name, language):
+        trans_map = {
+            "acknowledgement": {
+                "de": "Eingangsbestätigung",
+                "en": "Acknowledgement of receipt",
+                "fr": "Accusé de réception",
+            },
+            "credit_approval": {
+                "de": "Kreditgutsprache",
+                "en": "Credit approval",
+                "fr": "Accord de crédit",
+            },
+        }
+        return trans_map[name][language]
+
+    def get_acknowledgement_and_credit_approval(self, request, name, pk=None):
+        caluma_client = self.get_caluma_client(request)
+        raw_data = caluma_client.get_data(pk, GQL_DIR / f"get_{name}.gql")
         try:
-            resp = client.merge(
-                f'{getattr(settings, f"DOCUMENT_MERGE_SERVICE_{name.upper()}_TEMPLATE_SLUG")}-{data["identity"]["language"]}',
-                data=data,
-                convert="pdf",
-            )
-            document.write(resp.content)
-            document.seek(0)
+            data = self.get_formatted_data(raw_data, name)
+        except (Identity.DoesNotExist, Address.DoesNotExist) as e:
+            content = "Identity not found"
+            if e.args[0].startswith("Address"):
+                content = "No Address for identity"
 
-            return FileResponse(
-                document,
-                content_type="application/pdf",
-                filename=f"{data.get('dossier_no')}.pdf",
-            )
-        except HTTPError as e:
             return HttpResponse(
-                e.response.content,
-                status=e.response.status_code,
-                content_type=e.response.headers["Content-Type"],
+                content,
+                status=status.HTTP_400_BAD_REQUEST,
+                content_type="text/plain",
             )
 
-    @action(detail=True)
-    def application(self, request, pk=None):
-        pass
-        """
-        name = "application"
-        # prepare all answers for dms
-        response = self.get_merged_document(data, name)
+        dms_client = DMSClient()
+        template = f'{getattr(settings, f"DOCUMENT_MERGE_SERVICE_{name.upper()}_TEMPLATE_SLUG")}-{data["identity"]["language"]}'
+        status_code, content_type, content = dms_client.get_merged_document(
+            data,
+            template,
+        )
 
-        return response
-        """
+        if status_code != status.HTTP_200_OK:
+            return HttpResponse(content, status=status_code, content_type=content_type)
+
+        file_name = (
+            f"{data['dossier_nr']} - "
+            f"{self.get_filename_translation(name, data['identity']['language'])}.pdf"
+        )
+
+        return FileResponse(
+            content,
+            filename=file_name,
+        )
 
     @action(detail=True)
     def acknowledgement(self, request, pk=None):
-        name = "acknowledgement"
-        raw_data = self.get_data(pk, request, name)
-        data = self.get_formatted_data(raw_data, name)
-        response = self.get_merged_document(request, data, name)
-
-        return response
+        return self.get_acknowledgement_and_credit_approval(
+            request, "acknowledgement", pk
+        )
 
     @action(detail=True)
     def credit_approval(self, request, pk=None):
-        name = "credit_approval"
-        raw_data = self.get_data(pk, request, name)
-        data = self.get_formatted_data(raw_data, name)
-        response = self.get_merged_document(request, data, name)
-
-        return response
+        return self.get_acknowledgement_and_credit_approval(
+            request, "credit_approval", pk
+        )

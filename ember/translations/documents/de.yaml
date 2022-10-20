@@ -97,6 +97,3 @@ documents:
     application: "Gesuch"
     acknowledgement: "Eingangsbestätigung"
     creditApproval: "Kreditgutsprache"
-    documentFilename: "{dossierNo}-gesuch.pdf"
-    acknowledgementFilename: "{dossierNo}-eingangsbestätigung.pdf"
-    creditApprovalFilename: "{dossierNo}-kreditgutsprache.pdf"

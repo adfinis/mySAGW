@@ -1,7 +1,6 @@
 query Acknowledgement ($case_id: ID!) {
   node(id: $case_id) {
     ... on Case {
-      createdByUser
       main: document {
         dossier_nr: answers(filter: [{question: "dossier-nr"}]) {
           edges {
@@ -10,6 +9,21 @@ query Acknowledgement ($case_id: ID!) {
                 value
               }
             }
+          }
+        }
+      }
+      submit: workItems(filter: [{task: "submit-document"}]) {
+        edges {
+          node {
+            closedByUser
+          }
+        }
+      }
+      revise: workItems(filter: [{task: "revise-document"}], order: [{attribute: CLOSED_AT, direction: DESC}]) {
+        edges {
+          node {
+            closedByUser
+            closedAt
           }
         }
       }

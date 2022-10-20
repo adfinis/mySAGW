@@ -68,6 +68,12 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
         SALUTATION_NEUTRAL: {"de": "", "en": "", "fr": ""},
     }
 
+    GREETING_LOCALIZED_MAP = {
+        SALUTATION_MR: {"de": "Sehr geehrter", "en": "Dear", "fr": "Monsieur"},
+        SALUTATION_MRS: {"de": "Sehr geehrte", "en": "Dear", "fr": "Madame"},
+        SALUTATION_NEUTRAL: {"de": "Sehr geehrte·r", "en": "Dear", "fr": ""},
+    }
+
     SALUTATION_CHOICES = (
         (SALUTATION_MR, SALUTATION_MR),
         (SALUTATION_MRS, SALUTATION_MRS),
@@ -125,6 +131,52 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
         return self.__class__.objects.filter(
             pk__in=memberships.values_list("organisation", flat=True).distinct()
         )
+
+    @property
+    def full_name(self):
+        salutation = self.SALUTATION_LOCALIZED_MAP.get(self.salutation, {}).get(
+            self.language
+        )
+        title = self.TITLE_LOCALIZED_MAP[self.title][self.language]
+        full_name = ""
+        if salutation:
+            full_name = f"{salutation}"
+        if title and full_name:
+            full_name = f"{full_name} {title}"
+        elif title:
+            full_name = title
+        if full_name:
+            return f"{full_name} {self.first_name} {self.last_name}"
+
+        return f"{self.first_name} {self.last_name}"
+
+    @property
+    def address_block(self):
+        address = self.addresses.get(default=True)
+        address_block = f"{self.full_name}\n" f"{address.street_and_number}"
+        for add in [
+            address.address_addition_1,
+            address.address_addition_2,
+            address.address_addition_3,
+        ]:
+            if add:
+                address_block = f"{address_block}\n{add}"
+
+        if address.po_box:
+            address_block = f"{address_block}\n{address.po_box}"
+
+        address_block = f"{address_block}\n{address.postcode} {address.town}\n{address.country.name}"
+
+        return address_block
+
+    def greeting_salutation_and_name(self):
+        greeting = self.GREETING_LOCALIZED_MAP[self.salutation][self.language]
+        result = self.full_name
+
+        if greeting:
+            result = f"{greeting} {self.full_name}"
+
+        return result
 
     @property
     def authorized_for(self):

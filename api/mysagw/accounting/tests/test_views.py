@@ -43,7 +43,7 @@ def test_get_receipts(
         requests_mock.post(
             matcher,
             status_code=status.HTTP_400_BAD_REQUEST,
-            json={"error": "something went wrong"},
+            json=["something went wrong"],
             headers={"CONTENT-TYPE": "application/json"},
         )
     elif missing_receipts:

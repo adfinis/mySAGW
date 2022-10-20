@@ -195,50 +195,184 @@ def test_case_delete(db, client, has_access, expected_status, case_access_factor
             case_access.refresh_from_db()
 
 
+@pytest.mark.freeze_time("1970-01-01")
+@pytest.mark.parametrize("client", ["user", "staff", "admin"], indirect=["client"])
 @pytest.mark.parametrize(
-    "client,dms_failure,expected_status",
-    [
-        ("user", False, status.HTTP_200_OK),
-        ("staff", False, status.HTTP_200_OK),
-        ("admin", False, status.HTTP_200_OK),
-        ("admin", True, status.HTTP_400_BAD_REQUEST),
-        ("admin", False, status.HTTP_200_OK),
-    ],
-    indirect=["client"],
+    "endpoint",
+    ["acknowledgement", "credit-approval"],
 )
+@pytest.mark.parametrize("identity__idp_id", ["e5dabdd0-bafb-4b75-82d2-ccf9295b623b"])
+@pytest.mark.parametrize(
+    "title, salutation, po_box, address_addition_1, address_addition_2, address_addition_3",
+    [
+        (
+            models.Identity.TITLE_NONE,
+            models.Identity.SALUTATION_MR,
+            None,
+            None,
+            None,
+            None,
+        ),
+        (
+            models.Identity.TITLE_DR,
+            models.Identity.SALUTATION_MRS,
+            1234567,
+            "something",
+            "and",
+            "more",
+        ),
+        (
+            models.Identity.TITLE_PROF_DR,
+            models.Identity.SALUTATION_NEUTRAL,
+            1234567,
+            "something",
+            None,
+            "more",
+        ),
+        (
+            models.Identity.TITLE_NONE,
+            models.Identity.SALUTATION_NEUTRAL,
+            None,
+            None,
+            None,
+            None,
+        ),
+    ],
+)
+@pytest.mark.parametrize("language", [lang[0] for lang in settings.LANGUAGES])
 def test_download(
     db,
+    identity,
+    language,
+    title,
+    salutation,
+    po_box,
+    address_addition_1,
+    address_addition_2,
+    address_addition_3,
+    address_factory,
     client,
-    dms_failure,
-    expected_status,
-    requests_mock,
+    dms_mock,
+    acknowledgement_mock,
+    credit_approval_mock,
     snapshot,
+    endpoint,
 ):
-    if dms_failure:
-        matcher = re.compile(
-            build_url(
-                settings.DOCUMENT_MERGE_SERVICE_URL,
-                "template",
-                ".*",
-                "merge",
-                trailing=True,
-            )
-        )
-        requests_mock.post(
-            matcher,
-            status_code=status.HTTP_400_BAD_REQUEST,
-            json={"error": "something went wrong"},
-            headers={"CONTENT-TYPE": "application/json"},
-        )
+    identity.language = language
+    identity.title = title
+    identity.salutation = salutation
+    identity.save()
+
+    address = address_factory(identity=identity)
+    address.po_box = po_box
+    address.address_addition_3 = address_addition_3
+    address.address_addition_2 = address_addition_2
+    address.address_addition_3 = address_addition_3
+    address.save()
+
+    if endpoint == "acknowledgement":
+        acknowledgement_mock()
+    else:
+        credit_approval_mock()
 
     case_id = "e535ac0c-f3be-4a36-b2d4-1ef405ec71c8"
-    url = reverse("downloads-acknowledgement", args=[case_id])
+    url = reverse(f"downloads-{endpoint}", args=[case_id])
 
     response = client.get(url)
 
-    assert response.status_code == expected_status
+    assert response.status_code == status.HTTP_200_OK
+    assert dms_mock.called_once
+    assert (
+        dms_mock.request_history[0].path
+        == f"/api/v1/template/{endpoint}-{language}/merge/"
+    )
 
-    if expected_status != status.HTTP_200_OK:
-        return
+    snapshot.assert_match(dms_mock.request_history[0].json())
+    snapshot.assert_match(response.headers["content-disposition"])
 
-    snapshot.assert_match(response.getvalue())
+
+@pytest.mark.parametrize(
+    "endpoint",
+    ["acknowledgement", "credit-approval"],
+)
+@pytest.mark.parametrize("identity__idp_id", ["e5dabdd0-bafb-4b75-82d2-ccf9295b623b"])
+def test_download_dms_failure(
+    db,
+    identity,
+    address_factory,
+    client,
+    acknowledgement_mock,
+    credit_approval_mock,
+    requests_mock,
+    snapshot,
+    endpoint,
+):
+    address_factory(identity=identity)
+
+    if endpoint == "acknowledgement":
+        acknowledgement_mock()
+    else:
+        credit_approval_mock()
+
+    matcher = re.compile(
+        build_url(
+            settings.DOCUMENT_MERGE_SERVICE_URL,
+            "template",
+            ".*",
+            "merge",
+            trailing=True,
+        )
+    )
+
+    requests_mock.post(
+        matcher,
+        status_code=status.HTTP_400_BAD_REQUEST,
+        json=["something went wrong"],
+        headers={"CONTENT-TYPE": "application/json"},
+    )
+
+    case_id = "e535ac0c-f3be-4a36-b2d4-1ef405ec71c8"
+    url = reverse(f"downloads-{endpoint}", args=[case_id])
+
+    response = client.get(url)
+
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert response.json() == {
+        "errors": {"error": "something went wrong", "source": "DMS"}
+    }
+
+
+@pytest.mark.parametrize(
+    "endpoint",
+    ["acknowledgement", "credit-approval"],
+)
+@pytest.mark.parametrize(
+    "has_identity, response_content",
+    [(True, "No Address for identity"), (False, "Identity not found")],
+)
+def test_download_missing_address(
+    db,
+    identity_factory,
+    has_identity,
+    response_content,
+    client,
+    acknowledgement_mock,
+    credit_approval_mock,
+    snapshot,
+    endpoint,
+):
+    if has_identity:
+        identity_factory(idp_id="e5dabdd0-bafb-4b75-82d2-ccf9295b623b")
+
+    if endpoint == "acknowledgement":
+        acknowledgement_mock()
+    else:
+        credit_approval_mock()
+
+    case_id = "e535ac0c-f3be-4a36-b2d4-1ef405ec71c8"
+    url = reverse(f"downloads-{endpoint}", args=[case_id])
+
+    response = client.get(url)
+
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert response.content.decode("utf-8") == response_content

@@ -97,6 +97,3 @@ documents:
     application: "Requête"
     acknowledgement: "Accusé de réception"
     creditApproval: "Accord de crédit"
-    documentFilename: "{dossierNo}-Requête.pdf"
-    acknowledgementFilename: "{dossierNo}-accusé-de-réception.pdf"
-    creditApprovalFilename: "{dossierNo}-accord-de-crédit.pdf"

@@ -97,6 +97,3 @@ documents:
     application: "Application"
     acknowledgement: "Acknowledgement of receipt"
     creditApproval: "Credit approval"
-    documentFilename: "{dossierNo}-document.pdf"
-    acknowledgementFilename: "{dossierNo}-acknowledgement-of-receipt.pdf"
-    creditApprovalFilename: "{dossierNo}-credit-approval.pdf"
