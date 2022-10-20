@@ -1,5 +1,6 @@
 import Controller from "@ember/controller";
 import { inject as service } from "@ember/service";
+import { decamelize } from "@ember/string";
 import { dropTask } from "ember-concurrency-decorators";
 import { saveAs } from "file-saver";
 
@@ -10,7 +11,12 @@ export default class CasesDetailDownloadController extends Controller {
   @service store;
 
   get activeDownloads() {
-    const downloads = [this.application];
+    const downloads = [
+      /*
+        reenable when backend is ready
+        this.application
+      */
+    ];
     if (
       this.model.workItems.find(
         (workItem) =>
@@ -36,7 +42,9 @@ export default class CasesDetailDownloadController extends Controller {
   *download(name) {
     const adapter = this.store.adapterFor("identity");
 
-    const uri = `${adapter.buildURL("download")}/${this.model.id}/${name}`;
+    const uri = `${adapter.buildURL("download")}/${this.model.id}/${decamelize(
+      name
+    )}`;
     const init = {
       method: "GET",
       headers: adapter.headers,
@@ -49,10 +57,9 @@ export default class CasesDetailDownloadController extends Controller {
       }
 
       const blob = yield response.blob();
-      const filename = `${this.intl.t(`documents.download.${name}`, {
-        dossierNo:
-          this.model.document.answers.edges.firstObject.node.StringAnswerValue,
-      })}`;
+      const filename = response.headers
+        .get("content-disposition")
+        .match(/(?<=filename=")(.*?)(?=")/)[0];
 
       saveAs(blob, filename);
     } catch (error) {
