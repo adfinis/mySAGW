@@ -28,6 +28,11 @@ api-bash: ## Shell into the backend
 api-shell_plus: ## Run shell_plus
 	@docker-compose run --rm api python ./manage.py shell_plus
 
+.PHONY: api-dev-server
+api-dev-server: ## Start backend dev server
+	@docker-compose stop api
+	@docker-compose run --user root --use-alias --service-ports api ./manage.py runserver 0:8000
+
 .PHONY: makemigrations
 makemigrations: ## Make django migrations
 	@docker-compose run --rm api python ./manage.py makemigrations

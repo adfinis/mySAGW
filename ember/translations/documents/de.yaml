@@ -47,7 +47,7 @@ documents:
   reopenSuccess: "Gesuch wiedereröffnet"
   reopenError: "Gesuch wiedereröffnen fehlgeschlagen"
   accountingExport: "Export für Buchhaltung"
-  accountingExportFilename: "{dossierNo}.pdf"
+  accountingExportFilename: "{dossierNo}-buchhaltung.pdf"
 
   states:
     submit: "Einreichen"
@@ -70,6 +70,7 @@ documents:
     document: "Gesuch"
     work-items: "Aufgaben"
     circulation: "Zirkulation"
+    download: "Download"
 
   circulation:
     add: "In Zirkulation geben"
@@ -90,3 +91,9 @@ documents:
 
   filters:
     identity: "Identität"
+
+  download:
+    button: "Herunterladen"
+    application: "Gesuch"
+    acknowledgement: "Eingangsbestätigung"
+    creditApproval: "Kreditgutsprache"

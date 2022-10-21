@@ -1,0 +1,76 @@
+query Document ($case_id: ID!) {
+  node(id: $case_id) {
+    ... on Case {
+      createdByUser
+      document {
+        answers {
+          edges {
+            node {
+              ...FieldAnswer
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+fragment SimpleAnswer on Answer {
+  id
+  question {
+    id
+    slug
+  }
+  ... on StringAnswer {
+    stringValue: value
+  }
+  ... on IntegerAnswer {
+    integerValue: value
+  }
+  ... on FloatAnswer {
+    floatValue: value
+  }
+  ... on ListAnswer {
+    listValue: value
+  }
+  ... on FilesAnswer {
+    filesValue: value {
+      id
+      uploadUrl
+      downloadUrl
+      metadata
+      name
+    }
+  }
+  ... on DateAnswer {
+    dateValue: value
+  }
+}
+
+fragment FieldAnswer on Answer {
+  id
+  ...SimpleAnswer
+  ... on TableAnswer {
+    tableValue: value {
+      id
+      form {
+        id
+        slug
+        questions {
+          edges {
+            node {
+              ...FieldQuestion
+            }
+          }
+        }
+      }
+      answers {
+        edges {
+          node {
+            ...SimpleAnswer
+          }
+        }
+      }
+    }
+  }
+}
