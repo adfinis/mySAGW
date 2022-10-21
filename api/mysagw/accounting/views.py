@@ -82,8 +82,32 @@ def get_data(case_id, request):
     return resp
 
 
-def get_cover_context(data):
+def get_cover_context(data):  # noqa: C901
+    def mitgliedinstitution_label(slug):
+        for option in data["data"]["node"]["main"]["mitgliedinstitution"]["edges"][0][
+            "node"
+        ]["question"]["options"]["edges"]:
+            if option["node"]["slug"] == slug:
+                return option["node"]["label"]
+
+    def circ_kontonummer_label(slug):
+        for option in data["data"]["node"]["decisionCredit"]["edges"][0]["node"][
+            "document"
+        ]["circKontonummer"]["edges"][0]["node"]["question"]["options"]["edges"]:
+            if option["node"]["slug"] == slug:
+                return option["node"]["label"]
+
     fields = {
+        "form": (
+            [
+                "data",
+                "node",
+                "document",
+                "form",
+                "name",
+            ],
+            None,
+        ),
         "applicant_address": (
             [
                 "data",
@@ -309,6 +333,36 @@ def get_cover_context(data):
                 "value",
             ],
             lambda x: x.split("-")[3],
+        ),
+        "mitgliedinstitution": (
+            [
+                "data",
+                "node",
+                "main",
+                "mitgliedinstitution",
+                "edges",
+                0,
+                "node",
+                "value",
+            ],
+            mitgliedinstitution_label,
+        ),
+        "circ_kontonummer": (
+            [
+                "data",
+                "node",
+                "decisionCredit",
+                "edges",
+                0,
+                "node",
+                "document",
+                "circKontonummer",
+                "edges",
+                0,
+                "node",
+                "value",
+            ],
+            circ_kontonummer_label,
         ),
     }
 

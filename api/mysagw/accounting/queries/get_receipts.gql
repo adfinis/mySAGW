@@ -1,6 +1,11 @@
 query Receipts($case_id: ID!) {
   node(id: $case_id) {
     ... on Case {
+      document {
+        form {
+          name
+        }
+      }
       additionalData: workItems(filter: [{task: "additional-data-form"}], first: 1) {
         edges {
           node {
@@ -148,6 +153,27 @@ query Receipts($case_id: ID!) {
             }
           }
         }
+        mitgliedinstitution: answers(filter: [{question: "mitgliedinstitution"}]) {
+          edges {
+            node {
+              ... on StringAnswer {
+                value
+                question {
+                  ... on ChoiceQuestion {
+                    options {
+                      edges {
+                        node {
+                          slug
+                          label
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
       defineAmount: workItems(filter: [{task: "define-amount"}], order: [{attribute: CREATED_AT, direction: DESC}], first: 1) {
         edges {
@@ -158,6 +184,35 @@ query Receipts($case_id: ID!) {
                   node {
                     ... on FloatAnswer {
                       value
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      decisionCredit: workItems(filter: [{task: "decision-and-credit"}], order: [{attribute: CREATED_AT, direction: DESC}], first: 1) {
+        edges {
+          node {
+            document {
+              circKontonummer: answers(filter: [{question: "circ-kontonummer"}]) {
+                edges {
+                  node {
+                    ... on StringAnswer {
+                      value
+                      question {
+                        ... on ChoiceQuestion {
+                          options {
+                            edges {
+                              node {
+                                slug
+                                label
+                              }
+                            }
+                          }
+                        }
+                      }
                     }
                   }
                 }

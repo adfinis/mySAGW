@@ -15,6 +15,7 @@ def receipt_mock(requests_mock):
     caluma_data = {
         "data": {
             "node": {
+                "document": {"form": {"name": "Foo form"}},
                 "additionalData": {
                     "edges": [
                         {
@@ -120,6 +121,33 @@ def receipt_mock(requests_mock):
                 },
                 "main": {
                     "dossierno": {"edges": [{"node": {"value": "2021-0006"}}]},
+                    "mitgliedinstitution": {
+                        "edges": [
+                            {
+                                "node": {
+                                    "value": "foo-institute",
+                                    "question": {
+                                        "options": {
+                                            "edges": [
+                                                {
+                                                    "node": {
+                                                        "label": "Foo institute",
+                                                        "slug": "foo-institute",
+                                                    }
+                                                },
+                                                {
+                                                    "node": {
+                                                        "label": "Bar institute",
+                                                        "slug": "bar-institute",
+                                                    }
+                                                },
+                                            ]
+                                        }
+                                    },
+                                }
+                            }
+                        ]
+                    },
                     "sektion": {"edges": [{"node": {"value": "section-6"}}]},
                     "vp_year": {"edges": []},
                 },
@@ -132,6 +160,43 @@ def receipt_mock(requests_mock):
                                 }
                             }
                         },
+                    ]
+                },
+                "decisionCredit": {
+                    "edges": [
+                        {
+                            "node": {
+                                "document": {
+                                    "circKontonummer": {
+                                        "edges": [
+                                            {
+                                                "node": {
+                                                    "question": {
+                                                        "options": {
+                                                            "edges": [
+                                                                {
+                                                                    "node": {
+                                                                        "label": "23 konto1",
+                                                                        "slug": "konto1",
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "node": {
+                                                                        "label": "24 konto2",
+                                                                        "slug": "konto2",
+                                                                    }
+                                                                },
+                                                            ]
+                                                        }
+                                                    },
+                                                    "value": "konto1",
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
                     ]
                 },
             }
