@@ -57,9 +57,14 @@ export default class CasesDetailDownloadController extends Controller {
       }
 
       const blob = yield response.blob();
-      const filename = response.headers
-        .get("content-disposition")
-        .match(/(?<=filename=")(.*?)(?=")/)[0];
+
+      // extract filename from content-disposition header e.g.
+      // inline; filename*=utf-8''2022-0948%20-%20Accus%C3%A9%20de%20r%C3%A9ception.pdf
+      const filename = decodeURIComponent(
+        response.headers
+          .get("content-disposition")
+          .match(/filename\*?=['"]?(?:UTF-\d['"]*)?([^;\r\n"']*)['"]?;?/i)[1]
+      );
 
       saveAs(blob, filename);
     } catch (error) {
