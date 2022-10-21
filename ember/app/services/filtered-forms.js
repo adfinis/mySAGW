@@ -2,7 +2,8 @@ import Service, { inject as service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import { queryManager } from "ember-apollo-client";
 
-import getFormsQuery from "mysagw/gql/queries/get-form.graphql";
+import getFilteredFormsQuery from "mysagw/gql/queries/get-filtered-forms.graphql";
+import getFormsQuery from "mysagw/gql/queries/get-forms.graphql";
 
 export default class FilteredFormsService extends Service {
   @service store;
@@ -26,7 +27,7 @@ export default class FilteredFormsService extends Service {
 
     const allForms = {
       ...(await this.apollo.query({
-        query: getFormsQuery,
+        query: getFilteredFormsQuery,
       })),
     };
 
@@ -54,5 +55,11 @@ export default class FilteredFormsService extends Service {
     this.value = value;
 
     return value;
+  }
+
+  async mainFormSlugs() {
+    return (
+      await this.apollo.query({ query: getFormsQuery }, "allForms.edges")
+    ).map((form) => form.node.slug);
   }
 }

@@ -1,0 +1,9 @@
+query getForms {
+  allForms(filter: [{ questions: ["dossier-nr"] }]) {
+    edges {
+      node {
+        slug
+      }
+    }
+  }
+}
