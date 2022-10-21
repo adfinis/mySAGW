@@ -5,10 +5,11 @@ export default class ApplicationAdapter extends OIDCJSONAPIAdapter {
   namespace = "api/v1";
 
   @service session;
+  @service intl;
 
   get headers() {
     return {
-      "Accept-Language": localStorage.getItem("locale") ?? "en",
+      "Accept-Language": this.intl.primaryLocale,
       ...this.session.headers,
     };
   }
