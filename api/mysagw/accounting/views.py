@@ -3,7 +3,7 @@ from pathlib import Path
 
 import requests
 from django.conf import settings
-from django.http import FileResponse, HttpResponse
+from django.http import FileResponse
 from django.utils import timezone
 from PyPDF2 import PdfMerger
 from PyPDF2.errors import DependencyError, PdfReadError
@@ -14,7 +14,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 
 from mysagw.caluma_client import CalumaClient
-from mysagw.dms_client import DMSClient
+from mysagw.dms_client import DMSClient, get_dms_error_response
 from mysagw.oidc_auth.permissions import IsAdmin, IsAuthenticated, IsStaff
 
 GQL_DIR = Path(__file__).parent.resolve() / "queries"
@@ -392,20 +392,18 @@ class ReceiptView(APIView):
 
         receipt_urls = get_receipt_urls(raw_data)
         dms_client = DMSClient()
-        status_code, content_type, cover_content = dms_client.get_merged_document(
+        dms_response = dms_client.get_merged_document(
             cover_context,
             settings.DOCUMENT_MERGE_SERVICE_ACCOUNTING_COVER_TEMPLATE_SLUG,
         )
 
-        if status_code != status.HTTP_200_OK:
-            return HttpResponse(
-                cover_content, status=status_code, content_type=content_type
-            )
+        if dms_response.status_code != status.HTTP_200_OK:
+            return get_dms_error_response(dms_response)
 
         files = [get_receipt(url) for url in receipt_urls]
 
         merger = PdfMerger()
-        merger.append(cover_content)
+        merger.append(io.BytesIO(dms_response.content))
 
         for file in get_files_to_merge(files):
             try:

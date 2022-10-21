@@ -2,13 +2,14 @@ import datetime
 
 import pyexcel
 import pytest
+from django.http import HttpResponse
 from django.urls import reverse
 from django.utils import timezone
 from psycopg2._range import DateRange
 from rest_framework import status
 
 from mysagw.identity.models import Identity
-from mysagw.identity.views import IdentityViewSet
+from mysagw.identity.views import DMSClient
 
 TIMESTAMP = "2017-05-21T11:25:41.123840Z"
 
@@ -691,9 +692,9 @@ def test_identity_export_email(
     "dms_mock,error_response_type,expected_status",
     [
         ("success", None, status.HTTP_200_OK),
-        ("json_error", "json", status.HTTP_400_BAD_REQUEST),
-        ("text_error", "text", status.HTTP_400_BAD_REQUEST),
-        ("unknown_error", "unknown", status.HTTP_400_BAD_REQUEST),
+        ("json_error", "json", status.HTTP_500_INTERNAL_SERVER_ERROR),
+        ("text_error", "text", status.HTTP_500_INTERNAL_SERVER_ERROR),
+        ("unknown_error", "unknown", status.HTTP_500_INTERNAL_SERVER_ERROR),
     ],
     indirect=["dms_mock"],
 )
@@ -725,14 +726,26 @@ def test_identity_export_labels(
     if error_response_type == "json":
         assert response.get("content-type") == "application/json"
         assert response.json() == {
-            "errors": {"error": "something went wrong", "source": "DMS"}
+            "source": "DMS",
+            "status": 400,
+            "errors": {"error": "something went wrong"},
         }
     elif error_response_type == "text":
-        assert response.get("content-type") == "text/plain"
-        assert response.content == b"[DMS] something went wrong"
+        assert (
+            response.get("content-type") == "application/json"
+        )  # we still respond with json
+        assert response.json() == {
+            "source": "DMS",
+            "status": 400,
+            "errors": "something went wrong",
+        }
     elif error_response_type == "unknown":
-        assert response.get("content-type") == "unknown"
-        assert response.content == b"something went wrong"
+        assert response.get("content-type") == "application/json"
+        assert response.json() == {
+            "source": "DMS",
+            "status": 400,
+            "errors": "something went wrong",
+        }
 
 
 def test_identity_export_labels_context(
@@ -761,9 +774,11 @@ def test_identity_export_labels_context(
     url = reverse("identity-export-labels")
 
     merge_mock = mocker.patch.object(
-        IdentityViewSet,
-        "_merge",
-        return_value=(status.HTTP_200_OK, "text/plain", "the response"),
+        DMSClient,
+        "get_merged_document",
+        return_value=HttpResponse(
+            "content", status=status.HTTP_200_OK, content_type="text/plain"
+        ),
     )
 
     response = client.post(url)

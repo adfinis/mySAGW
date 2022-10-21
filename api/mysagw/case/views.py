@@ -1,3 +1,4 @@
+import io
 from datetime import datetime
 from pathlib import Path
 
@@ -13,7 +14,7 @@ from rest_framework.viewsets import GenericViewSet
 from mysagw.caluma_client import CalumaClient
 from mysagw.case import filters, models, serializers
 from mysagw.case.permissions import HasCaseAccess
-from mysagw.dms_client import DMSClient
+from mysagw.dms_client import DMSClient, get_dms_error_response
 from mysagw.identity.models import Address, Identity
 from mysagw.oidc_auth.permissions import IsAdmin, IsAuthenticated
 
@@ -210,13 +211,13 @@ class CaseDownloadViewSet(GenericViewSet):
 
         dms_client = DMSClient()
         template = f'{getattr(settings, f"DOCUMENT_MERGE_SERVICE_{name.upper()}_TEMPLATE_SLUG")}-{data["identity"]["language"]}'
-        status_code, content_type, content = dms_client.get_merged_document(
+        dms_response = dms_client.get_merged_document(
             data,
             template,
         )
 
-        if status_code != status.HTTP_200_OK:
-            return HttpResponse(content, status=status_code, content_type=content_type)
+        if dms_response.status_code != status.HTTP_200_OK:
+            return get_dms_error_response(dms_response)
 
         file_name = (
             f"{data['dossier_nr']} - "
@@ -224,7 +225,7 @@ class CaseDownloadViewSet(GenericViewSet):
         )
 
         return FileResponse(
-            content,
+            io.BytesIO(dms_response.content),
             filename=file_name,
         )
 

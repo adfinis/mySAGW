@@ -336,9 +336,11 @@ def test_download_dms_failure(
 
     response = client.get(url)
 
-    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert response.status_code == status.HTTP_500_INTERNAL_SERVER_ERROR
     assert response.json() == {
-        "errors": {"error": "something went wrong", "source": "DMS"}
+        "errors": ["something went wrong"],
+        "source": "DMS",
+        "status": 400,
     }
 
 

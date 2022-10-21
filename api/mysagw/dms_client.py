@@ -1,9 +1,10 @@
-import io
 import json
 
 import requests
 from django.conf import settings
+from django.http import HttpResponse
 from requests import HTTPError
+from rest_framework import status
 
 from mysagw.utils import build_url
 
@@ -36,17 +37,6 @@ class DMSClient:
 
         return self._request(method, url, data=data, files=files, headers=headers)
 
-    def get_error_content(self, response):
-        if response.headers["Content-Type"].startswith("application/json"):
-            content = response.json()
-            if isinstance(content, list):
-                content = {"error": content[0]}
-            content["source"] = "DMS"
-            return json.dumps({"errors": content})
-        elif response.headers["Content-Type"].startswith("text/plain"):
-            return f"[DMS] {response.content.decode()}".encode("utf-8")
-        return response.content
-
     def merge(
         self,
         template_slug: str,
@@ -63,7 +53,6 @@ class DMSClient:
         )
 
     def get_merged_document(self, context, template):
-        result = io.BytesIO()
         client = DMSClient()
         try:
             resp = client.merge(
@@ -71,9 +60,22 @@ class DMSClient:
                 data=context,
                 convert="pdf",
             )
-            result.write(resp.content)
-            result.seek(0)
-            return resp.status_code, resp.headers["Content-Type"], result
+            return resp
         except HTTPError as e:
-            content = client.get_error_content(e.response)
-            return e.response.status_code, e.response.headers["Content-Type"], content
+            return e.response
+
+
+def get_dms_error_response(response):
+    content = {
+        "source": "DMS",
+        "status": response.status_code,
+    }
+    if response.headers["Content-Type"].startswith("application/json"):
+        content["errors"] = response.json()
+    else:
+        content["errors"] = response.content.decode("utf-8")
+    return HttpResponse(
+        json.dumps(content),
+        status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        content_type="application/json",
+    )

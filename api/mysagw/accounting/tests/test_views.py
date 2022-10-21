@@ -15,7 +15,7 @@ from mysagw.utils import build_url
         ("user", False, False, status.HTTP_403_FORBIDDEN),
         ("staff", False, False, status.HTTP_200_OK),
         ("admin", False, False, status.HTTP_200_OK),
-        ("admin", True, False, status.HTTP_400_BAD_REQUEST),
+        ("admin", True, False, status.HTTP_500_INTERNAL_SERVER_ERROR),
         ("admin", False, True, status.HTTP_200_OK),
     ],
     indirect=["client"],
