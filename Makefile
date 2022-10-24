@@ -31,7 +31,7 @@ api-shell_plus: ## Run shell_plus
 .PHONY: api-dev-server
 api-dev-server: ## Start backend dev server
 	@docker-compose stop api
-	@docker-compose run --user root --use-alias --service-ports api ./manage.py runserver 0:8000
+	@docker-compose run --user root --use-aliases --service-ports api ./manage.py runserver 0:8000
 
 .PHONY: makemigrations
 makemigrations: ## Make django migrations
