@@ -69,8 +69,8 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
     }
 
     GREETING_LOCALIZED_MAP = {
-        SALUTATION_MR: {"de": "Sehr geehrter", "en": "Dear", "fr": "Monsieur"},
-        SALUTATION_MRS: {"de": "Sehr geehrte", "en": "Dear", "fr": "Madame"},
+        SALUTATION_MR: {"de": "Sehr geehrter", "en": "Dear", "fr": ""},
+        SALUTATION_MRS: {"de": "Sehr geehrte", "en": "Dear", "fr": ""},
         SALUTATION_NEUTRAL: {"de": "Sehr geehrte·r", "en": "Dear", "fr": ""},
     }
 

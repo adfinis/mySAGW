@@ -1162,7 +1162,7 @@ more
 1234567
 16870 Grahammouth
 Osttimor""",
-            "greeting_salutation_and_name": "Madame Madame Dr Bruce Wilkins",
+            "greeting_salutation_and_name": "Madame Dr Bruce Wilkins",
             "language": "fr",
         },
     },
@@ -1187,7 +1187,7 @@ more
 1234567
 16870 Grahammouth
 Osttimor""",
-            "greeting_salutation_and_name": "Madame Madame Dr Bruce Wilkins",
+            "greeting_salutation_and_name": "Madame Dr Bruce Wilkins",
             "language": "fr",
         },
     },
@@ -1212,7 +1212,7 @@ more
 1234567
 16870 Grahammouth
 Osttimor""",
-            "greeting_salutation_and_name": "Madame Madame Dr Bruce Wilkins",
+            "greeting_salutation_and_name": "Madame Dr Bruce Wilkins",
             "language": "fr",
         },
     },
@@ -1237,7 +1237,7 @@ more
 1234567
 16870 Grahammouth
 Osttimor""",
-            "greeting_salutation_and_name": "Madame Madame Dr Bruce Wilkins",
+            "greeting_salutation_and_name": "Madame Dr Bruce Wilkins",
             "language": "fr",
         },
         "rahmenkredit": "23",
@@ -1263,7 +1263,7 @@ more
 1234567
 16870 Grahammouth
 Osttimor""",
-            "greeting_salutation_and_name": "Madame Madame Dr Bruce Wilkins",
+            "greeting_salutation_and_name": "Madame Dr Bruce Wilkins",
             "language": "fr",
         },
         "rahmenkredit": "23",
@@ -1289,7 +1289,7 @@ more
 1234567
 16870 Grahammouth
 Osttimor""",
-            "greeting_salutation_and_name": "Madame Madame Dr Bruce Wilkins",
+            "greeting_salutation_and_name": "Madame Dr Bruce Wilkins",
             "language": "fr",
         },
         "rahmenkredit": "23",
@@ -1312,7 +1312,7 @@ snapshots[
 77130 Katherine Mountains
 16870 Grahammouth
 Osttimor""",
-            "greeting_salutation_and_name": "Monsieur Monsieur Bruce Wilkins",
+            "greeting_salutation_and_name": "Monsieur Bruce Wilkins",
             "language": "fr",
         },
     },
@@ -1334,7 +1334,7 @@ snapshots[
 77130 Katherine Mountains
 16870 Grahammouth
 Osttimor""",
-            "greeting_salutation_and_name": "Monsieur Monsieur Bruce Wilkins",
+            "greeting_salutation_and_name": "Monsieur Bruce Wilkins",
             "language": "fr",
         },
     },
@@ -1356,7 +1356,7 @@ snapshots[
 77130 Katherine Mountains
 16870 Grahammouth
 Osttimor""",
-            "greeting_salutation_and_name": "Monsieur Monsieur Bruce Wilkins",
+            "greeting_salutation_and_name": "Monsieur Bruce Wilkins",
             "language": "fr",
         },
     },
@@ -1378,7 +1378,7 @@ snapshots[
 77130 Katherine Mountains
 16870 Grahammouth
 Osttimor""",
-            "greeting_salutation_and_name": "Monsieur Monsieur Bruce Wilkins",
+            "greeting_salutation_and_name": "Monsieur Bruce Wilkins",
             "language": "fr",
         },
         "rahmenkredit": "23",
@@ -1401,7 +1401,7 @@ snapshots[
 77130 Katherine Mountains
 16870 Grahammouth
 Osttimor""",
-            "greeting_salutation_and_name": "Monsieur Monsieur Bruce Wilkins",
+            "greeting_salutation_and_name": "Monsieur Bruce Wilkins",
             "language": "fr",
         },
         "rahmenkredit": "23",
@@ -1424,7 +1424,7 @@ snapshots[
 77130 Katherine Mountains
 16870 Grahammouth
 Osttimor""",
-            "greeting_salutation_and_name": "Monsieur Monsieur Bruce Wilkins",
+            "greeting_salutation_and_name": "Monsieur Bruce Wilkins",
             "language": "fr",
         },
         "rahmenkredit": "23",
