@@ -21,6 +21,7 @@ export default class CasesDetailIndexController extends Controller {
   @service notification;
   @service intl;
   @service apollo;
+  @service store;
 
   @queryManager apollo;
 
@@ -215,9 +216,7 @@ export default class CasesDetailIndexController extends Controller {
   *exportAccounting() {
     const adapter = this.store.adapterFor("identity");
 
-    const uri = `${this.store.adapterFor("identity").buildURL("receipts")}/${
-      this.case.id
-    }`;
+    const uri = `${adapter.buildURL("receipts")}/${this.case.id}`;
     const init = {
       method: "GET",
       headers: adapter.headers,

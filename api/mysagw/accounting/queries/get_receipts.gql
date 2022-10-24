@@ -1,6 +1,11 @@
 query Receipts($case_id: ID!) {
   node(id: $case_id) {
     ... on Case {
+      document {
+        form {
+          name
+        }
+      }
       additionalData: workItems(filter: [{task: "additional-data-form"}], first: 1) {
         edges {
           node {
@@ -44,7 +49,43 @@ query Receipts($case_id: ID!) {
                   }
                 }
               }
+              applicant_postcode: answers(filter: [{question: "additional-data-postleitzahl"}]) {
+                edges {
+                  node {
+                    ... on StringAnswer {
+                      value
+                    }
+                  }
+                }
+              }
+              applicant_city: answers(filter: [{question: "additional-data-ort"}]) {
+                edges {
+                  node {
+                    ... on StringAnswer {
+                      value
+                    }
+                  }
+                }
+              }
+              applicant_land: answers(filter: [{question: "additional-data-land"}]) {
+                edges {
+                  node {
+                    ... on StringAnswer {
+                      value
+                    }
+                  }
+                }
+              }
               fibu: answers(filter: [{question: "additional-data-fibu"}]) {
+                edges {
+                  node {
+                    ... on StringAnswer {
+                      value
+                    }
+                  }
+                }
+              }
+              zahlungszweck: answers(filter: [{question: "additional-data-zahlungszweck"}]) {
                 edges {
                   node {
                     ... on StringAnswer {
@@ -112,6 +153,27 @@ query Receipts($case_id: ID!) {
             }
           }
         }
+        mitgliedinstitution: answers(filter: [{question: "mitgliedinstitution"}]) {
+          edges {
+            node {
+              ... on StringAnswer {
+                value
+                question {
+                  ... on ChoiceQuestion {
+                    options {
+                      edges {
+                        node {
+                          slug
+                          label
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
       defineAmount: workItems(filter: [{task: "define-amount"}], order: [{attribute: CREATED_AT, direction: DESC}], first: 1) {
         edges {
@@ -122,6 +184,35 @@ query Receipts($case_id: ID!) {
                   node {
                     ... on FloatAnswer {
                       value
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      decisionCredit: workItems(filter: [{task: "decision-and-credit"}], order: [{attribute: CREATED_AT, direction: DESC}], first: 1) {
+        edges {
+          node {
+            document {
+              circKontonummer: answers(filter: [{question: "circ-kontonummer"}]) {
+                edges {
+                  node {
+                    ... on StringAnswer {
+                      value
+                      question {
+                        ... on ChoiceQuestion {
+                          options {
+                            edges {
+                              node {
+                                slug
+                                label
+                              }
+                            }
+                          }
+                        }
+                      }
                     }
                   }
                 }

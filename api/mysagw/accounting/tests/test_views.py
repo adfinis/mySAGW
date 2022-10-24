@@ -8,13 +8,14 @@ from rest_framework import status
 from mysagw.utils import build_url
 
 
+@pytest.mark.freeze_time("1970-01-01")
 @pytest.mark.parametrize(
     "client,dms_failure,missing_receipts,expected_status",
     [
         ("user", False, False, status.HTTP_403_FORBIDDEN),
         ("staff", False, False, status.HTTP_200_OK),
         ("admin", False, False, status.HTTP_200_OK),
-        ("admin", True, False, status.HTTP_400_BAD_REQUEST),
+        ("admin", True, False, status.HTTP_500_INTERNAL_SERVER_ERROR),
         ("admin", False, True, status.HTTP_200_OK),
     ],
     indirect=["client"],
@@ -42,7 +43,7 @@ def test_get_receipts(
         requests_mock.post(
             matcher,
             status_code=status.HTTP_400_BAD_REQUEST,
-            json={"error": "something went wrong"},
+            json=["something went wrong"],
             headers={"CONTENT-TYPE": "application/json"},
         )
     elif missing_receipts:
@@ -60,4 +61,6 @@ def test_get_receipts(
     if expected_status != status.HTTP_200_OK:
         return
 
-    snapshot.assert_match(response.getvalue())
+    assert receipt_mock.called_once
+
+    snapshot.assert_match(receipt_mock.request_history[0].json())

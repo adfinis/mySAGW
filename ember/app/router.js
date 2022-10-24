@@ -46,6 +46,7 @@ Router.map(function () {
           });
         });
         this.route("circulation");
+        this.route("download");
       });
       this.route("new");
     });

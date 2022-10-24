@@ -69,6 +69,7 @@ module.exports = function (environment) {
       caluma: {
         submitTaskSlug: "submit-document",
         reviseTaskSlug: "revise-document",
+        decisionAndCreditTaskSlug: "decision-and-credit",
         completeTaskSlug: "complete-document",
         documentEditableTaskSlugs: [
           "submit-document",

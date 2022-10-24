@@ -23,12 +23,17 @@
       {{t "documents.subnav.document"}}
     </LinkTo>
   </li>
+  {{#if this.circulation}}
+    <li>
+        <LinkTo @route="cases.detail.circulation" @model={{@model}}>
+          {{t "documents.subnav.circulation"}}
+        </LinkTo>
+    </li>
+  {{/if}}
   <li>
-    {{#if this.circulation}}
-      <LinkTo @route="cases.detail.circulation" @model={{@model}}>
-        {{t "documents.subnav.circulation"}}
-      </LinkTo>
-    {{/if}}
+    <LinkTo @route="cases.detail.download" @model={{@model}}>
+      {{t "documents.subnav.download"}}
+    </LinkTo>
   </li>
 </ul>
 
