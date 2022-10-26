@@ -3,7 +3,7 @@ from datetime import datetime
 from pathlib import Path
 
 from django.conf import settings
-from django.http import FileResponse, HttpResponse
+from django.http import FileResponse
 from django.utils import formats
 from rest_framework import status
 from rest_framework.decorators import action
@@ -15,7 +15,7 @@ from mysagw.caluma_client import CalumaClient
 from mysagw.case import filters, models, serializers
 from mysagw.case.permissions import HasCaseAccess
 from mysagw.dms_client import DMSClient, get_dms_error_response
-from mysagw.identity.models import Address, Identity
+from mysagw.identity.models import Identity
 from mysagw.oidc_auth.permissions import IsAdmin, IsAuthenticated
 
 GQL_DIR = Path(__file__).parent.resolve() / "queries"
@@ -196,19 +196,7 @@ class CaseDownloadViewSet(GenericViewSet):
     def get_acknowledgement_and_credit_approval(self, request, name, pk=None):
         caluma_client = self.get_caluma_client(request)
         raw_data = caluma_client.get_data(pk, GQL_DIR / f"get_{name}.gql")
-        try:
-            data = self.get_formatted_data(raw_data, name)
-        except (Identity.DoesNotExist, Address.DoesNotExist) as e:
-            content = "Identity not found"
-            if e.args[0].startswith("Address"):
-                content = "No Address for identity"
-
-            return HttpResponse(
-                content,
-                status=status.HTTP_400_BAD_REQUEST,
-                content_type="text/plain",
-            )
-
+        data = self.get_formatted_data(raw_data, name)
         dms_client = DMSClient()
         template = f'{getattr(settings, f"DOCUMENT_MERGE_SERVICE_{name.upper()}_TEMPLATE_SLUG")}-{data["identity"]["language"]}'
         dms_response = dms_client.get_merged_document(

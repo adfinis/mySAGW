@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib.postgres.fields import DateRangeField
 from django.db import models
 from django.db.models import Q
-from django.utils import timezone
+from django.utils import timezone, translation
 from django_countries.fields import CountryField
 from localized_fields.fields import LocalizedCharField, LocalizedTextField
 from phonenumber_field.modelfields import PhoneNumberField
@@ -141,18 +141,32 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
         full_name = ""
         if salutation:
             full_name = f"{salutation}"
+
         if title and full_name:
             full_name = f"{full_name} {title}"
         elif title:
             full_name = title
-        if full_name:
-            return f"{full_name} {self.first_name} {self.last_name}"
 
-        return f"{self.first_name} {self.last_name}"
+        if self.first_name and full_name:
+            full_name = f"{full_name} {self.first_name}"
+        elif self.first_name:
+            full_name = self.first_name
+
+        if self.last_name and full_name:
+            full_name = f"{full_name} {self.last_name}"
+        elif self.last_name:
+            full_name = self.last_name
+
+        return full_name
 
     @property
     def address_block(self):
-        address = self.addresses.get(default=True)
+        address_block = self.full_name
+        try:
+            address = self.addresses.get(default=True)
+        except Address.DoesNotExist:
+            return address_block
+
         address_block = f"{self.full_name}\n" f"{address.street_and_number}"
         for add in [
             address.address_addition_1,
@@ -163,9 +177,10 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
                 address_block = f"{address_block}\n{add}"
 
         if address.po_box:
-            address_block = f"{address_block}\n{address.po_box}"
+            address_block = f"{address_block}\n{Address.PO_BOX_LOCALIZED_MAP[self.language]} {address.po_box}"
 
-        address_block = f"{address_block}\n{address.postcode} {address.town}\n{address.country.name}"
+        with translation.override(self.language):  # country field uses standard gettext
+            address_block = f"{address_block}\n{address.postcode} {address.town}\n{address.country.name}"
 
         return address_block
 
@@ -224,6 +239,7 @@ class PhoneNumber(UUIDModel, HistoricalModel):
 
 
 class Address(UUIDModel, HistoricalModel):
+    PO_BOX_LOCALIZED_MAP = {"de": "Postfach", "en": "P.O. Box", "fr": "Case postale"}
     identity = models.ForeignKey(
         Identity, related_name="addresses", on_delete=models.CASCADE
     )
