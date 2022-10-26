@@ -19,6 +19,7 @@ snapshots[
 8190 Roger View
 35543 Stewartbury
 Äthiopien""",
+            "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Sehr geehrte·r Bruce Wilkins",
             "language": "de",
         },
@@ -41,6 +42,7 @@ snapshots[
 8190 Roger View
 35543 Stewartbury
 Äthiopien""",
+            "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Sehr geehrte·r Bruce Wilkins",
             "language": "de",
         },
@@ -63,6 +65,7 @@ snapshots[
 8190 Roger View
 35543 Stewartbury
 Äthiopien""",
+            "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Sehr geehrte·r Bruce Wilkins",
             "language": "de",
         },
@@ -85,6 +88,7 @@ snapshots[
 8190 Roger View
 35543 Stewartbury
 Äthiopien""",
+            "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Sehr geehrte·r Bruce Wilkins",
             "language": "de",
         },
@@ -108,6 +112,7 @@ snapshots[
 8190 Roger View
 35543 Stewartbury
 Äthiopien""",
+            "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Sehr geehrte·r Bruce Wilkins",
             "language": "de",
         },
@@ -131,6 +136,7 @@ snapshots[
 8190 Roger View
 35543 Stewartbury
 Äthiopien""",
+            "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Sehr geehrte·r Bruce Wilkins",
             "language": "de",
         },
@@ -154,6 +160,7 @@ snapshots[
 8190 Roger View
 35543 Stewartbury
 Ethiopia""",
+            "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Dear Bruce Wilkins",
             "language": "en",
         },
@@ -176,6 +183,7 @@ snapshots[
 8190 Roger View
 35543 Stewartbury
 Ethiopia""",
+            "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Dear Bruce Wilkins",
             "language": "en",
         },
@@ -198,6 +206,7 @@ snapshots[
 8190 Roger View
 35543 Stewartbury
 Ethiopia""",
+            "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Dear Bruce Wilkins",
             "language": "en",
         },
@@ -220,6 +229,7 @@ snapshots[
 8190 Roger View
 35543 Stewartbury
 Ethiopia""",
+            "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Dear Bruce Wilkins",
             "language": "en",
         },
@@ -243,6 +253,7 @@ snapshots[
 8190 Roger View
 35543 Stewartbury
 Ethiopia""",
+            "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Dear Bruce Wilkins",
             "language": "en",
         },
@@ -266,6 +277,7 @@ snapshots[
 8190 Roger View
 35543 Stewartbury
 Ethiopia""",
+            "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Dear Bruce Wilkins",
             "language": "en",
         },
@@ -289,6 +301,7 @@ snapshots[
 8190 Roger View
 35543 Stewartbury
 Éthiopie""",
+            "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Bruce Wilkins",
             "language": "fr",
         },
@@ -311,6 +324,7 @@ snapshots[
 8190 Roger View
 35543 Stewartbury
 Éthiopie""",
+            "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Bruce Wilkins",
             "language": "fr",
         },
@@ -333,6 +347,7 @@ snapshots[
 8190 Roger View
 35543 Stewartbury
 Éthiopie""",
+            "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Bruce Wilkins",
             "language": "fr",
         },
@@ -355,6 +370,7 @@ snapshots[
 8190 Roger View
 35543 Stewartbury
 Éthiopie""",
+            "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Bruce Wilkins",
             "language": "fr",
         },
@@ -378,6 +394,7 @@ snapshots[
 8190 Roger View
 35543 Stewartbury
 Éthiopie""",
+            "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Bruce Wilkins",
             "language": "fr",
         },
@@ -401,6 +418,7 @@ snapshots[
 8190 Roger View
 35543 Stewartbury
 Éthiopie""",
+            "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Bruce Wilkins",
             "language": "fr",
         },

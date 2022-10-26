@@ -158,6 +158,7 @@ class CaseDownloadViewSet(GenericViewSet):
             "address_block": identity.address_block,
             "greeting_salutation_and_name": identity.greeting_salutation_and_name(),
             "language": identity.language,
+            "email": identity.email,
         }
 
         result["identity"] = identity_dict
