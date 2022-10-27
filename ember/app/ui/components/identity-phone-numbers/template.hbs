@@ -39,7 +39,9 @@
                 href="tel:{{phoneNumber.phone}}"
                 aria-label={{t "components.identity-phone-numbers.list.call"}}
                 title={{t "components.identity-phone-numbers.list.call"}}
-              ></a>
+              >
+                <span hidden>{{phoneNumber.phone}}</span>
+              </a>
 
               <div class="uk-margin-left">
                 {{#if (can "edit phone-number" @identity)}}
