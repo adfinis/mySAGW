@@ -4,6 +4,7 @@ import pytest
 from django.conf import settings
 from rest_framework import status
 
+from mysagw.case.tests.application_caluma_response import CALUMA_DATA
 from mysagw.utils import build_url
 
 
@@ -111,3 +112,8 @@ def credit_approval_mock(requests_mock):
         )
 
     return mockit
+
+
+@pytest.fixture
+def application_mock(requests_mock):
+    requests_mock.post("http://testserver/graphql", status_code=200, json=CALUMA_DATA)

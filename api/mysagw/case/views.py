@@ -13,6 +13,7 @@ from rest_framework.viewsets import GenericViewSet
 
 from mysagw.caluma_client import CalumaClient
 from mysagw.case import filters, models, serializers
+from mysagw.case.application_parser import ApplicationParser
 from mysagw.case.permissions import HasCaseAccess
 from mysagw.dms_client import DMSClient, get_dms_error_response
 from mysagw.identity.models import Identity
@@ -168,19 +169,14 @@ class CaseDownloadViewSet(GenericViewSet):
         result["date"] = formats.date_format(datetime.now())
         return result
 
-    # @action(detail=True)
-    # def application(self, request, pk=None):
-    #     pass
-    #     """
-    #     name = "application"
-    #     # prepare all answers for dms
-    #     response = self.get_merged_document(data, name)
-    #
-    #     return response
-    #     """
-
-    def get_filename_translation(self, name, language):
+    @staticmethod
+    def get_filename_translation(name, language):
         trans_map = {
+            "application": {
+                "de": "Gesuch",
+                "en": "Application",
+                "fr": "Requête",
+            },
             "acknowledgement": {
                 "de": "Eingangsbestätigung",
                 "en": "Acknowledgement of receipt",
@@ -194,12 +190,8 @@ class CaseDownloadViewSet(GenericViewSet):
         }
         return trans_map[name][language]
 
-    def get_acknowledgement_and_credit_approval(self, request, name, pk=None):
-        caluma_client = self.get_caluma_client(request)
-        raw_data = caluma_client.get_data(pk, GQL_DIR / f"get_{name}.gql")
-        data = self.get_formatted_data(raw_data, name)
+    def merge(self, name, data, template, file_name):
         dms_client = DMSClient()
-        template = f'{getattr(settings, f"DOCUMENT_MERGE_SERVICE_{name.upper()}_TEMPLATE_SLUG")}-{data["identity"]["language"]}'
         dms_response = dms_client.get_merged_document(
             data,
             template,
@@ -208,15 +200,39 @@ class CaseDownloadViewSet(GenericViewSet):
         if dms_response.status_code != status.HTTP_200_OK:
             return get_dms_error_response(dms_response)
 
-        file_name = (
-            f"{data['dossier_nr']} - "
-            f"{self.get_filename_translation(name, data['identity']['language'])}.pdf"
-        )
-
         return FileResponse(
             io.BytesIO(dms_response.content),
             filename=file_name,
         )
+
+    @action(detail=True)
+    def application(self, request, pk=None):
+        caluma_client = self.get_caluma_client(request)
+        raw_data = caluma_client.get_data(pk, GQL_DIR / "get_document.gql")
+        parser = ApplicationParser(raw_data)
+        data = parser.run()
+        identity = parser.get_identity()
+        file_name = (
+            f"{data['dossier_nr']} - "
+            f"{self.get_filename_translation('application', identity.language)}.pdf"
+        )
+        return self.merge(
+            "application",
+            data,
+            settings.DOCUMENT_MERGE_SERVICE_APPLICATION_EXPORT_SLUG,
+            file_name,
+        )
+
+    def get_acknowledgement_and_credit_approval(self, request, name, pk=None):
+        caluma_client = self.get_caluma_client(request)
+        raw_data = caluma_client.get_data(pk, GQL_DIR / f"get_{name}.gql")
+        data = self.get_formatted_data(raw_data, name)
+        template = f'{getattr(settings, f"DOCUMENT_MERGE_SERVICE_{name.upper()}_TEMPLATE_SLUG")}-{data["identity"]["language"]}'
+        file_name = (
+            f"{data['dossier_nr']} - "
+            f"{self.get_filename_translation(name, data['identity']['language'])}.pdf"
+        )
+        return self.merge("application", data, template, file_name)
 
     @action(detail=True)
     def acknowledgement(self, request, pk=None):
