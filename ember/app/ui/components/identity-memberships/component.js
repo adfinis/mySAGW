@@ -5,7 +5,7 @@ import { tracked } from "@glimmer/tracking";
 import { Changeset } from "ember-changeset";
 import lookupValidator from "ember-changeset-validations";
 import { dropTask, restartableTask, lastValue } from "ember-concurrency";
-import moment from "moment";
+import { DateTime } from "luxon";
 import UIkit from "uikit";
 
 import applyError from "mysagw/utils/apply-error";
@@ -18,6 +18,10 @@ export default class IdentityMembershipsComponent extends Component {
   @service store;
   @service intl;
   @service notification;
+
+  get locale() {
+    return this.intl.primaryLocale;
+  }
 
   // List
 
@@ -71,22 +75,26 @@ export default class IdentityMembershipsComponent extends Component {
   @dropTask
   *submit(changeset) {
     try {
+      const format = "yyyy-LL-dd";
       let timeSlot = changeset.get("timeSlot") || {};
       if (!timeSlot.lower && !timeSlot.upper) {
         timeSlot = null;
       } else {
         timeSlot.lower = timeSlot.lower
-          ? moment(timeSlot.lower).format("YYYY-MM-DD")
+          ? DateTime.fromJSDate(timeSlot.lower[0]).toFormat(format)
           : undefined;
         timeSlot.upper = timeSlot.upper
-          ? moment(timeSlot.upper).format("YYYY-MM-DD")
+          ? DateTime.fromJSDate(timeSlot.upper[0]).toFormat(format)
           : undefined;
       }
       changeset.set("timeSlot", timeSlot);
 
       const election = changeset.get("nextElection");
       if (election) {
-        changeset.set("nextElection", moment(election).format("YYYY-MM-DD"));
+        changeset.set(
+          "nextElection",
+          DateTime.fromJSDate(election[0]).toFormat(format)
+        );
       }
 
       yield changeset.save();

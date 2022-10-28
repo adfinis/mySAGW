@@ -5,9 +5,6 @@ module.exports = {
 
   settings: { "import/internal-regex": "^mysagw/" },
 
-  rules: {
-    "ember/no-mixins": "warn",
-  },
   plugins: ["ember"],
   env: {
     browser: true,

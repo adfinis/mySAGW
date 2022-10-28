@@ -23,18 +23,12 @@ module.exports = function (environment) {
         "https://mysagw.local/auth/realms/mysagw/protocol/openid-connect",
       enablePkce: true,
     },
-    "ember-validated-form": {
-      theme: "uikit",
-    },
     localizedModel: {
       allowAnyFallback: true,
       fallbacks: ["de", "en"],
     },
     apollo: {
       apiURL: "/graphql",
-    },
-    moment: {
-      includeLocales: ["de", "fr"],
     },
 
     EmberENV: {
