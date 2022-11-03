@@ -11,12 +11,7 @@ export default class CasesDetailDownloadController extends Controller {
   @service store;
 
   get activeDownloads() {
-    const downloads = [
-      /*
-        reenable when backend is ready
-        this.application
-      */
-    ];
+    const downloads = [this.application];
     if (
       this.model.workItems.find(
         (workItem) =>

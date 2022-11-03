@@ -288,3 +288,20 @@ def test_download_dms_failure(
         "source": "DMS",
         "status": 400,
     }
+
+
+@pytest.mark.parametrize("identity__idp_id", ["e5dabdd0-bafb-4b75-82d2-ccf9295b623b"])
+def tests_download_application(dms_mock, application_mock, client, identity, snapshot):
+    url = reverse("downloads-application", args=[str(uuid4())])
+
+    response = client.get(url)
+
+    assert response.status_code == status.HTTP_200_OK
+    assert dms_mock.called_once
+    assert (
+        dms_mock.request_history[0].path
+        == f"/api/v1/template/{settings.DOCUMENT_MERGE_SERVICE_APPLICATION_EXPORT_SLUG}/merge/"
+    )
+
+    snapshot.assert_match(dms_mock.request_history[0].json())
+    snapshot.assert_match(response.headers["content-disposition"])
