@@ -65,6 +65,7 @@ def test_dynamic_task_after_decision_and_credit(
     decision,
     expected_case_status,
     expected_work_item,
+    send_mail_mock,
 ):
     case = circulation.parent_work_item.case
 
@@ -106,6 +107,7 @@ def test_dynamic_task_after_define_amount(
     expected_work_item_form,
     expected_work_item_task,
     internal_periodics,
+    send_mail_mock,
 ):
     Question.objects.filter(formquestion__form__pk="additional-data-form").update(
         is_required="false"
@@ -178,6 +180,7 @@ def test_dynamic_task_redo_define_amount(
     form_factory,
     decision,
     expected_work_item_task,
+    send_mail_mock,
 ):
     Question.objects.filter(formquestion__form__pk="additional-data-form").update(
         is_required="false"
