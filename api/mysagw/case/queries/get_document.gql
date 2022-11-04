@@ -137,6 +137,8 @@ fragment SimpleAnswer on Answer {
   ... on FilesAnswer {
     filesValue: value {
       name
+      downloadUrl
+      metadata
     }
   }
   ... on DateAnswer {

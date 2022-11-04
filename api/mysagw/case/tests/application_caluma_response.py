@@ -151,7 +151,15 @@ CALUMA_DATA = {
                         {
                             "node": {
                                 "question": {"slug": "test-file"},
-                                "filesValue": [{"name": "test.pdf"}],
+                                "filesValue": [
+                                    {
+                                        "name": "test.pdf",
+                                        "downloadUrl": "https://mysagw.local/caluma-media/download-url-pdf",
+                                        "metadata": {
+                                            "content_type": "application/pdf",
+                                        },
+                                    }
+                                ],
                             }
                         },
                         {
@@ -598,7 +606,7 @@ CALUMA_DATA = {
                         ]
                     },
                 },
-            },
+            }
         }
     }
 }
