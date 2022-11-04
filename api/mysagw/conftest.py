@@ -3,6 +3,7 @@ import inspect
 import io
 import re
 from functools import partial
+from pathlib import Path
 
 import pytest
 from django.core.cache import cache
@@ -18,6 +19,9 @@ from .utils import build_url
 
 Faker.add_provider(MultilangProvider)
 Faker.add_provider(SwissPhoneNumberProvider)
+
+
+TEST_FILES_DIR = Path(__file__).parent.resolve() / "test_files"
 
 
 def register_module(module):
