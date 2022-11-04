@@ -5,6 +5,7 @@ from pathlib import Path
 from django.conf import settings
 from django.http import FileResponse
 from django.utils import formats
+from django.utils.translation import get_language
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, ListModelMixin
@@ -208,13 +209,17 @@ class CaseDownloadViewSet(GenericViewSet):
     @action(detail=True)
     def application(self, request, pk=None):
         caluma_client = self.get_caluma_client(request)
-        raw_data = caluma_client.get_data(pk, GQL_DIR / "get_document.gql")
+        language = get_language()
+        raw_data = caluma_client.get_data(
+            pk,
+            GQL_DIR / "get_document.gql",
+            add_headers={"Accept-Language": language},
+        )
         parser = ApplicationParser(raw_data)
         data = parser.run()
-        identity = parser.get_identity()
         file_name = (
             f"{data['dossier_nr']} - "
-            f"{self.get_filename_translation('application', identity.language)}.pdf"
+            f"{self.get_filename_translation('application', language)}.pdf"
         )
         return self.merge(
             "application",

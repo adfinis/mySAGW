@@ -1,7 +1,5 @@
 from django.utils.html import strip_tags
 
-from mysagw.identity.models import Identity
-
 
 class ApplicationParser:
     def __init__(self, data):
@@ -194,54 +192,6 @@ class ApplicationParser:
             parsed_data["questions"][question["slug"]] = type_method(*args)
 
         return parsed_data
-
-    def get_identity(self):
-        FIELDS = {
-            "identity_created": [
-                "data",
-                "node",
-                "document",
-                "createdByUser",
-            ],
-            "identity_submit": [
-                "data",
-                "node",
-                "submit",
-                "edges",
-                0,
-                "node",
-                "closedByUser",
-            ],
-            "identity_revise": [
-                "data",
-                "node",
-                "revise",
-                "edges",
-                0,
-                "node",
-                "closedByUser",
-            ],
-        }
-        result = {}
-        for field, path in FIELDS.items():
-            value = None
-            for node in path:
-                if value is None:
-                    value = self.data[node]
-                    continue
-                try:
-                    value = value[node]
-                except (KeyError, TypeError, IndexError):  # pragma: no cover
-                    value = ""
-                    break
-
-            result[field] = value
-        identity_id = result["identity_created"]
-        if result["identity_submit"]:
-            identity_id = result["identity_submit"]
-        if result["identity_revise"]:
-            identity_id = result["identity_revise"]
-        return Identity.objects.get(idp_id=identity_id)
 
     def run(self):
         self.parsed_data = self.format_application_data(

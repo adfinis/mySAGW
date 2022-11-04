@@ -2,7 +2,6 @@ query Document ($case_id: ID!) {
   node(id: $case_id) {
     ... on Case {
       document {
-        createdByUser
         dossier_nr: answers(filter: [{question: "dossier-nr"}]) {
           edges {
             node {
@@ -29,21 +28,6 @@ query Document ($case_id: ID!) {
                 ...FieldQuestion
               }
             }
-          }
-        }
-      }
-      submit: workItems(filter: [{task: "submit-document"}]) {
-        edges {
-          node {
-            closedByUser
-          }
-        }
-      }
-      revise: workItems(filter: [{task: "revise-document"}], order: [{attribute: CLOSED_AT, direction: DESC}]) {
-        edges {
-          node {
-            closedByUser
-            closedAt
           }
         }
       }
