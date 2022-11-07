@@ -2,7 +2,6 @@ CALUMA_DATA = {
     "data": {
         "node": {
             "document": {
-                "createdByUser": "e5dabdd0-bafb-4b75-82d2-ccf9295b623b",
                 "dossier_nr": {"edges": [{"node": {"value": "2022-0001"}}]},
                 "answers": {
                     "edges": [
@@ -152,7 +151,15 @@ CALUMA_DATA = {
                         {
                             "node": {
                                 "question": {"slug": "test-file"},
-                                "filesValue": [{"name": "test.pdf"}],
+                                "filesValue": [
+                                    {
+                                        "name": "test.pdf",
+                                        "downloadUrl": "https://mysagw.local/caluma-media/download-url-pdf",
+                                        "metadata": {
+                                            "content_type": "application/pdf",
+                                        },
+                                    }
+                                ],
                             }
                         },
                         {
@@ -599,28 +606,7 @@ CALUMA_DATA = {
                         ]
                     },
                 },
-            },
-            "submit": {
-                "edges": [
-                    {"node": {"closedByUser": "e5dabdd0-bafb-4b75-82d2-ccf9295b623b"}}
-                ]
-            },
-            "revise": {
-                "edges": [
-                    {
-                        "node": {
-                            "closedByUser": "e5dabdd0-bafb-4b75-82d2-ccf9295b623b",
-                            "closedAt": "2022-10-28T13:53:10.280646+00:00",
-                        }
-                    },
-                    {
-                        "node": {
-                            "closedByUser": "e5dabdd0-bafb-4b75-82d2-ccf9295b623b",
-                            "closedAt": "2022-10-27T15:29:00.787051+00:00",
-                        }
-                    },
-                ]
-            },
+            }
         }
     }
 }

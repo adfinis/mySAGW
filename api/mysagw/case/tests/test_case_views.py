@@ -290,11 +290,37 @@ def test_download_dms_failure(
     }
 
 
+@pytest.mark.parametrize("dms_failure", [False, True])
 @pytest.mark.parametrize("identity__idp_id", ["e5dabdd0-bafb-4b75-82d2-ccf9295b623b"])
-def tests_download_application(dms_mock, application_mock, client, identity, snapshot):
+def test_download_application(
+    dms_mock, requests_mock, application_mock, client, identity, snapshot, dms_failure
+):
+    if dms_failure:
+        requests_mock.post(
+            build_url(
+                settings.DOCUMENT_MERGE_SERVICE_URL,
+                "template",
+                settings.DOCUMENT_MERGE_SERVICE_APPLICATION_EXPORT_SLUG,
+                "merge",
+                trailing=True,
+            ),
+            status_code=status.HTTP_400_BAD_REQUEST,
+            json=["something went wrong"],
+            headers={"CONTENT-TYPE": "application/json"},
+        )
+
     url = reverse("downloads-application", args=[str(uuid4())])
 
     response = client.get(url)
+
+    if dms_failure:
+        assert response.status_code == status.HTTP_500_INTERNAL_SERVER_ERROR
+        assert response.json() == {
+            "errors": ["something went wrong"],
+            "source": "DMS",
+            "status": 400,
+        }
+        return
 
     assert response.status_code == status.HTTP_200_OK
     assert dms_mock.called_once
@@ -305,3 +331,4 @@ def tests_download_application(dms_mock, application_mock, client, identity, sna
 
     snapshot.assert_match(dms_mock.request_history[0].json())
     snapshot.assert_match(response.headers["content-disposition"])
+    snapshot.assert_match(response.getvalue())

@@ -1,12 +1,11 @@
 from django.utils.html import strip_tags
 
-from mysagw.identity.models import Identity
-
 
 class ApplicationParser:
     def __init__(self, data):
         self.data = data
         self.parsed_data = None
+        self.files_to_add = []
 
     @staticmethod
     def value_key_for_question(question_type):
@@ -81,15 +80,24 @@ class ApplicationParser:
         }
 
     def _handle_files(self, question, answer):
+        filename_list = []
+        for value in answer["node"][
+            self.value_key_for_question(question["__typename"])
+        ]:
+            name = value["name"]
+            if value["metadata"].get("content_type") in [
+                "application/pdf",
+                "image/png",
+                "image/jpeg",
+            ]:
+                self.files_to_add.append(value["downloadUrl"])
+                name = f"{name} ({len(self.files_to_add)})"
+            filename_list.append(name)
+
         return {
             "label": question["label"],
             "type": question["__typename"],
-            "value": [
-                value["name"]
-                for value in answer["node"][
-                    self.value_key_for_question(question["__typename"])
-                ]
-            ],
+            "value": filename_list,
             "info_text": strip_tags(question["infoText"]) or None,
         }
 
@@ -194,54 +202,6 @@ class ApplicationParser:
             parsed_data["questions"][question["slug"]] = type_method(*args)
 
         return parsed_data
-
-    def get_identity(self):
-        FIELDS = {
-            "identity_created": [
-                "data",
-                "node",
-                "document",
-                "createdByUser",
-            ],
-            "identity_submit": [
-                "data",
-                "node",
-                "submit",
-                "edges",
-                0,
-                "node",
-                "closedByUser",
-            ],
-            "identity_revise": [
-                "data",
-                "node",
-                "revise",
-                "edges",
-                0,
-                "node",
-                "closedByUser",
-            ],
-        }
-        result = {}
-        for field, path in FIELDS.items():
-            value = None
-            for node in path:
-                if value is None:
-                    value = self.data[node]
-                    continue
-                try:
-                    value = value[node]
-                except (KeyError, TypeError, IndexError):  # pragma: no cover
-                    value = ""
-                    break
-
-            result[field] = value
-        identity_id = result["identity_created"]
-        if result["identity_submit"]:
-            identity_id = result["identity_submit"]
-        if result["identity_revise"]:
-            identity_id = result["identity_revise"]
-        return Identity.objects.get(idp_id=identity_id)
 
     def run(self):
         self.parsed_data = self.format_application_data(

@@ -1,21 +1,16 @@
 import io
 from pathlib import Path
 
-import requests
 from django.conf import settings
 from django.http import FileResponse
 from django.utils import timezone
-from PyPDF2 import PdfMerger
-from PyPDF2.errors import DependencyError, PdfReadError
-from reportlab.lib.pagesizes import A4
-from reportlab.lib.utils import ImageReader
-from reportlab.pdfgen import canvas
 from rest_framework import status
 from rest_framework.views import APIView
 
 from mysagw.caluma_client import CalumaClient
 from mysagw.dms_client import DMSClient, get_dms_error_response
 from mysagw.oidc_auth.permissions import IsAdmin, IsAuthenticated, IsStaff
+from mysagw.pdf_utils import add_caluma_files_to_pdf
 
 GQL_DIR = Path(__file__).parent.resolve() / "queries"
 
@@ -38,13 +33,6 @@ def get_receipt_urls(data):
         except (KeyError, TypeError, IndexError):
             continue
     return result
-
-
-def get_receipt(url):
-    file = io.BytesIO()
-    resp = requests.get(url, verify=False)
-    file.write(resp.content)
-    return {"file": file, "content-type": resp.headers.get("content-type")}
 
 
 def get_cover_context(data):  # noqa: C901
@@ -351,29 +339,6 @@ def get_cover_context(data):  # noqa: C901
     return result
 
 
-def get_files_to_merge(files):
-    for file in files:
-        if file["content-type"] == "application/pdf":
-            yield file["file"]
-        elif file["content-type"] in ["image/png", "image/jpeg"]:
-            page = io.BytesIO()
-            can = canvas.Canvas(page, pagesize=A4)
-            image = ImageReader(file["file"])
-            height = image.getSize()[1]
-            x_start = 50
-            y_start = 800 - height
-            can.drawImage(
-                image,
-                x_start,
-                y_start,
-                preserveAspectRatio=True,
-                mask="auto",
-            )
-            can.save()
-            page.seek(0)
-            yield page
-
-
 class ReceiptView(APIView):
     permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
 
@@ -400,31 +365,7 @@ class ReceiptView(APIView):
         if dms_response.status_code != status.HTTP_200_OK:
             return get_dms_error_response(dms_response)
 
-        files = [get_receipt(url) for url in receipt_urls]
-
-        merger = PdfMerger()
-        merger.append(io.BytesIO(dms_response.content))
-
-        for file in get_files_to_merge(files):
-            try:
-                merger.append(file)
-            except PdfReadError:  # pragma: no cover
-                ## faulty pdf
-                pass
-            except DependencyError as e:
-                # we don't support AES encrypted PDFs
-                if (
-                    not e.args
-                    or not e.args[0] == "PyCryptodome is required for AES algorithm"
-                ):  # pragma: no cover
-                    raise
-
-        result = io.BytesIO()
-
-        merger.write(result)
-        merger.close()
-
-        result.seek(0)
+        result = add_caluma_files_to_pdf(io.BytesIO(dms_response.content), receipt_urls)
 
         response = FileResponse(
             result,

@@ -5,6 +5,7 @@ from pathlib import Path
 from django.conf import settings
 from django.http import FileResponse
 from django.utils import formats
+from django.utils.translation import get_language
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, ListModelMixin
@@ -18,6 +19,7 @@ from mysagw.case.permissions import HasCaseAccess
 from mysagw.dms_client import DMSClient, get_dms_error_response
 from mysagw.identity.models import Identity
 from mysagw.oidc_auth.permissions import IsAdmin, IsAuthenticated
+from mysagw.pdf_utils import add_caluma_files_to_pdf
 
 GQL_DIR = Path(__file__).parent.resolve() / "queries"
 
@@ -190,7 +192,48 @@ class CaseDownloadViewSet(GenericViewSet):
         }
         return trans_map[name][language]
 
-    def merge(self, name, data, template, file_name):
+    @action(detail=True)
+    def application(self, request, pk=None):
+        caluma_client = self.get_caluma_client(request)
+        language = get_language()
+        raw_data = caluma_client.get_data(
+            pk,
+            GQL_DIR / "get_document.gql",
+            add_headers={"Accept-Language": language},
+        )
+        parser = ApplicationParser(raw_data)
+        data = parser.run()
+
+        dms_client = DMSClient()
+        dms_response = dms_client.get_merged_document(
+            data,
+            settings.DOCUMENT_MERGE_SERVICE_APPLICATION_EXPORT_SLUG,
+        )
+
+        if dms_response.status_code != status.HTTP_200_OK:
+            return get_dms_error_response(dms_response)
+
+        result = add_caluma_files_to_pdf(
+            io.BytesIO(dms_response.content), parser.files_to_add
+        )
+
+        return FileResponse(
+            result,
+            filename=(
+                f"{data['dossier_nr']} - "
+                f"{self.get_filename_translation('application', language)}.pdf"
+            ),
+        )
+
+    def get_acknowledgement_and_credit_approval(self, request, name, pk=None):
+        caluma_client = self.get_caluma_client(request)
+        raw_data = caluma_client.get_data(pk, GQL_DIR / f"get_{name}.gql")
+        data = self.get_formatted_data(raw_data, name)
+        template = f'{getattr(settings, f"DOCUMENT_MERGE_SERVICE_{name.upper()}_TEMPLATE_SLUG")}-{data["identity"]["language"]}'
+        file_name = (
+            f"{data['dossier_nr']} - "
+            f"{self.get_filename_translation(name, data['identity']['language'])}.pdf"
+        )
         dms_client = DMSClient()
         dms_response = dms_client.get_merged_document(
             data,
@@ -204,35 +247,6 @@ class CaseDownloadViewSet(GenericViewSet):
             io.BytesIO(dms_response.content),
             filename=file_name,
         )
-
-    @action(detail=True)
-    def application(self, request, pk=None):
-        caluma_client = self.get_caluma_client(request)
-        raw_data = caluma_client.get_data(pk, GQL_DIR / "get_document.gql")
-        parser = ApplicationParser(raw_data)
-        data = parser.run()
-        identity = parser.get_identity()
-        file_name = (
-            f"{data['dossier_nr']} - "
-            f"{self.get_filename_translation('application', identity.language)}.pdf"
-        )
-        return self.merge(
-            "application",
-            data,
-            settings.DOCUMENT_MERGE_SERVICE_APPLICATION_EXPORT_SLUG,
-            file_name,
-        )
-
-    def get_acknowledgement_and_credit_approval(self, request, name, pk=None):
-        caluma_client = self.get_caluma_client(request)
-        raw_data = caluma_client.get_data(pk, GQL_DIR / f"get_{name}.gql")
-        data = self.get_formatted_data(raw_data, name)
-        template = f'{getattr(settings, f"DOCUMENT_MERGE_SERVICE_{name.upper()}_TEMPLATE_SLUG")}-{data["identity"]["language"]}'
-        file_name = (
-            f"{data['dossier_nr']} - "
-            f"{self.get_filename_translation(name, data['identity']['language'])}.pdf"
-        )
-        return self.merge("application", data, template, file_name)
 
     @action(detail=True)
     def acknowledgement(self, request, pk=None):
