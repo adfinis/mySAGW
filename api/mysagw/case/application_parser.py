@@ -85,7 +85,7 @@ class ApplicationParser:
             self.value_key_for_question(question["__typename"])
         ]:
             name = value["name"]
-            if value["metadata"].get("content_type") in [
+            if value.get("metadata", {}).get("content_type") in [
                 "application/pdf",
                 "image/png",
                 "image/jpeg",
