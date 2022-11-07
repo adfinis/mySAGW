@@ -1,12 +1,115 @@
 query Document ($case_id: ID!) {
   node(id: $case_id) {
     ... on Case {
-      createdByUser
       document {
-        answers {
+        dossier_nr: answers(filter: [{question: "dossier-nr"}]) {
+          edges {
+            node {
+              ...on StringAnswer {
+                value
+              }
+            }
+          }
+        }
+        answers(filter: [{visibleInContext: true}]) {
           edges {
             node {
               ...FieldAnswer
+            }
+          }
+        }
+        form {
+          slug
+          name
+          questions(filter: [{isArchived: false}]) {
+            edges {
+              node {
+                __typename
+                ...FieldQuestion
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+fragment SimpleQuestion on Question {
+  slug
+  label
+  infoText
+  ... on ChoiceQuestion {
+    choiceOptions: options(filter: [{isArchived: false}]) {
+      edges {
+        node {
+          slug
+          label
+        }
+      }
+    }
+  }
+  ... on MultipleChoiceQuestion {
+    multipleChoiceOptions: options(filter: [{isArchived: false}]) {
+      edges {
+        node {
+          slug
+          label
+        }
+      }
+    }
+  }
+  ... on StaticQuestion {
+    staticContent
+  }
+}
+
+fragment FieldTableQuestion on Question {
+  ... on TableQuestion {
+    rowForm {
+      slug
+      name
+      questions(filter: [{isArchived: false}]) {
+        edges {
+          node {
+            __typename
+            ...SimpleQuestion
+          }
+        }
+      }
+    }
+
+  }
+}
+
+fragment FieldQuestion on Question {
+  ...SimpleQuestion
+  ...FieldTableQuestion
+  ... on FormQuestion {
+    subForm {
+      slug
+      name
+      questions {
+        edges {
+          node {
+            __typename
+            # This part here limits our query to 2 level deep nested forms. This
+            # has to be solved in another way!
+            ...SimpleQuestion
+            ...FieldTableQuestion
+            ... on FormQuestion {
+              subForm {
+                slug
+                name
+                questions {
+                  edges {
+                    node {
+                      ...SimpleQuestion
+                      ...FieldTableQuestion
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -16,9 +119,7 @@ query Document ($case_id: ID!) {
 }
 
 fragment SimpleAnswer on Answer {
-  id
   question {
-    id
     slug
   }
   ... on StringAnswer {
@@ -35,11 +136,9 @@ fragment SimpleAnswer on Answer {
   }
   ... on FilesAnswer {
     filesValue: value {
-      id
-      uploadUrl
+      name
       downloadUrl
       metadata
-      name
     }
   }
   ... on DateAnswer {
@@ -48,22 +147,9 @@ fragment SimpleAnswer on Answer {
 }
 
 fragment FieldAnswer on Answer {
-  id
   ...SimpleAnswer
   ... on TableAnswer {
     tableValue: value {
-      id
-      form {
-        id
-        slug
-        questions {
-          edges {
-            node {
-              ...FieldQuestion
-            }
-          }
-        }
-      }
       answers {
         edges {
           node {

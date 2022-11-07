@@ -24,7 +24,7 @@ services:
   caluma:
     env_file: ./.envs/.local/.caluma
     volumes:
-      - ./caluma/extensions:/app/caluma/extensions:ro
+      - ./caluma/extensions:/app/caluma/extensions
       - ./caluma/data:/app/caluma/data:ro
       - ./caluma/setup.cfg:/app/setup.cfg:ro
     command:

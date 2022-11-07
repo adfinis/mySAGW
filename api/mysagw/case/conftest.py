@@ -4,6 +4,8 @@ import pytest
 from django.conf import settings
 from rest_framework import status
 
+from mysagw.case.tests.application_caluma_response import CALUMA_DATA
+from mysagw.conftest import TEST_FILES_DIR
 from mysagw.utils import build_url
 
 
@@ -19,10 +21,13 @@ def dms_mock(requests_mock):
         )
     )
 
+    with (TEST_FILES_DIR / "test.pdf").open("rb") as f:
+        pdf = f.read()
+
     return requests_mock.post(
         matcher,
         status_code=status.HTTP_200_OK,
-        content=b"foo",
+        content=pdf,
         headers={"CONTENT-TYPE": "application/pdf"},
     )
 
@@ -111,3 +116,18 @@ def credit_approval_mock(requests_mock):
         )
 
     return mockit
+
+
+@pytest.fixture
+def application_mock(requests_mock):
+    requests_mock.post("http://testserver/graphql", status_code=200, json=CALUMA_DATA)
+
+    with (TEST_FILES_DIR / "test.pdf").open("rb") as f:
+        pdf = f.read()
+
+    requests_mock.get(
+        "https://mysagw.local/caluma-media/download-url-pdf",
+        status_code=status.HTTP_200_OK,
+        content=pdf,
+        headers={"CONTENT-TYPE": "application/pdf"},
+    )

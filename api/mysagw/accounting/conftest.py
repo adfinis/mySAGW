@@ -1,13 +1,11 @@
 import re
-from pathlib import Path
 
 import pytest
 from django.conf import settings
 from rest_framework import status
 
+from mysagw.conftest import TEST_FILES_DIR
 from mysagw.utils import build_url
-
-FILES_DIR = Path(__file__).parent.resolve() / "tests" / "files"
 
 
 @pytest.fixture
@@ -205,16 +203,16 @@ def receipt_mock(requests_mock):
 
     requests_mock.post("http://testserver/graphql", status_code=200, json=caluma_data)
 
-    with (FILES_DIR / "test.png").open("rb") as f:
+    with (TEST_FILES_DIR / "test.png").open("rb") as f:
         png = f.read()
 
-    with (FILES_DIR / "test.pdf").open("rb") as f:
+    with (TEST_FILES_DIR / "test.pdf").open("rb") as f:
         pdf = f.read()
 
-    with (FILES_DIR / "test_encrypted.pdf").open("rb") as f:
+    with (TEST_FILES_DIR / "test_encrypted.pdf").open("rb") as f:
         pdf_encrypted = f.read()
 
-    with (FILES_DIR / "test_cover.pdf").open("rb") as f:
+    with (TEST_FILES_DIR / "test_cover.pdf").open("rb") as f:
         cover = f.read()
 
     requests_mock.get(

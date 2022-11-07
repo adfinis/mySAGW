@@ -75,6 +75,7 @@ docker-compose run --rm api python manage.py upload_template -t mysagw/case/temp
 docker-compose run --rm api python manage.py upload_template -t mysagw/case/templates/credit-approval-de.docx
 docker-compose run --rm api python manage.py upload_template -t mysagw/case/templates/credit-approval-fr.docx
 docker-compose run --rm api python manage.py upload_template -t mysagw/case/templates/credit-approval-en.docx
+docker-compose run --rm api python manage.py upload_template -t mysagw/case/templates/application.docx
 ```
 
 ## Contributing

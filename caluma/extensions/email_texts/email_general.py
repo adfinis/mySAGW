@@ -1,13 +1,13 @@
 SUBJECT_EN = "New information concerning {dossier_nr}"
 BODY_EN = """Dear {first_name} {last_name}
 
-The status of the following application/document has changed:
+Please note that further information is required for the following application:
 
 Reference: {dossier_nr}
-You can access your document directly via the following link:
+You can access your document via the following link:
 {link}
 
-If you have any questions, please feel free to contact us via sagw@sagw.ch, the telephone number +41 31 306 92 50 or at www.sagw.ch/kontakt-mysagw. Please always quote the reference number if you have a question.
+If you have any questions, please contact us via e-mail (sagw@sagw.ch), phone (+41 31 306 92 50) or online (www.sagw.ch/kontakt-mysagw). Please bear in mind to state the reference number of your application.
 
 Yours sincerely
 
@@ -15,17 +15,17 @@ Your SAGW team
 
 ******
 
-This is an automatically generated email, please do not reply to this message. You can find the contact details of SAGW on the following page:
+This is an automatically generated message. Please do not reply. The contact details of SASH can be found on the following website:
 www.sagw.ch/kontakt-mysagw
 """
 
 SUBJECT_DE = "Neue Informationen zu {dossier_nr}"
 BODY_DE = """Guten Tag {first_name} {last_name}
 
-Der Status des nachfolgenden Gesuchs/Dokument hat sich geändert:
+Wir benötigen noch weitere Angaben zum Gesuch:
 
 Referenz: {dossier_nr}
-Über den nachfolgenden Link können Sie direkt auf Ihr Dokument zugreifen:
+Über den nachfolgenden Link können Sie direkt auf Ihr Dokument zugreifen, wo Sie die Angaben zu den noch benötigten Informationen finden:
 {link}
 
 Sollten Sie Fragen haben, können Sie uns gerne über sagw@sagw.ch, die Telefonnummer +41 31 306 92 50 oder unter www.sagw.ch/kontakt-mysagw kontaktieren. Gerne bitten wir Sie, bei einer Frage immer die Referenznummer anzugeben.
@@ -43,13 +43,13 @@ www.sagw.ch/kontakt-mysagw
 SUBJECT_FR = "Nouvelles informations concernant {dossier_nr}"
 BODY_FR = """Bonjour {first_name} {last_name}
 
-Le statut de la demande/du document ci-dessous a changé:
+Nous avons besoin d’informations supplémentaires sur la requête suivante:
 
 Référence : {dossier_nr}
-Cliquez sur le lien ci-dessous pour ouvrir votre document:
+Le lien ci-dessous vous permet d’accéder directement à votre document, où vous trouverez les indications sur les informations à fournir:
 {link}
 
-Si vous avez des questions, n'hésitez pas à nous contacter via sagw@sagw.ch, au numéro de téléphone +41 31 306 92 50 ou à l'adresse www.sagw.ch/kontakt-mysagw. Nous vous prions de toujours indiquer le numéro de référence lorsque vous posez une question.
+Si vous avez des questions, n’hésitez pas à nous contacter à l’adresse sagw@sagw.ch, au numéro de téléphone +41 31 306 92 50 ou via www.sagw.ch/kontakt-mysagw. Nous vous prions de toujours indiquer le numéro de référence lorsque vous posez une question.
 
 Avec nos meilleures salutations,
 

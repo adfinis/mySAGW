@@ -183,3 +183,8 @@ def case_access_event_mock(
     }
 
     return requests_mock.get(f"{settings.API_BASE_URI}/case/accesses", json=data)
+
+
+@pytest.fixture
+def send_mail_mock(mocker):
+    return mocker.patch("caluma.extensions.events.work_item._send_new_work_item_mail")
