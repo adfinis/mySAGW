@@ -24,7 +24,7 @@ www.sagw.ch/kontakt-mysagw
 SUBJECT_DE = "Neue Informationen zu {dossier_nr}"
 BODY_DE = """Guten Tag {first_name} {last_name}
 
-Wir haben die Abrechnung des nachfolgenden Gesuchs geprüft. Wir können Ihnen demnach in den kommenden Tagen folgenden Beitrag auf die uns vorliegende Zahlungsverbindung überweisen:
+Wir haben die Abrechnung des nachfolgenden Gesuchs geprüft und können Ihnen nun in den kommenden Tagen folgenden Beitrag auf die uns vorliegende Zahlungsverbindung überweisen:
 
 CHF {payout_amount}
 
