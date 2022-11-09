@@ -20,7 +20,6 @@ export default class CasesDetailIndexController extends Controller {
   @service router;
   @service notification;
   @service intl;
-  @service apollo;
   @service store;
 
   @queryManager apollo;
@@ -127,6 +126,21 @@ export default class CasesDetailIndexController extends Controller {
     );
 
     return [...(newestAnswer ?? []), ...alwaysDisplayedAnswers].flat();
+  }
+
+  get workflowRemark() {
+    // if additional-data is open without additional-data-form, a redo should be performed
+    if (
+      this.case.workItems.filter(
+        (workItem) =>
+          workItem.status === "READY" &&
+          (workItem.task.slug === "additional-data" ||
+            workItem.task.slug === "additional-data-form")
+      ).length < 2
+    ) {
+      return this.intl.t("work-items.rejectDefineAmountNoAdditionData");
+    }
+    return null;
   }
 
   @dropTask
