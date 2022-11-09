@@ -224,7 +224,7 @@ def test_download(
     case_id = "e535ac0c-f3be-4a36-b2d4-1ef405ec71c8"
     url = reverse(f"downloads-{endpoint}", args=[case_id])
 
-    response = client.get(url)
+    response = client.get(url, HTTP_ACCEPT_LANGUAGE=language)
 
     assert response.status_code == status.HTTP_200_OK
     assert dms_mock.called_once

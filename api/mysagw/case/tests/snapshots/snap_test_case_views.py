@@ -21,7 +21,6 @@ snapshots[
 Äthiopien""",
             "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Sehr geehrte·r Bruce Wilkins",
-            "language": "de",
         },
     },
 }
@@ -44,7 +43,6 @@ snapshots[
 Äthiopien""",
             "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Sehr geehrte·r Bruce Wilkins",
-            "language": "de",
         },
     },
 }
@@ -67,7 +65,6 @@ snapshots[
 Äthiopien""",
             "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Sehr geehrte·r Bruce Wilkins",
-            "language": "de",
         },
     },
 }
@@ -90,7 +87,6 @@ snapshots[
 Äthiopien""",
             "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Sehr geehrte·r Bruce Wilkins",
-            "language": "de",
         },
         "rahmenkredit": "23",
     },
@@ -114,7 +110,6 @@ snapshots[
 Äthiopien""",
             "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Sehr geehrte·r Bruce Wilkins",
-            "language": "de",
         },
         "rahmenkredit": "23",
     },
@@ -138,7 +133,6 @@ snapshots[
 Äthiopien""",
             "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Sehr geehrte·r Bruce Wilkins",
-            "language": "de",
         },
         "rahmenkredit": "23",
     },
@@ -153,7 +147,7 @@ snapshots[
 ] = {
     "convert": "pdf",
     "data": {
-        "date": "1. Januar 1970",
+        "date": "Jan. 1, 1970",
         "dossier_nr": "2022-0001",
         "identity": {
             "address_block": """Bruce Wilkins
@@ -162,7 +156,6 @@ snapshots[
 Ethiopia""",
             "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Dear Bruce Wilkins",
-            "language": "en",
         },
     },
 }
@@ -176,7 +169,7 @@ snapshots[
 ] = {
     "convert": "pdf",
     "data": {
-        "date": "1. Januar 1970",
+        "date": "Jan. 1, 1970",
         "dossier_nr": "2022-0001",
         "identity": {
             "address_block": """Bruce Wilkins
@@ -185,7 +178,6 @@ snapshots[
 Ethiopia""",
             "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Dear Bruce Wilkins",
-            "language": "en",
         },
     },
 }
@@ -199,7 +191,7 @@ snapshots[
 ] = {
     "convert": "pdf",
     "data": {
-        "date": "1. Januar 1970",
+        "date": "Jan. 1, 1970",
         "dossier_nr": "2022-0001",
         "identity": {
             "address_block": """Bruce Wilkins
@@ -208,7 +200,6 @@ snapshots[
 Ethiopia""",
             "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Dear Bruce Wilkins",
-            "language": "en",
         },
     },
 }
@@ -222,7 +213,7 @@ snapshots[
 ] = {
     "convert": "pdf",
     "data": {
-        "date": "1. Januar 1970",
+        "date": "Jan. 1, 1970",
         "dossier_nr": "2022-0001",
         "identity": {
             "address_block": """Bruce Wilkins
@@ -231,7 +222,6 @@ snapshots[
 Ethiopia""",
             "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Dear Bruce Wilkins",
-            "language": "en",
         },
         "rahmenkredit": "23",
     },
@@ -246,7 +236,7 @@ snapshots[
 ] = {
     "convert": "pdf",
     "data": {
-        "date": "1. Januar 1970",
+        "date": "Jan. 1, 1970",
         "dossier_nr": "2022-0001",
         "identity": {
             "address_block": """Bruce Wilkins
@@ -255,7 +245,6 @@ snapshots[
 Ethiopia""",
             "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Dear Bruce Wilkins",
-            "language": "en",
         },
         "rahmenkredit": "23",
     },
@@ -270,7 +259,7 @@ snapshots[
 ] = {
     "convert": "pdf",
     "data": {
-        "date": "1. Januar 1970",
+        "date": "Jan. 1, 1970",
         "dossier_nr": "2022-0001",
         "identity": {
             "address_block": """Bruce Wilkins
@@ -279,7 +268,6 @@ snapshots[
 Ethiopia""",
             "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Dear Bruce Wilkins",
-            "language": "en",
         },
         "rahmenkredit": "23",
     },
@@ -294,7 +282,7 @@ snapshots[
 ] = {
     "convert": "pdf",
     "data": {
-        "date": "1. Januar 1970",
+        "date": "1 janvier 1970",
         "dossier_nr": "2022-0001",
         "identity": {
             "address_block": """Bruce Wilkins
@@ -303,7 +291,6 @@ snapshots[
 Éthiopie""",
             "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Bruce Wilkins",
-            "language": "fr",
         },
     },
 }
@@ -317,7 +304,7 @@ snapshots[
 ] = {
     "convert": "pdf",
     "data": {
-        "date": "1. Januar 1970",
+        "date": "1 janvier 1970",
         "dossier_nr": "2022-0001",
         "identity": {
             "address_block": """Bruce Wilkins
@@ -326,7 +313,6 @@ snapshots[
 Éthiopie""",
             "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Bruce Wilkins",
-            "language": "fr",
         },
     },
 }
@@ -340,7 +326,7 @@ snapshots[
 ] = {
     "convert": "pdf",
     "data": {
-        "date": "1. Januar 1970",
+        "date": "1 janvier 1970",
         "dossier_nr": "2022-0001",
         "identity": {
             "address_block": """Bruce Wilkins
@@ -349,7 +335,6 @@ snapshots[
 Éthiopie""",
             "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Bruce Wilkins",
-            "language": "fr",
         },
     },
 }
@@ -363,7 +348,7 @@ snapshots[
 ] = {
     "convert": "pdf",
     "data": {
-        "date": "1. Januar 1970",
+        "date": "1 janvier 1970",
         "dossier_nr": "2022-0001",
         "identity": {
             "address_block": """Bruce Wilkins
@@ -372,7 +357,6 @@ snapshots[
 Éthiopie""",
             "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Bruce Wilkins",
-            "language": "fr",
         },
         "rahmenkredit": "23",
     },
@@ -387,7 +371,7 @@ snapshots[
 ] = {
     "convert": "pdf",
     "data": {
-        "date": "1. Januar 1970",
+        "date": "1 janvier 1970",
         "dossier_nr": "2022-0001",
         "identity": {
             "address_block": """Bruce Wilkins
@@ -396,7 +380,6 @@ snapshots[
 Éthiopie""",
             "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Bruce Wilkins",
-            "language": "fr",
         },
         "rahmenkredit": "23",
     },
@@ -411,7 +394,7 @@ snapshots[
 ] = {
     "convert": "pdf",
     "data": {
-        "date": "1. Januar 1970",
+        "date": "1 janvier 1970",
         "dossier_nr": "2022-0001",
         "identity": {
             "address_block": """Bruce Wilkins
@@ -420,7 +403,6 @@ snapshots[
 Éthiopie""",
             "email": "gallagherheather@example.com",
             "greeting_salutation_and_name": "Bruce Wilkins",
-            "language": "fr",
         },
         "rahmenkredit": "23",
     },

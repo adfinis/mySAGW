@@ -160,7 +160,6 @@ class CaseDownloadViewSet(GenericViewSet):
         identity_dict = {
             "address_block": identity.address_block,
             "greeting_salutation_and_name": identity.greeting_salutation_and_name(),
-            "language": identity.language,
             "email": identity.email,
         }
 
@@ -229,10 +228,11 @@ class CaseDownloadViewSet(GenericViewSet):
         caluma_client = self.get_caluma_client(request)
         raw_data = caluma_client.get_data(pk, GQL_DIR / f"get_{name}.gql")
         data = self.get_formatted_data(raw_data, name)
-        template = f'{getattr(settings, f"DOCUMENT_MERGE_SERVICE_{name.upper()}_TEMPLATE_SLUG")}-{data["identity"]["language"]}'
+        language = get_language()
+        template = f'{getattr(settings, f"DOCUMENT_MERGE_SERVICE_{name.upper()}_TEMPLATE_SLUG")}-{language}'
         file_name = (
             f"{data['dossier_nr']} - "
-            f"{self.get_filename_translation(name, data['identity']['language'])}.pdf"
+            f"{self.get_filename_translation(name, language)}.pdf"
         )
         dms_client = DMSClient()
         dms_response = dms_client.get_merged_document(
