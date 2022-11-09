@@ -509,7 +509,7 @@ snapshots[
                     },
                     "test-static": {
                         "info_text": None,
-                        "label": "Test static",
+                        "label": "",
                         "type": "StaticQuestion",
                         "value": "Some static content",
                     },

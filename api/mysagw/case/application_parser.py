@@ -103,7 +103,7 @@ class ApplicationParser:
 
     def _handle_static(self, question):
         return {
-            "label": question["label"],
+            "label": "",  # we only want to render the staticContent
             "type": question["__typename"],
             "value": strip_tags(question["staticContent"]),
             "info_text": strip_tags(question["infoText"]) or None,
