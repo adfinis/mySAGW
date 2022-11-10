@@ -1,5 +1,4 @@
 import json
-from base64 import urlsafe_b64encode
 
 import requests
 from django.conf import settings
@@ -34,10 +33,8 @@ class CalumaClient:
         response.raise_for_status()
         return response.json()
 
-    def get_data(self, case_id, gql_file, add_headers=None):
+    def get_data(self, gql_file, variables, add_headers=None):
         with gql_file.open("r") as f:
             query = f.read()
-        global_id = urlsafe_b64encode(f"Case:{case_id}".encode("utf-8")).decode("utf-8")
-        variables = {"case_id": global_id}
         resp = self.execute(query, variables, add_headers=add_headers)
         return resp

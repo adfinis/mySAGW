@@ -27,12 +27,16 @@ class ApplicationParser:
         if len(question["choiceOptions"]["edges"]) > 10:
             # We don't want to render more than 10 choices,
             # so we mimic a `TextQuestion`
-            choice_label = next(
-                choice["node"]["label"]
-                for choice in question["choiceOptions"]["edges"]
-                if choice["node"]["slug"]
-                == answer["node"][self.value_key_for_question(question["__typename"])]
-            )
+            choice_label = None
+            if answer:
+                choice_label = next(
+                    choice["node"]["label"]
+                    for choice in question["choiceOptions"]["edges"]
+                    if choice["node"]["slug"]
+                    == answer["node"][
+                        self.value_key_for_question(question["__typename"])
+                    ]
+                )
 
             return {
                 "label": question["label"],
@@ -44,9 +48,9 @@ class ApplicationParser:
         return {
             "label": question["label"],
             "type": question["__typename"],
-            "value": answer["node"][
-                self.value_key_for_question(question["__typename"])
-            ],
+            "value": answer["node"][self.value_key_for_question(question["__typename"])]
+            if answer
+            else None,
             "options": [
                 (node["node"]["slug"], node["node"]["label"])
                 for node in question["choiceOptions"]["edges"]
@@ -62,24 +66,38 @@ class ApplicationParser:
         if len(question["multipleChoiceOptions"]["edges"]) > 10:
             # We don't want to render more than 10 choices,
             # so we remove the unchecked
-            options = [
-                option
-                for option in options
-                if option[0]
-                in answer["node"][self.value_key_for_question(question["__typename"])]
-            ]
+            options = (
+                [
+                    option
+                    for option in options
+                    if option[0]
+                    in answer["node"][
+                        self.value_key_for_question(question["__typename"])
+                    ]
+                ]
+                if answer
+                else []
+            )
 
         return {
             "label": question["label"],
             "type": question["__typename"],
-            "value": answer["node"][
-                self.value_key_for_question(question["__typename"])
-            ],
+            "value": answer["node"][self.value_key_for_question(question["__typename"])]
+            if answer
+            else [],
             "options": options,
             "info_text": strip_tags(question["infoText"]) or None,
         }
 
     def _handle_files(self, question, answer):
+        if not answer:
+            return {
+                "label": question["label"],
+                "type": question["__typename"],
+                "value": [],
+                "info_text": strip_tags(question["infoText"]) or None,
+            }
+
         filename_list = []
         for value in answer["node"][
             self.value_key_for_question(question["__typename"])
@@ -103,13 +121,21 @@ class ApplicationParser:
 
     def _handle_static(self, question):
         return {
-            "label": question["label"],
+            "label": "",  # we only want to render the staticContent
             "type": question["__typename"],
             "value": strip_tags(question["staticContent"]),
             "info_text": strip_tags(question["infoText"]) or None,
         }
 
     def _handle_table(self, question, answer):
+        if not answer:
+            return {
+                "type": "TextQuestion",
+                "label": question["label"],
+                "value": None,
+                "info_text": strip_tags(question["infoText"]) or None,
+            }
+
         row_form_questions = question["rowForm"]["questions"]["edges"]
         rows = [
             self.format_application_data(
@@ -130,9 +156,9 @@ class ApplicationParser:
         return {
             "label": question["label"],
             "type": question["__typename"],
-            "value": answer["node"][
-                self.value_key_for_question(question["__typename"])
-            ],
+            "value": answer["node"][self.value_key_for_question(question["__typename"])]
+            if answer
+            else None,
             "info_text": strip_tags(question["infoText"]) or None,
         }
 
@@ -190,11 +216,8 @@ class ApplicationParser:
             ):
                 continue
             elif question["__typename"] != "StaticQuestion":
-                # Questions other than StaticQuestion need the correct answer.
-                # We only include questions with an answer.
+                # Questions other than StaticQuestion need their answer if there is one.
                 answer = self._get_answer(question, answers)
-                if not answer:
-                    continue
 
                 args.append(answer)
 

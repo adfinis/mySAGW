@@ -1,4 +1,5 @@
 import io
+from base64 import urlsafe_b64encode
 from pathlib import Path
 
 from django.conf import settings
@@ -350,7 +351,10 @@ class ReceiptView(APIView):
             # endpoint="http://caluma:8000/graphql",
             # token="Bearer ey...",
         )
-        raw_data = caluma_client.get_data(pk, GQL_DIR / "get_receipts.gql")
+        variables = {
+            "case_id": urlsafe_b64encode(f"Case:{pk}".encode("utf-8")).decode("utf-8"),
+        }
+        raw_data = caluma_client.get_data(GQL_DIR / "get_receipts.gql", variables)
 
         cover_context = get_cover_context(raw_data)
         cover_context["date"] = timezone.now().date().strftime("%d. %m. %Y")

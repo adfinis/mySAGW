@@ -1,4 +1,4 @@
-FROM ghcr.io/projectcaluma/caluma:8.0.0-beta.18
+FROM ghcr.io/projectcaluma/caluma:8.0.0-beta.20
 
 ENV PATH="${HOME}/.local/bin:${PATH}"
 
@@ -8,5 +8,9 @@ COPY data /app/caluma/data
 COPY requirements.txt /app/sagw-requirements.txt
 
 USER root
-RUN poetry run pip install -r /app/sagw-requirements.txt
+ARG INSTALL_DEV="false"
+
+RUN if [ "$INSTALL_DEV" = "true" ] ; then poetry install --no-root; fi \
+&& poetry run pip install -r /app/sagw-requirements.txt
+
 USER caluma

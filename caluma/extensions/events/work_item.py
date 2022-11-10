@@ -53,16 +53,31 @@ def _send_new_work_item_mail(work_item):
 
     framework_credit = None
     payout_amount = None
+    selected_email_texts = email_general
 
     if work_item.task.slug == "additional-data":
-        decision_and_credit_work_item = (
-            work_item.case.work_items.filter(task__slug="decision-and-credit")
-            .order_by("-created_at")
+        define_amount_work_item = (
+            work_item.case.work_items.filter(task__slug="define-amount")
+            .order_by("-closed_at")
             .first()
         )
-        framework_credit = decision_and_credit_work_item.document.answers.get(
-            question__slug="gesprochener-rahmenkredit"
-        ).value
+        if not (
+            define_amount_work_item
+            and define_amount_work_item.status == "completed"
+            and define_amount_work_item.document.answers.filter(
+                question_id="define-amount-decision",
+                value="define-amount-decision-reject",
+            ).exists()
+        ):
+            decision_and_credit_work_item = (
+                work_item.case.work_items.filter(task__slug="decision-and-credit")
+                .order_by("-created_at")
+                .first()
+            )
+            framework_credit = decision_and_credit_work_item.document.answers.get(
+                question__slug="gesprochener-rahmenkredit"
+            ).value
+            selected_email_texts = email_cost_approval
     elif work_item.task.slug == "complete-document":
         define_amount_work_item = (
             work_item.case.work_items.filter(task__slug="define-amount")
@@ -73,16 +88,9 @@ def _send_new_work_item_mail(work_item):
             question__slug="define-amount-amount-float"
         ).value
         payout_amount = f"{payout_amount:,.2f}"
+        selected_email_texts = email_payout_amount
 
     users = get_users_for_case(work_item.case)
-
-    mail_text_map = {
-        "revise-document": email_general,
-        "additional-data": email_cost_approval,
-        "complete-document": email_payout_amount,
-    }
-
-    selected_email_texts = mail_text_map[work_item.task.slug]
 
     for user in users:
         subject = selected_email_texts.EMAIL_SUBJECTS[user["language"]]
