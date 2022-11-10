@@ -1,7 +1,7 @@
 SUBJECT_EN = "New information concerning {dossier_nr}"
 BODY_EN = """Dear {first_name} {last_name}
 
-After a careful review your application we are pleased to inform you that a framework credit of CHF {framework_credit} has been approved for the project mentioned below.
+After a careful review your application we are pleased to inform you that a framework credit of CHF {framework_credit}.- has been approved for the project mentioned below.
 
 You can download your application and the approval of the framework credit as PDF files under the heading «Download».
 
@@ -24,7 +24,7 @@ www.sagw.ch/kontakt-mysagw
 SUBJECT_DE = "Neue Informationen zu {dossier_nr}"
 BODY_DE = """Guten Tag {first_name} {last_name}
 
-Wir haben Ihren Antrag geprüft und freuen uns, Ihnen mitteilen zu können, dass wir für das unten genannte Projekt einen Rahmenkredit von CHF {framework_credit} gesprochen haben.
+Wir haben Ihren Antrag geprüft und freuen uns, Ihnen mitteilen zu können, dass wir für das unten genannte Projekt einen Rahmenkredit von CHF {framework_credit}.- gesprochen haben.
 
 Bei Bedarf können Sie Ihren Antrag und die Kostenzusprache als PDF unter der Rubrik «Download» herunterladen.
 
@@ -47,7 +47,7 @@ www.sagw.ch/kontakt-mysagw
 SUBJECT_FR = "Nouvelles informations concernant {dossier_nr}"
 BODY_FR = """Bonjour {first_name} {last_name}
 
-Nous avons examiné votre demande et avons le plaisir de vous informer que nous avons accordé un crédit-cadre de {framework_credit} CHF pour le projet mentionné ci-dessous.
+Nous avons examiné votre demande et avons le plaisir de vous informer que nous avons accordé un crédit-cadre de {framework_credit}.- CHF pour le projet mentionné ci-dessous.
 
 Si nécessaire, vous pouvez télécharger votre demande et la confirmation de l’octroi du financement en format PDF sous la rubrique «Download».
 

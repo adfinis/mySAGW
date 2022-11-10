@@ -1,11 +1,11 @@
-# name: test_send_new_work_item_mail[additional-data-de]
+# name: test_send_new_work_item_mail[additional-data-False-de]
   'Neue Informationen zu 1984-0023'
 # ---
-# name: test_send_new_work_item_mail[additional-data-de].1
+# name: test_send_new_work_item_mail[additional-data-False-de].1
   '''
   Guten Tag Winston Smith
   
-  Wir haben Ihren Antrag geprüft und freuen uns, Ihnen mitteilen zu können, dass wir für das unten genannte Projekt einen Rahmenkredit von CHF 23 gesprochen haben.
+  Wir haben Ihren Antrag geprüft und freuen uns, Ihnen mitteilen zu können, dass wir für das unten genannte Projekt einen Rahmenkredit von CHF 23.- gesprochen haben.
   
   Bei Bedarf können Sie Ihren Antrag und die Kostenzusprache als PDF unter der Rubrik «Download» herunterladen.
   
@@ -26,14 +26,14 @@
   
   '''
 # ---
-# name: test_send_new_work_item_mail[additional-data-en]
+# name: test_send_new_work_item_mail[additional-data-False-en]
   'New information concerning 1984-0023'
 # ---
-# name: test_send_new_work_item_mail[additional-data-en].1
+# name: test_send_new_work_item_mail[additional-data-False-en].1
   '''
   Dear Winston Smith
   
-  After a careful review your application we are pleased to inform you that a framework credit of CHF 23 has been approved for the project mentioned below.
+  After a careful review your application we are pleased to inform you that a framework credit of CHF 23.- has been approved for the project mentioned below.
   
   You can download your application and the approval of the framework credit as PDF files under the heading «Download».
   
@@ -54,14 +54,14 @@
   
   '''
 # ---
-# name: test_send_new_work_item_mail[additional-data-fr]
+# name: test_send_new_work_item_mail[additional-data-False-fr]
   'Nouvelles informations concernant 1984-0023'
 # ---
-# name: test_send_new_work_item_mail[additional-data-fr].1
+# name: test_send_new_work_item_mail[additional-data-False-fr].1
   '''
   Bonjour Winston Smith
   
-  Nous avons examiné votre demande et avons le plaisir de vous informer que nous avons accordé un crédit-cadre de 23 CHF pour le projet mentionné ci-dessous.
+  Nous avons examiné votre demande et avons le plaisir de vous informer que nous avons accordé un crédit-cadre de 23.- CHF pour le projet mentionné ci-dessous.
   
   Si nécessaire, vous pouvez télécharger votre demande et la confirmation de l’octroi du financement en format PDF sous la rubrique «Download».
   
@@ -82,94 +82,10 @@
   
   '''
 # ---
-# name: test_send_new_work_item_mail[complete-document-de]
+# name: test_send_new_work_item_mail[additional-data-True-de]
   'Neue Informationen zu 1984-0023'
 # ---
-# name: test_send_new_work_item_mail[complete-document-de].1
-  '''
-  Guten Tag Winston Smith
-  
-  Wir haben die Abrechnung des nachfolgenden Gesuchs geprüft und können Ihnen nun in den kommenden Tagen folgenden Beitrag auf die uns vorliegende Zahlungsverbindung überweisen:
-  
-  CHF 23.00
-  
-  Referenz: 1984-0023
-  Über den nachfolgenden Link können Sie direkt auf Ihr Dokument zugreifen, wo Sie die Angaben zu den noch benötigten Informationen finden:
-  https://mysagw.local/cases/my-case-id
-  
-  Sollten Sie Fragen haben, können Sie uns gerne über sagw@sagw.ch, die Telefonnummer +41 31 306 92 50 oder unter www.sagw.ch/kontakt-mysagw kontaktieren. Gerne bitten wir Sie, bei einer Frage immer die Referenznummer anzugeben.
-  
-  Freundliche Grüsse
-  
-  Ihr SAGW-Team
-  
-  ******
-  
-  Dies ist eine automatisch generierte Email, bitte antworten Sie nicht auf diese Nachricht. Die Kontaktangaben der SAGW können Sie der nachfolgenden Seite entnehmen:
-  www.sagw.ch/kontakt-mysagw
-  
-  '''
-# ---
-# name: test_send_new_work_item_mail[complete-document-en]
-  'New information concerning 1984-0023'
-# ---
-# name: test_send_new_work_item_mail[complete-document-en].1
-  '''
-  Dear Winston Smith
-  
-  After having verified the billing of the application mentioned below, we can confirm that the following amount will be transferred according to the payment details which have been provided:
-  
-  CHF 23.00
-  
-  Reference: 1984-0023
-  You can access your document via the following link:
-  https://mysagw.local/cases/my-case-id
-  
-  If you have any questions, please contact us via e-mail (sagw@sagw.ch), phone (+41 31 306 92 50) or online (www.sagw.ch/kontakt-mysagw). Please bear in mind to state the reference number of your application.
-  
-  Yours sincerely
-  
-  Your SAGW team
-  
-  ******
-  
-  This is an automatically generated message. Please do not reply. The contact details of SASH can be found on the following website:
-  www.sagw.ch/kontakt-mysagw
-  
-  '''
-# ---
-# name: test_send_new_work_item_mail[complete-document-fr]
-  'Nouvelles informations concernant 1984-0023'
-# ---
-# name: test_send_new_work_item_mail[complete-document-fr].1
-  '''
-  Bonjour Winston Smith
-  
-  Nous avons vérifié le décompte de la demande dont la référence figure ci-dessous. Nous verserons dans les prochains jours, sur les coordonnées de paiement dont nous disposons, le montant suivant:
-  
-  CHF 23.00
-  
-  Référence : 1984-0023
-  Vous pouvez accéder directement à votre document en cliquant sur le lien suivant:
-  https://mysagw.local/cases/my-case-id
-  
-  Si vous avez des questions, n’hésitez pas à nous contacter à l’adresse sagw@sagw.ch, au numéro de téléphone +41 31 306 92 50 ou via www.sagw.ch/kontakt-mysagw. Nous vous prions de toujours indiquer le numéro de référence lorsque vous posez une question.
-  
-  Avec nos meilleures salutations,
-  
-  Votre équipe de l'ASSH
-  
-  ******
-  
-  Ceci est un message électronique généré automatiquement, merci de ne pas y répondre. Vous trouverez les coordonnées de l'ASSH sur la page suivante :
-  www.sagw.ch/kontakt-mysagw
-  
-  '''
-# ---
-# name: test_send_new_work_item_mail[revise-document-de]
-  'Neue Informationen zu 1984-0023'
-# ---
-# name: test_send_new_work_item_mail[revise-document-de].1
+# name: test_send_new_work_item_mail[additional-data-True-de].1
   '''
   Guten Tag Winston Smith
   
@@ -192,10 +108,10 @@
   
   '''
 # ---
-# name: test_send_new_work_item_mail[revise-document-en]
+# name: test_send_new_work_item_mail[additional-data-True-en]
   'New information concerning 1984-0023'
 # ---
-# name: test_send_new_work_item_mail[revise-document-en].1
+# name: test_send_new_work_item_mail[additional-data-True-en].1
   '''
   Dear Winston Smith
   
@@ -218,10 +134,172 @@
   
   '''
 # ---
-# name: test_send_new_work_item_mail[revise-document-fr]
+# name: test_send_new_work_item_mail[additional-data-True-fr]
   'Nouvelles informations concernant 1984-0023'
 # ---
-# name: test_send_new_work_item_mail[revise-document-fr].1
+# name: test_send_new_work_item_mail[additional-data-True-fr].1
+  '''
+  Bonjour Winston Smith
+  
+  Nous avons besoin d’informations supplémentaires sur la requête suivante:
+  
+  Référence : 1984-0023
+  Le lien ci-dessous vous permet d’accéder directement à votre document, où vous trouverez les indications sur les informations à fournir:
+  https://mysagw.local/cases/my-case-id
+  
+  Si vous avez des questions, n’hésitez pas à nous contacter à l’adresse sagw@sagw.ch, au numéro de téléphone +41 31 306 92 50 ou via www.sagw.ch/kontakt-mysagw. Nous vous prions de toujours indiquer le numéro de référence lorsque vous posez une question.
+  
+  Avec nos meilleures salutations,
+  
+  Votre équipe de l'ASSH
+  
+  ******
+  
+  Ceci est un message électronique généré automatiquement, merci de ne pas y répondre. Vous trouverez les coordonnées de l'ASSH sur la page suivante :
+  www.sagw.ch/kontakt-mysagw
+  
+  '''
+# ---
+# name: test_send_new_work_item_mail[complete-document-False-de]
+  'Neue Informationen zu 1984-0023'
+# ---
+# name: test_send_new_work_item_mail[complete-document-False-de].1
+  '''
+  Guten Tag Winston Smith
+  
+  Wir haben die Abrechnung des nachfolgenden Gesuchs geprüft und können Ihnen nun in den kommenden Tagen folgenden Beitrag auf die uns vorliegende Zahlungsverbindung überweisen:
+  
+  CHF 23.00.-
+  
+  Referenz: 1984-0023
+  Über den nachfolgenden Link können Sie direkt auf Ihr Dokument zugreifen, wo Sie die Angaben zu den noch benötigten Informationen finden:
+  https://mysagw.local/cases/my-case-id
+  
+  Sollten Sie Fragen haben, können Sie uns gerne über sagw@sagw.ch, die Telefonnummer +41 31 306 92 50 oder unter www.sagw.ch/kontakt-mysagw kontaktieren. Gerne bitten wir Sie, bei einer Frage immer die Referenznummer anzugeben.
+  
+  Freundliche Grüsse
+  
+  Ihr SAGW-Team
+  
+  ******
+  
+  Dies ist eine automatisch generierte Email, bitte antworten Sie nicht auf diese Nachricht. Die Kontaktangaben der SAGW können Sie der nachfolgenden Seite entnehmen:
+  www.sagw.ch/kontakt-mysagw
+  
+  '''
+# ---
+# name: test_send_new_work_item_mail[complete-document-False-en]
+  'New information concerning 1984-0023'
+# ---
+# name: test_send_new_work_item_mail[complete-document-False-en].1
+  '''
+  Dear Winston Smith
+  
+  After having verified the billing of the application mentioned below, we can confirm that the following amount will be transferred according to the payment details which have been provided:
+  
+  CHF 23.00.-
+  
+  Reference: 1984-0023
+  You can access your document via the following link:
+  https://mysagw.local/cases/my-case-id
+  
+  If you have any questions, please contact us via e-mail (sagw@sagw.ch), phone (+41 31 306 92 50) or online (www.sagw.ch/kontakt-mysagw). Please bear in mind to state the reference number of your application.
+  
+  Yours sincerely
+  
+  Your SAGW team
+  
+  ******
+  
+  This is an automatically generated message. Please do not reply. The contact details of SASH can be found on the following website:
+  www.sagw.ch/kontakt-mysagw
+  
+  '''
+# ---
+# name: test_send_new_work_item_mail[complete-document-False-fr]
+  'Nouvelles informations concernant 1984-0023'
+# ---
+# name: test_send_new_work_item_mail[complete-document-False-fr].1
+  '''
+  Bonjour Winston Smith
+  
+  Nous avons vérifié le décompte de la demande dont la référence figure ci-dessous. Nous verserons dans les prochains jours, sur les coordonnées de paiement dont nous disposons, le montant suivant:
+  
+  CHF 23.00.-
+  
+  Référence : 1984-0023
+  Vous pouvez accéder directement à votre document en cliquant sur le lien suivant:
+  https://mysagw.local/cases/my-case-id
+  
+  Si vous avez des questions, n’hésitez pas à nous contacter à l’adresse sagw@sagw.ch, au numéro de téléphone +41 31 306 92 50 ou via www.sagw.ch/kontakt-mysagw. Nous vous prions de toujours indiquer le numéro de référence lorsque vous posez une question.
+  
+  Avec nos meilleures salutations,
+  
+  Votre équipe de l'ASSH
+  
+  ******
+  
+  Ceci est un message électronique généré automatiquement, merci de ne pas y répondre. Vous trouverez les coordonnées de l'ASSH sur la page suivante :
+  www.sagw.ch/kontakt-mysagw
+  
+  '''
+# ---
+# name: test_send_new_work_item_mail[revise-document-False-de]
+  'Neue Informationen zu 1984-0023'
+# ---
+# name: test_send_new_work_item_mail[revise-document-False-de].1
+  '''
+  Guten Tag Winston Smith
+  
+  Wir benötigen noch weitere Angaben zum Gesuch:
+  
+  Referenz: 1984-0023
+  Über den nachfolgenden Link können Sie direkt auf Ihr Dokument zugreifen, wo Sie die Angaben zu den noch benötigten Informationen finden:
+  https://mysagw.local/cases/my-case-id
+  
+  Sollten Sie Fragen haben, können Sie uns gerne über sagw@sagw.ch, die Telefonnummer +41 31 306 92 50 oder unter www.sagw.ch/kontakt-mysagw kontaktieren. Gerne bitten wir Sie, bei einer Frage immer die Referenznummer anzugeben.
+  
+  Freundliche Grüsse
+  
+  Ihr SAGW-Team
+  
+  ******
+  
+  Dies ist eine automatisch generierte Email, bitte antworten Sie nicht auf diese Nachricht. Die Kontaktangaben der SAGW können Sie der nachfolgenden Seite entnehmen:
+  www.sagw.ch/kontakt-mysagw
+  
+  '''
+# ---
+# name: test_send_new_work_item_mail[revise-document-False-en]
+  'New information concerning 1984-0023'
+# ---
+# name: test_send_new_work_item_mail[revise-document-False-en].1
+  '''
+  Dear Winston Smith
+  
+  Please note that further information is required for the following application:
+  
+  Reference: 1984-0023
+  You can access your document via the following link:
+  https://mysagw.local/cases/my-case-id
+  
+  If you have any questions, please contact us via e-mail (sagw@sagw.ch), phone (+41 31 306 92 50) or online (www.sagw.ch/kontakt-mysagw). Please bear in mind to state the reference number of your application.
+  
+  Yours sincerely
+  
+  Your SAGW team
+  
+  ******
+  
+  This is an automatically generated message. Please do not reply. The contact details of SASH can be found on the following website:
+  www.sagw.ch/kontakt-mysagw
+  
+  '''
+# ---
+# name: test_send_new_work_item_mail[revise-document-False-fr]
+  'Nouvelles informations concernant 1984-0023'
+# ---
+# name: test_send_new_work_item_mail[revise-document-False-fr].1
   '''
   Bonjour Winston Smith
   
