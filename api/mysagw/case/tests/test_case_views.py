@@ -7,6 +7,10 @@ from django.urls import reverse
 from rest_framework import status
 
 from mysagw.case import email_texts, models
+from mysagw.case.tests.application_caluma_response import (
+    CALUMA_DATA_EMPTY,
+    CALUMA_DATA_FULL,
+)
 from mysagw.utils import build_url
 
 
@@ -291,10 +295,19 @@ def test_download_dms_failure(
 
 
 @pytest.mark.parametrize("dms_failure", [False, True])
+@pytest.mark.parametrize("data", [CALUMA_DATA_FULL, CALUMA_DATA_EMPTY])
 @pytest.mark.parametrize("identity__idp_id", ["e5dabdd0-bafb-4b75-82d2-ccf9295b623b"])
 def test_download_application(
-    dms_mock, requests_mock, application_mock, client, identity, snapshot, dms_failure
+    dms_mock,
+    requests_mock,
+    application_mock,
+    client,
+    identity,
+    snapshot,
+    dms_failure,
+    data,
 ):
+    application_mock(data)
     if dms_failure:
         requests_mock.post(
             build_url(
