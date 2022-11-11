@@ -3,7 +3,7 @@ import io
 import requests
 from PyPDF2 import PdfMerger
 from PyPDF2.errors import DependencyError, PdfReadError
-from reportlab.lib.pagesizes import A4
+from reportlab.lib.pagesizes import A4, mm
 from reportlab.lib.utils import ImageReader
 from reportlab.pdfgen import canvas
 
@@ -16,25 +16,53 @@ def get_caluma_file(url):
 
 
 def prepare_files_for_merge(files):
+    document_width, document_height = A4
+    printable_document_width, printable_document_height = (203 * mm, 289 * mm)
+    document_width_diff = document_width - printable_document_width
+    document_height_diff = document_height - printable_document_height
     for file in files:
         if file["content-type"] == "application/pdf":
             yield file["file"]
         elif file["content-type"] in ["image/png", "image/jpeg"]:
+            # prepare the page
             page = io.BytesIO()
             can = canvas.Canvas(page, pagesize=A4)
+
+            # load image and get dimensions
             image = ImageReader(file["file"])
-            height = image.getSize()[1]
-            x_start = 50
-            y_start = 800 - height
+            image_width, image_height = image.getSize()
+            image_aspect = image_height / float(image_width)
+
+            # determine the print dimensions - here be dragons
+            print_width = printable_document_width
+            print_height = printable_document_width * image_aspect
+            if print_height > printable_document_height:
+                print_height = printable_document_height
+                print_width = printable_document_height * image_aspect
+
+            if image_width < print_width:
+                print_width = image_width
+                print_height = print_width * image_aspect
+                if print_height > printable_document_height:
+                    print_height = printable_document_height
+                    print_width = printable_document_height * image_aspect
+
+            # calculate x and y for `can.drawImage()`
+            x_start = document_width - (document_width - document_width_diff / 2)
+            y_start = document_height - document_height_diff / 2 - print_height
+
+            # draw the image to the canvas and yield the page
             can.drawImage(
                 image,
                 x_start,
                 y_start,
+                width=print_width,
+                height=print_height,
                 preserveAspectRatio=True,
+                anchor="nw",
                 mask="auto",
             )
             can.save()
-            page.seek(0)
             yield page
 
 

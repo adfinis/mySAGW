@@ -203,7 +203,7 @@ def receipt_mock(requests_mock):
 
     requests_mock.post("http://testserver/graphql", status_code=200, json=caluma_data)
 
-    with (TEST_FILES_DIR / "test.png").open("rb") as f:
+    with (TEST_FILES_DIR / "small.png").open("rb") as f:
         png = f.read()
 
     with (TEST_FILES_DIR / "test.pdf").open("rb") as f:
