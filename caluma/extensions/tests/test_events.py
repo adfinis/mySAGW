@@ -253,11 +253,12 @@ def test_case_status(
 
 @pytest.mark.parametrize("lang", ["de", "en", "fr"])
 @pytest.mark.parametrize(
-    "task_slug",
+    "task_slug, revise",
     [
-        "revise-document",
-        "additional-data",
-        "complete-document",
+        ("revise-document", False),
+        ("additional-data", False),
+        ("additional-data", True),
+        ("complete-document", False),
     ],
 )
 def test_send_new_work_item_mail(
@@ -268,6 +269,7 @@ def test_send_new_work_item_mail(
     document_review_case,
     mailoutbox,
     task_slug,
+    revise,
     lang,
     snapshot,
     mocker,
@@ -316,6 +318,15 @@ def test_send_new_work_item_mail(
         )
         complete_work_item(decision_credit_work_item, user)
 
+        if revise:
+            complete_work_item(case.work_items.get(task_id="additional-data"), user)
+            define_amount_work_item = case.work_items.get(task_id="define-amount")
+            define_amount_work_item.document.answers.create(
+                question_id="define-amount-decision",
+                value="define-amount-decision-reject",
+            )
+            complete_work_item(define_amount_work_item, user)
+
     if task_slug == "complete-document":
         additional_data_work_item = case.work_items.get(task_id="additional-data")
         additional_data_form_work_item = case.work_items.get(
@@ -351,8 +362,12 @@ def test_send_new_work_item_mail(
         )
         complete_work_item(define_amount_work_item, user)
 
-    assert len(mailoutbox) == 2 if task_slug == "complete-document" else 1
-    mail = mailoutbox[1] if task_slug == "complete-document" else mailoutbox[0]
+    expected_mails = 1
+    if task_slug == "complete-document" or revise:
+        expected_mails = 2
+
+    assert len(mailoutbox) == expected_mails
+    mail = mailoutbox[expected_mails - 1]
     assert mail.from_email == settings.MAILING_SENDER
     assert mail.to == ["test-send@example.com"]
     snapshot.assert_match(mail.subject)

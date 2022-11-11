@@ -94,6 +94,6 @@ documents:
 
   download:
     button: "Herunterladen"
-    application: "Gesuch"
+    application: "Gesuch (beta)"
     acknowledgement: "Eingangsbestätigung"
     creditApproval: "Kreditgutsprache"

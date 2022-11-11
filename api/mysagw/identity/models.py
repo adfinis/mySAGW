@@ -2,7 +2,8 @@ from django.conf import settings
 from django.contrib.postgres.fields import DateRangeField
 from django.db import models
 from django.db.models import Q
-from django.utils import timezone, translation
+from django.utils import timezone
+from django.utils.translation import get_language
 from django_countries.fields import CountryField
 from localized_fields.fields import LocalizedCharField, LocalizedTextField
 from phonenumber_field.modelfields import PhoneNumberField
@@ -134,10 +135,11 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
 
     @property
     def full_name(self):
+        language = get_language()
         salutation = self.SALUTATION_LOCALIZED_MAP.get(self.salutation, {}).get(
-            self.language
+            language
         )
-        title = self.TITLE_LOCALIZED_MAP[self.title][self.language]
+        title = self.TITLE_LOCALIZED_MAP[self.title][language]
         full_name = ""
         if salutation:
             full_name = f"{salutation}"
@@ -161,6 +163,7 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
 
     @property
     def address_block(self):
+        language = get_language()
         address_block = self.full_name
         try:
             address = self.addresses.get(default=True)
@@ -177,15 +180,15 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
                 address_block = f"{address_block}\n{add}"
 
         if address.po_box:
-            address_block = f"{address_block}\n{Address.PO_BOX_LOCALIZED_MAP[self.language]} {address.po_box}"
+            address_block = f"{address_block}\n{Address.PO_BOX_LOCALIZED_MAP[language]} {address.po_box}"
 
-        with translation.override(self.language):  # country field uses standard gettext
-            address_block = f"{address_block}\n{address.postcode} {address.town}\n{address.country.name}"
+        address_block = f"{address_block}\n{address.postcode} {address.town}\n{address.country.name}"
 
         return address_block
 
     def greeting_salutation_and_name(self):
-        greeting = self.GREETING_LOCALIZED_MAP[self.salutation][self.language]
+        language = get_language()
+        greeting = self.GREETING_LOCALIZED_MAP[self.salutation][language]
         result = self.full_name
 
         if greeting:

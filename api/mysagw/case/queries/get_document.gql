@@ -1,4 +1,4 @@
-query Document ($case_id: ID!) {
+query Document ($case_id: ID!, $document_id: ID!) {
   node(id: $case_id) {
     ... on Case {
       document {
@@ -21,7 +21,7 @@ query Document ($case_id: ID!) {
         form {
           slug
           name
-          questions(filter: [{isArchived: false}]) {
+          questions(filter: [{isArchived: false}, {visibleInDocument: $document_id}]) {
             edges {
               node {
                 __typename
@@ -89,7 +89,7 @@ fragment FieldQuestion on Question {
     subForm {
       slug
       name
-      questions {
+      questions(filter: [{visibleInDocument: $document_id}]) {
         edges {
           node {
             __typename
@@ -101,7 +101,7 @@ fragment FieldQuestion on Question {
               subForm {
                 slug
                 name
-                questions {
+                questions(filter: [{visibleInDocument: $document_id}]) {
                   edges {
                     node {
                       ...SimpleQuestion

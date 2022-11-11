@@ -1,4 +1,5 @@
 import io
+from base64 import urlsafe_b64encode
 from datetime import datetime
 from pathlib import Path
 
@@ -160,7 +161,6 @@ class CaseDownloadViewSet(GenericViewSet):
         identity_dict = {
             "address_block": identity.address_block,
             "greeting_salutation_and_name": identity.greeting_salutation_and_name(),
-            "language": identity.language,
             "email": identity.email,
         }
 
@@ -195,10 +195,18 @@ class CaseDownloadViewSet(GenericViewSet):
     @action(detail=True)
     def application(self, request, pk=None):
         caluma_client = self.get_caluma_client(request)
+        variables = {
+            "case_id": urlsafe_b64encode(f"Case:{pk}".encode("utf-8")).decode("utf-8"),
+        }
+        raw_document_id_data = caluma_client.get_data(
+            GQL_DIR / "get_document_id.gql", variables
+        )
+        document_id = raw_document_id_data["data"]["node"]["document"]["id"]
+        variables["document_id"] = document_id
         language = get_language()
         raw_data = caluma_client.get_data(
-            pk,
             GQL_DIR / "get_document.gql",
+            variables,
             add_headers={"Accept-Language": language},
         )
         parser = ApplicationParser(raw_data)
@@ -227,12 +235,16 @@ class CaseDownloadViewSet(GenericViewSet):
 
     def get_acknowledgement_and_credit_approval(self, request, name, pk=None):
         caluma_client = self.get_caluma_client(request)
-        raw_data = caluma_client.get_data(pk, GQL_DIR / f"get_{name}.gql")
+        variables = {
+            "case_id": urlsafe_b64encode(f"Case:{pk}".encode("utf-8")).decode("utf-8")
+        }
+        raw_data = caluma_client.get_data(GQL_DIR / f"get_{name}.gql", variables)
         data = self.get_formatted_data(raw_data, name)
-        template = f'{getattr(settings, f"DOCUMENT_MERGE_SERVICE_{name.upper()}_TEMPLATE_SLUG")}-{data["identity"]["language"]}'
+        language = get_language()
+        template = f'{getattr(settings, f"DOCUMENT_MERGE_SERVICE_{name.upper()}_TEMPLATE_SLUG")}-{language}'
         file_name = (
             f"{data['dossier_nr']} - "
-            f"{self.get_filename_translation(name, data['identity']['language'])}.pdf"
+            f"{self.get_filename_translation(name, language)}.pdf"
         )
         dms_client = DMSClient()
         dms_response = dms_client.get_merged_document(

@@ -94,6 +94,6 @@ documents:
 
   download:
     button: "Télécharger"
-    application: "Requête"
+    application: "Requête (beta)"
     acknowledgement: "Accusé de réception"
     creditApproval: "Accord de crédit"
