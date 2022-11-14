@@ -1,4 +1,5 @@
 from django.utils.html import strip_tags
+from django.utils.translation import get_language
 
 from mysagw.pdf_utils import SUPPORTED_MERGE_CONTENT_TYPES
 
@@ -234,6 +235,22 @@ class ApplicationParser:
         question = verteilplan["edges"][0]["node"]["question"]
         return self._handle_choice(question, answer, only_selected=True)
 
+    @property
+    def dossier_nr(self):
+        return self.data["data"]["node"]["document"]["dossier_nr"]["edges"][0]["node"][
+            "value"
+        ]
+
+    def _get_dossier_nr(self):
+        trans_map = {
+            "de": "Referenznummer",
+            "en": "Reference No.",
+            "fr": "N° de référence",
+        }
+
+        title = trans_map[get_language()]
+        return f"{title}: {self.dossier_nr}"
+
     def run(self):
         self.parsed_data = self.format_application_data(
             self.data["data"]["node"]["document"]["form"]["name"],
@@ -241,9 +258,7 @@ class ApplicationParser:
             self.data["data"]["node"]["document"]["answers"]["edges"],
         )
 
-        self.parsed_data["dossier_nr"] = self.data["data"]["node"]["document"][
-            "dossier_nr"
-        ]["edges"][0]["node"]["value"]
+        self.parsed_data["dossier_nr"] = self._get_dossier_nr()
 
         vp = self._get_verteilplan()
         if vp:

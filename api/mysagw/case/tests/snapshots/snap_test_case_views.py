@@ -417,7 +417,7 @@ snapshots[
 ] = {
     "convert": "pdf",
     "data": {
-        "dossier_nr": "2022-0001",
+        "dossier_nr": "Referenznummer: 2022-0001",
         "name": "Test Download",
         "questions": {
             "test-top-level": {
@@ -654,7 +654,7 @@ snapshots[
 ] = {
     "convert": "pdf",
     "data": {
-        "dossier_nr": "2022-0001",
+        "dossier_nr": "Referenznummer: 2022-0001",
         "name": "Test Download",
         "questions": {
             "test-top-level": {
