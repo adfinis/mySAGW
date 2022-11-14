@@ -3,6 +3,42 @@ CALUMA_DATA_FULL = {
         "node": {
             "document": {
                 "dossier_nr": {"edges": [{"node": {"value": "2022-0001"}}]},
+                "verteilplan": {
+                    "edges": [
+                        {
+                            "node": {
+                                "stringValue": "verteilplan-nr-vp-2022",
+                                "question": {
+                                    "__typename": "ChoiceQuestion",
+                                    "infoText": "",
+                                    "label": "Verteilplan",
+                                    "choiceOptions": {
+                                        "edges": [
+                                            {
+                                                "node": {
+                                                    "slug": "verteilplan-nr-vp-2021",
+                                                    "label": "2021",
+                                                }
+                                            },
+                                            {
+                                                "node": {
+                                                    "slug": "verteilplan-nr-vp-2022",
+                                                    "label": "2022",
+                                                }
+                                            },
+                                            {
+                                                "node": {
+                                                    "slug": "verteilplan-nr-vp-2023",
+                                                    "label": "2023",
+                                                }
+                                            },
+                                        ]
+                                    },
+                                },
+                            }
+                        }
+                    ]
+                },
                 "answers": {
                     "edges": [
                         {
@@ -630,6 +666,7 @@ CALUMA_DATA_EMPTY = {
         "node": {
             "document": {
                 "dossier_nr": {"edges": [{"node": {"value": "2022-0001"}}]},
+                "verteilplan": {"edges": []},
                 "answers": {"edges": []},
                 "form": {
                     "slug": "test-download",

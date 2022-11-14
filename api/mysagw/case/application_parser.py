@@ -25,8 +25,8 @@ class ApplicationParser:
         }
         return value_key_map.get(question_type)
 
-    def _handle_choice(self, question, answer):
-        if len(question["choiceOptions"]["edges"]) > 10:
+    def _handle_choice(self, question, answer, only_selected=False):
+        if len(question["choiceOptions"]["edges"]) > 10 or only_selected:
             # We don't want to render more than 10 choices,
             # so we mimic a `TextQuestion`
             choice_label = None
@@ -226,6 +226,14 @@ class ApplicationParser:
 
         return parsed_data
 
+    def _get_verteilplan(self):
+        verteilplan = self.data["data"]["node"]["document"]["verteilplan"]
+        if not len(verteilplan["edges"]):
+            return
+        answer = verteilplan["edges"][0]
+        question = verteilplan["edges"][0]["node"]["question"]
+        return self._handle_choice(question, answer, only_selected=True)
+
     def run(self):
         self.parsed_data = self.format_application_data(
             self.data["data"]["node"]["document"]["form"]["name"],
@@ -236,4 +244,8 @@ class ApplicationParser:
         self.parsed_data["dossier_nr"] = self.data["data"]["node"]["document"][
             "dossier_nr"
         ]["edges"][0]["node"]["value"]
+
+        vp = self._get_verteilplan()
+        if vp:
+            self.parsed_data["questions"]["verteilplan-nr"] = vp
         return self.parsed_data

@@ -425,7 +425,13 @@ snapshots[
                 "label": "Test top level",
                 "type": "TextQuestion",
                 "value": "some value",
-            }
+            },
+            "verteilplan-nr": {
+                "info_text": None,
+                "label": "Verteilplan",
+                "type": "TextQuestion",
+                "value": "2022",
+            },
         },
         "sub_forms": {
             "test-download-types": {
