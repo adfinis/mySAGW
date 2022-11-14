@@ -1,5 +1,7 @@
 from django.utils.html import strip_tags
 
+from mysagw.pdf_utils import SUPPORTED_MERGE_CONTENT_TYPES
+
 
 class ApplicationParser:
     def __init__(self, data):
@@ -103,11 +105,9 @@ class ApplicationParser:
             self.value_key_for_question(question["__typename"])
         ]:
             name = value["name"]
-            if (value.get("metadata", {}) or {}).get("content_type") in [
-                "application/pdf",
-                "image/png",
-                "image/jpeg",
-            ]:
+            if (value.get("metadata", {}) or {}).get(
+                "content_type"
+            ) in SUPPORTED_MERGE_CONTENT_TYPES:
                 self.files_to_add.append(value["downloadUrl"])
                 name = f"{name} ({len(self.files_to_add)})"
             filename_list.append(name)

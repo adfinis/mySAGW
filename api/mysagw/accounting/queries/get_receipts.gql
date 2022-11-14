@@ -21,6 +21,7 @@ query Receipts($case_id: ID!) {
                               ... on FilesAnswer {
                                 value {
                                   downloadUrl
+                                  metadata
                                 }
                               }
                             }

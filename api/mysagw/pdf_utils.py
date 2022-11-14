@@ -7,6 +7,8 @@ from reportlab.lib.pagesizes import A4, mm
 from reportlab.lib.utils import ImageReader
 from reportlab.pdfgen import canvas
 
+SUPPORTED_MERGE_CONTENT_TYPES = ["application/pdf", "image/png", "image/jpeg"]
+
 
 def get_caluma_file(url):
     file = io.BytesIO()
