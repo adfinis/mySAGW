@@ -417,7 +417,7 @@ snapshots[
 ] = {
     "convert": "pdf",
     "data": {
-        "dossier_nr": "2022-0001",
+        "dossier_nr": "Referenznummer: 2022-0001",
         "name": "Test Download",
         "questions": {
             "test-top-level": {
@@ -425,7 +425,13 @@ snapshots[
                 "label": "Test top level",
                 "type": "TextQuestion",
                 "value": "some value",
-            }
+            },
+            "verteilplan-nr": {
+                "info_text": None,
+                "label": "Verteilplan",
+                "type": "TextQuestion",
+                "value": "2022",
+            },
         },
         "sub_forms": {
             "test-download-types": {
@@ -648,7 +654,7 @@ snapshots[
 ] = {
     "convert": "pdf",
     "data": {
-        "dossier_nr": "2022-0001",
+        "dossier_nr": "Referenznummer: 2022-0001",
         "name": "Test Download",
         "questions": {
             "test-top-level": {

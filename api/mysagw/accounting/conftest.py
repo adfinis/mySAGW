@@ -31,10 +31,22 @@ def receipt_mock(requests_mock):
                                                                         "node": {
                                                                             "value": [
                                                                                 {
-                                                                                    "downloadUrl": "https://mysagw.local/caluma-media/download-url-png"
+                                                                                    "downloadUrl": "https://mysagw.local/caluma-media/download-url-png",
+                                                                                    "metadata": {
+                                                                                        "content_type": "image/png",
+                                                                                    },
                                                                                 },
                                                                                 {
-                                                                                    "downloadUrl": "https://mysagw.local/caluma-media/download-url-png2"
+                                                                                    "downloadUrl": "https://mysagw.local/caluma-media/download-url-png2",
+                                                                                    "metadata": {
+                                                                                        "content_type": "image/png",
+                                                                                    },
+                                                                                },
+                                                                                {
+                                                                                    "downloadUrl": "https://mysagw.local/caluma-media/song.mp3",
+                                                                                    "metadata": {
+                                                                                        "content_type": "audio/mpeg",
+                                                                                    },
                                                                                 },
                                                                             ]
                                                                         }
@@ -49,7 +61,10 @@ def receipt_mock(requests_mock):
                                                                         "node": {
                                                                             "value": [
                                                                                 {
-                                                                                    "downloadUrl": "https://mysagw.local/caluma-media/download-url-pdf"
+                                                                                    "downloadUrl": "https://mysagw.local/caluma-media/download-url-pdf",
+                                                                                    "metadata": {
+                                                                                        "content_type": "application/pdf",
+                                                                                    },
                                                                                 }
                                                                             ]
                                                                         }
@@ -64,7 +79,10 @@ def receipt_mock(requests_mock):
                                                                         "node": {
                                                                             "value": [
                                                                                 {
-                                                                                    "downloadUrl": "https://mysagw.local/caluma-media/download-url-pdf-encrypted"
+                                                                                    "downloadUrl": "https://mysagw.local/caluma-media/download-url-pdf-encrypted",
+                                                                                    "metadata": {
+                                                                                        "content_type": "application/pdf",
+                                                                                    },
                                                                                 }
                                                                             ]
                                                                         }

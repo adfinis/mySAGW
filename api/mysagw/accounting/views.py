@@ -11,7 +11,7 @@ from rest_framework.views import APIView
 from mysagw.caluma_client import CalumaClient
 from mysagw.dms_client import DMSClient, get_dms_error_response
 from mysagw.oidc_auth.permissions import IsAdmin, IsAuthenticated, IsStaff
-from mysagw.pdf_utils import add_caluma_files_to_pdf
+from mysagw.pdf_utils import SUPPORTED_MERGE_CONTENT_TYPES, add_caluma_files_to_pdf
 
 GQL_DIR = Path(__file__).parent.resolve() / "queries"
 
@@ -30,6 +30,7 @@ def get_receipt_urls(data):
             result += [
                 url["downloadUrl"]
                 for url in row["answers"]["edges"][0]["node"]["value"]
+                if url["metadata"]["content_type"] in SUPPORTED_MERGE_CONTENT_TYPES
             ]
         except (KeyError, TypeError, IndexError):
             continue

@@ -11,6 +11,30 @@ query Document ($case_id: ID!, $document_id: ID!) {
             }
           }
         }
+        verteilplan: answers(filter: [{question: "verteilplan-nr"}]) {
+          edges {
+            node {
+              ...on StringAnswer {
+                stringValue: value
+              }
+              question {
+                __typename
+                infoText
+                ... on ChoiceQuestion {
+                  label
+                  choiceOptions: options {
+                    edges {
+                      node {
+                        slug
+                        label
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
         answers(filter: [{visibleInContext: true}]) {
           edges {
             node {
