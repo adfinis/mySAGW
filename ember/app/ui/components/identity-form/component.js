@@ -130,9 +130,24 @@ export default class IdentityFormComponent extends Component {
   @dropTask
   *delete(identity) {
     try {
-      yield UIkit.modal.confirm(
-        this.intl.t("components.identity-form.delete.prompt")
-      );
+      let message = this.intl.t("components.identity-form.delete.prompt");
+
+      if (this.args.identity.idpId) {
+        const accesses = yield this.store.query("case-access", {
+          filter: { idpIds: this.args.identity.idpId },
+        });
+        message += `\n${this.intl.t(
+          "components.identity-form.delete.promptInfo",
+          {
+            caseAmount: accesses.length,
+          }
+        )}`;
+      }
+
+      const modal = UIkit.modal.confirm(message);
+      // We need to add css white-space rule for the new line
+      modal.dialog.$el.classList.add("white-space-pre-line");
+      yield modal;
 
       try {
         yield identity.destroyRecord();

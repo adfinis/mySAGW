@@ -19,5 +19,6 @@ components:
       delete: "Delete"
     delete:
       prompt: "Do you really want to delete this identity?"
+      promptInfo: "This identity has access to {caseAmount, plural, one {# application} other {# applications}}."
       success: "Identity deleted successfully."
     success: "Identity {name} saved successfully."
