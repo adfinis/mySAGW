@@ -99,6 +99,10 @@ settings.INTERNAL_APPLICATION_PERIODICS_CHOICES = (
 
 settings.CASE_ID_CACHE_SECONDS = int(os.environ.get("CASE_ID_CACHE_SECONDS", "60"))
 
+# Validation
+
+settings.BIRTHDATE_SLUG_PART = "geburtsdatum"
+
 # Logging
 
 settings.LOGGING = {
