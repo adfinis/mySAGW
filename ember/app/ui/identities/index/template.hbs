@@ -68,7 +68,7 @@
     <LoadingSpinner />
   {{else}}
     <p>{{t "identities.index.identityAmount" itemCount=this.totalCount}}</p>
-    <ul class="uk-list uk-list-divider">
+    <ul class="uk-list uk-list-divider" data-test-identities-list>
       {{#each this.identities as |identity|}}
         {{#unless identity.isNew}}
           <li>

@@ -19,5 +19,6 @@ components:
       delete: "Supprimer"
     delete:
       prompt: "Souhaitez-vous vraiment supprimer cette adresse?"
+      promptInfo: "Cette identité a accès à {caseAmount, plural, one {# requête} other {# requêtes}}."
       success: "L'adresse a été supprimée avec succès."
     success: "L'adresse «{name}» a été sauvegardée avec succès."
