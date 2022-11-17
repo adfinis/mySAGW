@@ -10,7 +10,7 @@ components:
       firstName: "Vorname"
       lastName: "Name"
       email: "Primäre E-Mail-Adresse"
-      isOrganisation: "Organsation"
+      isOrganisation: "Organisation"
       language: "Korrespondenzsprache"
       comment: "Kommentar"
     hint:
