@@ -228,7 +228,7 @@ class CaseDownloadViewSet(GenericViewSet):
         return FileResponse(
             result,
             filename=(
-                f"{data['dossier_nr']} - "
+                f"{parser.dossier_nr} - "
                 f"{self.get_filename_translation('application', language)}.pdf"
             ),
         )

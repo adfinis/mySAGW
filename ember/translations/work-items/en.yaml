@@ -21,6 +21,7 @@ work-items:
   finishSuccess: "Task successfully completed"
   fetchError: "Error while loading tasks"
   saveError: "Error while saving the task"
+  rejectDefineAmountNoAdditionData: "Make sure to go an additional step back."
 
   action: ""
   actions:

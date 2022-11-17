@@ -2,8 +2,8 @@ import { faker } from "@faker-js/faker";
 import { Factory } from "ember-cli-mirage";
 
 export default Factory.extend({
-  idpId: () => faker.name.firstName(),
-  organisationName: () => faker.company.companyName(),
+  idpId: () => faker.datatype.uuid(),
+  organisationName: () => faker.company.name(),
   firstName: () => faker.name.firstName(),
   lastName: () => faker.name.lastName(),
   isOrganisation: () => faker.datatype.boolean(),

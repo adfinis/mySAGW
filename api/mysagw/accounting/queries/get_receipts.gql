@@ -21,6 +21,7 @@ query Receipts($case_id: ID!) {
                               ... on FilesAnswer {
                                 value {
                                   downloadUrl
+                                  metadata
                                 }
                               }
                             }
@@ -68,15 +69,6 @@ query Receipts($case_id: ID!) {
                 }
               }
               applicant_land: answers(filter: [{question: "additional-data-land"}]) {
-                edges {
-                  node {
-                    ... on StringAnswer {
-                      value
-                    }
-                  }
-                }
-              }
-              fibu: answers(filter: [{question: "additional-data-fibu"}]) {
                 edges {
                   node {
                     ... on StringAnswer {

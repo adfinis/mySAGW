@@ -1,4 +1,7 @@
 from django.utils.html import strip_tags
+from django.utils.translation import get_language
+
+from mysagw.pdf_utils import SUPPORTED_MERGE_CONTENT_TYPES
 
 
 class ApplicationParser:
@@ -23,8 +26,8 @@ class ApplicationParser:
         }
         return value_key_map.get(question_type)
 
-    def _handle_choice(self, question, answer):
-        if len(question["choiceOptions"]["edges"]) > 10:
+    def _handle_choice(self, question, answer, only_selected=False):
+        if len(question["choiceOptions"]["edges"]) > 10 or only_selected:
             # We don't want to render more than 10 choices,
             # so we mimic a `TextQuestion`
             choice_label = None
@@ -103,11 +106,9 @@ class ApplicationParser:
             self.value_key_for_question(question["__typename"])
         ]:
             name = value["name"]
-            if (value.get("metadata", {}) or {}).get("content_type") in [
-                "application/pdf",
-                "image/png",
-                "image/jpeg",
-            ]:
+            if (value.get("metadata", {}) or {}).get(
+                "content_type"
+            ) in SUPPORTED_MERGE_CONTENT_TYPES:
                 self.files_to_add.append(value["downloadUrl"])
                 name = f"{name} ({len(self.files_to_add)})"
             filename_list.append(name)
@@ -226,6 +227,30 @@ class ApplicationParser:
 
         return parsed_data
 
+    def _get_verteilplan(self):
+        verteilplan = self.data["data"]["node"]["document"]["verteilplan"]
+        if not len(verteilplan["edges"]):
+            return
+        answer = verteilplan["edges"][0]
+        question = verteilplan["edges"][0]["node"]["question"]
+        return self._handle_choice(question, answer, only_selected=True)
+
+    @property
+    def dossier_nr(self):
+        return self.data["data"]["node"]["document"]["dossier_nr"]["edges"][0]["node"][
+            "value"
+        ]
+
+    def _get_dossier_nr(self):
+        trans_map = {
+            "de": "Referenznummer",
+            "en": "Reference No.",
+            "fr": "N° de référence",
+        }
+
+        title = trans_map[get_language()]
+        return f"{title}: {self.dossier_nr}"
+
     def run(self):
         self.parsed_data = self.format_application_data(
             self.data["data"]["node"]["document"]["form"]["name"],
@@ -233,7 +258,9 @@ class ApplicationParser:
             self.data["data"]["node"]["document"]["answers"]["edges"],
         )
 
-        self.parsed_data["dossier_nr"] = self.data["data"]["node"]["document"][
-            "dossier_nr"
-        ]["edges"][0]["node"]["value"]
+        self.parsed_data["dossier_nr"] = self._get_dossier_nr()
+
+        vp = self._get_verteilplan()
+        if vp:
+            self.parsed_data["questions"]["verteilplan-nr"] = vp
         return self.parsed_data

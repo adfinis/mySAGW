@@ -21,6 +21,7 @@ work-items:
   finishSuccess: "Aufgabe abgeschlossen"
   fetchError: "Fehler beim Laden"
   saveError: "Fehler beim Speichern"
+  rejectDefineAmountNoAdditionData: "Stelle sicher, dass noch einen Schritt zurückgegangen werden muss."
 
   action: ""
   actions:

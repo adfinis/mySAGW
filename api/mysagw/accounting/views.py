@@ -11,7 +11,7 @@ from rest_framework.views import APIView
 from mysagw.caluma_client import CalumaClient
 from mysagw.dms_client import DMSClient, get_dms_error_response
 from mysagw.oidc_auth.permissions import IsAdmin, IsAuthenticated, IsStaff
-from mysagw.pdf_utils import add_caluma_files_to_pdf
+from mysagw.pdf_utils import SUPPORTED_MERGE_CONTENT_TYPES, add_caluma_files_to_pdf
 
 GQL_DIR = Path(__file__).parent.resolve() / "queries"
 
@@ -30,6 +30,7 @@ def get_receipt_urls(data):
             result += [
                 url["downloadUrl"]
                 for url in row["answers"]["edges"][0]["node"]["value"]
+                if url["metadata"]["content_type"] in SUPPORTED_MERGE_CONTENT_TYPES
             ]
         except (KeyError, TypeError, IndexError):
             continue
@@ -194,23 +195,6 @@ def get_cover_context(data):  # noqa: C901
             ],
             None,
         ),
-        "fibu": (
-            [
-                "data",
-                "node",
-                "additionalData",
-                "edges",
-                0,
-                "node",
-                "document",
-                "fibu",
-                "edges",
-                0,
-                "node",
-                "value",
-            ],
-            None,
-        ),
         "zahlungszweck": (
             [
                 "data",
@@ -354,7 +338,11 @@ class ReceiptView(APIView):
         variables = {
             "case_id": urlsafe_b64encode(f"Case:{pk}".encode("utf-8")).decode("utf-8"),
         }
-        raw_data = caluma_client.get_data(GQL_DIR / "get_receipts.gql", variables)
+        raw_data = caluma_client.get_data(
+            GQL_DIR / "get_receipts.gql",
+            variables,
+            add_headers={"Accept-Language": "de"},
+        )
 
         cover_context = get_cover_context(raw_data)
         cover_context["date"] = timezone.now().date().strftime("%d. %m. %Y")

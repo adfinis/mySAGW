@@ -130,14 +130,15 @@ def application_mock(requests_mock):
             "http://testserver/graphql", status_code=200, json=json_callback
         )
 
-        with (TEST_FILES_DIR / "test.pdf").open("rb") as f:
-            pdf = f.read()
+        for file in ["small.png", "big.png", "long.png", "wide.png"]:
+            with (TEST_FILES_DIR / file).open("rb") as f:
+                png = f.read()
 
-        requests_mock.get(
-            "https://mysagw.local/caluma-media/download-url-pdf",
-            status_code=status.HTTP_200_OK,
-            content=pdf,
-            headers={"CONTENT-TYPE": "application/pdf"},
-        )
+            requests_mock.get(
+                f"https://mysagw.local/caluma-media/download-url-{file}",
+                status_code=status.HTTP_200_OK,
+                content=png,
+                headers={"CONTENT-TYPE": "image/png"},
+            )
 
     return mockit

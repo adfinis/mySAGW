@@ -163,4 +163,12 @@ export default function () {
     ]);
     return schema.memberships.where(query);
   });
+
+  this.get("/case/accesses", (schema, request) => {
+    const query = parseFilters(request, [
+      { source: "ipdIds", target: "idpId" },
+    ]);
+    return schema.memberships.where(query);
+  });
+  this.post("/case/accesses");
 }
