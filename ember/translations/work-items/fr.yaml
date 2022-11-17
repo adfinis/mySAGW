@@ -21,6 +21,7 @@ work-items:
   finishSuccess: "Tâche terminée"
   fetchError: "Erreur lors du téléchargement"
   saveError: "Erreur lors de la sauvegarde"
+  rejectDefineAmountNoAdditionData: "Assure-toi qu'il y a encore un pas à faire en arrière."
 
   action: ""
   actions:

@@ -60,26 +60,28 @@
   </div>
 </div>
 
-{{#if true}}
-  <hr />
-  <div class="uk-grid-collapse" uk-grid>
-    <div class="uk-width-1-3">
-      <span class="uk-text-large">
-        {{t "documents.remarks.title"}}
-      </span>
-    </div>
-    <div class="uk-width-2-3 uk-flex uk-flex-column">
+<hr />
+
+<div class="uk-grid-collapse" uk-grid>
+  <div class="uk-width-1-3">
+    <span class="uk-text-large">
+      {{t "documents.remarks.title"}}
+    </span>
+  </div>
+  <div class="uk-width-2-3 uk-flex uk-flex-column">
+    {{#if (or this.workflowRemark this.remarks)}}
+      <p>{{this.workflowRemark}}</p>
       {{#each this.remarks as |remark|}}
         <div class="uk-margin-bottom">
           <p class="uk-text-bold uk-margin-small-bottom">{{remark.label}}</p>
           <span>{{remark.value}}</span>
         </div>
-      {{else}}
-        {{t "global.empty"}}
       {{/each}}
-    </div>
+    {{else}}
+      {{t "global.empty"}}
+    {{/if}}
   </div>
-{{/if}}
+</div>
 
 <hr />
 

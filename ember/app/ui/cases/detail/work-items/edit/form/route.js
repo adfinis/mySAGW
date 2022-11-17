@@ -1,9 +1,11 @@
 import Route from "@ember/routing/route";
 import { inject as service } from "@ember/service";
-import calumaQuery from "@projectcaluma/ember-core/caluma-query";
-import { allWorkItems } from "@projectcaluma/ember-core/caluma-query/queries";
 import { queryManager } from "ember-apollo-client";
 import { restartableTask, lastValue } from "ember-concurrency";
+
+import CustomWorkItemModel from "mysagw/caluma-query/models/work-item";
+import getWorkItemDetailsQuery from "mysagw/gql/queries/get-work-item-details.graphql";
+import getWorkItemsQuery from "mysagw/gql/queries/get-work-items.graphql";
 
 export default class CasesDetailWorkItemsEditFormRoute extends Route {
   @queryManager apollo;
@@ -11,12 +13,6 @@ export default class CasesDetailWorkItemsEditFormRoute extends Route {
   @service notification;
   @service intl;
   @service router;
-
-  @calumaQuery({ query: allWorkItems })
-  workItemQuery;
-
-  @calumaQuery({ query: allWorkItems })
-  additionalWorkItemQuery;
 
   get workItemToComplete() {
     return this.workItem.additionalWorkItem
@@ -28,15 +24,21 @@ export default class CasesDetailWorkItemsEditFormRoute extends Route {
   @restartableTask()
   *fetchWorkItem(model) {
     try {
-      yield this.workItemQuery.fetch({ filter: [{ id: model }] });
+      const workItem = new CustomWorkItemModel(
+        (yield this.apollo.query(
+          {
+            query: getWorkItemDetailsQuery,
+            variables: { filter: [{ id: model }] },
+          },
+          "allWorkItems.edges"
+        ))[0].node
+      );
 
-      if (this.workItemQuery.value[0].additionalWorkItem) {
-        yield this.fetchAdditonalWorkItem.perform(
-          this.workItemQuery.value[0].additionalWorkItem
-        );
+      if (workItem.additionalWorkItem) {
+        yield this.fetchAdditonalWorkItem.perform(workItem.additionalWorkItem);
       }
 
-      return this.workItemQuery.value[0];
+      return workItem;
     } catch (error) {
       console.error(error);
       this.notification.danger(this.intl.t("work-items.fetchError"));
@@ -47,11 +49,15 @@ export default class CasesDetailWorkItemsEditFormRoute extends Route {
   @restartableTask()
   *fetchAdditonalWorkItem(filter) {
     try {
-      yield this.additionalWorkItemQuery.fetch({
-        filter: [...filter, { case: this.workItemQuery.value[0].case.id }],
-      });
+      const workItem = yield this.apollo.query(
+        {
+          query: getWorkItemsQuery,
+          variables: { filter: [...filter, { case: this.workItem.case.id }] },
+        },
+        "allWorkItems.edges"
+      );
 
-      return this.additionalWorkItemQuery.value[0];
+      return new CustomWorkItemModel(workItem[0].node);
     } catch (error) {
       console.error(error);
       this.notification.danger(this.intl.t("work-items.fetchError"));
