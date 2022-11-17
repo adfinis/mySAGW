@@ -77,15 +77,6 @@ query Receipts($case_id: ID!) {
                   }
                 }
               }
-              fibu: answers(filter: [{question: "additional-data-fibu"}]) {
-                edges {
-                  node {
-                    ... on StringAnswer {
-                      value
-                    }
-                  }
-                }
-              }
               zahlungszweck: answers(filter: [{question: "additional-data-zahlungszweck"}]) {
                 edges {
                   node {

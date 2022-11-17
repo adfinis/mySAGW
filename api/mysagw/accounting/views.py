@@ -195,23 +195,6 @@ def get_cover_context(data):  # noqa: C901
             ],
             None,
         ),
-        "fibu": (
-            [
-                "data",
-                "node",
-                "additionalData",
-                "edges",
-                0,
-                "node",
-                "document",
-                "fibu",
-                "edges",
-                0,
-                "node",
-                "value",
-            ],
-            None,
-        ),
         "zahlungszweck": (
             [
                 "data",
@@ -355,7 +338,11 @@ class ReceiptView(APIView):
         variables = {
             "case_id": urlsafe_b64encode(f"Case:{pk}".encode("utf-8")).decode("utf-8"),
         }
-        raw_data = caluma_client.get_data(GQL_DIR / "get_receipts.gql", variables)
+        raw_data = caluma_client.get_data(
+            GQL_DIR / "get_receipts.gql",
+            variables,
+            add_headers={"Accept-Language": "de"},
+        )
 
         cover_context = get_cover_context(raw_data)
         cover_context["date"] = timezone.now().date().strftime("%d. %m. %Y")
