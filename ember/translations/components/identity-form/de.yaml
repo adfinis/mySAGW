@@ -19,6 +19,6 @@ components:
       delete: "Löschen"
     delete:
       prompt: "Wollen Sie diese Adressse wirklich löschen?"
-      promptInfo: "Diese Adresse hat Zugriff zu {caseAmount, plural, one {# Gesuch} other {# Gesuche}}."
+      promptInfo: "Diese Adresse hat Zugriff auf {caseAmount, plural, one {# Gesuch} other {# Gesuche}}."
       success: "Adresse wurde erfolgreich gelöscht."
     success: "Adresse «{name}» wurde erfolgreich abgespeichert."
