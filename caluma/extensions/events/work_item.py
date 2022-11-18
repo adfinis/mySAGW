@@ -84,10 +84,12 @@ def _send_new_work_item_mail(work_item):
             .order_by("-created_at")
             .first()
         )
-        payout_amount = define_amount_work_item.document.answers.get(
+        payout_amount_answer = define_amount_work_item.document.answers.filter(
             question__slug="define-amount-amount-float"
-        ).value
-        payout_amount = f"{payout_amount:,.2f}"
+        ).first()
+        payout_amount = (
+            f"{payout_amount_answer.value:,.2f}" if payout_amount_answer else "0"
+        )
         selected_email_texts = email_payout_amount
 
     users = get_users_for_case(work_item.case)
