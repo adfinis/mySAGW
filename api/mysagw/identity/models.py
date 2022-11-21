@@ -163,14 +163,12 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
 
     @property
     def address_block(self):
-        language = get_language()
         address_block = self.full_name
         try:
             address = self.addresses.get(default=True)
         except Address.DoesNotExist:
             return address_block
 
-        address_block = f"{self.full_name}\n" f"{address.street_and_number}"
         for add in [
             address.address_addition_1,
             address.address_addition_2,
@@ -179,8 +177,10 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
             if add:
                 address_block = f"{address_block}\n{add}"
 
+        address_block = f"{address_block}\n" f"{address.street_and_number}"
+
         if address.po_box:
-            address_block = f"{address_block}\n{Address.PO_BOX_LOCALIZED_MAP[language]} {address.po_box}"
+            address_block = f"{address_block}\n{address.po_box}"
 
         address_block = f"{address_block}\n{address.postcode} {address.town}\n{address.country.name}"
 
@@ -242,7 +242,6 @@ class PhoneNumber(UUIDModel, HistoricalModel):
 
 
 class Address(UUIDModel, HistoricalModel):
-    PO_BOX_LOCALIZED_MAP = {"de": "Postfach", "en": "P.O. Box", "fr": "Case postale"}
     identity = models.ForeignKey(
         Identity, related_name="addresses", on_delete=models.CASCADE
     )

@@ -19,15 +19,11 @@ export default class AddressModel extends LocalizedModel {
 
   get label() {
     return [
-      this.streetAndNumber,
       this.addressAddition1,
       this.addressAddition2,
       this.addressAddition3,
-      this.poBox
-        ? `${this.intl.t("components.identity-addresses.form.label.poBox")} ${
-            this.poBox
-          }`
-        : "",
+      this.streetAndNumber,
+      this.poBox,
       `${this.postcode} ${this.town}`,
       this.country ? this.countryName : "",
     ]
