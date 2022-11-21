@@ -10,10 +10,10 @@ snapshots = Snapshot()
 snapshots[
     "test_address_block[23-de-None-Nice-Addition] 1"
 ] = """David Moreno
-060 Guerra Island
 Nice
 Addition
-Postfach 23
+060 Guerra Island
+23
 62422 Port Michaela
 Äthiopien"""
 
@@ -21,38 +21,38 @@ snapshots[
     "test_address_block[23-de-None-None-None] 1"
 ] = """David Moreno
 060 Guerra Island
-Postfach 23
+23
 62422 Port Michaela
 Äthiopien"""
 
 snapshots[
     "test_address_block[23-de-Some-Nice-Addition] 1"
 ] = """David Moreno
-060 Guerra Island
 Some
 Nice
 Addition
-Postfach 23
+060 Guerra Island
+23
 62422 Port Michaela
 Äthiopien"""
 
 snapshots[
     "test_address_block[23-de-Some-None-Addition] 1"
 ] = """David Moreno
-060 Guerra Island
 Some
 Addition
-Postfach 23
+060 Guerra Island
+23
 62422 Port Michaela
 Äthiopien"""
 
 snapshots[
     "test_address_block[23-en-None-Nice-Addition] 1"
 ] = """David Moreno
-060 Guerra Island
 Nice
 Addition
-P.O. Box 23
+060 Guerra Island
+23
 62422 Port Michaela
 Ethiopia"""
 
@@ -60,38 +60,38 @@ snapshots[
     "test_address_block[23-en-None-None-None] 1"
 ] = """David Moreno
 060 Guerra Island
-P.O. Box 23
+23
 62422 Port Michaela
 Ethiopia"""
 
 snapshots[
     "test_address_block[23-en-Some-Nice-Addition] 1"
 ] = """David Moreno
-060 Guerra Island
 Some
 Nice
 Addition
-P.O. Box 23
+060 Guerra Island
+23
 62422 Port Michaela
 Ethiopia"""
 
 snapshots[
     "test_address_block[23-en-Some-None-Addition] 1"
 ] = """David Moreno
-060 Guerra Island
 Some
 Addition
-P.O. Box 23
+060 Guerra Island
+23
 62422 Port Michaela
 Ethiopia"""
 
 snapshots[
     "test_address_block[23-fr-None-Nice-Addition] 1"
 ] = """David Moreno
-060 Guerra Island
 Nice
 Addition
-Case postale 23
+060 Guerra Island
+23
 62422 Port Michaela
 Éthiopie"""
 
@@ -99,37 +99,37 @@ snapshots[
     "test_address_block[23-fr-None-None-None] 1"
 ] = """David Moreno
 060 Guerra Island
-Case postale 23
+23
 62422 Port Michaela
 Éthiopie"""
 
 snapshots[
     "test_address_block[23-fr-Some-Nice-Addition] 1"
 ] = """David Moreno
-060 Guerra Island
 Some
 Nice
 Addition
-Case postale 23
+060 Guerra Island
+23
 62422 Port Michaela
 Éthiopie"""
 
 snapshots[
     "test_address_block[23-fr-Some-None-Addition] 1"
 ] = """David Moreno
-060 Guerra Island
 Some
 Addition
-Case postale 23
+060 Guerra Island
+23
 62422 Port Michaela
 Éthiopie"""
 
 snapshots[
     "test_address_block[None-de-None-Nice-Addition] 1"
 ] = """David Moreno
-060 Guerra Island
 Nice
 Addition
+060 Guerra Island
 62422 Port Michaela
 Äthiopien"""
 
@@ -143,28 +143,28 @@ snapshots[
 snapshots[
     "test_address_block[None-de-Some-Nice-Addition] 1"
 ] = """David Moreno
-060 Guerra Island
 Some
 Nice
 Addition
+060 Guerra Island
 62422 Port Michaela
 Äthiopien"""
 
 snapshots[
     "test_address_block[None-de-Some-None-Addition] 1"
 ] = """David Moreno
-060 Guerra Island
 Some
 Addition
+060 Guerra Island
 62422 Port Michaela
 Äthiopien"""
 
 snapshots[
     "test_address_block[None-en-None-Nice-Addition] 1"
 ] = """David Moreno
-060 Guerra Island
 Nice
 Addition
+060 Guerra Island
 62422 Port Michaela
 Ethiopia"""
 
@@ -178,28 +178,28 @@ Ethiopia"""
 snapshots[
     "test_address_block[None-en-Some-Nice-Addition] 1"
 ] = """David Moreno
-060 Guerra Island
 Some
 Nice
 Addition
+060 Guerra Island
 62422 Port Michaela
 Ethiopia"""
 
 snapshots[
     "test_address_block[None-en-Some-None-Addition] 1"
 ] = """David Moreno
-060 Guerra Island
 Some
 Addition
+060 Guerra Island
 62422 Port Michaela
 Ethiopia"""
 
 snapshots[
     "test_address_block[None-fr-None-Nice-Addition] 1"
 ] = """David Moreno
-060 Guerra Island
 Nice
 Addition
+060 Guerra Island
 62422 Port Michaela
 Éthiopie"""
 
@@ -213,19 +213,19 @@ snapshots[
 snapshots[
     "test_address_block[None-fr-Some-Nice-Addition] 1"
 ] = """David Moreno
-060 Guerra Island
 Some
 Nice
 Addition
+060 Guerra Island
 62422 Port Michaela
 Éthiopie"""
 
 snapshots[
     "test_address_block[None-fr-Some-None-Addition] 1"
 ] = """David Moreno
-060 Guerra Island
 Some
 Addition
+060 Guerra Island
 62422 Port Michaela
 Éthiopie"""
 
