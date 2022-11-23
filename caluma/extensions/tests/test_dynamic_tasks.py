@@ -86,6 +86,49 @@ def test_dynamic_task_after_decision_and_credit(
         assert case.work_items.filter(task_id=expected_work_item).exists()
 
 
+def test_dynamic_task_after_decision_and_credit_duplicate_addtional_data(
+    db,
+    caluma_data,
+    user,
+    case_access_event_mock,
+    circulation,
+    send_mail_mock,
+):
+    case = circulation.parent_work_item.case
+
+    skip_work_item(case.work_items.get(task_id="circulation"), user)
+
+    case.work_items.get(task_id="decision-and-credit").document.answers.create(
+        question_id="decision-and-credit-decision",
+        value="decision-and-credit-decision-additional-data",
+    )
+
+    complete_work_item(case.work_items.get(task_id="decision-and-credit"), user)
+
+    case.refresh_from_db()
+
+    assert case.work_items.filter(task_id="additional-data").exists()
+
+    complete_work_item(case.work_items.get(task_id="additional-data"), user)
+    case.work_items.get(task_id="define-amount").document.answers.create(
+        question_id="define-amount-decision",
+        value="define-amount-decision-reject",
+    )
+    complete_work_item(case.work_items.get(task_id="define-amount"), user)
+    redo_work_item(case.work_items.get(task_id="decision-and-credit"), user)
+
+    assert case.work_items.filter(task_id="additional-data").count() == 2
+
+    complete_work_item(case.work_items.get(task_id="decision-and-credit"), user)
+
+    assert (
+        case.work_items.filter(
+            task_id="additional-data", status=WorkItem.STATUS_READY
+        ).count()
+        == 1
+    )
+
+
 @pytest.mark.parametrize(
     "decision,expected_work_item_task,expected_work_item_form,internal_periodics",
     [
