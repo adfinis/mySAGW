@@ -17,6 +17,19 @@ query getWorkItemDetails($filter: [WorkItemFilterSetType]) {
           form {
             slug
           }
+          answers(filter: [{ questions: ["define-amount-decision"] }]) {
+            edges {
+              node {
+                id
+                question {
+                  slug
+                }
+                ... on StringAnswer {
+                  StringAnswerValue: value
+                }
+              }
+            }
+          }
         }
         case {
           id

@@ -22,16 +22,10 @@ export default class CasesDetailWorkItemsEditFormRoute extends Route {
 
   @lastValue("fetchWorkItem") workItem;
   @restartableTask()
-  *fetchWorkItem(model) {
+  *fetchWorkItem() {
     try {
       const workItem = new CustomWorkItemModel(
-        (yield this.apollo.query(
-          {
-            query: getWorkItemDetailsQuery,
-            variables: { filter: [{ id: model }] },
-          },
-          "allWorkItems.edges"
-        ))[0].node
+        (yield this.rawWorkItem)[0].node
       );
 
       if (workItem.additionalWorkItem) {
@@ -65,10 +59,20 @@ export default class CasesDetailWorkItemsEditFormRoute extends Route {
   }
 
   async model() {
-    await this.fetchWorkItem.perform(
-      this.modelFor("cases.detail.work-items.edit")
+    this.rawWorkItem = this.apollo.watchQuery(
+      {
+        query: getWorkItemDetailsQuery,
+        variables: {
+          filter: [{ id: this.modelFor("cases.detail.work-items.edit") }],
+        },
+      },
+      "allWorkItems.edges"
     );
+
+    await this.fetchWorkItem.perform();
+
     return {
+      rawWorkItem: this.rawWorkItem,
       workItem: this.workItem,
       workItemToComplete: this.workItemToComplete,
     };
