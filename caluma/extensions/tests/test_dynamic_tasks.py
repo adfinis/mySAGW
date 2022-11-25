@@ -86,7 +86,7 @@ def test_dynamic_task_after_decision_and_credit(
         assert case.work_items.filter(task_id=expected_work_item).exists()
 
 
-def test_dynamic_task_after_decision_and_credit_duplicate_addtional_data(
+def test_workflow_edge_cases(
     db,
     caluma_data,
     user,
@@ -98,28 +98,65 @@ def test_dynamic_task_after_decision_and_credit_duplicate_addtional_data(
 
     skip_work_item(case.work_items.get(task_id="circulation"), user)
 
-    case.work_items.get(task_id="decision-and-credit").document.answers.create(
+    decision_and_credit = case.work_items.get(task_id="decision-and-credit")
+    decision_and_credit.document.answers.create(
         question_id="decision-and-credit-decision",
         value="decision-and-credit-decision-additional-data",
     )
 
-    complete_work_item(case.work_items.get(task_id="decision-and-credit"), user)
+    complete_work_item(decision_and_credit, user)
 
     case.refresh_from_db()
 
     assert case.work_items.filter(task_id="additional-data").exists()
 
-    complete_work_item(case.work_items.get(task_id="additional-data"), user)
-    case.work_items.get(task_id="define-amount").document.answers.create(
-        question_id="define-amount-decision",
-        value="define-amount-decision-reject",
+    for i in range(2):
+        print(i)
+        complete_work_item(
+            case.work_items.get(
+                task_id="additional-data", status=WorkItem.STATUS_READY
+            ),
+            user,
+        )
+        define_amount = case.work_items.get(
+            task_id="define-amount", status=WorkItem.STATUS_READY
+        )
+        define_amount.document.answers.create(
+            question_id="define-amount-decision",
+            value="define-amount-decision-reject",
+        )
+        complete_work_item(define_amount, user)
+
+    redo_work_item(decision_and_credit, user)
+
+    assert case.work_items.filter(task_id="additional-data").count() == 3
+
+    complete_work_item(decision_and_credit, user)
+
+    assert (
+        case.work_items.filter(
+            task_id="additional-data", status=WorkItem.STATUS_READY
+        ).count()
+        == 1
     )
-    complete_work_item(case.work_items.get(task_id="define-amount"), user)
-    redo_work_item(case.work_items.get(task_id="decision-and-credit"), user)
 
-    assert case.work_items.filter(task_id="additional-data").count() == 2
+    redo_work_item(decision_and_credit, user)
+    answer = decision_and_credit.document.answers.get(
+        question_id="decision-and-credit-decision",
+    )
+    answer.value = "decision-and-credit-decision-define-amount"
+    answer.save()
 
-    complete_work_item(case.work_items.get(task_id="decision-and-credit"), user)
+    complete_work_item(decision_and_credit, user)
+
+    define_amount = case.work_items.filter(
+        task_id="define-amount", status=WorkItem.STATUS_READY
+    )
+    assert define_amount.count() == 1
+    define_amount.first().document.answers.get(
+        question_id="define-amount-decision",
+    ).value = "define-amount-decision-reject"
+    complete_work_item(define_amount.first(), user)
 
     assert (
         case.work_items.filter(

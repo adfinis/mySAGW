@@ -7,6 +7,18 @@ export default class CasesDetailWorkItemsEditFormController extends Controller {
   @service notification;
   @service intl;
 
+  get showTaskButton() {
+    return this.model.workItem.task.slug === "additional-data-form";
+  }
+
+  get taskButtonFilters() {
+    return [
+      { task: "additional-data" },
+      { status: "READY" },
+      { case: this.model.workItem.case.id },
+    ];
+  }
+
   @action
   async transitionToCaseWorkItems() {
     /*
