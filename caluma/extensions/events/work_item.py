@@ -368,3 +368,23 @@ def redo_define_amount(sender, work_item, user, **kwargs):
         advance_credits.save()
         data_form.status = caluma_workflow_models.WorkItem.STATUS_SUSPENDED
         data_form.save()
+
+
+@on(post_complete_work_item, raise_exception=True)
+@filter_events(
+    lambda sender, work_item: sender == "post_complete_work_item"
+    and work_item.task_id == "additional-data"
+)
+@transaction.atomic
+def close_multiple_define_amount(sender, work_item, user, **kwargs):
+    """
+    Close all define-amount WorkItems.
+
+    So the new that will open afterwards will be the only one.
+
+    TODO: This is an ugly hack and we want to get rid of it.
+    """
+    define_amount = work_item.case.work_items.filter(
+        task_id="define-amount", status=caluma_workflow_models.WorkItem.STATUS_REDO
+    )
+    define_amount.update(status=caluma_workflow_models.WorkItem.STATUS_CANCELED)
