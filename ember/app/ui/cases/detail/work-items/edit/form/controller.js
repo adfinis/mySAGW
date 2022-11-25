@@ -7,8 +7,20 @@ export default class CasesDetailWorkItemsEditFormController extends Controller {
   @service notification;
   @service intl;
 
+  get showTaskButton() {
+    return this.model.workItem.task.slug === "additional-data-form";
+  }
+
+  get taskButtonFilters() {
+    return [
+      { task: "additional-data" },
+      { status: "READY" },
+      { case: this.model.workItem.case.id },
+    ];
+  }
+
   @action
-  transitionToCaseWorkItems() {
+  async transitionToCaseWorkItems() {
     /*
       Display notification to redo when additional-data has been skipped
       by decision-and-credit but define-amount is being rejected, 
@@ -16,6 +28,10 @@ export default class CasesDetailWorkItemsEditFormController extends Controller {
     */
     if (
       this.model.workItem.task.slug === "define-amount" &&
+      (await this.model.rawWorkItem)[0].node.document.answers.edges.findBy(
+        "node.question.slug",
+        "define-amount-decision"
+      )?.node.StringAnswerValue === "define-amount-decision-reject" &&
       this.model.workItem.case.workItems.edges
         .findBy("node.task.slug", "decision-and-credit")
         .node.document.answers.edges.findBy(
