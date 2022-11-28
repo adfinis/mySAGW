@@ -26,15 +26,28 @@
     {{/if}}
 
     {{#if @model.workItem.canComplete}}
-      <WorkItemButton
-        @mutation="complete"
-        @workItemId={{@model.workItemToComplete.id}}
-        @type="submit"
-        @color="primary"
-        @label={{t "work-items.actions.finish"}}
-        @beforeMutate={{validate}}
-        @onSuccess={{this.transitionToCaseWorkItems}}
-      />
+      {{#if this.showTaskButton}}
+        <TaskButton
+          @mutation="complete"
+          @type="submit"
+          @color="primary"
+          @label={{t "work-items.actions.finish"}}
+          @beforeMutate={{validate}}
+          @onSuccess={{this.transitionToCaseWorkItems}}
+          @task="additional-data"
+          @filters={{this.taskButtonFilters}}
+        />
+      {{else}}
+        <WorkItemButton
+          @mutation="complete"
+          @workItemId={{@model.workItem.id}}
+          @type="submit"
+          @color="primary"
+          @label={{t "work-items.actions.finish"}}
+          @beforeMutate={{validate}}
+          @onSuccess={{this.transitionToCaseWorkItems}}
+        />
+      {{/if}}
     {{/if}}
     {{#if @model.workItem.canSkip}}
       <WorkItemButton

@@ -45,7 +45,6 @@ export default class IdentityAddressesComponent extends Component {
   @restartableTask
   *fetchCountries() {
     const adapter = this.store.adapterFor("identity");
-    adapter.headers["Accept-Language"] = localStorage.getItem("locale") ?? "en";
     const response = yield fetch(adapter.buildURL("address"), {
       method: "OPTIONS",
       headers: adapter.headers,

@@ -14,8 +14,8 @@ from caluma.caluma_workflow.events import (
     pre_complete_work_item,
 )
 
-from .. import email_texts
 from ..common import get_users_for_case
+from ..email_texts import email_cost_approval, email_general, email_payout_amount
 from ..settings import settings
 
 
@@ -37,6 +37,88 @@ def set_assigned_user(sender, work_item, user, **kwargs):
     work_item.save()
 
 
+def _send_new_work_item_mail(work_item):
+    """
+    Send the work_item emails.
+
+    This must reside in a separate function in order to be able to patch it in the
+    tests.
+    """
+    link = f"{settings.SELF_URI}/cases/{work_item.case.pk}"
+
+    try:
+        dossier_nr = work_item.case.document.answers.get(question_id="dossier-nr").value
+    except caluma_form_models.Answer.DoesNotExist:
+        dossier_nr = "Not found"
+
+    framework_credit = None
+    payout_amount = None
+    selected_email_texts = email_general
+
+    if work_item.task.slug == "additional-data":
+        define_amount_work_item = (
+            work_item.case.work_items.filter(task__slug="define-amount")
+            .order_by("-closed_at")
+            .first()
+        )
+        if not (
+            define_amount_work_item
+            and define_amount_work_item.status == "completed"
+            and define_amount_work_item.document.answers.filter(
+                question_id="define-amount-decision",
+                value="define-amount-decision-reject",
+            ).exists()
+        ):
+            decision_and_credit_work_item = (
+                work_item.case.work_items.filter(task__slug="decision-and-credit")
+                .order_by("-created_at")
+                .first()
+            )
+            framework_credit = decision_and_credit_work_item.document.answers.get(
+                question__slug="gesprochener-rahmenkredit"
+            ).value
+            selected_email_texts = email_cost_approval
+    elif work_item.task.slug == "complete-document":
+        define_amount_work_item = (
+            work_item.case.work_items.filter(task__slug="define-amount")
+            .order_by("-created_at")
+            .first()
+        )
+        payout_amount_answer = define_amount_work_item.document.answers.filter(
+            question__slug="define-amount-amount-float"
+        ).first()
+        payout_amount = (
+            f"{payout_amount_answer.value:,.2f}" if payout_amount_answer else "0"
+        )
+        selected_email_texts = email_payout_amount
+
+    users = get_users_for_case(work_item.case)
+
+    for user in users:
+        subject = selected_email_texts.EMAIL_SUBJECTS[user["language"]]
+
+        subject = subject.format(dossier_nr=dossier_nr)
+
+        body = selected_email_texts.EMAIL_BODIES[user["language"]]
+
+        body = body.format(
+            first_name=user["first-name"] or "",
+            last_name=user["last-name"] or "",
+            link=link,
+            dossier_nr=dossier_nr,
+            framework_credit=framework_credit,
+            payout_amount=payout_amount,
+        )
+
+        send_mail(
+            subject,
+            body,
+            settings.MAILING_SENDER,
+            [user["email"]],
+            fail_silently=True,
+        )
+
+
 @on(post_create_work_item, raise_exception=True)
 @filter_events(
     lambda sender, work_item: sender == "post_complete_work_item"
@@ -48,36 +130,7 @@ def set_assigned_user(sender, work_item, user, **kwargs):
     ]
 )
 def send_new_work_item_mail(sender, work_item, user, **kwargs):
-    link = f"{settings.SELF_URI}/cases/{work_item.case.pk}"
-
-    try:
-        dossier_nr = work_item.case.document.answers.get(question_id="dossier-nr").value
-    except caluma_form_models.Answer.DoesNotExist:
-        dossier_nr = "Not found"
-
-    users = get_users_for_case(work_item.case)
-
-    for user in users:
-        subject = email_texts.EMAIL_SUBJECTS[user["language"]]
-
-        subject = subject.format(dossier_nr=dossier_nr)
-
-        body = email_texts.EMAIL_BODIES[user["language"]]
-
-        body = body.format(
-            first_name=user["first-name"] or "",
-            last_name=user["last-name"] or "",
-            link=link,
-            dossier_nr=dossier_nr,
-        )
-
-        send_mail(
-            subject,
-            body,
-            settings.MAILING_SENDER,
-            [user["email"]],
-            fail_silently=True,
-        )
+    _send_new_work_item_mail(work_item)
 
 
 @on(post_create_work_item, raise_exception=True)
@@ -309,9 +362,29 @@ def redo_define_amount(sender, work_item, user, **kwargs):
             .first()
         )
 
-        # This cant be done over caluma_workflow_api because they are the last work items of a "branch",
-        # consequently they dont have another following work item which defines redoable for them.
+        # This can't be done over caluma_workflow_api because they are the last work items of a "branch",
+        # consequently they don't have another following work item which defines redoable for them.
         advance_credits.status = caluma_workflow_models.WorkItem.STATUS_READY
         advance_credits.save()
         data_form.status = caluma_workflow_models.WorkItem.STATUS_SUSPENDED
         data_form.save()
+
+
+@on(post_complete_work_item, raise_exception=True)
+@filter_events(
+    lambda sender, work_item: sender == "post_complete_work_item"
+    and work_item.task_id == "additional-data"
+)
+@transaction.atomic
+def close_multiple_define_amount(sender, work_item, user, **kwargs):
+    """
+    Close all define-amount WorkItems.
+
+    So the new that will open afterwards will be the only one.
+
+    TODO: This is an ugly hack and we want to get rid of it.
+    """
+    define_amount = work_item.case.work_items.filter(
+        task_id="define-amount", status=caluma_workflow_models.WorkItem.STATUS_REDO
+    )
+    define_amount.update(status=caluma_workflow_models.WorkItem.STATUS_CANCELED)

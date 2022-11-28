@@ -1,0 +1,49 @@
+query CreditApproval ($case_id: ID!) {
+  node(id: $case_id) {
+    ... on Case {
+      main: document {
+        dossier_nr: answers(filter: [{question: "dossier-nr"}]) {
+          edges {
+            node {
+              ... on StringAnswer {
+                value
+              }
+            }
+          }
+        }
+      }
+      decisionAndCredit: workItems(filter: [{task: "decision-and-credit"}], order: [{attribute: CREATED_AT, direction: DESC}], first: 1) {
+        edges {
+          node {
+            document {
+              credit: answers(filter: [{question: "gesprochener-rahmenkredit"}]) {
+                edges {
+                  node {
+                    ... on StringAnswer {
+                      value
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      submit: workItems(filter: [{task: "submit-document"}]) {
+        edges {
+          node {
+            closedByUser
+          }
+        }
+      }
+      revise: workItems(filter: [{task: "revise-document"}], order: [{attribute: CLOSED_AT, direction: DESC}]) {
+        edges {
+          node {
+            closedByUser
+            closedAt
+          }
+        }
+      }
+    }
+  }
+}

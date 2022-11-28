@@ -1,0 +1,186 @@
+query Document ($case_id: ID!, $document_id: ID!) {
+  node(id: $case_id) {
+    ... on Case {
+      document {
+        dossier_nr: answers(filter: [{question: "dossier-nr"}]) {
+          edges {
+            node {
+              ...on StringAnswer {
+                value
+              }
+            }
+          }
+        }
+        verteilplan: answers(filter: [{question: "verteilplan-nr"}]) {
+          edges {
+            node {
+              ...on StringAnswer {
+                stringValue: value
+              }
+              question {
+                __typename
+                infoText
+                ... on ChoiceQuestion {
+                  label
+                  choiceOptions: options {
+                    edges {
+                      node {
+                        slug
+                        label
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        answers(filter: [{visibleInContext: true}]) {
+          edges {
+            node {
+              ...FieldAnswer
+            }
+          }
+        }
+        form {
+          slug
+          name
+          questions(filter: [{isArchived: false}, {visibleInDocument: $document_id}]) {
+            edges {
+              node {
+                __typename
+                ...FieldQuestion
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+fragment SimpleQuestion on Question {
+  slug
+  label
+  infoText
+  ... on ChoiceQuestion {
+    choiceOptions: options(filter: [{isArchived: false}]) {
+      edges {
+        node {
+          slug
+          label
+        }
+      }
+    }
+  }
+  ... on MultipleChoiceQuestion {
+    multipleChoiceOptions: options(filter: [{isArchived: false}]) {
+      edges {
+        node {
+          slug
+          label
+        }
+      }
+    }
+  }
+  ... on StaticQuestion {
+    staticContent
+  }
+}
+
+fragment FieldTableQuestion on Question {
+  ... on TableQuestion {
+    rowForm {
+      slug
+      name
+      questions(filter: [{isArchived: false}]) {
+        edges {
+          node {
+            __typename
+            ...SimpleQuestion
+          }
+        }
+      }
+    }
+
+  }
+}
+
+fragment FieldQuestion on Question {
+  ...SimpleQuestion
+  ...FieldTableQuestion
+  ... on FormQuestion {
+    subForm {
+      slug
+      name
+      questions(filter: [{visibleInDocument: $document_id}]) {
+        edges {
+          node {
+            __typename
+            # This part here limits our query to 2 level deep nested forms. This
+            # has to be solved in another way!
+            ...SimpleQuestion
+            ...FieldTableQuestion
+            ... on FormQuestion {
+              subForm {
+                slug
+                name
+                questions(filter: [{visibleInDocument: $document_id}]) {
+                  edges {
+                    node {
+                      ...SimpleQuestion
+                      ...FieldTableQuestion
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+fragment SimpleAnswer on Answer {
+  question {
+    slug
+  }
+  ... on StringAnswer {
+    stringValue: value
+  }
+  ... on IntegerAnswer {
+    integerValue: value
+  }
+  ... on FloatAnswer {
+    floatValue: value
+  }
+  ... on ListAnswer {
+    listValue: value
+  }
+  ... on FilesAnswer {
+    filesValue: value {
+      name
+      downloadUrl
+      metadata
+    }
+  }
+  ... on DateAnswer {
+    dateValue: value
+  }
+}
+
+fragment FieldAnswer on Answer {
+  ...SimpleAnswer
+  ... on TableAnswer {
+    tableValue: value {
+      answers {
+        edges {
+          node {
+            ...SimpleAnswer
+          }
+        }
+      }
+    }
+  }
+}

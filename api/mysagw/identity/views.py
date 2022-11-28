@@ -3,14 +3,14 @@ from django.conf import settings
 from django.db.models import Q
 from django.http import HttpResponse
 from django.utils import translation
-from requests import HTTPError
+from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.exceptions import PermissionDenied, ValidationError
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework.viewsets import GenericViewSet
 from rest_framework_json_api import views
 
-from ..dms_client import DMSClient
+from ..dms_client import DMSClient, get_dms_error_response
 from ..oidc_auth.permissions import IsAdmin, IsAuthenticated, IsStaff
 from ..permissions import ReadOnly
 from . import filters, models, serializers
@@ -157,19 +157,6 @@ class IdentityViewSet(views.ModelViewSet):
         response = django_excel.make_response_from_records(records, "xlsx")
         return response
 
-    def _merge(self, records):
-        client = DMSClient()
-        try:
-            resp = client.merge(
-                settings.DOCUMENT_MERGE_SERVICE_LABELS_TEMPLATE_SLUG,
-                {"identities": records},
-                None,
-            )
-            return resp.status_code, resp.headers["Content-Type"], resp.content
-        except HTTPError as e:
-            content = client.get_error_content(e.response)
-            return e.response.status_code, e.response.headers["Content-Type"], content
-
     @action(detail=False, methods=["post"], url_path="export-labels")
     def export_labels(self, request, *args, **kwargs):
         def group_records(records, group_size=2):
@@ -219,8 +206,19 @@ class IdentityViewSet(views.ModelViewSet):
 
         records = group_records(records)
 
-        status_code, mime_type, resp_content = self._merge(records)
-        return HttpResponse(resp_content, status=status_code, content_type=mime_type)
+        dms_client = DMSClient()
+        dms_response = dms_client.get_merged_document(
+            {"identities": records},
+            settings.DOCUMENT_MERGE_SERVICE_LABELS_TEMPLATE_SLUG,
+        )
+
+        if dms_response.status_code != status.HTTP_200_OK:
+            return get_dms_error_response(dms_response)
+        return HttpResponse(
+            dms_response.content,
+            status=status.HTTP_200_OK,
+            content_type=dms_response.headers["Content-Type"],
+        )
 
 
 class MeViewSet(

@@ -3,6 +3,7 @@ from django.contrib.postgres.fields import DateRangeField
 from django.db import models
 from django.db.models import Q
 from django.utils import timezone
+from django.utils.translation import get_language
 from django_countries.fields import CountryField
 from localized_fields.fields import LocalizedCharField, LocalizedTextField
 from phonenumber_field.modelfields import PhoneNumberField
@@ -68,6 +69,12 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
         SALUTATION_NEUTRAL: {"de": "", "en": "", "fr": ""},
     }
 
+    GREETING_LOCALIZED_MAP = {
+        SALUTATION_MR: {"de": "Sehr geehrter", "en": "Dear", "fr": ""},
+        SALUTATION_MRS: {"de": "Sehr geehrte", "en": "Dear", "fr": ""},
+        SALUTATION_NEUTRAL: {"de": "Sehr geehrte·r", "en": "Dear", "fr": ""},
+    }
+
     SALUTATION_CHOICES = (
         (SALUTATION_MR, SALUTATION_MR),
         (SALUTATION_MRS, SALUTATION_MRS),
@@ -125,6 +132,69 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
         return self.__class__.objects.filter(
             pk__in=memberships.values_list("organisation", flat=True).distinct()
         )
+
+    @property
+    def full_name(self):
+        language = get_language()
+        salutation = self.SALUTATION_LOCALIZED_MAP.get(self.salutation, {}).get(
+            language
+        )
+        title = self.TITLE_LOCALIZED_MAP[self.title][language]
+        full_name = ""
+        if salutation:
+            full_name = f"{salutation}"
+
+        if title and full_name:
+            full_name = f"{full_name} {title}"
+        elif title:
+            full_name = title
+
+        if self.first_name and full_name:
+            full_name = f"{full_name} {self.first_name}"
+        elif self.first_name:
+            full_name = self.first_name
+
+        if self.last_name and full_name:
+            full_name = f"{full_name} {self.last_name}"
+        elif self.last_name:
+            full_name = self.last_name
+
+        return full_name
+
+    @property
+    def address_block(self):
+        address_block = self.full_name
+        try:
+            address = self.addresses.get(default=True)
+        except Address.DoesNotExist:
+            return address_block
+
+        for add in [
+            address.address_addition_1,
+            address.address_addition_2,
+            address.address_addition_3,
+        ]:
+            if add:
+                address_block = f"{address_block}\n{add}"
+
+        address_block = f"{address_block}\n" f"{address.street_and_number}"
+
+        if address.po_box:
+            address_block = f"{address_block}\n{address.po_box}"
+
+        address_block = f"{address_block}\n{address.postcode} {address.town}\n{address.country.name}"
+
+        return address_block
+
+    def greeting_salutation_and_name(self):
+        language = get_language()
+        greeting = self.GREETING_LOCALIZED_MAP[self.salutation][language]
+        result = self.full_name
+
+        if greeting:
+            result = f"{greeting} {self.full_name}"
+
+        return result
 
     @property
     def authorized_for(self):

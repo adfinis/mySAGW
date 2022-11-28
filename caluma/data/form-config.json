@@ -307,6 +307,21 @@
     },
     {
         "model": "caluma_form.formquestion",
+        "pk": "decision-and-credit-form.gesprochener-rahmenkredit",
+        "fields": {
+            "created_at": "2021-05-31T16:03:29.194Z",
+            "modified_at": "2021-05-31T16:03:29.194Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "form": "decision-and-credit-form",
+            "question": "gesprochener-rahmenkredit",
+            "sort": 1
+        }
+    },
+    {
+        "model": "caluma_form.formquestion",
         "pk": "define-amount-form.define-amount-amount-float",
         "fields": {
             "created_at": "2021-05-31T16:05:05.820Z",
@@ -874,6 +889,37 @@
             "type": "text",
             "is_required": "true",
             "is_hidden": "true",
+            "is_archived": false,
+            "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "info_text": "{\"de\": \"\", \"en\": null, \"fr\": null}",
+            "hint_text": "{\"de\": null, \"en\": null, \"fr\": null}",
+            "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
+            "configuration": {},
+            "meta": {},
+            "data_source": null,
+            "row_form": null,
+            "sub_form": null,
+            "source": null,
+            "format_validators": "[]",
+            "default_answer": null,
+            "calc_expression": null,
+            "calc_dependents": "[]"
+        }
+    },
+    {
+        "model": "caluma_form.question",
+        "pk": "gesprochener-rahmenkredit",
+        "fields": {
+            "created_at": "2021-05-31T16:03:29.087Z",
+            "modified_at": "2021-08-05T12:18:00.612Z",
+            "created_by_user": null,
+            "created_by_group": null,
+            "modified_by_user": null,
+            "modified_by_group": null,
+            "label": "{\"de\": \"Gesprochener Rahmenkredit\", \"en\": null, \"fr\": null}",
+            "type": "text",
+            "is_required": "false",
+            "is_hidden": "false",
             "is_archived": false,
             "placeholder": "{\"de\": null, \"en\": null, \"fr\": null}",
             "info_text": "{\"de\": \"\", \"en\": null, \"fr\": null}",

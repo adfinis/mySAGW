@@ -1,0 +1,79 @@
+query getWorkItemDetails($filter: [WorkItemFilterSetType]) {
+  allWorkItems(filter: $filter) {
+    edges {
+      node {
+        id
+        status
+        meta
+        addressedGroups
+        controllingGroups
+        assignedUsers
+        name
+        task {
+          slug
+        }
+        document {
+          id
+          form {
+            slug
+          }
+          answers(filter: [{ questions: ["define-amount-decision"] }]) {
+            edges {
+              node {
+                id
+                question {
+                  slug
+                }
+                ... on StringAnswer {
+                  StringAnswerValue: value
+                }
+              }
+            }
+          }
+        }
+        case {
+          id
+          meta
+          workItems(
+            filter: [
+              { tasks: ["decision-and-credit"] }
+              { status: REDO, invert: true }
+            ]
+            order: [{ attribute: CLOSED_AT, direction: DESC }]
+          ) {
+            edges {
+              node {
+                task {
+                  slug
+                }
+                document {
+                  answers(
+                    filter: [{ questions: ["decision-and-credit-decision"] }]
+                  ) {
+                    edges {
+                      node {
+                        id
+                        question {
+                          slug
+                        }
+                        ... on StringAnswer {
+                          StringAnswerValue: value
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        document {
+          id
+          form {
+            slug
+          }
+        }
+      }
+    }
+  }
+}

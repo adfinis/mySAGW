@@ -22,9 +22,13 @@ services:
     env_file: ./.envs/.local/.api
 
   caluma:
+    build:
+      context: caluma
+      args:
+        INSTALL_DEV: "true"
     env_file: ./.envs/.local/.caluma
     volumes:
-      - ./caluma/extensions:/app/caluma/extensions:ro
+      - ./caluma/extensions:/app/caluma/extensions
       - ./caluma/data:/app/caluma/data:ro
       - ./caluma/setup.cfg:/app/setup.cfg:ro
     command:

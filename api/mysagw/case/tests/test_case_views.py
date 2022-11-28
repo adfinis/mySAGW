@@ -1,3 +1,4 @@
+import re
 from uuid import uuid4
 
 import pytest
@@ -6,6 +7,11 @@ from django.urls import reverse
 from rest_framework import status
 
 from mysagw.case import email_texts, models
+from mysagw.case.tests.application_caluma_response import (
+    CALUMA_DATA_EMPTY,
+    CALUMA_DATA_FULL,
+)
+from mysagw.utils import build_url
 
 
 @pytest.mark.parametrize(
@@ -191,3 +197,151 @@ def test_case_delete(db, client, has_access, expected_status, case_access_factor
     if expected_status == status.HTTP_204_NO_CONTENT:
         with pytest.raises(models.CaseAccess.DoesNotExist):
             case_access.refresh_from_db()
+
+
+@pytest.mark.freeze_time("1970-01-01")
+@pytest.mark.parametrize("client", ["user", "staff", "admin"], indirect=["client"])
+@pytest.mark.parametrize(
+    "endpoint",
+    ["acknowledgement", "credit-approval"],
+)
+@pytest.mark.parametrize("identity__idp_id", ["e5dabdd0-bafb-4b75-82d2-ccf9295b623b"])
+@pytest.mark.parametrize("language", [lang[0] for lang in settings.LANGUAGES])
+def test_download(
+    db,
+    address,
+    language,
+    client,
+    dms_mock,
+    acknowledgement_mock,
+    credit_approval_mock,
+    snapshot,
+    endpoint,
+):
+    address.identity.language = language
+    address.identity.save()
+    if endpoint == "acknowledgement":
+        acknowledgement_mock()
+    else:
+        credit_approval_mock()
+
+    case_id = "e535ac0c-f3be-4a36-b2d4-1ef405ec71c8"
+    url = reverse(f"downloads-{endpoint}", args=[case_id])
+
+    response = client.get(url, HTTP_ACCEPT_LANGUAGE=language)
+
+    assert response.status_code == status.HTTP_200_OK
+    assert dms_mock.called_once
+    assert (
+        dms_mock.request_history[0].path
+        == f"/api/v1/template/{endpoint}-{language}/merge/"
+    )
+
+    snapshot.assert_match(dms_mock.request_history[0].json())
+    snapshot.assert_match(response.headers["content-disposition"])
+
+
+@pytest.mark.parametrize(
+    "endpoint",
+    ["acknowledgement", "credit-approval"],
+)
+@pytest.mark.parametrize("identity__idp_id", ["e5dabdd0-bafb-4b75-82d2-ccf9295b623b"])
+def test_download_dms_failure(
+    db,
+    identity,
+    address_factory,
+    client,
+    acknowledgement_mock,
+    credit_approval_mock,
+    requests_mock,
+    snapshot,
+    endpoint,
+):
+    address_factory(identity=identity)
+
+    if endpoint == "acknowledgement":
+        acknowledgement_mock()
+    else:
+        credit_approval_mock()
+
+    matcher = re.compile(
+        build_url(
+            settings.DOCUMENT_MERGE_SERVICE_URL,
+            "template",
+            ".*",
+            "merge",
+            trailing=True,
+        )
+    )
+
+    requests_mock.post(
+        matcher,
+        status_code=status.HTTP_400_BAD_REQUEST,
+        json=["something went wrong"],
+        headers={"CONTENT-TYPE": "application/json"},
+    )
+
+    case_id = "e535ac0c-f3be-4a36-b2d4-1ef405ec71c8"
+    url = reverse(f"downloads-{endpoint}", args=[case_id])
+
+    response = client.get(url)
+
+    assert response.status_code == status.HTTP_500_INTERNAL_SERVER_ERROR
+    assert response.json() == {
+        "errors": ["something went wrong"],
+        "source": "DMS",
+        "status": 400,
+    }
+
+
+@pytest.mark.parametrize("dms_failure", [False, True])
+@pytest.mark.parametrize("data", [CALUMA_DATA_FULL, CALUMA_DATA_EMPTY])
+@pytest.mark.parametrize("identity__idp_id", ["e5dabdd0-bafb-4b75-82d2-ccf9295b623b"])
+def test_download_application(
+    dms_mock,
+    requests_mock,
+    application_mock,
+    client,
+    identity,
+    snapshot,
+    dms_failure,
+    data,
+):
+    application_mock(data)
+    if dms_failure:
+        requests_mock.post(
+            build_url(
+                settings.DOCUMENT_MERGE_SERVICE_URL,
+                "template",
+                settings.DOCUMENT_MERGE_SERVICE_APPLICATION_EXPORT_SLUG,
+                "merge",
+                trailing=True,
+            ),
+            status_code=status.HTTP_400_BAD_REQUEST,
+            json=["something went wrong"],
+            headers={"CONTENT-TYPE": "application/json"},
+        )
+
+    url = reverse("downloads-application", args=[str(uuid4())])
+
+    response = client.get(url)
+
+    if dms_failure:
+        assert response.status_code == status.HTTP_500_INTERNAL_SERVER_ERROR
+        assert response.json() == {
+            "errors": ["something went wrong"],
+            "source": "DMS",
+            "status": 400,
+        }
+        return
+
+    assert response.status_code == status.HTTP_200_OK
+    assert dms_mock.called_once
+    assert (
+        dms_mock.request_history[0].path
+        == f"/api/v1/template/{settings.DOCUMENT_MERGE_SERVICE_APPLICATION_EXPORT_SLUG}/merge/"
+    )
+
+    snapshot.assert_match(dms_mock.request_history[0].json())
+    snapshot.assert_match(response.headers["content-disposition"])
+    snapshot.assert_match(response.getvalue())

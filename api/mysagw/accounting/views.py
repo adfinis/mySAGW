@@ -2,22 +2,16 @@ import io
 from base64 import urlsafe_b64encode
 from pathlib import Path
 
-import requests
 from django.conf import settings
-from django.http import FileResponse, HttpResponse
+from django.http import FileResponse
 from django.utils import timezone
-from PyPDF2 import PdfMerger
-from PyPDF2.errors import DependencyError, PdfReadError
-from reportlab.lib.pagesizes import A4
-from reportlab.lib.utils import ImageReader
-from reportlab.pdfgen import canvas
-from requests import HTTPError
 from rest_framework import status
 from rest_framework.views import APIView
 
-from mysagw.accounting.caluma_client import CalumaClient
-from mysagw.dms_client import DMSClient
+from mysagw.caluma_client import CalumaClient
+from mysagw.dms_client import DMSClient, get_dms_error_response
 from mysagw.oidc_auth.permissions import IsAdmin, IsAuthenticated, IsStaff
+from mysagw.pdf_utils import SUPPORTED_MERGE_CONTENT_TYPES, add_caluma_files_to_pdf
 
 GQL_DIR = Path(__file__).parent.resolve() / "queries"
 
@@ -36,54 +30,39 @@ def get_receipt_urls(data):
             result += [
                 url["downloadUrl"]
                 for url in row["answers"]["edges"][0]["node"]["value"]
+                if url["metadata"]["content_type"] in SUPPORTED_MERGE_CONTENT_TYPES
             ]
         except (KeyError, TypeError, IndexError):
             continue
     return result
 
 
-def get_cover(context):
-    cover = io.BytesIO()
-    client = DMSClient()
-    try:
-        resp = client.merge(
-            settings.DOCUMENT_MERGE_SERVICE_ACCOUNTING_COVER_TEMPLATE_SLUG,
-            data=context,
-            convert="pdf",
-        )
-        cover.write(resp.content)
-        cover.seek(0)
-        return resp.status_code, resp.headers["Content-Type"], cover
-    except HTTPError as e:
-        content = client.get_error_content(e.response)
-        return e.response.status_code, e.response.headers["Content-Type"], content
+def get_cover_context(data):  # noqa: C901
+    def mitgliedinstitution_label(slug):
+        for option in data["data"]["node"]["main"]["mitgliedinstitution"]["edges"][0][
+            "node"
+        ]["question"]["options"]["edges"]:
+            if option["node"]["slug"] == slug:
+                return option["node"]["label"]
 
+    def circ_kontonummer_label(slug):
+        for option in data["data"]["node"]["decisionCredit"]["edges"][0]["node"][
+            "document"
+        ]["circKontonummer"]["edges"][0]["node"]["question"]["options"]["edges"]:
+            if option["node"]["slug"] == slug:
+                return option["node"]["label"]
 
-def get_receipt(url):
-    file = io.BytesIO()
-    resp = requests.get(url, verify=False)
-    file.write(resp.content)
-    return {"file": file, "content-type": resp.headers.get("content-type")}
-
-
-def get_data(case_id, request):
-    with (GQL_DIR / "get_receipts.gql").open("r") as f:
-        query = f.read()
-    global_id = urlsafe_b64encode(f"Case:{case_id}".encode("utf-8")).decode("utf-8")
-    client = CalumaClient(
-        endpoint=f"{request.scheme}://{request.get_host()}/graphql",
-        token=request.META.get("HTTP_AUTHORIZATION"),
-        # For local testing:
-        # endpoint="http://caluma:8000/graphql",
-        # token="Bearer ey...",
-    )
-    variables = {"case_id": global_id}
-    resp = client.execute(query, variables)
-    return resp
-
-
-def get_cover_context(data):
     fields = {
+        "form": (
+            [
+                "data",
+                "node",
+                "document",
+                "form",
+                "name",
+            ],
+            None,
+        ),
         "applicant_address": (
             [
                 "data",
@@ -94,6 +73,57 @@ def get_cover_context(data):
                 "node",
                 "document",
                 "applicant_address",
+                "edges",
+                0,
+                "node",
+                "value",
+            ],
+            None,
+        ),
+        "applicant_postcode": (
+            [
+                "data",
+                "node",
+                "additionalData",
+                "edges",
+                0,
+                "node",
+                "document",
+                "applicant_postcode",
+                "edges",
+                0,
+                "node",
+                "value",
+            ],
+            None,
+        ),
+        "applicant_city": (
+            [
+                "data",
+                "node",
+                "additionalData",
+                "edges",
+                0,
+                "node",
+                "document",
+                "applicant_city",
+                "edges",
+                0,
+                "node",
+                "value",
+            ],
+            None,
+        ),
+        "applicant_land": (
+            [
+                "data",
+                "node",
+                "additionalData",
+                "edges",
+                0,
+                "node",
+                "document",
+                "applicant_land",
                 "edges",
                 0,
                 "node",
@@ -165,7 +195,7 @@ def get_cover_context(data):
             ],
             None,
         ),
-        "fibu": (
+        "zahlungszweck": (
             [
                 "data",
                 "node",
@@ -174,7 +204,7 @@ def get_cover_context(data):
                 0,
                 "node",
                 "document",
-                "fibu",
+                "zahlungszweck",
                 "edges",
                 0,
                 "node",
@@ -242,6 +272,36 @@ def get_cover_context(data):
             ],
             lambda x: x.split("-")[3],
         ),
+        "mitgliedinstitution": (
+            [
+                "data",
+                "node",
+                "main",
+                "mitgliedinstitution",
+                "edges",
+                0,
+                "node",
+                "value",
+            ],
+            mitgliedinstitution_label,
+        ),
+        "circ_kontonummer": (
+            [
+                "data",
+                "node",
+                "decisionCredit",
+                "edges",
+                0,
+                "node",
+                "document",
+                "circKontonummer",
+                "edges",
+                0,
+                "node",
+                "value",
+            ],
+            circ_kontonummer_label,
+        ),
     }
 
     result = {}
@@ -264,69 +324,40 @@ def get_cover_context(data):
     return result
 
 
-def get_files_to_merge(files):
-    for file in files:
-        if file["content-type"] == "application/pdf":
-            yield file["file"]
-        elif file["content-type"] in ["image/png", "image/jpeg"]:
-            page = io.BytesIO()
-            can = canvas.Canvas(page, pagesize=A4)
-            image = ImageReader(file["file"])
-            height = image.getSize()[1]
-            x_start = 50
-            y_start = 800 - height
-            can.drawImage(
-                image,
-                x_start,
-                y_start,
-                preserveAspectRatio=True,
-                mask="auto",
-            )
-            can.save()
-            page.seek(0)
-            yield page
-
-
 class ReceiptView(APIView):
     permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
 
     def get(self, request, pk, **kwargs):
-        raw_data = get_data(pk, request)
+        caluma_client = CalumaClient(
+            endpoint=f"{request.scheme}://{request.get_host()}/graphql",
+            token=request.META.get("HTTP_AUTHORIZATION"),
+            # For local testing:
+            # endpoint="http://caluma:8000/graphql",
+            # token="Bearer ey...",
+        )
+        variables = {
+            "case_id": urlsafe_b64encode(f"Case:{pk}".encode("utf-8")).decode("utf-8"),
+        }
+        raw_data = caluma_client.get_data(
+            GQL_DIR / "get_receipts.gql",
+            variables,
+            add_headers={"Accept-Language": "de"},
+        )
 
         cover_context = get_cover_context(raw_data)
         cover_context["date"] = timezone.now().date().strftime("%d. %m. %Y")
 
         receipt_urls = get_receipt_urls(raw_data)
-        status_code, content_type, cover = get_cover(cover_context)
+        dms_client = DMSClient()
+        dms_response = dms_client.get_merged_document(
+            cover_context,
+            settings.DOCUMENT_MERGE_SERVICE_ACCOUNTING_COVER_TEMPLATE_SLUG,
+        )
 
-        if status_code != status.HTTP_200_OK:
-            return HttpResponse(cover, status=status_code, content_type=content_type)
+        if dms_response.status_code != status.HTTP_200_OK:
+            return get_dms_error_response(dms_response)
 
-        files = [get_receipt(url) for url in receipt_urls]
-
-        merger = PdfMerger()
-        merger.append(cover)
-
-        for file in get_files_to_merge(files):
-            try:
-                merger.append(file)
-            except PdfReadError:  # pragma: no cover
-                ## faulty pdf
-                pass
-            except DependencyError as e:
-                # we don't support AES encrypted PDFs
-                if (
-                    not e.args
-                    or not e.args[0] == "PyCryptodome is required for AES algorithm"
-                ):  # pragma: no cover
-                    raise
-
-        result = io.BytesIO()
-
-        merger.write(result)
-        merger.close()
-
-        result.seek(0)
+        result = add_caluma_files_to_pdf(io.BytesIO(dms_response.content), receipt_urls)
 
         response = FileResponse(
             result,

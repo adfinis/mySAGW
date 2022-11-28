@@ -11,6 +11,9 @@ class IdentityFactory(DjangoModelFactory):
     organisation_name = Maybe("is_organisation", Faker("company"), None)
     first_name = Faker("first_name")
     last_name = Faker("last_name")
+    salutation = models.Identity.SALUTATION_NEUTRAL
+    title = models.Identity.TITLE_NONE
+    language = "de"
 
     class Meta:
         model = models.Identity
@@ -43,6 +46,10 @@ class AddressFactory(DjangoModelFactory):
     country = Faker("country_code")
     description = fuzzy.FuzzyChoice(["work", "private", "home", "office"])
     default = True
+    address_addition_1 = None
+    address_addition_2 = None
+    address_addition_3 = None
+    po_box = None
 
     class Meta:
         model = models.Address

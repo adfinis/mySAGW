@@ -1,0 +1,18 @@
+query getWorkItems($filter: [WorkItemFilterSetType]) {
+  allWorkItems(filter: $filter) {
+    edges {
+      node {
+        id
+        status
+        meta
+        addressedGroups
+        controllingGroups
+        assignedUsers
+        name
+        task {
+          slug
+        }
+      }
+    }
+  }
+}

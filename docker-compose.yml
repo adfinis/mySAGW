@@ -16,7 +16,7 @@ services:
       - db
 
   caluma:
-    image: ghcr.io/projectcaluma/caluma:8.0.0-beta.18
+    image: ghcr.io/projectcaluma/caluma:8.0.0-beta.20
     build:
       context: caluma
     environment:
@@ -28,6 +28,7 @@ services:
       - VISIBILITY_CLASSES=caluma.caluma_user.visibilities.Authenticated,caluma.extensions.visibilities.MySAGWVisibility
       - PERMISSION_CLASSES=caluma.caluma_user.permissions.IsAuthenticated,caluma.extensions.permissions.MySAGWPermission
       - DYNAMIC_TASKS_CLASSES=caluma.extensions.dynamic_tasks.CustomDynamicTasks
+      - VALIDATION_CLASSES=caluma.extensions.validations.CustomValidation
       - ENABLE_HEALTHZ_ENDPOINT=true
 
     depends_on:
@@ -93,7 +94,7 @@ services:
       - minio
 
   dms:
-    image: ghcr.io/adfinis/document-merge-service:5.0.4
+    image: ghcr.io/adfinis/document-merge-service:5.1.0
     depends_on:
       - db
     volumes:

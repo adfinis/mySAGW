@@ -95,7 +95,7 @@ export default class WorkItemsIndexController extends Controller {
       filter.push({
         caseSearchAnswers: [
           {
-            forms: (await this.filteredForms.fetch()).map((form) => form.slug),
+            forms: await this.filteredForms.mainFormSlugs(),
             value: this.answerSearch,
           },
         ],
