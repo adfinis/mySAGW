@@ -47,7 +47,6 @@ documents:
   reopenSuccess: "Application réouverte"
   reopenError: "La réouverture de l'application a échoué"
   accountingExport: "Exportation pour la comptabilité"
-  accountingExportFilename: "{dossierNo}-comptabilité.pdf"
 
   states:
     submit: "Soumettre la requête"

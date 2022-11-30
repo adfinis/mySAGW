@@ -8,12 +8,12 @@ import { queryManager } from "ember-apollo-client";
 import Changeset from "ember-changeset";
 import lookupValidator from "ember-changeset-validations";
 import { dropTask, restartableTask } from "ember-concurrency-decorators";
-import { saveAs } from "file-saver";
 
 import ENV from "mysagw/config/environment";
 import cancelCaseMutation from "mysagw/gql/mutations/cancel-case.graphql";
 import redoWorkItemMutation from "mysagw/gql/mutations/redo-work-item.graphql";
 import reopenCaseMutation from "mysagw/gql/mutations/reopen-case.graphql";
+import downloadFile from "mysagw/utils/download-file";
 import CaseValidations from "mysagw/validations/case";
 
 export default class CasesDetailIndexController extends Controller {
@@ -221,19 +221,7 @@ export default class CasesDetailIndexController extends Controller {
       headers: adapter.headers,
     };
     try {
-      const response = yield fetch(uri, init);
-
-      if (!response.ok) {
-        throw new Error(response.statusText || response.status);
-      }
-
-      const blob = yield response.blob();
-      const filename = `${this.intl.t("documents.accountingExportFilename", {
-        dossierNo:
-          this.case.document.answers.edges.firstObject.node.StringAnswerValue,
-      })}`;
-
-      saveAs(blob, filename);
+      yield downloadFile(uri, init);
     } catch (error) {
       console.error(error);
       this.notification.fromError(error);

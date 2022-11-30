@@ -47,7 +47,6 @@ documents:
   reopenSuccess: "Application reopened"
   reopenError: "Reopen application failed"
   accountingExport: "Export for accounting"
-  accountingExportFilename: "accounting-{dossierNo}.pdf"
 
   states:
     submit: "Submit"
