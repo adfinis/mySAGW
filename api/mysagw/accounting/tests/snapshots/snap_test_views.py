@@ -30,6 +30,10 @@ snapshots["test_get_receipts[admin-False-False-200] 1"] = {
     },
 }
 
+snapshots[
+    "test_get_receipts[admin-False-False-200] 2"
+] = 'inline; filename="Foo form - 2021-0006.pdf"'
+
 snapshots["test_get_receipts[admin-False-True-200] 1"] = {
     "convert": "pdf",
     "data": {
@@ -42,8 +46,8 @@ snapshots["test_get_receipts[admin-False-True-200] 1"] = {
         "bank_town": "",
         "circ_kontonummer": "",
         "date": "01. 01. 1970",
-        "dossier_no": "",
-        "form": "",
+        "dossier_no": "2021-0006",
+        "form": "Foo form",
         "iban": "",
         "mitgliedinstitution": "",
         "section": "",
@@ -52,6 +56,10 @@ snapshots["test_get_receipts[admin-False-True-200] 1"] = {
         "zahlungszweck": "",
     },
 }
+
+snapshots[
+    "test_get_receipts[admin-False-True-200] 2"
+] = 'inline; filename="Foo form - 2021-0006.pdf"'
 
 snapshots["test_get_receipts[staff-False-False-200] 1"] = {
     "convert": "pdf",
@@ -75,3 +83,7 @@ snapshots["test_get_receipts[staff-False-False-200] 1"] = {
         "zahlungszweck": "Foo Bar",
     },
 }
+
+snapshots[
+    "test_get_receipts[staff-False-False-200] 2"
+] = 'inline; filename="Foo form - 2021-0006.pdf"'

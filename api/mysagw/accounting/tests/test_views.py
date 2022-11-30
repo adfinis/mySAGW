@@ -48,7 +48,18 @@ def test_get_receipts(
         )
     elif missing_receipts:
         requests_mock.post(
-            "http://testserver/graphql", status_code=200, json={"data": {}}
+            "http://testserver/graphql",
+            status_code=200,
+            json={
+                "data": {
+                    "node": {
+                        "document": {"form": {"name": "Foo form"}},
+                        "main": {
+                            "dossierno": {"edges": [{"node": {"value": "2021-0006"}}]},
+                        },
+                    }
+                }
+            },
         )
 
     case_id = "e535ac0c-f3be-4a36-b2d4-1ef405ec71c8"
@@ -64,3 +75,4 @@ def test_get_receipts(
     assert receipt_mock.called_once
 
     snapshot.assert_match(receipt_mock.request_history[0].json())
+    snapshot.assert_match(response.headers["content-disposition"])
