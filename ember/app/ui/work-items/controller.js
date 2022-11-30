@@ -24,6 +24,7 @@ export default class WorkItemsIndexController extends Controller {
     "documentNumber",
     "identities",
     "answerSearch",
+    "responsible",
   ];
 
   @service session;
@@ -40,6 +41,7 @@ export default class WorkItemsIndexController extends Controller {
   @dedupeTracked documentNumber = "";
   @dedupeTracked identities = "";
   @dedupeTracked answerSearch = "";
+  @dedupeTracked responsible = "all";
 
   workItemsQuery = useCalumaQuery(this, allWorkItems, () => ({
     options: {
@@ -87,8 +89,10 @@ export default class WorkItemsIndexController extends Controller {
       filter.push({ assignedUsers: arrayFromString(this.identities) });
     }
 
-    if (this.role === "control") {
-      filter.push({ controllingGroups: ["sagw"] });
+    if (this.responsible === "own") {
+      filter.push({
+        assignedUsers: [this.session.data.authenticated.userinfo.sub],
+      });
     }
 
     if (this.answerSearch) {

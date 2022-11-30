@@ -16,14 +16,14 @@
     @onChange={{perform this.updateFilter "status"}}
   />
   <Filter.RadioButtons
-    @label={{t "work-items.filters.role"}}
-    @selected={{this.role}}
+    @label={{t "work-items.filters.responsible"}}
+    @selected={{this.responsible}}
     @options={{
       array
-      (hash value="active" label=(t "work-items.filters.active"))
-      (hash value="control" label=(t "work-items.filters.control"))
+      (hash value="all" label=(t "work-items.filters.all"))
+      (hash value="own" label=(t "work-items.filters.own"))
     }}
-    @onChange={{perform this.updateFilter "role"}}
+    @onChange={{perform this.updateFilter "responsible"}}
   />
   <Filter.Dropdown
     @label={{t "work-items.filters.taskTypes"}}
