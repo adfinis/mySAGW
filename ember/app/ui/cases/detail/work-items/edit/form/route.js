@@ -1,8 +1,8 @@
+import { getOwner, setOwner } from "@ember/application";
 import Route from "@ember/routing/route";
 import { inject as service } from "@ember/service";
 import { queryManager } from "ember-apollo-client";
 
-import CustomWorkItemModel from "mysagw/caluma-query/models/work-item";
 import getWorkItemDetailsQuery from "mysagw/gql/queries/get-work-item-details.graphql";
 
 export default class CasesDetailWorkItemsEditFormRoute extends Route {
@@ -22,9 +22,15 @@ export default class CasesDetailWorkItemsEditFormRoute extends Route {
         "allWorkItems.edges"
       );
 
+      const WorkItem = getOwner(this).factoryFor(
+        `caluma-query-model:work-item`
+      ).class;
+      const workItem = new WorkItem((await this.rawWorkItem)[0].node);
+      setOwner(workItem, getOwner(this));
+
       return {
         rawWorkItem: this.rawWorkItem,
-        workItem: new CustomWorkItemModel((await this.rawWorkItem)[0].node),
+        workItem,
       };
     } catch (error) {
       this.notification.danger(this.intl.t("work-items.fetchError"));
