@@ -47,7 +47,6 @@ documents:
   reopenSuccess: "Gesuch wiedereröffnet"
   reopenError: "Gesuch wiedereröffnen fehlgeschlagen"
   accountingExport: "Export für Buchhaltung"
-  accountingExportFilename: "{dossierNo}-buchhaltung.pdf"
 
   states:
     submit: "Einreichen"

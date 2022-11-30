@@ -5,6 +5,7 @@ from pathlib import Path
 from django.conf import settings
 from django.http import FileResponse
 from django.utils import timezone
+from django.utils.translation import get_language
 from rest_framework import status
 from rest_framework.views import APIView
 
@@ -341,7 +342,7 @@ class ReceiptView(APIView):
         raw_data = caluma_client.get_data(
             GQL_DIR / "get_receipts.gql",
             variables,
-            add_headers={"Accept-Language": "de"},
+            add_headers={"Accept-Language": get_language()},
         )
 
         cover_context = get_cover_context(raw_data)
@@ -359,10 +360,13 @@ class ReceiptView(APIView):
 
         result = add_caluma_files_to_pdf(io.BytesIO(dms_response.content), receipt_urls)
 
+        form_name = cover_context.get("form", "unknown_form")
+        dossier_no = cover_context.get("dossier_no", "unknown_dossier_no")
+
         response = FileResponse(
             result,
             content_type="application/pdf",
-            filename=f"{cover_context.get('dossier_no', 'receipts')}.pdf",
+            filename=f"{form_name} - {dossier_no}.pdf",
         )
 
         return response

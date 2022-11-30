@@ -78,7 +78,7 @@ export default class CustomCaseModel extends CaseModel {
     return this.document.answers.edges.findBy(
       "node.question.slug",
       "dossier-nr"
-    ).node.StringAnswerValue;
+    )?.node.StringAnswerValue;
   }
 
   static fragment = `{
