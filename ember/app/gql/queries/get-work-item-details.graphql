@@ -34,6 +34,11 @@ query getWorkItemDetails($filter: [WorkItemFilterSetType]) {
         case {
           id
           meta
+          parentWorkItem {
+            case {
+              id
+            }
+          }
           workItems(
             filter: [
               { tasks: ["decision-and-credit"] }
