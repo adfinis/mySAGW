@@ -44,6 +44,14 @@ export default class CasesDetailWorkItemsEditFormController extends Controller {
         this.intl.t("work-items.rejectDefineAmountNoAdditionData")
       );
     }
+
+    if (this.model.workItem.task.slug === "circulation-decision") {
+      return this.router.transitionTo(
+        "cases.detail.circulation",
+        this.model.workItem.case.id
+      );
+    }
+
     this.router.transitionTo(
       "cases.detail.work-items",
       this.model.workItem.case.id
