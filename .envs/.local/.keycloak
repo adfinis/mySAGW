@@ -1,4 +1,4 @@
 # Keycloak
 # ------------------------------------------------------------------------------
-DB_PASSWORD=keycloak
-KEYCLOAK_PASSWORD=keycloak
+KC_DB_PASSWORD=keycloak
+KEYCLOAK_ADMIN_PASSWORD=keycloak
