@@ -74,7 +74,7 @@ ydiaz@example.net""",
         "",
         "14517",
         "Port Donald",
-        "Taiwan (Provinz Chinas)",
+        "Taiwan",
     ],
     [
         "Christopher",
