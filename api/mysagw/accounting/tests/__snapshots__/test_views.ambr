@@ -1,0 +1,81 @@
+# name: test_get_receipts[admin-False-False-200]
+  dict({
+    'convert': 'pdf',
+    'data': dict({
+      'applicant_address': 'Dorfplatz 1',
+      'applicant_city': 'Zürich',
+      'applicant_land': 'Schweiz',
+      'applicant_name': 'Winston Smith',
+      'applicant_postcode': '8000',
+      'bank': 'Big Bank',
+      'bank_town': 'Bern',
+      'circ_kontonummer': '23 konto1',
+      'date': '01. 01. 1970',
+      'dossier_no': '2021-0006',
+      'form': 'Foo form',
+      'iban': 'CH56 0483 5012 3456 7800 9',
+      'mitgliedinstitution': 'Foo institute',
+      'section': '6',
+      'total': 5000.0,
+      'vp_year': '',
+      'zahlungszweck': 'Foo Bar',
+    }),
+  })
+# ---
+# name: test_get_receipts[admin-False-False-200].1
+  'inline; filename="Foo form - 2021-0006.pdf"'
+# ---
+# name: test_get_receipts[admin-False-True-200]
+  dict({
+    'convert': 'pdf',
+    'data': dict({
+      'applicant_address': '',
+      'applicant_city': '',
+      'applicant_land': '',
+      'applicant_name': '',
+      'applicant_postcode': '',
+      'bank': '',
+      'bank_town': '',
+      'circ_kontonummer': '',
+      'date': '01. 01. 1970',
+      'dossier_no': '2021-0006',
+      'form': 'Foo form',
+      'iban': '',
+      'mitgliedinstitution': '',
+      'section': '',
+      'total': '',
+      'vp_year': '',
+      'zahlungszweck': '',
+    }),
+  })
+# ---
+# name: test_get_receipts[admin-False-True-200].1
+  'inline; filename="Foo form - 2021-0006.pdf"'
+# ---
+# name: test_get_receipts[staff-False-False-200]
+  dict({
+    'convert': 'pdf',
+    'data': dict({
+      'applicant_address': 'Dorfplatz 1',
+      'applicant_city': 'Zürich',
+      'applicant_land': 'Schweiz',
+      'applicant_name': 'Winston Smith',
+      'applicant_postcode': '8000',
+      'bank': 'Big Bank',
+      'bank_town': 'Bern',
+      'circ_kontonummer': '23 konto1',
+      'date': '01. 01. 1970',
+      'dossier_no': '2021-0006',
+      'form': 'Foo form',
+      'iban': 'CH56 0483 5012 3456 7800 9',
+      'mitgliedinstitution': 'Foo institute',
+      'section': '6',
+      'total': 5000.0,
+      'vp_year': '',
+      'zahlungszweck': 'Foo Bar',
+    }),
+  })
+# ---
+# name: test_get_receipts[staff-False-False-200].1
+  'inline; filename="Foo form - 2021-0006.pdf"'
+# ---
