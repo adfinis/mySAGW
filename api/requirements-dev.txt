@@ -10,7 +10,7 @@ flake8-isort==5.0.3
 flake8-string-format==0.3.0
 flake8-tuple==0.4.1
 gitlint==0.18.0
-isort==5.10.1
+isort==5.11.2
 pdbpp==0.10.3
 pre_commit==2.20.0
 psycopg2-binary==2.9.5
