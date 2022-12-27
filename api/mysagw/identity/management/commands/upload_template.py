@@ -33,11 +33,12 @@ class Command(BaseCommand):
 
     def _upload_template(self, template, update=False):
         try:
-            resp = self.client.upload_template(
-                template.stem,
-                template.open("rb"),
-                update=update,
-            )
+            with template.open("rb") as t_file:
+                resp = self.client.upload_template(
+                    template.stem,
+                    t_file,
+                    update=update,
+                )
         except HTTPError as e:
             assert (
                 e.response.content
