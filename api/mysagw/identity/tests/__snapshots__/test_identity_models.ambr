@@ -1,0 +1,789 @@
+# name: test_address_block[23-de-None-Nice-Addition]
+  '''
+  David Moreno
+  Nice
+  Addition
+  060 Guerra Island
+  23
+  62422 Port Michaela
+  Äthiopien
+  '''
+# ---
+# name: test_address_block[23-de-None-None-None]
+  '''
+  David Moreno
+  060 Guerra Island
+  23
+  62422 Port Michaela
+  Äthiopien
+  '''
+# ---
+# name: test_address_block[23-de-Some-Nice-Addition]
+  '''
+  David Moreno
+  Some
+  Nice
+  Addition
+  060 Guerra Island
+  23
+  62422 Port Michaela
+  Äthiopien
+  '''
+# ---
+# name: test_address_block[23-de-Some-None-Addition]
+  '''
+  David Moreno
+  Some
+  Addition
+  060 Guerra Island
+  23
+  62422 Port Michaela
+  Äthiopien
+  '''
+# ---
+# name: test_address_block[23-en-None-Nice-Addition]
+  '''
+  David Moreno
+  Nice
+  Addition
+  060 Guerra Island
+  23
+  62422 Port Michaela
+  Ethiopia
+  '''
+# ---
+# name: test_address_block[23-en-None-None-None]
+  '''
+  David Moreno
+  060 Guerra Island
+  23
+  62422 Port Michaela
+  Ethiopia
+  '''
+# ---
+# name: test_address_block[23-en-Some-Nice-Addition]
+  '''
+  David Moreno
+  Some
+  Nice
+  Addition
+  060 Guerra Island
+  23
+  62422 Port Michaela
+  Ethiopia
+  '''
+# ---
+# name: test_address_block[23-en-Some-None-Addition]
+  '''
+  David Moreno
+  Some
+  Addition
+  060 Guerra Island
+  23
+  62422 Port Michaela
+  Ethiopia
+  '''
+# ---
+# name: test_address_block[23-fr-None-Nice-Addition]
+  '''
+  David Moreno
+  Nice
+  Addition
+  060 Guerra Island
+  23
+  62422 Port Michaela
+  Éthiopie
+  '''
+# ---
+# name: test_address_block[23-fr-None-None-None]
+  '''
+  David Moreno
+  060 Guerra Island
+  23
+  62422 Port Michaela
+  Éthiopie
+  '''
+# ---
+# name: test_address_block[23-fr-Some-Nice-Addition]
+  '''
+  David Moreno
+  Some
+  Nice
+  Addition
+  060 Guerra Island
+  23
+  62422 Port Michaela
+  Éthiopie
+  '''
+# ---
+# name: test_address_block[23-fr-Some-None-Addition]
+  '''
+  David Moreno
+  Some
+  Addition
+  060 Guerra Island
+  23
+  62422 Port Michaela
+  Éthiopie
+  '''
+# ---
+# name: test_address_block[None-de-None-Nice-Addition]
+  '''
+  David Moreno
+  Nice
+  Addition
+  060 Guerra Island
+  62422 Port Michaela
+  Äthiopien
+  '''
+# ---
+# name: test_address_block[None-de-None-None-None]
+  '''
+  David Moreno
+  060 Guerra Island
+  62422 Port Michaela
+  Äthiopien
+  '''
+# ---
+# name: test_address_block[None-de-Some-Nice-Addition]
+  '''
+  David Moreno
+  Some
+  Nice
+  Addition
+  060 Guerra Island
+  62422 Port Michaela
+  Äthiopien
+  '''
+# ---
+# name: test_address_block[None-de-Some-None-Addition]
+  '''
+  David Moreno
+  Some
+  Addition
+  060 Guerra Island
+  62422 Port Michaela
+  Äthiopien
+  '''
+# ---
+# name: test_address_block[None-en-None-Nice-Addition]
+  '''
+  David Moreno
+  Nice
+  Addition
+  060 Guerra Island
+  62422 Port Michaela
+  Ethiopia
+  '''
+# ---
+# name: test_address_block[None-en-None-None-None]
+  '''
+  David Moreno
+  060 Guerra Island
+  62422 Port Michaela
+  Ethiopia
+  '''
+# ---
+# name: test_address_block[None-en-Some-Nice-Addition]
+  '''
+  David Moreno
+  Some
+  Nice
+  Addition
+  060 Guerra Island
+  62422 Port Michaela
+  Ethiopia
+  '''
+# ---
+# name: test_address_block[None-en-Some-None-Addition]
+  '''
+  David Moreno
+  Some
+  Addition
+  060 Guerra Island
+  62422 Port Michaela
+  Ethiopia
+  '''
+# ---
+# name: test_address_block[None-fr-None-Nice-Addition]
+  '''
+  David Moreno
+  Nice
+  Addition
+  060 Guerra Island
+  62422 Port Michaela
+  Éthiopie
+  '''
+# ---
+# name: test_address_block[None-fr-None-None-None]
+  '''
+  David Moreno
+  060 Guerra Island
+  62422 Port Michaela
+  Éthiopie
+  '''
+# ---
+# name: test_address_block[None-fr-Some-Nice-Addition]
+  '''
+  David Moreno
+  Some
+  Nice
+  Addition
+  060 Guerra Island
+  62422 Port Michaela
+  Éthiopie
+  '''
+# ---
+# name: test_address_block[None-fr-Some-None-Addition]
+  '''
+  David Moreno
+  Some
+  Addition
+  060 Guerra Island
+  62422 Port Michaela
+  Éthiopie
+  '''
+# ---
+# name: test_address_block_missing_address
+  'David Moreno'
+# ---
+# name: test_fullname[de-None-None-dr-female]
+  'Frau Dr.'
+# ---
+# name: test_fullname[de-None-None-dr-male]
+  'Herr Dr.'
+# ---
+# name: test_fullname[de-None-None-dr-neutral]
+  'Dr.'
+# ---
+# name: test_fullname[de-None-None-none-female]
+  'Frau'
+# ---
+# name: test_fullname[de-None-None-none-male]
+  'Herr'
+# ---
+# name: test_fullname[de-None-None-none-neutral]
+  ''
+# ---
+# name: test_fullname[de-None-None-pd-dr-female]
+  'Frau PD Dr.'
+# ---
+# name: test_fullname[de-None-None-pd-dr-male]
+  'Herr PD Dr.'
+# ---
+# name: test_fullname[de-None-None-pd-dr-neutral]
+  'PD Dr.'
+# ---
+# name: test_fullname[de-None-None-prof-dr-female]
+  'Frau Prof. Dr.'
+# ---
+# name: test_fullname[de-None-None-prof-dr-male]
+  'Herr Prof. Dr.'
+# ---
+# name: test_fullname[de-None-None-prof-dr-neutral]
+  'Prof. Dr.'
+# ---
+# name: test_fullname[de-None-None-prof-female]
+  'Frau Prof.'
+# ---
+# name: test_fullname[de-None-None-prof-male]
+  'Herr Prof.'
+# ---
+# name: test_fullname[de-None-None-prof-neutral]
+  'Prof.'
+# ---
+# name: test_fullname[de-None-Winston-dr-female]
+  'Frau Dr. Winston'
+# ---
+# name: test_fullname[de-None-Winston-dr-male]
+  'Herr Dr. Winston'
+# ---
+# name: test_fullname[de-None-Winston-dr-neutral]
+  'Dr. Winston'
+# ---
+# name: test_fullname[de-None-Winston-none-female]
+  'Frau Winston'
+# ---
+# name: test_fullname[de-None-Winston-none-male]
+  'Herr Winston'
+# ---
+# name: test_fullname[de-None-Winston-none-neutral]
+  'Winston'
+# ---
+# name: test_fullname[de-None-Winston-pd-dr-female]
+  'Frau PD Dr. Winston'
+# ---
+# name: test_fullname[de-None-Winston-pd-dr-male]
+  'Herr PD Dr. Winston'
+# ---
+# name: test_fullname[de-None-Winston-pd-dr-neutral]
+  'PD Dr. Winston'
+# ---
+# name: test_fullname[de-None-Winston-prof-dr-female]
+  'Frau Prof. Dr. Winston'
+# ---
+# name: test_fullname[de-None-Winston-prof-dr-male]
+  'Herr Prof. Dr. Winston'
+# ---
+# name: test_fullname[de-None-Winston-prof-dr-neutral]
+  'Prof. Dr. Winston'
+# ---
+# name: test_fullname[de-None-Winston-prof-female]
+  'Frau Prof. Winston'
+# ---
+# name: test_fullname[de-None-Winston-prof-male]
+  'Herr Prof. Winston'
+# ---
+# name: test_fullname[de-None-Winston-prof-neutral]
+  'Prof. Winston'
+# ---
+# name: test_fullname[de-Smith-None-dr-female]
+  'Frau Dr. Smith'
+# ---
+# name: test_fullname[de-Smith-None-dr-male]
+  'Herr Dr. Smith'
+# ---
+# name: test_fullname[de-Smith-None-dr-neutral]
+  'Dr. Smith'
+# ---
+# name: test_fullname[de-Smith-None-none-female]
+  'Frau Smith'
+# ---
+# name: test_fullname[de-Smith-None-none-male]
+  'Herr Smith'
+# ---
+# name: test_fullname[de-Smith-None-none-neutral]
+  'Smith'
+# ---
+# name: test_fullname[de-Smith-None-pd-dr-female]
+  'Frau PD Dr. Smith'
+# ---
+# name: test_fullname[de-Smith-None-pd-dr-male]
+  'Herr PD Dr. Smith'
+# ---
+# name: test_fullname[de-Smith-None-pd-dr-neutral]
+  'PD Dr. Smith'
+# ---
+# name: test_fullname[de-Smith-None-prof-dr-female]
+  'Frau Prof. Dr. Smith'
+# ---
+# name: test_fullname[de-Smith-None-prof-dr-male]
+  'Herr Prof. Dr. Smith'
+# ---
+# name: test_fullname[de-Smith-None-prof-dr-neutral]
+  'Prof. Dr. Smith'
+# ---
+# name: test_fullname[de-Smith-None-prof-female]
+  'Frau Prof. Smith'
+# ---
+# name: test_fullname[de-Smith-None-prof-male]
+  'Herr Prof. Smith'
+# ---
+# name: test_fullname[de-Smith-None-prof-neutral]
+  'Prof. Smith'
+# ---
+# name: test_fullname[de-Smith-Winston-dr-female]
+  'Frau Dr. Winston Smith'
+# ---
+# name: test_fullname[de-Smith-Winston-dr-male]
+  'Herr Dr. Winston Smith'
+# ---
+# name: test_fullname[de-Smith-Winston-dr-neutral]
+  'Dr. Winston Smith'
+# ---
+# name: test_fullname[de-Smith-Winston-none-female]
+  'Frau Winston Smith'
+# ---
+# name: test_fullname[de-Smith-Winston-none-male]
+  'Herr Winston Smith'
+# ---
+# name: test_fullname[de-Smith-Winston-none-neutral]
+  'Winston Smith'
+# ---
+# name: test_fullname[de-Smith-Winston-pd-dr-female]
+  'Frau PD Dr. Winston Smith'
+# ---
+# name: test_fullname[de-Smith-Winston-pd-dr-male]
+  'Herr PD Dr. Winston Smith'
+# ---
+# name: test_fullname[de-Smith-Winston-pd-dr-neutral]
+  'PD Dr. Winston Smith'
+# ---
+# name: test_fullname[de-Smith-Winston-prof-dr-female]
+  'Frau Prof. Dr. Winston Smith'
+# ---
+# name: test_fullname[de-Smith-Winston-prof-dr-male]
+  'Herr Prof. Dr. Winston Smith'
+# ---
+# name: test_fullname[de-Smith-Winston-prof-dr-neutral]
+  'Prof. Dr. Winston Smith'
+# ---
+# name: test_fullname[de-Smith-Winston-prof-female]
+  'Frau Prof. Winston Smith'
+# ---
+# name: test_fullname[de-Smith-Winston-prof-male]
+  'Herr Prof. Winston Smith'
+# ---
+# name: test_fullname[de-Smith-Winston-prof-neutral]
+  'Prof. Winston Smith'
+# ---
+# name: test_fullname[en-None-None-dr-female]
+  'Mrs. Dr.'
+# ---
+# name: test_fullname[en-None-None-dr-male]
+  'Mr. Dr.'
+# ---
+# name: test_fullname[en-None-None-dr-neutral]
+  'Dr.'
+# ---
+# name: test_fullname[en-None-None-none-female]
+  'Mrs.'
+# ---
+# name: test_fullname[en-None-None-none-male]
+  'Mr.'
+# ---
+# name: test_fullname[en-None-None-none-neutral]
+  ''
+# ---
+# name: test_fullname[en-None-None-pd-dr-female]
+  'Mrs. PD Dr.'
+# ---
+# name: test_fullname[en-None-None-pd-dr-male]
+  'Mr. PD Dr.'
+# ---
+# name: test_fullname[en-None-None-pd-dr-neutral]
+  'PD Dr.'
+# ---
+# name: test_fullname[en-None-None-prof-dr-female]
+  'Mrs. Prof. Dr.'
+# ---
+# name: test_fullname[en-None-None-prof-dr-male]
+  'Mr. Prof. Dr.'
+# ---
+# name: test_fullname[en-None-None-prof-dr-neutral]
+  'Prof. Dr.'
+# ---
+# name: test_fullname[en-None-None-prof-female]
+  'Mrs. Prof.'
+# ---
+# name: test_fullname[en-None-None-prof-male]
+  'Mr. Prof.'
+# ---
+# name: test_fullname[en-None-None-prof-neutral]
+  'Prof.'
+# ---
+# name: test_fullname[en-None-Winston-dr-female]
+  'Mrs. Dr. Winston'
+# ---
+# name: test_fullname[en-None-Winston-dr-male]
+  'Mr. Dr. Winston'
+# ---
+# name: test_fullname[en-None-Winston-dr-neutral]
+  'Dr. Winston'
+# ---
+# name: test_fullname[en-None-Winston-none-female]
+  'Mrs. Winston'
+# ---
+# name: test_fullname[en-None-Winston-none-male]
+  'Mr. Winston'
+# ---
+# name: test_fullname[en-None-Winston-none-neutral]
+  'Winston'
+# ---
+# name: test_fullname[en-None-Winston-pd-dr-female]
+  'Mrs. PD Dr. Winston'
+# ---
+# name: test_fullname[en-None-Winston-pd-dr-male]
+  'Mr. PD Dr. Winston'
+# ---
+# name: test_fullname[en-None-Winston-pd-dr-neutral]
+  'PD Dr. Winston'
+# ---
+# name: test_fullname[en-None-Winston-prof-dr-female]
+  'Mrs. Prof. Dr. Winston'
+# ---
+# name: test_fullname[en-None-Winston-prof-dr-male]
+  'Mr. Prof. Dr. Winston'
+# ---
+# name: test_fullname[en-None-Winston-prof-dr-neutral]
+  'Prof. Dr. Winston'
+# ---
+# name: test_fullname[en-None-Winston-prof-female]
+  'Mrs. Prof. Winston'
+# ---
+# name: test_fullname[en-None-Winston-prof-male]
+  'Mr. Prof. Winston'
+# ---
+# name: test_fullname[en-None-Winston-prof-neutral]
+  'Prof. Winston'
+# ---
+# name: test_fullname[en-Smith-None-dr-female]
+  'Mrs. Dr. Smith'
+# ---
+# name: test_fullname[en-Smith-None-dr-male]
+  'Mr. Dr. Smith'
+# ---
+# name: test_fullname[en-Smith-None-dr-neutral]
+  'Dr. Smith'
+# ---
+# name: test_fullname[en-Smith-None-none-female]
+  'Mrs. Smith'
+# ---
+# name: test_fullname[en-Smith-None-none-male]
+  'Mr. Smith'
+# ---
+# name: test_fullname[en-Smith-None-none-neutral]
+  'Smith'
+# ---
+# name: test_fullname[en-Smith-None-pd-dr-female]
+  'Mrs. PD Dr. Smith'
+# ---
+# name: test_fullname[en-Smith-None-pd-dr-male]
+  'Mr. PD Dr. Smith'
+# ---
+# name: test_fullname[en-Smith-None-pd-dr-neutral]
+  'PD Dr. Smith'
+# ---
+# name: test_fullname[en-Smith-None-prof-dr-female]
+  'Mrs. Prof. Dr. Smith'
+# ---
+# name: test_fullname[en-Smith-None-prof-dr-male]
+  'Mr. Prof. Dr. Smith'
+# ---
+# name: test_fullname[en-Smith-None-prof-dr-neutral]
+  'Prof. Dr. Smith'
+# ---
+# name: test_fullname[en-Smith-None-prof-female]
+  'Mrs. Prof. Smith'
+# ---
+# name: test_fullname[en-Smith-None-prof-male]
+  'Mr. Prof. Smith'
+# ---
+# name: test_fullname[en-Smith-None-prof-neutral]
+  'Prof. Smith'
+# ---
+# name: test_fullname[en-Smith-Winston-dr-female]
+  'Mrs. Dr. Winston Smith'
+# ---
+# name: test_fullname[en-Smith-Winston-dr-male]
+  'Mr. Dr. Winston Smith'
+# ---
+# name: test_fullname[en-Smith-Winston-dr-neutral]
+  'Dr. Winston Smith'
+# ---
+# name: test_fullname[en-Smith-Winston-none-female]
+  'Mrs. Winston Smith'
+# ---
+# name: test_fullname[en-Smith-Winston-none-male]
+  'Mr. Winston Smith'
+# ---
+# name: test_fullname[en-Smith-Winston-none-neutral]
+  'Winston Smith'
+# ---
+# name: test_fullname[en-Smith-Winston-pd-dr-female]
+  'Mrs. PD Dr. Winston Smith'
+# ---
+# name: test_fullname[en-Smith-Winston-pd-dr-male]
+  'Mr. PD Dr. Winston Smith'
+# ---
+# name: test_fullname[en-Smith-Winston-pd-dr-neutral]
+  'PD Dr. Winston Smith'
+# ---
+# name: test_fullname[en-Smith-Winston-prof-dr-female]
+  'Mrs. Prof. Dr. Winston Smith'
+# ---
+# name: test_fullname[en-Smith-Winston-prof-dr-male]
+  'Mr. Prof. Dr. Winston Smith'
+# ---
+# name: test_fullname[en-Smith-Winston-prof-dr-neutral]
+  'Prof. Dr. Winston Smith'
+# ---
+# name: test_fullname[en-Smith-Winston-prof-female]
+  'Mrs. Prof. Winston Smith'
+# ---
+# name: test_fullname[en-Smith-Winston-prof-male]
+  'Mr. Prof. Winston Smith'
+# ---
+# name: test_fullname[en-Smith-Winston-prof-neutral]
+  'Prof. Winston Smith'
+# ---
+# name: test_fullname[fr-None-None-dr-female]
+  'Madame Dr'
+# ---
+# name: test_fullname[fr-None-None-dr-male]
+  'Monsieur Dr'
+# ---
+# name: test_fullname[fr-None-None-dr-neutral]
+  'Dr'
+# ---
+# name: test_fullname[fr-None-None-none-female]
+  'Madame'
+# ---
+# name: test_fullname[fr-None-None-none-male]
+  'Monsieur'
+# ---
+# name: test_fullname[fr-None-None-none-neutral]
+  ''
+# ---
+# name: test_fullname[fr-None-None-pd-dr-female]
+  'Madame PD Dr'
+# ---
+# name: test_fullname[fr-None-None-pd-dr-male]
+  'Monsieur PD Dr'
+# ---
+# name: test_fullname[fr-None-None-pd-dr-neutral]
+  'PD Dr'
+# ---
+# name: test_fullname[fr-None-None-prof-dr-female]
+  'Madame Prof. Dr'
+# ---
+# name: test_fullname[fr-None-None-prof-dr-male]
+  'Monsieur Prof. Dr'
+# ---
+# name: test_fullname[fr-None-None-prof-dr-neutral]
+  'Prof. Dr'
+# ---
+# name: test_fullname[fr-None-None-prof-female]
+  'Madame Prof.'
+# ---
+# name: test_fullname[fr-None-None-prof-male]
+  'Monsieur Prof.'
+# ---
+# name: test_fullname[fr-None-None-prof-neutral]
+  'Prof.'
+# ---
+# name: test_fullname[fr-None-Winston-dr-female]
+  'Madame Dr Winston'
+# ---
+# name: test_fullname[fr-None-Winston-dr-male]
+  'Monsieur Dr Winston'
+# ---
+# name: test_fullname[fr-None-Winston-dr-neutral]
+  'Dr Winston'
+# ---
+# name: test_fullname[fr-None-Winston-none-female]
+  'Madame Winston'
+# ---
+# name: test_fullname[fr-None-Winston-none-male]
+  'Monsieur Winston'
+# ---
+# name: test_fullname[fr-None-Winston-none-neutral]
+  'Winston'
+# ---
+# name: test_fullname[fr-None-Winston-pd-dr-female]
+  'Madame PD Dr Winston'
+# ---
+# name: test_fullname[fr-None-Winston-pd-dr-male]
+  'Monsieur PD Dr Winston'
+# ---
+# name: test_fullname[fr-None-Winston-pd-dr-neutral]
+  'PD Dr Winston'
+# ---
+# name: test_fullname[fr-None-Winston-prof-dr-female]
+  'Madame Prof. Dr Winston'
+# ---
+# name: test_fullname[fr-None-Winston-prof-dr-male]
+  'Monsieur Prof. Dr Winston'
+# ---
+# name: test_fullname[fr-None-Winston-prof-dr-neutral]
+  'Prof. Dr Winston'
+# ---
+# name: test_fullname[fr-None-Winston-prof-female]
+  'Madame Prof. Winston'
+# ---
+# name: test_fullname[fr-None-Winston-prof-male]
+  'Monsieur Prof. Winston'
+# ---
+# name: test_fullname[fr-None-Winston-prof-neutral]
+  'Prof. Winston'
+# ---
+# name: test_fullname[fr-Smith-None-dr-female]
+  'Madame Dr Smith'
+# ---
+# name: test_fullname[fr-Smith-None-dr-male]
+  'Monsieur Dr Smith'
+# ---
+# name: test_fullname[fr-Smith-None-dr-neutral]
+  'Dr Smith'
+# ---
+# name: test_fullname[fr-Smith-None-none-female]
+  'Madame Smith'
+# ---
+# name: test_fullname[fr-Smith-None-none-male]
+  'Monsieur Smith'
+# ---
+# name: test_fullname[fr-Smith-None-none-neutral]
+  'Smith'
+# ---
+# name: test_fullname[fr-Smith-None-pd-dr-female]
+  'Madame PD Dr Smith'
+# ---
+# name: test_fullname[fr-Smith-None-pd-dr-male]
+  'Monsieur PD Dr Smith'
+# ---
+# name: test_fullname[fr-Smith-None-pd-dr-neutral]
+  'PD Dr Smith'
+# ---
+# name: test_fullname[fr-Smith-None-prof-dr-female]
+  'Madame Prof. Dr Smith'
+# ---
+# name: test_fullname[fr-Smith-None-prof-dr-male]
+  'Monsieur Prof. Dr Smith'
+# ---
+# name: test_fullname[fr-Smith-None-prof-dr-neutral]
+  'Prof. Dr Smith'
+# ---
+# name: test_fullname[fr-Smith-None-prof-female]
+  'Madame Prof. Smith'
+# ---
+# name: test_fullname[fr-Smith-None-prof-male]
+  'Monsieur Prof. Smith'
+# ---
+# name: test_fullname[fr-Smith-None-prof-neutral]
+  'Prof. Smith'
+# ---
+# name: test_fullname[fr-Smith-Winston-dr-female]
+  'Madame Dr Winston Smith'
+# ---
+# name: test_fullname[fr-Smith-Winston-dr-male]
+  'Monsieur Dr Winston Smith'
+# ---
+# name: test_fullname[fr-Smith-Winston-dr-neutral]
+  'Dr Winston Smith'
+# ---
+# name: test_fullname[fr-Smith-Winston-none-female]
+  'Madame Winston Smith'
+# ---
+# name: test_fullname[fr-Smith-Winston-none-male]
+  'Monsieur Winston Smith'
+# ---
+# name: test_fullname[fr-Smith-Winston-none-neutral]
+  'Winston Smith'
+# ---
+# name: test_fullname[fr-Smith-Winston-pd-dr-female]
+  'Madame PD Dr Winston Smith'
+# ---
+# name: test_fullname[fr-Smith-Winston-pd-dr-male]
+  'Monsieur PD Dr Winston Smith'
+# ---
+# name: test_fullname[fr-Smith-Winston-pd-dr-neutral]
+  'PD Dr Winston Smith'
+# ---
+# name: test_fullname[fr-Smith-Winston-prof-dr-female]
+  'Madame Prof. Dr Winston Smith'
+# ---
+# name: test_fullname[fr-Smith-Winston-prof-dr-male]
+  'Monsieur Prof. Dr Winston Smith'
+# ---
+# name: test_fullname[fr-Smith-Winston-prof-dr-neutral]
+  'Prof. Dr Winston Smith'
+# ---
+# name: test_fullname[fr-Smith-Winston-prof-female]
+  'Madame Prof. Winston Smith'
+# ---
+# name: test_fullname[fr-Smith-Winston-prof-male]
+  'Monsieur Prof. Winston Smith'
+# ---
+# name: test_fullname[fr-Smith-Winston-prof-neutral]
+  'Prof. Winston Smith'
+# ---

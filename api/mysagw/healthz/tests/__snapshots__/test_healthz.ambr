@@ -1,0 +1,96 @@
+# name: test_db_migrations_not_applied[admin]
+  dict({
+    'caches': list([
+      dict({
+        'default': dict({
+          'ok': True,
+        }),
+      }),
+    ]),
+    'database migrations': list([
+      dict({
+        'default': dict({
+          'ok': False,
+        }),
+      }),
+    ]),
+    'database models': list([
+      dict({
+        'default': dict({
+          'ok': True,
+        }),
+      }),
+    ]),
+    'databases': list([
+      dict({
+        'default': dict({
+          'ok': True,
+        }),
+      }),
+    ]),
+  })
+# ---
+# name: test_healthz_permissions[admin-200]
+  dict({
+    'caches': list([
+      dict({
+        'default': dict({
+          'ok': True,
+        }),
+      }),
+    ]),
+    'database migrations': list([
+      dict({
+        'default': dict({
+          'ok': True,
+        }),
+      }),
+    ]),
+    'database models': list([
+      dict({
+        'default': dict({
+          'ok': True,
+        }),
+      }),
+    ]),
+    'databases': list([
+      dict({
+        'default': dict({
+          'ok': True,
+        }),
+      }),
+    ]),
+  })
+# ---
+# name: test_healthz_permissions[staff-200]
+  dict({
+    'caches': list([
+      dict({
+        'default': dict({
+          'ok': True,
+        }),
+      }),
+    ]),
+    'database migrations': list([
+      dict({
+        'default': dict({
+          'ok': True,
+        }),
+      }),
+    ]),
+    'database models': list([
+      dict({
+        'default': dict({
+          'ok': True,
+        }),
+      }),
+    ]),
+    'databases': list([
+      dict({
+        'default': dict({
+          'ok': True,
+        }),
+      }),
+    ]),
+  })
+# ---

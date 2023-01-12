@@ -1,8 +1,8 @@
 import io
 
 import requests
-from PyPDF2 import PdfMerger
-from PyPDF2.errors import DependencyError, PdfReadError
+from pypdf import PdfMerger
+from pypdf.errors import DependencyError, PdfReadError
 from reportlab.lib.pagesizes import A4, mm
 from reportlab.lib.utils import ImageReader
 from reportlab.pdfgen import canvas
