@@ -52,13 +52,13 @@ class DMSClient:
             requests.post, url, headers=headers, json={"data": data, "convert": convert}
         )
 
-    def get_merged_document(self, context, template):
+    def get_merged_document(self, context, template, convert=None):
         client = DMSClient()
         try:
             resp = client.merge(
                 template,
                 data=context,
-                convert="pdf",
+                convert=convert,
             )
             return resp
         except HTTPError as e:
