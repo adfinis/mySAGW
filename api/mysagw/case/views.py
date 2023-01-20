@@ -216,6 +216,7 @@ class CaseDownloadViewSet(GenericViewSet):
         dms_response = dms_client.get_merged_document(
             data,
             settings.DOCUMENT_MERGE_SERVICE_APPLICATION_EXPORT_SLUG,
+            convert="pdf",
         )
 
         if dms_response.status_code != status.HTTP_200_OK:
@@ -247,10 +248,7 @@ class CaseDownloadViewSet(GenericViewSet):
             f"{self.get_filename_translation(name, language)}.pdf"
         )
         dms_client = DMSClient()
-        dms_response = dms_client.get_merged_document(
-            data,
-            template,
-        )
+        dms_response = dms_client.get_merged_document(data, template, convert="pdf")
 
         if dms_response.status_code != status.HTTP_200_OK:
             return get_dms_error_response(dms_response)

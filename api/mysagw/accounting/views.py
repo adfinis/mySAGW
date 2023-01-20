@@ -353,6 +353,7 @@ class ReceiptView(APIView):
         dms_response = dms_client.get_merged_document(
             cover_context,
             settings.DOCUMENT_MERGE_SERVICE_ACCOUNTING_COVER_TEMPLATE_SLUG,
+            convert="pdf",
         )
 
         if dms_response.status_code != status.HTTP_200_OK:
