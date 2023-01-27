@@ -60,8 +60,9 @@ export default class IdentityFormComponent extends Component {
 
     return [
       `https://${host}/auth/admin/mysagw/console/`,
-      "#/realms/mysagw/users/",
+      "#/mysagw/users/",
       this.changeset.get("idpId"),
+      "/settings",
     ].join("");
   }
 

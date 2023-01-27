@@ -23,13 +23,13 @@ repos:
         stages: [ commit ]
         name: caluma-isort
         language: system
-        entry: /bin/sh -c 'cd ./caluma/ && isort'
+        entry: /bin/sh -c 'cd ./caluma/ && isort .'
         types: [ python ]
       - id: caluma-black
         stages: [ commit ]
         name: caluma-black
         language: system
-        entry: /bin/sh -c 'cd ./caluma/ && black'
+        entry: /bin/sh -c 'cd ./caluma/ && black .'
         types: [ python ]
       - id: caluma-flake8
         stages: [ commit ]

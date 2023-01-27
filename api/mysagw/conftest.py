@@ -1,5 +1,3 @@
-import importlib
-import inspect
 import io
 import re
 from functools import partial
@@ -8,13 +6,15 @@ from pathlib import Path
 import pytest
 from django.core.cache import cache
 from factory import Faker
-from factory.base import FactoryMetaClass
 from pytest_factoryboy import register
 from rest_framework import status
 from rest_framework.test import APIClient
 
+from .case import factories as case_factories
 from .faker import MultilangProvider, SwissPhoneNumberProvider
+from .identity import factories as identity_factories
 from .oidc_auth.models import OIDCUser
+from .snippets import factories as snippets_factories
 from .utils import build_url
 
 Faker.add_provider(MultilangProvider)
@@ -24,15 +24,16 @@ Faker.add_provider(SwissPhoneNumberProvider)
 TEST_FILES_DIR = Path(__file__).parent.resolve() / "test_files"
 
 
-def register_module(module):
-    for name, obj in inspect.getmembers(module):
-        if isinstance(obj, FactoryMetaClass) and not obj._meta.abstract:
-            register(obj)
-
-
-register_module(importlib.import_module(".identity.factories", "mysagw"))
-register_module(importlib.import_module(".snippets.factories", "mysagw"))
-register_module(importlib.import_module(".case.factories", "mysagw"))
+register(identity_factories.IdentityFactory)
+register(identity_factories.EmailFactory)
+register(identity_factories.PhoneNumberFactory)
+register(identity_factories.AddressFactory)
+register(identity_factories.InterestCategoryFactory)
+register(identity_factories.InterestFactory)
+register(identity_factories.MembershipRoleFactory)
+register(identity_factories.MembershipFactory)
+register(snippets_factories.SnippetFactory)
+register(case_factories.CaseAccessFactory)
 
 
 def _get_claims(
