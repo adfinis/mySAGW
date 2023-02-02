@@ -311,6 +311,16 @@ def finish_define_amount(sender, work_item, user, **kwargs):
 @filter_events(lambda sender, work_item: work_item.task_id == "complete-document")
 @transaction.atomic
 def complete_additional_data_form(sender, work_item, user, **kwargs):
+    """
+    Cant do this processing in finish_define_amount as it
+    would cause no READY work items to be present and the case would be closed.
+
+    Current bug is that post_create_work_item is only called once.
+    After redoing complete-document, the work item is not created
+    again and additional-data-form is not completed.
+
+    A fix would be emmiting an event in caluma when reopening a redo wok item.
+    """
     form_work_item = caluma_workflow_models.WorkItem.objects.filter(
         task_id="additional-data-form",
         case=work_item.case,
