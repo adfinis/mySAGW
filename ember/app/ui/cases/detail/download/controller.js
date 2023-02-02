@@ -22,11 +22,20 @@ export default class CasesDetailDownloadController extends Controller {
     ) {
       downloads.push(this.acknowledgement);
     }
+
+    const workItem = this.model.workItems.find(
+      (workItem) =>
+        workItem.task.slug === ENV.APP.caluma.decisionAndCredit.task &&
+        workItem.status === "COMPLETED"
+    );
+    const answer = workItem?.document.answers.edges.find(
+      (answer) =>
+        answer.node.question.slug === ENV.APP.caluma.decisionAndCredit.question
+    ).node.StringAnswerValue;
     if (
-      this.model.workItems.find(
-        (workItem) =>
-          workItem.task.slug === ENV.APP.caluma.decisionAndCreditTaskSlug &&
-          workItem.status === "COMPLETED"
+      answer &&
+      ENV.APP.caluma.decisionAndCredit.answers.some((choice) =>
+        answer.includes(choice)
       )
     ) {
       downloads.push(this.creditApproval);
