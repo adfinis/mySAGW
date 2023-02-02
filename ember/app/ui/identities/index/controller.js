@@ -15,6 +15,7 @@ export default class IdentitiesIndexController extends Controller {
   @service notification;
   @service store;
   @service intl;
+  @service fetch;
 
   queryParams = ["pageSize", "pageNumber"];
   @tracked pageSize = 25;

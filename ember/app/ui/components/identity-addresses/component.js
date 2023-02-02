@@ -9,7 +9,6 @@ import {
   restartableTask,
   lastValue,
 } from "ember-concurrency-decorators";
-import fetch from "fetch";
 import UIkit from "uikit";
 
 import applyError from "mysagw/utils/apply-error";
@@ -22,6 +21,7 @@ export default class IdentityAddressesComponent extends Component {
   @service notification;
   @service store;
   @service intl;
+  @service fetch;
 
   // Lifecycle
 

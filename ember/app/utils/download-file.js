@@ -1,7 +1,10 @@
+import { getOwner } from "@ember/application";
 import { saveAs } from "file-saver";
 
-export default async function downloadFile(uri, init) {
-  const response = await fetch(uri, init);
+export default async function downloadFile(uri, init, context) {
+  const service = getOwner(context).lookup("service:fetch");
+
+  const response = await service.fetch(uri, init);
 
   if (!response.ok) {
     throw new Error(response.statusText || response.status);

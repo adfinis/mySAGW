@@ -46,7 +46,7 @@ export default class CasesDetailDownloadController extends Controller {
       headers: adapter.headers,
     };
     try {
-      yield downloadFile(uri, init);
+      yield downloadFile(uri, init, this);
     } catch (error) {
       console.error(error);
       this.notification.fromError(error);
