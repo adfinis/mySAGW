@@ -45,7 +45,7 @@ export default class IdentityAddressesComponent extends Component {
   @restartableTask
   *fetchCountries() {
     const adapter = this.store.adapterFor("identity");
-    const response = yield fetch(adapter.buildURL("address"), {
+    const response = yield this.fetch.fetch(adapter.buildURL("address"), {
       method: "OPTIONS",
       headers: adapter.headers,
     });

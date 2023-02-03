@@ -4,29 +4,26 @@ import fetch from "fetch";
 
 const CONTENT_TYPE = "application/vnd.api+json";
 
-const cleanObject = (obj) => {
-  return Object.entries(obj).reduce((clean, [key, value]) => {
-    return {
-      ...clean,
-      ...(isEmpty(value) ? {} : { [key]: value }),
-    };
-  }, {});
-};
+const cleanObject = (obj) =>
+  Object.fromEntries(
+    // eslint-disable-next-line no-unused-vars
+    Object.entries(obj).filter(([key, value]) => !isEmpty(value))
+  );
 
 export default class FetchService extends Service {
   @service session;
 
-  async fetch(resource, init = {}) {
+  async fetch(resource, options = {}) {
     await this.session.refreshAuthentication.perform();
 
-    init.headers = cleanObject({
+    options.headers = cleanObject({
       ...this.session.headers,
       accept: CONTENT_TYPE,
       "content-type": CONTENT_TYPE,
-      ...(init.headers || {}),
+      ...(options.headers || {}),
     });
 
-    const response = await fetch(resource, init);
+    const response = await fetch(resource, options);
 
     if (!response.ok) {
       if (response.status === 401) {

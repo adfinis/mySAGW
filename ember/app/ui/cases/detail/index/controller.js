@@ -21,6 +21,7 @@ export default class CasesDetailIndexController extends Controller {
   @service notification;
   @service intl;
   @service store;
+  @service fetch;
 
   @queryManager apollo;
 
@@ -221,7 +222,7 @@ export default class CasesDetailIndexController extends Controller {
       headers: adapter.headers,
     };
     try {
-      yield downloadFile(uri, init, this);
+      yield downloadFile(this.fetch.fetch(uri, init));
     } catch (error) {
       console.error(error);
       this.notification.fromError(error);

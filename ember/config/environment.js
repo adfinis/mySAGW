@@ -17,7 +17,7 @@ module.exports = function (environment) {
       tokenEndpoint: "/token",
       endSessionEndpoint: "/logout",
       userinfoEndpoint: "/userinfo",
-      afterLogoutUri: "/",
+      afterLogoutUri: "/login",
       host:
         process.env.OIDC_HOST ||
         "https://mysagw.local/auth/realms/mysagw/protocol/openid-connect",

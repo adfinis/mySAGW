@@ -8,8 +8,9 @@ import {
   lastValue,
   dropTask,
 } from "ember-concurrency";
-import { saveAs } from "file-saver";
 import moment from "moment";
+
+import downloadFile from "mysagw/utils/download-file";
 
 export default class IdentitiesIndexController extends Controller {
   @service notification;
@@ -114,18 +115,12 @@ export default class IdentitiesIndexController extends Controller {
     };
 
     try {
-      const response = yield fetch(uri, init);
-
-      if (!response.ok) {
-        throw new Error(response.statusText || response.status);
-      }
-
-      const blob = yield response.blob();
-      const filename = `${this.intl.t("identities.index.export.filename", {
-        date: moment().format("YYYY-MM-DD"),
-      })}.${fileExtension}`;
-
-      saveAs(blob, filename);
+      yield downloadFile(
+        this.fetch.fetch(uri, init),
+        `${this.intl.t("identities.index.export.filename", {
+          date: moment().format("YYYY-MM-DD"),
+        })}.${fileExtension}`
+      );
     } catch (error) {
       console.error(error);
       this.notification.fromError(error);
