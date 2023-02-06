@@ -53,9 +53,8 @@ class DMSClient:
         )
 
     def get_merged_document(self, context, template, convert=None):
-        client = DMSClient()
         try:
-            resp = client.merge(
+            resp = self.merge(
                 template,
                 data=context,
                 convert=convert,

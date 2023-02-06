@@ -32,7 +32,7 @@ def get_users_for_case(case):
         token=token,
     )
     users = []
-    for include in result["included"]:
+    for include in result.get("included", []):
         users.append(include["attributes"])
 
     return users
