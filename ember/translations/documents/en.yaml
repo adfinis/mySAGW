@@ -4,6 +4,7 @@ documents:
   municipality: "Municipality"
   type: "Type"
   fetchError: "An error has occured while fetching applications."
+  back: "Back to applications"
 
   pageInfo: "Showing {length} of {total} applications"
   orderBy: "Order by"

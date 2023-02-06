@@ -7,6 +7,7 @@ components:
       edit: "Edit number"
       delete: "Delete number"
       empty: "No numbers yet."
+      call: "Call"
     form:
       title:
         add: "Add phone number"

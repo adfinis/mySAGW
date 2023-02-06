@@ -1,5 +1,6 @@
 import Service, { inject as service } from "@ember/service";
 import { isEmpty } from "@ember/utils";
+import { handleUnauthorized } from "ember-simple-auth-oidc";
 import fetch from "fetch";
 
 const CONTENT_TYPE = "application/vnd.api+json";
@@ -27,7 +28,7 @@ export default class FetchService extends Service {
 
     if (!response.ok) {
       if (response.status === 401) {
-        return this.session.handleUnauthorized();
+        return handleUnauthorized(this.session);
       }
 
       const contentType = response.headers.get("content-type");

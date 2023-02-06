@@ -4,6 +4,7 @@ documents:
   municipality: "Commune"
   type: "Type de requête"
   fetchError: "Une erreur s'est produite lors de la récupération des documents."
+  back: "Retour à Requêtes"
 
   pageInfo: "Montrer {length} de {total} requêtes"
   orderBy: "Trier selon"

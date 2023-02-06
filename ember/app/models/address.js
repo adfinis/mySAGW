@@ -1,5 +1,5 @@
-import { inject as service } from "@ember/service";
 import { attr, belongsTo } from "@ember-data/model";
+import { inject as service } from "@ember/service";
 import { LocalizedModel, localizedAttr } from "ember-localized-model";
 
 export default class AddressModel extends LocalizedModel {
