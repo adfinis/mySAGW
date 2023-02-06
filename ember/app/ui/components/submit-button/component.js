@@ -2,7 +2,7 @@ import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import Component from "@glimmer/component";
 import { queryManager } from "ember-apollo-client";
-import { lastValue, restartableTask } from "ember-concurrency-decorators";
+import { lastValue, restartableTask } from "ember-concurrency";
 
 import ENV from "mysagw/config/environment";
 import getDocumentsQuery from "mysagw/gql/queries/get-documents.graphql";

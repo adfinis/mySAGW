@@ -7,7 +7,7 @@ import { allCases } from "@projectcaluma/ember-core/caluma-query/queries";
 import { queryManager } from "ember-apollo-client";
 import Changeset from "ember-changeset";
 import lookupValidator from "ember-changeset-validations";
-import { dropTask, restartableTask } from "ember-concurrency-decorators";
+import { dropTask, restartableTask } from "ember-concurrency";
 
 import ENV from "mysagw/config/environment";
 import cancelCaseMutation from "mysagw/gql/mutations/cancel-case.graphql";
