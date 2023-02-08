@@ -1,6 +1,6 @@
 <th class={{join " " @config.classList}}>
   {{#if @config.sortKey}}
-    <UkButton @color="text" @onClick={{fn this.order}}>
+    <UkButton @color="text" @onClick={{this.order}}>
       {{t @config.label}}
       {{#if this.isActive}}
         <span uk-icon="icon: {{this.icon}}"></span>

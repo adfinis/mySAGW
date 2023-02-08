@@ -3,6 +3,8 @@
     @route="cases.index"
     class="uk-icon-button uk-margin-right"
     uk-icon="icon: arrow-left; ratio: 2"
+    aria-label={{t "documents.back"}}
+    title={{t "documents.back"}}
   />
   {{@model.document.form.name}}
 </h2>
@@ -25,9 +27,9 @@
   </li>
   {{#if this.circulation}}
     <li>
-        <LinkTo @route="cases.detail.circulation" @model={{@model}}>
-          {{t "documents.subnav.circulation"}}
-        </LinkTo>
+      <LinkTo @route="cases.detail.circulation" @model={{@model}}>
+        {{t "documents.subnav.circulation"}}
+      </LinkTo>
     </li>
   {{/if}}
   <li>

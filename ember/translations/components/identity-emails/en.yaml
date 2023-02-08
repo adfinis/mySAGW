@@ -7,6 +7,7 @@ components:
       edit: "Edit address"
       delete: "Delete address"
       empty: "No addresses yet."
+      send: "Send email"
     form:
       title:
         add: "Add email address"
