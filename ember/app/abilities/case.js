@@ -11,7 +11,10 @@ export default class CaseAbility extends BaseAbility {
   }
 
   get canEdit() {
-    return this.hasAccess(this.model);
+    return (
+      (this.model.hasSubmitOrReviseWorkItem && this.hasAccess(this.model)) ||
+      this.isStaffOrAdmin
+    );
   }
 
   get canDelete() {
