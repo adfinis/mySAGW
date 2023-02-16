@@ -79,7 +79,7 @@ documents:
 
   accesses:
     title: "Accès"
-    invitation: "Invitations"
+    invitations: "Invitations"
     email: "E-Mail"
     add: "Autoriser l'accès"
     duplicateEmail: "Ce courriel a déjà été donné accès"

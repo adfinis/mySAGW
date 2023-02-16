@@ -30,6 +30,14 @@ module.exports = function (environment) {
     apollo: {
       apiURL: "/graphql",
     },
+    "ember-caluma": {
+      FLATPICKR_DATE_FORMAT: {
+        de: "d.m.Y",
+        fr: "d.m.Y",
+        en: "m/d/Y",
+      },
+      FLATPICKR_DATE_FORMAT_DEFAULT: "d.m.Y",
+    },
 
     EmberENV: {
       FEATURES: {
