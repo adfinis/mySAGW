@@ -114,6 +114,12 @@ export default class CasesIndexController extends Controller {
 
   @restartableTask
   *updateFilter(type, eventOrValue) {
+    if (["documentNumber", "answerSearch"].includes(type)) {
+      // debounce only input filters by 500ms to prevent too many requests when
+      // typing into a search field
+      yield timeout(500);
+    }
+
     /*
      * Set filter from type argument, if eventOrValue is a event it is from an input field
      * if its identities an array is to be expected

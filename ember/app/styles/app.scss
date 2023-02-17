@@ -43,7 +43,8 @@ main {
 }
 
 .filters-gap {
-  row-gap: 5px;
+  row-gap: 1em;
+  column-gap: 0.5em;
 }
 
 .case-state-label__icon {
@@ -52,6 +53,11 @@ main {
 
 .white-space-pre-line {
   white-space: pre-line;
+}
+
+.badge-top-right {
+  top: -0.5em;
+  right: -0.5em;
 }
 
 @import 'ember-uikit';

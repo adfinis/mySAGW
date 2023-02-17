@@ -42,6 +42,10 @@ work-items:
     taskTypes: "Task"
     documentNumber: "Application number"
     answer: "Answer"
+    forms: "Form"
+    expertAssociations: "Expert association"
+    distributionPlans: "Distribution plan"
+    sections: "Section"
 
     all: "All"
     own: "Own"

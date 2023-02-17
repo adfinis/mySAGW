@@ -33,3 +33,8 @@ components:
       loading: "Loading..."
       empty: "No entries found"
       search: "Type to search"
+
+    modal:
+      title: "Filters"
+      open: "More filters"
+      close: "Filter"

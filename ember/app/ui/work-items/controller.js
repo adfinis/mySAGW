@@ -6,9 +6,10 @@ import { allWorkItems } from "@projectcaluma/ember-core/caluma-query/queries";
 import { queryManager } from "ember-apollo-client";
 import { restartableTask, timeout } from "ember-concurrency";
 import { trackedFunction } from "ember-resources/util/function";
+import { TrackedObject } from "tracked-built-ins";
 import { dedupeTracked } from "tracked-toolbox";
 
-import getTasksQuery from "mysagw/gql/queries/get-tasks.graphql";
+import ENV from "mysagw/config/environment";
 import {
   arrayFromString,
   stringFromArray,
@@ -19,12 +20,12 @@ export default class WorkItemsIndexController extends Controller {
   queryParams = [
     "order",
     "status",
-    "role",
     "taskTypes",
     "documentNumber",
     "identities",
     "answerSearch",
     "responsible",
+    "filters",
   ];
 
   @service session;
@@ -34,14 +35,21 @@ export default class WorkItemsIndexController extends Controller {
   @queryManager apollo;
 
   // Filters
+  _filters = {
+    status: "open",
+    responsible: "all",
+    taskTypes: "",
+    documentNumber: "",
+    identities: "",
+    answerSearch: "",
+    forms: "",
+    expertAssociations: "",
+    distributionPlan: "",
+    sections: "",
+  }
+  @dedupeTracked filters = new TrackedObject(this._filters);
+  @dedupeTracked invertedFilters = new TrackedObject(this._filters)
   @dedupeTracked order = "-CREATED_AT";
-  @dedupeTracked status = "open";
-  @dedupeTracked role = "active";
-  @dedupeTracked taskTypes = "";
-  @dedupeTracked documentNumber = "";
-  @dedupeTracked identities = "";
-  @dedupeTracked answerSearch = "";
-  @dedupeTracked responsible = "all";
 
   workItemsQuery = useCalumaQuery(this, allWorkItems, () => ({
     options: {
@@ -52,79 +60,65 @@ export default class WorkItemsIndexController extends Controller {
     order: [serializeOrder(this.order, "caseDocumentAnswer")],
   }));
 
-  get selectedTaskTypes() {
-    const taskTypes = arrayFromString(this.taskTypes);
-
-    return (
-      this.allTaskTypes.value?.filter((taskType) =>
-        taskTypes.includes(taskType.value)
-      ) ?? []
-    );
-  }
-
-  get selectedIdentities() {
-    return arrayFromString(this.identities);
-  }
-
   workItemsFilter = trackedFunction(this, async () => {
     const filter = [
       { metaHasKey: "hidden", invert: true },
-      { status: this.status === "closed" ? "COMPLETED" : "READY" },
+      { status: this.filters.status === "closed" ? "COMPLETED" : "READY" },
       {
         caseDocumentHasAnswer: [
           {
             question: "dossier-nr",
-            value: this.documentNumber,
+            value: this.filters.documentNumber,
             lookup: "ICONTAINS",
           },
         ],
       },
     ];
 
-    if (this.taskTypes) {
-      filter.push({ tasks: arrayFromString(this.taskTypes) });
+    if (this.filters.taskTypes) {
+      filter.push({ tasks: arrayFromString(this.filters.taskTypes) });
     }
 
-    if (this.identities) {
-      filter.push({ assignedUsers: arrayFromString(this.identities) });
+    if (this.filters.identities) {
+      filter.push({ assignedUsers: arrayFromString(this.filters.identities) });
     }
 
-    if (this.responsible === "own") {
+    if (this.filters.responsible === "own") {
       filter.push({
         assignedUsers: [this.session.data.authenticated.userinfo.sub],
       });
     }
 
-    if (this.answerSearch) {
+    if (this.filters.answerSearch) {
       filter.push({
         caseSearchAnswers: [
           {
             forms: await this.filteredForms.mainFormSlugs(),
-            value: this.answerSearch,
+            value: this.filters.answerSearch,
           },
         ],
       });
     }
 
+    if (this.filters.forms) {
+      // TODO cant filter for case form
+    }
+
+    Object.keys(ENV.APP.caluma.filterableQuestions).forEach((question) => {
+      if (!this.filters[question]) {
+        return;
+      }
+      filter.push({
+        caseDocumentHasAnswer: [
+          {
+            question: ENV.APP.caluma.filterableQuestions[question],
+            value: this.filters[question],
+          },
+        ],
+      });
+    });
+
     return filter;
-  });
-
-  allTaskTypes = trackedFunction(this, async () => {
-    const response = await this.apollo.query(
-      {
-        query: getTasksQuery,
-        variables: {
-          filter: [{ isArchived: false }],
-          order: [{ attribute: "NAME" }],
-        },
-      },
-      "allTasks.edges"
-    );
-
-    return response.map((edge) => ({
-      value: edge.node.slug,
-      label: edge.node.name,
-    }));
   });
 
   @action
@@ -168,13 +162,15 @@ export default class WorkItemsIndexController extends Controller {
     }
 
     // Update the filter with the passed value. This can either be an array of
-    // objects (task types or identities), and event or a plain value
-    if (type === "identities") {
-      this[type] = stringFromArray(eventOrValue, "idpId");
-    } else if (type === "taskTypes") {
-      this[type] = stringFromArray(eventOrValue, "value");
+    // objects (multiple choice filters), and event or a plain value
+    console.log(eventOrValue);
+    if (Array.isArray(eventOrValue)) {
+      this.filters[type] = stringFromArray(
+        eventOrValue,
+        type === "identities" ? "idpId" : "value"
+      );
     } else {
-      this[type] = eventOrValue.target?.value ?? eventOrValue;
+      this.filters[type] = eventOrValue.target?.value ?? eventOrValue;
     }
   }
 

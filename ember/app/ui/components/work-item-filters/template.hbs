@@ -1,0 +1,121 @@
+<Filters class="uk-child-width-expand" as |Filter|>
+  <Filter.RadioButtons
+    class="uk-width-auto"
+    id="match-targeet"
+    @label={{t "work-items.filters.status"}}
+    @selected={{@filters.status}}
+    @options={{array
+      (hash value="open" label=(t "work-items.filters.open"))
+      (hash value="closed" label=(t "work-items.filters.closed"))
+    }}
+    @onChange={{perform @updateFilter "status"}}
+  />
+  <Filter.RadioButtons
+    class="uk-width-auto"
+    @label={{t "work-items.filters.responsible"}}
+    @selected={{@filters.responsible}}
+    @options={{array
+      (hash value="all" label=(t "work-items.filters.all"))
+      (hash value="own" label=(t "work-items.filters.own"))
+    }}
+    @onChange={{perform @updateFilter "responsible"}}
+  />
+  <Filter.Dropdown
+    @label={{t "work-items.filters.taskTypes"}}
+    @selected={{@filters.taskTypes}}
+    @options={{this.taskTypes.value}}
+    @onChange={{perform @updateFilter "taskTypes"}}
+  />
+  <Filter.Identity
+    @selectedIdentities={{@filter.identities}}
+    @onChange={{perform @updateFilter "identities"}}
+  />
+  <Filter.Input
+    class="uk-width-small"
+    @label={{t "work-items.filters.documentNumber"}}
+    @value={{@filters.documentNumber}}
+    @onChange={{perform @updateFilter "documentNumber"}}
+  />
+  <Filter.Input
+    @label={{t "work-items.filters.answer"}}
+    @value={{@filters.answerSearch}}
+    @onChange={{perform @updateFilter "answerSearch"}}
+  />
+
+  <FilterModal
+    @setFiltersAmount={{this.setFiltersAmount}}
+    class="uk-width-auto"
+  >
+    <Filters
+      class="uk-grid-divider uk-grid-match uk-child-expand"
+      uk-grid
+      as |Filter|
+    >
+      <Filter.RadioButtons
+        @label={{t "work-items.filters.status"}}
+        @selected={{@filters.status}}
+        @options={{array
+          (hash value="open" label=(t "work-items.filters.open"))
+          (hash value="closed" label=(t "work-items.filters.closed"))
+        }}
+        @onChange={{perform @updateFilter "status"}}
+      />
+      <Filter.RadioButtons
+        @label={{t "work-items.filters.responsible"}}
+        @selected={{@filters.responsible}}
+        @options={{array
+          (hash value="all" label=(t "work-items.filters.all"))
+          (hash value="own" label=(t "work-items.filters.own"))
+        }}
+        @onChange={{perform @updateFilter "responsible"}}
+      />
+      <Filter.Dropdown
+        @label={{t "work-items.filters.taskTypes"}}
+        @selected={{@filters.taskTypes}}
+        @options={{this.taskTypes.value}}
+        @onChange={{perform @updateFilter "taskTypes"}}
+      />
+      <Filter.Identity
+        @selectedIdentities={{@filter.identities}}
+        @onChange={{perform @updateFilter "identities"}}
+      />
+      <Filter.Input
+        @label={{t "work-items.filters.documentNumber"}}
+        @value={{@filters.documentNumber}}
+        @onChange={{perform @updateFilter "documentNumber"}}
+      />
+      <Filter.Input
+        @label={{t "work-items.filters.answer"}}
+        @value={{@filters.answerSearch}}
+        @onChange={{perform @updateFilter "answerSearch"}}
+      />
+      <Filter.Dropdown
+        @label={{t "work-items.filters.forms"}}
+        @selected={{@filters.forms}}
+        @options={{this.forms.value}}
+        @onChange={{perform @updateFilter "forms"}}
+      />
+      <Filter.Dropdown
+        @label={{t "work-items.filters.expertAssociations"}}
+        @selected={{@filters.expertAssociations}}
+        @options={{this.expertAssociations}}
+        @onChange={{perform @updateFilter "expertAssociations"}}
+        @loading={{this.questionOptions.isLoading}}
+      />
+      <Filter.Dropdown
+        @label={{t "work-items.filters.distributionPlans"}}
+        @selected={{@filters.distributionPlans}}
+        @options={{this.distributionPlans}}
+        @onChange={{perform @updateFilter "distributionPlans"}}
+        @loading={{this.questionOptions.isLoading}}
+      />
+      <Filter.Dropdown
+        @label={{t "work-items.filters.sections"}}
+        @selected={{@filters.sections}}
+        @options={{this.sections}}
+        @onChange={{perform @updateFilter "sections"}}
+        @loading={{this.questionOptions.isLoading}}
+      />
+    </Filters>
+  </FilterModal>
+</Filters>
