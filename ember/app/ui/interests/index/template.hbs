@@ -47,7 +47,9 @@
                     @route="interests.edit"
                     @model={{category.id}}
                     data-test-category-edit
-                  ></LinkTo>
+                  >
+                    <span hidden>{{t "interests.index.list.edit"}}</span>
+                  </LinkTo>
                 {{/if}}
 
                 {{#if (can "delete interest-category" category)}}

@@ -23,9 +23,6 @@ module.exports = function (environment) {
         "https://mysagw.local/auth/realms/mysagw/protocol/openid-connect",
       enablePkce: true,
     },
-    "ember-validated-form": {
-      theme: "uikit",
-    },
     localizedModel: {
       allowAnyFallback: true,
       fallbacks: ["de", "en"],
@@ -33,8 +30,13 @@ module.exports = function (environment) {
     apollo: {
       apiURL: "/graphql",
     },
-    moment: {
-      includeLocales: ["de", "fr"],
+    "ember-caluma": {
+      FLATPICKR_DATE_FORMAT: {
+        de: "d.m.Y",
+        fr: "d.m.Y",
+        en: "m/d/Y",
+      },
+      FLATPICKR_DATE_FORMAT_DEFAULT: "d.m.Y",
     },
 
     EmberENV: {

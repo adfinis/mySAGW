@@ -1,7 +1,7 @@
 import Controller from "@ember/controller";
 import { inject as service } from "@ember/service";
 import { decamelize } from "@ember/string";
-import { dropTask } from "ember-concurrency-decorators";
+import { dropTask } from "ember-concurrency";
 
 import ENV from "mysagw/config/environment";
 import downloadFile from "mysagw/utils/download-file";

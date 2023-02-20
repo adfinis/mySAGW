@@ -5,7 +5,9 @@
     uk-icon="icon: arrow-left; ratio: 2"
     aria-label={{t "documents.back"}}
     title={{t "documents.back"}}
-  />
+  >
+    <span hidden>{{@model.document.form.name}}</span>
+  </LinkTo>
   {{@model.document.form.name}}
 </h2>
 

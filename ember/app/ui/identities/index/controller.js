@@ -8,7 +8,7 @@ import {
   lastValue,
   dropTask,
 } from "ember-concurrency";
-import moment from "moment";
+import { DateTime } from "luxon";
 
 import downloadFile from "mysagw/utils/download-file";
 
@@ -118,7 +118,7 @@ export default class IdentitiesIndexController extends Controller {
       yield downloadFile(
         this.fetch.fetch(uri, init),
         `${this.intl.t("identities.index.export.filename", {
-          date: moment().format("YYYY-MM-DD"),
+          date: DateTime.now().toFormat("yyyy-LL-dd"),
         })}.${fileExtension}`
       );
     } catch (error) {
