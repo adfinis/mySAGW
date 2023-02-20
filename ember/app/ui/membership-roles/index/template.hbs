@@ -44,10 +44,13 @@
                       class="uk-icon-button uk-button-default"
                       uk-icon="pencil"
                       title={{t "roles.index.list.edit"}}
+                      aria-label={{this.text}}
                       @route="membership-roles.edit"
                       @model={{role.id}}
                       data-test-role-edit
-                    ></LinkTo>
+                    >
+                      <span hidden>{{t "roles.index.list.edit"}}</span>
+                    </LinkTo>
                   {{/if}}
 
                   {{#if (can "delete membership-role" role)}}

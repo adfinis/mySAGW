@@ -31,19 +31,19 @@
               <div class="uk-text-small">
                 {{#if membership.timeSlot.lower}}
                   {{t "components.identity-memberships.timeSlotLower"}}
-                  {{moment-format membership.timeSlot.lower "DD.MM.YYYY" allowEmpty=true}}
+                  {{format-date membership.timeSlot.lower "dd.LL.yyyy"}}
                 {{/if}}
 
                 {{#if membership.timeSlot.upper}}
                   {{t "components.identity-memberships.timeSlotUpper"}}
-                  {{moment-format membership.timeSlot.upper "DD.MM.YYYY" allowEmpty=true}}
+                  {{format-date membership.timeSlot.upper "dd.LL.yyyy"}}
                 {{/if}}
               </div>
 
               {{#if membership.nextElection}}
                 <div class="uk-text-small">
                   {{t "components.identity-memberships.list.nextElection"
-                    date=(moment-format membership.nextElection "DD.MM.YYYY")
+                    date=(format-date membership.nextElection "dd.LL.yyyy")
                   }}
                 </div>
               {{/if}}
@@ -167,10 +167,12 @@
                 @name="timeSlot.lower"
                 as |field|
               >
-                <PikadayInput
+                <EmberFlatpickr
                   class="uk-input"
-                  @value={{field.value}}
-                  @onSelection={{field.update}}
+                  @date={{if field.value field.value null}}
+                  @onChange={{field.update}}
+                  @dateFormat="d.m.Y"
+                  @locale={{this.locale}}
                 />
               </Form.input>
             </div>
@@ -182,10 +184,12 @@
                 @name="timeSlot.upper"
                 as |field|
               >
-                <PikadayInput
+                <EmberFlatpickr
                   class="uk-input"
-                  @value={{field.value}}
-                  @onSelection={{field.update}}
+                  @date={{if field.value field.value null}}
+                  @onChange={{field.update}}
+                  @dateFormat="d.m.Y"
+                  @locale={{this.locale}}
                 />
               </Form.input>
             </div>
@@ -199,10 +203,12 @@
           @name="nextElection"
           as |field|
         >
-          <PikadayInput
+          <EmberFlatpickr
             class="uk-input"
-            @value={{field.value}}
-            @onSelection={{field.update}}
+            @date={{if field.value field.value null}}
+            @onChange={{field.update}}
+            @dateFormat="d.m.Y"
+            @locale={{this.locale}}
           />
         </Form.input>
       </div>

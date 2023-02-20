@@ -7,6 +7,7 @@ components:
       edit: "Modifier une adresse électronique"
       delete: "Effacer une adresse électronique"
       empty: "Jusqu'à présent aucune adresse électronique n'a été saisie."
+      send: "Envoyer un courriel"
     form:
       title:
         add: "Ajouter une adresse électronique"

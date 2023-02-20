@@ -7,6 +7,7 @@ components:
       edit: "Nummer bearbeiten"
       delete: "Nummer löschen"
       empty: "Bisher wurden keine Telefonnummern erfasst."
+      call: "Anrufen"
     form:
       title:
         add: "Nummer hinzufügen"

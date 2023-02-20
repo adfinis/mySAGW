@@ -4,6 +4,7 @@ documents:
   municipality: "Gemeinde"
   type: "Gesuchstyp"
   fetchError: "Während des Abfragen der Gesuche ist ein Fehler aufgetreten."
+  back: "Zurück zu Gesuche"
 
   pageInfo: "{length} von {total} Gesuchen zeigen"
   orderBy: "Sortieren nach"

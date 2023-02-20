@@ -4,6 +4,7 @@ documents:
   municipality: "Commune"
   type: "Type de requête"
   fetchError: "Une erreur s'est produite lors de la récupération des documents."
+  back: "Retour à Requêtes"
 
   pageInfo: "Montrer {length} de {total} requêtes"
   orderBy: "Trier selon"
@@ -78,7 +79,7 @@ documents:
 
   accesses:
     title: "Accès"
-    invitation: "Invitations"
+    invitations: "Invitations"
     email: "E-Mail"
     add: "Autoriser l'accès"
     duplicateEmail: "Ce courriel a déjà été donné accès"

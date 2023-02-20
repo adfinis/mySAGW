@@ -37,7 +37,11 @@
                 class="uk-icon-button uk-button-default"
                 uk-icon="receiver"
                 href="tel:{{phoneNumber.phone}}"
-              ></a>
+                aria-label={{t "components.identity-phone-numbers.list.call"}}
+                title={{t "components.identity-phone-numbers.list.call"}}
+              >
+                <span hidden>{{phoneNumber.phone}}</span>
+              </a>
 
               <div class="uk-margin-left">
                 {{#if (can "edit phone-number" @identity)}}

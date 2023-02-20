@@ -26,6 +26,7 @@ components:
 
   submit-button:
     title: "Absenden"
+    error: "Ein Fehler ist passiert beim Validieren vom Dokument."
 
   filters:
     dropdown:

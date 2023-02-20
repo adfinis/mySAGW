@@ -1,6 +1,5 @@
 import Route from "@ember/routing/route";
 import { inject as service } from "@ember/service";
-import moment from "moment";
 
 export default class ApplicationRoute extends Route {
   @service intl;
@@ -14,7 +13,6 @@ export default class ApplicationRoute extends Route {
 
     const locale = localStorage.getItem("locale") ?? "en";
     this.intl.setLocale([locale]);
-    moment.locale(locale);
 
     this.calumaOptions.registerComponentOverride({
       label: "Einreichen Button",

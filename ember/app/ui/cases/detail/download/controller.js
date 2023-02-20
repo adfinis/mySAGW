@@ -1,7 +1,7 @@
 import Controller from "@ember/controller";
 import { inject as service } from "@ember/service";
 import { decamelize } from "@ember/string";
-import { dropTask } from "ember-concurrency-decorators";
+import { dropTask } from "ember-concurrency";
 
 import ENV from "mysagw/config/environment";
 import downloadFile from "mysagw/utils/download-file";
@@ -10,6 +10,7 @@ export default class CasesDetailDownloadController extends Controller {
   @service notification;
   @service intl;
   @service store;
+  @service fetch;
 
   get activeDownloads() {
     const downloads = [this.application];
@@ -46,7 +47,7 @@ export default class CasesDetailDownloadController extends Controller {
       headers: adapter.headers,
     };
     try {
-      yield downloadFile(uri, init);
+      yield downloadFile(this.fetch.fetch(uri, init));
     } catch (error) {
       console.error(error);
       this.notification.fromError(error);

@@ -7,7 +7,7 @@ import { allCases } from "@projectcaluma/ember-core/caluma-query/queries";
 import { queryManager } from "ember-apollo-client";
 import Changeset from "ember-changeset";
 import lookupValidator from "ember-changeset-validations";
-import { dropTask, restartableTask } from "ember-concurrency-decorators";
+import { dropTask, restartableTask } from "ember-concurrency";
 
 import ENV from "mysagw/config/environment";
 import cancelCaseMutation from "mysagw/gql/mutations/cancel-case.graphql";
@@ -21,6 +21,7 @@ export default class CasesDetailIndexController extends Controller {
   @service notification;
   @service intl;
   @service store;
+  @service fetch;
 
   @queryManager apollo;
 
@@ -221,7 +222,7 @@ export default class CasesDetailIndexController extends Controller {
       headers: adapter.headers,
     };
     try {
-      yield downloadFile(uri, init);
+      yield downloadFile(this.fetch.fetch(uri, init));
     } catch (error) {
       console.error(error);
       this.notification.fromError(error);
