@@ -35,7 +35,7 @@
     "@projectcaluma/ember-analytics": "^11.0.1",
     "@projectcaluma/ember-core": "^11.0.1",
     "@projectcaluma/ember-form": "^11.0.1",
-    "@projectcaluma/ember-form-builder": "^11.0.1",
+    "@projectcaluma/ember-form-builder": "^11.0.2",
     "@projectcaluma/ember-testing": "^11.0.1",
     "@projectcaluma/ember-workflow": "^11.0.1",
     "babel-eslint": "^10.1.0",
