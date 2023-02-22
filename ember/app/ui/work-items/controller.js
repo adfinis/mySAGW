@@ -46,9 +46,9 @@ export default class WorkItemsIndexController extends Controller {
     expertAssociations: "",
     distributionPlan: "",
     sections: "",
-  }
+  };
   @dedupeTracked filters = new TrackedObject(this._filters);
-  @dedupeTracked invertedFilters = new TrackedObject(this._filters)
+  @dedupeTracked invertedFilters = new TrackedObject(this._filters);
   @dedupeTracked order = "-CREATED_AT";
 
   workItemsQuery = useCalumaQuery(this, allWorkItems, () => ({
@@ -102,6 +102,7 @@ export default class WorkItemsIndexController extends Controller {
 
     if (this.filters.forms) {
       // TODO cant filter for case form
+      // filter.push({ caseDocumentForms: arrayFromString(this.filters.forms) });
     }
 
     Object.keys(ENV.APP.caluma.filterableQuestions).forEach((question) => {
@@ -171,6 +172,11 @@ export default class WorkItemsIndexController extends Controller {
     } else {
       this.filters[type] = eventOrValue.target?.value ?? eventOrValue;
     }
+  }
+
+  @action
+  resetFilters() {
+    this.filters = new TrackedObject(this._filters);
   }
 
   get tableConfig() {

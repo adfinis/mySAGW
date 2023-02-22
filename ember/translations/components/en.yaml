@@ -30,6 +30,7 @@ components:
 
   filters:
     invert: "Invert filter"
+    reset: "Reset filters"
     dropdown:
       loading: "Loading..."
       empty: "No entries found"

@@ -1,13 +1,15 @@
 import Controller from "@ember/controller";
+import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import { useCalumaQuery } from "@projectcaluma/ember-core/caluma-query";
 import { allCases } from "@projectcaluma/ember-core/caluma-query/queries";
 import { queryManager } from "ember-apollo-client";
 import { restartableTask, timeout } from "ember-concurrency";
 import { trackedFunction } from "ember-resources/util/function";
-import { dedupeTracked } from "tracked-toolbox";
 import { TrackedObject } from "tracked-built-ins";
+import { dedupeTracked } from "tracked-toolbox";
 
+import ENV from "mysagw/config/environment";
 import casesCountQuery from "mysagw/gql/queries/cases-count.graphql";
 import {
   arrayFromString,
@@ -34,7 +36,7 @@ export default class CasesIndexController extends Controller {
     expertAssociations: "",
     distributionPlan: "",
     sections: "",
-  }
+  };
   @dedupeTracked filters = new TrackedObject(this._filters);
   @dedupeTracked order = "-CREATED_AT";
 
@@ -56,7 +58,7 @@ export default class CasesIndexController extends Controller {
     // the filtered forms which uses `await Promise.resolve()` to avoid an
     // infinite loop. However, all tracked properties used after that await
     // statement won't trigger a re-run if changed.
-    const { documentNumber, answerSearch, identities } = this.filters;
+    const { documentNumber, answerSearch, identities, forms } = this.filters;
 
     const filters = [
       { workflow: "circulation", invert: true },
@@ -82,6 +84,25 @@ export default class CasesIndexController extends Controller {
         ],
       });
     }
+
+    if (forms) {
+      // TODO cant filter for case form
+      // filter.push({ documentForms: arrayFromString(forms) });
+    }
+
+    Object.keys(ENV.APP.caluma.filterableQuestions).forEach((question) => {
+      if (!this.filters[question]) {
+        return;
+      }
+      filter.push({
+        hasAnswer: [
+          {
+            question: ENV.APP.caluma.filterableQuestions[question],
+            value: this.filters[question],
+          },
+        ],
+      });
+    });
 
     if (identities) {
       filters.push({
@@ -135,5 +156,10 @@ export default class CasesIndexController extends Controller {
     } else {
       this.filters[type] = eventOrValue.target?.value ?? eventOrValue;
     }
+  }
+
+  @action
+  resetFilters() {
+    this.filters = new TrackedObject(this._filters);
   }
 }

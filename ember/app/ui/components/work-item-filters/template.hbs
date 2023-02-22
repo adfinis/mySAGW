@@ -119,4 +119,15 @@
       />
     </Filters>
   </FilterModal>
+
+  <label class="uk-width-auto">
+    <span class="uk-invisible">{{t "components.filters.reset"}}</span>
+    <UkButton
+      class="uk-display-block"
+      uk-tooltip={{t "components.filters.reset"}}
+      @onClick={{@resetFilters}}
+    >
+      <UkIcon @icon="refresh" />
+    </UkButton>
+  </label>
 </Filters>

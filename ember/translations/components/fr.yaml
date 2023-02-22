@@ -29,6 +29,8 @@ components:
     error: "Une erreur s'est produite lors de la validation du document."
 
   filters:
+    invert: "Invert filter"
+    reset: "Reset filters"
     dropdown:
       loading: "Chargement..."
       empty: "Aucune entrée trouvée"

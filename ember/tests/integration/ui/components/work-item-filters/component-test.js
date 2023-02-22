@@ -1,18 +1,19 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'mysagw/tests/helpers';
-import { render } from '@ember/test-helpers';
-import { hbs } from 'ember-cli-htmlbars';
+import { render } from "@ember/test-helpers";
+import { hbs } from "ember-cli-htmlbars";
+import { module, test } from "qunit";
 
-module('Integration | Component | work-item-filters', function (hooks) {
+import { setupRenderingTest } from "mysagw/tests/helpers";
+
+module("Integration | Component | work-item-filters", function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function (assert) {
+  test("it renders", async function (assert) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
     await render(hbs`<WorkItemFilters />`);
 
-    assert.dom(this.element).hasText('');
+    assert.dom(this.element).hasText("");
 
     // Template block usage:
     await render(hbs`
@@ -21,6 +22,6 @@ module('Integration | Component | work-item-filters', function (hooks) {
       </WorkItemFilters>
     `);
 
-    assert.dom(this.element).hasText('template block text');
+    assert.dom(this.element).hasText("template block text");
   });
 });
