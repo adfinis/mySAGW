@@ -43,9 +43,9 @@ work-items:
     documentNumber: "Dossiernummer"
     answer: "Antwort"
     forms: "Form"
-    expertAssociations: "Expert association"
-    distributionPlans: "Distribution plan"
-    sections: "Section"
+    expertAssociations: "Fachgesellschaft"
+    distributionPlans: "Verteilplan"
+    sections: "Sektion"
 
     all: "Alle"
     own: "Eigene"

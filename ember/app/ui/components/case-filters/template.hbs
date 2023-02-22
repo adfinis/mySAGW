@@ -22,10 +22,10 @@
   <div class="uk-flex filters-gap">
     <FilterModal
       @setFiltersAmount={{this.setFiltersAmount}}
+      @resetFilters={{@resetFilters}}
       class="uk-width-auto"
     >
       <Filters
-        @invertable={{true}}
         class="uk-grid-divider uk-grid-match uk-child-expand"
         uk-grid
         as |Filter|
@@ -34,11 +34,13 @@
           @label={{t "work-items.filters.documentNumber"}}
           @value={{@filters.documentNumber}}
           @onChange={{perform @updateFilter "documentNumber"}}
+          @invertFilter={{perform @invertFilter "documentNumber"}}
         />
         <Filter.Input
           @label={{t "work-items.filters.answer"}}
           @value={{@filters.answerSearch}}
           @onChange={{perform @updateFilter "answerSearch"}}
+          @invertFilter={{perform @invertFilter "answerSearch"}}
         />
         {{#if (can "filter access case")}}
           <Filter.Identity
@@ -51,27 +53,28 @@
           @selected={{@filters.forms}}
           @options={{this.forms.value}}
           @onChange={{perform @updateFilter "forms"}}
+          @invertFilter={{perform @invertFilter "forms"}}
         />
         <Filter.Dropdown
           @label={{t "work-items.filters.expertAssociations"}}
           @selected={{@filters.expertAssociations}}
           @options={{this.expertAssociations}}
           @onChange={{perform @updateFilter "expertAssociations"}}
-          @loading={{this.questionOptions.isLoading}}
+          @invertFilter={{perform @invertFilter "expertAssociations"}}
         />
         <Filter.Dropdown
           @label={{t "work-items.filters.distributionPlans"}}
           @selected={{@filters.distributionPlans}}
           @options={{this.distributionPlans}}
           @onChange={{perform @updateFilter "distributionPlans"}}
-          @loading={{this.questionOptions.isLoading}}
+          @invertFilter={{perform @invertFilter "distributionPlans"}}
         />
         <Filter.Dropdown
           @label={{t "work-items.filters.sections"}}
           @selected={{@filters.sections}}
           @options={{this.sections}}
           @onChange={{perform @updateFilter "sections"}}
-          @loading={{this.questionOptions.isLoading}}
+          @invertFilter={{perform @invertFilter "sections"}}
         />
       </Filters>
     </FilterModal>

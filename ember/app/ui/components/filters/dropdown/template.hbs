@@ -16,9 +16,14 @@
       {{option.label}}
     </PowerSelectMultiple>
   </label>
-  {{#if @invertable}}
+  {{#if @invertFilter}}
     <label>
-      <Input class="uk-checkbox" @type="checkbox"/>
+      <Input
+        class="uk-checkbox"
+        @type="checkbox"
+        @value={{@value.inverted}}
+        {{on "click" @invertFilter}}
+      />
       {{t "components.filters.invert"}}
     </label>
   {{/if}}

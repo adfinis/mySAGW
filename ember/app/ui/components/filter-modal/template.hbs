@@ -26,7 +26,11 @@
   <modal.body>
     {{yield}}
   </modal.body>
-  <modal.footer class="uk-flex uk-flex-center">
+  <modal.footer class="uk-flex uk-flex-center filters-gap">
+    <UkButton
+      @label={{t "components.filters.reset"}}
+      @onClick={{@resetFilters}}
+    />
     <UkButton
       @label={{t "components.filters.modal.close"}}
       @onClick={{fn (mut this.visible) false}}

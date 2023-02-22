@@ -1,44 +1,21 @@
-import Controller from "@ember/controller";
-import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import { useCalumaQuery } from "@projectcaluma/ember-core/caluma-query";
 import { allCases } from "@projectcaluma/ember-core/caluma-query/queries";
 import { queryManager } from "ember-apollo-client";
-import { restartableTask, timeout } from "ember-concurrency";
 import { trackedFunction } from "ember-resources/util/function";
-import { TrackedObject } from "tracked-built-ins";
-import { dedupeTracked } from "tracked-toolbox";
 
 import ENV from "mysagw/config/environment";
 import casesCountQuery from "mysagw/gql/queries/cases-count.graphql";
-import {
-  arrayFromString,
-  stringFromArray,
-  serializeOrder,
-} from "mysagw/utils/query-params";
+import { arrayFromString, serializeOrder } from "mysagw/utils/query-params";
+import TableController from "mysagw/utils/table-controller";
 
-export default class CasesIndexController extends Controller {
-  queryParams = ["order", "documentNumber", "identities", "answerSearch"];
-
+export default class CasesIndexController extends TableController {
   @service store;
   @service notification;
   @service intl;
   @service filteredForms;
 
   @queryManager apollo;
-
-  // Filters
-  _filters = {
-    documentNumber: "",
-    identities: "",
-    answerSearch: "",
-    forms: "",
-    expertAssociations: "",
-    distributionPlan: "",
-    sections: "",
-  };
-  @dedupeTracked filters = new TrackedObject(this._filters);
-  @dedupeTracked order = "-CREATED_AT";
 
   caseQuery = useCalumaQuery(this, allCases, () => ({
     options: { pageSize: 20 },
@@ -71,6 +48,7 @@ export default class CasesIndexController extends Controller {
             lookup: "ICONTAINS",
           },
         ],
+        invert: Boolean(documentNumber),
       },
     ];
 
@@ -82,25 +60,27 @@ export default class CasesIndexController extends Controller {
             value: answerSearch,
           },
         ],
+        invert: Boolean(answerSearch),
       });
     }
 
     if (forms) {
       // TODO cant filter for case form
-      // filter.push({ documentForms: arrayFromString(forms) });
+      // filter.push({ documentForms: arrayFromString(forms),        invert: Boolean(forms), });
     }
 
     Object.keys(ENV.APP.caluma.filterableQuestions).forEach((question) => {
       if (!this.filters[question]) {
         return;
       }
-      filter.push({
+      filters.push({
         hasAnswer: [
           {
             question: ENV.APP.caluma.filterableQuestions[question],
             value: this.filters[question],
           },
         ],
+        invert: Boolean(this.invertedFilters[question]),
       });
     });
 
@@ -136,30 +116,5 @@ export default class CasesIndexController extends Controller {
       console.error(error);
       this.notification.fromError(error);
     }
-  }
-
-  @restartableTask
-  *updateFilter(type, eventOrValue) {
-    if (["documentNumber", "answerSearch"].includes(type)) {
-      // debounce only input filters by 500ms to prevent too many requests when
-      // typing into a search field
-      yield timeout(500);
-    }
-
-    // Update the filter with the passed value. This can either be an array of
-    // objects (multiple choice filters), and event or a plain value
-    if (Array.isArray(eventOrValue)) {
-      this.filters[type] = stringFromArray(
-        eventOrValue,
-        type === "identities" ? "idpId" : "value"
-      );
-    } else {
-      this.filters[type] = eventOrValue.target?.value ?? eventOrValue;
-    }
-  }
-
-  @action
-  resetFilters() {
-    this.filters = new TrackedObject(this._filters);
   }
 }

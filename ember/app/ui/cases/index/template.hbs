@@ -17,14 +17,20 @@
         {{t "documents.empty.welcome" appName="mySAGW"}}
       </h1>
 
-      <p class="uk-text-center uk-text-large uk-margin-large-top uk-margin-medium-bottom">
+      <p
+        class="uk-text-center uk-text-large uk-margin-large-top uk-margin-medium-bottom"
+      >
         {{t "documents.empty.no-documents"}}
       </p>
 
       <div class="uk-flex uk-flex-center">
-        <div class="uk-flex uk-flex-middle uk-margin-small-left uk-margin-small-right">
-          <LinkTo @route="cases.new"
-            class="uk-button uk-button-default uk-width-medium uk-height-medium uk-flex uk-flex-middle uk-flex-center uk-flex-column">
+        <div
+          class="uk-flex uk-flex-middle uk-margin-small-left uk-margin-small-right"
+        >
+          <LinkTo
+            @route="cases.new"
+            class="uk-button uk-button-default uk-width-medium uk-height-medium uk-flex uk-flex-middle uk-flex-center uk-flex-column"
+          >
             <UkIcon @icon="plus" @ratio="3" class="uk-margin" />
             {{t "documents.new.title"}}
           </LinkTo>
@@ -33,19 +39,18 @@
     </div>
   {{else}}
     <CaseFilters
+      {{did-insert this.deserializeFilter}}
       @filters={{this.filters}}
       @invertedFilters={{this.invertedFilters}}
       @updateFilter={{this.updateFilter}}
       @resetFilters={{this.resetFilters}}
     />
 
-    {{#if this.caseFilters.value}}
-      <CasesTable
-        @query={{this.caseQuery}}
-        @loading={{this.caseQuery.isLoading}}
-        @setOrder={{fn (mut this.order)}}
-        @order={{this.order}}
-      />
-    {{/if}}
+    <CasesTable
+      @query={{this.caseQuery}}
+      @loading={{this.caseQuery.isLoading}}
+      @setOrder={{fn (mut this.order)}}
+      @order={{this.order}}
+    />
   {{/if}}
 {{/if}}

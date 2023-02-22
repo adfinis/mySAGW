@@ -5,17 +5,17 @@
 <hr />
 
 <WorkItemFilters
+  {{did-insert this.deserializeFilter}}
   @filters={{this.filters}}
   @invertedFilters={{this.invertedFilters}}
   @updateFilter={{this.updateFilter}}
   @resetFilters={{this.resetFilters}}
+  @invertFilter={{this.invertFilter}}
 />
 
-{{#if this.workItemsFilter.value}}
-  <WorkItemList
-    @query={{this.workItemsQuery}}
-    @config={{this.tableConfig}}
-    @setOrder={{fn (mut this.order)}}
-    @order={{this.order}}
-  />
-{{/if}}
+<WorkItemList
+  @query={{this.workItemsQuery}}
+  @config={{this.tableConfig}}
+  @setOrder={{fn (mut this.order)}}
+  @order={{this.order}}
+/>

@@ -1,40 +1,21 @@
-import Controller from "@ember/controller";
 import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import { useCalumaQuery } from "@projectcaluma/ember-core/caluma-query";
 import { allWorkItems } from "@projectcaluma/ember-core/caluma-query/queries";
 import { queryManager } from "ember-apollo-client";
-import { restartableTask, timeout } from "ember-concurrency";
 import { trackedFunction } from "ember-resources/util/function";
-import { TrackedObject } from "tracked-built-ins";
-import { dedupeTracked } from "tracked-toolbox";
 
 import ENV from "mysagw/config/environment";
-import {
-  arrayFromString,
-  stringFromArray,
-  serializeOrder,
-} from "mysagw/utils/query-params";
+import { arrayFromString, serializeOrder } from "mysagw/utils/query-params";
+import TableController from "mysagw/utils/table-controller";
 
-export default class WorkItemsIndexController extends Controller {
-  queryParams = [
-    "order",
-    "status",
-    "taskTypes",
-    "documentNumber",
-    "identities",
-    "answerSearch",
-    "responsible",
-    "filters",
-  ];
-
+export default class WorkItemsIndexController extends TableController {
   @service session;
   @service store;
   @service filteredForms;
 
   @queryManager apollo;
 
-  // Filters
   _filters = {
     status: "open",
     responsible: "all",
@@ -47,9 +28,6 @@ export default class WorkItemsIndexController extends Controller {
     distributionPlan: "",
     sections: "",
   };
-  @dedupeTracked filters = new TrackedObject(this._filters);
-  @dedupeTracked invertedFilters = new TrackedObject(this._filters);
-  @dedupeTracked order = "-CREATED_AT";
 
   workItemsQuery = useCalumaQuery(this, allWorkItems, () => ({
     options: {
@@ -72,15 +50,22 @@ export default class WorkItemsIndexController extends Controller {
             lookup: "ICONTAINS",
           },
         ],
+        invert: Boolean(this.invertedFilters.documentNumber),
       },
     ];
 
     if (this.filters.taskTypes) {
-      filter.push({ tasks: arrayFromString(this.filters.taskTypes) });
+      filter.push({
+        tasks: arrayFromString(this.filters.taskTypes),
+        invert: Boolean(this.invertedFilters.taskTypes),
+      });
     }
 
     if (this.filters.identities) {
-      filter.push({ assignedUsers: arrayFromString(this.filters.identities) });
+      filter.push({
+        assignedUsers: arrayFromString(this.filters.identities),
+        invert: Boolean(this.invertedFilters.identities),
+      });
     }
 
     if (this.filters.responsible === "own") {
@@ -97,12 +82,14 @@ export default class WorkItemsIndexController extends Controller {
             value: this.filters.answerSearch,
           },
         ],
+        invert: Boolean(this.invertedFilters.answerSearch),
       });
     }
 
     if (this.filters.forms) {
       // TODO cant filter for case form
-      // filter.push({ caseDocumentForms: arrayFromString(this.filters.forms) });
+      // filter.push({ caseDocumentForms: arrayFromString(this.filters.forms),
+      //  invert: Boolean(this.invertedFilters.forms), });
     }
 
     Object.keys(ENV.APP.caluma.filterableQuestions).forEach((question) => {
@@ -116,6 +103,7 @@ export default class WorkItemsIndexController extends Controller {
             value: this.filters[question],
           },
         ],
+        invert: Boolean(this.invertedFilters[question]),
       });
     });
 
@@ -152,31 +140,6 @@ export default class WorkItemsIndexController extends Controller {
     }
 
     return workItems;
-  }
-
-  @restartableTask
-  *updateFilter(type, eventOrValue) {
-    if (["documentNumber", "answerSearch"].includes(type)) {
-      // debounce only input filters by 500ms to prevent too many requests when
-      // typing into a search field
-      yield timeout(500);
-    }
-
-    // Update the filter with the passed value. This can either be an array of
-    // objects (multiple choice filters), and event or a plain value
-    if (Array.isArray(eventOrValue)) {
-      this.filters[type] = stringFromArray(
-        eventOrValue,
-        type === "identities" ? "idpId" : "value"
-      );
-    } else {
-      this.filters[type] = eventOrValue.target?.value ?? eventOrValue;
-    }
-  }
-
-  @action
-  resetFilters() {
-    this.filters = new TrackedObject(this._filters);
   }
 
   get tableConfig() {

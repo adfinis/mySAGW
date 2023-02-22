@@ -43,8 +43,8 @@ work-items:
     documentNumber: "Numéro du document"
     answer: "Response"
     forms: "Form"
-    expertAssociations: "Expert association"
-    distributionPlans: "Distribution plan"
+    expertAssociations: "Société membre"
+    distributionPlans: "Plan de distribution"
     sections: "Section"
 
     all: "Tous"
