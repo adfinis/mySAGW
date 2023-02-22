@@ -163,7 +163,6 @@ export default class WorkItemsIndexController extends Controller {
 
     // Update the filter with the passed value. This can either be an array of
     // objects (multiple choice filters), and event or a plain value
-    console.log(eventOrValue);
     if (Array.isArray(eventOrValue)) {
       this.filters[type] = stringFromArray(
         eventOrValue,

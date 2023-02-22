@@ -29,6 +29,7 @@ components:
     error: "An error has occured while validating the document."
 
   filters:
+    invert: "Invert filter"
     dropdown:
       loading: "Loading..."
       empty: "No entries found"

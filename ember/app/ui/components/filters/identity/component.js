@@ -1,31 +1,26 @@
+import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { restartableTask, timeout } from "ember-concurrency";
 import { trackedFunction } from "ember-resources/util/function";
-import {
-  arrayFromString,
-} from "mysagw/utils/query-params";
-import { action } from "@ember/object";
+
+import { arrayFromString } from "mysagw/utils/query-params";
 
 export default class FiltersIdentityComponent extends Component {
   @service store;
   @service notification;
 
-  @tracked selection = this.selectedIdentityOptions;
+  get selected() {
+    const selected = arrayFromString(this.args.selected ?? "");
 
-  get selectedIdentities() {
-    return arrayFromString(this.args.selectedIdentities ?? "");
-  }
-
-  get selectedIdentityOptions() {
     return this.identityOptions.value?.filter((i) =>
-      this.selectedIdentities.includes(i.idpId)
+      selected.includes(i.idpId)
     );
   }
 
   identityOptions = trackedFunction(this, async () => {
-    if (!this.selectedIdentities.length) {
+    if (!this.args.selected) {
       return [];
     }
 
@@ -36,7 +31,9 @@ export default class FiltersIdentityComponent extends Component {
         await this.store.query(
           "identity",
           {
-            filter: { idpIds: this.selectedIdentities.join(",") },
+            filter: {
+              idpIds: this.args.selected,
+            },
           },
           { adapterOptions: { customEndpoint: "public-identities" } }
         )
@@ -77,7 +74,6 @@ export default class FiltersIdentityComponent extends Component {
 
   @action
   setSelection(value) {
-    this.selection = value;
     this.args.onChange(value);
   }
 }

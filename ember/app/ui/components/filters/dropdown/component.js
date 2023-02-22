@@ -5,10 +5,7 @@ import {
   arrayFromString,
 } from "mysagw/utils/query-params";
 export default class FiltersDropdownComponent extends Component {
-  @tracked selection = this.selected;
-
   get selected() {
-    console.log(this.args.selected);
     const selected = arrayFromString(this.args.selected ?? "");
 
     return (
@@ -19,7 +16,6 @@ export default class FiltersDropdownComponent extends Component {
 
   @action
   setSelection(value) {
-    this.selection = value;
     this.args.onChange(value);
   }
 }

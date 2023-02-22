@@ -27,7 +27,7 @@
     @onChange={{perform @updateFilter "taskTypes"}}
   />
   <Filter.Identity
-    @selectedIdentities={{@filter.identities}}
+    @selected={{@filter.identities}}
     @onChange={{perform @updateFilter "identities"}}
   />
   <Filter.Input
@@ -47,6 +47,7 @@
     class="uk-width-auto"
   >
     <Filters
+      @invertable={{true}}
       class="uk-grid-divider uk-grid-match uk-child-expand"
       uk-grid
       as |Filter|
@@ -76,7 +77,7 @@
         @onChange={{perform @updateFilter "taskTypes"}}
       />
       <Filter.Identity
-        @selectedIdentities={{@filter.identities}}
+        @selected={{@filter.identities}}
         @onChange={{perform @updateFilter "identities"}}
       />
       <Filter.Input

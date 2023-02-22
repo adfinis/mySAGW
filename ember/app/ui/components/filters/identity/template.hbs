@@ -1,9 +1,10 @@
 <div ...attributes>
   <label class="uk-display-block">
     {{t "documents.filters.identity"}}
+    {{log @selected}}
     <PowerSelectMultiple
       @options={{this.identityOptions.value}}
-      @selected={{this.selection}}
+      @selected={{this.selected}}
       @onChange={{this.setSelection}}
       @searchEnabled={{true}}
       @search={{perform this.search}}
@@ -16,4 +17,10 @@
       {{option.label}}
     </PowerSelectMultiple>
   </label>
+  {{#if @invertable}}
+    <label>
+      <Input class="uk-checkbox" @type="checkbox"/>
+      {{t "components.filters.invert"}}
+    </label>
+  {{/if}}
 </div>

@@ -6,6 +6,7 @@ import { queryManager } from "ember-apollo-client";
 import { restartableTask, timeout } from "ember-concurrency";
 import { trackedFunction } from "ember-resources/util/function";
 import { dedupeTracked } from "tracked-toolbox";
+import { TrackedObject } from "tracked-built-ins";
 
 import casesCountQuery from "mysagw/gql/queries/cases-count.graphql";
 import {
@@ -24,10 +25,18 @@ export default class CasesIndexController extends Controller {
 
   @queryManager apollo;
 
+  // Filters
+  _filters = {
+    documentNumber: "",
+    identities: "",
+    answerSearch: "",
+    forms: "",
+    expertAssociations: "",
+    distributionPlan: "",
+    sections: "",
+  }
+  @dedupeTracked filters = new TrackedObject(this._filters);
   @dedupeTracked order = "-CREATED_AT";
-  @dedupeTracked documentNumber = "";
-  @dedupeTracked identities = "";
-  @dedupeTracked answerSearch = "";
 
   caseQuery = useCalumaQuery(this, allCases, () => ({
     options: { pageSize: 20 },
@@ -41,17 +50,13 @@ export default class CasesIndexController extends Controller {
     );
   });
 
-  get selectedIdentities() {
-    return arrayFromString(this.identities);
-  }
-
   caseFilters = trackedFunction(this, async () => {
     // This is necessary to trigger a re-run if identities changed and an answer
     // search is given. If an answer search is given, we await the fetching of
     // the filtered forms which uses `await Promise.resolve()` to avoid an
     // infinite loop. However, all tracked properties used after that await
     // statement won't trigger a re-run if changed.
-    const { documentNumber, answerSearch, identities } = this;
+    const { documentNumber, answerSearch, identities } = this.filters;
 
     const filters = [
       { workflow: "circulation", invert: true },
@@ -120,15 +125,15 @@ export default class CasesIndexController extends Controller {
       yield timeout(500);
     }
 
-    /*
-     * Set filter from type argument, if eventOrValue is a event it is from an input field
-     * if its identities an array is to be expected
-     */
-    if (type === "identities") {
-      this[type] = stringFromArray(eventOrValue, "idpId");
+    // Update the filter with the passed value. This can either be an array of
+    // objects (multiple choice filters), and event or a plain value
+    if (Array.isArray(eventOrValue)) {
+      this.filters[type] = stringFromArray(
+        eventOrValue,
+        type === "identities" ? "idpId" : "value"
+      );
     } else {
-      yield timeout(500);
-      this[type] = eventOrValue.target.value;
+      this.filters[type] = eventOrValue.target?.value ?? eventOrValue;
     }
   }
 }

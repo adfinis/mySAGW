@@ -5,7 +5,6 @@
       @options={{@options}}
       @selected={{this.selected}}
       @onChange={{this.setSelection}}
-      @onInput={{@onInput}}
       @searchEnabled={{true}}
       @searchField="label"
       @renderInPlace={{true}}
@@ -17,4 +16,10 @@
       {{option.label}}
     </PowerSelectMultiple>
   </label>
+  {{#if @invertable}}
+    <label>
+      <Input class="uk-checkbox" @type="checkbox"/>
+      {{t "components.filters.invert"}}
+    </label>
+  {{/if}}
 </div>

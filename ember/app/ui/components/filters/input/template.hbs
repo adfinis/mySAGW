@@ -3,4 +3,10 @@
     {{@label}}
     <input value={{@value}} class="uk-input" {{on "input" @onChange}}/>
   </label>
+  {{#if @invertable}}
+    <label>
+      <Input class="uk-checkbox" @type="checkbox"/>
+      {{t "components.filters.invert"}}
+    </label>
+  {{/if}}
 </div>
