@@ -1,6 +1,7 @@
-<div uk-grid class="uk-flex-between">
-  <Filters as |Filter|>
+<Filters class="uk-flex uk-flex-between uk-child-width-expand" as |Filter|>
+  <div class="uk-flex filters-gap">
     <Filter.Input
+      class="uk-width-auto"
       @label={{t "work-items.filters.documentNumber"}}
       @value={{@filters.documentNumber}}
       @onChange={{perform @updateFilter "documentNumber"}}
@@ -17,16 +18,15 @@
         @selected={{@filters.identities}}
       />
     {{/if}}
-  </Filters>
-
-  <div class="uk-flex filters-gap">
+  </div>
+  <div class="uk-flex filters-gap uk-flex-right">
     <FilterModal
       @setFiltersAmount={{this.setFiltersAmount}}
       @resetFilters={{@resetFilters}}
       class="uk-width-auto"
     >
       <Filters
-        class="uk-grid-divider uk-grid-match uk-child-expand"
+        class="uk-grid-match uk-flex-around uk-child-width-1-4@l uk-child-width-1-5@xl"
         uk-grid
         as |Filter|
       >
@@ -90,4 +90,4 @@
       </UkButton>
     </label>
   </div>
-</div>
+</Filters>
