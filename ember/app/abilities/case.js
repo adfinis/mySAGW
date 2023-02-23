@@ -13,7 +13,7 @@ export default class CaseAbility extends BaseAbility {
   get canEdit() {
     return (
       (this.model.hasSubmitOrReviseWorkItem && this.hasAccess(this.model)) ||
-      this.isStaffOrAdmin
+      this.isAdmin
     );
   }
 

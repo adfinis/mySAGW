@@ -40,7 +40,7 @@ module("Unit | Controller | cases/detail/edit", function (hooks) {
         isAuthenticated: true,
         data: {
           authenticated: {
-            userinfo: { email: "lorem@ipsum.co", mysagw_groups: ["sagw"] },
+            userinfo: { email: "lorem@ipsum.co", mysagw_groups: ["admin"] },
           },
         },
       },
