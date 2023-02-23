@@ -14,7 +14,7 @@
     {{#if (can "filter access case")}}
       <Filter.Identity
         @onChange={{perform @updateFilter "identities"}}
-        @selectedIdentities={{@filters.selectedIdentities}}
+        @selected={{@filters.identities}}
       />
     {{/if}}
   </Filters>
@@ -44,7 +44,7 @@
         />
         {{#if (can "filter access case")}}
           <Filter.Identity
-            @selected={{@filter.identities}}
+            @selected={{@filters.identities}}
             @onChange={{perform @updateFilter "identities"}}
           />
         {{/if}}

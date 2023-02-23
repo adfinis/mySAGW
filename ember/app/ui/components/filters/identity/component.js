@@ -13,8 +13,8 @@ export default class FiltersIdentityComponent extends Component {
   get selected() {
     const selected = arrayFromString(this.args.selected ?? "");
 
-    return this.identityOptions.value?.filter((i) =>
-      selected.includes(i.idpId)
+    return this.identityOptions.value?.filter((option) =>
+      selected.includes(option.idpId)
     );
   }
 

@@ -27,7 +27,7 @@
     @onChange={{perform @updateFilter "taskTypes"}}
   />
   <Filter.Identity
-    @selected={{@filter.identities}}
+    @selected={{@filters.identities}}
     @onChange={{perform @updateFilter "identities"}}
   />
   <Filter.Input
@@ -78,7 +78,7 @@
         @invertFilter={{perform @invertFilter "taskTypes"}}
       />
       <Filter.Identity
-        @selected={{@filter.identities}}
+        @selected={{@filters.identities}}
         @onChange={{perform @updateFilter "identities"}}
         @invertFilter={{perform @invertFilter "identities"}}
       />
