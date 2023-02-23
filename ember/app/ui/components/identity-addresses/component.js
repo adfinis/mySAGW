@@ -4,12 +4,7 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { Changeset } from "ember-changeset";
 import lookupValidator from "ember-changeset-validations";
-import {
-  dropTask,
-  restartableTask,
-  lastValue,
-} from "ember-concurrency-decorators";
-import fetch from "fetch";
+import { dropTask, restartableTask, lastValue } from "ember-concurrency";
 import UIkit from "uikit";
 
 import applyError from "mysagw/utils/apply-error";
@@ -22,6 +17,7 @@ export default class IdentityAddressesComponent extends Component {
   @service notification;
   @service store;
   @service intl;
+  @service fetch;
 
   // Lifecycle
 
@@ -45,7 +41,7 @@ export default class IdentityAddressesComponent extends Component {
   @restartableTask
   *fetchCountries() {
     const adapter = this.store.adapterFor("identity");
-    const response = yield fetch(adapter.buildURL("address"), {
+    const response = yield this.fetch.fetch(adapter.buildURL("address"), {
       method: "OPTIONS",
       headers: adapter.headers,
     });

@@ -40,20 +40,10 @@ updates:
     prefix: chore
     include: scope
   ignore:
-    # mirror https://github.com/projectcaluma/ember-caluma/blob/main/.github/dependabot.yml
+    # mirror part of https://github.com/projectcaluma/ember-caluma/blob/main/.github/dependabot.yml
     - dependency-name: graphql
       versions:
         - ">= 16"
-    # We're not ready yet
-    - dependency-name: ember-source
-      versions:
-        - ">= 4"
-    - dependency-name: ember-cli
-      versions:
-        - ">= 4"
-    - dependency-name: ember-data
-      versions:
-        - ">= 4"
     # https://github.com/ember-cli/ember-cli/issues/9307
     - dependency-name: eslint
       versions:

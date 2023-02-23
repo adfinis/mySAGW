@@ -9,6 +9,18 @@ module.exports = function (defaults) {
     "ember-cli-babel": {
       includePolyfill: true,
     },
+    "ember-validated-form": {
+      theme: "uikit",
+    },
+    "ember-fetch": {
+      preferNative: true,
+    },
+    "ember-simple-auth": {
+      useSessionSetupMethod: true,
+    },
+    flatpickr: {
+      locales: ["fr", "de"],
+    },
 
     sassOptions: {
       includePaths: [
@@ -16,12 +28,6 @@ module.exports = function (defaults) {
         "node_modules/ember-power-select/app/styles/",
         "node_modules/ember-basic-dropdown/app/styles/",
       ],
-    },
-    "ember-fetch": {
-      preferNative: true,
-    },
-    "ember-simple-auth": {
-      useSessionSetupMethod: true,
     },
   });
 

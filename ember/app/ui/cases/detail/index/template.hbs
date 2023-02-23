@@ -26,23 +26,13 @@
             {{t "documents.createdAt"}}
           </th>
           <td class="uk-width-1-3">
-            {{
-              if
-              this.case.createdAt
-              (moment-format this.case.createdAt "DD.MM.YYYY")
-              "-"
-            }}
+            {{format-date this.case.createdAt "dd.LL.yyyy"}}
           </td>
           <th class="uk-text-bold uk-width-1-6">
             {{t "documents.modifiedAt"}}
           </th>
           <td class="uk-width-1-3">
-            {{
-              if
-              this.case.modifiedAt
-              (moment-format this.case.modifiedAt "DD.MM.YYYY")
-              "-"
-            }}
+            {{format-date this.case.modifiedAt "dd.LL.yyyy"}}
           </td>
         </tr>
         <tr>

@@ -1,6 +1,6 @@
 import { attr, belongsTo } from "@ember-data/model";
 import { LocalizedModel } from "ember-localized-model";
-import moment from "moment";
+import { DateTime } from "luxon";
 
 export default class MembershipModel extends LocalizedModel {
   @belongsTo("identity") identity;
@@ -14,7 +14,7 @@ export default class MembershipModel extends LocalizedModel {
 
   get isInactive() {
     return this.timeSlot && this.timeSlot.upper
-      ? this.inactive || moment().isAfter(this.timeSlot.upper, "day") > 0
+      ? this.inactive || DateTime.now() > DateTime.fromISO(this.timeSlot.upper)
       : this.inactive;
   }
 }

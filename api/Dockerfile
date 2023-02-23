@@ -8,10 +8,8 @@ RUN wget -q https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-
 && useradd -u 901 -r mysagw --create-home \
 # all project specific folders need to be accessible by newly created user but also for unknown users (when UID is set manually). Such users are in group root.
 && chown -R mysagw:root /home/mysagw \
-&& chmod -R 770 /home/mysagw
-
-
-RUN apt-get update && apt-get install -y --no-install-recommends \
+&& chmod -R 770 /home/mysagw \
+&& apt-get update && apt-get install -y --no-install-recommends \
   # needed for psycopg2
   libpq-dev
 
