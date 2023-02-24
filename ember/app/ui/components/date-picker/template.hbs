@@ -1,0 +1,23 @@
+<div class="uk-inline uk-width-1-1">
+  <a
+    class="uk-form-icon uk-form-icon-flip"
+    uk-tooltip={{t "caluma.form.delete"}}
+    href="#"
+    {{on "click" this.clearCalendar}}
+  >
+    <UkIcon @icon="close" />
+  </a>
+  <EmberFlatpickr
+    class="uk-input {{if @disabled 'uk-disabled'}}"
+    readonly={{@disabled}}
+    @disabled={{@disabled}}
+    @locale={{this.locale}}
+    @date={{or @date null}}
+    @altFormat="d.m.Y"
+    @altInput={{true}}
+    @allowInput={{true}}
+    @onChange={{this.onChange}}
+    @onReady={{this.onReady}}
+    @onClose={{this.onClose}}
+  />
+</div>

@@ -4,6 +4,7 @@ components:
     add: "Add membership"
     timeSlotLower: "From"
     timeSlotUpper: "Until"
+    timeSlotError: "Until date can't be before From date."
 
     list:
       nextElection: "Next election {date}"

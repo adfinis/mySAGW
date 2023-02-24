@@ -4,6 +4,7 @@ components:
     add: "Mitgliedschaft hinzufügen"
     timeSlotLower: "Von"
     timeSlotUpper: "Bis"
+    timeSlotError: "Das Bis-Datum kann nicht vor dem Von-Datum liegen."
 
     list:
       nextElection: "Nächste Wiederwahl {date}"

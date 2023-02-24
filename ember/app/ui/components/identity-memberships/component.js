@@ -19,10 +19,6 @@ export default class IdentityMembershipsComponent extends Component {
   @service intl;
   @service notification;
 
-  get locale() {
-    return this.intl.primaryLocale;
-  }
-
   // List
 
   @lastValue("fetchMemberships") memberships;
@@ -72,30 +68,43 @@ export default class IdentityMembershipsComponent extends Component {
     this.changeset = null;
   }
 
+  formatDate(date) {
+    if (Array.isArray(date)) {
+      return DateTime.fromJSDate(date[0]).toISODate();
+    } else if (date) {
+      return date;
+    }
+    return null;
+  }
+
+  validateTimeSlot(timeSlot) {
+    if (timeSlot.get("lower") && timeSlot.get("upper")) {
+      if (
+        DateTime.fromISO(timeSlot.get("lower")) >
+        DateTime.fromISO(timeSlot.get("upper"))
+      ) {
+        throw new Error(
+          this.intl.t("components.identity-memberships.timeSlotError")
+        );
+      }
+    }
+  }
+
   @dropTask
   *submit(changeset) {
     try {
-      const format = "yyyy-LL-dd";
-      let timeSlot = changeset.get("timeSlot") || {};
-      if (!timeSlot.lower && !timeSlot.upper) {
-        timeSlot = null;
-      } else {
-        timeSlot.lower = timeSlot.lower
-          ? DateTime.fromJSDate(timeSlot.lower[0]).toFormat(format)
-          : undefined;
-        timeSlot.upper = timeSlot.upper
-          ? DateTime.fromJSDate(timeSlot.upper[0]).toFormat(format)
-          : undefined;
+      changeset.execute();
+      const timeSlot = new Map(Object.entries(changeset.data.timeSlot));
+      timeSlot.forEach(([key, value]) => {
+        timeSlot[key] = this.formatDate(value);
+      });
+      this.validateTimeSlot(timeSlot);
+      if (timeSlot.size) {
+        changeset.set("timeSlot", Object.fromEntries(timeSlot));
       }
-      changeset.set("timeSlot", timeSlot);
 
       const election = changeset.get("nextElection");
-      if (election) {
-        changeset.set(
-          "nextElection",
-          DateTime.fromJSDate(election[0]).toFormat(format)
-        );
-      }
+      changeset.set("nextElection", this.formatDate(election));
 
       yield changeset.save();
       this.changeset = null;

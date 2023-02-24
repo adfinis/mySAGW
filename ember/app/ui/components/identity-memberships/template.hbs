@@ -79,14 +79,13 @@
 
     {{#if (can "add membership-role")}}
       <p class="uk-text-right">
-        <button
-          class="uk-button uk-button-default"
-          type="button"
-          disabled={{this.changeset}}
-          {{on "click" (fn this.edit null)}}
+        <UkButton
+          @disabled={{this.changeset}}
+          @onClick={{fn this.edit null}}
+          data-test-add
         >
           {{t "components.identity-memberships.add"}}
-        </button>
+        </UkButton>
       </p>
     {{/if}}
   {{/if}}
@@ -121,6 +120,7 @@
             @onChange={{field.update}}
             @onFocus={{this.openPowerSelect}}
             @triggerClass="uk-select"
+            data-test-organisation-select
             as |opt|
           >
             {{opt.organisationName}}
@@ -167,13 +167,9 @@
                 @name="timeSlot.lower"
                 as |field|
               >
-                <EmberFlatpickr
-                  class="uk-input"
-                  @date={{if field.value field.value null}}
+                <DatePicker
+                  @date={{field.value}}
                   @onChange={{field.update}}
-                  @dateFormat="d.m.Y"
-                  @locale={{this.locale}}
-                  @allowInput={{true}}
                 />
               </Form.input>
             </div>
@@ -185,13 +181,9 @@
                 @name="timeSlot.upper"
                 as |field|
               >
-                <EmberFlatpickr
-                  class="uk-input"
-                  @date={{if field.value field.value null}}
+                <DatePicker
+                  @date={{field.value}}
                   @onChange={{field.update}}
-                  @dateFormat="d.m.Y"
-                  @locale={{this.locale}}
-                  @allowInput={{true}}
                 />
               </Form.input>
             </div>
@@ -205,13 +197,9 @@
           @name="nextElection"
           as |field|
         >
-          <EmberFlatpickr
-            class="uk-input"
-            @date={{if field.value field.value null}}
+          <DatePicker
+            @date={{field.value}}
             @onChange={{field.update}}
-            @dateFormat="d.m.Y"
-            @locale={{this.locale}}
-            @allowInput={{true}}
           />
         </Form.input>
       </div>

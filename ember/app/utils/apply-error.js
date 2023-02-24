@@ -1,5 +1,5 @@
 export default function applyError(changeset, error) {
-  error.errors
+  error?.errors
     .filter(
       ({ source: { pointer } }) =>
         pointer.startsWith("/data/attributes") &&

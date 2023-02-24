@@ -4,6 +4,7 @@ components:
     add: "Ajouter une affiliation"
     timeSlotLower: "Depuis"
     timeSlotUpper: "Jusqu'à"
+    timeSlotError: "La date de fin ne peut pas être antérieure à la date de début."
 
     list:
       nextElection: "Prochaine réélection {date}"
