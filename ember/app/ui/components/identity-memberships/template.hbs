@@ -165,6 +165,7 @@
               <Form.input
                 @label={{t "components.identity-memberships.form.label.timeFrom"}}
                 @name="timeSlot.lower"
+                @errorComponent={{component "validated-form-error"}}
                 as |field|
               >
                 <DatePicker
@@ -179,6 +180,7 @@
               <Form.input
                 @label={{t "components.identity-memberships.form.label.timeUntil"}}
                 @name="timeSlot.upper"
+                @errorComponent={{component "validated-form-error"}}
                 as |field|
               >
                 <DatePicker

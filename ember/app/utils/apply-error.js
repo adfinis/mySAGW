@@ -1,6 +1,6 @@
 export default function applyError(changeset, error) {
-  error?.errors
-    .filter(
+  error.errors
+    ?.filter(
       ({ source: { pointer } }) =>
         pointer.startsWith("/data/attributes") &&
         !pointer.endsWith("non-field-errors")

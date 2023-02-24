@@ -11,6 +11,9 @@ module.exports = function (defaults) {
     },
     "ember-validated-form": {
       theme: "uikit",
+      defaults: {
+        "types/date": "myapp/components/date-picker",
+      },
     },
     "ember-fetch": {
       preferNative: true,

@@ -44,7 +44,7 @@ export default class IdentityMembershipsComponent extends Component {
 
   // Add / Edit
 
-  @tracked changeset = null;
+  @tracked changeset;
 
   @action
   edit(membership) {
@@ -69,6 +69,7 @@ export default class IdentityMembershipsComponent extends Component {
   }
 
   formatDate(date) {
+    // Flatpickr returns an array of dates.
     if (Array.isArray(date)) {
       return DateTime.fromJSDate(date[0]).toISODate();
     } else if (date) {
@@ -77,35 +78,24 @@ export default class IdentityMembershipsComponent extends Component {
     return null;
   }
 
-  validateTimeSlot(timeSlot) {
-    if (timeSlot.get("lower") && timeSlot.get("upper")) {
-      if (
-        DateTime.fromISO(timeSlot.get("lower")) >
-        DateTime.fromISO(timeSlot.get("upper"))
-      ) {
-        throw new Error(
-          this.intl.t("components.identity-memberships.timeSlotError")
-        );
-      }
-    }
-  }
-
   @dropTask
   *submit(changeset) {
     try {
       changeset.execute();
       const timeSlot = new Map(Object.entries(changeset.data.timeSlot));
-      timeSlot.forEach(([key, value]) => {
-        timeSlot[key] = this.formatDate(value);
+      timeSlot.forEach((slot) => {
+        if (slot) {
+          const [key, value] = slot;
+          timeSlot[key] = this.formatDate(value);
+        }
       });
-      this.validateTimeSlot(timeSlot);
       if (timeSlot.size) {
         changeset.set("timeSlot", Object.fromEntries(timeSlot));
       }
-
       const election = changeset.get("nextElection");
       changeset.set("nextElection", this.formatDate(election));
 
+      yield changeset.validate();
       yield changeset.save();
       this.changeset = null;
       yield this.onUpdate();

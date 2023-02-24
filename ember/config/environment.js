@@ -27,6 +27,7 @@ module.exports = function (environment) {
       allowAnyFallback: true,
       fallbacks: ["de", "en"],
     },
+    "changeset-validations": { rawOutput: true },
     apollo: {
       apiURL: "/graphql",
     },
