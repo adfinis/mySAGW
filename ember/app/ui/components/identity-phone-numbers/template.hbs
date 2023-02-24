@@ -119,7 +119,7 @@
           {{#each this.intl.locales as |locale|}}
             <Form.input
               @label={{t "components.identity-phone-numbers.form.label.description" lang=(uppercase locale)}}
-              @name="descriptionObject.{{locale}}"
+              @name="_description.{{locale}}"
               @required={{false}}
             />
           {{/each}}
@@ -127,7 +127,7 @@
       {{else}}
         <Form.input
           @label={{t "components.identity-phone-numbers.form.label.description" lang=(uppercase this.intl.locale.firstObject)}}
-          @name="descriptionObject.{{this.intl.locale.firstObject}}"
+          @name="_description.{{this.intl.locale.firstObject}}"
           @required={{false}}
         />
       {{/if}}
