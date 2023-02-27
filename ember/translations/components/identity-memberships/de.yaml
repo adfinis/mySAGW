@@ -5,6 +5,7 @@ components:
     timeSlotLower: "Von"
     timeSlotUpper: "Bis"
     timeSlotError: "Das Bis-Datum kann nicht vor dem Von-Datum liegen."
+    timeSlotErrorLower: "Das Von-Datum kann nicht nach dem Bis-Datum liegen."
 
     list:
       nextElection: "Nächste Wiederwahl {date}"

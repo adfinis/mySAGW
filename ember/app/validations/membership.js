@@ -8,7 +8,7 @@ function validateTimeSlotLower() {
         DateTime.fromISO(newValue) >
         DateTime.fromISO(content.get("timeSlot.upper"))
       ) {
-        return "components.identity-memberships.timeSlotError";
+        return "components.identity-memberships.timeSlotErrorLower";
       }
     }
     return true;
