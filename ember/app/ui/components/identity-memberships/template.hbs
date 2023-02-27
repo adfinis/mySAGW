@@ -166,7 +166,6 @@
                 @label={{t "components.identity-memberships.form.label.timeFrom"}}
                 @name="timeSlot.lower"
                 @errorComponent={{component "validated-form-error"}}
-                @on-update={{(fn this.updateDateField "timeSlot.lower")}}
                 as |field|
               >
                 <DatePicker
@@ -182,7 +181,6 @@
                 @label={{t "components.identity-memberships.form.label.timeUntil"}}
                 @name="timeSlot.upper"
                 @errorComponent={{component "validated-form-error"}}
-                @on-update={{(fn this.updateDateField "timeSlot.upper")}}
                 as |field|
               >
                 <DatePicker
@@ -203,7 +201,7 @@
         >
           <DatePicker
             @date={{field.value}}
-            @onChange={{(fn this.updateDateField field)}}
+            @onChange={{field.update}}
           />
         </Form.input>
       </div>

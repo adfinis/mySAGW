@@ -3,10 +3,15 @@ import { DateTime } from "luxon";
 
 function validateTimeSlotLower() {
   return (key, newValue, oldValue, changes, content) => {
-    if (newValue && content.get("timeSlot.upper")) {
+    if (
+      newValue &&
+      (changes?.timeSlot?.upper ?? content.get("timeSlot.upper"))
+    ) {
       if (
         DateTime.fromISO(newValue) >
-        DateTime.fromISO(content.get("timeSlot.upper"))
+        DateTime.fromISO(
+          changes?.timeSlot?.upper ?? content.get("timeSlot.upper")
+        )
       ) {
         return "components.identity-memberships.timeSlotErrorLower";
       }
@@ -17,10 +22,14 @@ function validateTimeSlotLower() {
 
 function validateTimeSlotUpper() {
   return (key, newValue, oldValue, changes, content) => {
-    if (content.get("timeSlot.lower") && newValue) {
+    if (
+      newValue &&
+      (changes?.timeSlot?.lower ?? content.get("timeSlot.lower"))
+    ) {
       if (
-        DateTime.fromISO(content.get("timeSlot.lower")) >
-        DateTime.fromISO(newValue)
+        DateTime.fromISO(
+          changes?.timeSlot?.lower ?? content.get("timeSlot.lower")
+        ) > DateTime.fromISO(newValue)
       ) {
         return "components.identity-memberships.timeSlotError";
       }
