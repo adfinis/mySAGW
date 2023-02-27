@@ -99,7 +99,7 @@ export default class IdentityMembershipsComponent extends Component {
       }
       const election = changeset.get("nextElection");
       changeset.set("nextElection", this.formatDate(election));
-
+      changeset.set("timeSlot.bounds", "[)");
       yield changeset.validate();
       if (changeset.isValid) {
         yield changeset.save();
