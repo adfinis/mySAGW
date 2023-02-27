@@ -19,10 +19,6 @@ export default class IdentityMembershipsComponent extends Component {
   @service intl;
   @service notification;
 
-  get locale() {
-    return this.intl.primaryLocale;
-  }
-
   // List
 
   @lastValue("fetchMemberships") memberships;
@@ -41,6 +37,11 @@ export default class IdentityMembershipsComponent extends Component {
     this.fetchRoles.perform(this.args.identity);
   }
 
+  @action updateDateField(fieldName, newValue, changeset) {
+    changeset.rollbackProperty(fieldName);
+    changeset.set(fieldName, newValue);
+  }
+
   @action
   openPowerSelect(select) {
     select.actions.open();
@@ -48,7 +49,7 @@ export default class IdentityMembershipsComponent extends Component {
 
   // Add / Edit
 
-  @tracked changeset = null;
+  @tracked changeset;
 
   @action
   edit(membership) {
@@ -72,38 +73,44 @@ export default class IdentityMembershipsComponent extends Component {
     this.changeset = null;
   }
 
+  formatDate(date) {
+    // Flatpickr returns an array of dates.
+    if (Array.isArray(date)) {
+      return DateTime.fromJSDate(date[0]).toISODate();
+    } else if (date) {
+      return date;
+    }
+    return null;
+  }
+
   @dropTask
   *submit(changeset) {
     try {
-      const format = "yyyy-LL-dd";
-      let timeSlot = changeset.get("timeSlot") || {};
-      if (!timeSlot.lower && !timeSlot.upper) {
-        timeSlot = null;
-      } else {
-        timeSlot.lower = timeSlot.lower
-          ? DateTime.fromJSDate(timeSlot.lower[0]).toFormat(format)
-          : undefined;
-        timeSlot.upper = timeSlot.upper
-          ? DateTime.fromJSDate(timeSlot.upper[0]).toFormat(format)
-          : undefined;
+      changeset.execute();
+      const timeSlot = new Map(Object.entries(changeset.data.timeSlot));
+      timeSlot.forEach((slot) => {
+        if (slot) {
+          const [key, value] = slot;
+          timeSlot[key] = this.formatDate(value);
+        }
+      });
+      if (timeSlot.size) {
+        changeset.set("timeSlot", Object.fromEntries(timeSlot));
       }
-      changeset.set("timeSlot", timeSlot);
-
       const election = changeset.get("nextElection");
-      if (election) {
-        changeset.set(
-          "nextElection",
-          DateTime.fromJSDate(election[0]).toFormat(format)
-        );
+      changeset.set("nextElection", this.formatDate(election));
+      changeset.set("timeSlot.bounds", "[)");
+      yield changeset.validate();
+      if (changeset.isValid) {
+        yield changeset.save();
+        yield this.onUpdate();
+        this.changeset = null;
       }
-
-      yield changeset.save();
-      this.changeset = null;
-      yield this.onUpdate();
     } catch (error) {
       console.error(error);
       this.notification.fromError(error);
       applyError(changeset, error);
+      changeset.rollback();
     }
   }
 
