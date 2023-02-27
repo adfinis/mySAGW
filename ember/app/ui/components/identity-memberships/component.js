@@ -37,6 +37,11 @@ export default class IdentityMembershipsComponent extends Component {
     this.fetchRoles.perform(this.args.identity);
   }
 
+  @action updateDateField(fieldName, newValue, changeset) {
+    changeset.rollbackProperty(fieldName);
+    changeset.set(fieldName, newValue);
+  }
+
   @action
   openPowerSelect(select) {
     select.actions.open();
@@ -96,9 +101,11 @@ export default class IdentityMembershipsComponent extends Component {
       changeset.set("nextElection", this.formatDate(election));
 
       yield changeset.validate();
-      yield changeset.save();
-      this.changeset = null;
-      yield this.onUpdate();
+      if (changeset.isValid) {
+        yield changeset.save();
+        yield this.onUpdate();
+        this.changeset = null;
+      }
     } catch (error) {
       console.error(error);
       this.notification.fromError(error);
