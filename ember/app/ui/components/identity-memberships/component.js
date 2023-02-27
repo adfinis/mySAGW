@@ -103,6 +103,7 @@ export default class IdentityMembershipsComponent extends Component {
       console.error(error);
       this.notification.fromError(error);
       applyError(changeset, error);
+      changeset.rollback();
     }
   }
 
