@@ -63,7 +63,7 @@
     "ember-cli-terser": "^4.0.2",
     "ember-composable-helpers": "^5.0.0",
     "ember-concurrency": "^2.3.7",
-    "ember-data": "~4.4.1",
+    "ember-data": "~4.6.4",
     "ember-engines": "^0.8.23",
     "ember-export-application-global": "^2.0.1",
     "ember-fetch": "^8.1.2",
@@ -101,15 +101,14 @@
     "webpack": "^5.75.0"
   },
   "//": [
-    "@babel/helper-get-function-arity: remove after https://github.com/cibernox/ember-power-select/pull/1562/ and ember-composable-helpers work without the dependency",
     "validated-changeset: remove validated-changeset resolution when https://github.com/poteto/ember-changeset/issues/650 is addressed",
     "@embroider/macros: needs to be resolved so no version under 1 gets used",
-    "ember-data: remove after 4.8 upgrade"
+    "ember-data: problem with ember-concurrency https://github.com/machty/ember-concurrency/issues/509"
   ],
   "resolutions": {
     "validated-changeset": "^1.3.4",
     "@embroider/macros": "^1.10.0",
-    "ember-data": "~4.4.1"
+    "ember-data": "~4.6.4"
   },
   "engines": {
     "node": "16.* || >= 18"
