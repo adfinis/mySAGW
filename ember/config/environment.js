@@ -27,6 +27,7 @@ module.exports = function (environment) {
       allowAnyFallback: true,
       fallbacks: ["de", "en"],
     },
+    "changeset-validations": { rawOutput: true },
     apollo: {
       apiURL: "/graphql",
     },
@@ -71,7 +72,11 @@ module.exports = function (environment) {
       caluma: {
         submitTaskSlug: "submit-document",
         reviseTaskSlug: "revise-document",
-        decisionAndCreditTaskSlug: "decision-and-credit",
+        decisionAndCredit: {
+          task: "decision-and-credit",
+          question: "decision-and-credit-decision",
+          answers: ["additional-data"],
+        },
         completeTaskSlug: "complete-document",
         documentEditableTaskSlugs: [
           "submit-document",

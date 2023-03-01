@@ -71,7 +71,8 @@ caluma-loadconfig: caluma-load-form caluma-load-workflow ## Load workflow and fo
 caluma-dump-forms: ## dump Caluma form models including default answers
 	@docker-compose run --rm caluma poetry run python manage.py dumpdata --indent 4 \
 	caluma_form.Form caluma_form.FormQuestion caluma_form.Question \
-	caluma_form.QuestionOption caluma_form.Option caluma_form.Answer | sed -e \
+	caluma_form.QuestionOption caluma_form.Option caluma_form.Answer \
+	caluma_analytics.AnalyticsTable caluma_analytics.AnalyticsField | sed -e \
 	's/\r$$//' | jq '.[] | select(.fields.document == null)' | jq -s '.' --indent 4
 
 .PHONY: caluma-dump-workflow
@@ -89,7 +90,6 @@ caluma-foreground: ## run caluma in foreground with dev server for debugging
 	@docker-compose stop caluma
 	@docker-compose run --rm -u root --use-aliases --service-ports caluma bash -c \
 	'poetry add --lock pdbpp && poetry install --no-dev --no-root && poetry run python ./manage.py runserver 0.0.0.0:8000'
-
 
 .PHONY: ember-lint
 ember-lint: ## lint the frontend
