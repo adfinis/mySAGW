@@ -1,14 +1,14 @@
 <div ...attributes>
   <label class="uk-display-block">
     {{@label}}
-    <input value={{@value}} class="uk-input" {{on "input" @onChange}}/>
+    <input value={{@value}} class="uk-input" {{on "input" @onChange}} />
   </label>
   {{#if @invertFilter}}
     <label>
       <Input
         class="uk-checkbox"
         @type="checkbox"
-        @value={{@value.inverted}}
+        @checked={{@inverted}}
         {{on "click" @invertFilter}}
       />
       {{t "components.filters.invert"}}

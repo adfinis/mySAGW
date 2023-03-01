@@ -33,12 +33,14 @@
         <Filter.Input
           @label={{t "work-items.filters.documentNumber"}}
           @value={{@filters.documentNumber}}
+          @inverted={{@invertedFilters.documentNumber}}
           @onChange={{perform @updateFilter "documentNumber"}}
           @invertFilter={{perform @invertFilter "documentNumber"}}
         />
         <Filter.Input
           @label={{t "work-items.filters.answer"}}
           @value={{@filters.answerSearch}}
+          @inverted={{@invertedFilters.answerSearch}}
           @onChange={{perform @updateFilter "answerSearch"}}
           @invertFilter={{perform @invertFilter "answerSearch"}}
         />
@@ -51,6 +53,7 @@
         <Filter.Dropdown
           @label={{t "work-items.filters.forms"}}
           @selected={{@filters.forms}}
+          @inverted={{@invertedFilters.forms}}
           @options={{this.forms.value}}
           @onChange={{perform @updateFilter "forms"}}
           @invertFilter={{perform @invertFilter "forms"}}
@@ -58,6 +61,7 @@
         <Filter.Dropdown
           @label={{t "work-items.filters.expertAssociations"}}
           @selected={{@filters.expertAssociations}}
+          @inverted={{@invertedFilters.expertAssociations}}
           @options={{this.expertAssociations}}
           @onChange={{perform @updateFilter "expertAssociations"}}
           @invertFilter={{perform @invertFilter "expertAssociations"}}
@@ -65,6 +69,7 @@
         <Filter.Dropdown
           @label={{t "work-items.filters.distributionPlans"}}
           @selected={{@filters.distributionPlans}}
+          @inverted={{@invertedFilters.distributionPlans}}
           @options={{this.distributionPlans}}
           @onChange={{perform @updateFilter "distributionPlans"}}
           @invertFilter={{perform @invertFilter "distributionPlans"}}
@@ -72,6 +77,7 @@
         <Filter.Dropdown
           @label={{t "work-items.filters.sections"}}
           @selected={{@filters.sections}}
+          @inverted={{@invertedFilters.sections}}
           @options={{this.sections}}
           @onChange={{perform @updateFilter "sections"}}
           @invertFilter={{perform @invertFilter "sections"}}

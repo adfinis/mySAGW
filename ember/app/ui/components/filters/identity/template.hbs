@@ -21,7 +21,7 @@
       <Input
         class="uk-checkbox"
         @type="checkbox"
-        @value={{@value.inverted}}
+        @checked={{@inverted}}
         {{on "click" @invertFilter}}
       />
       {{t "components.filters.invert"}}

@@ -72,17 +72,20 @@
       <Filter.Dropdown
         @label={{t "work-items.filters.taskTypes"}}
         @selected={{@filters.taskTypes}}
+        @inverted={{@invertedFilters.taskTypes}}
         @options={{this.taskTypes.value}}
         @onChange={{perform @updateFilter "taskTypes"}}
         @invertFilter={{perform @invertFilter "taskTypes"}}
       />
       <Filter.Identity
         @selected={{@filters.identities}}
+        @inverted={{@invertedFilters.identities}}
         @onChange={{perform @updateFilter "identities"}}
         @invertFilter={{perform @invertFilter "identities"}}
       />
       <Filter.Input
         @label={{t "work-items.filters.documentNumber"}}
+        @inverted={{@invertedFilters.documentNumber}}
         @value={{@filters.documentNumber}}
         @onChange={{perform @updateFilter "documentNumber"}}
         @invertFilter={{perform @invertFilter "documentNumber"}}
@@ -90,12 +93,14 @@
       <Filter.Input
         @label={{t "work-items.filters.answer"}}
         @value={{@filters.answerSearch}}
+        @inverted={{@invertedFilters.answerSearch}}
         @onChange={{perform @updateFilter "answerSearch"}}
         @invertFilter={{perform @invertFilter "answerSearch"}}
       />
       <Filter.Dropdown
         @label={{t "work-items.filters.forms"}}
         @selected={{@filters.forms}}
+        @inverted={{@invertedFilters.documenformstNumber}}
         @options={{this.forms.value}}
         @onChange={{perform @updateFilter "forms"}}
         @invertFilter={{perform @invertFilter "forms"}}
@@ -103,6 +108,7 @@
       <Filter.Dropdown
         @label={{t "work-items.filters.expertAssociations"}}
         @selected={{@filters.expertAssociations}}
+        @inverted={{@invertedFilters.expertAssociations}}
         @options={{this.expertAssociations}}
         @onChange={{perform @updateFilter "expertAssociations"}}
         @invertFilter={{perform @invertFilter "expertAssociations"}}
@@ -110,6 +116,7 @@
       <Filter.Dropdown
         @label={{t "work-items.filters.distributionPlans"}}
         @selected={{@filters.distributionPlans}}
+        @inverted={{@invertedFilters.distributionPlans}}
         @options={{this.distributionPlans}}
         @onChange={{perform @updateFilter "distributionPlans"}}
         @invertFilter={{perform @invertFilter "distributionPlans"}}
@@ -117,6 +124,7 @@
       <Filter.Dropdown
         @label={{t "work-items.filters.sections"}}
         @selected={{@filters.sections}}
+        @inverted={{@invertedFilters.sections}}
         @options={{this.sections}}
         @onChange={{perform @updateFilter "sections"}}
         @loading={{this.questionOptions.isLoading}}

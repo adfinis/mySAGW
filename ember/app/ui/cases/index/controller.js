@@ -48,7 +48,7 @@ export default class CasesIndexController extends TableController {
             lookup: "ICONTAINS",
           },
         ],
-        invert: Boolean(documentNumber),
+        invert: Boolean(this.invertedFilters.documentNumber),
       },
     ];
 
@@ -60,13 +60,13 @@ export default class CasesIndexController extends TableController {
             value: answerSearch,
           },
         ],
-        invert: Boolean(answerSearch),
+        invert: Boolean(this.invertedFilters.answerSearch),
       });
     }
 
     if (forms) {
       // TODO cant filter for case form
-      // filter.push({ documentForms: arrayFromString(forms),        invert: Boolean(forms), });
+      // filter.push({ documentForms: arrayFromString(forms),        invert: Boolean(this.invertedFilters.forms), });
     }
 
     Object.keys(ENV.APP.caluma.filterableQuestions).forEach((question) => {
