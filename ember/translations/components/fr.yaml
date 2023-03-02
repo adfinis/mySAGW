@@ -30,6 +30,8 @@ components:
 
   filters:
     invert: "Filtre inversé"
+    inverted: "Ce filtre est inversé"
+    resetShort: "Reset"
     reset: "Réinitialisation"
     dropdown:
       loading: "Chargement..."

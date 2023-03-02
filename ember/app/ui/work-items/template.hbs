@@ -2,10 +2,9 @@
   {{t "work-items.title"}}
 </h1>
 
-<hr />
+<hr {{did-insert this.deserializeFilter}}/>
 
 <WorkItemFilters
-  {{did-insert this.deserializeFilter}}
   @filters={{this.filters}}
   @invertedFilters={{this.invertedFilters}}
   @updateFilter={{this.updateFilter}}

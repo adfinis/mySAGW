@@ -65,8 +65,10 @@ export default class CasesIndexController extends TableController {
     }
 
     if (forms) {
-      // TODO cant filter for case form
-      // filter.push({ documentForms: arrayFromString(forms),        invert: Boolean(this.invertedFilters.forms), });
+      filters.push({
+        documentForms: arrayFromString(forms),
+        invert: Boolean(this.invertedFilters.forms),
+      });
     }
 
     Object.keys(ENV.APP.caluma.filterableQuestions).forEach((question) => {

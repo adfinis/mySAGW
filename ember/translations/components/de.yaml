@@ -30,6 +30,8 @@ components:
 
   filters:
     invert: "Filter umkehren"
+    inverted: "Dieser Filter ist umgekehrt"
+    resetShort: "Reset"
     reset: "Filters zurücksetzten"
     dropdown:
       loading: "Lädt..."

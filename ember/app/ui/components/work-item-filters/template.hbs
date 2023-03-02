@@ -23,21 +23,25 @@
     @label={{t "work-items.filters.taskTypes"}}
     @selected={{@filters.taskTypes}}
     @options={{this.taskTypes.value}}
+    @invertedIcon={{@invertedFilters.taskTypes}}
     @onChange={{perform @updateFilter "taskTypes"}}
   />
   <Filter.Identity
     @selected={{@filters.identities}}
+    @invertedIcon={{@invertedFilters.identities}}
     @onChange={{perform @updateFilter "identities"}}
   />
   <Filter.Input
     class="uk-width-small"
     @label={{t "work-items.filters.documentNumber"}}
     @value={{@filters.documentNumber}}
+    @invertedIcon={{@invertedFilters.documentNumber}}
     @onChange={{perform @updateFilter "documentNumber"}}
   />
   <Filter.Input
     @label={{t "work-items.filters.answer"}}
     @value={{@filters.answerSearch}}
+    @invertedIcon={{@invertedFilters.answerSearch}}
     @onChange={{perform @updateFilter "answerSearch"}}
   />
 
@@ -133,14 +137,16 @@
     </Filters>
   </FilterModal>
 
-  <label class="uk-width-auto">
-    <span class="uk-invisible">{{t "components.filters.reset"}}</span>
-    <UkButton
-      class="uk-display-block"
-      uk-tooltip={{t "components.filters.reset"}}
-      @onClick={{@resetFilters}}
-    >
-      <UkIcon @icon="refresh" />
-    </UkButton>
-  </label>
+  {{#if this.setFiltersAmount}}
+    <label class="uk-width-auto">
+      <span class="uk-invisible">{{t "components.filters.resetShort"}}</span>
+      <UkButton
+        class="uk-display-block uk-button-danger"
+        uk-tooltip={{t "components.filters.reset"}}
+        @onClick={{@resetFilters}}
+      >
+        <UkIcon @icon="close" />
+      </UkButton>
+    </label>
+  {{/if}}
 </Filters>

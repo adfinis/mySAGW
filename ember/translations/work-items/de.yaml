@@ -41,7 +41,7 @@ work-items:
     order: "Sortierung"
     taskTypes: "Aufgabe"
     documentNumber: "Dossiernummer"
-    answer: "Antwort"
+    answer: "Suchfeld"
     forms: "Form"
     expertAssociations: "Fachgesellschaft"
     distributionPlans: "Verteilplan"

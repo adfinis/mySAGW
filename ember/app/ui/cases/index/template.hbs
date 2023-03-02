@@ -38,8 +38,8 @@
       </div>
     </div>
   {{else}}
+    <div {{did-insert this.deserializeFilter}}></div>
     <CaseFilters
-      {{did-insert this.deserializeFilter}}
       @filters={{this.filters}}
       @invertedFilters={{this.invertedFilters}}
       @updateFilter={{this.updateFilter}}

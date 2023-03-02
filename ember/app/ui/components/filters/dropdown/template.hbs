@@ -1,6 +1,15 @@
 <div ...attributes>
   <label class="uk-display-block">
-    {{@label}}
+    <span>
+      {{@label}}
+      {{#if @invertedIcon}}
+        <UkIcon
+          @icon="warning"
+          @ratio="0.8"
+          uk-tooltip={{t "components.filters.inverted"}}
+        />
+      {{/if}}
+    </span>
     <PowerSelectMultiple
       @options={{@options}}
       @selected={{this.selected}}

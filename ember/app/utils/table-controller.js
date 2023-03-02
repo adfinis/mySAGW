@@ -32,6 +32,10 @@ export default class TableController extends Controller {
   }
   @action
   deserializeFilter() {
+    if (!this.filter) {
+      return;
+    }
+
     const { filters, inverts } = JSON.parse(atob(this.filter));
     this.filters = new TrackedObject(filters);
     this.invertedFilters = new TrackedObject(inverts);
@@ -62,6 +66,7 @@ export default class TableController extends Controller {
   @enqueueTask
   *invertFilter(type) {
     this.invertedFilters[type] = !this.invertedFilters[type];
+    this.serializeFilter();
     yield timeout(300);
   }
 

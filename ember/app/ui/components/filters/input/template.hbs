@@ -1,7 +1,16 @@
 <div ...attributes>
   <label class="uk-display-block">
-    {{@label}}
-    <input value={{@value}} class="uk-input" {{on "input" @onChange}} />
+    <span>
+      {{@label}}
+      {{#if @invertedIcon}}
+        <UkIcon
+          @icon="warning"
+          @ratio="0.8"
+          uk-tooltip={{t "components.filters.inverted"}}
+        />
+      {{/if}}
+    </span>
+    <Input @value={{@value}} class="uk-input" {{on "input" @onChange}} />
   </label>
   {{#if @invertFilter}}
     <label>

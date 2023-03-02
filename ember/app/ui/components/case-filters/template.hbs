@@ -3,12 +3,14 @@
     <Filter.Input
       class="uk-width-auto"
       @label={{t "work-items.filters.documentNumber"}}
+      @invertedIcon={{@invertedFilters.forms}}
       @value={{@filters.documentNumber}}
       @onChange={{perform @updateFilter "documentNumber"}}
     />
     <Filter.Input
       @label={{t "work-items.filters.answer"}}
       @value={{@filters.answerSearch}}
+      @invertedIcon={{@invertedFilters.answerSearch}}
       @onChange={{perform @updateFilter "answerSearch"}}
     />
 
@@ -85,15 +87,17 @@
       </Filters>
     </FilterModal>
 
-    <label class="uk-width-auto">
-      <span class="uk-invisible">{{t "components.filters.reset"}}</span>
-      <UkButton
-        class="uk-display-block"
-        uk-tooltip={{t "components.filters.reset"}}
-        @onClick={{@resetFilters}}
-      >
-        <UkIcon @icon="refresh" />
-      </UkButton>
-    </label>
+    {{#if this.setFiltersAmount}}
+      <label class="uk-width-auto">
+        <span class="uk-invisible">{{t "components.filters.resetShort"}}</span>
+        <UkButton
+          class="uk-display-block uk-button-danger"
+          uk-tooltip={{t "components.filters.reset"}}
+          @onClick={{@resetFilters}}
+        >
+          <UkIcon @icon="close" />
+        </UkButton>
+      </label>
+    {{/if}}
   </div>
 </Filters>

@@ -41,7 +41,7 @@ work-items:
     order: "Tri"
     taskTypes: "Tâche"
     documentNumber: "Numéro du document"
-    answer: "Response"
+    answer: "Champ de recherche"
     forms: "Form"
     expertAssociations: "Société membre"
     distributionPlans: "Plan de distribution"
