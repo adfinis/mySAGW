@@ -14,7 +14,7 @@ from caluma.caluma_workflow.events import (
     pre_complete_work_item,
 )
 
-from ..common import get_users_for_case
+from ..common import format_currency, get_users_for_case
 from ..email_texts import email_cost_approval, email_general, email_payout_amount
 from ..settings import settings
 
@@ -77,6 +77,7 @@ def _send_new_work_item_mail(work_item):
             framework_credit = decision_and_credit_work_item.document.answers.get(
                 question__slug="gesprochener-rahmenkredit"
             ).value
+            framework_credit = format_currency(framework_credit, "CHF")
             selected_email_texts = email_cost_approval
     elif work_item.task.slug == "complete-document":
         define_amount_work_item = (
@@ -87,8 +88,8 @@ def _send_new_work_item_mail(work_item):
         payout_amount_answer = define_amount_work_item.document.answers.filter(
             question__slug="define-amount-amount-float"
         ).first()
-        payout_amount = (
-            f"{payout_amount_answer.value:,.2f}" if payout_amount_answer else "0"
+        payout_amount = format_currency(
+            payout_amount_answer.value if payout_amount_answer else 0, "CHF"
         )
         selected_email_texts = email_payout_amount
 

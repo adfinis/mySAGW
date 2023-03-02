@@ -3,7 +3,7 @@ BODY_EN = """Dear {first_name} {last_name}
 
 After having verified the billing of the application mentioned below, we can confirm that the following amount will be transferred according to the payment details which have been provided:
 
-CHF {payout_amount}.-
+{payout_amount}
 
 Reference: {dossier_nr}
 You can access your document via the following link:
@@ -26,7 +26,7 @@ BODY_DE = """Guten Tag {first_name} {last_name}
 
 Wir haben die Abrechnung des nachfolgenden Gesuchs geprüft und können Ihnen nun in den kommenden Tagen folgenden Beitrag auf die uns vorliegende Zahlungsverbindung überweisen:
 
-CHF {payout_amount}.-
+{payout_amount}
 
 Referenz: {dossier_nr}
 Über den nachfolgenden Link können Sie direkt auf Ihr Dokument zugreifen, wo Sie die Angaben zu den noch benötigten Informationen finden:
@@ -49,7 +49,7 @@ BODY_FR = """Bonjour {first_name} {last_name}
 
 Nous avons vérifié le décompte de la demande dont la référence figure ci-dessous. Nous verserons dans les prochains jours, sur les coordonnées de paiement dont nous disposons, le montant suivant:
 
-CHF {payout_amount}.-
+{payout_amount}
 
 Référence : {dossier_nr}
 Vous pouvez accéder directement à votre document en cliquant sur le lien suivant:
