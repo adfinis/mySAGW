@@ -91,7 +91,10 @@ class MySAGWPermission(BasePermission):
 
         case = self._get_case_for_doc(answer.document)
 
-        if not self._is_admin(info) and not (
+        if self._is_admin(info):
+            return True
+
+        if not (
             self._can_access_case(info, case)
             or self._is_own(info, answer.document.family)
         ):
