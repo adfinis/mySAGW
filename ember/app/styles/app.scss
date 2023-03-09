@@ -55,4 +55,8 @@ main {
   white-space: pre-line;
 }
 
+.modal-filters > div {
+  align-content: start;
+}
+
 @import 'ember-uikit';

@@ -40,7 +40,10 @@ export default class CasesIndexController extends TableController {
     const filters = [
       { workflow: "circulation", invert: true },
       { status: "CANCELED", invert: true },
-      {
+    ];
+
+    if (documentNumber) {
+      filters.push({
         hasAnswer: [
           {
             question: "dossier-nr",
@@ -49,8 +52,8 @@ export default class CasesIndexController extends TableController {
           },
         ],
         invert: Boolean(this.invertedFilters.documentNumber),
-      },
-    ];
+      });
+    }
 
     if (answerSearch) {
       filters.push({

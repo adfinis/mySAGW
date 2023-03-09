@@ -42,7 +42,10 @@ export default class WorkItemsIndexController extends TableController {
     const filter = [
       { metaHasKey: "hidden", invert: true },
       { status: this.filters.status === "closed" ? "COMPLETED" : "READY" },
-      {
+    ];
+
+    if (this.filters.documentNumber) {
+      filter.push({
         caseDocumentHasAnswer: [
           {
             question: "dossier-nr",
@@ -51,8 +54,8 @@ export default class WorkItemsIndexController extends TableController {
           },
         ],
         invert: Boolean(this.invertedFilters.documentNumber),
-      },
-    ];
+      });
+    }
 
     if (this.filters.taskTypes) {
       filter.push({
