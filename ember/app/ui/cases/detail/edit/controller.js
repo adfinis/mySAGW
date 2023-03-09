@@ -6,9 +6,6 @@ export default class CasesDetailEditController extends Controller {
   @service can;
 
   get disabled() {
-    return !(
-      this.model.hasSubmitOrReviseWorkItem &&
-      this.can.can("edit case", this.model)
-    );
+    return !this.can.can("edit case", this.model);
   }
 }
