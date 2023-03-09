@@ -1,4 +1,6 @@
 from django.conf import settings
+from django.db.models import Q
+from django.utils import timezone
 from drf_extra_fields.fields import DateRangeField
 from rest_framework.exceptions import ValidationError
 from rest_framework.relations import MANY_RELATION_KWARGS
@@ -364,6 +366,7 @@ class MembershipRoleSerializer(serializers.ModelSerializer):
             "title",
             "description",
             "archived",
+            "sort",
         )
 
     def validate(self, *args, **kwargs):
@@ -425,19 +428,40 @@ class MyMembershipsSerializer(MembershipSerializer):
     }
 
 
-class OrganisationAdminMembersSerializer(MembershipSerializer):
-    included_serializers = {
-        "identity": PublicIdentitySerializer,
-        "role": MembershipRoleSerializer,
-        "organisation": PublicIdentitySerializer,
-    }
+class OrganisationAdminMembersSerializer(serializers.ModelSerializer):
+    roles = serializers.SerializerMethodField()
+    resource_name = "OrganisationAdminMembersIdentity"
+
+    def get_roles(self, obj):
+        memberships = obj.memberships.filter(
+            organisation_id=self.context["request"].GET["filter[organisation]"]
+        )
+        active_memberships = memberships.filter(
+            Q(inactive=False),
+            Q(time_slot__isnull=True) | Q(time_slot__contains=timezone.now()),
+        )
+        inactive_memberships = memberships.exclude(
+            pk__in=active_memberships.values_list("pk", flat=True)
+        )
+
+        result_memberships = []
+        for membership_qs in [active_memberships, inactive_memberships]:
+            for m in membership_qs.order_by("-role__sort"):
+                result_memberships.append(
+                    {
+                        "role": m.role.title,
+                        "inactive": m.inactive,
+                        "authorized": m.authorized,
+                    }
+                )
+
+        return result_memberships
 
     class Meta:
-        model = models.Membership
+        model = models.Identity
         fields = (
-            "identity",
-            "organisation",
-            "role",
-            "inactive",
-            "time_slot",
+            "first_name",
+            "last_name",
+            "email",
+            "roles",
         )

@@ -2,9 +2,10 @@ import operator
 import shlex
 from functools import reduce
 
-from django.db.models import OuterRef, Subquery
+from django.db.models import Max, OuterRef, Q, Subquery, Value
+from django.db.models.functions import Coalesce
 from django.utils import timezone
-from django_filters import BooleanFilter, CharFilter
+from django_filters import BooleanFilter, CharFilter, UUIDFilter
 from django_filters.rest_framework import FilterSet
 from rest_framework.compat import distinct
 from rest_framework.filters import SearchFilter
@@ -77,6 +78,62 @@ class InterestCategoryFilterSet(FilterSet):
         model = models.InterestCategory
         fields = [
             "public",
+        ]
+
+
+class OrganisationAdminMembersFilterSet(FilterSet):
+    organisation = UUIDFilter(
+        field_name="memberships__organisation_id",
+        method="organisation_filter",
+        required=True,
+    )
+
+    def organisation_filter(self, queryset, name, value):
+        queryset = queryset.filter(**{name: value})
+        queryset = queryset.annotate(
+            highest_active_role=Coalesce(
+                Max(
+                    "memberships__role__sort",
+                    filter=Q(**{name: value})
+                    & Q(memberships__inactive=False)
+                    & (
+                        Q(memberships__time_slot__isnull=True)
+                        | Q(memberships__time_slot__contains=timezone.now())
+                    ),
+                ),
+                Value(0),
+            )
+        )
+        queryset = queryset.annotate(
+            highest_inactive_role=Coalesce(
+                Max(
+                    "memberships__role__sort",
+                    filter=Q(**{name: value})
+                    & ~Q(
+                        Q(memberships__inactive=False)
+                        & (
+                            Q(memberships__time_slot__isnull=True)
+                            | Q(memberships__time_slot__contains=timezone.now())
+                        )
+                    ),
+                ),
+                Value(0),
+            )
+        )
+
+        queryset = queryset.order_by(
+            "-highest_active_role",
+            "-highest_inactive_role",
+            "last_name",
+            "first_name",
+            "email",
+        )
+        return queryset
+
+    class Meta:
+        model = models.Identity
+        fields = [
+            "organisation",
         ]
 
 
