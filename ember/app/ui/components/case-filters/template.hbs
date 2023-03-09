@@ -44,7 +44,9 @@
           @value={{@filters.answerSearch}}
           @inverted={{@invertedFilters.answerSearch}}
           @onChange={{perform @updateFilter "answerSearch"}}
+          {{!-- inversion not supported for now
           @invertFilter={{perform @invertFilter "answerSearch"}}
+          --}}
         />
         {{#if (can "filter access case")}}
           <Filter.Identity
