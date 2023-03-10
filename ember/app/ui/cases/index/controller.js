@@ -35,19 +35,20 @@ export default class CasesIndexController extends TableController {
     // the filtered forms which uses `await Promise.resolve()` to avoid an
     // infinite loop. However, all tracked properties used after that await
     // statement won't trigger a re-run if changed.
-    const { documentNumber, answerSearch, identities, forms } = this.filters;
+    const { identities } = this.filters;
+    const { identities: invertedIdentites } = this.invertedFilters;
 
     const filters = [
       { workflow: "circulation", invert: true },
       { status: "CANCELED", invert: true },
     ];
 
-    if (documentNumber) {
+    if (this.filters.documentNumber) {
       filters.push({
         hasAnswer: [
           {
             question: "dossier-nr",
-            value: documentNumber,
+            value: this.filters.documentNumber,
             lookup: "ICONTAINS",
           },
         ],
@@ -55,21 +56,21 @@ export default class CasesIndexController extends TableController {
       });
     }
 
-    if (answerSearch) {
+    if (this.filters.answerSearch) {
       filters.push({
         searchAnswers: [
           {
-            forms: await this.filteredForms.mainFormSlugs(),
-            value: answerSearch,
+            forms: this.forms,
+            value: this.filters.answerSearch,
           },
         ],
         invert: Boolean(this.invertedFilters.answerSearch),
       });
     }
 
-    if (forms) {
+    if (this.filters.forms) {
       filters.push({
-        documentForms: arrayFromString(forms),
+        documentForms: arrayFromString(this.filters.forms),
         invert: Boolean(this.invertedFilters.forms),
       });
     }
@@ -92,6 +93,7 @@ export default class CasesIndexController extends TableController {
     if (identities) {
       filters.push({
         ids: await this.fetchAccesses(arrayFromString(identities)),
+        invert: Boolean(invertedIdentites),
       });
     }
 

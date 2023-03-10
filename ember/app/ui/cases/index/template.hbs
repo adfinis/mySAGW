@@ -38,7 +38,6 @@
       </div>
     </div>
   {{else}}
-    <div {{did-insert this.deserializeFilter}}></div>
     <CaseFilters
       @filters={{this.filters}}
       @invertedFilters={{this.invertedFilters}}
@@ -49,7 +48,7 @@
 
     <CasesTable
       @query={{this.caseQuery}}
-      @loading={{this.caseQuery.isLoading}}
+      @loading={{this.caseFilters.isLoading}}
       @setOrder={{fn (mut this.order)}}
       @order={{this.order}}
     />

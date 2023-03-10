@@ -1,7 +1,12 @@
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
 import { tracked } from "@glimmer/tracking";
-import { enqueueTask, restartableTask, timeout } from "ember-concurrency";
+import {
+  lastValue,
+  enqueueTask,
+  restartableTask,
+  timeout,
+} from "ember-concurrency";
 import { TrackedObject } from "tracked-built-ins";
 import { dedupeTracked } from "tracked-toolbox";
 
@@ -75,5 +80,11 @@ export default class TableController extends Controller {
     this.filters = new TrackedObject(this._filters);
     this.invertedFilters = new TrackedObject(this._filters);
     this.serializeFilter();
+  }
+
+  @lastValue("fetchForms") forms;
+  @restartableTask
+  *fetchForms() {
+    return yield this.filteredForms.mainFormSlugs();
   }
 }

@@ -81,7 +81,7 @@ export default class WorkItemsIndexController extends TableController {
       filter.push({
         caseSearchAnswers: [
           {
-            forms: await this.filteredForms.mainFormSlugs(),
+            forms: this.forms,
             value: this.filters.answerSearch,
           },
         ],
@@ -90,7 +90,7 @@ export default class WorkItemsIndexController extends TableController {
     }
 
     if (this.filters.forms) {
-      // TODO cant filter for case form
+      // TODO update caluma to support this
       // filter.push({ caseDocumentForms: arrayFromString(this.filters.forms),
       // invert: Boolean(this.invertedFilters.forms), });
     }

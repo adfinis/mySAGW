@@ -2,7 +2,7 @@
   {{t "work-items.title"}}
 </h1>
 
-<hr {{did-insert this.deserializeFilter}}/>
+<hr />
 
 <WorkItemFilters
   @filters={{this.filters}}
@@ -14,6 +14,7 @@
 
 <WorkItemList
   @query={{this.workItemsQuery}}
+  @loading={{this.workItemFilters.isLoading}}
   @config={{this.tableConfig}}
   @setOrder={{fn (mut this.order)}}
   @order={{this.order}}
