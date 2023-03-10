@@ -8,7 +8,6 @@ import {
   timeout,
 } from "ember-concurrency";
 import { TrackedObject } from "tracked-built-ins";
-import { dedupeTracked } from "tracked-toolbox";
 
 import { stringFromArray } from "mysagw/utils/query-params";
 
@@ -25,9 +24,9 @@ export default class TableController extends Controller {
     distributionPlan: "",
     sections: "",
   };
-  @dedupeTracked filters = new TrackedObject(this._filters);
-  @dedupeTracked invertedFilters = new TrackedObject(this._filters);
-  @dedupeTracked order = "-CREATED_AT";
+  @tracked filters = new TrackedObject(this._filters);
+  @tracked invertedFilters = new TrackedObject(this._filters);
+  @tracked order = "-CREATED_AT";
 
   @tracked filter = this.serializeFilter();
   serializeFilter() {
