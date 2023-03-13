@@ -314,7 +314,7 @@ def test_send_new_work_item_mail(
         )
         decision_credit_work_item.document.answers.create(
             question_id="gesprochener-rahmenkredit",
-            value="23",
+            value=23.0,
         )
         complete_work_item(decision_credit_work_item, user)
 

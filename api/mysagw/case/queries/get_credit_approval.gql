@@ -19,7 +19,7 @@ query CreditApproval ($case_id: ID!) {
               credit: answers(filter: [{question: "gesprochener-rahmenkredit"}]) {
                 edges {
                   node {
-                    ... on StringAnswer {
+                    ... on FloatAnswer {
                       value
                     }
                   }
