@@ -1,17 +1,13 @@
 import { render, click, waitFor } from "@ember/test-helpers";
 import { hbs } from "ember-cli-htmlbars";
-import { setupMirage } from "ember-cli-mirage/test-support";
-import { setupIntl } from "ember-intl/test-support";
 import { selectChoose } from "ember-power-select/test-support";
-import { setupRenderingTest } from "ember-qunit";
 import { authenticateSession } from "ember-simple-auth/test-support";
 import { module, test } from "qunit";
 
+import { setupRenderingTest } from "mysagw/tests/helpers";
+
 module("Integration | Component | identity-memberships", function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
-  setupIntl(hooks);
-
   hooks.beforeEach(async function () {
     await authenticateSession({
       access_token: "123qweasdyxc",
@@ -20,7 +16,7 @@ module("Integration | Component | identity-memberships", function (hooks) {
   });
 
   // TODO ember-power-select does not work
-  test.todo("it adds", async function (assert) {
+  test.skip("it adds", async function (assert) {
     this.identity = this.server.create("identity");
     const organisation = this.server.create("identity", {
       isOrganisation: true,
@@ -38,7 +34,7 @@ module("Integration | Component | identity-memberships", function (hooks) {
     await click("[data-test-add]");
     await selectChoose(
       "[data-test-organisation-select]",
-      organisation.organisationName
+      organisation.organisationName,
     );
     await selectChoose("[data-test-role-select]", "Chef");
 

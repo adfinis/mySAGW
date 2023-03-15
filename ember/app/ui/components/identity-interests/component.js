@@ -30,14 +30,13 @@ export default class IdentityInterestsComponent extends Component {
   // List
 
   async parseOwnInterests(identity) {
-    return await identity.interests
-      .getEach("category")
+    return (await identity.interests)
+      .map((interest) => interest.category)
       .uniqBy("id")
-      .map((category) => ({
+      .map(async (category) => ({
         title: category.get("title"),
-        interests: identity.interests.filterBy(
-          "category.id",
-          category.get("id")
+        interests: (await identity.interests).filter(
+          (interest) => interest.category.get("id") === category.get("id"),
         ),
       }));
   }
@@ -56,7 +55,7 @@ export default class IdentityInterestsComponent extends Component {
     this.changeset = Changeset(
       { interest },
       lookupValidator(InterestValidations),
-      InterestValidations
+      InterestValidations,
     );
   }
 
@@ -104,11 +103,13 @@ export default class IdentityInterestsComponent extends Component {
     this.categories = yield this.parseOwnInterests(this.args.identity);
 
     return interests
-      .getEach("category")
+      .map((interest) => interest.category)
       .uniqBy("id")
       .map((category) => ({
         groupName: category.get("title"),
-        options: interests.filterBy("category.id", category.get("id")),
+        options: interests.filter(
+          (interest) => interest.category.get("id") === category.get("id"),
+        ),
       }));
   }
 
@@ -119,7 +120,7 @@ export default class IdentityInterestsComponent extends Component {
     try {
       const options = { interest: interest.title };
       yield UIkit.modal.confirm(
-        this.intl.t("components.identity-interests.delete.prompt", options)
+        this.intl.t("components.identity-interests.delete.prompt", options),
       );
 
       try {
@@ -127,7 +128,7 @@ export default class IdentityInterestsComponent extends Component {
         this.args.identity.save(this.endpoint);
 
         this.notification.success(
-          this.intl.t("components.identity-interests.delete.success", options)
+          this.intl.t("components.identity-interests.delete.success", options),
         );
         // Reset list.
         // TODO Update `categories` via Ember Data store.

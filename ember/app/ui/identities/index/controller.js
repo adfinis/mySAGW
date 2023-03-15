@@ -120,7 +120,7 @@ export default class IdentitiesIndexController extends Controller {
         this.fetch.fetch(uri, init),
         `${this.intl.t("identities.index.export.filename", {
           date: DateTime.now().toFormat("yyyy-LL-dd"),
-        })}.${fileExtension}`
+        })}.${fileExtension}`,
       );
     } catch (error) {
       console.error(error);

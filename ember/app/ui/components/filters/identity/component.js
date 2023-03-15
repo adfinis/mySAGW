@@ -14,7 +14,7 @@ export default class FiltersIdentityComponent extends Component {
     const selected = arrayFromString(this.args.selected ?? "");
 
     return this.identityOptions.value?.filter((option) =>
-      selected.includes(option.idpId)
+      selected.includes(option.idpId),
     );
   }
 
@@ -26,17 +26,15 @@ export default class FiltersIdentityComponent extends Component {
     try {
       await Promise.resolve();
 
-      return (
-        await this.store.query(
-          "identity",
-          {
-            filter: {
-              idpIds: this.args.selected,
-            },
+      return await this.store.query(
+        "identity",
+        {
+          filter: {
+            idpIds: this.args.selected,
           },
-          { adapterOptions: { customEndpoint: "public-identities" } }
-        )
-      ).toArray();
+        },
+        { adapterOptions: { customEndpoint: "public-identities" } },
+      );
     } catch (error) {
       console.error(error);
       this.notification.fromError(error);
@@ -54,7 +52,7 @@ export default class FiltersIdentityComponent extends Component {
     try {
       yield Promise.resolve();
 
-      return (yield this.store.query(
+      return yield this.store.query(
         "identity",
         {
           filter: {
@@ -63,8 +61,8 @@ export default class FiltersIdentityComponent extends Component {
             has_idp_id: true,
           },
         },
-        { adapterOptions: { customEndpoint: "public-identities" } }
-      )).toArray();
+        { adapterOptions: { customEndpoint: "public-identities" } },
+      );
     } catch (error) {
       console.error(error);
       this.notification.fromError(error);

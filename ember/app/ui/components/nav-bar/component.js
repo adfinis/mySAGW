@@ -42,14 +42,14 @@ export default class NavbarComponent extends Component {
   @action
   onCopySuccess() {
     this.notification.success(
-      this.intl.t("components.nav-bar.snippet.copy-success")
+      this.intl.t("components.nav-bar.snippet.copy-success"),
     );
   }
 
   @action
   onCopyError() {
     this.notification.danger(
-      this.intl.t("components.nav-bar.snippet.copy-error")
+      this.intl.t("components.nav-bar.snippet.copy-error"),
     );
   }
 
@@ -77,12 +77,12 @@ export default class NavbarComponent extends Component {
         filter: { search: this.searchTerm, archived: false },
         page: {
           number: this.pageNumber,
-          size: this.pageSize,
+          size: 1,
         },
       });
-      this.totalPages = snippets.meta.pagination?.pages;
+      this.totalPages = snippets.meta?.pagination.pages;
 
-      this.snippets = [...this.snippets, ...snippets.toArray()];
+      this.snippets = [...this.snippets, ...snippets];
 
       return snippets;
     } catch (error) {

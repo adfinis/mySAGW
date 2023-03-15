@@ -1,7 +1,5 @@
 import { click, render, settled, waitFor } from "@ember/test-helpers";
 import { hbs } from "ember-cli-htmlbars";
-import { setupMirage } from "ember-cli-mirage/test-support";
-import { setupIntl } from "ember-intl/test-support";
 import { module, test } from "qunit";
 
 import ENV from "mysagw/config/environment";
@@ -9,8 +7,6 @@ import { setupRenderingTest } from "mysagw/tests/helpers";
 
 module("Integration | Component | submit-button", function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks);
-  setupMirage(hooks);
 
   hooks.beforeEach(function () {
     this.set("field", {

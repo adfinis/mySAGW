@@ -20,7 +20,7 @@ export default class CasesDetailWorkItemsEditFormRoute extends Route {
             filter: [{ id: this.modelFor("cases.detail.work-items.edit") }],
           },
         },
-        "allWorkItems.edges"
+        "allWorkItems.edges",
       );
 
       const workItem = new CustomWorkItemModel(rawWorkItem[0].node);

@@ -5,7 +5,7 @@ import { LocalizedModel, localizedAttr } from "ember-localized-model";
 export default class AddressModel extends LocalizedModel {
   @service intl;
 
-  @belongsTo("identity") identity;
+  @belongsTo("identity", { inverse: "address", async: true }) identity;
   @attr addressAddition1;
   @attr addressAddition2;
   @attr addressAddition3;

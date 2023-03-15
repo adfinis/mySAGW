@@ -22,7 +22,7 @@ export default class CaseDataService extends Service {
         variables: { filter: [{ id: caseId }] },
         fetchPolicy: "network-only",
       },
-      "allCases.edges"
+      "allCases.edges",
     );
 
     const caseModel = new CustomCaseModel(caseEdges[0].node);
@@ -46,7 +46,7 @@ export default class CaseDataService extends Service {
         },
         fetchPolicy: "network-only",
       },
-      "allWorkItems.edges"
+      "allWorkItems.edges",
     );
 
     this.circulation = circulation.firstObject;

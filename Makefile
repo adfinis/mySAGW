@@ -93,12 +93,12 @@ caluma-foreground: ## run caluma in foreground with dev server for debugging
 
 .PHONY: ember-lint
 ember-lint: ## lint the frontend
-	@docker compose run --rm ember yarn lint
+	@docker compose run --rm ember pnpm run lint
 
 .PHONY: ember-lint-fix
 ember-lint-fix: ## lint and fix the frontend
-	@docker compose run --rm ember yarn lint:js --fix
+	@docker compose run --rm ember pnpm run lint:js --fix
 
 .PHONY: ember-test
 ember-test: ## test the frontend
-	@docker compose run --rm ember yarn test:ember
+	@docker compose run --rm ember pnpm run test:ember
