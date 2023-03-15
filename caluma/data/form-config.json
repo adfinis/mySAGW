@@ -833,7 +833,7 @@
                 "max_value": null,
                 "min_value": null
             },
-            "meta": {},
+            "meta": {"waehrung": "chf"},
             "data_source": null,
             "row_form": null,
             "sub_form": null,
@@ -926,7 +926,7 @@
             "hint_text": "{\"de\": null, \"en\": null, \"fr\": null}",
             "static_content": "{\"de\": \"\", \"en\": \"\", \"fr\": \"\"}",
             "configuration": {},
-            "meta": {},
+            "meta": {"waehrung": "chf"},
             "data_source": null,
             "row_form": null,
             "sub_form": null,

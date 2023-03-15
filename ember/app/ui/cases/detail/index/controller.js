@@ -68,65 +68,76 @@ export default class CasesDetailIndexController extends Controller {
    * Answers in alwaysDisplayedAnswers should always be displayed.
    */
   get remarks() {
-    const newestAnswer =
-      this.remarkWorkItems.newest?.document.answers.edges.reduce(
-        (filteredAnswers, answer, _, answers) => {
-          Object.keys(ENV.APP.caluma.displayedAnswers).forEach((taskSlug) => {
-            if (!this.remarkWorkItems.newest.task.slug.includes(taskSlug)) {
-              return;
-            }
+    const workItems = this.remarkWorkItems;
 
-            const decision = answers.find(
-              (a) => a.node.question.slug === `${taskSlug}-decision`
-            );
-            const value = decision.node[`${decision.node.__typename}Value`];
+    const newestAnswer = workItems.newest?.document.answers.edges.reduce(
+      (filteredAnswers, answer, _, answers) => {
+        Object.keys(ENV.APP.caluma.displayedAnswers).forEach((taskSlug) => {
+          if (!workItems.newest.task.slug.includes(taskSlug)) {
+            return;
+          }
 
-            if (
-              ENV.APP.caluma.displayedAnswers[taskSlug][value].includes(
-                answer.node.question.slug
-              ) &&
-              answer.node[`${answer.node.__typename}Value`]
-            ) {
-              filteredAnswers.push({
-                label: answer.node.question.label,
-                value: answer.node[`${answer.node.__typename}Value`],
-              });
+          const decision = answers.find(
+            (a) => a.node.question.slug === `${taskSlug}-decision`
+          );
+          const value = decision.node[`${decision.node.__typename}Value`];
+
+          if (
+            ENV.APP.caluma.displayedAnswers[taskSlug][value].includes(
+              answer.node.question.slug
+            ) &&
+            answer.node[`${answer.node.__typename}Value`]
+          ) {
+            filteredAnswers.push(this.formatAnswer(answer));
+          }
+        });
+
+        return filteredAnswers;
+      },
+      []
+    );
+
+    const alwaysDisplayedAnswers = workItems.always.map((workItem) => {
+      return workItem.document.answers.edges.reduce(
+        (filteredAnswers, answer) => {
+          Object.keys(ENV.APP.caluma.alwaysDisplayedAnswers).forEach(
+            (taskSlug) => {
+              if (
+                ENV.APP.caluma.alwaysDisplayedAnswers[taskSlug].includes(
+                  answer.node.question.slug
+                ) &&
+                answer.node[`${answer.node.__typename}Value`]
+              ) {
+                filteredAnswers.push(this.formatAnswer(answer));
+              }
             }
-          });
+          );
 
           return filteredAnswers;
         },
         []
       );
-
-    const alwaysDisplayedAnswers = this.remarkWorkItems.always.map(
-      (workItem) => {
-        return workItem.document.answers.edges.reduce(
-          (filteredAnswers, answer) => {
-            Object.keys(ENV.APP.caluma.alwaysDisplayedAnswers).forEach(
-              (taskSlug) => {
-                if (
-                  ENV.APP.caluma.alwaysDisplayedAnswers[taskSlug].includes(
-                    answer.node.question.slug
-                  ) &&
-                  answer.node[`${answer.node.__typename}Value`]
-                ) {
-                  filteredAnswers.push({
-                    label: answer.node.question.label,
-                    value: answer.node[`${answer.node.__typename}Value`],
-                  });
-                }
-              }
-            );
-
-            return filteredAnswers;
-          },
-          []
-        );
-      }
-    );
+    });
 
     return [...(newestAnswer ?? []), ...alwaysDisplayedAnswers].flat();
+  }
+
+  formatAnswer(answer) {
+    let value = answer.node[`${answer.node.__typename}Value`];
+
+    if (answer.node.question.meta.waehrung) {
+      value = new Intl.NumberFormat("de-CH", {
+        style: "currency",
+        currency: answer.node.question.meta.waehrung,
+      })
+        .format(value)
+        .replace(".00", ".-");
+    }
+
+    return {
+      label: answer.node.question.label,
+      value,
+    };
   }
 
   @dropTask

@@ -21,6 +21,7 @@ from mysagw.dms_client import DMSClient, get_dms_error_response
 from mysagw.identity.models import Identity
 from mysagw.oidc_auth.permissions import IsAdmin, IsAuthenticated
 from mysagw.pdf_utils import add_caluma_files_to_pdf
+from mysagw.utils import format_currency
 
 GQL_DIR = Path(__file__).parent.resolve() / "queries"
 
@@ -149,6 +150,9 @@ class CaseDownloadViewSet(GenericViewSet):
                 except (KeyError, TypeError, IndexError):
                     value = ""
                     break
+
+            if field == "rahmenkredit":
+                value = format_currency(value, "CHF")
 
             result[field] = value
 

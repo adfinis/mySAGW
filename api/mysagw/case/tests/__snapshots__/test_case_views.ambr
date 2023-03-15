@@ -80,7 +80,7 @@
         'email': 'gallagherheather@example.com',
         'greeting_salutation_and_name': 'Sehr geehrte·r Bruce Wilkins',
       }),
-      'rahmenkredit': '23',
+      'rahmenkredit': 'CHF 23.-',
     }),
   })
 # ---
@@ -103,7 +103,7 @@
         'email': 'gallagherheather@example.com',
         'greeting_salutation_and_name': 'Sehr geehrte·r Bruce Wilkins',
       }),
-      'rahmenkredit': '23',
+      'rahmenkredit': 'CHF 23.-',
     }),
   })
 # ---
@@ -126,7 +126,7 @@
         'email': 'gallagherheather@example.com',
         'greeting_salutation_and_name': 'Sehr geehrte·r Bruce Wilkins',
       }),
-      'rahmenkredit': '23',
+      'rahmenkredit': 'CHF 23.-',
     }),
   })
 # ---
@@ -215,7 +215,7 @@
         'email': 'gallagherheather@example.com',
         'greeting_salutation_and_name': 'Dear Bruce Wilkins',
       }),
-      'rahmenkredit': '23',
+      'rahmenkredit': 'CHF 23.-',
     }),
   })
 # ---
@@ -238,7 +238,7 @@
         'email': 'gallagherheather@example.com',
         'greeting_salutation_and_name': 'Dear Bruce Wilkins',
       }),
-      'rahmenkredit': '23',
+      'rahmenkredit': 'CHF 23.-',
     }),
   })
 # ---
@@ -261,7 +261,7 @@
         'email': 'gallagherheather@example.com',
         'greeting_salutation_and_name': 'Dear Bruce Wilkins',
       }),
-      'rahmenkredit': '23',
+      'rahmenkredit': 'CHF 23.-',
     }),
   })
 # ---
@@ -350,7 +350,7 @@
         'email': 'gallagherheather@example.com',
         'greeting_salutation_and_name': 'Bruce Wilkins',
       }),
-      'rahmenkredit': '23',
+      'rahmenkredit': 'CHF 23.-',
     }),
   })
 # ---
@@ -373,7 +373,7 @@
         'email': 'gallagherheather@example.com',
         'greeting_salutation_and_name': 'Bruce Wilkins',
       }),
-      'rahmenkredit': '23',
+      'rahmenkredit': 'CHF 23.-',
     }),
   })
 # ---
@@ -396,7 +396,7 @@
         'email': 'gallagherheather@example.com',
         'greeting_salutation_and_name': 'Bruce Wilkins',
       }),
-      'rahmenkredit': '23',
+      'rahmenkredit': 'CHF 23.-',
     }),
   })
 # ---
@@ -474,13 +474,13 @@
               'info_text': None,
               'label': 'Test float',
               'type': 'FloatQuestion',
-              'value': 23.5,
+              'value': '€ 23.50',
             }),
             'test-int': dict({
               'info_text': None,
               'label': 'Test int',
               'type': 'IntegerQuestion',
-              'value': 23,
+              'value': 'CHF 23.-',
             }),
             'test-many-choices': dict({
               'info_text': None,
