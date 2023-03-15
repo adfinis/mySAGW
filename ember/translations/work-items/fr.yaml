@@ -42,7 +42,7 @@ work-items:
     taskTypes: "Tâche"
     documentNumber: "Numéro du document"
     answer: "Champ de recherche"
-    forms: "Form"
+    forms: "Formulaire"
     expertAssociations: "Société membre"
     distributionPlans: "Plan de distribution"
     sections: "Section"

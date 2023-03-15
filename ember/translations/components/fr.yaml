@@ -39,6 +39,6 @@ components:
       search: "Tapez pour rechercher"
 
     modal:
-      title: "Filters"
-      open: "More filters"
-      close: "Filter"
+      title: "Filtres"
+      open: "Plus de filtres"
+      close: "Filtre"

@@ -32,7 +32,7 @@ components:
     invert: "Filter umkehren"
     inverted: "Dieser Filter ist umgekehrt"
     resetShort: "Reset"
-    reset: "Filters zurücksetzten"
+    reset: "Filter zurücksetzten"
     dropdown:
       loading: "Lädt..."
       empty: "Keine Einträge gefunden"
@@ -40,5 +40,5 @@ components:
 
     modal:
       title: "Filters"
-      open: "More filters"
+      open: "Mehr Filter"
       close: "Filter"

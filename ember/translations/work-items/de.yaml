@@ -42,7 +42,7 @@ work-items:
     taskTypes: "Aufgabe"
     documentNumber: "Dossiernummer"
     answer: "Suchfeld"
-    forms: "Form"
+    forms: "Formular"
     expertAssociations: "Fachgesellschaft"
     distributionPlans: "Verteilplan"
     sections: "Sektion"

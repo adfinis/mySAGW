@@ -27,8 +27,8 @@ export default class TableController extends Controller {
   @tracked filters = new TrackedObject(this._filters);
   @tracked invertedFilters = new TrackedObject(this._filters);
   @tracked order = "-CREATED_AT";
+  @tracked filter;
 
-  @tracked filter = this.serializeFilter();
   serializeFilter() {
     this.filter = btoa(
       JSON.stringify({ filters: this.filters, inverts: this.invertedFilters })

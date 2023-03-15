@@ -101,7 +101,6 @@
         @onChange={{perform @updateFilter "answerSearch"}}
         @invertFilter={{perform @invertFilter "answerSearch"}}
       />
-      {{!-- filter not supported for now
       <Filter.Dropdown
         @label={{t "work-items.filters.forms"}}
         @selected={{@filters.forms}}
@@ -110,7 +109,6 @@
         @onChange={{perform @updateFilter "forms"}}
         @invertFilter={{perform @invertFilter "forms"}}
       />
-      --}}
       <Filter.Dropdown
         @label={{t "work-items.filters.expertAssociations"}}
         @selected={{@filters.expertAssociations}}

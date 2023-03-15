@@ -90,9 +90,10 @@ export default class WorkItemsIndexController extends TableController {
     }
 
     if (this.filters.forms) {
-      // TODO update caluma to support this
-      // filter.push({ caseDocumentForms: arrayFromString(this.filters.forms),
-      // invert: Boolean(this.invertedFilters.forms), });
+      filter.push({
+        caseDocumentForms: arrayFromString(this.filters.forms),
+        invert: Boolean(this.invertedFilters.forms),
+      });
     }
 
     Object.keys(ENV.APP.caluma.filterableQuestions).forEach((question) => {
@@ -103,7 +104,8 @@ export default class WorkItemsIndexController extends TableController {
         caseDocumentHasAnswer: [
           {
             question: ENV.APP.caluma.filterableQuestions[question],
-            value: this.filters[question],
+            lookup: "IN",
+            value: arrayFromString(this.filters[question]),
           },
         ],
         invert: Boolean(this.invertedFilters[question]),

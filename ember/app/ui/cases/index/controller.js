@@ -83,7 +83,8 @@ export default class CasesIndexController extends TableController {
         hasAnswer: [
           {
             question: ENV.APP.caluma.filterableQuestions[question],
-            value: this.filters[question],
+            lookup: "IN",
+            value: arrayFromString(this.filters[question]),
           },
         ],
         invert: Boolean(this.invertedFilters[question]),

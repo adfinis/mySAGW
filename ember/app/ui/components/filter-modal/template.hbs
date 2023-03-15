@@ -4,6 +4,7 @@
     <UkButton
       class="uk-inline uk-display-block"
       @onClick={{fn (mut this.visible) true}}
+      data-test-filter-modal-open
     >
       {{t "components.filters.modal.open"}}
       {{#if @setFiltersAmount}}
