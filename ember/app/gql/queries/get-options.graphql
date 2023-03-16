@@ -1,0 +1,29 @@
+fragment OptionsFragment on OptionConnection {
+  edges {
+    node {
+      slug
+      label
+    }
+  }
+}
+
+query getOptionsQuery($filter: [QuestionFilterSetType]) {
+  allQuestions(filter: $filter) {
+    edges {
+      node {
+        slug
+        __typename
+        ... on ChoiceQuestion {
+          ChoiceQuestion: options(filter: [{ isArchived: false }]) {
+            ...OptionsFragment
+          }
+        }
+        ... on MultipleChoiceQuestion {
+          MultipleChoiceQuestion: options(filter: [{ isArchived: false }]) {
+            ...OptionsFragment
+          }
+        }
+      }
+    }
+  }
+}

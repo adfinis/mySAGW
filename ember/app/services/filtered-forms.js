@@ -58,8 +58,12 @@ export default class FilteredFormsService extends Service {
   }
 
   async mainFormSlugs() {
+    return (await this.mainForms()).map((form) => form.slug);
+  }
+
+  async mainForms() {
     return (
       await this.apollo.query({ query: getFormsQuery }, "allForms.edges")
-    ).map((form) => form.node.slug);
+    ).map((form) => form.node);
   }
 }
