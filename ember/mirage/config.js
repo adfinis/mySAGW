@@ -171,4 +171,11 @@ export default function () {
     return schema.memberships.where(query);
   });
   this.post("/case/accesses");
+
+  this.get("/my-orgs", (schema, request) => {
+    const query = parseFilters(request, [
+      { source: "identity", target: "identityId" },
+    ]);
+    return schema.memberships.where(query);
+  });
 }

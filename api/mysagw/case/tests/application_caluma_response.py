@@ -43,7 +43,10 @@ CALUMA_DATA_FULL = {
                     "edges": [
                         {
                             "node": {
-                                "question": {"slug": "test-many-multiple-choices"},
+                                "question": {
+                                    "slug": "test-many-multiple-choices",
+                                    "meta": {},
+                                },
                                 "listValue": [
                                     "test-many-multiple-choices-choice-3",
                                     "test-many-multiple-choices-choice-6",
@@ -53,7 +56,7 @@ CALUMA_DATA_FULL = {
                         },
                         {
                             "node": {
-                                "question": {"slug": "test-table"},
+                                "question": {"slug": "test-table", "meta": {}},
                                 "tableValue": [
                                     {
                                         "answers": {
@@ -135,37 +138,40 @@ CALUMA_DATA_FULL = {
                         },
                         {
                             "node": {
-                                "question": {"slug": "test-date"},
+                                "question": {"slug": "test-date", "meta": {}},
                                 "dateValue": "2022-10-14",
                             }
                         },
                         {
                             "node": {
-                                "question": {"slug": "test-many-choices"},
+                                "question": {"slug": "test-many-choices", "meta": {}},
                                 "stringValue": "test-many-choices-choice-7",
                             }
                         },
                         {
                             "node": {
-                                "question": {"slug": "test-textarea"},
+                                "question": {"slug": "test-textarea", "meta": {}},
                                 "stringValue": "Bar\n\nBaz",
                             }
                         },
                         {
                             "node": {
-                                "question": {"slug": "test-top-level"},
+                                "question": {"slug": "test-top-level", "meta": {}},
                                 "stringValue": "some value",
                             }
                         },
                         {
                             "node": {
-                                "question": {"slug": "test-text"},
+                                "question": {"slug": "test-text", "meta": {}},
                                 "stringValue": "Foo",
                             }
                         },
                         {
                             "node": {
-                                "question": {"slug": "test-multiple-choice"},
+                                "question": {
+                                    "slug": "test-multiple-choice",
+                                    "meta": {},
+                                },
                                 "listValue": [
                                     "test-multiple-choice-choice-1",
                                     "test-multiple-choice-choice-3",
@@ -174,19 +180,19 @@ CALUMA_DATA_FULL = {
                         },
                         {
                             "node": {
-                                "question": {"slug": "test-calc"},
+                                "question": {"slug": "test-calc", "meta": {}},
                                 "floatValue": 46.5,
                             }
                         },
                         {
                             "node": {
-                                "question": {"slug": "test-choice"},
+                                "question": {"slug": "test-choice", "meta": {}},
                                 "stringValue": "test-choice-choice-2",
                             }
                         },
                         {
                             "node": {
-                                "question": {"slug": "test-file"},
+                                "question": {"slug": "test-file", "meta": {}},
                                 "filesValue": [
                                     {
                                         "name": "small.png",
@@ -221,13 +227,19 @@ CALUMA_DATA_FULL = {
                         },
                         {
                             "node": {
-                                "question": {"slug": "test-float"},
+                                "question": {
+                                    "slug": "test-float",
+                                    "meta": {"waehrung": "€"},
+                                },
                                 "floatValue": 23.5,
                             }
                         },
                         {
                             "node": {
-                                "question": {"slug": "test-int"},
+                                "question": {
+                                    "slug": "test-int",
+                                    "meta": {"waehrung": "chf"},
+                                },
                                 "integerValue": 23,
                             }
                         },
@@ -255,6 +267,7 @@ CALUMA_DATA_FULL = {
                                                         "slug": "test-text",
                                                         "label": "Test text",
                                                         "infoText": "",
+                                                        "meta": {},
                                                     }
                                                 },
                                                 {
@@ -263,6 +276,7 @@ CALUMA_DATA_FULL = {
                                                         "slug": "test-textarea",
                                                         "label": "Test textarea",
                                                         "infoText": "",
+                                                        "meta": {},
                                                     }
                                                 },
                                                 {
@@ -271,6 +285,7 @@ CALUMA_DATA_FULL = {
                                                         "slug": "test-int",
                                                         "label": "Test int",
                                                         "infoText": "",
+                                                        "meta": {"waehrung": "chf"},
                                                     }
                                                 },
                                                 {
@@ -279,6 +294,7 @@ CALUMA_DATA_FULL = {
                                                         "slug": "test-float",
                                                         "label": "Test float",
                                                         "infoText": "",
+                                                        "meta": {"waehrung": "€"},
                                                     }
                                                 },
                                                 {
@@ -287,6 +303,7 @@ CALUMA_DATA_FULL = {
                                                         "slug": "test-multiple-choice",
                                                         "label": "Test multiple choice",
                                                         "infoText": "",
+                                                        "meta": {},
                                                         "multipleChoiceOptions": {
                                                             "edges": [
                                                                 {
@@ -317,6 +334,7 @@ CALUMA_DATA_FULL = {
                                                         "slug": "test-choice",
                                                         "label": "Test choice",
                                                         "infoText": "",
+                                                        "meta": {},
                                                         "choiceOptions": {
                                                             "edges": [
                                                                 {
@@ -347,6 +365,7 @@ CALUMA_DATA_FULL = {
                                                         "slug": "test-file",
                                                         "label": "Test file",
                                                         "infoText": "",
+                                                        "meta": {},
                                                     }
                                                 },
                                                 {
@@ -355,6 +374,7 @@ CALUMA_DATA_FULL = {
                                                         "slug": "test-static",
                                                         "label": "Test static",
                                                         "infoText": "",
+                                                        "meta": {},
                                                         "staticContent": "Some static content",
                                                     }
                                                 },
@@ -364,6 +384,7 @@ CALUMA_DATA_FULL = {
                                                         "slug": "test-date",
                                                         "label": "Test date",
                                                         "infoText": "Bitte geben Sie das Datum ein.",
+                                                        "meta": {},
                                                     }
                                                 },
                                                 {
@@ -372,6 +393,7 @@ CALUMA_DATA_FULL = {
                                                         "slug": "test-calc",
                                                         "label": "Test calc",
                                                         "infoText": "",
+                                                        "meta": {},
                                                     }
                                                 },
                                                 {
@@ -380,6 +402,7 @@ CALUMA_DATA_FULL = {
                                                         "slug": "test-table",
                                                         "label": "Test table",
                                                         "infoText": "",
+                                                        "meta": {},
                                                         "rowForm": {
                                                             "slug": "test-table-form",
                                                             "name": "Test table form",
@@ -391,6 +414,7 @@ CALUMA_DATA_FULL = {
                                                                             "slug": "row-1",
                                                                             "label": "Row 1",
                                                                             "infoText": "",
+                                                                            "meta": {},
                                                                         }
                                                                     },
                                                                     {
@@ -399,6 +423,7 @@ CALUMA_DATA_FULL = {
                                                                             "slug": "row-2",
                                                                             "label": "Row 2",
                                                                             "infoText": "",
+                                                                            "meta": {},
                                                                         }
                                                                     },
                                                                     {
@@ -407,6 +432,7 @@ CALUMA_DATA_FULL = {
                                                                             "slug": "row-3",
                                                                             "label": "Row 3",
                                                                             "infoText": "",
+                                                                            "meta": {},
                                                                         }
                                                                     },
                                                                     {
@@ -415,6 +441,7 @@ CALUMA_DATA_FULL = {
                                                                             "slug": "row-4",
                                                                             "label": "Row 4",
                                                                             "infoText": "",
+                                                                            "meta": {},
                                                                             "choiceOptions": {
                                                                                 "edges": [
                                                                                     {
@@ -445,6 +472,7 @@ CALUMA_DATA_FULL = {
                                                                             "slug": "row-5",
                                                                             "label": "Row 5",
                                                                             "infoText": "",
+                                                                            "meta": {},
                                                                             "multipleChoiceOptions": {
                                                                                 "edges": [
                                                                                     {
@@ -480,6 +508,7 @@ CALUMA_DATA_FULL = {
                                                         "slug": "test-many-choices",
                                                         "label": "Test Many Choices",
                                                         "infoText": "",
+                                                        "meta": {},
                                                         "choiceOptions": {
                                                             "edges": [
                                                                 {
@@ -559,6 +588,7 @@ CALUMA_DATA_FULL = {
                                                         "label": "Submit button",
                                                         "infoText": "",
                                                         "staticContent": "",
+                                                        "meta": {},
                                                     }
                                                 },
                                                 {
@@ -567,6 +597,7 @@ CALUMA_DATA_FULL = {
                                                         "slug": "test-many-multiple-choices",
                                                         "label": "Test Many Multiple Choices",
                                                         "infoText": "",
+                                                        "meta": {},
                                                         "multipleChoiceOptions": {
                                                             "edges": [
                                                                 {
@@ -650,6 +681,7 @@ CALUMA_DATA_FULL = {
                                     "slug": "test-top-level",
                                     "label": "Test top level",
                                     "infoText": "<p>Eine Info.</p>",
+                                    "meta": {},
                                 }
                             },
                         ]
@@ -679,6 +711,7 @@ CALUMA_DATA_EMPTY = {
                                     "slug": "test-form",
                                     "label": "Test form",
                                     "infoText": "",
+                                    "meta": {},
                                     "subForm": {
                                         "slug": "test-download-types",
                                         "name": "Test Download Types",
@@ -690,6 +723,7 @@ CALUMA_DATA_EMPTY = {
                                                         "slug": "test-text",
                                                         "label": "Test text",
                                                         "infoText": "",
+                                                        "meta": {},
                                                     }
                                                 },
                                                 {
@@ -698,6 +732,7 @@ CALUMA_DATA_EMPTY = {
                                                         "slug": "test-textarea",
                                                         "label": "Test textarea",
                                                         "infoText": "",
+                                                        "meta": {},
                                                     }
                                                 },
                                                 {
@@ -706,6 +741,7 @@ CALUMA_DATA_EMPTY = {
                                                         "slug": "test-int",
                                                         "label": "Test int",
                                                         "infoText": "",
+                                                        "meta": {},
                                                     }
                                                 },
                                                 {
@@ -714,6 +750,7 @@ CALUMA_DATA_EMPTY = {
                                                         "slug": "test-float",
                                                         "label": "Test float",
                                                         "infoText": "",
+                                                        "meta": {},
                                                     }
                                                 },
                                                 {
@@ -722,6 +759,7 @@ CALUMA_DATA_EMPTY = {
                                                         "slug": "test-multiple-choice",
                                                         "label": "Test multiple choice",
                                                         "infoText": "",
+                                                        "meta": {},
                                                         "multipleChoiceOptions": {
                                                             "edges": [
                                                                 {
@@ -752,6 +790,7 @@ CALUMA_DATA_EMPTY = {
                                                         "slug": "test-choice",
                                                         "label": "Test choice",
                                                         "infoText": "",
+                                                        "meta": {},
                                                         "choiceOptions": {
                                                             "edges": [
                                                                 {
@@ -782,6 +821,7 @@ CALUMA_DATA_EMPTY = {
                                                         "slug": "test-file",
                                                         "label": "Test file",
                                                         "infoText": "",
+                                                        "meta": {},
                                                     }
                                                 },
                                                 {
@@ -791,6 +831,7 @@ CALUMA_DATA_EMPTY = {
                                                         "label": "Test static",
                                                         "infoText": "",
                                                         "staticContent": "Some static content",
+                                                        "meta": {},
                                                     }
                                                 },
                                                 {
@@ -799,6 +840,7 @@ CALUMA_DATA_EMPTY = {
                                                         "slug": "test-date",
                                                         "label": "Test date",
                                                         "infoText": "Bitte geben Sie das Datum ein.",
+                                                        "meta": {},
                                                     }
                                                 },
                                                 {
@@ -807,6 +849,7 @@ CALUMA_DATA_EMPTY = {
                                                         "slug": "test-calc",
                                                         "label": "Test calc",
                                                         "infoText": "",
+                                                        "meta": {},
                                                     }
                                                 },
                                                 {
@@ -815,6 +858,7 @@ CALUMA_DATA_EMPTY = {
                                                         "slug": "test-table",
                                                         "label": "Test table",
                                                         "infoText": "",
+                                                        "meta": {},
                                                         "rowForm": {
                                                             "slug": "test-table-form",
                                                             "name": "Test table form",
@@ -826,6 +870,7 @@ CALUMA_DATA_EMPTY = {
                                                                             "slug": "row-1",
                                                                             "label": "Row 1",
                                                                             "infoText": "",
+                                                                            "meta": {},
                                                                         }
                                                                     },
                                                                     {
@@ -834,6 +879,7 @@ CALUMA_DATA_EMPTY = {
                                                                             "slug": "row-2",
                                                                             "label": "Row 2",
                                                                             "infoText": "",
+                                                                            "meta": {},
                                                                         }
                                                                     },
                                                                     {
@@ -842,6 +888,7 @@ CALUMA_DATA_EMPTY = {
                                                                             "slug": "row-3",
                                                                             "label": "Row 3",
                                                                             "infoText": "",
+                                                                            "meta": {},
                                                                         }
                                                                     },
                                                                     {
@@ -850,6 +897,7 @@ CALUMA_DATA_EMPTY = {
                                                                             "slug": "row-4",
                                                                             "label": "Row 4",
                                                                             "infoText": "",
+                                                                            "meta": {},
                                                                             "choiceOptions": {
                                                                                 "edges": [
                                                                                     {
@@ -880,6 +928,7 @@ CALUMA_DATA_EMPTY = {
                                                                             "slug": "row-5",
                                                                             "label": "Row 5",
                                                                             "infoText": "",
+                                                                            "meta": {},
                                                                             "multipleChoiceOptions": {
                                                                                 "edges": [
                                                                                     {
@@ -915,6 +964,7 @@ CALUMA_DATA_EMPTY = {
                                                         "slug": "test-many-choices",
                                                         "label": "Test Many Choices",
                                                         "infoText": "",
+                                                        "meta": {},
                                                         "choiceOptions": {
                                                             "edges": [
                                                                 {
@@ -994,6 +1044,7 @@ CALUMA_DATA_EMPTY = {
                                                         "label": "Submit button",
                                                         "infoText": "",
                                                         "staticContent": "",
+                                                        "meta": {},
                                                     }
                                                 },
                                                 {
@@ -1002,6 +1053,7 @@ CALUMA_DATA_EMPTY = {
                                                         "slug": "test-many-multiple-choices",
                                                         "label": "Test Many Multiple Choices",
                                                         "infoText": "",
+                                                        "meta": {},
                                                         "multipleChoiceOptions": {
                                                             "edges": [
                                                                 {
@@ -1085,6 +1137,7 @@ CALUMA_DATA_EMPTY = {
                                     "slug": "test-top-level",
                                     "label": "Test top level",
                                     "infoText": "<p>Eine Info.</p>",
+                                    "meta": {},
                                 }
                             },
                         ]

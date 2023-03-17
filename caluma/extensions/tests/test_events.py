@@ -314,7 +314,7 @@ def test_send_new_work_item_mail(
         )
         decision_credit_work_item.document.answers.create(
             question_id="gesprochener-rahmenkredit",
-            value="23",
+            value=23000.0,
         )
         complete_work_item(decision_credit_work_item, user)
 
@@ -354,7 +354,7 @@ def test_send_new_work_item_mail(
         define_amount_work_item = case.work_items.get(task_id="define-amount")
         define_amount_work_item.document.answers.create(
             question_id="define-amount-amount-float",
-            value=23.0,
+            value=23000.0,
         )
         define_amount_work_item.document.answers.create(
             question_id="define-amount-decision",

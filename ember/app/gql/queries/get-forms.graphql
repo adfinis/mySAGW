@@ -3,6 +3,7 @@ query getForms {
     edges {
       node {
         slug
+        name
       }
     }
   }

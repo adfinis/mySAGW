@@ -1,0 +1,106 @@
+<Filters class="uk-flex uk-flex-between uk-child-width-expand" as |Filter|>
+  <div class="uk-flex filters-gap">
+    <Filter.Input
+      class="uk-width-auto"
+      @label={{t "work-items.filters.documentNumber"}}
+      @invertedIcon={{@invertedFilters.documentNumber}}
+      @value={{@filters.documentNumber}}
+      @onChange={{perform @updateFilter "documentNumber"}}
+    />
+    <Filter.Input
+      @label={{t "work-items.filters.answer"}}
+      @value={{@filters.answerSearch}}
+      @invertedIcon={{@invertedFilters.answerSearch}}
+      @onChange={{perform @updateFilter "answerSearch"}}
+    />
+
+    {{#if (can "filter access case")}}
+      <Filter.Identity
+        @onChange={{perform @updateFilter "identities"}}
+        @selected={{@filters.identities}}
+        @invertedIcon={{@invertedFilters.identities}}
+      />
+    {{/if}}
+  </div>
+  <div class="uk-flex filters-gap uk-flex-right">
+    <FilterModal
+      @setFiltersAmount={{this.setFiltersAmount}}
+      @resetFilters={{@resetFilters}}
+      class="uk-width-auto"
+    >
+      <Filters
+        class="uk-grid-match uk-flex-around uk-child-width-1-4@l uk-child-width-1-5@xl modal-filters"
+        uk-grid
+        as |Filter|
+      >
+        <Filter.Input
+          @label={{t "work-items.filters.documentNumber"}}
+          @value={{@filters.documentNumber}}
+          @inverted={{@invertedFilters.documentNumber}}
+          @onChange={{perform @updateFilter "documentNumber"}}
+          @invertFilter={{perform @invertFilter "documentNumber"}}
+        />
+        <Filter.Input
+          @label={{t "work-items.filters.answer"}}
+          @value={{@filters.answerSearch}}
+          @inverted={{@invertedFilters.answerSearch}}
+          @onChange={{perform @updateFilter "answerSearch"}}
+          @invertFilter={{perform @invertFilter "answerSearch"}}
+        />
+        {{#if (can "filter access case")}}
+          <Filter.Identity
+            @selected={{@filters.identities}}
+            @onChange={{perform @updateFilter "identities"}}
+            @inverted={{@invertedFilters.identities}}
+            @invertFilter={{perform @invertFilter "identities"}}
+          />
+        {{/if}}
+        <Filter.Dropdown
+          @label={{t "work-items.filters.forms"}}
+          @selected={{@filters.forms}}
+          @inverted={{@invertedFilters.forms}}
+          @options={{this.forms.value}}
+          @onChange={{perform @updateFilter "forms"}}
+          @invertFilter={{perform @invertFilter "forms"}}
+        />
+        <Filter.Dropdown
+          @label={{t "work-items.filters.expertAssociations"}}
+          @selected={{@filters.expertAssociations}}
+          @inverted={{@invertedFilters.expertAssociations}}
+          @options={{this.expertAssociations}}
+          @onChange={{perform @updateFilter "expertAssociations"}}
+          @invertFilter={{perform @invertFilter "expertAssociations"}}
+        />
+        <Filter.Dropdown
+          @label={{t "work-items.filters.distributionPlans"}}
+          @selected={{@filters.distributionPlans}}
+          @inverted={{@invertedFilters.distributionPlans}}
+          @options={{this.distributionPlans}}
+          @onChange={{perform @updateFilter "distributionPlans"}}
+          @invertFilter={{perform @invertFilter "distributionPlans"}}
+        />
+        <Filter.Dropdown
+          @label={{t "work-items.filters.sections"}}
+          @selected={{@filters.sections}}
+          @inverted={{@invertedFilters.sections}}
+          @options={{this.sections}}
+          @onChange={{perform @updateFilter "sections"}}
+          @invertFilter={{perform @invertFilter "sections"}}
+        />
+      </Filters>
+    </FilterModal>
+
+    {{#if this.setFiltersAmount}}
+      <label class="uk-width-auto">
+        <span class="uk-invisible">{{t "components.filters.resetShort"}}</span>
+        <UkButton
+          class="uk-display-block uk-button-danger"
+          uk-tooltip={{t "components.filters.reset"}}
+          @onClick={{@resetFilters}}
+        >
+          <UkIcon @icon="close" />
+        </UkButton>
+      </label>
+    {{/if}}
+  </div>
+</Filters>

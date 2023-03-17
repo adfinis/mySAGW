@@ -1,47 +1,33 @@
-import Controller from "@ember/controller";
 import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import { useCalumaQuery } from "@projectcaluma/ember-core/caluma-query";
 import { allWorkItems } from "@projectcaluma/ember-core/caluma-query/queries";
 import { queryManager } from "ember-apollo-client";
-import { restartableTask, timeout } from "ember-concurrency";
 import { trackedFunction } from "ember-resources/util/function";
-import { dedupeTracked } from "tracked-toolbox";
 
-import getTasksQuery from "mysagw/gql/queries/get-tasks.graphql";
-import {
-  arrayFromString,
-  stringFromArray,
-  serializeOrder,
-} from "mysagw/utils/query-params";
+import ENV from "mysagw/config/environment";
+import { arrayFromString, serializeOrder } from "mysagw/utils/query-params";
+import TableController from "mysagw/utils/table-controller";
 
-export default class WorkItemsIndexController extends Controller {
-  queryParams = [
-    "order",
-    "status",
-    "role",
-    "taskTypes",
-    "documentNumber",
-    "identities",
-    "answerSearch",
-    "responsible",
-  ];
-
+export default class WorkItemsIndexController extends TableController {
   @service session;
   @service store;
   @service filteredForms;
 
   @queryManager apollo;
 
-  // Filters
-  @dedupeTracked order = "-CREATED_AT";
-  @dedupeTracked status = "open";
-  @dedupeTracked role = "active";
-  @dedupeTracked taskTypes = "";
-  @dedupeTracked documentNumber = "";
-  @dedupeTracked identities = "";
-  @dedupeTracked answerSearch = "";
-  @dedupeTracked responsible = "all";
+  _filters = {
+    status: "open",
+    responsible: "all",
+    taskTypes: "",
+    documentNumber: "",
+    identities: "",
+    answerSearch: "",
+    forms: "",
+    expertAssociations: "",
+    distributionPlan: "",
+    sections: "",
+  };
 
   workItemsQuery = useCalumaQuery(this, allWorkItems, () => ({
     options: {
@@ -52,79 +38,81 @@ export default class WorkItemsIndexController extends Controller {
     order: [serializeOrder(this.order, "caseDocumentAnswer")],
   }));
 
-  get selectedTaskTypes() {
-    const taskTypes = arrayFromString(this.taskTypes);
-
-    return (
-      this.allTaskTypes.value?.filter((taskType) =>
-        taskTypes.includes(taskType.value)
-      ) ?? []
-    );
-  }
-
-  get selectedIdentities() {
-    return arrayFromString(this.identities);
-  }
-
   workItemsFilter = trackedFunction(this, async () => {
     const filter = [
       { metaHasKey: "hidden", invert: true },
-      { status: this.status === "closed" ? "COMPLETED" : "READY" },
-      {
+      { status: this.filters.status === "closed" ? "COMPLETED" : "READY" },
+    ];
+
+    if (this.filters.documentNumber) {
+      filter.push({
         caseDocumentHasAnswer: [
           {
             question: "dossier-nr",
-            value: this.documentNumber,
+            value: this.filters.documentNumber,
             lookup: "ICONTAINS",
           },
         ],
-      },
-    ];
-
-    if (this.taskTypes) {
-      filter.push({ tasks: arrayFromString(this.taskTypes) });
+        invert: Boolean(this.invertedFilters.documentNumber),
+      });
     }
 
-    if (this.identities) {
-      filter.push({ assignedUsers: arrayFromString(this.identities) });
+    if (this.filters.taskTypes) {
+      filter.push({
+        tasks: arrayFromString(this.filters.taskTypes),
+        invert: Boolean(this.invertedFilters.taskTypes),
+      });
     }
 
-    if (this.responsible === "own") {
+    if (this.filters.identities) {
+      filter.push({
+        assignedUsers: arrayFromString(this.filters.identities),
+        invert: Boolean(this.invertedFilters.identities),
+      });
+    }
+
+    if (this.filters.responsible === "own") {
       filter.push({
         assignedUsers: [this.session.data.authenticated.userinfo.sub],
       });
     }
 
-    if (this.answerSearch) {
+    if (this.filters.answerSearch) {
       filter.push({
         caseSearchAnswers: [
           {
-            forms: await this.filteredForms.mainFormSlugs(),
-            value: this.answerSearch,
+            forms: this.forms,
+            value: this.filters.answerSearch,
           },
         ],
+        invert: Boolean(this.invertedFilters.answerSearch),
       });
     }
 
+    if (this.filters.forms) {
+      filter.push({
+        caseDocumentForms: arrayFromString(this.filters.forms),
+        invert: Boolean(this.invertedFilters.forms),
+      });
+    }
+
+    Object.keys(ENV.APP.caluma.filterableQuestions).forEach((question) => {
+      if (!this.filters[question]) {
+        return;
+      }
+      filter.push({
+        caseDocumentHasAnswer: [
+          {
+            question: ENV.APP.caluma.filterableQuestions[question],
+            lookup: "IN",
+            value: arrayFromString(this.filters[question]),
+          },
+        ],
+        invert: Boolean(this.invertedFilters[question]),
+      });
+    });
+
     return filter;
-  });
-
-  allTaskTypes = trackedFunction(this, async () => {
-    const response = await this.apollo.query(
-      {
-        query: getTasksQuery,
-        variables: {
-          filter: [{ isArchived: false }],
-          order: [{ attribute: "NAME" }],
-        },
-      },
-      "allTasks.edges"
-    );
-
-    return response.map((edge) => ({
-      value: edge.node.slug,
-      label: edge.node.name,
-    }));
   });
 
   @action
@@ -157,25 +145,6 @@ export default class WorkItemsIndexController extends Controller {
     }
 
     return workItems;
-  }
-
-  @restartableTask
-  *updateFilter(type, eventOrValue) {
-    if (["documentNumber", "answerSearch"].includes(type)) {
-      // debounce only input filters by 500ms to prevent too many requests when
-      // typing into a search field
-      yield timeout(500);
-    }
-
-    // Update the filter with the passed value. This can either be an array of
-    // objects (task types or identities), and event or a plain value
-    if (type === "identities") {
-      this[type] = stringFromArray(eventOrValue, "idpId");
-    } else if (type === "taskTypes") {
-      this[type] = stringFromArray(eventOrValue, "value");
-    } else {
-      this[type] = eventOrValue.target?.value ?? eventOrValue;
-    }
   }
 
   get tableConfig() {

@@ -113,6 +113,7 @@ export default class CustomCaseModel extends CaseModel {
                     FloatAnswerValue: value
                   }
                   question {
+                    meta
                     slug
                     label
                   }
@@ -138,6 +139,7 @@ export default class CustomCaseModel extends CaseModel {
             id
             question {
               slug
+              meta
               ... on ChoiceQuestion {
                 options {
                   edges {

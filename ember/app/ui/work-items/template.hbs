@@ -4,54 +4,18 @@
 
 <hr />
 
-<Filters as |Filter|>
-  <Filter.RadioButtons
-    @label={{t "work-items.filters.status"}}
-    @selected={{this.status}}
-    @options={{
-      array
-      (hash value="open" label=(t "work-items.filters.open"))
-      (hash value="closed" label=(t "work-items.filters.closed"))
-    }}
-    @onChange={{perform this.updateFilter "status"}}
-  />
-  <Filter.RadioButtons
-    @label={{t "work-items.filters.responsible"}}
-    @selected={{this.responsible}}
-    @options={{
-      array
-      (hash value="all" label=(t "work-items.filters.all"))
-      (hash value="own" label=(t "work-items.filters.own"))
-    }}
-    @onChange={{perform this.updateFilter "responsible"}}
-  />
-  <Filter.Dropdown
-    @label={{t "work-items.filters.taskTypes"}}
-    @selected={{this.selectedTaskTypes}}
-    @options={{this.allTaskTypes.value}}
-    @onChange={{perform this.updateFilter "taskTypes"}}
-  />
-  <Filter.Identity
-    @onChange={{perform this.updateFilter "identities"}}
-    @selectedIdentities={{this.selectedIdentities}}
-  />
-  <Filter.Input
-    @label={{t "work-items.filters.documentNumber"}}
-    @value={{this.documentNumber}}
-    @onChange={{perform this.updateFilter "documentNumber"}}
-  />
-  <Filter.Input
-    @label={{t "work-items.filters.answer" }}
-    @value={{this.answerSearch}}
-    @onChange={{perform this.updateFilter "answerSearch"}}
-  />
-</Filters>
+<WorkItemFilters
+  @filters={{this.filters}}
+  @invertedFilters={{this.invertedFilters}}
+  @updateFilter={{this.updateFilter}}
+  @resetFilters={{this.resetFilters}}
+  @invertFilter={{this.invertFilter}}
+/>
 
-{{#if this.workItemsFilter.value}}
-  <WorkItemList
-    @query={{this.workItemsQuery}}
-    @config={{this.tableConfig}}
-    @setOrder={{fn (mut this.order)}}
-    @order={{this.order}}
-  />
-{{/if}}
+<WorkItemList
+  @query={{this.workItemsQuery}}
+  @loading={{this.workItemFilters.isLoading}}
+  @config={{this.tableConfig}}
+  @setOrder={{fn (mut this.order)}}
+  @order={{this.order}}
+/>

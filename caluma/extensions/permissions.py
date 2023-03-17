@@ -17,9 +17,16 @@ from caluma.extensions.settings import settings
 
 
 class MySAGWPermission(BasePermission):
-    def _is_admin_or_sagw(self, info):
+    def _is_admin(self, info):
         groups = info.context.user.groups
-        return "admin" in groups or "sagw" in groups
+        return "admin" in groups
+
+    def _is_sagw(self, info):
+        groups = info.context.user.groups
+        return "sagw" in groups
+
+    def _is_admin_or_sagw(self, info):
+        return self._is_admin(info) or self._is_sagw(info)
 
     def _can_access_case(self, info, case):
         case_ids = get_cases_for_user(info.context.user)
@@ -84,7 +91,10 @@ class MySAGWPermission(BasePermission):
 
         case = self._get_case_for_doc(answer.document)
 
-        if not self._is_admin_or_sagw(info) and not (
+        if self._is_admin(info):
+            return True
+
+        if not (
             self._can_access_case(info, case)
             or self._is_own(info, answer.document.family)
         ):

@@ -154,6 +154,11 @@ module.exports = function (environment) {
             "CLOSED_AT",
           ],
         },
+        filterableQuestions: {
+          expertAssociations: "mitgliedinstitution",
+          sections: "sektion",
+          distributionPlans: "verteilplan-nr",
+        },
       },
     },
   };

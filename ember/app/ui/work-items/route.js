@@ -1,7 +1,8 @@
-import Route from "@ember/routing/route";
 import { inject as service } from "@ember/service";
 
-export default class WorkItemsIndexRoute extends Route {
+import TableRoute from "mysagw/utils/table-route";
+
+export default class WorkItemsIndexRoute extends TableRoute {
   @service router;
   @service can;
 
