@@ -449,7 +449,7 @@ class OrganisationAdminMembersSerializer(serializers.ModelSerializer):
             for m in membership_qs.order_by("-role__sort"):
                 result_memberships.append(
                     {
-                        "role": m.role.title,
+                        "role": m.role.title if m.role else None,
                         "inactive": m.inactive,
                         "authorized": m.authorized,
                     }
