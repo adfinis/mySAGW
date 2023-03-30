@@ -43,3 +43,15 @@ docker-compose run --rm api python manage.py upload_template -t mysagw/case/temp
 docker-compose run --rm api python manage.py upload_template -t mysagw/case/templates/credit-approval-fr.docx
 docker-compose run --rm api python manage.py upload_template -t mysagw/case/templates/credit-approval-en.docx
 ```
+
+## Set membership-role sort
+
+```python
+from mysagw.identity.helpers import get_membership_roles_order, set_membership_roles_order
+
+role_order = get_membership_roles_order()
+
+new_role_order = []  # edit role_order to match desired ordering
+
+set_membership_roles_order(new_role_order)
+```
