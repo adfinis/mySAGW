@@ -31,6 +31,10 @@ class MembershipRole(UUIDModel, HistoricalModel):
     title = LocalizedCharField()
     description = LocalizedTextField(blank=True, null=True, required=False)
     archived = models.BooleanField(default=False)
+    sort = models.PositiveIntegerField(editable=False, db_index=True, default=0)
+
+    class Meta:
+        ordering = ["-sort", "title"]
 
 
 class Membership(UUIDModel, HistoricalModel):
@@ -122,8 +126,7 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
     comment = models.TextField(blank=True, null=True)
 
     def _get_memberships(self, only_authorized=False):
-        memberships = Membership.objects.filter(
-            Q(identity=self),
+        memberships = self.memberships.filter(
             Q(inactive=False),
             Q(time_slot__isnull=True) | Q(time_slot__contains=timezone.now()),
         )

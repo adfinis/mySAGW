@@ -20,6 +20,8 @@ export default class IdentityModel extends LocalizedModel {
   @attr hasMemberships;
   @attr hasMembers;
   @attr isAuthorized;
+  // special attribute from org-memberships endpoint
+  @attr roles;
 
   get fullName() {
     return [this.lastName, this.firstName].filter(Boolean).join(" ");

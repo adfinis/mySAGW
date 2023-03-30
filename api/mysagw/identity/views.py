@@ -326,10 +326,10 @@ class MyMembershipViewSet(
 
 
 class OrganisationAdminMembersViewSet(
-    RetrieveModelMixin,
     ListModelMixin,
     GenericViewSet,
 ):
-    queryset = models.Membership.objects.all()
+    queryset = models.Identity.objects.all()
     serializer_class = serializers.OrganisationAdminMembersSerializer
-    filterset_class = filters.MembershipFilterSet
+    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
+    filterset_class = filters.OrganisationAdminMembersFilterSet

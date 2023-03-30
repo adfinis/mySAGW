@@ -5,6 +5,7 @@ from django.conf import settings
 from django.urls import reverse
 from psycopg2.extras import DateRange
 from rest_framework import status
+from syrupy import filters
 
 from mysagw.identity import models
 
@@ -492,3 +493,85 @@ def test_my_memberships_delete_failure(db, client):
     response = client.delete(url)
 
     assert response.status_code == status.HTTP_403_FORBIDDEN
+
+
+def test_organisation_members(
+    db, client, membership_role_factory, membership_factory, identity_factory, snapshot
+):
+    first_role = membership_role_factory.create(sort=1)
+    second_role = membership_role_factory.create(sort=2)
+    third_role = membership_role_factory.create(sort=3)
+    organisation = identity_factory(is_organisation=True)
+    user1 = identity_factory(first_name="User", last_name="1")
+    user2 = identity_factory(first_name="User", last_name="2")
+    user3 = identity_factory(first_name="User", last_name="3")
+    user4 = identity_factory(first_name="User", last_name="4")
+    user5 = identity_factory(first_name="User", last_name="5")
+
+    # User1, 2 memberships, 1 inactive
+    # second role is highest
+    # should be second in list - same highest role as user 3, but last_name comes first
+    # in alphabet
+    membership_factory.create(
+        role=first_role, identity=user1, organisation=organisation
+    )
+    membership_factory.create(
+        role=second_role, identity=user1, organisation=organisation
+    )
+    membership_factory.create(
+        role=third_role,
+        identity=user1,
+        organisation=organisation,
+        time_slot=DateRange(datetime.date(2020, 1, 1), datetime.date(2020, 12, 31)),
+    )
+
+    # User2, 3 memberships, 1 inactive
+    # third role is highest
+    # should be first in list
+    membership_factory.create(
+        role=second_role, identity=user2, organisation=organisation, inactive=True
+    )
+    membership_factory.create(
+        role=second_role, identity=user2, organisation=organisation
+    )
+    membership_factory.create(
+        role=third_role, identity=user2, organisation=organisation
+    )
+
+    # User3, 2 memberships, 1 inactive
+    # second role highest
+    # should be third in list - same highest role as user 1, but last_name comes after
+    # in alphabet
+    membership_factory.create(
+        role=second_role, identity=user3, organisation=organisation
+    )
+    membership_factory.create(
+        role=third_role, identity=user3, organisation=organisation, inactive=True
+    )
+
+    # User4, 1 membership, 1 inactive
+    # should be fifth in list
+    membership_factory.create(
+        role=second_role, identity=user4, organisation=organisation, inactive=True
+    )
+
+    # User5, 1 membership, 1 inactive
+    # should be fourth in list
+    membership_factory.create(
+        role=third_role, identity=user5, organisation=organisation, inactive=True
+    )
+
+    url = reverse("org-memberships-list")
+
+    response = client.get(url, {"filter[organisation]": str(organisation.pk)})
+
+    assert response.status_code == status.HTTP_200_OK
+
+    json = response.json()
+    assert len(json["data"]) == 5
+    assert json["data"][0]["attributes"]["last-name"] == "2"
+    assert json["data"][1]["attributes"]["last-name"] == "1"
+    assert json["data"][2]["attributes"]["last-name"] == "3"
+    assert json["data"][3]["attributes"]["last-name"] == "5"
+    assert json["data"][4]["attributes"]["last-name"] == "4"
+    assert json == snapshot(exclude=filters.props("id"))

@@ -235,10 +235,19 @@ class ApplicationParser:
 
                 args.append(answer)
 
-            if question["meta"].get("waehrung"):
+            if (
+                answer
+                and question["__typename"]
+                in [
+                    "IntegerQuestion",
+                    "FloatQuestion",
+                    "CalculatedFloatQuestion",
+                ]
+                and question["meta"].get("waehrung")
+            ):
                 type_method = self._handle_waehrung
 
-            # now let the type method to its thing
+            # now let the type method do its thing
             parsed_data["questions"][question["slug"]] = type_method(*args)
 
         return parsed_data

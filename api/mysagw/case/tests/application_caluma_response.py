@@ -374,7 +374,7 @@ CALUMA_DATA_FULL = {
                                                         "slug": "test-static",
                                                         "label": "Test static",
                                                         "infoText": "",
-                                                        "meta": {},
+                                                        "meta": {"waehrung": "chf"},
                                                         "staticContent": "Some static content",
                                                     }
                                                 },
@@ -741,7 +741,7 @@ CALUMA_DATA_EMPTY = {
                                                         "slug": "test-int",
                                                         "label": "Test int",
                                                         "infoText": "",
-                                                        "meta": {},
+                                                        "meta": {"waehrung": "chf"},
                                                     }
                                                 },
                                                 {
