@@ -1,32 +1,32 @@
-<div
-  {{did-insert (perform this.fetchMembers)}}
-  class="uk-margin-remove-last-child"
->
+<div class="uk-margin-remove-last-child">
   <h2>{{t "components.identity-members.title"}}</h2>
 
-  {{#if this.fetchMembers.isRunning}}
+  {{#if this.membersResource.isPending}}
     <LoadingSpinner />
   {{else}}
     <ul class="uk-list uk-list-divider">
       {{#each this.members as |member|}}
-        <li class="uk-flex uk-flex-between uk-flex-middle {{if member.inactive "text-strike-through"}}">
+        <li
+          class="uk-flex uk-flex-between uk-flex-middle
+            {{if member.inactive 'text-strike-through'}}"
+        >
           <div>
             {{#if @hideIdentityLink}}
-              <span class="uk-text-bold">{{member.identity.fullName}}</span>
+              <span class="uk-text-bold">{{member.fullName}}</span>
             {{else}}
               <LinkTo
                 @route="identities.edit"
-                @model={{member.identity.id}}
+                @model={{member.id}}
                 class="uk-text-bold"
               >
-                {{member.identity.fullName}}
+                {{member.fullName}}
               </LinkTo>
             {{/if}}
 
             <div class="uk-text-meta">
-              {{#each member.roles as |role|}}
-                <span class={{if role.inactive "text-strike-through"}}>
-                  {{role.title}}
+              {{#each member.roles as |membership|}}
+                <span class={{if membership.inactive "text-strike-through"}}>
+                  {{get membership.role this.locale}}
                 </span>
               {{/each}}
             </div>

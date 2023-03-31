@@ -36,3 +36,11 @@ def get_users_for_case(case):
         users.append(include["attributes"])
 
     return users
+
+
+def format_currency(value, currency):
+    if currency and (isinstance(value, float) or isinstance(value, int)):
+        value = f"{currency.upper()} {value:_.2f}".replace(".00", ".-").replace(
+            "_", "'"
+        )
+    return value

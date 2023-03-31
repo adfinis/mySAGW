@@ -90,7 +90,7 @@ def credit_approval_mock(requests_mock):
                             {
                                 "node": {
                                     "document": {
-                                        "credit": {"edges": [{"node": {"value": "23"}}]}
+                                        "credit": {"edges": [{"node": {"value": 23.0}}]}
                                     }
                                 }
                             }

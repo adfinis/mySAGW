@@ -1,5 +1,5 @@
 <DynamicTable
-  @loading={{@query.isLoading}}
+  @loading={{or @query.isLoading @loading}}
   @data={{@query.value}}
   @config={{@config}}
   @loadMoreData={{this.fetchMore}}

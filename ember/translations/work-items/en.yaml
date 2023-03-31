@@ -41,7 +41,11 @@ work-items:
     order: "Order"
     taskTypes: "Task"
     documentNumber: "Application number"
-    answer: "Answer"
+    answer: "Finder"
+    forms: "Form"
+    expertAssociations: "Expert association"
+    distributionPlans: "Distribution plan"
+    sections: "Section"
 
     all: "All"
     own: "Own"

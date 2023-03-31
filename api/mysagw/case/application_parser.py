@@ -2,6 +2,7 @@ from django.utils.html import strip_tags
 from django.utils.translation import get_language
 
 from mysagw.pdf_utils import SUPPORTED_MERGE_CONTENT_TYPES
+from mysagw.utils import format_currency
 
 
 class ApplicationParser:
@@ -153,6 +154,18 @@ class ApplicationParser:
             "info_text": strip_tags(question["infoText"]) or None,
         }
 
+    def _handle_waehrung(self, question, answer):
+        value = answer["node"][self.value_key_for_question(question["__typename"])]
+
+        return {
+            "label": question["label"],
+            "type": question["__typename"],
+            "value": format_currency(value, question["meta"]["waehrung"])
+            if answer
+            else None,
+            "info_text": strip_tags(question["infoText"]) or None,
+        }
+
     def _handle_simple(self, question, answer):
         return {
             "label": question["label"],
@@ -211,6 +224,7 @@ class ApplicationParser:
             # StaticQuestions need some special handling, as they do not need an answer
             # and should only be included in the PDF, if they actually contain
             # StaticContent.
+            answer = None
             if (
                 question["__typename"] == "StaticQuestion"
                 and not question["staticContent"]
@@ -222,7 +236,19 @@ class ApplicationParser:
 
                 args.append(answer)
 
-            # now let the type method to its thing
+            if (
+                answer
+                and question["__typename"]
+                in [
+                    "IntegerQuestion",
+                    "FloatQuestion",
+                    "CalculatedFloatQuestion",
+                ]
+                and question["meta"].get("waehrung")
+            ):
+                type_method = self._handle_waehrung
+
+            # now let the type method do its thing
             parsed_data["questions"][question["slug"]] = type_method(*args)
 
         return parsed_data

@@ -63,6 +63,7 @@ fragment SimpleQuestion on Question {
   slug
   label
   infoText
+  meta
   ... on ChoiceQuestion {
     choiceOptions: options(filter: [{isArchived: false}]) {
       edges {

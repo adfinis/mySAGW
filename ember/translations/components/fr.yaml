@@ -29,7 +29,16 @@ components:
     error: "Une erreur s'est produite lors de la validation du document."
 
   filters:
+    invert: "Filtre inversé"
+    inverted: "Ce filtre est inversé"
+    resetShort: "Reset"
+    reset: "Réinitialisation"
     dropdown:
       loading: "Chargement..."
       empty: "Aucune entrée trouvée"
       search: "Tapez pour rechercher"
+
+    modal:
+      title: "Filtres"
+      open: "Plus de filtres"
+      close: "Filtre"

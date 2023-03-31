@@ -1,0 +1,146 @@
+# name: test_organisation_members[admin]
+  dict({
+    'data': list([
+      dict({
+        'attributes': dict({
+          'email': 'evansthomas@example.com',
+          'first-name': 'User',
+          'last-name': '2',
+          'roles': list([
+            dict({
+              'authorized': False,
+              'inactive': False,
+              'role': dict({
+                'de': 'Beamter',
+                'en': 'Tour manager',
+                'fr': 'officier de la marine marchande',
+              }),
+            }),
+            dict({
+              'authorized': False,
+              'inactive': False,
+              'role': dict({
+                'de': 'Altenpfleger',
+                'en': 'Investment banker, corporate',
+                'fr': 'ingénieur efficacité énergétique du bâtiment',
+              }),
+            }),
+            dict({
+              'authorized': False,
+              'inactive': True,
+              'role': dict({
+                'de': 'Altenpfleger',
+                'en': 'Investment banker, corporate',
+                'fr': 'ingénieur efficacité énergétique du bâtiment',
+              }),
+            }),
+          ]),
+        }),
+        'type': 'identities',
+      }),
+      dict({
+        'attributes': dict({
+          'email': 'michelle86@example.com',
+          'first-name': 'User',
+          'last-name': '1',
+          'roles': list([
+            dict({
+              'authorized': False,
+              'inactive': False,
+              'role': dict({
+                'de': 'Altenpfleger',
+                'en': 'Investment banker, corporate',
+                'fr': 'ingénieur efficacité énergétique du bâtiment',
+              }),
+            }),
+            dict({
+              'authorized': False,
+              'inactive': False,
+              'role': dict({
+                'de': 'Drogist',
+                'en': 'Educational psychologist',
+                'fr': 'journaliste',
+              }),
+            }),
+            dict({
+              'authorized': False,
+              'inactive': False,
+              'role': dict({
+                'de': 'Beamter',
+                'en': 'Tour manager',
+                'fr': 'officier de la marine marchande',
+              }),
+            }),
+          ]),
+        }),
+        'type': 'identities',
+      }),
+      dict({
+        'attributes': dict({
+          'email': 'ebonyjohnson@example.com',
+          'first-name': 'User',
+          'last-name': '3',
+          'roles': list([
+            dict({
+              'authorized': False,
+              'inactive': False,
+              'role': dict({
+                'de': 'Altenpfleger',
+                'en': 'Investment banker, corporate',
+                'fr': 'ingénieur efficacité énergétique du bâtiment',
+              }),
+            }),
+            dict({
+              'authorized': False,
+              'inactive': True,
+              'role': dict({
+                'de': 'Beamter',
+                'en': 'Tour manager',
+                'fr': 'officier de la marine marchande',
+              }),
+            }),
+          ]),
+        }),
+        'type': 'identities',
+      }),
+      dict({
+        'attributes': dict({
+          'email': 'johnsonmercedes@example.net',
+          'first-name': 'User',
+          'last-name': '5',
+          'roles': list([
+            dict({
+              'authorized': False,
+              'inactive': True,
+              'role': dict({
+                'de': 'Beamter',
+                'en': 'Tour manager',
+                'fr': 'officier de la marine marchande',
+              }),
+            }),
+          ]),
+        }),
+        'type': 'identities',
+      }),
+      dict({
+        'attributes': dict({
+          'email': 'delacruzbrandon@example.com',
+          'first-name': 'User',
+          'last-name': '4',
+          'roles': list([
+            dict({
+              'authorized': False,
+              'inactive': True,
+              'role': dict({
+                'de': 'Altenpfleger',
+                'en': 'Investment banker, corporate',
+                'fr': 'ingénieur efficacité énergétique du bâtiment',
+              }),
+            }),
+          ]),
+        }),
+        'type': 'identities',
+      }),
+    ]),
+  })
+# ---

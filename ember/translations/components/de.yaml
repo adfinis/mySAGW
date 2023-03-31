@@ -29,7 +29,16 @@ components:
     error: "Ein Fehler ist passiert beim Validieren vom Dokument."
 
   filters:
+    invert: "Filter umkehren"
+    inverted: "Dieser Filter ist umgekehrt"
+    resetShort: "Reset"
+    reset: "Filter zurücksetzten"
     dropdown:
       loading: "Lädt..."
       empty: "Keine Einträge gefunden"
       search: "Tippen um zu suchen"
+
+    modal:
+      title: "Filters"
+      open: "Mehr Filter"
+      close: "Filter"
