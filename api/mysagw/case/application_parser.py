@@ -224,6 +224,7 @@ class ApplicationParser:
             # StaticQuestions need some special handling, as they do not need an answer
             # and should only be included in the PDF, if they actually contain
             # StaticContent.
+            answer = None
             if (
                 question["__typename"] == "StaticQuestion"
                 and not question["staticContent"]
