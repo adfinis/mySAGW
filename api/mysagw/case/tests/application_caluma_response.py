@@ -263,6 +263,16 @@ CALUMA_DATA_FULL = {
                                             "edges": [
                                                 {
                                                     "node": {
+                                                        "__typename": "StaticQuestion",
+                                                        "slug": "test-static",
+                                                        "label": "Test static",
+                                                        "infoText": "",
+                                                        "meta": {"waehrung": "chf"},
+                                                        "staticContent": "Some static content",
+                                                    }
+                                                },
+                                                {
+                                                    "node": {
                                                         "__typename": "TextQuestion",
                                                         "slug": "test-text",
                                                         "label": "Test text",
@@ -366,16 +376,6 @@ CALUMA_DATA_FULL = {
                                                         "label": "Test file",
                                                         "infoText": "",
                                                         "meta": {},
-                                                    }
-                                                },
-                                                {
-                                                    "node": {
-                                                        "__typename": "StaticQuestion",
-                                                        "slug": "test-static",
-                                                        "label": "Test static",
-                                                        "infoText": "",
-                                                        "meta": {"waehrung": "chf"},
-                                                        "staticContent": "Some static content",
                                                     }
                                                 },
                                                 {
