@@ -15,6 +15,7 @@
                 'en': 'Tour manager',
                 'fr': 'officier de la marine marchande',
               }),
+              'time_slot': None,
             }),
             dict({
               'authorized': False,
@@ -24,6 +25,7 @@
                 'en': 'Investment banker, corporate',
                 'fr': 'ingénieur efficacité énergétique du bâtiment',
               }),
+              'time_slot': None,
             }),
             dict({
               'authorized': False,
@@ -33,6 +35,7 @@
                 'en': 'Investment banker, corporate',
                 'fr': 'ingénieur efficacité énergétique du bâtiment',
               }),
+              'time_slot': None,
             }),
           ]),
         }),
@@ -52,6 +55,7 @@
                 'en': 'Investment banker, corporate',
                 'fr': 'ingénieur efficacité énergétique du bâtiment',
               }),
+              'time_slot': None,
             }),
             dict({
               'authorized': False,
@@ -61,6 +65,7 @@
                 'en': 'Educational psychologist',
                 'fr': 'journaliste',
               }),
+              'time_slot': None,
             }),
             dict({
               'authorized': False,
@@ -69,6 +74,11 @@
                 'de': 'Beamter',
                 'en': 'Tour manager',
                 'fr': 'officier de la marine marchande',
+              }),
+              'time_slot': dict({
+                'bounds': '[)',
+                'lower': '2020-01-01',
+                'upper': '2020-12-31',
               }),
             }),
           ]),
@@ -89,6 +99,7 @@
                 'en': 'Investment banker, corporate',
                 'fr': 'ingénieur efficacité énergétique du bâtiment',
               }),
+              'time_slot': None,
             }),
             dict({
               'authorized': False,
@@ -98,6 +109,7 @@
                 'en': 'Tour manager',
                 'fr': 'officier de la marine marchande',
               }),
+              'time_slot': None,
             }),
           ]),
         }),
@@ -117,6 +129,7 @@
                 'en': 'Tour manager',
                 'fr': 'officier de la marine marchande',
               }),
+              'time_slot': None,
             }),
           ]),
         }),
@@ -136,6 +149,7 @@
                 'en': 'Investment banker, corporate',
                 'fr': 'ingénieur efficacité énergétique du bâtiment',
               }),
+              'time_slot': None,
             }),
           ]),
         }),

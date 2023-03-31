@@ -43,12 +43,14 @@ def test_permissions_fallback(
 
 
 @pytest.mark.parametrize(
-    "groups,task_slug,has_perm,has_obj_perm",
+    "groups,task_slug,has_access,has_perm,has_obj_perm",
     [
-        (["admin"], settings.APPLICANT_TASK_SLUGS[0], True, True),
-        (["sagw"], settings.APPLICANT_TASK_SLUGS[0], True, True),
-        (["foo"], "bar", True, False),
-        (["foo"], settings.APPLICANT_TASK_SLUGS[0], True, True),
+        (["admin"], settings.APPLICANT_TASK_SLUGS[0], True, True, True),
+        (["sagw"], settings.APPLICANT_TASK_SLUGS[0], True, True, True),
+        (["sagw"], settings.APPLICANT_TASK_SLUGS[0], False, True, False),
+        (["sagw"], "define-amount", False, True, True),
+        (["foo"], "bar", True, True, False),
+        (["foo"], settings.APPLICANT_TASK_SLUGS[0], True, True, True),
     ],
 )
 def test_permission_for_save_document_answer(
@@ -58,14 +60,21 @@ def test_permission_for_save_document_answer(
     work_item_factory,
     groups,
     task_slug,
+    has_access,
     has_perm,
     has_obj_perm,
     mocker,
     case_access_request_mock,
 ):
+    # TODO: Test all possible scenarios
+
+    case_pk = "994b72cc-6556-46e5-baf9-228457fa309f"
+    if not has_access:
+        case_pk = str(uuid4())
+
     work_item = work_item_factory(
         task__slug=task_slug,
-        case__pk="994b72cc-6556-46e5-baf9-228457fa309f",
+        case__pk=case_pk,
         status="ready",
     )
 

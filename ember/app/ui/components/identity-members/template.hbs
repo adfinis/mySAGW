@@ -24,7 +24,7 @@
             {{/if}}
 
             <div class="uk-text-meta">
-              {{#each member.roles as |membership|}}
+              {{#each member.memberships as |membership|}}
                 <span class={{if membership.inactive "text-strike-through"}}>
                   {{get membership.role this.locale}}
                 </span>

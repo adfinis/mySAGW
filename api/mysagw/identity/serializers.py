@@ -430,7 +430,6 @@ class MyMembershipsSerializer(MembershipSerializer):
 
 class OrganisationAdminMembersSerializer(serializers.ModelSerializer):
     roles = serializers.SerializerMethodField()
-    resource_name = "OrganisationAdminMembersIdentity"
 
     def get_roles(self, obj):
         memberships = obj.memberships.filter(
@@ -445,13 +444,20 @@ class OrganisationAdminMembersSerializer(serializers.ModelSerializer):
         )
 
         result_memberships = []
+        date_range_field = DateRangeField(
+            child_attrs={"allow_null": True}, required=False, allow_null=True
+        )
         for membership_qs in [active_memberships, inactive_memberships]:
             for m in membership_qs.order_by("-role__sort"):
+                time_slot = None
+                if m.time_slot:
+                    time_slot = date_range_field.to_representation(m.time_slot)
                 result_memberships.append(
                     {
                         "role": m.role.title if m.role else None,
                         "inactive": m.inactive,
                         "authorized": m.authorized,
+                        "time_slot": time_slot,
                     }
                 )
 
@@ -459,6 +465,8 @@ class OrganisationAdminMembersSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Identity
+        # TODO: implement new resource type in frontend
+        # resource_name = "OrganisationAdminMembersIdentity"
         fields = (
             "first_name",
             "last_name",
