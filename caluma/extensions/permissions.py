@@ -93,6 +93,17 @@ class MySAGWPermission(BasePermission):
 
         if self._is_admin(info):
             return True
+        elif self._is_sagw(info):
+            work_item = (
+                answer.document.family.work_item
+                if hasattr(answer.document.family, "work_item")
+                else case.work_items.filter(status="ready").first()
+            )
+            if (
+                work_item.task.slug not in settings.APPLICANT_TASK_SLUGS
+                or self._can_access_case(info, case)
+            ):
+                return True
 
         if not (
             self._can_access_case(info, case)
