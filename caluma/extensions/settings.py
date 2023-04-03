@@ -60,6 +60,7 @@ settings.CASE_STATUS = {
     "revise-document": "revise",
     "additional-data": "submit-receipts",
     "define-amount": "decision",
+    "complete-document": "decision",
 }
 
 settings.APPLICANT_TASK_SLUGS = [

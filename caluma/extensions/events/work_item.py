@@ -11,6 +11,7 @@ from caluma.caluma_workflow.events import (
     post_complete_work_item,
     post_create_work_item,
     post_redo_work_item,
+    post_reopen_case,
     pre_complete_work_item,
 )
 
@@ -135,17 +136,15 @@ def send_new_work_item_mail(sender, work_item, user, **kwargs):
 
 
 @on(post_create_work_item, raise_exception=True)
-@filter_events(
-    lambda sender: sender
-    in [
-        "post_complete_work_item",
-        "post_skip_work_item",
-        "case_post_create",
-        "post_redo_work_item",
-    ]
-)
+@on(post_reopen_case, raise_exception=True)
 @transaction.atomic
-def set_case_status(sender, work_item, user, **kwargs):
+def set_case_status_post_create_work_item_reopen_case(
+    sender, user, work_item=None, case=None, **kwargs
+):
+    work_item = (
+        work_item if work_item else case.work_items.filter(status="ready").first()
+    )
+
     status = settings.CASE_STATUS.get(work_item.task_id)
     if status is None:
         return

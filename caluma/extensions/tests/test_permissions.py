@@ -7,7 +7,12 @@ from caluma.caluma_analytics.schema import SaveAnalyticsTable
 from caluma.caluma_core.mutation import Mutation
 from caluma.caluma_form.schema import SaveDocumentAnswer
 from caluma.caluma_workflow.models import Task, Workflow
-from caluma.caluma_workflow.schema import CancelCase, CompleteWorkItem, SaveCase
+from caluma.caluma_workflow.schema import (
+    CancelCase,
+    CompleteWorkItem,
+    RedoWorkItem,
+    SaveCase,
+)
 from caluma.extensions.permissions import MySAGWPermission
 from caluma.extensions.settings import settings
 
@@ -270,4 +275,29 @@ def test_analytics_permissions(
     assert (
         perm.has_object_permission(mutation, admin_info, analytics_table)
         is has_obj_perm
+    )
+
+
+@pytest.mark.parametrize(
+    "groups,has_perm,has_obj_perm",
+    [
+        (["admin"], True, True),
+        (["sagw"], True, True),
+        (["foo"], False, False),
+    ],
+)
+def test_redo_workitem_reopen_case(
+    db, admin_info, work_item_factory, groups, has_perm, has_obj_perm
+):
+    admin_info.context.user.groups = groups
+
+    work_item = work_item_factory()
+
+    perm = MySAGWPermission()
+
+    mutation = RedoWorkItem
+    assert perm.has_permission(mutation, admin_info) is has_perm
+    assert perm.has_object_permission(mutation, admin_info, work_item) is has_obj_perm
+    assert (
+        perm.has_object_permission(mutation, admin_info, work_item.case) is has_obj_perm
     )
