@@ -45,8 +45,10 @@ def test_case_list(
     "client,has_access,identity_exists,expected_status",
     [
         ("user", False, False, status.HTTP_403_FORBIDDEN),
+        ("user", False, True, status.HTTP_403_FORBIDDEN),
         ("user", True, False, status.HTTP_201_CREATED),
-        ("staff", False, False, status.HTTP_403_FORBIDDEN),
+        ("staff", False, False, status.HTTP_201_CREATED),
+        ("staff", False, True, status.HTTP_201_CREATED),
         ("admin", False, False, status.HTTP_201_CREATED),
         ("admin", False, True, status.HTTP_201_CREATED),
     ],
@@ -177,7 +179,7 @@ def test_case_create_already_exists(db, case_access_factory, client):
     [
         ("user", False, status.HTTP_404_NOT_FOUND),
         ("user", True, status.HTTP_204_NO_CONTENT),
-        ("staff", False, status.HTTP_404_NOT_FOUND),
+        ("staff", False, status.HTTP_204_NO_CONTENT),
         ("admin", False, status.HTTP_204_NO_CONTENT),
     ],
     indirect=["client"],
