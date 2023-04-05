@@ -19,7 +19,7 @@ from mysagw.case.application_parser import ApplicationParser
 from mysagw.case.permissions import HasCaseAccess
 from mysagw.dms_client import DMSClient, get_dms_error_response
 from mysagw.identity.models import Identity
-from mysagw.oidc_auth.permissions import IsAdmin, IsAuthenticated
+from mysagw.oidc_auth.permissions import IsAdmin, IsAuthenticated, IsStaff
 from mysagw.pdf_utils import add_caluma_files_to_pdf
 from mysagw.utils import format_currency
 
@@ -35,11 +35,11 @@ class CaseAccessViewSet(
     serializer_class = serializers.CaseAccessSerializer
     queryset = models.CaseAccess.objects.all()
     filterset_class = filters.CaseAccessFilterSet
-    permission_classes = (IsAuthenticated & (IsAdmin | HasCaseAccess),)
+    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff | HasCaseAccess),)
 
     def get_queryset(self, *args, **kwargs):
         qs = super().get_queryset(*args, **kwargs)
-        if self.request.user.is_admin:
+        if self.request.user.is_staff:
             return qs
         return qs.filter(
             case_id__in=qs.filter(identity=self.request.user.identity).values("case_id")
@@ -48,7 +48,7 @@ class CaseAccessViewSet(
 
 class CaseDownloadViewSet(GenericViewSet):
     serializer_class = BaseSerializer
-    permission_classes = (IsAuthenticated & (IsAdmin | HasCaseAccess),)
+    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff | HasCaseAccess),)
 
     ACKNOWLEDGEMENT_FIELDS = {
         "identity_submit": [

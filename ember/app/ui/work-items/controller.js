@@ -171,7 +171,7 @@ export default class WorkItemsIndexController extends TableController {
           linkTo: "cases.detail.index",
           linkToModelField: "case.id",
         },
-        ...(this.status === "open"
+        ...(this.filters.status === "open"
           ? [
               {
                 heading: { label: "work-items.responsible" },

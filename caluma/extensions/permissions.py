@@ -11,7 +11,13 @@ from caluma.caluma_core.permissions import (
     permission_for,
 )
 from caluma.caluma_form.schema import SaveDocument, SaveDocumentAnswer
-from caluma.caluma_workflow.schema import CancelCase, CompleteWorkItem, SaveCase
+from caluma.caluma_workflow.schema import (
+    CancelCase,
+    CompleteWorkItem,
+    RedoWorkItem,
+    ReopenCase,
+    SaveCase,
+)
 from caluma.extensions.common import get_cases_for_user
 from caluma.extensions.settings import settings
 
@@ -93,6 +99,16 @@ class MySAGWPermission(BasePermission):
 
         if self._is_admin(info):
             return True
+        elif self._is_sagw(info):
+            work_item = (
+                answer.document.family.work_item
+                if hasattr(answer.document.family, "work_item")
+                else case.work_items.filter(status="ready")
+                .exclude(task__slug__in=settings.APPLICANT_TASK_SLUGS)
+                .first()
+            )
+            if work_item or self._can_access_case(info, case):
+                return True
 
         if not (
             self._can_access_case(info, case)
@@ -133,6 +149,15 @@ class MySAGWPermission(BasePermission):
                 status="ready", task__slug="submit-document"
             ).exists()
         )
+
+    @permission_for(RedoWorkItem)
+    @object_permission_for(RedoWorkItem)
+    @permission_for(ReopenCase)
+    @object_permission_for(ReopenCase)
+    def has_permission_for_redo_workitem_reopen_case(
+        self, mutation, info, instance=None
+    ):
+        return self._is_admin_or_sagw(info)
 
     @permission_for(RemoveAnalyticsField)
     @object_permission_for(RemoveAnalyticsField)

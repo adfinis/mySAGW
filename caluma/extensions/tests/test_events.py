@@ -5,6 +5,7 @@ from caluma.caluma_form.models import Question
 from caluma.caluma_workflow.api import (
     complete_work_item,
     redo_work_item,
+    reopen_case,
     skip_work_item,
     start_case,
 )
@@ -249,6 +250,9 @@ def test_case_status(
 
     skip_work_item(case.work_items.get(task_id="complete-document"), user)
     assert case.meta["status"] == "complete"
+
+    reopen_case(case, [case.work_items.get(task_id="complete-document")], user)
+    assert case.meta["status"] == "decision"
 
 
 @pytest.mark.parametrize("lang", ["de", "en", "fr"])
