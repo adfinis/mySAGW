@@ -6751,26 +6751,10 @@ ember-cli-typescript@^4.0.0, ember-cli-typescript@^4.1.0, ember-cli-typescript@^
     stagehand "^1.0.0"
     walk-sync "^2.2.0"
 
-ember-cli-typescript@^5.0.0, ember-cli-typescript@^5.2.1:
+ember-cli-typescript@^5.0.0, ember-cli-typescript@^5.1.0, ember-cli-typescript@^5.2.1:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/ember-cli-typescript/-/ember-cli-typescript-5.2.1.tgz#553030f1ce3e8958b8e4fc34909acd1218cb35f2"
   integrity sha512-qqp5TAIuPHxHiGXJKL+78Euyhy0zSKQMovPh8sJpN/ZBYx0H90pONufHR3anaMcp1snVfx4B+mb9+7ijOik8ZA==
-  dependencies:
-    ansi-to-html "^0.6.15"
-    broccoli-stew "^3.0.0"
-    debug "^4.0.0"
-    execa "^4.0.0"
-    fs-extra "^9.0.1"
-    resolve "^1.5.0"
-    rsvp "^4.8.1"
-    semver "^7.3.2"
-    stagehand "^1.0.0"
-    walk-sync "^2.2.0"
-
-ember-cli-typescript@^5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-typescript/-/ember-cli-typescript-5.1.0.tgz#460eb848564e29d64f2b36b2a75bbe98172b72a4"
-  integrity sha512-wEZfJPkjqFEZAxOYkiXsDrJ1HY75e/6FoGhQFg8oNFJeGYpIS/3W0tgyl1aRkSEEN1NRlWocDubJ4aZikT+RTA==
   dependencies:
     ansi-to-html "^0.6.15"
     broccoli-stew "^3.0.0"
@@ -7285,6 +7269,23 @@ ember-power-select@^6.0.1:
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/ember-power-select/-/ember-power-select-6.0.2.tgz#b4adaeac14f56b21e289f19ef9600786279e4b26"
   integrity sha512-ntOFm7tlFGI5nSgaEg1lVL44t+oaSZwG2Ir7x8oP+SbfDClKW8kqTYrbTdOMkn2JBygkJ0d1KkxV1NxwF2B4dQ==
+  dependencies:
+    "@embroider/util" "^1.0.0"
+    "@glimmer/component" "^1.1.2"
+    "@glimmer/tracking" "^1.1.2"
+    ember-assign-helper "^0.4.0"
+    ember-basic-dropdown "^7.0.1"
+    ember-cli-babel "^7.26.11"
+    ember-cli-htmlbars "^6.1.0"
+    ember-cli-typescript "^5.0.0"
+    ember-concurrency "^2.0.0"
+    ember-text-measurer "^0.6.0"
+    ember-truth-helpers "^3.1.0"
+
+ember-power-select@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/ember-power-select/-/ember-power-select-7.0.0.tgz#fda9e693141c6f22e1578ca4788afe5c4491ad45"
+  integrity sha512-FKeeF1PqYw5XfPPGoHP0aPG0X/3W15v9O2nk0z54oVeLIUTn2R3Ry9iSLa0/mAjDi1Cn7Zdnyki4Z1oM2aWOuA==
   dependencies:
     "@embroider/util" "^1.0.0"
     "@glimmer/component" "^1.1.2"
