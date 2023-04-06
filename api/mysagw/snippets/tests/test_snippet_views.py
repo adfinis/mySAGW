@@ -15,7 +15,6 @@ from .. import models
     indirect=["client"],
 )
 def test_snippet_detail(db, client, expected_status, snippet):
-
     url = reverse("snippet-detail", args=[snippet.pk])
 
     response = client.get(url)

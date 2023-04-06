@@ -1,3 +1,4 @@
+# serializer version: 1
 # name: test_organisation_members[admin]
   dict({
     'data': list([
