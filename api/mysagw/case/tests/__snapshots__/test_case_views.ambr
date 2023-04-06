@@ -1,3 +1,4 @@
+# serializer version: 1
 # name: test_download[de-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-admin]
   dict({
     'convert': 'pdf',
