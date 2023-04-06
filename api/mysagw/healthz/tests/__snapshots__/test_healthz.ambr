@@ -1,3 +1,4 @@
+# serializer version: 1
 # name: test_db_migrations_not_applied[admin]
   dict({
     'caches': list([
