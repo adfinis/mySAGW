@@ -16,7 +16,6 @@ class CustomValidation(BaseValidation):
             settings.BIRTHDATE_SLUG_PART in data["question"].slug
             and data["question"].type == "date"
         ):
-
             # minimum age of 12
             if datetime.now().year - data["date"].year < 13:
                 raise exceptions.ValidationError(

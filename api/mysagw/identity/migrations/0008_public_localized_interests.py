@@ -18,7 +18,6 @@ def set_all_title_hstore(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("identity", "0007_organisation_types"),
     ]
