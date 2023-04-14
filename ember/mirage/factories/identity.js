@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { Factory } from "ember-cli-mirage";
+import { Factory } from "miragejs";
 
 export default Factory.extend({
   idpId: () => faker.datatype.uuid(),
