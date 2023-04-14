@@ -26,14 +26,15 @@ export default class NavbarComponent extends Component {
   @action
   setLocale(locale) {
     this.intl.setLocale(locale);
-    try {
-      localStorage.setItem("locale", locale);
-    } catch (e) {
-      console.error(e);
-    }
 
-    // Hard reload the whole page so the data is refetched
     if (macroCondition(!isTesting())) {
+      try {
+        localStorage.setItem("locale", locale);
+      } catch (e) {
+        console.error(e);
+      }
+
+      // Hard reload the whole page so the data is refetched
       window.location.reload();
     }
   }

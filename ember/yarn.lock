@@ -7355,10 +7355,10 @@ ember-set-helper@^2.0.1:
   dependencies:
     ember-cli-babel "^7.18.0"
 
-ember-simple-auth-oidc@^5.0.2:
-  version "5.0.2"
-  resolved "https://registry.yarnpkg.com/ember-simple-auth-oidc/-/ember-simple-auth-oidc-5.0.2.tgz#9fc9b68e763e9e58e4c5625b3bd3a20cdfccaeba"
-  integrity sha512-KUpnGD94TnK9fZe66SegBJr20Gcgbp8TjDMtfotqoypSoneJ6amrbvyMQu6pjtS3kvNpLP1uZ2VMuuxnrflc3Q==
+ember-simple-auth-oidc@^5.0.3:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/ember-simple-auth-oidc/-/ember-simple-auth-oidc-5.0.3.tgz#b8d977d3ca92d78787ee8cd0183121d2b3274e8b"
+  integrity sha512-AaPhFZS/Kh2PTIQSFoRbElF7zyE0qoMAuh/u0bfxZtYxH6h7n4v1zfkZ40dz/YP2GozAlBe1jrBEeb1nHZsOdQ==
   dependencies:
     "@apollo/client" "^3.7.0"
     "@embroider/macros" "^1.9.0"
