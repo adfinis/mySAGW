@@ -24,7 +24,8 @@ class BaseUser:  # pragma: no cover
     @property
     def is_admin(self):
         return (
-            self.client_id == settings.OIDC_RP_CLIENT_ID
+            self.claims.get(settings.OIDC_CLIENT_GRANT_USERNAME_CLAIM)
+            == settings.OIDC_RP_CLIENT_USERNAME
             or settings.ADMIN_GROUP in self.groups
         )
 
@@ -34,7 +35,11 @@ class BaseUser:  # pragma: no cover
 
     @property
     def is_monitoring_member(self):
-        return self.is_staff or self.client_id == settings.OIDC_MONITORING_CLIENT_ID
+        return (
+            self.is_staff
+            or self.claims.get(settings.OIDC_CLIENT_GRANT_USERNAME_CLAIM)
+            == settings.OIDC_MONITORING_CLIENT_USERNAME
+        )
 
 
 class OIDCUser(BaseUser):
@@ -46,13 +51,15 @@ class OIDCUser(BaseUser):
         self.email = self.claims.get(settings.OIDC_EMAIL_CLAIM)
         self.groups = self.claims.get(settings.OIDC_GROUPS_CLAIM, [])
         self.group = self.groups[0] if self.groups else None
-        self.client_id = self.claims.get(settings.OIDC_CLIENT_ID_CLAIM)
         self.token = token
         self.is_authenticated = True
         self.identity = self._get_or_create_identity()
 
     def _get_or_create_identity(self):
-        if self.client_id:
+        if self.claims.get(settings.OIDC_CLIENT_GRANT_USERNAME_CLAIM) in [
+            settings.OIDC_RP_CLIENT_USERNAME,
+            settings.OIDC_MONITORING_CLIENT_USERNAME,
+        ]:
             return None
         try:
             identity = Identity.objects.get(
