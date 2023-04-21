@@ -330,7 +330,7 @@
                   id="snippet-{{snippet.id}}-{{locale}}"
                   class="uk-textarea"
                   readonly=""
-                >{{get snippet.bodyObject locale}}</textarea>
+                >{{get snippet._body locale}}</textarea>
                 <CopyButton
                   @clipboardTarget="#snippet-{{snippet.id}}-{{locale}}"
                   @success={{this.onCopySuccess}}

@@ -69,8 +69,7 @@ export default class CasesDetailCirculationController extends Controller {
   get circulationWorkItem() {
     return (
       this.circulationWorkItemsQuery.value.findBy("task.slug", "circulation") ??
-      this.model.raw.workItems.edges.findBy("node.task.slug", "circulation")
-        ?.node
+      this.model.workItems.findBy("task.slug", "circulation")
     );
   }
 
