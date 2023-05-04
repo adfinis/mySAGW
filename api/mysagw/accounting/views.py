@@ -13,6 +13,7 @@ from mysagw.caluma_client import CalumaClient
 from mysagw.dms_client import DMSClient, get_dms_error_response
 from mysagw.oidc_auth.permissions import IsAdmin, IsAuthenticated, IsStaff
 from mysagw.pdf_utils import SUPPORTED_MERGE_CONTENT_TYPES, add_caluma_files_to_pdf
+from mysagw.utils import format_currency
 
 GQL_DIR = Path(__file__).parent.resolve() / "queries"
 
@@ -258,7 +259,7 @@ def get_cover_context(data):  # noqa: C901
                 "node",
                 "value",
             ],
-            None,
+            lambda x: format_currency(x, "CHF") if x else "",
         ),
         "vp_year": (
             [
@@ -302,6 +303,42 @@ def get_cover_context(data):  # noqa: C901
                 "value",
             ],
             circ_kontonummer_label,
+        ),
+        "vorschussbetrag": (
+            [
+                "data",
+                "node",
+                "advanceCredits",
+                "edges",
+                0,
+                "node",
+                "document",
+                "vorschussbetrag",
+                "edges",
+                0,
+                "node",
+                "value",
+            ],
+            lambda x: format_currency(x, "CHF") if x else "",
+        ),
+        "vorschussdatum": (
+            [
+                "data",
+                "node",
+                "advanceCredits",
+                "edges",
+                0,
+                "node",
+                "document",
+                "vorschussdatum",
+                "edges",
+                0,
+                "node",
+                "value",
+            ],
+            lambda x: timezone.datetime.fromisoformat(x).strftime("%d. %m. %Y")
+            if x
+            else "",
         ),
     }
 

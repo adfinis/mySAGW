@@ -213,6 +213,32 @@ query Receipts($case_id: ID!) {
           }
         }
       }
+      advanceCredits: workItems(filter: [{task: "advance-credits"}], order: [{attribute: CREATED_AT, direction: DESC}], first: 1) {
+        edges {
+          node {
+            document {
+              vorschussbetrag: answers(filter: [{question: "advance-credit-amount-float"}]) {
+                edges {
+                  node {
+                    ... on FloatAnswer {
+                      value
+                    }
+                  }
+                }
+              }
+              vorschussdatum: answers(filter: [{question: "advance-credit-date"}]) {
+                edges {
+                  node {
+                    ... on DateAnswer {
+                      value
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
