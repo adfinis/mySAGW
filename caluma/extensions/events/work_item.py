@@ -338,6 +338,20 @@ def redo_circulation(sender, work_item, user, **kwargs):
 
 
 @on(post_redo_work_item, raise_exception=True)
+@filter_events(lambda sender, work_item: work_item.task_id == "review-document")
+@transaction.atomic
+def redo_review_document(sender, work_item, user, **kwargs):
+    circulation = work_item.case.work_items.get(task_id="circulation")
+    circulation.child_case = caluma_workflow_api.start_case(
+        workflow=caluma_workflow_models.Workflow.objects.get(pk="circulation"),
+        form=caluma_form_models.Form.objects.get(pk="circulation-form"),
+        user=user,
+        parent_work_item=circulation,
+    )
+    circulation.save()
+
+
+@on(post_redo_work_item, raise_exception=True)
 @filter_events(lambda sender, work_item: work_item.task_id == "define-amount")
 @transaction.atomic
 def redo_define_amount(sender, work_item, user, **kwargs):

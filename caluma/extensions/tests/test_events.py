@@ -403,6 +403,7 @@ def test_redo_circulation(
     user,
     case_access_event_mock,
     circulation,
+    work_item_factory,
 ):
     Question.objects.filter(formquestion__form__pk="additional-data-form").update(
         is_required="false"
@@ -410,12 +411,16 @@ def test_redo_circulation(
 
     circ_work_item = circulation.parent_work_item
 
+    work_item_factory(
+        case=circulation, task_id="circulation-decision", status=WorkItem.STATUS_READY
+    )
     skip_work_item(circ_work_item.case.work_items.get(task_id="circulation"), user)
 
     assert (
         circ_work_item.child_case.work_items.get(task_id="finish-circulation").status
         == WorkItem.STATUS_CANCELED
     )
+    assert circ_work_item.child_case.work_items.count() == 3
 
     redo_work_item(circ_work_item.case.work_items.get(task_id="circulation"), user)
 
@@ -424,6 +429,35 @@ def test_redo_circulation(
         circ_work_item.child_case.work_items.get(task_id="finish-circulation").status
         == WorkItem.STATUS_READY
     )
+    assert circ_work_item.child_case.work_items.count() == 2
+
+
+def test_redo_review_document(
+    db,
+    caluma_data,
+    user,
+    case_access_event_mock,
+    circulation,
+    work_item_factory,
+):
+    Question.objects.filter(formquestion__form__pk="additional-data-form").update(
+        is_required="false"
+    )
+
+    circ_work_item = circulation.parent_work_item
+
+    previous_case = circ_work_item.child_case.pk
+    work_item_factory(
+        case=circulation, task_id="circulation-decision", status=WorkItem.STATUS_READY
+    )
+    assert circ_work_item.child_case.work_items.count() == 3
+
+    redo_work_item(circ_work_item.case.work_items.get(task_id="review-document"), user)
+
+    circ_work_item.refresh_from_db()
+    new_case = circ_work_item.child_case.pk
+    assert previous_case != new_case
+    assert circ_work_item.child_case.work_items.count() == 2
 
 
 @pytest.mark.parametrize(
