@@ -1,7 +1,3 @@
-import { JSONAPISerializer } from "ember-cli-mirage";
+import { JSONAPISerializer } from "miragejs";
 
-export default class MirageApplicationSerializer extends JSONAPISerializer.extend(
-  {
-    alwaysIncludeLinkageData: true,
-  }
-) {}
+export default JSONAPISerializer.extend({});

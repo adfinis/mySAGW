@@ -33,6 +33,7 @@ class APIClient:
                 client_id=settings.OIDC_ADMIN_CLIENT_ID,
                 client_secret=settings.OIDC_ADMIN_CLIENT_SECRET,
                 verify=settings.API_VERIFY_SSL,
+                scope="openid",
             )
             token["expires_at_dt"] = datetime.utcfromtimestamp(int(token["expires_at"]))
 

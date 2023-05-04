@@ -11,7 +11,7 @@ module("Acceptance | snippets", function (hooks) {
   setupIntl(hooks);
 
   hooks.beforeEach(async function () {
-    this.server.create("snippet");
+    this.server.create("snippet", { body: { de: "Lorem ipsum" } });
 
     await authenticateSession({
       access_token: "123qweasdyxc",
@@ -40,10 +40,16 @@ module("Acceptance | snippets", function (hooks) {
   });
 
   test("can list snippets in sidebar", async function (assert) {
-    assert.expect(1);
+    assert.expect(2);
 
     await click("[data-test-snippet-sidebar-button]");
 
     assert.dom("[data-test-snippet-sidebar-list] li").exists({ count: 1 });
+
+    await click("[data-test-snippet-sidebar-list] li:first-child a");
+
+    assert
+      .dom(".uk-accordion-content textarea:first-child")
+      .hasValue("Lorem ipsum");
   });
 });

@@ -1,11 +1,11 @@
 <nav
-  class="
-    nav-bar uk-navbar-container uk-navbar-transparent
-    uk-padding-small uk-padding-remove-top uk-padding-remove-bottom
-  "
+  class="nav-bar uk-navbar-container uk-navbar-transparent uk-padding-small uk-padding-remove-top uk-padding-remove-bottom"
   uk-navbar
 >
-  <LinkTo @route="application" class="uk-navbar-item uk-logo uk-text-primary uk-padding-remove">
+  <LinkTo
+    @route="application"
+    class="uk-navbar-item uk-logo uk-text-primary uk-padding-remove"
+  >
     {{#if @logo}}
       <img class="nav-bar-logo" src={{@logo}} alt={{@text}} />
     {{else}}
@@ -36,24 +36,39 @@
         </li>
       {{/if}}
 
-      {{#if (or (can "list identity") (can "list interests") (can "list membership-role"))}}
+      {{#if
+        (or
+          (can "list identity")
+          (can "list interests")
+          (can "list membership-role")
+        )
+      }}
         <li id="nav-identity-management">
-          <a href="#">{{t "components.nav-bar.identity-management"}}<span uk-icon="chevron-down"></span></a>
+          <a href="#">
+            {{t "components.nav-bar.identity-management"}}
+            <span uk-icon="chevron-down"></span>
+          </a>
           <div class="uk-navbar-dropdown uk-margin-remove">
             <ul class="uk-nav uk-navbar-dropdown-nav">
               {{#if (can "list identity")}}
                 <li>
-                  <LinkTo @route="identities">{{t "components.nav-bar.identities"}}</LinkTo>
+                  <LinkTo @route="identities">
+                    {{t "components.nav-bar.identities"}}
+                  </LinkTo>
                 </li>
               {{/if}}
               {{#if (can "list interest")}}
                 <li>
-                  <LinkTo @route="interests">{{t "components.nav-bar.interests"}}</LinkTo>
+                  <LinkTo @route="interests">
+                    {{t "components.nav-bar.interests"}}
+                  </LinkTo>
                 </li>
               {{/if}}
               {{#if (can "list membership-role")}}
                 <li>
-                  <LinkTo @route="membership-roles">{{t "components.nav-bar.roles"}}</LinkTo>
+                  <LinkTo @route="membership-roles">
+                    {{t "components.nav-bar.roles"}}
+                  </LinkTo>
                 </li>
               {{/if}}
             </ul>
@@ -62,18 +77,27 @@
       {{/if}}
       {{#if (can "list form-builder")}}
         <li>
-          <a href="#">{{t "components.nav-bar.form-management"}}<span uk-icon="chevron-down"></span></a>
+          <a href="#">
+            {{t "components.nav-bar.form-management"}}
+            <span uk-icon="chevron-down"></span>
+          </a>
           <div class="uk-navbar-dropdown uk-margin-remove">
             <ul class="uk-nav uk-dropdown-nav">
               {{#if (can "list form-builder")}}
                 <li>
-                  <LinkTo @route="form-builder">{{t "components.nav-bar.form-builder"}}</LinkTo>
+                  <LinkTo @route="form-builder">
+                    {{t "components.nav-bar.form-builder"}}
+                  </LinkTo>
                 </li>
                 <li>
-                  <LinkTo @route="form.configuration">{{t "components.nav-bar.form-configuration"}}</LinkTo>
+                  <LinkTo @route="form.configuration">
+                    {{t "components.nav-bar.form-configuration"}}
+                  </LinkTo>
                 </li>
                 <li>
-                  <LinkTo @route="analytics">{{t "components.nav-bar.analytics"}}</LinkTo>
+                  <LinkTo @route="analytics">
+                    {{t "components.nav-bar.analytics"}}
+                  </LinkTo>
                 </li>
               {{/if}}
             </ul>
@@ -92,7 +116,11 @@
       </li>
       {{#if this.session.isAuthenticated}}
         <li>
-          <a class="uk-padding-remove" {{on "click" this.invalidateSession}} href="#">
+          <a
+            class="uk-padding-remove"
+            {{on "click" this.invalidateSession}}
+            href="#"
+          >
             {{t "components.nav-bar.logout"}}
           </a>
         </li>
@@ -104,11 +132,23 @@
         </li>
       {{/if}}
       <li class="language-select">
-        <a class="uk-link-reset" href="#">{{this.intl.locale}} <UkIcon @icon="chevron-down"/></a>
-        <ul uk-dropdown="pos: bottom-justify" class="uk-list uk-list-collapse uk-padding-small uk-text-center uk-margin-remove">
+        <a class="uk-link-reset" href="#">
+          {{this.intl.locale}}
+          <UkIcon @icon="chevron-down" />
+        </a>
+        <ul
+          uk-dropdown="pos: bottom-justify"
+          class="uk-list uk-list-collapse uk-padding-small uk-text-center uk-margin-remove"
+        >
           {{#each this.intl.locales as |locale|}}
             <li>
-              <a class="uk-link-text uk-text-uppercase" {{on "click" (fn this.setLocale locale)}} href="#">{{locale}}</a>
+              <a
+                class="uk-link-text uk-text-uppercase"
+                {{on "click" (fn this.setLocale locale)}}
+                href="#"
+              >
+                {{locale}}
+              </a>
             </li>
           {{/each}}
         </ul>
@@ -197,7 +237,10 @@
           </LinkTo>
         </li>
         <li>
-          <LinkTo @route="form.configuration" uk-toggle="target: #offcanvas-nav">
+          <LinkTo
+            @route="form.configuration"
+            uk-toggle="target: #offcanvas-nav"
+          >
             {{t "components.nav-bar.form-configuration"}}
           </LinkTo>
         </li>
@@ -210,18 +253,40 @@
         </LinkTo>
       </li>
       <li>
-        <a href="#" {{on "click" this.invalidateSession}} uk-toggle="target: #offcanvas-nav">
+        <a
+          href="#"
+          {{on "click" this.invalidateSession}}
+          uk-toggle="target: #offcanvas-nav"
+        >
           <span class="uk-margin-small-right" uk-icon="icon: sign-out"></span>
           {{t "components.nav-bar.logout"}}
         </a>
       </li>
 
       <li class="language-select-offcanvas">
-        <a class="uk-link-reset uk-text-uppercase" href="#">{{this.intl.locale}} <UkIcon @icon="chevron-down"/></a>
-        <ul uk-dropdown="pos: bottom-justify; mode: click" class="uk-list uk-list-collapse uk-padding-small">
+        <a
+          class="uk-link-reset uk-text-uppercase"
+          href="#"
+          data-test-locale
+        >
+          {{this.intl.locale}}
+          <UkIcon @icon="chevron-down" />
+        </a>
+        <ul
+          uk-dropdown="pos: bottom-justify; mode: click"
+          class="uk-list uk-list-collapse uk-padding-small"
+          data-test-locale-dropdown
+        >
           {{#each this.intl.locales as |locale|}}
             <li>
-              <a class="uk-link-text uk-text-uppercase" {{on "click" (fn this.setLocale locale)}} href="#">{{locale}}</a>
+              <a
+                class="uk-link-text uk-text-uppercase"
+                {{on "click" (fn this.setLocale locale)}}
+                href="#"
+                data-test-locale-select={{locale}}
+              >
+                {{locale}}
+              </a>
             </li>
           {{/each}}
         </ul>
@@ -231,7 +296,10 @@
 </div>
 
 <div id="offcanvas-snippets" uk-offcanvas="flip: true; overlay: true">
-  <div class="uk-offcanvas-bar uk-flex uk-flex-column" {{did-insert (perform this.fetchSnippets)}}>
+  <div
+    class="uk-offcanvas-bar uk-flex uk-flex-column"
+    {{did-insert (perform this.fetchSnippets)}}
+  >
     <button class="uk-offcanvas-close" type="button" uk-close></button>
 
     <h3>{{t "components.nav-bar.snippets"}}</h3>
@@ -246,7 +314,7 @@
         type="search"
         value={{this.searchTerm}}
         {{on "input" (perform this.search)}}
-      >
+      />
     </div>
 
     {{#if this.fetchSnippets.isRunning}}
@@ -258,7 +326,11 @@
             <a class="uk-accordion-title" href="#">{{snippet.title}}</a>
             <div class="uk-accordion-content">
               {{#each this.intl.locales as |locale|}}
-                <textarea id="snippet-{{snippet.id}}-{{locale}}" class="uk-textarea" readonly="">{{get snippet.bodyObject locale}}</textarea>
+                <textarea
+                  id="snippet-{{snippet.id}}-{{locale}}"
+                  class="uk-textarea"
+                  readonly=""
+                >{{get snippet._body locale}}</textarea>
                 <CopyButton
                   @clipboardTarget="#snippet-{{snippet.id}}-{{locale}}"
                   @success={{this.onCopySuccess}}
@@ -274,7 +346,9 @@
           <p>{{t "snippets.index.empty"}}</p>
         {{/each}}
         {{#if (not (eq this.pageNumber this.totalPages))}}
-          <a {{on "click" this.loadMoreSnippets}} href="#">{{t "components.nav-bar.snippet.load-more"}}</a>
+          <a {{on "click" this.loadMoreSnippets}} href="#">
+            {{t "components.nav-bar.snippet.load-more"}}
+          </a>
         {{/if}}
       </ul>
     {{/if}}
