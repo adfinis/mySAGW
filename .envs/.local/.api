@@ -6,4 +6,3 @@ OIDC_OP_USER_ENDPOINT=https://mysagw.local/auth/realms/mysagw/protocol/openid-co
 CALUMA_VERIFY_SSL=False
 # Multiple ADMINS need to be comma separated
 ADMINS=Test Example <test@example.com>
-OIDC_OP_INTROSPECT_ENDPOINT=https://mysagw.local/auth/realms/mysagw/protocol/openid-connect/token/introspect
