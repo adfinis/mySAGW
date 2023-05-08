@@ -263,9 +263,10 @@ def test_case_status(
         ("additional-data", False),
         ("additional-data", True),
         ("complete-document", False),
+        ("decision-and-credit", False),
     ],
 )
-def test_send_new_work_item_mail(
+def test_send_work_item_mail(
     db,
     user,
     caluma_data,
@@ -308,6 +309,15 @@ def test_send_new_work_item_mail(
         value=review_document_decision_answer,
     )
     complete_work_item(review_work_item, user)
+
+    if task_slug == "decision-and-credit":
+        skip_work_item(case.work_items.get(task_id="circulation"), user)
+        decision_credit_work_item = case.work_items.get(task_id="decision-and-credit")
+        decision_credit_work_item.document.answers.create(
+            question_id="decision-and-credit-decision",
+            value="decision-and-credit-decision-close",
+        )
+        complete_work_item(decision_credit_work_item, user)
 
     if task_slug in ["additional-data", "complete-document"]:
         skip_work_item(case.work_items.get(task_id="circulation"), user)
