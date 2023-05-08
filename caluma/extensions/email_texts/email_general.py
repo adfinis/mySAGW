@@ -53,7 +53,7 @@ Si vous avez des questions, n’hésitez pas à nous contacter à l’adresse sa
 
 Avec nos meilleures salutations,
 
-Votre équipe de l'ASSH
+Votre équipe de l’ASSH
 
 ******
 
