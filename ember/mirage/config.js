@@ -1,8 +1,20 @@
 import graphqlHandler from "@projectcaluma/ember-testing/mirage-graphql";
+import { discoverEmberDataModels } from "ember-cli-mirage";
+import { createServer } from "miragejs";
 
 import parseFilters from "mysagw/mirage/helpers/parse-filters";
 
-export default function () {
+export default function (config) {
+  const finalConfig = {
+    ...config,
+    models: { ...discoverEmberDataModels(), ...config.models },
+    routes,
+  };
+
+  return createServer(finalConfig);
+}
+
+function routes() {
   this.passthrough("/auth");
   this.passthrough("https://mysagw.local/auth/**");
 

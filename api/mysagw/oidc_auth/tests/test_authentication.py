@@ -10,10 +10,9 @@ from rest_framework.exceptions import AuthenticationFailed
 from simple_history.models import HistoricalRecords
 
 from mysagw.identity.models import Identity
-from mysagw.oidc_auth.authentication import MySAGWAuthenticationBackend
 
 
-@pytest.mark.parametrize("is_id_token", [True, False])
+@pytest.mark.parametrize("is_client_grant_token", [True, False])
 @pytest.mark.parametrize(
     "authentication_header,authenticated,error",
     [
@@ -30,27 +29,19 @@ def test_authentication(
     authentication_header,
     authenticated,
     error,
-    is_id_token,
+    is_client_grant_token,
     requests_mock,
-    mocker,
     settings,
     claims,
 ):
-    requests_mock.get(settings.OIDC_OP_USER_ENDPOINT, text=json.dumps(claims))
-
     assert Identity.objects.count() == 0
 
-    mocker.patch.object(
-        MySAGWAuthenticationBackend,
-        "_client_id_from_token",
-        return_value="some_client" if is_id_token else settings.OIDC_RP_CLIENT_ID,
-    )
+    if is_client_grant_token:
+        claims[
+            settings.OIDC_CLIENT_GRANT_USERNAME_CLAIM
+        ] = settings.OIDC_RP_CLIENT_USERNAME
 
-    if not is_id_token:
-        claims[settings.OIDC_CLIENT_ID_CLAIM] = settings.OIDC_RP_CLIENT_ID
-        requests_mock.post(
-            settings.OIDC_OP_INTROSPECT_ENDPOINT, text=json.dumps(claims)
-        )
+    requests_mock.get(settings.OIDC_OP_USER_ENDPOINT, text=json.dumps(claims))
 
     request = rf.get("/openid", HTTP_AUTHORIZATION=authentication_header)
     HistoricalRecords.thread.request = request
@@ -61,15 +52,14 @@ def test_authentication(
         assert error
     else:
         if authenticated:
-            key = "userinfo" if is_id_token else "introspection"
             user, auth = result
             assert user.is_authenticated
             assert auth == authentication_header.split(" ")[1]
             assert (
-                cache.get(f"auth.{key}.{hashlib.sha256(b'Token').hexdigest()}")
+                cache.get(f"auth.userinfo.{hashlib.sha256(b'Token').hexdigest()}")
                 == claims
             )
-            assert Identity.objects.count() == (1 if is_id_token else 0)
+            assert Identity.objects.count() == (0 if is_client_grant_token else 1)
         else:
             assert result is None
 
@@ -82,7 +72,6 @@ def test_authentication_existing_identity(
     db,
     rf,
     requests_mock,
-    mocker,
     settings,
     identity,
     get_claims,
@@ -92,12 +81,6 @@ def test_authentication_existing_identity(
     )
 
     requests_mock.get(settings.OIDC_OP_USER_ENDPOINT, text=json.dumps(claims))
-
-    mocker.patch.object(
-        MySAGWAuthenticationBackend,
-        "_client_id_from_token",
-        return_value="some_client",
-    )
 
     assert Identity.objects.count() == 1
 
@@ -116,7 +99,6 @@ def test_authentication_multiple_existing_identity(
     db,
     rf,
     requests_mock,
-    mocker,
     settings,
     identity_factory,
     get_claims,
@@ -129,12 +111,6 @@ def test_authentication_multiple_existing_identity(
     )
 
     requests_mock.get(settings.OIDC_OP_USER_ENDPOINT, text=json.dumps(claims))
-
-    mocker.patch.object(
-        MySAGWAuthenticationBackend,
-        "_client_id_from_token",
-        return_value="some_client",
-    )
 
     assert Identity.objects.count() == 2
 
@@ -157,17 +133,10 @@ def test_authentication_idp_502(
     db,
     rf,
     requests_mock,
-    mocker,
     settings,
 ):
     requests_mock.get(
         settings.OIDC_OP_USER_ENDPOINT, status_code=status.HTTP_502_BAD_GATEWAY
-    )
-
-    mocker.patch.object(
-        MySAGWAuthenticationBackend,
-        "_client_id_from_token",
-        return_value="some_client",
     )
 
     request = rf.get("/openid", HTTP_AUTHORIZATION="Bearer Token")
@@ -179,46 +148,12 @@ def test_authentication_idp_missing_claim(
     db,
     rf,
     requests_mock,
-    mocker,
     settings,
     claims,
 ):
     settings.OIDC_ID_CLAIM = "missing"
     requests_mock.get(settings.OIDC_OP_USER_ENDPOINT, text=json.dumps(claims))
 
-    mocker.patch.object(
-        MySAGWAuthenticationBackend,
-        "_client_id_from_token",
-        return_value="some_client",
-    )
-
     request = rf.get("/openid", HTTP_AUTHORIZATION="Bearer Token")
     with pytest.raises(AuthenticationFailed):
         OIDCAuthentication().authenticate(request)
-
-
-def test_authentication_no_client(db, rf, requests_mock, mocker, settings, claims):
-    requests_mock.post(settings.OIDC_OP_INTROSPECT_ENDPOINT, text=json.dumps(claims))
-
-    mocker.patch.object(
-        MySAGWAuthenticationBackend,
-        "_client_id_from_token",
-        return_value=settings.OIDC_RP_CLIENT_ID,
-    )
-
-    request = rf.get("/openid", HTTP_AUTHORIZATION="Bearer Token")
-    with pytest.raises(AuthenticationFailed):
-        OIDCAuthentication().authenticate(request)
-
-
-@pytest.mark.parametrize(
-    "token,claim",
-    [
-        ("e30.ewogICJjbGllbnRJZCI6ICJmb28iCn0", "foo"),
-        ("e30.ewogICJub3RjbGllbnRJZCI6ICJiYXIiCn0", None),
-        ("undefined", None),
-        ("e30.undefined", None),
-    ],
-)
-def test_client_id_from_token(token, claim):
-    assert MySAGWAuthenticationBackend._client_id_from_token(token) == claim
