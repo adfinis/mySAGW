@@ -25,6 +25,8 @@ export default class FilteredFormsService extends Service {
     const isExpertAssociation = organisations.isAny("isExpertAssociation");
     const isAdvisoryBoard = organisations.isAny("isAdvisoryBoard");
 
+    // todo more generic filtering
+    // this is abyssmal
     const allForms = {
       ...(await this.apollo.query({
         query: getFilteredFormsQuery,

@@ -16,6 +16,12 @@ export default class FormConfigurationController extends Controller {
   @calumaQuery({ query: allForms })
   formQuery;
 
+  CONFIGURATION_TYPES = [
+    "expertAssociationForm",
+    "advisoryBoardForm",
+    "internal",
+  ];
+
   @restartableTask
   *fetchForms() {
     yield this.formQuery.fetch({
@@ -48,8 +54,6 @@ export default class FormConfigurationController extends Controller {
       this.notification.success(
         this.intl.t("form-configuration.saveSuccess", { name: form.name })
       );
-
-      this.fetchForms.perform();
     } catch (error) {
       console.error(error);
       this.notification.fromError(error);

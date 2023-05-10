@@ -9,30 +9,30 @@
     {{#each this.formQuery.value as |form|}}
       <li class="uk-flex uk-flex-middle">
         <span class="uk-text-bold">
-          <LinkTo @route="form-builder.edit" @model={{form.slug}}>{{form.name}}</LinkTo>
+          <LinkTo
+            @route="form-builder.edit"
+            @model={{form.slug}}
+          >
+            {{form.name}}
+          </LinkTo>
         </span>
 
-        <span class="uk-width-expand uk-text-muted uk-text-small uk-text-truncate"></span>
+        <span
+          class="uk-width-expand uk-text-muted uk-text-small uk-text-truncate"
+        ></span>
 
         <div class="uk-margin-left uk-flex uk-flex-wrap">
-          <label class="uk-margin-small-right">
-            <input
-              type="checkbox"
-              checked={{form.meta.expertAssociationForm}}
-              {{on "click" (perform this.setFormMeta form "expertAssociationForm")}}
-              class="uk-checkbox"
-            />
-            {{t "form-configuration.expertAssociationForm"}}
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              checked={{form.meta.advisoryBoardForm}}
-              class="uk-checkbox"
-              {{on "click" (perform this.setFormMeta form "advisoryBoardForm")}}
-            />
-            {{t "form-configuration.advisoryBoardForm"}}
-          </label>
+          {{#each this.CONFIGURATION_TYPES as |type|}}
+            <label class="uk-margin-small-right">
+              <input
+                type="checkbox"
+                checked={{get form.meta type}}
+                class="uk-checkbox"
+                {{on "click" (perform this.setFormMeta form type)}}
+              />
+              {{t (concat "form-configuration." type)}}
+            </label>
+          {{/each}}
         </div>
       </li>
     {{else}}
