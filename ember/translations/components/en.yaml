@@ -27,6 +27,7 @@ components:
   submit-button:
     title: "Submit"
     error: "An error has occured while validating the document."
+    confirmation: "Do you really want to send the application?"
 
   filters:
     invert: "Invert filter"

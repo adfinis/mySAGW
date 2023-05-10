@@ -32,6 +32,7 @@ work-items:
     edit: "Edit task"
     finish: "Complete task"
     skip: "Skip task"
+    confirmation: "Have you uploaded all the receipts?"
 
   filters:
     responsible: "Responsible"
