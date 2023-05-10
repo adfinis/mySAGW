@@ -25,7 +25,7 @@ BODY_DE = """Guten Tag {first_name} {last_name}
 Die Schweizerische Akademie der Geistes- und Sozialwissenschaften (SAGW) hat Ihr unten genanntes Gesuch geprüft. Leider müssen wir Ihnen mitteilen, dass wir Ihrem Antrag nicht entsprechen können, da weder die formellen noch die materiellen Voraussetzungen für eine Unterstützung erfüllt sind.
 
 Referenz: {dossier_nr}
-Über den nachfolgenden Link können Sie direkt auf Ihr Dokument zugreifen, wo Sie die Angaben zu den noch benötigten Informationen finden:
+Über den nachfolgenden Link können Sie direkt auf Ihr Dokument zugreifen:
 {link}
 
 Sollten Sie Fragen haben, können Sie uns gerne über sagw@sagw.ch, die Telefonnummer +41 31 306 92 50 oder unter www.sagw.ch/kontakt-mysagw kontaktieren. Gerne bitten wir Sie, bei einer Frage immer die Referenznummer anzugeben.
