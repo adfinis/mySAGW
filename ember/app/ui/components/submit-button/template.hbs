@@ -1,23 +1,56 @@
-<DocumentValidity
-  @document={{@field.document}}
-  @validateOnEnter={{false}}
-  @onInvalid={{this.validationError}}
-  as |isValid validate|
->
-  <div {{in-viewport onEnter=(perform this.fetchWorkItem)}}></div>
+<div {{in-viewport onEnter=(perform this.fetchWorkItem)}}>
   {{#if this.fetchWorkItem.isRunning}}
     <LoadingSpinner />
   {{else}}
-    <WorkItemButton
-      @mutation="complete"
-      @workItemId={{this.workItem.id}}
-      @filters={{this.submitWorkItemFilters}}
-      @label={{t "components.submit-button.title"}}
-      @disabled={{not this.workItem}}
-      @color="primary"
+    <UkButton
       @type="button"
-      @beforeMutate={{validate}}
-      @onSuccess={{this.transitionToCase}}
-    />
+      @disabled={{not this.workItem}}
+      @onClick={{fn (mut this.confirmModal) true}}
+      @color="primary"
+      data-test-submit-confirm-open
+    >
+      {{t "components.submit-button.title"}}
+    </UkButton>
   {{/if}}
-</DocumentValidity>
+</div>
+
+<UkModal
+  @visible={{this.confirmModal}}
+  @onHide={{fn (mut this.confirmModal) false}}
+  as |modal|
+>
+  <modal.header>
+    <h2 class="uk-modal-title">{{t "components.submit-button.title"}}</h2>
+  </modal.header>
+  <modal.body>
+    <p>{{t "components.submit-button.confirmation"}}</p>
+  </modal.body>
+  <modal.footer class="uk-text-right">
+    <UkButton
+      @type="button"
+      @onClick={{fn (mut this.confirmModal) false}}
+      @color="default"
+    >
+      {{t "global.cancel"}}
+    </UkButton>
+    <DocumentValidity
+      @document={{@field.document}}
+      @validateOnEnter={{false}}
+      @onInvalid={{this.validationError}}
+      as |isValid validate|
+    >
+      <WorkItemButton
+        @mutation="complete"
+        @workItemId={{this.workItem.id}}
+        @filters={{this.submitWorkItemFilters}}
+        @label={{t "components.submit-button.title"}}
+        @disabled={{not this.workItem}}
+        @color="primary"
+        @type="button"
+        @beforeMutate={{validate}}
+        @onSuccess={{this.transitionToCase}}
+        data-test-submit
+      />
+    </DocumentValidity>
+  </modal.footer>
+</UkModal>

@@ -32,6 +32,7 @@ work-items:
     edit: "Aufgabe bearbeiten"
     finish: "Aufgabe abschliessen"
     skip: "Aufgabe überspringen"
+    confirmation: "Haben Sie alle Belege hochgeladen?"
 
   filters:
     responsible: "Verantwortlich"
