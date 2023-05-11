@@ -11,12 +11,12 @@ module("Unit | Service | filtered-forms", function (hooks) {
     /*
      * A total of 8 forms
      * 1 public
-     * 4 internal
+     * 4 hidden
      * 5 expertAssociation
      * 6 advisoryBoard
      */
     this.server.create("form");
-    this.server.createList("form", 1, { meta: { internalForm: true } });
+    this.server.createList("form", 1, { meta: { hiddenForm: true } });
     this.server.createList("form", 2, { meta: { advisoryBoardForm: true } });
     this.server.createList("form", 3, {
       meta: { expertAssociationForm: true },
@@ -24,26 +24,26 @@ module("Unit | Service | filtered-forms", function (hooks) {
     this.server.create("form", {
       meta: {
         expertAssociationForm: true,
-        internalForm: true,
+        hiddenForm: true,
       },
     });
     this.server.create("form", {
       meta: {
         advisoryBoardForm: true,
-        internalForm: true,
-      },
-    });
-    this.server.create("form", {
-      meta: {
-        advisoryBoardForm: true,
-        expertAssociationForm: true,
+        hiddenForm: true,
       },
     });
     this.server.create("form", {
       meta: {
         advisoryBoardForm: true,
         expertAssociationForm: true,
-        internalForm: true,
+      },
+    });
+    this.server.create("form", {
+      meta: {
+        advisoryBoardForm: true,
+        expertAssociationForm: true,
+        hiddenForm: true,
       },
     });
   });
@@ -102,7 +102,7 @@ module("Unit | Service | filtered-forms", function (hooks) {
     assert.strictEqual(forms.length, 6);
   });
 
-  test("it filters internal forms", async function (assert) {
+  test("it filters hidden forms", async function (assert) {
     await authenticateSession({
       access_token: "123qweasdyxc",
       userinfo: { mysagw_groups: ["sagw"] },

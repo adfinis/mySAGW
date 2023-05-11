@@ -42,7 +42,7 @@ export default class CaseAbility extends BaseAbility {
     return this.model.isCompleted && this.isStaffOrAdmin;
   }
 
-  get canCreateInternalForm() {
+  get canCreateHiddenForm() {
     return this.isStaffOrAdmin;
   }
 

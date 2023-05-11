@@ -23,23 +23,23 @@ export default class FilteredFormsService extends Service {
       })
     ).filterBy("isAuthorized");
 
+    // map all visibilities from ENV.APP.caluma.formVisibilities
     const userVisibilities = {
-      internalForm: this.abilities.can("create internal form case"),
+      hiddenForm: this.abilities.can("create hidden form case"),
       advisoryBoardForm: organisations.isAny("isAdvisoryBoard"),
       expertAssociationForm: organisations.isAny("isExpertAssociation"),
     };
     const allForms = await this.mainForms();
 
     this.value = allForms.filter((form) => {
-      const visibilities = ENV.APP.caluma.formVisibilities.map((visibility) => {
-        return form.meta[visibility] && userVisibilities[visibility];
-      });
-      const specificVisibility = visibilities.any((visibility) => visibility);
+      const visibilities = ENV.APP.caluma.formVisibilities.map(
+        (visibility) => form.meta[visibility] && userVisibilities[visibility]
+      );
       const publicVisibility = visibilities.every(
         (visibility) => visibility === undefined
       );
 
-      return specificVisibility || publicVisibility;
+      return publicVisibility || visibilities.any((visibility) => visibility);
     });
 
     return this.value;

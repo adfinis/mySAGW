@@ -162,7 +162,7 @@ module.exports = function (environment) {
         formVisibilities: [
           "expertAssociationForm",
           "advisoryBoardForm",
-          "internalForm",
+          "hiddenForm",
         ],
       },
     },

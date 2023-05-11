@@ -2,5 +2,5 @@ form-configuration:
   title: "Configuration"
   expertAssociationForm: "Société membre"
   advisoryBoardForm: "Commission/Curatorium"
-  internal: "Caché"
+  hiddenForm: "Caché"
   saveSuccess: "Le formulaire «{name}» a été enregistré avec succès."
