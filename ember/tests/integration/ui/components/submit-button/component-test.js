@@ -1,4 +1,4 @@
-import { click, render, waitFor } from "@ember/test-helpers";
+import { click, render, settled, waitFor } from "@ember/test-helpers";
 import { hbs } from "ember-cli-htmlbars";
 import { setupMirage } from "ember-cli-mirage/test-support";
 import { setupIntl } from "ember-intl/test-support";
@@ -32,6 +32,7 @@ module("Integration | Component | submit-button", function (hooks) {
   test("it renders", async function (assert) {
     await render(hbs`<SubmitButton @field={{this.field}}/>`);
     await waitFor("[data-test-submit-confirm-open]");
+    await settled();
 
     assert
       .dom("[data-test-submit-confirm-open]")
@@ -42,6 +43,7 @@ module("Integration | Component | submit-button", function (hooks) {
   test("it shows confirmation", async function (assert) {
     await render(hbs`<SubmitButton @field={{this.field}}/>`);
     await waitFor("[data-test-submit-confirm-open]");
+    await settled();
 
     await click("[data-test-submit-confirm-open]");
 
