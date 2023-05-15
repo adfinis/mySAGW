@@ -5,6 +5,7 @@ import { allForms } from "@projectcaluma/ember-core/caluma-query/queries";
 import { queryManager } from "ember-apollo-client";
 import { restartableTask, enqueueTask } from "ember-concurrency";
 
+import ENV from "mysagw/config/environment";
 import saveFormMutation from "mysagw/gql/mutations/save-form.graphql";
 
 export default class FormConfigurationController extends Controller {
@@ -15,6 +16,8 @@ export default class FormConfigurationController extends Controller {
 
   @calumaQuery({ query: allForms })
   formQuery;
+
+  formVisibilities = ENV.APP.caluma.formVisibilities;
 
   @restartableTask
   *fetchForms() {
@@ -48,8 +51,6 @@ export default class FormConfigurationController extends Controller {
       this.notification.success(
         this.intl.t("form-configuration.saveSuccess", { name: form.name })
       );
-
-      this.fetchForms.perform();
     } catch (error) {
       console.error(error);
       this.notification.fromError(error);

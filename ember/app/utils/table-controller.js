@@ -84,6 +84,6 @@ export default class TableController extends Controller {
   @lastValue("fetchForms") forms;
   @restartableTask
   *fetchForms() {
-    return yield this.filteredForms.mainFormSlugs();
+    return (yield this.filteredForms.fetch()).map((form) => form.slug);
   }
 }
