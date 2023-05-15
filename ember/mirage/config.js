@@ -188,6 +188,6 @@ function routes() {
     const query = parseFilters(request, [
       { source: "identity", target: "identityId" },
     ]);
-    return schema.memberships.where(query);
+    return schema.identities.where(query);
   });
 }

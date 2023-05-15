@@ -2,4 +2,5 @@ form-configuration:
   title: "Configuration"
   expertAssociationForm: "Expert association form"
   advisoryBoardForm: "Advisory board form"
+  hiddenForm: "Hidden"
   saveSuccess: "Form {name} saved successfully"

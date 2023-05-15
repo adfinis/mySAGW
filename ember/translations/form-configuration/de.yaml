@@ -2,4 +2,5 @@ form-configuration:
   title: "Konfiguration"
   expertAssociationForm: "Fachgesellschaft"
   advisoryBoardForm: "Kommission/Kuratorium"
+  hiddenForm: "Versteckt"
   saveSuccess: "Formular «{name}» wurde erfolgreich gespeichert."

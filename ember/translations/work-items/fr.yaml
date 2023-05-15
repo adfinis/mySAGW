@@ -32,6 +32,7 @@ work-items:
     edit: "Modifier la tâche"
     finish: "Terminer la tâche"
     skip: "Ignorer la tâche"
+    confirmation: "Avez-vous téléchargé tous les justificatifs?"
 
   filters:
     responsible: "Responsable"

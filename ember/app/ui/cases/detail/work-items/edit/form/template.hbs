@@ -27,16 +27,45 @@
 
     {{#if @model.workItem.canComplete}}
       {{#if this.showTaskButton}}
-        <TaskButton
-          @mutation="complete"
-          @type="submit"
+        <UkButton
+          @type="button"
+          @onClick={{fn (mut this.confirmModal) true}}
           @color="primary"
-          @label={{t "work-items.actions.finish"}}
-          @beforeMutate={{validate}}
-          @onSuccess={{this.transitionToCaseWorkItems}}
-          @task="additional-data"
-          @filters={{this.taskButtonFilters}}
-        />
+        >
+          {{t "work-items.actions.finish"}}
+        </UkButton>
+
+        <UkModal
+          @visible={{this.confirmModal}}
+          @onHide={{fn (mut this.confirmModal) false}}
+          as |modal|
+        >
+          <modal.header>
+            <h2 class="uk-modal-title">{{t "work-items.actions.finish"}}</h2>
+          </modal.header>
+          <modal.body>
+            <p>{{t "work-items.actions.confirmation"}}</p>
+          </modal.body>
+          <modal.footer class="uk-text-right">
+            <UkButton
+              @type="button"
+              @onClick={{fn (mut this.confirmModal) false}}
+              @color="default"
+            >
+              {{t "global.cancel"}}
+            </UkButton>
+            <TaskButton
+              @mutation="complete"
+              @type="submit"
+              @color="primary"
+              @label={{t "work-items.actions.finish"}}
+              @beforeMutate={{validate}}
+              @onSuccess={{this.transitionToCaseWorkItems}}
+              @task="additional-data"
+              @filters={{this.taskButtonFilters}}
+            />
+          </modal.footer>
+        </UkModal>
       {{else}}
         <WorkItemButton
           @mutation="complete"

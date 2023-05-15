@@ -1,6 +1,7 @@
 import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import Component from "@glimmer/component";
+import { tracked } from "@glimmer/tracking";
 import { queryManager } from "ember-apollo-client";
 import { lastValue, restartableTask } from "ember-concurrency";
 
@@ -13,6 +14,8 @@ export default class SubmitButtonComponent extends Component {
   @service intl;
 
   @queryManager apollo;
+
+  @tracked confirmModal = false;
 
   @lastValue("fetchWorkItem") workItem;
   @restartableTask
