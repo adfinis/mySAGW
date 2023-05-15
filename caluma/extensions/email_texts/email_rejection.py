@@ -1,9 +1,7 @@
 SUBJECT_EN = "New information concerning {dossier_nr}"
 BODY_EN = """Dear {first_name} {last_name}
 
-After having verified the billing of the application mentioned below, we can confirm that the following amount will be transferred according to the payment details which have been provided:
-
-{payout_amount}
+The Swiss Academy of Humanities and Social Sciences (SAGW/SAHS) has reviewed your request. Unfortunately, we have to inform you that your request cannot be granted since neither the formal nor the material criteria are being fulfilled.
 
 Reference: {dossier_nr}
 You can access your document via the following link:
@@ -24,12 +22,10 @@ www.sagw.ch/kontakt-mysagw
 SUBJECT_DE = "Neue Informationen zu {dossier_nr}"
 BODY_DE = """Guten Tag {first_name} {last_name}
 
-Wir haben die Abrechnung des nachfolgenden Gesuchs geprüft und können Ihnen nun in den kommenden Tagen folgenden Beitrag auf die uns vorliegende Zahlungsverbindung überweisen:
-
-{payout_amount}
+Die Schweizerische Akademie der Geistes- und Sozialwissenschaften (SAGW) hat Ihr unten genanntes Gesuch geprüft. Leider müssen wir Ihnen mitteilen, dass wir Ihrem Antrag nicht entsprechen können, da weder die formellen noch die materiellen Voraussetzungen für eine Unterstützung erfüllt sind.
 
 Referenz: {dossier_nr}
-Über den nachfolgenden Link können Sie direkt auf Ihr Dokument zugreifen, wo Sie die Angaben zu den noch benötigten Informationen finden:
+Über den nachfolgenden Link können Sie direkt auf Ihr Dokument zugreifen:
 {link}
 
 Sollten Sie Fragen haben, können Sie uns gerne über sagw@sagw.ch, die Telefonnummer +41 31 306 92 50 oder unter www.sagw.ch/kontakt-mysagw kontaktieren. Gerne bitten wir Sie, bei einer Frage immer die Referenznummer anzugeben.
@@ -47,12 +43,10 @@ www.sagw.ch/kontakt-mysagw
 SUBJECT_FR = "Nouvelles informations concernant {dossier_nr}"
 BODY_FR = """Bonjour {first_name} {last_name}
 
-Nous avons vérifié le décompte de la demande dont la référence figure ci-dessous. Nous verserons dans les prochains jours, sur les coordonnées de paiement dont nous disposons, le montant suivant:
-
-{payout_amount}
+L’Académie suisse des sciences humaines et sociales (ASSH) a examiné votre requête susmentionnée. Malheureusement, nous devons vous informer que nous ne pouvons pas donner suite à votre demande, car ni les conditions formelles ni les conditions matérielles pour un soutien ne sont remplies.
 
 Référence : {dossier_nr}
-Vous pouvez accéder directement à votre document en cliquant sur le lien suivant:
+Cliquez sur le lien ci-dessous pour ouvrir votre document:
 {link}
 
 Si vous avez des questions, n’hésitez pas à nous contacter à l’adresse sagw@sagw.ch, au numéro de téléphone +41 31 306 92 50 ou via www.sagw.ch/kontakt-mysagw. Nous vous prions de toujours indiquer le numéro de référence lorsque vous posez une question.

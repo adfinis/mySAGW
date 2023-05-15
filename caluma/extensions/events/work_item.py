@@ -16,7 +16,12 @@ from caluma.caluma_workflow.events import (
 )
 
 from ..common import format_currency, get_users_for_case
-from ..email_texts import email_cost_approval, email_general, email_payout_amount
+from ..email_texts import (
+    email_cost_approval,
+    email_general,
+    email_payout_amount,
+    email_rejection,
+)
 from ..settings import settings
 
 
@@ -38,7 +43,7 @@ def set_assigned_user(sender, work_item, user, **kwargs):
     work_item.save()
 
 
-def _send_new_work_item_mail(work_item):
+def _send_work_item_mail(work_item):
     """
     Send the work_item emails.
 
@@ -93,6 +98,8 @@ def _send_new_work_item_mail(work_item):
             payout_amount_answer.value if payout_amount_answer else 0, "CHF"
         )
         selected_email_texts = email_payout_amount
+    elif work_item.task.slug == "decision-and-credit":
+        selected_email_texts = email_rejection
 
     users = get_users_for_case(work_item.case)
 
@@ -132,7 +139,19 @@ def _send_new_work_item_mail(work_item):
     ]
 )
 def send_new_work_item_mail(sender, work_item, user, **kwargs):
-    _send_new_work_item_mail(work_item)
+    _send_work_item_mail(work_item)
+
+
+@on(post_complete_work_item, raise_exception=True)
+@filter_events(
+    lambda sender, work_item: work_item.task_id == "decision-and-credit"
+    and work_item.document.answers.filter(
+        question_id="decision-and-credit-decision",
+        value="decision-and-credit-decision-close",
+    ).exists()
+)
+def send_rejection_mail(sender, work_item, user, **kwargs):
+    _send_work_item_mail(work_item)
 
 
 @on(post_create_work_item, raise_exception=True)

@@ -215,6 +215,22 @@ def receipt_mock(requests_mock):
                         }
                     ]
                 },
+                "advanceCredits": {
+                    "edges": [
+                        {
+                            "node": {
+                                "document": {
+                                    "vorschussbetrag": {
+                                        "edges": [{"node": {"value": 5000}}]
+                                    },
+                                    "vorschussdatum": {
+                                        "edges": [{"node": {"value": "2023-05-04"}}]
+                                    },
+                                }
+                            }
+                        }
+                    ]
+                },
             }
         }
     }
