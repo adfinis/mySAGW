@@ -27,7 +27,7 @@ components:
   submit-button:
     title: "Soumettre"
     error: "Une erreur s'est produite lors de la validation du document."
-    confirmation: "Voulez-vous vraiment envoyer la demande ?"
+    confirmation: "Voulez-vous envoyer définitivement le formulaire?"
 
   filters:
     invert: "Filtre inversé"
