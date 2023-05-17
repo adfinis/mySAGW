@@ -1,7 +1,7 @@
 SUBJECT_EN = "New information concerning {dossier_nr}"
 BODY_EN = """Dear {first_name} {last_name}
 
-The Swiss Academy of Humanities and Social Sciences (SAGW/SAHS) has reviewed your request. Unfortunately, we have to inform you that your request cannot be granted since neither the formal nor the material criteria are being fulfilled.
+The Swiss Academy of Humanities and Social Sciences (SAGW/SAHS) has reviewed your request. Unfortunately, we have to inform you that your request cannot be granted since the formal or the material criteria are not being fulfilled.
 
 Reference: {dossier_nr}
 You can access your document via the following link:
@@ -22,7 +22,7 @@ www.sagw.ch/kontakt-mysagw
 SUBJECT_DE = "Neue Informationen zu {dossier_nr}"
 BODY_DE = """Guten Tag {first_name} {last_name}
 
-Die Schweizerische Akademie der Geistes- und Sozialwissenschaften (SAGW) hat Ihr unten genanntes Gesuch geprüft. Leider müssen wir Ihnen mitteilen, dass wir Ihrem Antrag nicht entsprechen können, da weder die formellen noch die materiellen Voraussetzungen für eine Unterstützung erfüllt sind.
+Die Schweizerische Akademie der Geistes- und Sozialwissenschaften (SAGW) hat Ihr oben genanntes Gesuch geprüft. Leider müssen wir Ihnen mitteilen, dass wir Ihrem Antrag nicht entsprechen können, da die formellen oder materiellen Voraussetzungen dafür nicht gegeben sind.
 
 Referenz: {dossier_nr}
 Über den nachfolgenden Link können Sie direkt auf Ihr Dokument zugreifen:
@@ -43,7 +43,7 @@ www.sagw.ch/kontakt-mysagw
 SUBJECT_FR = "Nouvelles informations concernant {dossier_nr}"
 BODY_FR = """Bonjour {first_name} {last_name}
 
-L’Académie suisse des sciences humaines et sociales (ASSH) a examiné votre requête susmentionnée. Malheureusement, nous devons vous informer que nous ne pouvons pas donner suite à votre demande, car ni les conditions formelles ni les conditions matérielles pour un soutien ne sont remplies.
+L’Académie suisse des sciences humaines et sociales (ASSH) a examiné votre requête susmentionnée. Malheureusement, nous devons vous informer que nous ne pouvons pas donner suite à votre demande, car les conditions formelles ou les conditions matérielles pour un soutien ne sont pas remplies.
 
 Référence : {dossier_nr}
 Cliquez sur le lien ci-dessous pour ouvrir votre document:
