@@ -5,7 +5,7 @@ from functools import reduce
 from django.db.models import Max, OuterRef, Q, Subquery, Value
 from django.db.models.functions import Coalesce
 from django.utils import timezone
-from django_filters import BooleanFilter, CharFilter, UUIDFilter
+from django_filters import BooleanFilter, UUIDFilter
 from django_filters.rest_framework import FilterSet
 from rest_framework.compat import distinct
 from rest_framework.filters import SearchFilter
@@ -17,7 +17,31 @@ from mysagw.identity import models
 class IdentityFilterSet(FilterSet):
     idp_ids = CharMultiValueFilter(field_name="idp_id")
     has_idp_id = BooleanFilter(field_name="idp_id", lookup_expr="isnull", exclude=True)
-    memberships__organisation__organisation_name = CharFilter(distinct=True)
+    member_of_organisations = CharMultiValueFilter(
+        field_name="memberships__organisation__organisation_name",
+        distinct=True,
+        method="member_of_organisations_filter",
+    )
+
+    @staticmethod
+    def member_of_organisations_filter(queryset, name, value):
+        membership_base_query = models.Membership.objects.filter(
+            models.Q(organisation__organisation_name__in=value)
+            & (
+                (
+                    models.Q(time_slot__isnull=True)
+                    | models.Q(time_slot__contains=timezone.now())
+                )
+                & models.Q(inactive=False)
+            )
+        )
+
+        membership_base_subquery = membership_base_query.filter(
+            identity_id=OuterRef("pk")
+        )
+        return queryset.filter(
+            memberships__id__in=Subquery(membership_base_subquery.values("id"))
+        ).distinct()
 
     class Meta:
         model = models.Identity
@@ -25,7 +49,7 @@ class IdentityFilterSet(FilterSet):
             "email",
             "idp_id",
             "is_organisation",
-            "memberships__organisation__organisation_name",
+            "member_of_organisations",
         ]
 
 
