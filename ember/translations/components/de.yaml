@@ -27,6 +27,7 @@ components:
   submit-button:
     title: "Absenden"
     error: "Ein Fehler ist passiert beim Validieren vom Dokument."
+    confirmation: "Wollen Sie das Formular definitiv absenden?"
 
   filters:
     invert: "Filter umkehren"

@@ -10,7 +10,7 @@ export default class FiltersComponent extends Component {
   @service filteredForms;
 
   forms = trackedFunction(this, async () => {
-    const forms = await this.filteredForms.mainForms();
+    const forms = await this.filteredForms.fetch();
 
     return forms.map((node) => ({
       value: node.slug,

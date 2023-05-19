@@ -2,11 +2,12 @@ import Service, { inject as service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import { queryManager } from "ember-apollo-client";
 
-import getFilteredFormsQuery from "mysagw/gql/queries/get-filtered-forms.graphql";
+import ENV from "mysagw/config/environment";
 import getFormsQuery from "mysagw/gql/queries/get-forms.graphql";
 
 export default class FilteredFormsService extends Service {
   @service store;
+  @service abilities;
 
   @queryManager apollo;
 
@@ -22,43 +23,26 @@ export default class FilteredFormsService extends Service {
       })
     ).filterBy("isAuthorized");
 
-    const isExpertAssociation = organisations.isAny("isExpertAssociation");
-    const isAdvisoryBoard = organisations.isAny("isAdvisoryBoard");
-
-    const allForms = {
-      ...(await this.apollo.query({
-        query: getFilteredFormsQuery,
-      })),
+    // map all visibilities from ENV.APP.caluma.formVisibilities
+    const userVisibilities = {
+      hiddenForm: this.abilities.can("create hidden form case"),
+      advisoryBoardForm: organisations.isAny("isAdvisoryBoard"),
+      expertAssociationForm: organisations.isAny("isExpertAssociation"),
     };
+    const allForms = await this.mainForms();
 
-    if (!isExpertAssociation) {
-      delete allForms.expertAssociation;
-    }
-    if (!isAdvisoryBoard) {
-      delete allForms.advisoryBoard;
-    }
-    if (!isExpertAssociation && !isAdvisoryBoard) {
-      delete allForms.bothTypes;
-    }
+    this.value = allForms.filter((form) => {
+      const visibilities = ENV.APP.caluma.formVisibilities.map(
+        (visibility) => form.meta[visibility] && userVisibilities[visibility]
+      );
+      const publicVisibility = visibilities.every(
+        (visibility) => visibility === undefined
+      );
 
-    const value = [
-      allForms?.expertAssociation,
-      allForms?.advisoryBoard,
-      allForms?.bothTypes,
-      allForms?.public,
-    ]
-      .map((forms) => {
-        return forms?.edges.map((edge) => edge.node) ?? [];
-      })
-      .flat();
+      return publicVisibility || visibilities.any((visibility) => visibility);
+    });
 
-    this.value = value;
-
-    return value;
-  }
-
-  async mainFormSlugs() {
-    return (await this.mainForms()).map((form) => form.slug);
+    return this.value;
   }
 
   async mainForms() {

@@ -1,11 +1,14 @@
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
+import { tracked } from "@glimmer/tracking";
 
 export default class CasesDetailWorkItemsEditFormController extends Controller {
   @service router;
   @service notification;
   @service intl;
+
+  @tracked confirmModal = false;
 
   get showTaskButton() {
     return this.model.workItem.task.slug === "additional-data-form";

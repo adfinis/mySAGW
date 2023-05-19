@@ -159,6 +159,11 @@ module.exports = function (environment) {
           sections: "sektion",
           distributionPlans: "verteilplan-nr",
         },
+        formVisibilities: [
+          "expertAssociationForm",
+          "advisoryBoardForm",
+          "hiddenForm",
+        ],
       },
     },
   };
