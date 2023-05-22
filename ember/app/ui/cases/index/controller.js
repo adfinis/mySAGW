@@ -109,17 +109,11 @@ export default class CasesIndexController extends TableController {
     await Promise.resolve();
 
     try {
-      const accesses = (
+      return (
         await this.store.query("case-access", {
           filter: { idpIds: idpIds.join(",") },
         })
       ).map((access) => access.get("caseId"));
-
-      // TODO: this needs to be fixed in the backend: empty lists of ids will
-      // result in not filtering at all!
-      return accesses.length
-        ? accesses
-        : ["5131f81b-2fca-4b95-9b46-8b9d3997e665"];
     } catch (error) {
       console.error(error);
       this.notification.fromError(error);
