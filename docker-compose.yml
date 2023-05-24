@@ -29,6 +29,7 @@ services:
       - PERMISSION_CLASSES=caluma.caluma_user.permissions.IsAuthenticated,caluma.extensions.permissions.MySAGWPermission
       - DYNAMIC_TASKS_CLASSES=caluma.extensions.dynamic_tasks.CustomDynamicTasks
       - VALIDATION_CLASSES=caluma.extensions.validations.CustomValidation
+      - META_FIELDS=assigneeEmail,assigneeName
       - ENABLE_HEALTHZ_ENDPOINT=true
 
     depends_on:

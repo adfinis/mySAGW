@@ -2,7 +2,6 @@ import Controller from "@ember/controller";
 import { inject as service } from "@ember/service";
 import calumaQuery from "@projectcaluma/ember-core/caluma-query";
 import { allWorkItems } from "@projectcaluma/ember-core/caluma-query/queries";
-import { queryManager } from "ember-apollo-client";
 import { restartableTask } from "ember-concurrency";
 
 import ENV from "mysagw/config/environment";
@@ -10,8 +9,6 @@ import ENV from "mysagw/config/environment";
 export default class CasesDetailWorkItemsController extends Controller {
   @service store;
   @service can;
-
-  @queryManager apollo;
 
   @calumaQuery({
     query: allWorkItems,
