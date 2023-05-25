@@ -198,7 +198,9 @@ def create_circulation_child_case(sender, work_item, user, **kwargs):
 def invite_to_circulation(sender, work_item, user, context, **kwargs):
     for index, assign_user in enumerate(context["assign_users"]):
         if index == 0:
-            work_item.assigned_users = [assign_user]
+            work_item.assigned_users = [assign_user["idpId"]]
+            work_item.meta["assigneeName"] = assign_user["name"]
+            work_item.meta["assigneeEmail"] = assign_user["email"]
             work_item.save()
             continue
 
@@ -207,7 +209,11 @@ def invite_to_circulation(sender, work_item, user, context, **kwargs):
             description=work_item.task.description,
             task=work_item.task,
             status=caluma_workflow_models.WorkItem.STATUS_READY,
-            assigned_users=[assign_user],
+            assigned_users=[assign_user["idpId"]],
+            meta={
+                "assigneeName": assign_user["name"],
+                "assigneeEmail": assign_user["email"],
+            },
             case=work_item.case,
             document=caluma_form_models.Document.objects.create(
                 form=work_item.document.form

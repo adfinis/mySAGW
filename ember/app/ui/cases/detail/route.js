@@ -6,6 +6,7 @@ import { allCases } from "@projectcaluma/ember-core/caluma-query/queries";
 export default class CasesDetailRoute extends Route {
   @service store;
   @service can;
+  @service router;
 
   @calumaQuery({ query: allCases })
   caseQuery;
@@ -14,7 +15,7 @@ export default class CasesDetailRoute extends Route {
     await this.caseQuery.fetch({ filter: [{ id: case_id }] });
 
     await this.store.query("case-access", {
-      filter: { caseId: this.caseQuery.value.firstObject.id },
+      filter: { caseIds: this.caseQuery.value.firstObject.id },
       include: "identity",
     });
 
@@ -23,7 +24,7 @@ export default class CasesDetailRoute extends Route {
 
   afterModel(model) {
     if (this.can.cannot("list case", model)) {
-      this.transitionTo("cases");
+      this.router.transitionTo("cases");
     }
   }
 
