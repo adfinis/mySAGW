@@ -70,6 +70,10 @@ settings.APPLICANT_TASK_SLUGS = [
     "additional-data-form",
 ]
 
+settings.CIRCULATION_TASK_SLUGS = [
+    "circulation-decision",
+]
+
 settings.REVISION_QUESTIONS = {
     "review-document": [
         "priorisierung-der-antrage-kommentar",

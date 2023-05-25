@@ -40,12 +40,32 @@ export default class BaseAbility extends Ability {
     return this.isStaff || this.isOwnIdentity(identity);
   }
 
-  hasAccess(document) {
+  hasAccess(calumaCase) {
+    return (
+      this.hasCaseAccess(calumaCase) || this.hasCirculationAccess(calumaCase)
+    );
+  }
+
+  hasCaseAccess(calumaCase) {
     return Boolean(
-      document.accesses.findBy(
+      calumaCase.accesses.findBy(
         "identity.idpId",
         this.session.data.authenticated.userinfo.sub
       )
+    );
+  }
+
+  hasCirculationAccess(calumaCase) {
+    return Boolean(
+      calumaCase.workItems
+        .findBy("task.slug", "circulation")
+        ?.childCase.workItems.edges.find(
+          (workItem) =>
+            workItem.node.task.slug === "circulation-decision" &&
+            workItem.node.assignedUsers.includes(
+              this.session.data.authenticated.userinfo.sub
+            )
+        )
     );
   }
 }

@@ -1,18 +1,20 @@
+import { getOwner, setOwner } from "@ember/application";
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
-import calumaQuery from "@projectcaluma/ember-core/caluma-query";
-import { allCases } from "@projectcaluma/ember-core/caluma-query/queries";
 import { queryManager } from "ember-apollo-client";
 import Changeset from "ember-changeset";
 import lookupValidator from "ember-changeset-validations";
 import { dropTask, restartableTask } from "ember-concurrency";
+import { task as trackedTask } from "ember-resources/util/ember-concurrency";
 
+import CustomCaseModel from "mysagw/caluma-query/models/case";
 import ENV from "mysagw/config/environment";
 import cancelCaseMutation from "mysagw/gql/mutations/cancel-case.graphql";
 import redoWorkItemMutation from "mysagw/gql/mutations/redo-work-item.graphql";
 import reopenCaseMutation from "mysagw/gql/mutations/reopen-case.graphql";
+import getCaseQuery from "mysagw/gql/queries/get-case.graphql";
 import downloadFile from "mysagw/utils/download-file";
 import CaseValidations from "mysagw/validations/case";
 
@@ -279,15 +281,24 @@ export default class CasesDetailIndexController extends Controller {
     }
   }
 
-  @calumaQuery({ query: allCases })
-  caseQuery;
-
   @dropTask
   *getCase() {
-    yield this.caseQuery.fetch({ filter: [{ id: this.model.id }] });
+    const caseEdges = yield this.apollo.query(
+      {
+        query: getCaseQuery,
+        variables: { filter: [{ id: this.model.id }] },
+      },
+      "allCases.edges"
+    );
+
+    const caseModel = new CustomCaseModel(caseEdges[0].node);
+    setOwner(caseModel, getOwner(this));
+    return caseModel;
   }
 
+  _case = trackedTask(this, this.getCase, () => [this.model.id]);
+
   get case() {
-    return this.caseQuery.value.firstObject ?? this.model;
+    return this._case.value?.firstObject ?? this.model;
   }
 }

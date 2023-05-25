@@ -70,6 +70,7 @@ documents:
     document: "Gesuch"
     work-items: "Aufgaben"
     circulation: "Zirkulation"
+    circulation-answer: "Zirkulationsantwort"
     download: "Download"
 
   circulation:

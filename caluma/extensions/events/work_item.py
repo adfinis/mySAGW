@@ -52,6 +52,7 @@ def _send_work_item_mail(work_item):
     """
     link = f"{settings.SELF_URI}/cases/{work_item.case.pk}"
 
+    return
     try:
         dossier_nr = work_item.case.document.answers.get(question_id="dossier-nr").value
     except caluma_form_models.Answer.DoesNotExist:

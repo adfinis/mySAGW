@@ -100,6 +100,7 @@ module.exports = function (environment) {
           "complete-document",
         ],
         manuallyCompletableTasks: ["complete-document"],
+        // when adding to displayAnswers, remeber to add to get-case.graphql
         displayedAnswers: {
           // task slug
           "review-document": {

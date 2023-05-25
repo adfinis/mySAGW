@@ -7,13 +7,25 @@ export default class CaseAbility extends BaseAbility {
   }
 
   get canList() {
-    return this.hasAccess(this.model) || this.isStaffOrAdmin;
+    return this.canListUser || this.canListAdmin || this.canListCirculation;
+  }
+
+  get canListAdmin() {
+    return this.isStaffOrAdmin;
+  }
+
+  get canListUser() {
+    return this.hasCaseAccess(this.model);
+  }
+
+  get canListCirculation() {
+    return this.hasCirculationAccess(this.model);
   }
 
   get canEdit() {
     return (
       this.isAdmin ||
-      (this.model.hasSubmitOrReviseWorkItem && this.hasAccess(this.model))
+      (this.model.hasSubmitOrReviseWorkItem && this.hasCaseAccess(this.model))
     );
   }
 
@@ -47,7 +59,7 @@ export default class CaseAbility extends BaseAbility {
   }
 
   get canAddAccess() {
-    return this.hasAccess(this.model) || this.isStaffOrAdmin;
+    return this.hasCaseAccess(this.model) || this.isStaffOrAdmin;
   }
 
   get canDeleteAccess() {
@@ -56,7 +68,7 @@ export default class CaseAbility extends BaseAbility {
         this.model.accesses.filter((access) => {
           return !access.email && access.caseId === this.access.caseId;
         }).length > 1) &&
-        this.hasAccess(this.model)) ||
+        this.hasCaseAccess(this.model)) ||
       this.isStaffOrAdmin
     );
   }

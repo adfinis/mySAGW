@@ -1,30 +1,45 @@
+import { getOwner, setOwner } from "@ember/application";
 import Route from "@ember/routing/route";
 import { inject as service } from "@ember/service";
-import calumaQuery from "@projectcaluma/ember-core/caluma-query";
-import { allCases } from "@projectcaluma/ember-core/caluma-query/queries";
+import { decodeId } from "@projectcaluma/ember-core/helpers/decode-id";
+import { queryManager } from "ember-apollo-client";
+
+import CustomCaseModel from "mysagw/caluma-query/models/case";
+import getCaseQuery from "mysagw/gql/queries/get-case.graphql";
 
 export default class CasesDetailRoute extends Route {
   @service store;
   @service can;
+  @service router;
 
-  @calumaQuery({ query: allCases })
-  caseQuery;
+  @queryManager apollo;
 
   async model({ case_id }) {
-    await this.caseQuery.fetch({ filter: [{ id: case_id }] });
+    const caseId = decodeId(case_id);
 
-    await this.store.query("case-access", {
-      filter: { caseId: this.caseQuery.value.firstObject.id },
-      include: "identity",
-    });
+    const [caseEdges] = await Promise.all([
+      this.apollo.query(
+        {
+          query: getCaseQuery,
+          variables: { filter: [{ id: caseId }] },
+        },
+        "allCases.edges"
+      ),
+      this.store.query("case-access", {
+        filter: { caseIds: caseId },
+        include: "identity",
+      }),
+    ]);
 
-    return this.caseQuery.value.firstObject;
+    const caseModel = new CustomCaseModel(caseEdges[0].node);
+    setOwner(caseModel, getOwner(this));
+    return caseModel;
   }
 
   afterModel(model) {
     // TODO: allow access to case if invited to circulation
     if (this.can.cannot("list case", model)) {
-      this.transitionTo("cases");
+      this.router.transitionTo("cases");
     }
   }
 

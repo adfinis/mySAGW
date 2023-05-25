@@ -1,20 +1,36 @@
 import Controller from "@ember/controller";
-import calumaQuery from "@projectcaluma/ember-core/caluma-query";
-import { allWorkItems } from "@projectcaluma/ember-core/caluma-query/queries";
-import { dropTask } from "ember-concurrency";
+import { inject as service } from "@ember/service";
+import { queryManager } from "ember-apollo-client";
+import { dropTask, lastValue } from "ember-concurrency";
+
+import getWorkItemChildCaseQuery from "mysagw/gql/queries/get-work-item-child-case.graphql";
 
 export default class CasesDetailController extends Controller {
-  @calumaQuery({ query: allWorkItems })
-  workItemsQuery;
+  @service session;
 
+  @queryManager apollo;
+
+  @lastValue("fetchWorkItems") circulation;
   @dropTask
   *fetchWorkItems() {
-    yield this.workItemsQuery.fetch({
-      filter: [{ task: "circulation" }, { case: this.model.id }],
-    });
+    const circulation = yield this.apollo.query(
+      {
+        query: getWorkItemChildCaseQuery,
+        variables: {
+          filter: [{ task: "circulation" }, { case: this.model.id }],
+        },
+      },
+      "allWorkItems.edges"
+    );
+
+    return circulation.firstObject;
   }
 
-  get circulation() {
-    return this.workItemsQuery.value.firstObject;
+  get circulationAnswer() {
+    return this.circulation?.node.childCase.workItems.edges.find((workItem) =>
+      workItem.node.assignedUsers.includes(
+        this.session.data.authenticated.userinfo.sub
+      )
+    ).node;
   }
 }

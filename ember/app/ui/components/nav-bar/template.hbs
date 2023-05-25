@@ -190,14 +190,16 @@
     <button class="uk-offcanvas-close" type="button" uk-close></button>
 
     <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
+      {{#if (can "list work-item")}}
+        <li>
+          <LinkTo @route="work-items" uk-toggle="target: #offcanvas-nav">
+            {{t "components.nav-bar.tasks"}}
+          </LinkTo>
+        </li>
+      {{/if}}
       <li>
         <LinkTo @route="cases" uk-toggle="target: #offcanvas-nav">
           {{t "components.nav-bar.documents"}}
-        </LinkTo>
-      </li>
-      <li>
-        <LinkTo @route="work-items" uk-toggle="target: #offcanvas-nav">
-          {{t "components.nav-bar.tasks"}}
         </LinkTo>
       </li>
 
@@ -273,7 +275,7 @@
           <UkIcon @icon="chevron-down" />
         </a>
         <ul
-          uk-dropdown="pos: bottom-justify; mode: click"
+          uk-dropdown="pos: bottom-center; mode: click"
           class="uk-list uk-list-collapse uk-padding-small"
           data-test-locale-dropdown
         >
