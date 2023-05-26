@@ -39,7 +39,7 @@ class CaseAccessViewSet(
     permission_classes = (IsAuthenticated & (IsAdmin | IsStaff | HasCaseAccess),)
 
     def list(self, request, *args, **kwargs):
-        expected_keys = ["filter[idpId]", "filter[caseIds]", "filter[idpId]"]
+        expected_keys = ["filter[idpId]", "filter[caseIds]", "filter[idpIds]"]
         if not request.GET or set(expected_keys).isdisjoint(request.GET.keys()):
             raise ValidationError(
                 f"At least one of following filters must be used: {', '.join(expected_keys)}"
