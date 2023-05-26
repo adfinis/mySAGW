@@ -1,13 +1,28 @@
-import BaseAbility from "mysagw/abilities/-base";
+import { inject as service } from "@ember/service";
 
+import BaseAbility from "mysagw/abilities/-base";
 export default class WorkItemAbility extends BaseAbility {
+  @service store;
+
   get canList() {
-    return this.isStaff;
+    const identity = this.store
+      .peekAll("identity")
+      .findBy("idpId", this.session.data.authenticated.userinfo?.sub);
+
+    const nwpIdentity = identity?.memberships.find(
+      (membership) =>
+        membership.organisation.get("organisationName")===
+          ENV.APP.nwpOrganisationName && !membership.isInactive
+    );
+
+    return this.isStaffOrAdmin || Boolean(nwpIdentity);
   }
+
   get canEdit() {
-    return this.isStaff;
+    return this.isStaffOrAdmin;
   }
+
   get canShowAll() {
-    return this.isStaff;
+    return this.isStaffOrAdmin;
   }
 }

@@ -6,6 +6,7 @@ export default class IndexRoute extends Route {
   @service store;
   @service notification;
   @service intl;
+  @service router;
 
   model() {
     return this.store.queryRecord("identity", {});
@@ -14,13 +15,13 @@ export default class IndexRoute extends Route {
   afterModel(model) {
     if (!(model.firstName && model.lastName)) {
       this.notification.warning(this.intl.t("profile.noNameSet"));
-      return this.transitionTo("profile");
+      return this.router.transitionTo("profile");
     }
 
     if (this.can.can("list work-item")) {
-      return this.transitionTo("work-items");
+      return this.router.transitionTo("work-items");
     }
 
-    this.transitionTo("cases");
+    this.router.transitionTo("cases");
   }
 }
