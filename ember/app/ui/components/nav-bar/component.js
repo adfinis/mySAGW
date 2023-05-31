@@ -4,7 +4,7 @@ import { isTesting, macroCondition } from "@embroider/macros";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { timeout, restartableTask } from "ember-concurrency";
-
+import { task as trackedTask } from "ember-resources/util/ember-concurrency";
 export default class NavbarComponent extends Component {
   @service session;
   @service intl;
@@ -56,7 +56,6 @@ export default class NavbarComponent extends Component {
   @action
   loadMoreSnippets() {
     this.pageNumber += 1;
-    this.fetchSnippets.perform();
   }
 
   @restartableTask
@@ -65,7 +64,6 @@ export default class NavbarComponent extends Component {
     this.searchTerm = event.target.value;
     this.pageNumber = 1;
     this.snippets = [];
-    this.fetchSnippets.perform();
   }
 
   @restartableTask
@@ -87,6 +85,31 @@ export default class NavbarComponent extends Component {
       this.snippets = [...this.snippets, ...snippets.toArray()];
 
       return snippets;
+    } catch (error) {
+      console.error(error);
+      this.notification.fromError(error);
+    }
+  }
+
+  _snippets = trackedTask(this, this.fetchSnippets, () => [
+    this.pageNumber,
+    this.searchTerm,
+  ]);
+
+  @restartableTask
+  *fetchCurrentUser() {
+    // keep watch if this causes authentication problems (login loops etc.)
+    try {
+      return yield Promise.all([
+        this.store.query(
+          "membership",
+          {
+            include: "organisation",
+          },
+          { adapterOptions: { customEndpoint: "my-memberships" } }
+        ),
+        this.store.queryRecord("identity", {}),
+      ]);
     } catch (error) {
       console.error(error);
       this.notification.fromError(error);

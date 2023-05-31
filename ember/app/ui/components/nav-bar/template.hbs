@@ -1,6 +1,7 @@
 <nav
   class="nav-bar uk-navbar-container uk-navbar-transparent uk-padding-small uk-padding-remove-top uk-padding-remove-bottom"
   uk-navbar
+  {{did-insert (perform this.fetchCurrentUser)}}
 >
   <LinkTo
     @route="application"
@@ -300,7 +301,6 @@
 <div id="offcanvas-snippets" uk-offcanvas="flip: true; overlay: true">
   <div
     class="uk-offcanvas-bar uk-flex uk-flex-column"
-    {{did-insert (perform this.fetchSnippets)}}
   >
     <button class="uk-offcanvas-close" type="button" uk-close></button>
 
@@ -319,7 +319,7 @@
       />
     </div>
 
-    {{#if this.fetchSnippets.isRunning}}
+    {{#if this._snippets.isRunning}}
       <LoadingSpinner />
     {{else}}
       <ul uk-accordion="multiple: true" data-test-snippet-sidebar-list>

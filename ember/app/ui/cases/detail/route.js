@@ -37,7 +37,6 @@ export default class CasesDetailRoute extends Route {
   }
 
   afterModel(model) {
-    // TODO: allow access to case if invited to circulation
     if (this.can.cannot("list case", model)) {
       this.router.transitionTo("cases");
     }

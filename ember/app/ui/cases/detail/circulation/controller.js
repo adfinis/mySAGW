@@ -120,10 +120,7 @@ export default class CasesDetailCirculationController extends Controller {
     return yield this.store.query("identity", {
       filter: {
         isOrganisation: false,
-        member_of_organisations: [
-          ENV.APP.staffOrganisationName,
-          ENV.APP.nwpOrganisationName,
-        ].toString(),
+        member_of_organisations: ENV.APP.circulationOrganisations.toString(),
         hasIdpId: true,
       },
     });

@@ -26,7 +26,6 @@ export default class IdentityModel extends LocalizedModel {
   @hasMany("membership") memberships;
   @hasMany("membership") members;
 
-
   // special attribute from org-memberships endpoint
   @attr roles;
 

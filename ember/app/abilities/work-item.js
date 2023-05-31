@@ -1,6 +1,8 @@
 import { inject as service } from "@ember/service";
 
 import BaseAbility from "mysagw/abilities/-base";
+import ENV from "mysagw/config/environment";
+
 export default class WorkItemAbility extends BaseAbility {
   @service store;
 
@@ -11,8 +13,9 @@ export default class WorkItemAbility extends BaseAbility {
 
     const nwpIdentity = identity?.memberships.find(
       (membership) =>
-        membership.organisation.get("organisationName")===
-          ENV.APP.nwpOrganisationName && !membership.isInactive
+        ENV.APP.circulationOrganisations.includes(
+          membership.organisation.get("organisationName")
+        ) && !membership.isInactive
     );
 
     return this.isStaffOrAdmin || Boolean(nwpIdentity);
