@@ -36,14 +36,8 @@ export default class CasesDetailRoute extends Route {
     return caseModel;
   }
 
-  afterModel(model) {
-    if (this.can.cannot("list case", model)) {
-      this.router.transitionTo("cases");
-    }
-  }
-
   setupController(controller, model) {
     super.setupController(controller, model);
-    controller.fetchWorkItems.perform();
+    controller.fetchCirculation.perform();
   }
 }

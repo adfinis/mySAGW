@@ -23,7 +23,7 @@
         {{t "documents.subnav.work-items"}}
       </LinkTo>
     </li>
-  {{else if (can "list circulation case" @model)}}
+  {{else if this.circulationDecisionCount.value}}
     <li>
       <LinkTo @route="cases.detail.work-items.edit.form" @model={{this.circulationAnswer.id}}>
         {{t "documents.subnav.circulation-answer"}}

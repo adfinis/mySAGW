@@ -54,18 +54,4 @@ export default class BaseAbility extends Ability {
       )
     );
   }
-
-  hasCirculationAccess(calumaCase) {
-    return Boolean(
-      calumaCase.workItems
-        .findBy("task.slug", "circulation")
-        ?.childCase.workItems.edges.find(
-          (workItem) =>
-            workItem.node.task.slug === "circulation-decision" &&
-            workItem.node.assignedUsers.includes(
-              this.session.data.authenticated.userinfo.sub
-            )
-        )
-    );
-  }
 }

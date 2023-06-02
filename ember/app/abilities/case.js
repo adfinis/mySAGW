@@ -7,7 +7,7 @@ export default class CaseAbility extends BaseAbility {
   }
 
   get canList() {
-    return this.canListUser || this.canListAdmin || this.canListCirculation;
+    return this.canListUser || this.canListAdmin;
   }
 
   get canListAdmin() {
@@ -16,10 +16,6 @@ export default class CaseAbility extends BaseAbility {
 
   get canListUser() {
     return this.hasCaseAccess(this.model);
-  }
-
-  get canListCirculation() {
-    return this.hasCirculationAccess(this.model);
   }
 
   get canEdit() {

@@ -95,24 +95,4 @@ export default class NavbarComponent extends Component {
     this.pageNumber,
     this.searchTerm,
   ]);
-
-  @restartableTask
-  *fetchCurrentUser() {
-    // keep watch if this causes authentication problems (login loops etc.)
-    try {
-      return yield Promise.all([
-        this.store.query(
-          "membership",
-          {
-            include: "organisation",
-          },
-          { adapterOptions: { customEndpoint: "my-memberships" } }
-        ),
-        this.store.queryRecord("identity", {}),
-      ]);
-    } catch (error) {
-      console.error(error);
-      this.notification.fromError(error);
-    }
-  }
 }

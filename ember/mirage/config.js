@@ -190,4 +190,12 @@ function routes() {
     ]);
     return schema.identities.where(query);
   });
+
+  this.get("/my-memberships", (schema) => {
+    return schema.memberships.all();
+  });
+
+  this.get("/me", (schema) => {
+    return schema.identities.findOrCreateBy({ email: "test@test.com" });
+  });
 }

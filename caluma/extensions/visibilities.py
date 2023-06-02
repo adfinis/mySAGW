@@ -142,9 +142,6 @@ class CreateOrAssignVisibility(BaseVisibility):
                         ]
                     )
                     | Q(assigned_users__contains=[user.username])
-                    | Q(
-                        child_case__work_items__assigned_users__contains=[user.username]
-                    )
                 )
             )
         )
