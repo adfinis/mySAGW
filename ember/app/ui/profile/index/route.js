@@ -2,10 +2,10 @@ import Route from "@ember/routing/route";
 import { inject as service } from "@ember/service";
 
 export default class ProfileIndexRoute extends Route {
-  @service store;
+  @service session;
 
   model() {
-    return this.store.queryRecord("identity", {});
+    return this.session.identity;
   }
 
   setupController(controller, post) {

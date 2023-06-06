@@ -15,13 +15,13 @@ export default class CaseAbility extends BaseAbility {
   }
 
   get canListUser() {
-    return this.hasCaseAccess(this.model);
+    return this.hasAccess(this.model);
   }
 
   get canEdit() {
     return (
       this.isAdmin ||
-      (this.model.hasSubmitOrReviseWorkItem && this.hasCaseAccess(this.model))
+      (this.model.hasSubmitOrReviseWorkItem && this.hasAccess(this.model))
     );
   }
 
@@ -55,7 +55,7 @@ export default class CaseAbility extends BaseAbility {
   }
 
   get canAddAccess() {
-    return this.hasCaseAccess(this.model) || this.isStaffOrAdmin;
+    return this.hasAccess(this.model) || this.isStaffOrAdmin;
   }
 
   get canDeleteAccess() {
@@ -64,7 +64,7 @@ export default class CaseAbility extends BaseAbility {
         this.model.accesses.filter((access) => {
           return !access.email && access.caseId === this.access.caseId;
         }).length > 1) &&
-        this.hasCaseAccess(this.model)) ||
+        this.hasAccess(this.model)) ||
       this.isStaffOrAdmin
     );
   }

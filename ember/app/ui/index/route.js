@@ -3,17 +3,15 @@ import { inject as service } from "@ember/service";
 
 export default class IndexRoute extends Route {
   @service can;
-  @service store;
   @service notification;
   @service intl;
   @service router;
+  @service session;
 
-  model() {
-    return this.store.queryRecord("identity", {});
-  }
-
-  afterModel(model) {
-    if (!(model.firstName && model.lastName)) {
+  afterModel() {
+    if (
+      !(this.session.identity?.firstName && this.session.identity?.lastName)
+    ) {
       this.notification.warning(this.intl.t("profile.noNameSet"));
       return this.router.transitionTo("profile");
     }

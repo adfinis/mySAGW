@@ -41,12 +41,6 @@ export default class BaseAbility extends Ability {
   }
 
   hasAccess(calumaCase) {
-    return (
-      this.hasCaseAccess(calumaCase) || this.hasCirculationAccess(calumaCase)
-    );
-  }
-
-  hasCaseAccess(calumaCase) {
     return Boolean(
       calumaCase.accesses.findBy(
         "identity.idpId",

@@ -173,8 +173,10 @@ export default class CasesDetailCirculationController extends Controller {
 
     this.selectedIdentities = [];
 
-    yield this.fetchWorkItems.perform();
-    yield this.fetchCirculationWorkItems.perform();
+    yield Promise.all([
+      this.fetchWorkItems.perform(),
+      this.fetchCirculationWorkItems.perform(),
+    ]);
   }
 
   @action

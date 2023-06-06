@@ -6,10 +6,10 @@ export default class ApplicationRoute extends Route {
   @service calumaOptions;
   @service session;
 
-  beforeModel(...args) {
+  async beforeModel(...args) {
     super.beforeModel(...args);
 
-    this.session.setup();
+    await this.session.setup();
 
     const locale = localStorage.getItem("locale") ?? "en";
     this.intl.setLocale([locale]);
