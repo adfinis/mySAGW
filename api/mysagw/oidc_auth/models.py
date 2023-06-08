@@ -13,7 +13,6 @@ class BaseUser:  # pragma: no cover
         self.email = None
         self.groups = []
         self.group = None
-        self.client_id = None
         self.token = None
         self.claims = {}
         self.is_authenticated = False
