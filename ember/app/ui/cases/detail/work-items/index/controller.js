@@ -87,19 +87,20 @@ export default class CasesDetailWorkItemsController extends Controller {
       filter.push({ tasks: ENV.APP.caluma.documentEditableTaskSlugs });
     }
 
-    yield this.readyWorkItemsQuery.fetch({
-      filter: [...filter, { status: "READY" }],
-      order: [], // todo order
-    });
-
-    yield this.completedWorkItemsQuery.fetch({
-      filter: [
-        ...filter,
-        { status: "READY", invert: true },
-        { status: "REDO", invert: true },
-      ],
-      order: [{ attribute: "CLOSED_AT", direction: "DESC" }],
-    });
+    yield Promise.all([
+      this.readyWorkItemsQuery.fetch({
+        filter: [...filter, { status: "READY" }],
+        order: [{ attribute: "CREATED_AT", direction: "DESC" }],
+      }),
+      this.completedWorkItemsQuery.fetch({
+        filter: [
+          ...filter,
+          { status: "READY", invert: true },
+          { status: "REDO", invert: true },
+        ],
+        order: [{ attribute: "CLOSED_AT", direction: "DESC" }],
+      }),
+    ]);
 
     yield this.getIdentities.perform();
   }

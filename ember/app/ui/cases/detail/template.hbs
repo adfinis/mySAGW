@@ -17,17 +17,25 @@
       {{t "documents.subnav.overview"}}
     </LinkTo>
   </li>
-  <li>
-    <LinkTo @route="cases.detail.work-items" @model={{@model}}>
-      {{t "documents.subnav.work-items"}}
-    </LinkTo>
-  </li>
+  {{#if (or (can "list user case" @model) (can "list admin case" @model))}}
+    <li>
+      <LinkTo @route="cases.detail.work-items" @model={{@model}}>
+        {{t "documents.subnav.work-items"}}
+      </LinkTo>
+    </li>
+  {{else if this.circulationAnswer}}
+    <li>
+      <LinkTo @route="cases.detail.work-items.edit.form" @model={{this.circulationAnswer.id}}>
+        {{t "documents.subnav.circulation-answer"}}
+      </LinkTo>
+    </li>
+  {{/if}}
   <li>
     <LinkTo @route="cases.detail.edit" @model={{@model}}>
       {{t "documents.subnav.document"}}
     </LinkTo>
   </li>
-  {{#if this.circulation}}
+  {{#if (and (can "list admin case" @model) this.caseData.circulation)}}
     <li>
       <LinkTo @route="cases.detail.circulation" @model={{@model}}>
         {{t "documents.subnav.circulation"}}

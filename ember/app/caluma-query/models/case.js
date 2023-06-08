@@ -96,30 +96,9 @@ export default class CustomCaseModel extends CaseModel {
           status
           createdAt
           closedAt
+          assignedUsers
           task {
             slug
-          }
-          document {
-            answers {
-              edges {
-                node {
-                  ... on StringAnswer {
-                    StringAnswerValue: value
-                  }
-                  ... on IntegerAnswer {
-                    IntegerAnswerValue: value
-                  }
-                  ... on FloatAnswer {
-                    FloatAnswerValue: value
-                  }
-                  question {
-                    meta
-                    slug
-                    label
-                  }
-                }
-              }
-            }
           }
         }
       }

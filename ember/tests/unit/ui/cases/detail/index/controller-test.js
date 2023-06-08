@@ -6,7 +6,7 @@ module("Unit | Controller | cases/detail/index", function (hooks) {
 
   test("it computes remarks", function (assert) {
     const controller = this.owner.lookup("controller:cases/detail/index");
-    controller.model = {
+    controller.caseData.case = {
       workItems: [
         {
           __typename: "WorkItem",

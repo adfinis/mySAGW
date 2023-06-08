@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.utils import timezone
 from psycopg2._range import DateRange
 from rest_framework import status
+from syrupy import filters
 
 from mysagw.identity.models import Identity
 from mysagw.identity.views import DMSClient
@@ -505,27 +506,26 @@ def test_identity_organisation_filters(db, client, identity_factory, is_organisa
     assert expected_ids == received_ids
 
 
-def test_identity_organisation_filters_distinct(
-    db, client, identity_factory, membership_factory
+def test_identity_organisation_multi_filter_distinct(
+    db, client, identity_factory, membership_factory, snapshot
 ):
-    organisation = identity_factory(is_organisation=True, organisation_name="SAGW")
-    membership = membership_factory(organisation=organisation, role=None)
-    membership_factory(
-        identity=membership.identity, organisation=organisation, role=None
-    )
+    sagw = identity_factory(is_organisation=True, organisation_name="SAGW")
+    sagw_membership = membership_factory(organisation=sagw, role=None)
+    membership_factory(identity=sagw_membership.identity, organisation=sagw, role=None)
+    nwp = identity_factory(is_organisation=True, organisation_name="NWP")
+    nwp_membership = membership_factory(organisation=nwp, role=None)
+    membership_factory(identity=nwp_membership.identity, organisation=nwp, role=None)
 
     url = reverse("identity-list")
 
-    response = client.get(
-        url, {"filter[memberships__organisation__organisationName]": "SAGW"}
-    )
+    response = client.get(url, {"filter[memberOfOrganisations]": "SAGW,NWP"})
 
     assert response.status_code == status.HTTP_200_OK
 
     json = response.json()
 
-    assert len(json["data"]) == 1
-    assert json["data"][0]["id"] == str(membership.identity.pk)
+    assert len(json["data"]) == 2
+    assert json == snapshot(exclude=filters.props("id", "created-at", "modified-at"))
 
 
 def test_identity_idp_ids_filters(db, client, identity_factory):

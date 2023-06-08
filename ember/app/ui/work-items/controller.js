@@ -13,6 +13,7 @@ export default class WorkItemsIndexController extends TableController {
   @service session;
   @service store;
   @service filteredForms;
+  @service can;
 
   @queryManager apollo;
 
@@ -111,6 +112,12 @@ export default class WorkItemsIndexController extends TableController {
         invert: Boolean(this.invertedFilters[question]),
       });
     });
+
+    if (this.can.cannot("show all workItem")) {
+      filter.push({
+        task: "circulation-decision",
+      });
+    }
 
     return filter;
   });
