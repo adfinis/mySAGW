@@ -166,7 +166,13 @@ export default class CasesDetailCirculationController extends Controller {
       variables: {
         id: this.inviteToCirculationWorkItem.id,
         context: JSON.stringify({
-          assign_users: this.selectedIdentities.mapBy("idpId"),
+          assign_users: this.selectedIdentities.map((identity) => {
+            return {
+              idpId: identity.idpId,
+              name: identity.fullName,
+              email: identity.email,
+            };
+          }),
         }),
       },
     });

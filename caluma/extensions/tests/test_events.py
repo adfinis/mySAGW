@@ -147,7 +147,12 @@ def test_work_item_invite_to_circulation(
     complete_work_item(
         circulation.work_items.get(task_id="invite-to-circulation"),
         user,
-        {"assign_users": ["ab", "cd"]},
+        {
+            "assign_users": [
+                {"idpId": "ab", "name": "AB", "email": "a@b.c"},
+                {"idpId": "cd", "name": "CD", "email": "c@d.e"},
+            ]
+        },
     )
 
     decisions = circulation.work_items.filter(task_id="circulation-decision")
