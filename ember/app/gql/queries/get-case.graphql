@@ -1,8 +1,96 @@
 query getCase($filter: [CaseFilterSetType]) {
   allCases(filter: $filter) {
-    edges{
+    edges {
       node {
         id
+        createdAt
+        modifiedAt
+        status
+        meta
+        workItems(
+          filter: [{ status: REDO, invert: true }]
+          order: [{ attribute: CLOSED_AT, direction: DESC }]
+        ) {
+          edges {
+            node {
+              id
+              status
+              createdAt
+              task {
+                slug
+              }
+              childCase {
+                workItems {
+                  edges {
+                    node {
+                      id
+                      status
+                      assignedUsers
+                      task {
+                        slug
+                      }
+                    }
+                  }
+                }
+              }
+              document {
+                answers(
+                  filter: [
+                    {
+                      questions: [
+                        "priorisierung-der-antrage-kommentar"
+                        "decision-and-credit-remark"
+                        "define-amount-amount-float"
+                        "define-amount-remark"
+                        "review-document-decision"
+                        "decision-and-credit-decision"
+                        "define-amount-decision"
+                      ]
+                    }
+                  ]
+                ) {
+                  edges {
+                    node {
+                      ... on StringAnswer {
+                        StringAnswerValue: value
+                      }
+                      ... on IntegerAnswer {
+                        IntegerAnswerValue: value
+                      }
+                      ... on FloatAnswer {
+                        FloatAnswerValue: value
+                      }
+                      question {
+                        meta
+                        slug
+                        label
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        document {
+          id
+          form {
+            name
+            description
+          }
+          answers(filter: [{ questions: ["dossier-nr"] }]) {
+            edges {
+              node {
+                question {
+                  slug
+                }
+                ... on StringAnswer {
+                  StringAnswerValue: value
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

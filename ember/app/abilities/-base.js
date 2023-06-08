@@ -5,7 +5,7 @@ export default class BaseAbility extends Ability {
   @service session;
 
   get userGroups() {
-    return this.session.data?.authenticated?.userinfo?.mysagw_groups || [];
+    return this.session.data.authenticated.userinfo?.mysagw_groups || [];
   }
 
   get isAdmin() {
@@ -37,12 +37,12 @@ export default class BaseAbility extends Ability {
   }
 
   isStaffOrOwnIdentity(identity) {
-    return this.isStaff || this.isOwnIdentity(identity);
+    return this.isStaffOrAdmin || this.isOwnIdentity(identity);
   }
 
-  hasAccess(document) {
+  hasAccess(calumaCase) {
     return Boolean(
-      document.accesses.findBy(
+      calumaCase.accesses.findBy(
         "identity.idpId",
         this.session.data.authenticated.userinfo.sub
       )

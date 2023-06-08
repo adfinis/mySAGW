@@ -18,7 +18,10 @@ from caluma.caluma_workflow.schema import (
     ReopenCase,
     SaveCase,
 )
-from caluma.extensions.common import get_cases_for_user
+from caluma.extensions.common import (
+    get_cases_for_user,
+    get_cases_for_user_by_circulation_invite,
+)
 from caluma.extensions.settings import settings
 
 
@@ -133,12 +136,20 @@ class MySAGWPermission(BasePermission):
 
     @object_permission_for(CompleteWorkItem)
     def has_object_permission_for_complete_work_item(self, mutation, info, work_item):
-        return self._is_admin_or_sagw(info) or (
-            (
-                self._can_access_case(info, work_item.case)
-                or self._is_own(info, work_item)
+        return (
+            self._is_admin_or_sagw(info)
+            or (
+                (
+                    self._can_access_case(info, work_item.case)
+                    or self._is_own(info, work_item)
+                )
+                and work_item.task.slug in settings.APPLICANT_TASK_SLUGS
             )
-            and work_item.task.slug in settings.APPLICANT_TASK_SLUGS
+            or (
+                str(work_item.case.pk)
+                in get_cases_for_user_by_circulation_invite(info.context.user)
+                and work_item.task.slug in settings.CIRCULATION_TASK_SLUGS
+            )
         )
 
     @object_permission_for(CancelCase)

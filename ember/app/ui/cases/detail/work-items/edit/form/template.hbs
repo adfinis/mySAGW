@@ -1,8 +1,8 @@
-<h3>{{@model.workItem.name}}</h3>
+<h3>{{@model.name}}</h3>
 
 <CfContent
-  @documentId={{@model.workItem.document.id}}
-  @disabled={{not @model.workItem.canEdit}}
+  @documentId={{@model.document.id}}
+  @disabled={{not @model.canEdit}}
   as |content|
 >
   <DocumentValidity
@@ -25,7 +25,7 @@
       <content.form />
     {{/if}}
 
-    {{#if @model.workItem.canComplete}}
+    {{#if @model.canComplete}}
       {{#if this.showTaskButton}}
         <UkButton
           @type="button"
@@ -69,7 +69,7 @@
       {{else}}
         <WorkItemButton
           @mutation="complete"
-          @workItemId={{@model.workItem.id}}
+          @workItemId={{@model.id}}
           @type="submit"
           @color="primary"
           @label={{t "work-items.actions.finish"}}
@@ -78,10 +78,10 @@
         />
       {{/if}}
     {{/if}}
-    {{#if @model.workItem.canSkip}}
+    {{#if @model.canSkip}}
       <WorkItemButton
         @mutation="skip"
-        @workItemId={{@model.workItem.id}}
+        @workItemId={{@model.id}}
         @type="submit"
         @label={{t "work-items.actions.skip"}}
         @beforeMutate={{validate}}

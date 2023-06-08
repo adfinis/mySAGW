@@ -8,7 +8,7 @@ export default class WorkItemsIndexRoute extends TableRoute {
 
   beforeModel() {
     if (this.can.cannot("list work-item")) {
-      return this.router.transitionTo("notfound");
+      return this.router.transitionTo("index");
     }
   }
 }
