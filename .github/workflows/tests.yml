@@ -21,7 +21,7 @@ jobs:
       - name: Lint the code
         run: make api-lint
       - name: Check for missing migrations
-        run: docker-compose exec -T api ./manage.py makemigrations --check --dry-run --no-input
+        run: docker-compose exec -T api poetry run ./manage.py makemigrations --check --dry-run --no-input
       - name: Run test suite
         run: make api-test
   caluma-tests:
@@ -38,12 +38,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Install poetry
+        run: pipx install poetry
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.8'
       - name: Install dependencies
-        run: pip install -r ./api/requirements-dev.txt
+        run: poetry install --directory=api
       - name: Run test suite
         run: make caluma-lint
   ember-test:

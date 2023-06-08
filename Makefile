@@ -14,11 +14,11 @@ start: ## Start the development server
 
 .PHONY: api-test
 api-test: ## Test the backend
-	@docker-compose run --rm api pytest --no-cov-on-fail --cov --create-db -vv
+	@docker-compose run --rm api poetry run pytest --no-cov-on-fail --cov --create-db -vv
 
 .PHONY: api-lint
 api-lint: ## Lint the backend
-	@docker-compose run --rm api sh -c "black --check . && flake8"
+	@docker-compose run --rm api sh -c "poetry run black --check . && poetry run flake8"
 
 .PHONY: api-bash
 api-bash: ## Shell into the backend
@@ -26,20 +26,20 @@ api-bash: ## Shell into the backend
 
 .PHONY: api-shell_plus
 api-shell_plus: ## Run shell_plus
-	@docker-compose run --rm api python ./manage.py shell_plus
+	@docker-compose run --rm api poetry run ./manage.py shell_plus
 
 .PHONY: api-dev-server
 api-dev-server: ## Start backend dev server
 	@docker-compose stop api
-	@docker-compose run --user root --use-aliases --service-ports api bash -c 'pip install pdbpp && python ./manage.py runserver 0.0.0.0:8000'
+	@docker-compose run --user root --use-aliases --service-ports api bash -c 'pip install pdbpp && poetry run ./manage.py runserver 0.0.0.0:8000'
 
 .PHONY: makemigrations
 makemigrations: ## Make django migrations
-	@docker-compose run --rm api python ./manage.py makemigrations
+	@docker-compose run --rm api poetry run ./manage.py makemigrations
 
 .PHONY: migrate
 migrate: ## Migrate django
-	@docker-compose run --rm api python ./manage.py migrate
+	@docker-compose run --rm api poetry run ./manage.py migrate
 
 .PHONY: dbshell
 dbshell: ## Start a psql shell
@@ -53,8 +53,8 @@ caluma-test: ## test caluma config and extensions
 
 .PHONY: caluma-lint
 caluma-lint: ## lint caluma extensions
-	@cd ./caluma && black --check .
-	@cd ./caluma && flake8
+	@cd ./caluma && poetry run black --check .
+	@cd ./caluma && poetry run flake8
 
 .PHONY: caluma-load-workflow
 caluma-load-workflow: ## Load workflow config from JSON
