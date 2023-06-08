@@ -1,5 +1,0 @@
-query getWorkItemCount($filter: [WorkItemFilterSetType]) {
-  allWorkItems(filter: $filter) {
-    totalCount
-  }
-}

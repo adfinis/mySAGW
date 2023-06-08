@@ -5,7 +5,7 @@ import { tracked } from "@glimmer/tracking";
 import calumaQuery from "@projectcaluma/ember-core/caluma-query";
 import { allWorkItems } from "@projectcaluma/ember-core/caluma-query/queries";
 import { queryManager } from "ember-apollo-client";
-import { dropTask, lastValue } from "ember-concurrency";
+import { dropTask, lastValue, restartableTask } from "ember-concurrency";
 
 import ENV from "mysagw/config/environment";
 import completeWorkItem from "mysagw/gql/mutations/complete-work-item.graphql";
@@ -145,7 +145,7 @@ export default class CasesDetailCirculationController extends Controller {
     }
   }
 
-  @dropTask
+  @restartableTask
   *fetchCirculationWorkItems() {
     yield this.circulationWorkItemsQuery.fetch({
       filter: [

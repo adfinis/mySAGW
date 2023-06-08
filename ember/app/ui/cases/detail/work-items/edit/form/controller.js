@@ -9,6 +9,7 @@ export default class CasesDetailWorkItemsEditFormController extends Controller {
   @service intl;
   @service session;
   @service can;
+  @service caseData;
 
   @tracked confirmModal = false;
 
@@ -60,6 +61,11 @@ export default class CasesDetailWorkItemsEditFormController extends Controller {
       return this.router.transitionTo("cases.detail.index", this.model.case.id);
     }
 
+    if (this.model.task.slug === "review-document") {
+      this.caseData.fetchCirculation.perform(this.model.case.id);
+    }
+
+    this.caseData.fetchCase.perform(this.model.case.id);
     this.router.transitionTo("cases.detail.work-items", this.model.case.id);
   }
 }
