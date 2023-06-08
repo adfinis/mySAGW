@@ -28,7 +28,7 @@ def get_users_for_case(case):
     client = APIClient()
     token = client.get_admin_token()
     result = client.get(
-        f"/case/accesses?filter%5BcaseId%5D={str(case.pk)}&include=identity",
+        f"/case/accesses?filter%5BcaseIds%5D={str(case.pk)}&include=identity",
         token=token,
     )
     users = []
