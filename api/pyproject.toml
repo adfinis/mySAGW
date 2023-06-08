@@ -72,7 +72,7 @@ combine_as_imports = true
 line_length = 88
 
 [tool.pytest.ini_options]
-addopts = "--reuse-db --randomly-seed=1521188766 --randomly-dont-reorganize -W=default"
+addopts = "--reuse-db --randomly-seed=1521188766 --randomly-dont-reorganize"
 DJANGO_SETTINGS_MODULE = "mysagw.settings"
 env = [
     "ADMINS=Test Example <test@example.com>,Test2 <test2@example.com>",
@@ -82,6 +82,9 @@ env = [
 filterwarnings = [
     "error::DeprecationWarning",
     "error::PendingDeprecationWarning",
+    "ignore:invalid escape sequence",  # needed for deprecation == "2.0.7" (dependency of localized-fields)
+    "ignore:pkg_resources is deprecated as an API:DeprecationWarning",  # needed for simple-history: https://github.com/jazzband/django-simple-history/blob/master/simple_history/__init__.py#L1
+    "ignore:distutils Version classes are deprecated. Use packaging.version instead.:DeprecationWarning",  # issue in pytest-freezegun
     "ignore:LocalizedAutoSlug is deprecated and will be removed in the next major version:DeprecationWarning",
     "ignore:'django_extensions' defines default_app_config:PendingDeprecationWarning", # deprecation in django_extensions
 ]

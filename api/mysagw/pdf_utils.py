@@ -1,7 +1,7 @@
 import io
 
 import requests
-from pypdf import PdfMerger
+from pypdf import PdfWriter
 from pypdf.errors import DependencyError, PdfReadError
 from reportlab.lib.pagesizes import A4, mm
 from reportlab.lib.utils import ImageReader
@@ -71,7 +71,7 @@ def prepare_files_for_merge(files):
 def add_caluma_files_to_pdf(pdf, urls):
     files = [get_caluma_file(url) for url in urls]
 
-    merger = PdfMerger()
+    merger = PdfWriter()
     merger.append(pdf)
 
     for file in prepare_files_for_merge(files):

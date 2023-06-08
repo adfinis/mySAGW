@@ -53,8 +53,8 @@ caluma-test: ## test caluma config and extensions
 
 .PHONY: caluma-lint
 caluma-lint: ## lint caluma extensions
-	@cd ./caluma && poetry run black --check .
-	@cd ./caluma && poetry run flake8
+	@cd ./api && poetry run bash -c "cd ../caluma && black --check ."
+	@cd ./api && poetry run bash -c "cd ../caluma && flake8"
 
 .PHONY: caluma-load-workflow
 caluma-load-workflow: ## Load workflow config from JSON
