@@ -99,6 +99,7 @@ services:
       - DATABASE_NAME=dms
       - DATABASE_USER=dms
       - ALLOWED_HOSTS=dms
+      - OIDC_BEARER_TOKEN_REVALIDATION_TIME=300
       # needed until https://github.com/adfinis-sygroup/document-merge-service/issues/407 is closed
       - DOCXTEMPLATE_JINJA_EXTENSIONS=
 
