@@ -59,6 +59,10 @@ module.exports = function (environment) {
 
       staffOrganisationName:
         "Schweizerische Akademie der Geistes- und Sozialwissenschaften (SAGW)",
+      circulationOrganisations: [
+        "Schweizerische Akademie der Geistes- und Sozialwissenschaften (SAGW)",
+        "Kommission Nachwuchspreis (NWP)",
+      ],
 
       caseStateIcons: {
         submit: "clock",
@@ -98,6 +102,7 @@ module.exports = function (environment) {
           "complete-document",
         ],
         manuallyCompletableTasks: ["complete-document"],
+        // when adding to displayAnswers, remeber to add to get-case.graphql
         displayedAnswers: {
           // task slug
           "review-document": {

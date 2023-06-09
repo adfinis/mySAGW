@@ -9,6 +9,7 @@ from django.utils import formats
 from django.utils.translation import get_language
 from rest_framework import status
 from rest_framework.decorators import action
+from rest_framework.exceptions import ValidationError
 from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, ListModelMixin
 from rest_framework.serializers import BaseSerializer
 from rest_framework.viewsets import GenericViewSet
@@ -36,6 +37,14 @@ class CaseAccessViewSet(
     queryset = models.CaseAccess.objects.all()
     filterset_class = filters.CaseAccessFilterSet
     permission_classes = (IsAuthenticated & (IsAdmin | IsStaff | HasCaseAccess),)
+
+    def list(self, request, *args, **kwargs):
+        expected_keys = ["filter[idpId]", "filter[caseIds]", "filter[idpIds]"]
+        if not request.GET or set(expected_keys).isdisjoint(request.GET.keys()):
+            raise ValidationError(
+                f"At least one of following filters must be used: {', '.join(expected_keys)}"
+            )
+        return super().list(request, *args, **kwargs)
 
     def get_queryset(self, *args, **kwargs):
         qs = super().get_queryset(*args, **kwargs)

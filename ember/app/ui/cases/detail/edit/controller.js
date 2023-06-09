@@ -3,9 +3,10 @@ import { inject as service } from "@ember/service";
 
 export default class CasesDetailEditController extends Controller {
   queryParams = ["displayedForm"];
+
   @service can;
 
   get disabled() {
-    return !this.can.can("edit case", this.model);
+    return this.can.cannot("edit case", this.model);
   }
 }

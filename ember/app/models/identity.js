@@ -12,8 +12,8 @@ export default class IdentityModel extends LocalizedModel {
   @attr lastName;
   @attr email;
   @attr language;
-  @hasMany additionalEmails;
-  @hasMany phoneNumbers;
+  @hasMany("additional-email") additionalEmails;
+  @hasMany("phone-number") phoneNumbers;
   @hasMany("interest") interests;
   @attr isOrganisation;
   @attr isExpertAssociation;
@@ -22,6 +22,10 @@ export default class IdentityModel extends LocalizedModel {
   @attr hasMemberships;
   @attr hasMembers;
   @attr isAuthorized;
+
+  @hasMany("membership") memberships;
+  @hasMany("membership") members;
+
   // special attribute from org-memberships endpoint
   @attr roles;
 
@@ -33,7 +37,7 @@ export default class IdentityModel extends LocalizedModel {
     return this.fullName;
   }
 
-  get memberships() {
+  get roleMemberships() {
     return this.roles.map((role) => {
       role.timeSlot = role.time_slot;
       role.inactive = membershipInactive(role);

@@ -12,10 +12,13 @@
   @invertFilter={{this.invertFilter}}
 />
 
-<WorkItemList
-  @query={{this.workItemsQuery}}
-  @loading={{this.workItemFilters.isLoading}}
-  @config={{this.tableConfig}}
-  @setOrder={{fn (mut this.order)}}
-  @order={{this.order}}
-/>
+{{#if this.workItemsFilter.isResolved}}
+  <WorkItemList
+    @query={{this.workItemsQuery}}
+    @config={{this.tableConfig}}
+    @setOrder={{fn (mut this.order)}}
+    @order={{this.order}}
+  />
+{{else}}
+  <UkSpinner />
+{{/if}}

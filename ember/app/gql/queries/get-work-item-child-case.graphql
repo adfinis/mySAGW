@@ -1,0 +1,30 @@
+query getWorkItems($filter: [WorkItemFilterSetType]) {
+  allWorkItems(
+    filter: $filter
+    order: [{ attribute: CLOSED_AT, direction: DESC }]
+  ) {
+    edges {
+      node {
+        id
+        status
+        task {
+          slug
+        }
+        childCase {
+          workItems(order: [{ attribute: CLOSED_AT, direction: DESC }]) {
+            edges {
+              node {
+                id
+                status
+                assignedUsers
+                task {
+                  slug
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

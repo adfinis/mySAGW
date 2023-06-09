@@ -1,7 +1,7 @@
 import Route from "@ember/routing/route";
 
 export default class CasesDetailWorkItemsEditRoute extends Route {
-  model(params) {
-    return params.work_item_id;
+  model({ work_item_id }) {
+    return work_item_id;
   }
 }

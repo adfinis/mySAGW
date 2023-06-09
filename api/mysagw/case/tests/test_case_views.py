@@ -15,15 +15,21 @@ from mysagw.utils import build_url
 
 
 @pytest.mark.parametrize(
-    "filter_id,expected_count",
+    "filter_id,expected_count,expected_status",
     [
-        (None, 4),
-        ("00000000-0000-0000-0000-000000000000", 2),
-        ("11111111-1111-1111-1111-111111111111", 1),
+        (None, 0, status.HTTP_400_BAD_REQUEST),
+        ("00000000-0000-0000-0000-000000000000", 2, status.HTTP_200_OK),
+        ("11111111-1111-1111-1111-111111111111", 1, status.HTTP_200_OK),
     ],
 )
 def test_case_list(
-    db, client, filter_id, expected_count, identity_factory, case_access_factory
+    db,
+    client,
+    filter_id,
+    expected_count,
+    expected_status,
+    identity_factory,
+    case_access_factory,
 ):
     identity_0 = identity_factory(idp_id="00000000-0000-0000-0000-000000000000")
     identity_1 = identity_factory(idp_id="11111111-1111-1111-1111-111111111111")
@@ -35,10 +41,11 @@ def test_case_list(
 
     response = client.get(url, {"filter[idpId]": filter_id} if filter_id else None)
 
-    assert response.status_code == status.HTTP_200_OK
+    assert response.status_code == expected_status
 
-    json = response.json()
-    assert len(json["data"]) == expected_count
+    if expected_status == status.HTTP_200_OK:
+        json = response.json()
+        assert len(json["data"]) == expected_count
 
 
 @pytest.mark.parametrize(

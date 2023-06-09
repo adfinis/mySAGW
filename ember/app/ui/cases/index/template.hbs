@@ -46,11 +46,14 @@
       @invertFilter={{this.invertFilter}}
     />
 
-    <CasesTable
-      @query={{this.caseQuery}}
-      @loading={{this.caseFilters.isLoading}}
-      @setOrder={{fn (mut this.order)}}
-      @order={{this.order}}
-    />
+    {{#if this.caseFilters.isResolved}}
+      <CasesTable
+        @query={{this.caseQuery}}
+        @setOrder={{fn (mut this.order)}}
+        @order={{this.order}}
+      />
+    {{else}}
+      <UkSpinner />
+    {{/if}}
   {{/if}}
 {{/if}}

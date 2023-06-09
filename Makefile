@@ -89,7 +89,7 @@ caluma-flush: ## flush the Caluma database
 caluma-foreground: ## run caluma in foreground with dev server for debugging
 	@docker-compose stop caluma
 	@docker-compose run --rm -u root --use-aliases --service-ports caluma bash -c \
-	'poetry add --lock pdbpp && poetry install --no-dev --no-root && poetry run python ./manage.py runserver 0.0.0.0:8000'
+	'poetry run pip install pdbpp && poetry run python ./manage.py runserver 0.0.0.0:8000'
 
 .PHONY: ember-lint
 ember-lint: ## lint the frontend

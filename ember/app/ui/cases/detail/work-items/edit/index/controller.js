@@ -49,6 +49,15 @@ export default class CasesDetailWorkItemsEditController extends Controller {
   *saveWorkItem(event) {
     event.preventDefault();
 
+    let meta = this.workItem.meta;
+    if (this.workItem.task.slug === "circulation-decision") {
+      meta = {
+        ...meta,
+        assigneeName: this.workItem.assignedUser.fullName,
+        assigneeEmail: this.workItem.assignedUser.email,
+      };
+    }
+
     try {
       yield this.apollo.mutate({
         mutation: saveWorkItemMutation,
@@ -56,6 +65,7 @@ export default class CasesDetailWorkItemsEditController extends Controller {
           input: {
             workItem: this.workItem.id,
             assignedUsers: this.workItem.assignedUsers,
+            meta: JSON.stringify(meta),
           },
         },
       });
@@ -77,8 +87,7 @@ export default class CasesDetailWorkItemsEditController extends Controller {
     return yield this.store.query("identity", {
       filter: {
         isOrganisation: false,
-        memberships__organisation__organisationName:
-          ENV.APP.staffOrganisationName,
+        member_of_organisations: ENV.APP.staffOrganisationName,
         hasIdpId: true,
       },
     });
