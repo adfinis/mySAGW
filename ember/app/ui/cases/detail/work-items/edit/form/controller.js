@@ -61,11 +61,13 @@ export default class CasesDetailWorkItemsEditFormController extends Controller {
       return this.router.transitionTo("cases.detail.index", this.model.case.id);
     }
 
+    const fetches = [this.caseData.fetchCase.perform(this.model.case.id)];
+
     if (this.model.task.slug === "review-document") {
-      this.caseData.fetchCirculation.perform(this.model.case.id);
+      fetches.push(this.caseData.fetchCirculation.perform(this.model.case.id));
     }
 
-    this.caseData.fetchCase.perform(this.model.case.id);
+    await Promise.all(fetches);
     this.router.transitionTo("cases.detail.work-items", this.model.case.id);
   }
 }

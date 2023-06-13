@@ -252,7 +252,7 @@ export default class CasesDetailIndexController extends Controller {
         variables: { input: { id: this.caseData.case.redoWorkItem.id } },
       });
 
-      yield this.caseData.fetchCase.perform(this.model.id);
+      yield Promise.all(this.caseData.fetch(this.model.id));
 
       this.notification.success(this.intl.t("documents.redoSuccess"));
     } catch (error) {
