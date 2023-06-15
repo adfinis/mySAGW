@@ -11,7 +11,7 @@ module("Acceptance | identities", function (hooks) {
   setupIntl(hooks);
 
   hooks.beforeEach(async function () {
-    this.identity = this.server.create("identity");
+    this.identity = this.server.create("identity", { email: "test@test.com" });
 
     await authenticateSession({
       access_token: "123qweasdyxc",

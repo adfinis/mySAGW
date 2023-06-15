@@ -5,7 +5,7 @@ import { tracked } from "@glimmer/tracking";
 import calumaQuery from "@projectcaluma/ember-core/caluma-query";
 import { allWorkItems } from "@projectcaluma/ember-core/caluma-query/queries";
 import { queryManager } from "ember-apollo-client";
-import { dropTask, lastValue } from "ember-concurrency";
+import { dropTask, lastValue, restartableTask } from "ember-concurrency";
 
 import ENV from "mysagw/config/environment";
 import completeWorkItem from "mysagw/gql/mutations/complete-work-item.graphql";
@@ -120,8 +120,7 @@ export default class CasesDetailCirculationController extends Controller {
     return yield this.store.query("identity", {
       filter: {
         isOrganisation: false,
-        memberships__organisation__organisationName:
-          ENV.APP.staffOrganisationName,
+        member_of_organisations: ENV.APP.circulationOrganisations.toString(),
         hasIdpId: true,
       },
     });
@@ -146,7 +145,7 @@ export default class CasesDetailCirculationController extends Controller {
     }
   }
 
-  @dropTask
+  @restartableTask
   *fetchCirculationWorkItems() {
     yield this.circulationWorkItemsQuery.fetch({
       filter: [
@@ -167,15 +166,23 @@ export default class CasesDetailCirculationController extends Controller {
       variables: {
         id: this.inviteToCirculationWorkItem.id,
         context: JSON.stringify({
-          assign_users: this.selectedIdentities.mapBy("idpId"),
+          assign_users: this.selectedIdentities.map((identity) => {
+            return {
+              idpId: identity.idpId,
+              name: identity.fullName,
+              email: identity.email,
+            };
+          }),
         }),
       },
     });
 
     this.selectedIdentities = [];
 
-    yield this.fetchWorkItems.perform();
-    yield this.fetchCirculationWorkItems.perform();
+    yield Promise.all([
+      this.fetchWorkItems.perform(),
+      this.fetchCirculationWorkItems.perform(),
+    ]);
   }
 
   @action

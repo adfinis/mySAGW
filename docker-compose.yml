@@ -16,7 +16,7 @@ services:
       - db
 
   caluma:
-    image: ghcr.io/projectcaluma/caluma:8.0.0-beta.30
+    image: ghcr.io/projectcaluma/caluma:9.0.0
     build:
       context: caluma
     environment:
@@ -29,6 +29,7 @@ services:
       - PERMISSION_CLASSES=caluma.caluma_user.permissions.IsAuthenticated,caluma.extensions.permissions.MySAGWPermission
       - DYNAMIC_TASKS_CLASSES=caluma.extensions.dynamic_tasks.CustomDynamicTasks
       - VALIDATION_CLASSES=caluma.extensions.validations.CustomValidation
+      - META_FIELDS=assigneeEmail,assigneeName
       - ENABLE_HEALTHZ_ENDPOINT=true
 
     depends_on:
@@ -98,6 +99,7 @@ services:
       - DATABASE_NAME=dms
       - DATABASE_USER=dms
       - ALLOWED_HOSTS=dms
+      - OIDC_BEARER_TOKEN_REVALIDATION_TIME=300
       # needed until https://github.com/adfinis-sygroup/document-merge-service/issues/407 is closed
       - DOCXTEMPLATE_JINJA_EXTENSIONS=
 

@@ -11,34 +11,32 @@
   {{@model.document.form.name}}
 </h2>
 
-<ul uk-tab>
-  <li>
-    <LinkTo @route="cases.detail.index" @model={{@model}}>
-      {{t "documents.subnav.overview"}}
-    </LinkTo>
-  </li>
-  <li>
-    <LinkTo @route="cases.detail.work-items" @model={{@model}}>
+<UkTab as |tab|>
+  <tab.item @linkToIndex={{true}} @href="/cases/{{@model.id}}">
+    {{t "documents.subnav.overview"}}
+  </tab.item>
+  {{#if (or (can "list user case" @model) (can "list admin case" @model))}}
+    <tab.item @href="/cases/{{@model.id}}/work-items">
       {{t "documents.subnav.work-items"}}
-    </LinkTo>
-  </li>
-  <li>
-    <LinkTo @route="cases.detail.edit" @model={{@model}}>
-      {{t "documents.subnav.document"}}
-    </LinkTo>
-  </li>
-  {{#if this.circulation}}
-    <li>
-      <LinkTo @route="cases.detail.circulation" @model={{@model}}>
-        {{t "documents.subnav.circulation"}}
-      </LinkTo>
-    </li>
+    </tab.item>
+  {{else if this.circulationAnswer}}
+    <tab.item
+      @href="/cases/{{@model.id}}/work-items/{{this.circulationAnswer.id}}/form"
+    >
+      {{t "documents.subnav.circulation-answer"}}
+    </tab.item>
   {{/if}}
-  <li>
-    <LinkTo @route="cases.detail.download" @model={{@model}}>
-      {{t "documents.subnav.download"}}
-    </LinkTo>
-  </li>
-</ul>
+  <tab.item @href="/cases/{{@model.id}}/edit">
+    {{t "documents.subnav.document"}}
+  </tab.item>
+  {{#if (and (can "list admin case" @model) this.caseData.circulation)}}
+    <tab.item @href="/cases/{{@model.id}}/circulation">
+      {{t "documents.subnav.circulation"}}
+    </tab.item>
+  {{/if}}
+  <tab.item @href="/cases/{{@model.id}}/download">
+    {{t "documents.subnav.download"}}
+  </tab.item>
+</UkTab>
 
 {{outlet}}

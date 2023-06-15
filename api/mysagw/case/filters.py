@@ -13,4 +13,4 @@ class CaseAccessFilterSet(FilterSet):
 
     class Meta:
         model = models.CaseAccess
-        fields = ["case_id", "identity", "idp_id", "case_ids", "idp_ids"]
+        fields = ["idp_id", "case_ids", "idp_ids"]

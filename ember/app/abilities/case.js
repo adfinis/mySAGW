@@ -7,7 +7,15 @@ export default class CaseAbility extends BaseAbility {
   }
 
   get canList() {
-    return this.hasAccess(this.model) || this.isStaffOrAdmin;
+    return this.canListUser || this.canListAdmin;
+  }
+
+  get canListAdmin() {
+    return this.isStaffOrAdmin;
+  }
+
+  get canListUser() {
+    return this.hasAccess(this.model);
   }
 
   get canEdit() {

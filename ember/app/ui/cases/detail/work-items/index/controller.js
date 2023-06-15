@@ -2,7 +2,6 @@ import Controller from "@ember/controller";
 import { inject as service } from "@ember/service";
 import calumaQuery from "@projectcaluma/ember-core/caluma-query";
 import { allWorkItems } from "@projectcaluma/ember-core/caluma-query/queries";
-import { queryManager } from "ember-apollo-client";
 import { restartableTask } from "ember-concurrency";
 
 import ENV from "mysagw/config/environment";
@@ -10,8 +9,6 @@ import ENV from "mysagw/config/environment";
 export default class CasesDetailWorkItemsController extends Controller {
   @service store;
   @service can;
-
-  @queryManager apollo;
 
   @calumaQuery({
     query: allWorkItems,
@@ -90,19 +87,20 @@ export default class CasesDetailWorkItemsController extends Controller {
       filter.push({ tasks: ENV.APP.caluma.documentEditableTaskSlugs });
     }
 
-    yield this.readyWorkItemsQuery.fetch({
-      filter: [...filter, { status: "READY" }],
-      order: [], // todo order
-    });
-
-    yield this.completedWorkItemsQuery.fetch({
-      filter: [
-        ...filter,
-        { status: "READY", invert: true },
-        { status: "REDO", invert: true },
-      ],
-      order: [{ attribute: "CLOSED_AT", direction: "DESC" }],
-    });
+    yield Promise.all([
+      this.readyWorkItemsQuery.fetch({
+        filter: [...filter, { status: "READY" }],
+        order: [{ attribute: "CREATED_AT", direction: "DESC" }],
+      }),
+      this.completedWorkItemsQuery.fetch({
+        filter: [
+          ...filter,
+          { status: "READY", invert: true },
+          { status: "REDO", invert: true },
+        ],
+        order: [{ attribute: "CLOSED_AT", direction: "DESC" }],
+      }),
+    ]);
 
     yield this.getIdentities.perform();
   }

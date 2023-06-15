@@ -497,6 +497,114 @@
     ]),
   })
 # ---
+# name: test_identity_organisation_multi_filter_distinct[admin]
+  dict({
+    'data': list([
+      dict({
+        'attributes': dict({
+          'comment': None,
+          'created-by-user': None,
+          'email': 'qskinner@example.com',
+          'first-name': 'Craig',
+          'has-members': False,
+          'has-memberships': True,
+          'idp-id': '0fa3973e-2e9f-46ee-8268-566caa517a08',
+          'is-advisory-board': False,
+          'is-expert-association': False,
+          'is-organisation': False,
+          'language': 'de',
+          'last-name': 'Brady',
+          'modified-by-user': None,
+          'organisation-name': None,
+          'salutation': 'neutral',
+          'title': 'none',
+        }),
+        'relationships': dict({
+          'additional-emails': dict({
+            'data': list([
+            ]),
+            'meta': dict({
+              'count': 0,
+            }),
+          }),
+          'addresses': dict({
+            'data': list([
+            ]),
+            'meta': dict({
+              'count': 0,
+            }),
+          }),
+          'interests': dict({
+            'data': list([
+            ]),
+            'meta': dict({
+              'count': 0,
+            }),
+          }),
+          'phone-numbers': dict({
+            'data': list([
+            ]),
+            'meta': dict({
+              'count': 0,
+            }),
+          }),
+        }),
+        'type': 'identities',
+      }),
+      dict({
+        'attributes': dict({
+          'comment': None,
+          'created-by-user': None,
+          'email': 'bryantjessica@example.com',
+          'first-name': 'Elizabeth',
+          'has-members': False,
+          'has-memberships': True,
+          'idp-id': 'c90bbca9-79ec-4684-93e2-6930c1f27a6a',
+          'is-advisory-board': False,
+          'is-expert-association': False,
+          'is-organisation': False,
+          'language': 'de',
+          'last-name': 'Collins',
+          'modified-by-user': None,
+          'organisation-name': None,
+          'salutation': 'neutral',
+          'title': 'none',
+        }),
+        'relationships': dict({
+          'additional-emails': dict({
+            'data': list([
+            ]),
+            'meta': dict({
+              'count': 0,
+            }),
+          }),
+          'addresses': dict({
+            'data': list([
+            ]),
+            'meta': dict({
+              'count': 0,
+            }),
+          }),
+          'interests': dict({
+            'data': list([
+            ]),
+            'meta': dict({
+              'count': 0,
+            }),
+          }),
+          'phone-numbers': dict({
+            'data': list([
+            ]),
+            'meta': dict({
+              'count': 0,
+            }),
+          }),
+        }),
+        'type': 'identities',
+      }),
+    ]),
+  })
+# ---
 # name: test_membership_export[admin]
   list([
     list([
