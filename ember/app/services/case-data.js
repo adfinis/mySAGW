@@ -20,6 +20,7 @@ export default class CaseDataService extends Service {
       {
         query: getCaseQuery,
         variables: { filter: [{ id: caseId }] },
+        fetchPolicy: "network-only",
       },
       "allCases.edges"
     );
@@ -43,6 +44,7 @@ export default class CaseDataService extends Service {
             { status: "REDO", invert: true },
           ],
         },
+        fetchPolicy: "network-only",
       },
       "allWorkItems.edges"
     );
