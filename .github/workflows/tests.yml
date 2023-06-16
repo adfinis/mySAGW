@@ -17,11 +17,11 @@ jobs:
       - name: Set UID
         run: echo "UID=$(id --user)" > .env
       - name: Build the containers
-        run: docker-compose up -d --build  api db
+        run: docker compose up -d --build  api db
       - name: Lint the code
         run: make api-lint
       - name: Check for missing migrations
-        run: docker-compose exec -T api ./manage.py makemigrations --check --dry-run --no-input
+        run: docker compose exec -T api poetry run ./manage.py makemigrations --check --dry-run --no-input
       - name: Run test suite
         run: make api-test
   caluma-tests:
@@ -31,19 +31,22 @@ jobs:
       - name: Set UID
         run: echo "UID=$(id --user)" > .env
       - name: Build the containers
-        run: docker-compose up -d --build caluma db
+        run: docker compose up -d --build caluma db
       - name: Run test suite
         run: make caluma-test
   caluma-lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Install poetry
+        run: pipx install poetry
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.8'
+          python-version: '3.9'
+          cache: 'poetry'
       - name: Install dependencies
-        run: pip install -r ./api/requirements-dev.txt
+        run: poetry install --directory=api
       - name: Run test suite
         run: make caluma-lint
   ember-test:
@@ -69,7 +72,7 @@ jobs:
       - name: Set UID
         run: echo "UID=$(id --user)" > .env
       - name: Build and start the container
-        run: docker-compose up -d --build ember
+        run: docker compose up -d --build ember
   commit-lint:
     runs-on: ubuntu-latest
     steps:
@@ -79,7 +82,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.8'
+          python-version: '3.9'
       - name: Install gitlint
         run: pip install gitlint
       - name: Run gitlint
