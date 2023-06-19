@@ -33,6 +33,10 @@ class StaffVisibility(BaseVisibility):
 
 
 class CreateOrAssignVisibility(BaseVisibility):
+    def _is_admin_or_sagw(self, info):
+        groups = info.context.user.groups
+        return "admin" in groups or "sagw" in groups
+
     @filter_queryset_for(Node)
     def filter_queryset_for_all(self, node, queryset, info):  # pragma: no cover
         user = info.context.user
@@ -40,6 +44,9 @@ class CreateOrAssignVisibility(BaseVisibility):
 
     @filter_queryset_for(Answer)
     def filter_queryset_for_answer(self, node, queryset, info):
+        if self._is_admin_or_sagw(info):
+            return queryset
+
         case_ids_circulation = get_cases_for_user_by_circulation_invite(
             info.context.user
         )
@@ -80,6 +87,9 @@ class CreateOrAssignVisibility(BaseVisibility):
     def filter_queryset_for_document(
         self, node, queryset, info, tasks=settings.APPLICANT_TASK_SLUGS
     ):
+        if self._is_admin_or_sagw(info):
+            return queryset
+
         user = info.context.user
         case_ids_access = get_cases_for_user_by_access(user)
         case_ids_circulation = get_cases_for_user_by_circulation_invite(user)
@@ -126,6 +136,9 @@ class CreateOrAssignVisibility(BaseVisibility):
 
     @filter_queryset_for(WorkItem)
     def filter_queryset_for_workitem(self, node, queryset, info):
+        if self._is_admin_or_sagw(info):
+            return queryset
+
         user = info.context.user
         case_ids = get_cases_for_user(user)
 
@@ -148,6 +161,9 @@ class CreateOrAssignVisibility(BaseVisibility):
 
     @filter_queryset_for(Case)
     def filter_queryset_for_case(self, node, queryset, info):
+        if self._is_admin_or_sagw(info):
+            return queryset
+
         user = info.context.user
         case_ids = get_cases_for_user(user)
         return queryset.filter(Q(pk__in=case_ids) | Q(created_by_user=user.username))
