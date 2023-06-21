@@ -41,6 +41,11 @@ export default class FiltersComponent extends Component {
     }
 
     const question = this.questionOptions.value.filterBy("slug", slug)[0];
+
+    if (!question) {
+      return [];
+    }
+
     const options = question[question.__typename].edges;
 
     return options.map((edge) => ({
