@@ -15,6 +15,7 @@ work-items:
   documentNumber: "Référence"
   circulationComment: "Remarque"
   circulationDecision: "Décision"
+  circulationAmount: "Somme"
   distributionPlan: "Plan de distribution"
 
   saveSuccess: "Tâche enregistrée"

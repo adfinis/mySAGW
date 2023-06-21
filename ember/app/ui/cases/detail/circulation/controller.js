@@ -59,6 +59,12 @@ export default class CasesDetailCirculationController extends Controller {
           type: "answer-value",
         },
         {
+          heading: { label: "work-items.circulationAmount" },
+          questionSlug: "circulation-antrag-betrag",
+          answerKey: "document.answers.edges",
+          type: "answer-value",
+        },
+        {
           heading: { label: "work-items.action" },
           type: "work-item-actions",
         },
