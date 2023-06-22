@@ -15,7 +15,7 @@ work-items:
   documentNumber: "Number"
   circulationComment: "Comment"
   circulationDecision: "Decision"
-  circulationAmount: "Amount"
+  circulationAmount: "Amount (WiMa)"
   distributionPlan: "Distribution plan"
 
   saveSuccess: "Task successfully saved"

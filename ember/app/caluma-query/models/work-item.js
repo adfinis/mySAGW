@@ -139,6 +139,7 @@ export default class CustomWorkItemModel extends WorkItemModel {
             id
             question {
               slug
+              meta
               ... on ChoiceQuestion {
                 options {
                   edges {

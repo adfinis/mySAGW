@@ -15,7 +15,7 @@ work-items:
   documentNumber: "Referenz"
   circulationComment: "Bemerkung"
   circulationDecision: "Entscheid"
-  circulationAmount: "Betrag"
+  circulationAmount: "Betrag (WiMa)"
   distributionPlan: "Verteilplan"
 
   saveSuccess: "Aufgabe gespeichert"
