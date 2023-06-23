@@ -28,65 +28,65 @@
       @resetFilters={{@resetFilters}}
       class="uk-width-auto"
     >
-      <Filters
-        class="uk-grid-match uk-flex-around uk-child-width-1-4@l uk-child-width-1-5@xl modal-filters"
-        uk-grid
-        as |Filter|
-      >
-        <Filter.Input
-          @label={{t "work-items.filters.documentNumber"}}
-          @value={{@filters.documentNumber}}
-          @inverted={{@invertedFilters.documentNumber}}
-          @onChange={{perform @updateFilter "documentNumber"}}
-          @invertFilter={{perform @invertFilter "documentNumber"}}
-        />
-        <Filter.Input
-          @label={{t "work-items.filters.answer"}}
-          @value={{@filters.answerSearch}}
-          @inverted={{@invertedFilters.answerSearch}}
-          @onChange={{perform @updateFilter "answerSearch"}}
-          @invertFilter={{perform @invertFilter "answerSearch"}}
-        />
-        {{#if (can "filter access case")}}
-          <Filter.Identity
-            @selected={{@filters.identities}}
-            @onChange={{perform @updateFilter "identities"}}
-            @inverted={{@invertedFilters.identities}}
-            @invertFilter={{perform @invertFilter "identities"}}
+      <Filters class="uk-flex uk-flex-column uk-flex-between" as |Filter|>
+        <div class="uk-flex uk-flex-row uk-flex-around uk-margin-medium">
+          <Filter.Input
+            @label={{t "work-items.filters.documentNumber"}}
+            @value={{@filters.documentNumber}}
+            @inverted={{@invertedFilters.documentNumber}}
+            @onChange={{perform @updateFilter "documentNumber"}}
+            @invertFilter={{perform @invertFilter "documentNumber"}}
           />
-        {{/if}}
-        <Filter.Dropdown
-          @label={{t "work-items.filters.forms"}}
-          @selected={{@filters.forms}}
-          @inverted={{@invertedFilters.forms}}
-          @options={{this.forms.value}}
-          @onChange={{perform @updateFilter "forms"}}
-          @invertFilter={{perform @invertFilter "forms"}}
-        />
-        <Filter.Dropdown
-          @label={{t "work-items.filters.expertAssociations"}}
-          @selected={{@filters.expertAssociations}}
-          @inverted={{@invertedFilters.expertAssociations}}
-          @options={{this.expertAssociations}}
-          @onChange={{perform @updateFilter "expertAssociations"}}
-          @invertFilter={{perform @invertFilter "expertAssociations"}}
-        />
-        <Filter.Dropdown
-          @label={{t "work-items.filters.distributionPlans"}}
-          @selected={{@filters.distributionPlans}}
-          @inverted={{@invertedFilters.distributionPlans}}
-          @options={{this.distributionPlans}}
-          @onChange={{perform @updateFilter "distributionPlans"}}
-          @invertFilter={{perform @invertFilter "distributionPlans"}}
-        />
-        <Filter.Dropdown
-          @label={{t "work-items.filters.sections"}}
-          @selected={{@filters.sections}}
-          @inverted={{@invertedFilters.sections}}
-          @options={{this.sections}}
-          @onChange={{perform @updateFilter "sections"}}
-          @invertFilter={{perform @invertFilter "sections"}}
-        />
+          <Filter.Input
+            @label={{t "work-items.filters.answer"}}
+            @value={{@filters.answerSearch}}
+            @inverted={{@invertedFilters.answerSearch}}
+            @onChange={{perform @updateFilter "answerSearch"}}
+            @invertFilter={{perform @invertFilter "answerSearch"}}
+          />
+          {{#if (can "filter access case")}}
+            <Filter.Identity
+              @selected={{@filters.identities}}
+              @onChange={{perform @updateFilter "identities"}}
+              @inverted={{@invertedFilters.identities}}
+              @invertFilter={{perform @invertFilter "identities"}}
+            />
+          {{/if}}
+          <Filter.Dropdown
+            @label={{t "work-items.filters.forms"}}
+            @selected={{@filters.forms}}
+            @inverted={{@invertedFilters.forms}}
+            @options={{this.forms.value}}
+            @onChange={{perform @updateFilter "forms"}}
+            @invertFilter={{perform @invertFilter "forms"}}
+          />
+        </div>
+        <div class="uk-flex uk-flex-row uk-flex-around">
+          <Filter.Dropdown
+            @label={{t "work-items.filters.expertAssociations"}}
+            @selected={{@filters.expertAssociations}}
+            @inverted={{@invertedFilters.expertAssociations}}
+            @options={{this.expertAssociations}}
+            @onChange={{perform @updateFilter "expertAssociations"}}
+            @invertFilter={{perform @invertFilter "expertAssociations"}}
+          />
+          <Filter.Dropdown
+            @label={{t "work-items.filters.distributionPlans"}}
+            @selected={{@filters.distributionPlans}}
+            @inverted={{@invertedFilters.distributionPlans}}
+            @options={{this.distributionPlans}}
+            @onChange={{perform @updateFilter "distributionPlans"}}
+            @invertFilter={{perform @invertFilter "distributionPlans"}}
+          />
+          <Filter.Dropdown
+            @label={{t "work-items.filters.sections"}}
+            @selected={{@filters.sections}}
+            @inverted={{@invertedFilters.sections}}
+            @options={{this.sections}}
+            @onChange={{perform @updateFilter "sections"}}
+            @invertFilter={{perform @invertFilter "sections"}}
+          />
+        </div>
       </Filters>
     </FilterModal>
 
