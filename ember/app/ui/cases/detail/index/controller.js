@@ -15,6 +15,7 @@ import redoWorkItemMutation from "mysagw/gql/mutations/redo-work-item.graphql";
 import reopenCaseMutation from "mysagw/gql/mutations/reopen-case.graphql";
 import getCaseQuery from "mysagw/gql/queries/get-case.graphql";
 import downloadFile from "mysagw/utils/download-file";
+import formatCurrency from "mysagw/utils/format-currency";
 import CaseValidations from "mysagw/validations/case";
 
 export default class CasesDetailIndexController extends Controller {
@@ -128,12 +129,7 @@ export default class CasesDetailIndexController extends Controller {
     let value = answer.node[`${answer.node.__typename}Value`];
 
     if (answer.node.question.meta.waehrung) {
-      value = new Intl.NumberFormat("de-CH", {
-        style: "currency",
-        currency: answer.node.question.meta.waehrung,
-      })
-        .format(value)
-        .replace(".00", ".-");
+      value = formatCurrency(value, answer.node.question.meta.waehrung);
     }
 
     return {

@@ -133,12 +133,13 @@ export default class CustomWorkItemModel extends WorkItemModel {
       form {
         slug
       }
-      answers(filter: [{questions: ["circulation-decision", "circulation-comment"]}]) {
+      answers(filter: [{questions: ["circulation-decision", "circulation-comment", "circulation-antrag-betrag"]}]) {
         edges {
           node {
             id
             question {
               slug
+              meta
               ... on ChoiceQuestion {
                 options {
                   edges {
@@ -152,6 +153,9 @@ export default class CustomWorkItemModel extends WorkItemModel {
             }
             ... on StringAnswer {
               StringAnswerValue: value
+            }
+            ... on FloatAnswer {
+              FloatAnswerValue: value
             }
           }
         }
