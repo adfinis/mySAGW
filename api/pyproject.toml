@@ -9,7 +9,7 @@ readme = "../README.md"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-django = "^3.2.19"
+django = "^3.2.20"
 django-countries = "^7.5.1"
 django-environ = "^0.10.0"
 django-excel = "^0.0.10"
