@@ -107,7 +107,6 @@ class IdentityViewSet(views.ModelViewSet):
         "last_name",
         "email",
         "interests__title",
-        "interests__description",
         "additional_emails__email",
         "phone_numbers__phone",
         "memberships__role__title",
