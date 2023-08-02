@@ -41,6 +41,17 @@ export default class IdentityModel extends LocalizedModel {
     return this.roles.map((role) => {
       role.timeSlot = role.time_slot;
       role.inactive = membershipInactive(role);
+
+      // resolve a default if translations are not set
+      if (role.role) {
+        const nonEmptyValue = Object.values(role.role).find((value) => value);
+        Object.keys(role.role).forEach((key) => {
+          if (!role.role[key]) {
+            role.role[key] = nonEmptyValue;
+          }
+        });
+      }
+
       return role;
     });
   }
