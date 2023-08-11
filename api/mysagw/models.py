@@ -12,6 +12,7 @@ class UniqueBooleanField(models.BooleanField):
     by providing a list of field names as `together` param.
 
     Example:
+    -------
         ```
         >>> class Email(models.Model):
         ...     user = models.ForeignKey(User)

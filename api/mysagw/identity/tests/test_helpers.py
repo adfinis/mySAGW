@@ -15,7 +15,7 @@ def test_set_membership_roles_order(db, membership_role_factory):
 
     shuffle(roles_list)
 
-    new_roles_list = [[ct, l[1], l[2]] for ct, l in enumerate(roles_list)]
+    new_roles_list = [[ct, role[1], role[2]] for ct, role in enumerate(roles_list)]
     new_roles_list.reverse()
 
     set_membership_roles_order(new_roles_list)
