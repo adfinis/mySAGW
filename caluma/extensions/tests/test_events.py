@@ -264,6 +264,7 @@ def test_case_status(
 @pytest.mark.parametrize(
     "task_slug, revise",
     [
+        ("review-document", False),
         ("revise-document", False),
         ("additional-data", False),
         ("additional-data", True),
@@ -301,6 +302,8 @@ def test_send_work_item_mail(
 
     if task_slug == "revise-document":
         review_document_decision_answer = "review-document-decision-reject"
+    elif task_slug == "review-document":
+        review_document_decision_answer = "review-document-decision-complete"
 
     case.document.answers.create(
         question_id="dossier-nr",

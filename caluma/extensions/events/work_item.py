@@ -98,7 +98,7 @@ def _send_work_item_mail(work_item):
             payout_amount_answer.value if payout_amount_answer else 0, "CHF"
         )
         selected_email_texts = email_payout_amount
-    elif work_item.task.slug == "decision-and-credit":
+    elif work_item.task.slug in ["review-document", "decision-and-credit"]:
         selected_email_texts = email_rejection
 
     users = get_users_for_case(work_item.case)
@@ -144,11 +144,18 @@ def send_new_work_item_mail(sender, work_item, user, **kwargs):
 
 @on(post_complete_work_item, raise_exception=True)
 @filter_events(
-    lambda sender, work_item: work_item.task_id == "decision-and-credit"
-    and work_item.document.answers.filter(
-        question_id="decision-and-credit-decision",
-        value="decision-and-credit-decision-close",
-    ).exists()
+    lambda sender, work_item: work_item.task_id
+    in ["review-document", "decision-and-credit"]
+    and (
+        work_item.document.answers.filter(
+            question_id="decision-and-credit-decision",
+            value="decision-and-credit-decision-close",
+        ).exists()
+        or work_item.document.answers.filter(
+            question_id="review-document-decision",
+            value="review-document-decision-complete",
+        ).exists()
+    )
 )
 def send_rejection_mail(sender, work_item, user, **kwargs):
     _send_work_item_mail(work_item)
