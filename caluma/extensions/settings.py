@@ -102,6 +102,8 @@ settings.INTERNAL_APPLICATION_PERIODICS_CHOICES = (
     "intern-gesuchsart-intern-antrag-periodika",
 )
 
+settings.EARLY_CAREER_AWARD_FORM_SLUG = "nachwuchspreis-online"
+
 settings.CASE_ID_CACHE_SECONDS = int(os.environ.get("CASE_ID_CACHE_SECONDS", "60"))
 
 # Validation

@@ -1,8 +1,8 @@
 # serializer version: 1
-# name: test_send_work_item_mail[additional-data-False-de]
+# name: test_send_work_item_mail[additional-data-False-False-de]
   'Neue Informationen zu 1984-0023'
 # ---
-# name: test_send_work_item_mail[additional-data-False-de].1
+# name: test_send_work_item_mail[additional-data-False-False-de].1
   '''
   Guten Tag Winston Smith
   
@@ -27,10 +27,10 @@
   
   '''
 # ---
-# name: test_send_work_item_mail[additional-data-False-en]
+# name: test_send_work_item_mail[additional-data-False-False-en]
   'New information concerning 1984-0023'
 # ---
-# name: test_send_work_item_mail[additional-data-False-en].1
+# name: test_send_work_item_mail[additional-data-False-False-en].1
   '''
   Dear Winston Smith
   
@@ -55,10 +55,10 @@
   
   '''
 # ---
-# name: test_send_work_item_mail[additional-data-False-fr]
+# name: test_send_work_item_mail[additional-data-False-False-fr]
   'Nouvelles informations concernant 1984-0023'
 # ---
-# name: test_send_work_item_mail[additional-data-False-fr].1
+# name: test_send_work_item_mail[additional-data-False-False-fr].1
   '''
   Bonjour Winston Smith
   
@@ -83,10 +83,10 @@
   
   '''
 # ---
-# name: test_send_work_item_mail[additional-data-True-de]
+# name: test_send_work_item_mail[additional-data-True-False-de]
   'Neue Informationen zu 1984-0023'
 # ---
-# name: test_send_work_item_mail[additional-data-True-de].1
+# name: test_send_work_item_mail[additional-data-True-False-de].1
   '''
   Guten Tag Winston Smith
   
@@ -109,10 +109,10 @@
   
   '''
 # ---
-# name: test_send_work_item_mail[additional-data-True-en]
+# name: test_send_work_item_mail[additional-data-True-False-en]
   'New information concerning 1984-0023'
 # ---
-# name: test_send_work_item_mail[additional-data-True-en].1
+# name: test_send_work_item_mail[additional-data-True-False-en].1
   '''
   Dear Winston Smith
   
@@ -135,10 +135,10 @@
   
   '''
 # ---
-# name: test_send_work_item_mail[additional-data-True-fr]
+# name: test_send_work_item_mail[additional-data-True-False-fr]
   'Nouvelles informations concernant 1984-0023'
 # ---
-# name: test_send_work_item_mail[additional-data-True-fr].1
+# name: test_send_work_item_mail[additional-data-True-False-fr].1
   '''
   Bonjour Winston Smith
   
@@ -161,10 +161,10 @@
   
   '''
 # ---
-# name: test_send_work_item_mail[complete-document-False-de]
+# name: test_send_work_item_mail[complete-document-False-False-de]
   'Neue Informationen zu 1984-0023'
 # ---
-# name: test_send_work_item_mail[complete-document-False-de].1
+# name: test_send_work_item_mail[complete-document-False-False-de].1
   '''
   Guten Tag Winston Smith
   
@@ -189,10 +189,10 @@
   
   '''
 # ---
-# name: test_send_work_item_mail[complete-document-False-en]
+# name: test_send_work_item_mail[complete-document-False-False-en]
   'New information concerning 1984-0023'
 # ---
-# name: test_send_work_item_mail[complete-document-False-en].1
+# name: test_send_work_item_mail[complete-document-False-False-en].1
   '''
   Dear Winston Smith
   
@@ -217,10 +217,10 @@
   
   '''
 # ---
-# name: test_send_work_item_mail[complete-document-False-fr]
+# name: test_send_work_item_mail[complete-document-False-False-fr]
   'Nouvelles informations concernant 1984-0023'
 # ---
-# name: test_send_work_item_mail[complete-document-False-fr].1
+# name: test_send_work_item_mail[complete-document-False-False-fr].1
   '''
   Bonjour Winston Smith
   
@@ -245,10 +245,10 @@
   
   '''
 # ---
-# name: test_send_work_item_mail[decision-and-credit-False-de]
+# name: test_send_work_item_mail[decision-and-credit-False-False-de]
   'Neue Informationen zu 1984-0023'
 # ---
-# name: test_send_work_item_mail[decision-and-credit-False-de].1
+# name: test_send_work_item_mail[decision-and-credit-False-False-de].1
   '''
   Guten Tag Winston Smith
   
@@ -271,10 +271,10 @@
   
   '''
 # ---
-# name: test_send_work_item_mail[decision-and-credit-False-en]
+# name: test_send_work_item_mail[decision-and-credit-False-False-en]
   'New information concerning 1984-0023'
 # ---
-# name: test_send_work_item_mail[decision-and-credit-False-en].1
+# name: test_send_work_item_mail[decision-and-credit-False-False-en].1
   '''
   Dear Winston Smith
   
@@ -297,10 +297,10 @@
   
   '''
 # ---
-# name: test_send_work_item_mail[decision-and-credit-False-fr]
+# name: test_send_work_item_mail[decision-and-credit-False-False-fr]
   'Nouvelles informations concernant 1984-0023'
 # ---
-# name: test_send_work_item_mail[decision-and-credit-False-fr].1
+# name: test_send_work_item_mail[decision-and-credit-False-False-fr].1
   '''
   Bonjour Winston Smith
   
@@ -323,10 +323,73 @@
   
   '''
 # ---
-# name: test_send_work_item_mail[review-document-False-de]
+# name: test_send_work_item_mail[decision-and-credit-False-True-de]
+  'Early Career Award'
+# ---
+# name: test_send_work_item_mail[decision-and-credit-False-True-de].1
+  '''
+  Dear Winston Smith
+  
+  We regret to inform you that you are not among the three prize winners and finalists of the Early Career Award.
+  On behalf of the jury, we thank you for your understanding and wish you all the best for your academic future.
+  
+  Yours sincerely
+  
+  Your SAGW team
+  
+  ******
+  
+  This is an automatically generated message. Please do not reply. The contact details of SASH can be found on the following website:
+  www.sagw.ch/kontakt-mysagw
+  
+  '''
+# ---
+# name: test_send_work_item_mail[decision-and-credit-False-True-en]
+  'Early Career Award'
+# ---
+# name: test_send_work_item_mail[decision-and-credit-False-True-en].1
+  '''
+  Dear Winston Smith
+  
+  We regret to inform you that you are not among the three prize winners and finalists of the Early Career Award.
+  On behalf of the jury, we thank you for your understanding and wish you all the best for your academic future.
+  
+  Yours sincerely
+  
+  Your SAGW team
+  
+  ******
+  
+  This is an automatically generated message. Please do not reply. The contact details of SASH can be found on the following website:
+  www.sagw.ch/kontakt-mysagw
+  
+  '''
+# ---
+# name: test_send_work_item_mail[decision-and-credit-False-True-fr]
+  'Early Career Award'
+# ---
+# name: test_send_work_item_mail[decision-and-credit-False-True-fr].1
+  '''
+  Dear Winston Smith
+  
+  We regret to inform you that you are not among the three prize winners and finalists of the Early Career Award.
+  On behalf of the jury, we thank you for your understanding and wish you all the best for your academic future.
+  
+  Yours sincerely
+  
+  Your SAGW team
+  
+  ******
+  
+  This is an automatically generated message. Please do not reply. The contact details of SASH can be found on the following website:
+  www.sagw.ch/kontakt-mysagw
+  
+  '''
+# ---
+# name: test_send_work_item_mail[review-document-False-False-de]
   'Neue Informationen zu 1984-0023'
 # ---
-# name: test_send_work_item_mail[review-document-False-de].1
+# name: test_send_work_item_mail[review-document-False-False-de].1
   '''
   Guten Tag Winston Smith
   
@@ -349,10 +412,10 @@
   
   '''
 # ---
-# name: test_send_work_item_mail[review-document-False-en]
+# name: test_send_work_item_mail[review-document-False-False-en]
   'New information concerning 1984-0023'
 # ---
-# name: test_send_work_item_mail[review-document-False-en].1
+# name: test_send_work_item_mail[review-document-False-False-en].1
   '''
   Dear Winston Smith
   
@@ -375,10 +438,10 @@
   
   '''
 # ---
-# name: test_send_work_item_mail[review-document-False-fr]
+# name: test_send_work_item_mail[review-document-False-False-fr]
   'Nouvelles informations concernant 1984-0023'
 # ---
-# name: test_send_work_item_mail[review-document-False-fr].1
+# name: test_send_work_item_mail[review-document-False-False-fr].1
   '''
   Bonjour Winston Smith
   
@@ -401,10 +464,10 @@
   
   '''
 # ---
-# name: test_send_work_item_mail[revise-document-False-de]
+# name: test_send_work_item_mail[revise-document-False-False-de]
   'Neue Informationen zu 1984-0023'
 # ---
-# name: test_send_work_item_mail[revise-document-False-de].1
+# name: test_send_work_item_mail[revise-document-False-False-de].1
   '''
   Guten Tag Winston Smith
   
@@ -427,10 +490,10 @@
   
   '''
 # ---
-# name: test_send_work_item_mail[revise-document-False-en]
+# name: test_send_work_item_mail[revise-document-False-False-en]
   'New information concerning 1984-0023'
 # ---
-# name: test_send_work_item_mail[revise-document-False-en].1
+# name: test_send_work_item_mail[revise-document-False-False-en].1
   '''
   Dear Winston Smith
   
@@ -453,10 +516,10 @@
   
   '''
 # ---
-# name: test_send_work_item_mail[revise-document-False-fr]
+# name: test_send_work_item_mail[revise-document-False-False-fr]
   'Nouvelles informations concernant 1984-0023'
 # ---
-# name: test_send_work_item_mail[revise-document-False-fr].1
+# name: test_send_work_item_mail[revise-document-False-False-fr].1
   '''
   Bonjour Winston Smith
   
