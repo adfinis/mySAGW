@@ -265,6 +265,7 @@ def test_case_status(
     "task_slug, revise, early_career_form",
     [
         ("review-document", False, False),
+        ("review-document", False, True),
         ("revise-document", False, False),
         ("additional-data", False, False),
         ("additional-data", True, False),

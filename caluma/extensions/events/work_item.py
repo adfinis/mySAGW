@@ -101,7 +101,10 @@ def _send_work_item_mail(work_item):
         selected_email_texts = email_payout_amount
     elif work_item.task.slug in ["review-document", "decision-and-credit"]:
         selected_email_texts = email_rejection
-        if work_item.case.document.form.slug == settings.EARLY_CAREER_AWARD_FORM_SLUG:
+        if (
+            work_item.case.document.form.slug == settings.EARLY_CAREER_AWARD_FORM_SLUG
+            and work_item.task.slug == "decision-and-credit"
+        ):
             selected_email_texts = email_rejection_early_career_award
 
     users = get_users_for_case(work_item.case)
