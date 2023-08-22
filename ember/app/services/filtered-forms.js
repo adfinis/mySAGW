@@ -13,16 +13,14 @@ export default class FilteredFormsService extends Service {
 
   @tracked value = null;
 
-  async fetchAll() {
+  async fetch() {
     if (this.value !== null) return this.value;
 
     this.value = await this.mainForms();
 
-    return this.value;
-  }
-
-  async fetch() {
-    const allForms = await this.fetchAll();
+    if (this.abilities.can("filter all forms case")) {
+      return this.value;
+    }
 
     const organisations = (
       await this.store.findAll("identity", {
@@ -38,7 +36,7 @@ export default class FilteredFormsService extends Service {
       expertAssociationForm: organisations.isAny("isExpertAssociation"),
     };
 
-    this.value = allForms.filter((form) => {
+    this.value = this.value.filter((form) => {
       const visibilities = ENV.APP.caluma.formVisibilities.map(
         (visibility) => form.meta[visibility] && userVisibilities[visibility]
       );
