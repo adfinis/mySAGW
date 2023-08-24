@@ -374,7 +374,7 @@ class ReceiptView(APIView):
             # token="Bearer ey...",
         )
         variables = {
-            "case_id": urlsafe_b64encode(f"Case:{pk}".encode("utf-8")).decode("utf-8"),
+            "case_id": urlsafe_b64encode(f"Case:{pk}".encode()).decode("utf-8"),
         }
         raw_data = caluma_client.get_data(
             GQL_DIR / "get_receipts.gql",
@@ -401,10 +401,8 @@ class ReceiptView(APIView):
         form_name = cover_context.get("form", "unknown_form")
         dossier_no = cover_context.get("dossier_no", "unknown_dossier_no")
 
-        response = FileResponse(
+        return FileResponse(
             result,
             content_type="application/pdf",
             filename=f"{form_name} - {dossier_no}.pdf",
         )
-
-        return response

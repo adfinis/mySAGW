@@ -48,13 +48,15 @@ class CreateOrAssignVisibility(BaseVisibility):
             return queryset
 
         case_ids_circulation = get_cases_for_user_by_circulation_invite(
-            info.context.user
+            info.context.user,
         )
         return queryset.filter(
             Q(
                 document__family__in=self.filter_queryset_for_document(
-                    None, form_models.Document.objects, info
-                )
+                    None,
+                    form_models.Document.objects,
+                    info,
+                ),
             )
             | (
                 Q(
@@ -62,7 +64,7 @@ class CreateOrAssignVisibility(BaseVisibility):
                         question
                         for sublist in settings.REVISION_QUESTIONS.values()
                         for question in sublist
-                    ]
+                    ],
                 )
                 & (
                     Q(
@@ -71,21 +73,25 @@ class CreateOrAssignVisibility(BaseVisibility):
                             form_models.Document.objects,
                             info,
                             list(settings.REVISION_QUESTIONS.keys()),
-                        )
+                        ),
                     )
                     | (
                         Q(document__family__case__family_id__in=case_ids_circulation)
                         | Q(
-                            document__work_item__case__family_id__in=case_ids_circulation
+                            document__work_item__case__family_id__in=case_ids_circulation,
                         )
                     )
                 )
-            )
+            ),
         )
 
     @filter_queryset_for(Document)
     def filter_queryset_for_document(
-        self, node, queryset, info, tasks=settings.APPLICANT_TASK_SLUGS
+        self,
+        node,
+        queryset,
+        info,
+        tasks=settings.APPLICANT_TASK_SLUGS,
     ):
         if self._is_admin_or_sagw(info):
             return queryset
@@ -94,7 +100,7 @@ class CreateOrAssignVisibility(BaseVisibility):
         case_ids_access = get_cases_for_user_by_access(user)
         case_ids_circulation = get_cases_for_user_by_circulation_invite(user)
         case_ids_circulation = list(
-            filter(lambda i: i not in case_ids_access, case_ids_circulation)
+            filter(lambda i: i not in case_ids_access, case_ids_circulation),
         )
 
         work_item_case_access = Q(family__work_item__task__slug__in=tasks) | (
@@ -125,13 +131,13 @@ class CreateOrAssignVisibility(BaseVisibility):
         )
 
         row_document_on_applicant_form = Q(family__form__is_published=True) | Q(
-            family__work_item__task__slug__in=settings.APPLICANT_TASK_SLUGS
+            family__work_item__task__slug__in=settings.APPLICANT_TASK_SLUGS,
         )
         return queryset.filter(
             Q(work_item_case_access & access_to_case_by_access)
             | work_item_case_circulation_invite
             | floating_row_document
-            | Q(row_document_on_applicant_form & access_to_case_by_access)
+            | Q(row_document_on_applicant_form & access_to_case_by_access),
         )
 
     @filter_queryset_for(WorkItem)
@@ -152,11 +158,11 @@ class CreateOrAssignVisibility(BaseVisibility):
                             # REVISION workitems must be accessible in order to display the
                             # remarks
                             *list(settings.REVISION_QUESTIONS.keys()),
-                        ]
+                        ],
                     )
                     | Q(assigned_users__contains=[user.username])
                 )
-            )
+            ),
         )
 
     @filter_queryset_for(Case)

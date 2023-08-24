@@ -6,6 +6,7 @@ import pytest
 from django.core.management import call_command
 
 
+@pytest.mark.usefixtures("_caluma_data")
 @pytest.mark.parametrize(
     "models,json_path",
     [
@@ -32,7 +33,7 @@ from django.core.management import call_command
         ),
     ],
 )
-def test_dump(caluma_data, models, json_path):
+def test_dump(models, json_path):
     out = StringIO()
 
     call_command(
@@ -42,7 +43,7 @@ def test_dump(caluma_data, models, json_path):
         stdout=out,
     )
 
-    with open(json_path, "r") as dumped:
+    with json_path.open("r") as dumped:
         assert json.load(dumped) == json.loads(
-            out.getvalue()
+            out.getvalue(),
         ), "Dumped models do not match file content"

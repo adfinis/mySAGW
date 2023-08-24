@@ -48,11 +48,11 @@ def receipt_mock(requests_mock):
                                                                                         "content_type": "audio/mpeg",
                                                                                     },
                                                                                 },
-                                                                            ]
-                                                                        }
-                                                                    }
-                                                                ]
-                                                            }
+                                                                            ],
+                                                                        },
+                                                                    },
+                                                                ],
+                                                            },
                                                         },
                                                         {
                                                             "answers": {
@@ -65,12 +65,12 @@ def receipt_mock(requests_mock):
                                                                                     "metadata": {
                                                                                         "content_type": "application/pdf",
                                                                                     },
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    }
-                                                                ]
-                                                            }
+                                                                                },
+                                                                            ],
+                                                                        },
+                                                                    },
+                                                                ],
+                                                            },
                                                         },
                                                         {
                                                             "answers": {
@@ -83,57 +83,57 @@ def receipt_mock(requests_mock):
                                                                                     "metadata": {
                                                                                         "content_type": "application/pdf",
                                                                                     },
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    }
-                                                                ]
-                                                            }
+                                                                                },
+                                                                            ],
+                                                                        },
+                                                                    },
+                                                                ],
+                                                            },
                                                         },
                                                         {"answers": {"edges": []}},
-                                                    ]
-                                                }
-                                            }
-                                        ]
+                                                    ],
+                                                },
+                                            },
+                                        ],
                                     },
                                     "applicant_name": {
-                                        "edges": [{"node": {"value": "Winston Smith"}}]
+                                        "edges": [{"node": {"value": "Winston Smith"}}],
                                     },
                                     "applicant_address": {
-                                        "edges": [{"node": {"value": "Dorfplatz 1"}}]
+                                        "edges": [{"node": {"value": "Dorfplatz 1"}}],
                                     },
                                     "applicant_postcode": {
-                                        "edges": [{"node": {"value": "8000"}}]
+                                        "edges": [{"node": {"value": "8000"}}],
                                     },
                                     "applicant_city": {
-                                        "edges": [{"node": {"value": "Zürich"}}]
+                                        "edges": [{"node": {"value": "Zürich"}}],
                                     },
                                     "applicant_land": {
-                                        "edges": [{"node": {"value": "Schweiz"}}]
+                                        "edges": [{"node": {"value": "Schweiz"}}],
                                     },
                                     "fibu": {"edges": [{"node": {"value": "2021"}}]},
                                     "zahlungszweck": {
-                                        "edges": [{"node": {"value": "Foo Bar"}}]
+                                        "edges": [{"node": {"value": "Foo Bar"}}],
                                     },
                                     "iban": {
                                         "edges": [
                                             {
                                                 "node": {
-                                                    "value": "CH56 0483 5012 3456 7800 9"
-                                                }
-                                            }
-                                        ]
+                                                    "value": "CH56 0483 5012 3456 7800 9",
+                                                },
+                                            },
+                                        ],
                                     },
                                     "bank": {
-                                        "edges": [{"node": {"value": "Big Bank"}}]
+                                        "edges": [{"node": {"value": "Big Bank"}}],
                                     },
                                     "bank_town": {
-                                        "edges": [{"node": {"value": "Bern"}}]
+                                        "edges": [{"node": {"value": "Bern"}}],
                                     },
-                                }
-                            }
-                        }
-                    ]
+                                },
+                            },
+                        },
+                    ],
                 },
                 "main": {
                     "dossierno": {"edges": [{"node": {"value": "2021-0006"}}]},
@@ -149,20 +149,20 @@ def receipt_mock(requests_mock):
                                                     "node": {
                                                         "label": "Foo institute",
                                                         "slug": "foo-institute",
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
                                                         "label": "Bar institute",
                                                         "slug": "bar-institute",
-                                                    }
+                                                    },
                                                 },
-                                            ]
-                                        }
+                                            ],
+                                        },
                                     },
-                                }
-                            }
-                        ]
+                                },
+                            },
+                        ],
                     },
                     "sektion": {"edges": [{"node": {"value": "section-6"}}]},
                     "vp_year": {"edges": []},
@@ -172,11 +172,11 @@ def receipt_mock(requests_mock):
                         {
                             "node": {
                                 "document": {
-                                    "total": {"edges": [{"node": {"value": 5000.0}}]}
-                                }
-                            }
+                                    "total": {"edges": [{"node": {"value": 5000.0}}]},
+                                },
+                            },
                         },
-                    ]
+                    ],
                 },
                 "decisionCredit": {
                     "edges": [
@@ -194,26 +194,26 @@ def receipt_mock(requests_mock):
                                                                     "node": {
                                                                         "label": "23 konto1",
                                                                         "slug": "konto1",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "label": "24 konto2",
                                                                         "slug": "konto2",
-                                                                    }
+                                                                    },
                                                                 },
-                                                            ]
-                                                        }
+                                                            ],
+                                                        },
                                                     },
                                                     "value": "konto1",
-                                                }
-                                            }
-                                        ]
-                                    }
-                                }
-                            }
-                        }
-                    ]
+                                                },
+                                            },
+                                        ],
+                                    },
+                                },
+                            },
+                        },
+                    ],
                 },
                 "advanceCredits": {
                     "edges": [
@@ -221,18 +221,18 @@ def receipt_mock(requests_mock):
                             "node": {
                                 "document": {
                                     "vorschussbetrag": {
-                                        "edges": [{"node": {"value": 5000}}]
+                                        "edges": [{"node": {"value": 5000}}],
                                     },
                                     "vorschussdatum": {
-                                        "edges": [{"node": {"value": "2023-05-04"}}]
+                                        "edges": [{"node": {"value": "2023-05-04"}}],
                                     },
-                                }
-                            }
-                        }
-                    ]
+                                },
+                            },
+                        },
+                    ],
                 },
-            }
-        }
+            },
+        },
     }
 
     requests_mock.post("http://testserver/graphql", status_code=200, json=caluma_data)
@@ -284,7 +284,7 @@ def receipt_mock(requests_mock):
             ".*",
             "merge",
             trailing=True,
-        )
+        ),
     )
 
     return requests_mock.post(

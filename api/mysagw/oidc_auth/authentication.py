@@ -1,7 +1,7 @@
 import functools
 import hashlib
 import warnings
-from collections import namedtuple
+from typing import NamedTuple
 
 from django.conf import settings
 from django.core.cache import cache
@@ -15,7 +15,8 @@ from .models import OIDCUser
 
 
 class MySAGWAuthenticationBackend(OIDCAuthenticationBackend):
-    _HistoricalRequestUser = namedtuple("User", ["id"])
+    class _HistoricalRequestUser(NamedTuple):
+        id: str
 
     def verify_claims(self, claims):
         # claims for human users
@@ -36,7 +37,8 @@ class MySAGWAuthenticationBackend(OIDCAuthenticationBackend):
 
         for claim in claims_to_verify:
             if claim not in claims:
-                raise SuspiciousOperation(f'Couldn\'t find "{claim}" claim')
+                msg = f'Couldn\'t find "{claim}" claim'
+                raise SuspiciousOperation(msg)
 
     def get_or_create_user(self, access_token, id_token, payload):
         """Verify claims and return user, otherwise raise an Exception."""
@@ -51,12 +53,10 @@ class MySAGWAuthenticationBackend(OIDCAuthenticationBackend):
         # user_id will be set on the historical record when creating/updating the
         # identity
         HistoricalRecords.thread.request.user = self._HistoricalRequestUser(
-            claims[settings.OIDC_ID_CLAIM]
+            claims[settings.OIDC_ID_CLAIM],
         )
 
-        user = OIDCUser(access_token, claims)
-
-        return user
+        return OIDCUser(access_token, claims)
 
     def cached_request(self, access_token, id_token, payload):
         token_hash = hashlib.sha256(force_bytes(access_token)).hexdigest()

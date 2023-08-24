@@ -18,7 +18,8 @@ class Command(BaseCommand):
     def template_file(self, value):
         template = Path(value)
         if not template.exists() or not template.is_file:
-            raise ArgumentTypeError(f"Template not found: {template}")
+            msg = f"Template not found: {template}"
+            raise ArgumentTypeError(msg)
         return template
 
     def add_arguments(self, parser):

@@ -102,7 +102,7 @@ class MySAGWPermission(BasePermission):
 
         if self._is_admin(info):
             return True
-        elif self._is_sagw(info):
+        if self._is_sagw(info):
             work_item = (
                 answer.document.family.work_item
                 if hasattr(answer.document.family, "work_item")
@@ -123,7 +123,8 @@ class MySAGWPermission(BasePermission):
             answer.document.family.work_item
             if hasattr(answer.document.family, "work_item")
             else case.work_items.filter(
-                task__slug__in=["submit-document", "revise-document"], status="ready"
+                task__slug__in=["submit-document", "revise-document"],
+                status="ready",
             ).first()
         )
 
@@ -157,7 +158,8 @@ class MySAGWPermission(BasePermission):
         return self._is_admin_or_sagw(info) or (
             (self._can_access_case(info, case) or self._is_own(info, case))
             and case.work_items.filter(
-                status="ready", task__slug="submit-document"
+                status="ready",
+                task__slug="submit-document",
             ).exists()
         )
 
@@ -166,7 +168,10 @@ class MySAGWPermission(BasePermission):
     @permission_for(ReopenCase)
     @object_permission_for(ReopenCase)
     def has_permission_for_redo_workitem_reopen_case(
-        self, mutation, info, instance=None
+        self,
+        mutation,
+        info,
+        instance=None,
     ):
         return self._is_admin_or_sagw(info)
 

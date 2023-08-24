@@ -7,9 +7,8 @@ from mysagw.identity.helpers import (
 
 
 def test_set_membership_roles_order(db, membership_role_factory):
-    roles = []
     for sort in range(10, 0, -1):
-        roles.append(membership_role_factory(sort=sort))
+        membership_role_factory(sort=sort)
 
     roles_list = get_membership_roles_order()
 

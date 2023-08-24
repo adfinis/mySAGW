@@ -2,11 +2,7 @@ from mysagw.identity.models import MembershipRole
 
 
 def get_membership_roles_order():
-    roles_order = [
-        [r.sort, r.title.de, str(r.pk)] for r in MembershipRole.objects.iterator()
-    ]
-    print(roles_order)
-    return roles_order
+    return [[r.sort, r.title.de, str(r.pk)] for r in MembershipRole.objects.iterator()]
 
 
 def set_membership_roles_order(roles_order):

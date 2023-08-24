@@ -12,6 +12,7 @@ from caluma.extensions.settings import settings
 from caluma.extensions.visibilities import MySAGWVisibility
 
 
+@pytest.mark.usefixtures("_caluma_data")
 @pytest.mark.parametrize(
     "user_name,visibility_map",
     [
@@ -43,7 +44,6 @@ from caluma.extensions.visibilities import MySAGWVisibility
 )
 def test_visibilities_default(
     db,
-    caluma_data,
     case_access_event_mock,
     create_document_review_case,
     admin_info,
@@ -60,10 +60,12 @@ def test_visibilities_default(
     admin_info.context.user.group = user_name
 
     admin_user = OIDCUser(
-        b"sometoken", {"sub": "admin", settings.OIDC_GROUPS_CLAIM: ["admin"]}
+        b"sometoken",
+        {"sub": "admin", settings.OIDC_GROUPS_CLAIM: ["admin"]},
     )
     user = OIDCUser(
-        b"sometoken", {"sub": user_name, settings.OIDC_GROUPS_CLAIM: [user_name]}
+        b"sometoken",
+        {"sub": user_name, settings.OIDC_GROUPS_CLAIM: [user_name]},
     )
 
     def prepare_case(case_identifier):

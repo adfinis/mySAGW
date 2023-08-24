@@ -69,10 +69,7 @@ def test_email_identity_filters(db, client, email_factory):
 
     json = response.json()
 
-    received_ids = []
-    for email in json["data"]:
-        received_ids.append(email["id"])
-    received_ids = sorted(received_ids)
+    received_ids = sorted([email["id"] for email in json["data"]])
 
     assert expected_ids == received_ids
 
@@ -101,7 +98,7 @@ def test_email_create(db, identity, client, own, expected_status):
             "relationships": {
                 "identity": {"data": {"id": str(identity.pk), "type": "identities"}},
             },
-        }
+        },
     }
 
     response = client.post(url, data=data)
@@ -129,10 +126,10 @@ def test_email_create_with_includes(db, email_factory, client):
             "attributes": {"email": "test@example.com"},
             "relationships": {
                 "identity": {
-                    "data": {"id": str(email.identity.pk), "type": "identities"}
+                    "data": {"id": str(email.identity.pk), "type": "identities"},
                 },
             },
-        }
+        },
     }
 
     response = client.post(url, data=data)
@@ -182,7 +179,9 @@ def test_email_update(
     if for_org:
         email.identity = identity_factory(is_organisation=True)
         membership_factory(
-            identity=client.user.identity, organisation=email.identity, authorized=True
+            identity=client.user.identity,
+            organisation=email.identity,
+            authorized=True,
         )
     email.save()
 
@@ -193,7 +192,7 @@ def test_email_update(
             "type": "additional-emails",
             "id": str(email.pk),
             "attributes": {"description": {"de": "Foo"}},
-        }
+        },
     }
 
     response = client.patch(url, data=data)

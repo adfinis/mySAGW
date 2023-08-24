@@ -11,7 +11,8 @@ env = environ.Env()
 settings.EMAIL_HOST = os.environ.get("EMAIL_HOST", "mail")
 settings.EMAIL_PORT = os.environ.get("EMAIL_PORT", 1025)
 settings.EMAIL_HOST_USER = os.environ.get(
-    "EMAIL_HOST_USER", "noreply@mysagw.adfinis.com"
+    "EMAIL_HOST_USER",
+    "noreply@mysagw.adfinis.com",
 )
 settings.SERVER_EMAIL = os.environ.get("SERVER_EMAIL", settings.EMAIL_HOST_USER)
 settings.EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
@@ -25,11 +26,15 @@ settings.MAILING_SENDER = f"{from_name} <{from_mail}>"
 settings.API_BASE_URI = os.environ.get("API_BASE_URI", "https://mysagw.local/api/v1")
 settings.SELF_URI = os.environ.get("SELF_URI", "https://mysagw.local")
 raw_verify_ssl = os.environ.get("API_VERIFY_SSL", "true")
-settings.API_VERIFY_SSL = True if raw_verify_ssl == "true" else False
+settings.API_VERIFY_SSL = raw_verify_ssl == "true"
 
-settings.OIDC_ADMIN_CLIENT_ID = os.environ.get("OIDC_ADMIN_CLIENT_ID", "test_client")
+settings.OIDC_ADMIN_CLIENT_ID = os.environ.get(
+    "OIDC_ADMIN_CLIENT_ID",
+    "test_client",
+)
 settings.OIDC_ADMIN_CLIENT_SECRET = os.environ.get(
-    "OIDC_ADMIN_CLIENT_SECRET", "fb13e564-75dd-4fc3-a993-3dad9064e71e"
+    "OIDC_ADMIN_CLIENT_SECRET",
+    "fb13e564-75dd-4fc3-a993-3dad9064e71e",
 )
 settings.OIDC_TOKEN_ENDPOINT = os.environ.get(
     "OIDC_TOKEN_ENDPOINT",

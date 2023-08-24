@@ -1,4 +1,5 @@
 import json
+from typing import Optional
 
 import requests
 from django.conf import settings
@@ -23,7 +24,7 @@ class DMSClient:
         response.raise_for_status()
         return response
 
-    def upload_template(self, slug, file, update=False, headers: dict = None):
+    def upload_template(self, slug, file, update=False, headers: Optional[dict] = None):
         headers = headers if headers else {}
 
         url = build_url(self.url, "template", trailing=True)
@@ -41,25 +42,27 @@ class DMSClient:
         self,
         template_slug: str,
         data: dict,
-        convert: str = None,
-        headers: dict = None,
+        convert: Optional[str] = None,
+        headers: Optional[dict] = None,
     ):
         headers = headers if headers else {}
 
         url = build_url(self.url, "template", template_slug, "merge", trailing=True)
 
         return self._request(
-            requests.post, url, headers=headers, json={"data": data, "convert": convert}
+            requests.post,
+            url,
+            headers=headers,
+            json={"data": data, "convert": convert},
         )
 
     def get_merged_document(self, context, template, convert=None):
         try:
-            resp = self.merge(
+            return self.merge(
                 template,
                 data=context,
                 convert=convert,
             )
-            return resp
         except HTTPError as e:
             return e.response
 

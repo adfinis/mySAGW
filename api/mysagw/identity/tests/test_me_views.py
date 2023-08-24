@@ -28,7 +28,7 @@ def test_me_retrieve(db, client, interest_factory):
     assert json["data"]["id"] == str(identity.pk)
     assert len(json["data"]["relationships"]["interests"]["data"]) == 1
     assert json["data"]["relationships"]["interests"]["data"][0]["id"] == str(
-        public_interest.pk
+        public_interest.pk,
     )
 
 
@@ -76,7 +76,7 @@ def test_me_update(db, client):
             "type": "identities",
             "id": str(identity.pk),
             "attributes": {"first-name": "Foo"},
-        }
+        },
     }
 
     response = client.patch(url, data=data)
@@ -107,7 +107,7 @@ def test_my_orgs_update(db, client, authorized, membership_factory):
             "type": "identities",
             "id": str(membership.organisation.pk),
             "attributes": {"organisation-name": "Foo"},
-        }
+        },
     }
 
     response = client.patch(url, data=data)
@@ -149,10 +149,10 @@ def test_me_set_interests(db, client, interest_factory, public, expected_status)
                     "data": [
                         {"id": str(interests[0].pk), "type": "interests"},
                         {"id": str(interests[1].pk), "type": "interests"},
-                    ]
-                }
+                    ],
+                },
             },
-        }
+        },
     }
 
     response = client.patch(url, data=data)

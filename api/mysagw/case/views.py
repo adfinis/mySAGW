@@ -1,11 +1,10 @@
 import io
 from base64 import urlsafe_b64encode
-from datetime import datetime
 from pathlib import Path
 
 from django.conf import settings
 from django.http import FileResponse
-from django.utils import formats
+from django.utils import formats, timezone
 from django.utils.translation import get_language
 from rest_framework import status
 from rest_framework.decorators import action
@@ -41,8 +40,9 @@ class CaseAccessViewSet(
     def list(self, request, *args, **kwargs):
         expected_keys = ["filter[idpId]", "filter[caseIds]", "filter[idpIds]"]
         if not request.GET or set(expected_keys).isdisjoint(request.GET.keys()):
+            msg = f"At least one of following filters must be used: {', '.join(expected_keys)}"
             raise ValidationError(
-                f"At least one of following filters must be used: {', '.join(expected_keys)}"
+                msg,
             )
         return super().list(request, *args, **kwargs)
 
@@ -51,7 +51,9 @@ class CaseAccessViewSet(
         if self.request.user.is_staff:
             return qs
         return qs.filter(
-            case_id__in=qs.filter(identity=self.request.user.identity).values("case_id")
+            case_id__in=qs.filter(identity=self.request.user.identity).values(
+                "case_id",
+            ),
         )
 
 
@@ -181,7 +183,7 @@ class CaseDownloadViewSet(GenericViewSet):
         del result["identity_submit"]
         del result["identity_revise"]
 
-        result["date"] = formats.date_format(datetime.now())
+        result["date"] = formats.date_format(timezone.now())
         return result
 
     @staticmethod
@@ -209,10 +211,11 @@ class CaseDownloadViewSet(GenericViewSet):
     def application(self, request, pk=None):
         caluma_client = self.get_caluma_client(request)
         variables = {
-            "case_id": urlsafe_b64encode(f"Case:{pk}".encode("utf-8")).decode("utf-8"),
+            "case_id": urlsafe_b64encode(f"Case:{pk}".encode()).decode("utf-8"),
         }
         raw_document_id_data = caluma_client.get_data(
-            GQL_DIR / "get_document_id.gql", variables
+            GQL_DIR / "get_document_id.gql",
+            variables,
         )
         document_id = raw_document_id_data["data"]["node"]["document"]["id"]
         variables["document_id"] = document_id
@@ -236,7 +239,8 @@ class CaseDownloadViewSet(GenericViewSet):
             return get_dms_error_response(dms_response)
 
         result = add_caluma_files_to_pdf(
-            io.BytesIO(dms_response.content), parser.files_to_add
+            io.BytesIO(dms_response.content),
+            parser.files_to_add,
         )
 
         return FileResponse(
@@ -250,7 +254,7 @@ class CaseDownloadViewSet(GenericViewSet):
     def get_acknowledgement_and_credit_approval(self, request, name, pk=None):
         caluma_client = self.get_caluma_client(request)
         variables = {
-            "case_id": urlsafe_b64encode(f"Case:{pk}".encode("utf-8")).decode("utf-8")
+            "case_id": urlsafe_b64encode(f"Case:{pk}".encode()).decode("utf-8"),
         }
         raw_data = caluma_client.get_data(GQL_DIR / f"get_{name}.gql", variables)
         data = self.get_formatted_data(raw_data, name)
@@ -274,11 +278,15 @@ class CaseDownloadViewSet(GenericViewSet):
     @action(detail=True)
     def acknowledgement(self, request, pk=None):
         return self.get_acknowledgement_and_credit_approval(
-            request, "acknowledgement", pk
+            request,
+            "acknowledgement",
+            pk,
         )
 
     @action(detail=True)
     def credit_approval(self, request, pk=None):
         return self.get_acknowledgement_and_credit_approval(
-            request, "credit_approval", pk
+            request,
+            "credit_approval",
+            pk,
         )

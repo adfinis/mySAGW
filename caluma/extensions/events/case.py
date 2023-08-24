@@ -15,7 +15,8 @@ from ..common import get_api_user_attributes
 def complete_circulation(sender, case, user, **kwargs):
     if case.workflow_id == "circulation":
         caluma_workflow_api.complete_work_item(
-            work_item=case.parent_work_item, user=user
+            work_item=case.parent_work_item,
+            user=user,
         )
 
 
@@ -29,7 +30,7 @@ def set_case_finished_status(sender, case, user, **kwargs):
 @on(post_create_case, raise_exception=True)
 def create_case_number(sender, case, user, context, **kwargs):
     if (
-        not case.workflow.slug == "document-review"
+        case.workflow.slug != "document-review"
         or not case.document.form.questions.filter(pk="dossier-nr").exists()
         or case.document.answers.filter(question__slug="dossier-nr").exists()
     ):
@@ -55,7 +56,9 @@ def create_case_number(sender, case, user, context, **kwargs):
     new_dossier_no = f"{year}-{new_no.zfill(4)}"
 
     caluma_form_models.Answer.objects.create(
-        question=question, document=case.document, value=new_dossier_no
+        question=question,
+        document=case.document,
+        value=new_dossier_no,
     )
 
 
@@ -76,7 +79,7 @@ def create_case_access_rights(sender, case, user, context, **kwargs):
             "relationships": {
                 "identity": {},
             },
-        }
+        },
     }
 
     client.post("/case/accesses", json=data)

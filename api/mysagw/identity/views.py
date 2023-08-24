@@ -25,8 +25,9 @@ class UniqueBooleanFieldViewSetMixin:
             and instance.__class__.objects.filter(identity=instance.identity).count()
             > 1
         ):
+            msg = "Can't delete the default entry. Set another entry as default first."
             raise ValidationError(
-                "Can't delete the default entry. Set another entry as default first."
+                msg,
             )
         super().perform_destroy(instance)
 
@@ -41,9 +42,9 @@ class IdentityAdditionsViewSetMixin:
             and identity not in self.request.user.identity.authorized_for
             and not self.request.user.is_staff
         ):
+            msg = "You can only create records for your own identity or identities you are authorized to manage."
             raise PermissionDenied(
-                "You can only create records for your own identity or identities you "
-                "are authorized to manage."
+                msg,
             )
         return super().perform_create(serializer)
 
@@ -51,11 +52,10 @@ class IdentityAdditionsViewSetMixin:
         qs = super().get_queryset(*args, **kwargs)
         if self.request.user.is_staff:
             return qs
-        qs = qs.filter(
+        return qs.filter(
             Q(identity=self.request.user.identity)
-            | Q(identity__in=self.request.user.identity.authorized_for)
+            | Q(identity__in=self.request.user.identity.authorized_for),
         )
-        return qs
 
 
 class EmailViewSet(IdentityAdditionsViewSetMixin, views.ModelViewSet):
@@ -71,7 +71,9 @@ class EmailViewSet(IdentityAdditionsViewSetMixin, views.ModelViewSet):
 
 
 class PhoneNumberViewSet(
-    IdentityAdditionsViewSetMixin, UniqueBooleanFieldViewSetMixin, views.ModelViewSet
+    IdentityAdditionsViewSetMixin,
+    UniqueBooleanFieldViewSetMixin,
+    views.ModelViewSet,
 ):
     serializer_class = serializers.PhoneNumberSerializer
     queryset = models.PhoneNumber.objects.all()
@@ -125,13 +127,14 @@ class IdentityViewSet(views.ModelViewSet):
     @action(detail=False, methods=["post"])
     def export(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset()).prefetch_related(
-            "phone_numbers", "additional_emails", "addresses"
+            "phone_numbers",
+            "additional_emails",
+            "addresses",
         )
 
         ex = IdentityExport()
         records = ex.export(queryset)
-        response = django_excel.make_response_from_records(records, "xlsx")
-        return response
+        return django_excel.make_response_from_records(records, "xlsx")
 
     @action(detail=False, methods=["post"], url_path="export-memberships")
     def export_memberships(self, request, *args, **kwargs):
@@ -145,16 +148,14 @@ class IdentityViewSet(views.ModelViewSet):
 
         ex = MembershipExport()
         records = ex.export(queryset)
-        response = django_excel.make_response_from_records(records, "xlsx")
-        return response
+        return django_excel.make_response_from_records(records, "xlsx")
 
     @action(detail=False, methods=["post"], url_path="export-email")
     def export_email(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
 
         records = queryset.values("email")
-        response = django_excel.make_response_from_records(records, "xlsx")
-        return response
+        return django_excel.make_response_from_records(records, "xlsx")
 
     @action(detail=False, methods=["post"], url_path="export-labels")
     def export_labels(self, request, *args, **kwargs):
@@ -181,7 +182,9 @@ class IdentityViewSet(views.ModelViewSet):
             return grouped_records
 
         queryset = self.filter_queryset(self.get_queryset()).prefetch_related(
-            "phone_numbers", "additional_emails", "addresses"
+            "phone_numbers",
+            "additional_emails",
+            "addresses",
         )
         ex = IdentityExport()
         records = ex.export(
@@ -268,8 +271,7 @@ class InterestCategoryViewSet(views.ModelViewSet):
         qs = super().get_queryset(*args, **kwargs)
         if self.request.user.is_staff:
             return qs
-        qs = qs.filter(public=True)
-        return qs
+        return qs.filter(public=True)
 
 
 class InterestViewSet(views.ModelViewSet):
@@ -282,8 +284,7 @@ class InterestViewSet(views.ModelViewSet):
         qs = super().get_queryset(*args, **kwargs)
         if self.request.user.is_staff:
             return qs
-        qs = qs.filter(category__public=True)
-        return qs
+        return qs.filter(category__public=True)
 
 
 class MembershipRoleViewSet(views.ModelViewSet):
