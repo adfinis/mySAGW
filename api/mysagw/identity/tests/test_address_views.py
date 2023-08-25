@@ -86,7 +86,7 @@ def test_address_create(db, identity, client, own, expected_status):
             "relationships": {
                 "identity": {"data": {"id": str(identity.pk), "type": "identities"}},
             },
-        }
+        },
     }
 
     response = client.post(url, data=data)
@@ -124,10 +124,10 @@ def test_address_create_new_default(db, address_factory, client):
             },
             "relationships": {
                 "identity": {
-                    "data": {"id": str(address.identity.pk), "type": "identities"}
+                    "data": {"id": str(address.identity.pk), "type": "identities"},
                 },
             },
-        }
+        },
     }
 
     response = client.post(url, data=data)
@@ -179,7 +179,7 @@ def test_address_update(db, client, own, expected_status, address):
             "type": "addresses",
             "id": str(address.pk),
             "attributes": {"description": {"de": "Foo"}},
-        }
+        },
     }
 
     response = client.patch(url, data=data)

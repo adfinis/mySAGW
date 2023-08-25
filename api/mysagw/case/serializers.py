@@ -28,7 +28,7 @@ class CaseAccessSerializer(serializers.ModelSerializer):
 
         try:
             validated_data["identity"] = Identity.objects.get(
-                email__iexact=validated_data["email"]
+                email__iexact=validated_data["email"],
             )
             validated_data.pop("email")
         except Identity.DoesNotExist:
@@ -39,7 +39,8 @@ class CaseAccessSerializer(serializers.ModelSerializer):
             case_id=validated_data["case_id"],
             identity=validated_data.get("identity"),
         ).exists():
-            raise ValidationError("Case already exists!")
+            msg = "Case already exists!"
+            raise ValidationError(msg)
 
         return validated_data
 

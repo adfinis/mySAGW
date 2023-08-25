@@ -2,7 +2,7 @@ import random
 
 from django.core.management.base import BaseCommand
 
-from mysagw import conftest  # noqa
+from mysagw import conftest  # noqa: F401
 from mysagw.identity import models
 from mysagw.identity.factories import (
     EmailFactory,
@@ -46,7 +46,7 @@ class Command(BaseCommand):
             m = MembershipFactory(
                 organisation__idp_id=None,
                 identity__idp_id=None,
-                role=random.choice(membership_roles),
+                role=random.choice(membership_roles),  # noqa: S311
             )
             PhoneNumberFactory.create_batch(2, identity=m.organisation)
             PhoneNumberFactory.create_batch(2, identity=m.identity)

@@ -40,10 +40,7 @@ def test_snippet_search(db, client, snippet_factory, search, expected):
 
     json = response.json()
 
-    received_ids = []
-    for snippet in json["data"]:
-        received_ids.append(snippet["id"])
-    received_ids = sorted(received_ids)
+    received_ids = sorted([snippet["id"] for snippet in json["data"]])
 
     assert expected_ids == received_ids
 
@@ -62,9 +59,6 @@ def test_snippet_archived_filter(db, client, snippet_factory):
 
     json = response.json()
 
-    received_ids = []
-    for snippet in json["data"]:
-        received_ids.append(snippet["id"])
-    received_ids = sorted(received_ids)
+    received_ids = sorted([snippet["id"] for snippet in json["data"]])
 
     assert expected_ids == received_ids

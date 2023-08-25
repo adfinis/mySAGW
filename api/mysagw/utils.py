@@ -9,8 +9,9 @@ def build_url(*fragments, **options):
 
 
 def format_currency(value, currency):
-    if currency and (isinstance(value, float) or isinstance(value, int)):
+    if currency and (isinstance(value, (float, int))):
         value = f"{currency.upper()} {value:_.2f}".replace(".00", ".-").replace(
-            "_", "'"
+            "_",
+            "'",
         )
     return value

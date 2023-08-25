@@ -116,14 +116,14 @@ def test_interest_create(
     url = reverse(f"{remove_underscore(model)}-list")
 
     data = {
-        "data": {"type": "interest-categories", "attributes": {"title": {"de": "Foo"}}}
+        "data": {"type": "interest-categories", "attributes": {"title": {"de": "Foo"}}},
     }
     if model == "interest":
         data["data"]["type"] = "interests"
         data["data"]["relationships"] = {
             "category": {
-                "data": {"id": str(category.pk), "type": "interest-categories"}
-            }
+                "data": {"id": str(category.pk), "type": "interest-categories"},
+            },
         }
 
     response = client.post(url, data)
@@ -170,15 +170,15 @@ def test_interest_update(
             "id": str(obj.pk),
             "type": "interest-categories",
             "attributes": {"title": {"de": "Foo"}},
-        }
+        },
     }
     if model == "interest":
         category = interest_category_factory()
         data["data"]["type"] = "interests"
         data["data"]["relationships"] = {
             "category": {
-                "data": {"id": str(category.pk), "type": "interest-categories"}
-            }
+                "data": {"id": str(category.pk), "type": "interest-categories"},
+            },
         }
 
     response = client.patch(url, data)

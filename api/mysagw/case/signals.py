@@ -10,5 +10,6 @@ def assign_cases(sender, instance, created, **kwargs):
     if not created:
         return
     CaseAccess.objects.filter(email__iexact=instance.email, email__isnull=False).update(
-        email=None, identity=instance
+        email=None,
+        identity=instance,
     )

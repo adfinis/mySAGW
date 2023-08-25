@@ -1,8 +1,9 @@
-import datetime
+import time
 from pathlib import Path
 
 import pytest
 from django.core.management import call_command
+from django.utils import timezone
 
 from caluma.caluma_form.models import Answer, Question
 from caluma.caluma_user.models import BaseUser
@@ -14,7 +15,7 @@ from .settings import settings
 
 
 @pytest.fixture
-def caluma_data(db):
+def _caluma_data(db):
     call_command("loaddata", Path.cwd() / "caluma" / "data" / "form-config.json")
     call_command("loaddata", Path.cwd() / "caluma" / "data" / "workflow-config.json")
 
@@ -27,7 +28,8 @@ def user():
 @pytest.fixture
 def create_document_review_case(db, user, form_question_factory):
     form_question = form_question_factory(
-        question__type=Question.TYPE_TEXT, form__is_published=True
+        question__type=Question.TYPE_TEXT,
+        form__is_published=True,
     )
 
     def func():
@@ -87,8 +89,8 @@ def identities_mock(requests_mock):
                     "phone-numbers": {"meta": {"count": 0}, "data": []},
                     "addresses": {"meta": {"count": 0}, "data": []},
                 },
-            }
-        ]
+            },
+        ],
     }
 
     return requests_mock.get(f"{settings.API_BASE_URI}/identities", json=data)
@@ -96,6 +98,7 @@ def identities_mock(requests_mock):
 
 @pytest.fixture
 def get_token_mock(mocker):
+    expires = timezone.now() + timezone.timedelta(minutes=30)
     data = {
         "access_token": "eyToken",
         "expires_in": 300,
@@ -103,8 +106,8 @@ def get_token_mock(mocker):
         "token_type": "Bearer",
         "not-before-policy": 0,
         "scope": ["profile", "email"],
-        "expires_at": 1632468505.0576448,
-        "expires_at_dt": datetime.datetime(2021, 9, 24, 7, 28, 25),
+        "expires_at": time.mktime(expires.timetuple()),
+        "expires_at_dt": expires,
     }
 
     return mocker.patch.object(
@@ -129,10 +132,10 @@ def case_access_create_request_mock(requests_mock):
                     "data": {
                         "type": "identities",
                         "id": "d7b118a7-ce53-48b7-9b05-be148f154f14",
-                    }
-                }
+                    },
+                },
             },
-        }
+        },
     }
 
     return requests_mock.post(f"{settings.API_BASE_URI}/case/accesses", json=data)
@@ -141,7 +144,7 @@ def case_access_create_request_mock(requests_mock):
 @pytest.fixture
 def case_access_request_mock(requests_mock):
     data = {
-        "data": [{"attributes": {"case-id": "994b72cc-6556-46e5-baf9-228457fa309f"}}]
+        "data": [{"attributes": {"case-id": "994b72cc-6556-46e5-baf9-228457fa309f"}}],
     }
 
     return requests_mock.get(f"{settings.API_BASE_URI}/case/accesses", json=data)
@@ -149,7 +152,10 @@ def case_access_request_mock(requests_mock):
 
 @pytest.fixture
 def case_access_event_mock(
-    requests_mock, identities_mock, get_token_mock, case_access_create_request_mock
+    requests_mock,
+    identities_mock,
+    get_token_mock,
+    case_access_create_request_mock,
 ):
     data = {
         "data": [
@@ -165,8 +171,8 @@ def case_access_event_mock(
                         "data": {
                             "type": "identities",
                             "id": "19c90e69-0398-4ed7-9bde-1ed13627b1f7",
-                        }
-                    }
+                        },
+                    },
                 },
             },
             {

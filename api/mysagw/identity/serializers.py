@@ -34,8 +34,9 @@ class UniqueBooleanFieldSerializerMixin:
             and self.instance.default
             and not validated_data.get("default", True)
         ):
+            msg = 'Can\'t unset "default". Set another default instead.'
             raise ValidationError(
-                'Can\'t unset "default". Set another default instead.'
+                msg,
             )
         return validated_data
 
@@ -121,7 +122,8 @@ class IdentitySerializer(TrackingSerializer):
     def _ensure_no_empty_identity(self, validated_data):
         any_needed = ["email", "first_name", "last_name"]
         if validated_data.get(
-            "is_organisation", getattr(self.instance, "is_organisation", None)
+            "is_organisation",
+            getattr(self.instance, "is_organisation", None),
         ):
             any_needed.append("organisation_name")
 
@@ -131,9 +133,9 @@ class IdentitySerializer(TrackingSerializer):
         ]
 
         if not any(values):
+            msg = "Identities need at least an email, first_name, last_name or organisation_name."
             raise ValidationError(
-                "Identities need at least an email, first_name, last_name or "
-                "organisation_name."
+                msg,
             )
 
     def _handle_organisation_validations(self, validated_data):
@@ -146,32 +148,34 @@ class IdentitySerializer(TrackingSerializer):
         if not self.instance:
             if is_organisation and not organisation_name:
                 raise ValidationError(no_organisation_name_msg)
-            elif not is_organisation and organisation_name:
+            if not is_organisation and organisation_name:
                 validated_data["organisation_name"] = None
             return validated_data
 
         if self.instance.is_organisation and not is_organisation:
             if self.instance.members.exists():
+                msg = 'Can\'t unset "is_organisation", because there are members.'
                 raise ValidationError(
-                    'Can\'t unset "is_organisation", because there are members.'
+                    msg,
                 )
             validated_data["organisation_name"] = None
 
         if not self.instance.is_organisation and is_organisation:
             if self.instance.memberships.exists():
+                msg = 'Can\'t set "is_organisation", because there are memberships.'
                 raise ValidationError(
-                    'Can\'t set "is_organisation", because there are memberships.'
+                    msg,
                 )
-            elif not organisation_name:
+            if not organisation_name:
                 raise ValidationError(no_organisation_name_msg)
 
         if not self.instance.is_organisation and (
             validated_data.get("is_expert_association")
             or validated_data.get("is_advisory_board")
         ):
+            msg = 'Can\'t set "is_expert_association" or "is_advisory_board", because it isn\'t a organisation.'
             raise ValidationError(
-                'Can\'t set "is_expert_association" or "is_advisory_board", because it '
-                "isn't a organisation."
+                msg,
             )
 
         return validated_data
@@ -186,13 +190,12 @@ class IdentitySerializer(TrackingSerializer):
         if validated_data.get("email") == "":
             validated_data["email"] = None
 
-        validated_data = self._handle_organisation_validations(validated_data)
-
-        return validated_data
+        return self._handle_organisation_validations(validated_data)
 
     class Meta:
         model = models.Identity
-        fields = TrackingSerializer.Meta.fields + (
+        fields = (
+            *TrackingSerializer.Meta.fields,
             "idp_id",
             "first_name",
             "last_name",
@@ -227,8 +230,7 @@ class InterestsManyRelatedField(serializers.ManyRelatedField):
     # to public interests
     def get_attribute(self, instance):
         queryset = super().get_attribute(instance)
-        queryset = queryset.filter(category__public=True)
-        return queryset
+        return queryset.filter(category__public=True)
 
 
 class InterestsResourceRelatedField(serializers.ResourceRelatedField):
@@ -236,7 +238,7 @@ class InterestsResourceRelatedField(serializers.ResourceRelatedField):
     @classmethod
     def many_init(cls, *args, **kwargs):
         list_kwargs = {"child_relation": cls(*args, **kwargs)}
-        for key in kwargs.keys():
+        for key in kwargs:
             if key in MANY_RELATION_KWARGS:
                 list_kwargs[key] = kwargs[key]
         return InterestsManyRelatedField(**list_kwargs)
@@ -256,9 +258,11 @@ class MeSerializer(serializers.ModelSerializer):
 
         # normal users have no access to their non-public interests. Here we make sure
         # they are not lost on update
-        for interest in self.instance.interests.iterator():
-            if interest.category.public is False:
-                validated_data["interests"].append(interest)
+        validated_data["interests"] += [
+            interest
+            for interest in self.instance.interests.iterator()
+            if interest.category.public is False
+        ]
 
         return validated_data
 
@@ -372,23 +376,27 @@ class MembershipRoleSerializer(serializers.ModelSerializer):
     def validate(self, *args, **kwargs):
         validated_data = super().validate(*args, **kwargs)
         if not validated_data.get("title", {}).get(settings.LANGUAGE_CODE):
+            msg = f'Title must be set for language: "{settings.LANGUAGE_CODE}"'
             raise ValidationError(
-                f'Title must be set for language: "{settings.LANGUAGE_CODE}"'
+                msg,
             )
         return validated_data
 
 
 class MembershipSerializer(
-    SetModifyingUserOnIdentityMixin, serializers.ModelSerializer
+    SetModifyingUserOnIdentityMixin,
+    serializers.ModelSerializer,
 ):
     identity = serializers.ResourceRelatedField(
-        queryset=models.Identity.objects.filter(is_organisation=False)
+        queryset=models.Identity.objects.filter(is_organisation=False),
     )
     organisation = serializers.ResourceRelatedField(
-        queryset=models.Identity.objects.filter(is_organisation=True)
+        queryset=models.Identity.objects.filter(is_organisation=True),
     )
     time_slot = DateRangeField(
-        child_attrs={"allow_null": True}, required=False, allow_null=True
+        child_attrs={"allow_null": True},
+        required=False,
+        allow_null=True,
     )
 
     included_serializers = {
@@ -402,9 +410,11 @@ class MembershipSerializer(
             return validated_data
         for field in ["identity", "organisation"]:
             if validated_data.get(field) and validated_data[field] != getattr(
-                self.instance, field
+                self.instance,
+                field,
             ):
-                raise ValidationError(f'Field "{field}" can\'t be modified.')
+                msg = f'Field "{field}" can\'t be modified.'
+                raise ValidationError(msg)
         return validated_data
 
     class Meta:
@@ -433,19 +443,21 @@ class OrganisationAdminMembersSerializer(serializers.ModelSerializer):
 
     def get_roles(self, obj):
         memberships = obj.memberships.filter(
-            organisation_id=self.context["request"].GET["filter[organisation]"]
+            organisation_id=self.context["request"].GET["filter[organisation]"],
         )
         active_memberships = memberships.filter(
             Q(inactive=False),
             Q(time_slot__isnull=True) | Q(time_slot__contains=timezone.now()),
         )
         inactive_memberships = memberships.exclude(
-            pk__in=active_memberships.values_list("pk", flat=True)
+            pk__in=active_memberships.values_list("pk", flat=True),
         )
 
         result_memberships = []
         date_range_field = DateRangeField(
-            child_attrs={"allow_null": True}, required=False, allow_null=True
+            child_attrs={"allow_null": True},
+            required=False,
+            allow_null=True,
         )
         for membership_qs in [active_memberships, inactive_memberships]:
             for m in membership_qs.order_by("-role__sort"):
@@ -458,7 +470,7 @@ class OrganisationAdminMembersSerializer(serializers.ModelSerializer):
                         "inactive": m.inactive,
                         "authorized": m.authorized,
                         "time_slot": time_slot,
-                    }
+                    },
                 )
 
         return result_memberships

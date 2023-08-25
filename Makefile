@@ -18,7 +18,7 @@ api-test: ## Test the backend
 
 .PHONY: api-lint
 api-lint: ## Lint the backend
-	@docker compose run --rm api sh -c "poetry run black --check . && poetry run flake8"
+	@docker compose run --rm api sh -c "poetry run black --check . && poetry run ruff check ."
 
 .PHONY: api-bash
 api-bash: ## Shell into the backend
@@ -54,7 +54,7 @@ caluma-test: ## test caluma config and extensions
 .PHONY: caluma-lint
 caluma-lint: ## lint caluma extensions
 	@cd ./api && poetry run bash -c "cd ../caluma && black --check ."
-	@cd ./api && poetry run bash -c "cd ../caluma && flake8"
+	@cd ./api && poetry run ruff check ../caluma
 
 .PHONY: caluma-load-workflow
 caluma-load-workflow: ## Load workflow config from JSON

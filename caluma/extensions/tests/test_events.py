@@ -14,22 +14,32 @@ from caluma.caluma_workflow.models import Case, Workflow, WorkItem
 from ..settings import settings
 
 
+@pytest.mark.usefixtures("_caluma_data")
 def test_work_item_set_assigned_user(
-    db, caluma_data, case_access_event_mock, document_review_case
+    db,
+    case_access_event_mock,
+    document_review_case,
 ):
     assert document_review_case.work_items.get(
-        task_id="submit-document"
+        task_id="submit-document",
     ).assigned_users == ["test"]
 
 
+@pytest.mark.usefixtures("_caluma_data")
 def test_work_item_create_circulation(
-    db, caluma_data, case_access_event_mock, circulation
+    db,
+    case_access_event_mock,
+    circulation,
 ):
     assert circulation.workflow_id == "circulation"
 
 
+@pytest.mark.usefixtures("_caluma_data")
 def test_work_item_finish_circulation(
-    db, caluma_data, user, case_access_event_mock, circulation
+    db,
+    user,
+    case_access_event_mock,
+    circulation,
 ):
     complete_work_item(circulation.work_items.get(task_id="finish-circulation"), user)
 
@@ -39,11 +49,15 @@ def test_work_item_finish_circulation(
     )
 
 
+@pytest.mark.usefixtures("_caluma_data")
 def test_work_item_additional_data(
-    db, caluma_data, user, case_access_event_mock, circulation
+    db,
+    user,
+    case_access_event_mock,
+    circulation,
 ):
     Question.objects.filter(formquestion__form__pk="additional-data-form").update(
-        is_required="false"
+        is_required="false",
     )
 
     case = circulation.parent_work_item.case
@@ -72,8 +86,13 @@ def test_work_item_additional_data(
     )
 
 
+@pytest.mark.usefixtures("_caluma_data")
 def test_work_item_define_amount(
-    db, caluma_data, user, case_access_event_mock, circulation, send_mail_mock
+    db,
+    user,
+    case_access_event_mock,
+    circulation,
+    send_mail_mock,
 ):
     work_items = circulation.parent_work_item.case.work_items
 
@@ -124,7 +143,8 @@ def test_work_item_define_amount(
     )
 
     define_amount = work_items.get(
-        task_id="define-amount", status=WorkItem.STATUS_READY
+        task_id="define-amount",
+        status=WorkItem.STATUS_READY,
     )
     define_amount.document.answers.create(
         question_id="define-amount-decision",
@@ -141,8 +161,12 @@ def test_work_item_define_amount(
     assert circulation.parent_work_item.case.status == Case.STATUS_RUNNING
 
 
+@pytest.mark.usefixtures("_caluma_data")
 def test_work_item_invite_to_circulation(
-    db, caluma_data, user, case_access_event_mock, circulation
+    db,
+    user,
+    case_access_event_mock,
+    circulation,
 ):
     complete_work_item(
         circulation.work_items.get(task_id="invite-to-circulation"),
@@ -151,34 +175,37 @@ def test_work_item_invite_to_circulation(
             "assign_users": [
                 {"idpId": "ab", "name": "AB", "email": "a@b.c"},
                 {"idpId": "cd", "name": "CD", "email": "c@d.e"},
-            ]
+            ],
         },
     )
 
     decisions = circulation.work_items.filter(task_id="circulation-decision")
     assert decisions.count() == 2
-    assert list(
-        map(lambda v: v["assigned_users"][0], decisions.values("assigned_users"))
-    ) == [
+    assert [v["assigned_users"][0] for v in decisions.values("assigned_users")] == [
         "ab",
         "cd",
     ]
 
 
+@pytest.mark.usefixtures("_caluma_data")
 def test_case_complete_circulation(
-    db, caluma_data, user, case_access_event_mock, circulation
+    db,
+    user,
+    case_access_event_mock,
+    circulation,
 ):
     complete_work_item(circulation.work_items.get(task_id="finish-circulation"), user)
 
     assert circulation.parent_work_item.status == WorkItem.STATUS_COMPLETED
 
 
+@pytest.mark.usefixtures("_caluma_data")
 @pytest.mark.parametrize(
-    "same_year,first", [(True, False), (False, False), (False, True)]
+    "same_year,first",
+    [(True, False), (False, False), (False, True)],
 )
 def test_case_number(
     db,
-    caluma_data,
     case_access_event_mock,
     user,
     form_question_factory,
@@ -209,9 +236,9 @@ def test_case_number(
     assert case.document.answers.get(question=question).value == expected_no
 
 
+@pytest.mark.usefixtures("_caluma_data")
 def test_case_status(
     db,
-    caluma_data,
     case_access_event_mock,
     document_review_case,
     user,
@@ -260,6 +287,7 @@ def test_case_status(
     assert case.meta["status"] == "decision"
 
 
+@pytest.mark.usefixtures("_caluma_data")
 @pytest.mark.parametrize("lang", ["de", "en", "fr"])
 @pytest.mark.parametrize(
     "task_slug, revise, early_career_form",
@@ -274,10 +302,9 @@ def test_case_status(
         ("decision-and-credit", False, True),
     ],
 )
-def test_send_work_item_mail(
+def test_send_work_item_mail(  # noqa: PLR0915
     db,
     user,
-    caluma_data,
     case_access_event_mock,
     document_review_case,
     mailoutbox,
@@ -297,7 +324,7 @@ def test_send_work_item_mail(
                 "last-name": "Smith",
                 "email": "test-send@example.com",
                 "language": lang,
-            }
+            },
         ]
     case = document_review_case
     if early_career_form:
@@ -358,7 +385,7 @@ def test_send_work_item_mail(
     if task_slug == "complete-document":
         additional_data_work_item = case.work_items.get(task_id="additional-data")
         additional_data_form_work_item = case.work_items.get(
-            task_id="additional-data-form"
+            task_id="additional-data-form",
         )
         additional_data_form_work_item.document.answers.create(
             question_id="additional-data-adresse",
@@ -402,9 +429,9 @@ def test_send_work_item_mail(
     snapshot.assert_match(mail.body.replace(str(case.pk), "my-case-id"))
 
 
+@pytest.mark.usefixtures("_caluma_data")
 def test_access_control(
     db,
-    caluma_data,
     user,
     identities_mock,
     form_question_factory,
@@ -421,22 +448,24 @@ def test_access_control(
     assert case_access_create_request_mock.called
 
 
+@pytest.mark.usefixtures("_caluma_data")
 def test_redo_circulation(
     db,
-    caluma_data,
     user,
     case_access_event_mock,
     circulation,
     work_item_factory,
 ):
     Question.objects.filter(formquestion__form__pk="additional-data-form").update(
-        is_required="false"
+        is_required="false",
     )
 
     circ_work_item = circulation.parent_work_item
 
     work_item_factory(
-        case=circulation, task_id="circulation-decision", status=WorkItem.STATUS_READY
+        case=circulation,
+        task_id="circulation-decision",
+        status=WorkItem.STATUS_READY,
     )
     skip_work_item(circ_work_item.case.work_items.get(task_id="circulation"), user)
 
@@ -456,23 +485,25 @@ def test_redo_circulation(
     assert circ_work_item.child_case.work_items.count() == 2
 
 
+@pytest.mark.usefixtures("_caluma_data")
 def test_redo_review_document(
     db,
-    caluma_data,
     user,
     case_access_event_mock,
     circulation,
     work_item_factory,
 ):
     Question.objects.filter(formquestion__form__pk="additional-data-form").update(
-        is_required="false"
+        is_required="false",
     )
 
     circ_work_item = circulation.parent_work_item
 
     previous_case = circ_work_item.child_case.pk
     work_item_factory(
-        case=circulation, task_id="circulation-decision", status=WorkItem.STATUS_READY
+        case=circulation,
+        task_id="circulation-decision",
+        status=WorkItem.STATUS_READY,
     )
     assert circ_work_item.child_case.work_items.count() == 3
 
@@ -484,6 +515,7 @@ def test_redo_review_document(
     assert circ_work_item.child_case.work_items.count() == 2
 
 
+@pytest.mark.usefixtures("_caluma_data")
 @pytest.mark.parametrize(
     "decision,expected_work_item_task",
     [
@@ -499,7 +531,6 @@ def test_redo_review_document(
 )
 def test_redo_define_amount(
     db,
-    caluma_data,
     user,
     case_access_event_mock,
     circulation,
@@ -508,7 +539,7 @@ def test_redo_define_amount(
     send_mail_mock,
 ):
     Question.objects.filter(formquestion__form__pk="additional-data-form").update(
-        is_required="false"
+        is_required="false",
     )
 
     case = circulation.parent_work_item.case
@@ -526,7 +557,8 @@ def test_redo_define_amount(
         complete_work_item(case.work_items.get(task_id="additional-data"), user)
 
     case.work_items.get(task_id="define-amount").document.answers.create(
-        question_id="define-amount-decision", value="define-amount-decision-continue"
+        question_id="define-amount-decision",
+        value="define-amount-decision-continue",
     )
 
     complete_work_item(case.work_items.get(task_id="define-amount"), user)
@@ -535,5 +567,6 @@ def test_redo_define_amount(
 
     assert case.status == Case.STATUS_RUNNING
     assert case.work_items.filter(
-        task_id=expected_work_item_task, status=WorkItem.STATUS_READY
+        task_id=expected_work_item_task,
+        status=WorkItem.STATUS_READY,
     ).exists()
