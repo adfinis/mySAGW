@@ -262,13 +262,16 @@ def test_case_status(
 
 @pytest.mark.parametrize("lang", ["de", "en", "fr"])
 @pytest.mark.parametrize(
-    "task_slug, revise",
+    "task_slug, revise, early_career_form",
     [
-        ("revise-document", False),
-        ("additional-data", False),
-        ("additional-data", True),
-        ("complete-document", False),
-        ("decision-and-credit", False),
+        ("review-document", False, False),
+        ("review-document", False, True),
+        ("revise-document", False, False),
+        ("additional-data", False, False),
+        ("additional-data", True, False),
+        ("complete-document", False, False),
+        ("decision-and-credit", False, False),
+        ("decision-and-credit", False, True),
     ],
 )
 def test_send_work_item_mail(
@@ -280,6 +283,7 @@ def test_send_work_item_mail(
     mailoutbox,
     task_slug,
     revise,
+    early_career_form,
     lang,
     snapshot,
     mocker,
@@ -296,11 +300,16 @@ def test_send_work_item_mail(
             }
         ]
     case = document_review_case
+    if early_career_form:
+        case.document.form.slug = settings.EARLY_CAREER_AWARD_FORM_SLUG
+        case.document.form.save()
 
     review_document_decision_answer = "review-document-decision-continue"
 
     if task_slug == "revise-document":
         review_document_decision_answer = "review-document-decision-reject"
+    elif task_slug == "review-document":
+        review_document_decision_answer = "review-document-decision-complete"
 
     case.document.answers.create(
         question_id="dossier-nr",
