@@ -150,7 +150,10 @@ class CreateOrAssignVisibility(BaseVisibility):
 
         return queryset.filter(
             (
-                Q(case__family_id__in=case_ids)
+                (
+                    Q(case__family_id__in=case_ids)
+                    | Q(case__created_by_user=user.username)
+                )
                 & (
                     Q(
                         task__slug__in=[
