@@ -9,7 +9,7 @@ module("Unit | Service | filtered-forms", function (hooks) {
 
   hooks.beforeEach(function () {
     /*
-     * A total of 8 forms
+     * A total of 11 forms
      * 1 public
      * 4 hidden
      * 5 expertAssociation
@@ -111,7 +111,8 @@ module("Unit | Service | filtered-forms", function (hooks) {
 
     const forms = await service.fetch();
 
-    assert.strictEqual(forms.length, 5);
+    // staff or admin can see all forms
+    assert.strictEqual(forms.length, 11);
   });
 
   test("it filters public forms", async function (assert) {
