@@ -113,7 +113,11 @@ def test_membership_role_list_ordering(db, client, lang, membership_role_factory
     indirect=["client"],
 )
 def test_membership_list(
-    db, client, expected_count, expected_status, membership_factory
+    db,
+    client,
+    expected_count,
+    expected_status,
+    membership_factory,
 ):
     membership_factory.create_batch(2)
     membership_factory(identity=client.user.identity)
@@ -165,7 +169,7 @@ def test_membership_role_create(db, client, expected_status):
     url = reverse("membershiprole-list")
 
     data = {
-        "data": {"type": "membership-roles", "attributes": {"title": {"de": "Foo"}}}
+        "data": {"type": "membership-roles", "attributes": {"title": {"de": "Foo"}}},
     }
 
     response = client.post(url, data=data)
@@ -250,10 +254,10 @@ def test_membership_create(
             "relationships": {
                 "identity": {"data": {"id": str(identity.pk), "type": "identities"}},
                 "organisation": {
-                    "data": {"id": str(organisation.pk), "type": "identities"}
+                    "data": {"id": str(organisation.pk), "type": "identities"},
                 },
             },
-        }
+        },
     }
 
     response = client.post(url, data=data)
@@ -303,10 +307,10 @@ def test_my_membership_create(
             "relationships": {
                 "identity": {"data": {"id": str(identity.pk), "type": "identities"}},
                 "organisation": {
-                    "data": {"id": str(organisation.pk), "type": "identities"}
+                    "data": {"id": str(organisation.pk), "type": "identities"},
                 },
             },
-        }
+        },
     }
 
     response = client.post(url, data=data)
@@ -332,7 +336,7 @@ def test_membership_role_update(db, client, expected_status, membership_role_fac
             "type": "membership-roles",
             "id": str(membershiprole.pk),
             "attributes": {"title": {"de": "Foo"}},
-        }
+        },
     }
 
     response = client.patch(url, data=data)
@@ -424,7 +428,7 @@ def test_membership_update_failure(db, client, field, membership, identity_facto
             "relationships": {
                 field: {"data": {"type": "identities", "id": str(identity.pk)}},
             },
-        }
+        },
     }
 
     response = client.patch(url, data=data)
@@ -496,7 +500,12 @@ def test_my_memberships_delete_failure(db, client):
 
 
 def test_organisation_members(
-    db, client, membership_role_factory, membership_factory, identity_factory, snapshot
+    db,
+    client,
+    membership_role_factory,
+    membership_factory,
+    identity_factory,
+    snapshot,
 ):
     first_role = membership_role_factory.create(sort=1)
     second_role = membership_role_factory.create(sort=2)
@@ -513,10 +522,14 @@ def test_organisation_members(
     # should be second in list - same highest role as user 3, but last_name comes first
     # in alphabet
     membership_factory.create(
-        role=first_role, identity=user1, organisation=organisation
+        role=first_role,
+        identity=user1,
+        organisation=organisation,
     )
     membership_factory.create(
-        role=second_role, identity=user1, organisation=organisation
+        role=second_role,
+        identity=user1,
+        organisation=organisation,
     )
     membership_factory.create(
         role=third_role,
@@ -529,13 +542,20 @@ def test_organisation_members(
     # third role is highest
     # should be first in list
     membership_factory.create(
-        role=second_role, identity=user2, organisation=organisation, inactive=True
+        role=second_role,
+        identity=user2,
+        organisation=organisation,
+        inactive=True,
     )
     membership_factory.create(
-        role=second_role, identity=user2, organisation=organisation
+        role=second_role,
+        identity=user2,
+        organisation=organisation,
     )
     membership_factory.create(
-        role=third_role, identity=user2, organisation=organisation
+        role=third_role,
+        identity=user2,
+        organisation=organisation,
     )
 
     # User3, 2 memberships, 1 inactive
@@ -543,22 +563,33 @@ def test_organisation_members(
     # should be third in list - same highest role as user 1, but last_name comes after
     # in alphabet
     membership_factory.create(
-        role=second_role, identity=user3, organisation=organisation
+        role=second_role,
+        identity=user3,
+        organisation=organisation,
     )
     membership_factory.create(
-        role=third_role, identity=user3, organisation=organisation, inactive=True
+        role=third_role,
+        identity=user3,
+        organisation=organisation,
+        inactive=True,
     )
 
     # User4, 1 membership, 1 inactive
     # should be fifth in list
     membership_factory.create(
-        role=second_role, identity=user4, organisation=organisation, inactive=True
+        role=second_role,
+        identity=user4,
+        organisation=organisation,
+        inactive=True,
     )
 
     # User5, 1 membership, 1 inactive
     # should be fourth in list
     membership_factory.create(
-        role=third_role, identity=user5, organisation=organisation, inactive=True
+        role=third_role,
+        identity=user5,
+        organisation=organisation,
+        inactive=True,
     )
 
     url = reverse("org-memberships-list")

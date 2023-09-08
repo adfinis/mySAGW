@@ -24,7 +24,7 @@ class BaseMultiValueFilter(BaseInFilter):
         if lookup == "in":
             return super().filter(qs, value)
 
-        elif lookup == "all":
+        if lookup == "all":
             for val in value:
                 # need to match all values (useful only on 1:n rels)
                 qs = qs.filter(Q(**{self.field_name: val}))

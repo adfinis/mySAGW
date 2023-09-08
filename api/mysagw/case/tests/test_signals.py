@@ -9,7 +9,8 @@ from mysagw.identity.models import Identity
 )
 def test_assign_cases(db, case_access_factory, identity_email, assigned):
     case_access = case_access_factory(
-        email="foo@example.com", case_id="00000000-0000-0000-0000-000000000000"
+        email="foo@example.com",
+        case_id="00000000-0000-0000-0000-000000000000",
     )
     identity = Identity.objects.create(email=identity_email)
 

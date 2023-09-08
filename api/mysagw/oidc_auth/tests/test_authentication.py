@@ -77,7 +77,9 @@ def test_authentication_existing_identity(
     get_claims,
 ):
     claims = get_claims(
-        id_claim="matching_id", groups_claim=[], email_claim="match@example.com"
+        id_claim="matching_id",
+        groups_claim=[],
+        email_claim="match@example.com",
     )
 
     requests_mock.get(settings.OIDC_OP_USER_ENDPOINT, text=json.dumps(claims))
@@ -107,7 +109,9 @@ def test_authentication_multiple_existing_identity(
     identity = identity_factory(idp_id="matching_id")
     identity_factory(email="match@example.com")
     claims = get_claims(
-        id_claim="matching_id", groups_claim=[], email_claim="match@example.com"
+        id_claim="matching_id",
+        groups_claim=[],
+        email_claim="match@example.com",
     )
 
     requests_mock.get(settings.OIDC_OP_USER_ENDPOINT, text=json.dumps(claims))
@@ -136,7 +140,8 @@ def test_authentication_idp_502(
     settings,
 ):
     requests_mock.get(
-        settings.OIDC_OP_USER_ENDPOINT, status_code=status.HTTP_502_BAD_GATEWAY
+        settings.OIDC_OP_USER_ENDPOINT,
+        status_code=status.HTTP_502_BAD_GATEWAY,
     )
 
     request = rf.get("/openid", HTTP_AUTHORIZATION="Bearer Token")

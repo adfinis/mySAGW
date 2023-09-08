@@ -12,6 +12,7 @@ class UniqueBooleanField(models.BooleanField):
     by providing a list of field names as `together` param.
 
     Example:
+    -------
         ```
         >>> class Email(models.Model):
         ...     user = models.ForeignKey(User)
@@ -87,11 +88,17 @@ class UUIDModel(models.Model):
 class TrackingModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     created_by_user = models.CharField(
-        max_length=255, blank=True, null=True, db_index=True
+        max_length=255,
+        blank=True,
+        null=True,
+        db_index=True,
     )
     modified_at = models.DateTimeField(auto_now=True, db_index=True)
     modified_by_user = models.CharField(
-        max_length=255, blank=True, null=True, db_index=True
+        max_length=255,
+        blank=True,
+        null=True,
+        db_index=True,
     )
 
     class Meta:

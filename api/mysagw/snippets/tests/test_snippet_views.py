@@ -71,7 +71,7 @@ def test_snippet_update(db, client, expected_status, snippet_factory):
             "type": "snippets",
             "id": str(snippet.pk),
             "attributes": {"title": "Foo"},
-        }
+        },
     }
 
     response = client.patch(url, data=data)

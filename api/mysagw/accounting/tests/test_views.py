@@ -38,7 +38,7 @@ def test_get_receipts(
                 ".*",
                 "merge",
                 trailing=True,
-            )
+            ),
         )
         requests_mock.post(
             matcher,
@@ -57,8 +57,8 @@ def test_get_receipts(
                         "main": {
                             "dossierno": {"edges": [{"node": {"value": "2021-0006"}}]},
                         },
-                    }
-                }
+                    },
+                },
             },
         )
 

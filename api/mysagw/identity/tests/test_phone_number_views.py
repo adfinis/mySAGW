@@ -80,7 +80,7 @@ def test_phone_number_create(db, identity, client, own, expected_status):
             "relationships": {
                 "identity": {"data": {"id": str(identity.pk), "type": "identities"}},
             },
-        }
+        },
     }
 
     response = client.post(url, data=data)
@@ -115,10 +115,10 @@ def test_phone_number_create_new_default(db, phone_number_factory, client):
             "attributes": {"phone": "+41791234567", "default": True},
             "relationships": {
                 "identity": {
-                    "data": {"id": str(phone_number.identity.pk), "type": "identities"}
+                    "data": {"id": str(phone_number.identity.pk), "type": "identities"},
                 },
             },
-        }
+        },
     }
 
     response = client.post(url, data=data)
@@ -170,7 +170,7 @@ def test_phone_number_update(db, client, own, expected_status, phone_number):
             "type": "phone-numbers",
             "id": str(phone_number.pk),
             "attributes": {"description": {"de": "Foo"}},
-        }
+        },
     }
 
     response = client.patch(url, data=data)
@@ -204,7 +204,7 @@ def test_phone_number_update_unset_default(db, client, phone_number):
             "type": "phone-numbers",
             "id": str(phone_number.pk),
             "attributes": {"default": False},
-        }
+        },
     }
 
     response = client.patch(url, data=data)
@@ -229,7 +229,8 @@ def test_phone_number_update_unset_default(db, client, phone_number):
 def test_phone_number_delete(db, client, own, expected_status, phone_number_factory):
     main_phone_number = phone_number_factory()
     other_phone_number = phone_number_factory(
-        identity=main_phone_number.identity, default=False
+        identity=main_phone_number.identity,
+        default=False,
     )
     assert other_phone_number.identity.modified_by_user != client.user.id
 

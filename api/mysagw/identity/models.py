@@ -22,7 +22,9 @@ class Interest(UUIDModel, HistoricalModel):
     title = LocalizedCharField()
     description = models.CharField(max_length=255, blank=True, null=True)
     category = models.ForeignKey(
-        InterestCategory, related_name="interests", on_delete=models.PROTECT
+        InterestCategory,
+        related_name="interests",
+        on_delete=models.PROTECT,
     )
     archived = models.BooleanField(default=False)
 
@@ -113,11 +115,15 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
     first_name = models.CharField(max_length=255, null=True, blank=True)
     last_name = models.CharField(max_length=255, null=True, blank=True)
     salutation = models.CharField(
-        choices=SALUTATION_CHOICES, default=SALUTATION_NEUTRAL, max_length=7
+        choices=SALUTATION_CHOICES,
+        default=SALUTATION_NEUTRAL,
+        max_length=7,
     )
     title = models.CharField(choices=TITLE_CHOICES, default=TITLE_NONE, max_length=9)
     language = models.CharField(
-        max_length=2, choices=settings.LANGUAGES, default=settings.LANGUAGE_CODE
+        max_length=2,
+        choices=settings.LANGUAGES,
+        default=settings.LANGUAGE_CODE,
     )
     interests = models.ManyToManyField(Interest, related_name="identities", blank=True)
     is_organisation = models.BooleanField(default=False)
@@ -133,14 +139,14 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
         if only_authorized:
             memberships = memberships.filter(authorized=True)
         return self.__class__.objects.filter(
-            pk__in=memberships.values_list("organisation", flat=True).distinct()
+            pk__in=memberships.values_list("organisation", flat=True).distinct(),
         )
 
     @property
     def full_name(self):
         language = get_language()
         salutation = self.SALUTATION_LOCALIZED_MAP.get(self.salutation, {}).get(
-            language
+            language,
         )
         title = self.TITLE_LOCALIZED_MAP[self.title][language]
         full_name = ""
@@ -180,14 +186,12 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
             if add:
                 address_block = f"{address_block}\n{add}"
 
-        address_block = f"{address_block}\n" f"{address.street_and_number}"
+        address_block = f"{address_block}\n{address.street_and_number}"
 
         if address.po_box:
             address_block = f"{address_block}\n{address.po_box}"
 
-        address_block = f"{address_block}\n{address.postcode} {address.town}\n{address.country.name}"
-
-        return address_block
+        return f"{address_block}\n{address.postcode} {address.town}\n{address.country.name}"
 
     def greeting_salutation_and_name(self):
         language = get_language()
@@ -221,7 +225,9 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
 
 class Email(UUIDModel, HistoricalModel):
     identity = models.ForeignKey(
-        Identity, related_name="additional_emails", on_delete=models.CASCADE
+        Identity,
+        related_name="additional_emails",
+        on_delete=models.CASCADE,
     )
     email = models.EmailField()
     description = LocalizedCharField(blank=True, null=True, required=False)
@@ -233,7 +239,9 @@ class Email(UUIDModel, HistoricalModel):
 
 class PhoneNumber(UUIDModel, HistoricalModel):
     identity = models.ForeignKey(
-        Identity, related_name="phone_numbers", on_delete=models.CASCADE
+        Identity,
+        related_name="phone_numbers",
+        on_delete=models.CASCADE,
     )
     phone = PhoneNumberField()
     description = LocalizedCharField(blank=True, null=True, required=False)
@@ -246,7 +254,9 @@ class PhoneNumber(UUIDModel, HistoricalModel):
 
 class Address(UUIDModel, HistoricalModel):
     identity = models.ForeignKey(
-        Identity, related_name="addresses", on_delete=models.CASCADE
+        Identity,
+        related_name="addresses",
+        on_delete=models.CASCADE,
     )
     address_addition_1 = models.CharField(max_length=255, null=True, blank=True)
     address_addition_2 = models.CharField(max_length=255, null=True, blank=True)

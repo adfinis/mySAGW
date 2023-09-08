@@ -2,15 +2,12 @@ from collections import OrderedDict
 
 
 def _str_or_empty(value):
-    map = {True: 1, False: 0, None: ""}
-    return map.get(value, str(value))
+    mapping = {True: 1, False: 0, None: ""}
+    return mapping.get(value, str(value))
 
 
 def _fetch_related_strings(manager, field):
-    m2m_strings = []
-    for entry in manager.iterator():
-        m2m_strings.append(_str_or_empty(getattr(entry, field)))
-    return m2m_strings
+    return [_str_or_empty(getattr(entry, field)) for entry in manager.iterator()]
 
 
 class IdentityExport:
@@ -24,10 +21,10 @@ class IdentityExport:
         "organisation_name": lambda i, a: i.organisation_name,
         "email": lambda i, a: i.email,
         "additional_emails": lambda i, a: "\n".join(
-            _fetch_related_strings(i.additional_emails, "email")
+            _fetch_related_strings(i.additional_emails, "email"),
         ),
         "phone_numbers": lambda i, a: "\n".join(
-            _fetch_related_strings(i.phone_numbers, "phone")
+            _fetch_related_strings(i.phone_numbers, "phone"),
         ),
         "address_addition_1": lambda i, a: "" if not a else a.address_addition_1,
         "address_addition_2": lambda i, a: "" if not a else a.address_addition_2,

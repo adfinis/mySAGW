@@ -1,4 +1,4 @@
-from collections import namedtuple
+from typing import NamedTuple
 from uuid import uuid4
 
 import pytest
@@ -16,7 +16,9 @@ from caluma.caluma_workflow.schema import (
 from caluma.extensions.permissions import MySAGWPermission
 from caluma.extensions.settings import settings
 
-_Fallbackobj = namedtuple("Fallbackobj", ["created_by_user"])
+
+class _Fallbackobj(NamedTuple):
+    created_by_user: str
 
 
 @pytest.mark.parametrize(
@@ -29,7 +31,12 @@ _Fallbackobj = namedtuple("Fallbackobj", ["created_by_user"])
     ],
 )
 def test_permissions_fallback(
-    mocker, admin_info, groups, created_by_user, has_perm, has_obj_perm
+    mocker,
+    admin_info,
+    groups,
+    created_by_user,
+    has_perm,
+    has_obj_perm,
 ):
     admin_info.context.user.groups = groups
     admin_info.context.user.username = "baz"
@@ -159,7 +166,13 @@ def test_permission_for_save_document_answer_no_access(
     ],
 )
 def test_permission_for_save_case_and_start_case(
-    db, admin_info, answer, groups, created_by_user, has_perm, has_obj_perm
+    db,
+    admin_info,
+    answer,
+    groups,
+    created_by_user,
+    has_perm,
+    has_obj_perm,
 ):
     admin_info.context.user.groups = groups
     admin_info.context.user.username = "baz"
@@ -193,7 +206,8 @@ def test_permission_for_complete_work_item(
     case_access_request_mock,
 ):
     work_item = work_item_factory(
-        task__slug=task_slug, case__pk="994b72cc-6556-46e5-baf9-228457fa309f"
+        task__slug=task_slug,
+        case__pk="994b72cc-6556-46e5-baf9-228457fa309f",
     )
 
     admin_info.context.user.groups = groups
@@ -205,6 +219,7 @@ def test_permission_for_complete_work_item(
     assert perm.has_object_permission(mutation, admin_info, work_item) is has_obj_perm
 
 
+@pytest.mark.usefixtures("_caluma_data")
 @pytest.mark.parametrize(
     "groups,task_slug,has_case_access,has_perm,has_obj_perm",
     [
@@ -226,7 +241,6 @@ def test_permission_for_cancel_case(
     has_case_access,
     has_perm,
     has_obj_perm,
-    caluma_data,
     case_access_create_request_mock,
     identities_mock,
     get_token_mock,
@@ -264,7 +278,12 @@ def test_permission_for_cancel_case(
     ],
 )
 def test_analytics_permissions(
-    db, admin_info, analytics_table, groups, has_perm, has_obj_perm
+    db,
+    admin_info,
+    analytics_table,
+    groups,
+    has_perm,
+    has_obj_perm,
 ):
     admin_info.context.user.groups = groups
 
@@ -287,7 +306,12 @@ def test_analytics_permissions(
     ],
 )
 def test_redo_workitem_reopen_case(
-    db, admin_info, work_item_factory, groups, has_perm, has_obj_perm
+    db,
+    admin_info,
+    work_item_factory,
+    groups,
+    has_perm,
+    has_obj_perm,
 ):
     admin_info.context.user.groups = groups
 

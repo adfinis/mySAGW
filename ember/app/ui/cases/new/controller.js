@@ -7,7 +7,6 @@ import { restartableTask } from "ember-concurrency";
 import { trackedFunction } from "ember-resources/util/function";
 
 import createCaseMutation from "mysagw/gql/mutations/create-case.graphql";
-import getWorkflowQuery from "mysagw/gql/queries/get-workflow.graphql";
 
 export default class CaseNewController extends Controller {
   queryParams = ["selectedForm"];
@@ -33,23 +32,9 @@ export default class CaseNewController extends Controller {
 
   @restartableTask
   *createCase() {
-    const workflow = (yield this.apollo.query(
-      {
-        query: getWorkflowQuery,
-        variables: {
-          filter: [
-            {
-              slug: "document-review",
-            },
-          ],
-        },
-      },
-      "allWorkflows.edges"
-    )).firstObject.node;
-
     const newCase = yield this.apollo.mutate({
       mutation: createCaseMutation,
-      variables: { form: this.selectedForm, workflow: workflow.id },
+      variables: { form: this.selectedForm, workflow: "document-review" },
     });
 
     this.router.transitionTo(
