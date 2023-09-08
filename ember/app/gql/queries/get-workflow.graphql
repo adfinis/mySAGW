@@ -1,9 +1,0 @@
-query ($filter: [WorkflowFilterSetType]) {
-  allWorkflows(filter: $filter) {
-    edges {
-      node {
-        id
-      }
-    }
-  }
-}
