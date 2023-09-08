@@ -108,7 +108,7 @@ class ApplicationParser:
         ]:
             name = value["name"]
             if (value.get("metadata", {}) or {}).get(
-                "content_type"
+                "content_type",
             ) in SUPPORTED_MERGE_CONTENT_TYPES:
                 self.files_to_add.append(value["downloadUrl"])
                 name = f"{name} ({len(self.files_to_add)})"
@@ -141,7 +141,9 @@ class ApplicationParser:
         row_form_questions = question["rowForm"]["questions"]["edges"]
         rows = [
             self.format_application_data(
-                question["rowForm"]["name"], row_form_questions, row["answers"]["edges"]
+                question["rowForm"]["name"],
+                row_form_questions,
+                row["answers"]["edges"],
             )
             for row in answer["node"][
                 self.value_key_for_question(question["__typename"])
@@ -216,7 +218,8 @@ class ApplicationParser:
 
             # get the correct method for this question type
             type_method = type_method_map.get(
-                question["__typename"], self._handle_simple
+                question["__typename"],
+                self._handle_simple,
             )
 
             args = [question]
@@ -230,7 +233,8 @@ class ApplicationParser:
                 and not question["staticContent"]
             ):
                 continue
-            elif question["__typename"] != "StaticQuestion":
+
+            if question["__typename"] != "StaticQuestion":
                 # Questions other than StaticQuestion need their answer if there is one.
                 answer = self._get_answer(question, answers)
 

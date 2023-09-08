@@ -80,7 +80,7 @@ def test_identity_create(db, client, expected_status):
         "data": {
             "type": "identities",
             "attributes": {"first_name": "foo", "salutation": "neutral"},
-        }
+        },
     }
 
     response = client.post(url, data=data)
@@ -108,7 +108,7 @@ def test_identity_create_empty_failure(db, client, attributes):
         "data": {
             "type": "identities",
             "attributes": attributes,
-        }
+        },
     }
 
     response = client.post(url, data=data)
@@ -134,7 +134,7 @@ def test_identity_update_empty_failure(db, client, identity):
                 "organisation-name": "",
                 "email": None,
             },
-        }
+        },
     }
 
     response = client.patch(url, data=data)
@@ -165,7 +165,7 @@ def test_identity_update(db, client, expected_status, identity_factory):
             "type": "identities",
             "id": str(identity.pk),
             "attributes": {"first-name": "Foo", "email": ""},
-        }
+        },
     }
 
     response = client.patch(url, data=data)
@@ -188,7 +188,12 @@ def test_identity_update(db, client, expected_status, identity_factory):
     ],
 )
 def test_identity_update_is_organisation_membership_failure(
-    db, client, membership_factory, is_organisation, field, error_msg_vars
+    db,
+    client,
+    membership_factory,
+    is_organisation,
+    field,
+    error_msg_vars,
 ):
     membership = membership_factory(organisation__is_organisation=True)
     instance = getattr(membership, field)
@@ -200,7 +205,7 @@ def test_identity_update_is_organisation_membership_failure(
             "type": "identities",
             "id": str(instance.pk),
             "attributes": {"is-organisation": is_organisation},
-        }
+        },
     }
 
     response = client.patch(url, data=data)
@@ -222,7 +227,11 @@ def test_identity_update_is_organisation_membership_failure(
 )
 @pytest.mark.parametrize("update", [True, False])
 def test_identity_update_is_organisation_organisation_name_failure(
-    db, client, identity, expected_status, update
+    db,
+    client,
+    identity,
+    expected_status,
+    update,
 ):
     is_organisation = not identity.is_organisation
 
@@ -234,7 +243,7 @@ def test_identity_update_is_organisation_organisation_name_failure(
                 "email": "test@example.com",
                 "organisation-name": identity.organisation_name,
             },
-        }
+        },
     }
 
     url = reverse("identity-list")
@@ -276,7 +285,7 @@ def test_identity_update_organisation_type_failure(db, client, identity, field):
             "type": "identities",
             "id": str(identity.pk),
             "attributes": {"is-organisation": identity.is_organisation, field: True},
-        }
+        },
     }
 
     response = client.patch(url, data=data)
@@ -329,10 +338,10 @@ def test_identity_set_interests(db, client, identity_factory, interest_factory):
                     "data": [
                         {"id": str(interests[0].pk), "type": "interests"},
                         {"id": str(interests[1].pk), "type": "interests"},
-                    ]
-                }
+                    ],
+                },
             },
-        }
+        },
     }
 
     response = client.patch(url, data=data)
@@ -507,7 +516,11 @@ def test_identity_organisation_filters(db, client, identity_factory, is_organisa
 
 
 def test_identity_organisation_multi_filter_distinct(
-    db, client, identity_factory, membership_factory, snapshot
+    db,
+    client,
+    identity_factory,
+    membership_factory,
+    snapshot,
 ):
     sagw = identity_factory(is_organisation=True, organisation_name="SAGW")
     sagw_membership = membership_factory(organisation=sagw, role=None)
@@ -633,7 +646,8 @@ def test_membership_export(
 
     memberships[4].role = None
     memberships[4].time_slot = DateRange(
-        lower=datetime.date(2020, 1, 1), upper=datetime.date(2020, 1, 2)
+        lower=datetime.date(2020, 1, 1),
+        upper=datetime.date(2020, 1, 2),
     )
     memberships[4].next_election = datetime.date(2020, 11, 23)
     memberships[4].save()
@@ -688,22 +702,22 @@ def test_identity_export_email(
         assert sheet.array[i + 1][0] == identities[i].email
 
 
+@pytest.mark.usefixtures("_dms_mock")
 @pytest.mark.parametrize(
-    "dms_mock,error_response_type,expected_status",
+    "_dms_mock,error_response_type,expected_status",
     [
         ("success", None, status.HTTP_200_OK),
         ("json_error", "json", status.HTTP_500_INTERNAL_SERVER_ERROR),
         ("text_error", "text", status.HTTP_500_INTERNAL_SERVER_ERROR),
         ("unknown_error", "unknown", status.HTTP_500_INTERNAL_SERVER_ERROR),
     ],
-    indirect=["dms_mock"],
+    indirect=["_dms_mock"],
 )
 def test_identity_export_labels(
     db,
     client,
     identity_factory,
     snapshot,
-    dms_mock,
     expected_status,
     error_response_type,
 ):
@@ -777,7 +791,9 @@ def test_identity_export_labels_context(
         DMSClient,
         "get_merged_document",
         return_value=HttpResponse(
-            "content", status=status.HTTP_200_OK, content_type="text/plain"
+            "content",
+            status=status.HTTP_200_OK,
+            content_type="text/plain",
         ),
     )
 

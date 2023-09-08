@@ -1,41 +1,29 @@
 repos:
   - repo: local
     hooks:
-      - id: api-isort
-        stages: [commit]
-        name: api-isort
-        language: system
-        entry: /bin/sh -c 'cd ./api/ && isort .'
-        types: [python]
       - id: api-black
         stages: [commit]
         name: api-black
         language: system
         entry: /bin/sh -c 'cd ./api/ && black .'
         types: [python]
-      - id: api-flake8
+      - id: api-ruff
         stages: [commit]
-        name: api-flake8
+        name: api-ruff
         language: system
-        entry: /bin/sh -c 'cd ./api/ && flake8'
+        entry: /bin/sh -c 'cd ./api/ && ruff check . --show-source --fix'
         types: [python]
-      - id: caluma-isort
-        stages: [ commit ]
-        name: caluma-isort
-        language: system
-        entry: /bin/sh -c 'cd ./caluma/ && isort .'
-        types: [ python ]
       - id: caluma-black
         stages: [ commit ]
         name: caluma-black
         language: system
         entry: /bin/sh -c 'cd ./caluma/ && black .'
         types: [ python ]
-      - id: caluma-flake8
+      - id: caluma-ruff
         stages: [ commit ]
-        name: caluma-flake8
+        name: caluma-ruff
         language: system
-        entry: /bin/sh -c 'cd ./caluma/ && flake8'
+        entry: /bin/sh -c 'cd ./caluma/ && ruff check . --config ../api/pyproject.toml --show-source --fix'
         types: [ python ]
       - id: gitlint
         stages: [commit-msg]

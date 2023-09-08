@@ -83,7 +83,7 @@ def test_case_create(
             "relationships": {
                 "identity": {},
             },
-        }
+        },
     }
 
     if has_access:
@@ -144,7 +144,7 @@ def test_case_create_first(db, client, mailoutbox):
             "relationships": {
                 "identity": {},
             },
-        }
+        },
     }
 
     url = reverse("caseaccess-list")
@@ -157,7 +157,9 @@ def test_case_create_first(db, client, mailoutbox):
 
 def test_case_create_already_exists(db, case_access_factory, client):
     case_access = case_access_factory(
-        email=None, identity=client.user.identity, case_id=uuid4()
+        email=None,
+        identity=client.user.identity,
+        case_id=uuid4(),
     )
 
     data = {
@@ -170,7 +172,7 @@ def test_case_create_already_exists(db, case_access_factory, client):
             "relationships": {
                 "identity": {},
             },
-        }
+        },
     }
 
     url = reverse("caseaccess-list")
@@ -280,7 +282,7 @@ def test_download_dms_failure(
             ".*",
             "merge",
             trailing=True,
-        )
+        ),
     )
 
     requests_mock.post(

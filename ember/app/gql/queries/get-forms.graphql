@@ -1,11 +1,5 @@
 query getForms {
-  allForms(
-    filter: [
-      { questions: ["dossier-nr"] }
-      { isPublished: true }
-      { isArchived: false }
-    ]
-  ) {
+  allForms(filter: [{ questions: ["dossier-nr"] }, { isArchived: false }]) {
     edges {
       node {
         slug

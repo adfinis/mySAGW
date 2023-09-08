@@ -6,7 +6,8 @@ from mysagw.identity.models import Identity
 
 
 @pytest.mark.parametrize(
-    "identity__salutation", Identity.SALUTATION_LOCALIZED_MAP.keys()
+    "identity__salutation",
+    Identity.SALUTATION_LOCALIZED_MAP.keys(),
 )
 @pytest.mark.parametrize("identity__title", Identity.TITLE_LOCALIZED_MAP.keys())
 @pytest.mark.parametrize("identity__first_name", ["Winston", None])

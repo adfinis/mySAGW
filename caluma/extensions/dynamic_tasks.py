@@ -21,7 +21,7 @@ class CustomDynamicTasks(BaseDynamicTasks):
 
         if "reject" in review_decision.value:
             return ["revise-document"]
-        elif "continue" in review_decision.value:
+        if "continue" in review_decision.value:
             return ["circulation"]
 
         return []
@@ -34,16 +34,18 @@ class CustomDynamicTasks(BaseDynamicTasks):
 
         if "additional-data" in credit_decision.value:
             additional_data = case.work_items.filter(
-                task__slug="additional-data", status=WorkItem.STATUS_REDO
+                task__slug="additional-data",
+                status=WorkItem.STATUS_REDO,
             )
             if additional_data.exists():
                 set_one_workitem_ready(additional_data)
                 return ["additional-data-form", "advance-credits"]
 
             return ["additional-data", "additional-data-form", "advance-credits"]
-        elif "define-amount" in credit_decision.value:
+        if "define-amount" in credit_decision.value:
             define_amount = case.work_items.filter(
-                task__slug="define-amount", status=WorkItem.STATUS_REDO
+                task__slug="define-amount",
+                status=WorkItem.STATUS_REDO,
             )
             if define_amount.exists():
                 set_one_workitem_ready(define_amount)
@@ -60,12 +62,13 @@ class CustomDynamicTasks(BaseDynamicTasks):
 
         if "reject" in decision.value:
             additional_data = case.work_items.filter(
-                task__slug="additional-data", status=WorkItem.STATUS_REDO
+                task__slug="additional-data",
+                status=WorkItem.STATUS_REDO,
             )
             if additional_data.exists():
                 set_one_workitem_ready(additional_data)
             return ["additional-data"]
-        elif "continue" in decision.value:
+        if "continue" in decision.value:
             return ["complete-document"]
 
         return []

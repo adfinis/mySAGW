@@ -28,7 +28,9 @@ def test_upload_labels_template_command(requests_mock, args, success):
         )
 
     template_url = build_url(
-        settings.DOCUMENT_MERGE_SERVICE_URL, "template", trailing=True
+        settings.DOCUMENT_MERGE_SERVICE_URL,
+        "template",
+        trailing=True,
     )
 
     mock_upload = requests_mock.post(
@@ -54,5 +56,5 @@ def test_upload_labels_template_command(requests_mock, args, success):
         with pytest.raises(CommandError) as e:
             call_command("upload_template", *args)
         assert e.value.args[0].startswith(
-            "Error: argument -t/--template: Template not found:"
+            "Error: argument -t/--template: Template not found:",
         )

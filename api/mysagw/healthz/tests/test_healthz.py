@@ -34,12 +34,11 @@ def test_healthz_permissions(db, snapshot, identity, client, expected_status):
     snapshot.assert_match(response.json())
 
 
+@pytest.mark.usefixtures("_roll_back_migrations")
 def test_db_migrations_not_applied(
     capsys,
     client,
     snapshot,
-    db,
-    roll_back_migrations,
     identity,
 ):
     """

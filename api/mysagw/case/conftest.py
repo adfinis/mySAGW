@@ -17,7 +17,7 @@ def dms_mock(requests_mock):
             ".*",
             "merge",
             trailing=True,
-        )
+        ),
     )
 
     with (TEST_FILES_DIR / "test.pdf").open("rb") as f:
@@ -38,16 +38,16 @@ def acknowledgement_mock(requests_mock):
             "data": {
                 "node": {
                     "main": {
-                        "dossier_nr": {"edges": [{"node": {"value": "2022-0001"}}]}
+                        "dossier_nr": {"edges": [{"node": {"value": "2022-0001"}}]},
                     },
                     "submit": {
                         "edges": [
                             {
                                 "node": {
-                                    "closedByUser": "e5dabdd0-bafb-4b75-82d2-ccf9295b623b"
-                                }
-                            }
-                        ]
+                                    "closedByUser": "e5dabdd0-bafb-4b75-82d2-ccf9295b623b",
+                                },
+                            },
+                        ],
                     },
                     "revise": {
                         "edges": [
@@ -55,22 +55,24 @@ def acknowledgement_mock(requests_mock):
                                 "node": {
                                     "closedByUser": "e5dabdd0-bafb-4b75-82d2-ccf9295b623b",
                                     "closedAt": "1970-01-02T06:04:35.345403+00:00",
-                                }
+                                },
                             },
                             {
                                 "node": {
                                     "closedByUser": "e5dabdd0-bafb-4b75-82d2-ccf9295b623b",
                                     "closedAt": "1970-01-01T05:58:47.177316+00:00",
-                                }
+                                },
                             },
-                        ]
+                        ],
                     },
-                }
-            }
+                },
+            },
         }
 
         requests_mock.post(
-            "http://testserver/graphql", status_code=200, json=caluma_data
+            "http://testserver/graphql",
+            status_code=200,
+            json=caluma_data,
         )
 
     return mockit
@@ -83,35 +85,39 @@ def credit_approval_mock(requests_mock):
             "data": {
                 "node": {
                     "main": {
-                        "dossier_nr": {"edges": [{"node": {"value": "2022-0001"}}]}
+                        "dossier_nr": {"edges": [{"node": {"value": "2022-0001"}}]},
                     },
                     "decisionAndCredit": {
                         "edges": [
                             {
                                 "node": {
                                     "document": {
-                                        "credit": {"edges": [{"node": {"value": 23.0}}]}
-                                    }
-                                }
-                            }
-                        ]
+                                        "credit": {
+                                            "edges": [{"node": {"value": 23.0}}],
+                                        },
+                                    },
+                                },
+                            },
+                        ],
                     },
                     "submit": {
                         "edges": [
                             {
                                 "node": {
-                                    "closedByUser": "e5dabdd0-bafb-4b75-82d2-ccf9295b623b"
-                                }
-                            }
-                        ]
+                                    "closedByUser": "e5dabdd0-bafb-4b75-82d2-ccf9295b623b",
+                                },
+                            },
+                        ],
                     },
                     "revise": {"edges": []},
-                }
-            }
+                },
+            },
         }
 
         requests_mock.post(
-            "http://testserver/graphql", status_code=200, json=caluma_data
+            "http://testserver/graphql",
+            status_code=200,
+            json=caluma_data,
         )
 
     return mockit
@@ -123,11 +129,12 @@ def application_mock(requests_mock):
         def json_callback(request, context):
             if request.json()["query"].startswith("query DocumentId"):
                 return {"data": {"node": {"document": {"id": "GLOBAL_ID"}}}}
-            else:
-                return data
+            return data
 
         requests_mock.post(
-            "http://testserver/graphql", status_code=200, json=json_callback
+            "http://testserver/graphql",
+            status_code=200,
+            json=json_callback,
         )
 
         for file in ["small.png", "big.png", "long.png", "wide.png"]:

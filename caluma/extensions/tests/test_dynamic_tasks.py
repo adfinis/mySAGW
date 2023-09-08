@@ -10,6 +10,7 @@ from caluma.caluma_workflow.api import (
 from caluma.caluma_workflow.models import Case, WorkItem
 
 
+@pytest.mark.usefixtures("_caluma_data")
 @pytest.mark.parametrize(
     "decision,expected_case_status,expected_work_item",
     [
@@ -20,7 +21,6 @@ from caluma.caluma_workflow.models import Case, WorkItem
 )
 def test_dynamic_task_after_review_document(
     db,
-    caluma_data,
     user,
     case_access_event_mock,
     document_review_case,
@@ -47,6 +47,7 @@ def test_dynamic_task_after_review_document(
         assert case.work_items.filter(task_id=expected_work_item).exists()
 
 
+@pytest.mark.usefixtures("_caluma_data")
 @pytest.mark.parametrize(
     "decision,expected_case_status,expected_work_item",
     [
@@ -58,7 +59,6 @@ def test_dynamic_task_after_review_document(
 )
 def test_dynamic_task_after_decision_and_credit(
     db,
-    caluma_data,
     user,
     case_access_event_mock,
     circulation,
@@ -86,9 +86,9 @@ def test_dynamic_task_after_decision_and_credit(
         assert case.work_items.filter(task_id=expected_work_item).exists()
 
 
+@pytest.mark.usefixtures("_caluma_data")
 def test_workflow_edge_cases(
     db,
-    caluma_data,
     user,
     case_access_event_mock,
     circulation,
@@ -110,16 +110,17 @@ def test_workflow_edge_cases(
 
     assert case.work_items.filter(task_id="additional-data").exists()
 
-    for i in range(2):
-        print(i)
+    for _i in range(2):
         complete_work_item(
             case.work_items.get(
-                task_id="additional-data", status=WorkItem.STATUS_READY
+                task_id="additional-data",
+                status=WorkItem.STATUS_READY,
             ),
             user,
         )
         define_amount = case.work_items.get(
-            task_id="define-amount", status=WorkItem.STATUS_READY
+            task_id="define-amount",
+            status=WorkItem.STATUS_READY,
         )
         define_amount.document.answers.create(
             question_id="define-amount-decision",
@@ -135,7 +136,8 @@ def test_workflow_edge_cases(
 
     assert (
         case.work_items.filter(
-            task_id="additional-data", status=WorkItem.STATUS_READY
+            task_id="additional-data",
+            status=WorkItem.STATUS_READY,
         ).count()
         == 1
     )
@@ -150,7 +152,8 @@ def test_workflow_edge_cases(
     complete_work_item(decision_and_credit, user)
 
     define_amount = case.work_items.filter(
-        task_id="define-amount", status=WorkItem.STATUS_READY
+        task_id="define-amount",
+        status=WorkItem.STATUS_READY,
     )
     assert define_amount.count() == 1
     define_amount.first().document.answers.get(
@@ -160,12 +163,14 @@ def test_workflow_edge_cases(
 
     assert (
         case.work_items.filter(
-            task_id="additional-data", status=WorkItem.STATUS_READY
+            task_id="additional-data",
+            status=WorkItem.STATUS_READY,
         ).count()
         == 1
     )
 
 
+@pytest.mark.usefixtures("_caluma_data")
 @pytest.mark.parametrize(
     "decision,expected_work_item_task,expected_work_item_form,internal_periodics",
     [
@@ -177,7 +182,6 @@ def test_workflow_edge_cases(
 )
 def test_dynamic_task_after_define_amount(
     db,
-    caluma_data,
     user,
     case_access_event_mock,
     circulation,
@@ -190,7 +194,7 @@ def test_dynamic_task_after_define_amount(
     send_mail_mock,
 ):
     Question.objects.filter(formquestion__form__pk="additional-data-form").update(
-        is_required="false"
+        is_required="false",
     )
 
     case = circulation.parent_work_item.case
@@ -237,6 +241,7 @@ def test_dynamic_task_after_define_amount(
         assert case.status == Case.STATUS_COMPLETED
 
 
+@pytest.mark.usefixtures("_caluma_data")
 @pytest.mark.parametrize(
     "decision,expected_work_item_task",
     [
@@ -252,7 +257,6 @@ def test_dynamic_task_after_define_amount(
 )
 def test_dynamic_task_redo_define_amount(
     db,
-    caluma_data,
     user,
     case_access_event_mock,
     circulation,
@@ -263,7 +267,7 @@ def test_dynamic_task_redo_define_amount(
     send_mail_mock,
 ):
     Question.objects.filter(formquestion__form__pk="additional-data-form").update(
-        is_required="false"
+        is_required="false",
     )
 
     case = circulation.parent_work_item.case
@@ -285,7 +289,8 @@ def test_dynamic_task_redo_define_amount(
 
         assert case.status == Case.STATUS_RUNNING
         assert case.work_items.filter(
-            task_id=expected_work_item_task, status=WorkItem.STATUS_READY
+            task_id=expected_work_item_task,
+            status=WorkItem.STATUS_READY,
         ).exists()
     else:
         with pytest.raises(ValidationError):

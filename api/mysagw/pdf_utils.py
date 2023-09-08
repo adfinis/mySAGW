@@ -1,6 +1,7 @@
 import io
 
 import requests
+from django.conf import settings
 from pypdf import PdfWriter
 from pypdf.errors import DependencyError, PdfReadError
 from reportlab.lib.pagesizes import A4, mm
@@ -12,7 +13,7 @@ SUPPORTED_MERGE_CONTENT_TYPES = ["application/pdf", "image/png", "image/jpeg"]
 
 def get_caluma_file(url):
     file = io.BytesIO()
-    resp = requests.get(url, verify=False)
+    resp = requests.get(url, verify=settings.ENV != "dev", timeout=15)
     file.write(resp.content)
     return {"file": file, "content-type": resp.headers.get("content-type")}
 

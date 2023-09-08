@@ -38,7 +38,8 @@ def set_assigned_user(sender, work_item, user, **kwargs):
         "additional-data-form",
     ]:
         work_item.assigned_users = caluma_workflow_models.WorkItem.objects.get(
-            task_id="submit-document", case=work_item.case
+            task_id="submit-document",
+            case=work_item.case,
         ).assigned_users
 
     work_item.save()
@@ -82,7 +83,7 @@ def _send_work_item_mail(work_item):
                 .first()
             )
             framework_credit = decision_and_credit_work_item.document.answers.get(
-                question__slug="gesprochener-rahmenkredit"
+                question__slug="gesprochener-rahmenkredit",
             ).value
             framework_credit = format_currency(framework_credit, "CHF")
             selected_email_texts = email_cost_approval
@@ -93,10 +94,11 @@ def _send_work_item_mail(work_item):
             .first()
         )
         payout_amount_answer = define_amount_work_item.document.answers.filter(
-            question__slug="define-amount-amount-float"
+            question__slug="define-amount-amount-float",
         ).first()
         payout_amount = format_currency(
-            payout_amount_answer.value if payout_amount_answer else 0, "CHF"
+            payout_amount_answer.value if payout_amount_answer else 0,
+            "CHF",
         )
         selected_email_texts = email_payout_amount
     elif work_item.task.slug in ["review-document", "decision-and-credit"]:
@@ -142,7 +144,7 @@ def _send_work_item_mail(work_item):
         "revise-document",
         "additional-data",
         "complete-document",
-    ]
+    ],
 )
 def send_new_work_item_mail(sender, work_item, user, **kwargs):
     _send_work_item_mail(work_item)
@@ -161,7 +163,7 @@ def send_new_work_item_mail(sender, work_item, user, **kwargs):
             question_id="review-document-decision",
             value="review-document-decision-complete",
         ).exists()
-    )
+    ),
 )
 def send_rejection_mail(sender, work_item, user, **kwargs):
     _send_work_item_mail(work_item)
@@ -171,7 +173,11 @@ def send_rejection_mail(sender, work_item, user, **kwargs):
 @on(post_reopen_case, raise_exception=True)
 @transaction.atomic
 def set_case_status_post_create_work_item_reopen_case(
-    sender, user, work_item=None, case=None, **kwargs
+    sender,
+    user,
+    work_item=None,
+    case=None,
+    **kwargs,
 ):
     work_item = (
         work_item if work_item else case.work_items.filter(status="ready").first()
@@ -189,7 +195,7 @@ def set_case_status_post_create_work_item_reopen_case(
     lambda sender, work_item: sender
     in ["post_complete_work_item", "post_skip_work_item"]
     and work_item.task_id == "circulation"
-    and not work_item.child_case
+    and not work_item.child_case,
 )
 @transaction.atomic
 def create_circulation_child_case(sender, work_item, user, **kwargs):
@@ -205,7 +211,7 @@ def create_circulation_child_case(sender, work_item, user, **kwargs):
 @filter_events(
     lambda sender, work_item, context: sender == "post_complete_work_item"
     and work_item.task_id == "circulation-decision"
-    and context is not None
+    and context is not None,
 )
 @transaction.atomic
 def invite_to_circulation(sender, work_item, user, context, **kwargs):
@@ -229,7 +235,7 @@ def invite_to_circulation(sender, work_item, user, context, **kwargs):
             },
             case=work_item.case,
             document=caluma_form_models.Document.objects.create(
-                form=work_item.document.form
+                form=work_item.document.form,
             ),
         )
 
@@ -237,16 +243,17 @@ def invite_to_circulation(sender, work_item, user, context, **kwargs):
 @on(post_create_work_item, raise_exception=True)
 @filter_events(
     lambda sender, work_item: sender == "post_complete_work_item"
-    and work_item.task_id == "additional-data-form"
+    and work_item.task_id == "additional-data-form",
 )
 @transaction.atomic
 def create_additional_data_form_document(sender, work_item, user, context, **kwargs):
     form_slug = settings.ADDITIONAL_DATA_FORM.get(
-        work_item.case.document.form_id, "additional-data-form"
+        work_item.case.document.form_id,
+        "additional-data-form",
     )
     if work_item.case.document.form_id == settings.INTERNAL_APPLICATION_FORM_SLUG:
         answer = work_item.case.document.answers.filter(
-            question__slug=settings.INTERNAL_APPLICATION_TYPE_QUESTION_SLUG
+            question__slug=settings.INTERNAL_APPLICATION_TYPE_QUESTION_SLUG,
         )
         if (
             answer
@@ -263,7 +270,7 @@ def create_additional_data_form_document(sender, work_item, user, context, **kwa
 @on(pre_complete_work_item, raise_exception=True)
 @filter_events(
     lambda sender, work_item: sender == "pre_complete_work_item"
-    and work_item.task_id == "finish-circulation"
+    and work_item.task_id == "finish-circulation",
 )
 @transaction.atomic
 def finish_circulation(sender, work_item, user, **kwargs):
@@ -280,7 +287,7 @@ def finish_circulation(sender, work_item, user, **kwargs):
 @on(post_complete_work_item, raise_exception=True)
 @filter_events(
     lambda sender, work_item: sender == "post_complete_work_item"
-    and work_item.task_id == "additional-data"
+    and work_item.task_id == "additional-data",
 )
 @transaction.atomic
 def finish_additional_data(sender, work_item, user, **kwargs):
@@ -297,7 +304,7 @@ def finish_additional_data(sender, work_item, user, **kwargs):
 @on(post_complete_work_item, raise_exception=True)
 @filter_events(
     lambda sender, work_item: sender == "post_complete_work_item"
-    and work_item.task_id == "additional-data-form"
+    and work_item.task_id == "additional-data-form",
 )
 @transaction.atomic
 def finish_additional_data_form(sender, work_item, user, **kwargs):
@@ -317,7 +324,7 @@ def finish_additional_data_form(sender, work_item, user, **kwargs):
 @on(post_complete_work_item, raise_exception=True)
 @filter_events(
     lambda sender, work_item: sender == "post_complete_work_item"
-    and work_item.task_id == "define-amount"
+    and work_item.task_id == "define-amount",
 )
 @transaction.atomic
 def finish_define_amount(sender, work_item, user, **kwargs):
@@ -327,7 +334,7 @@ def finish_define_amount(sender, work_item, user, **kwargs):
 
     if any(state in decision.value for state in ["zurueckgezogen", "dismissed"]):
         for sibling in work_item.case.work_items.filter(
-            status=caluma_workflow_models.WorkItem.STATUS_READY
+            status=caluma_workflow_models.WorkItem.STATUS_READY,
         ):
             caluma_workflow_api.complete_work_item(
                 work_item=sibling,
@@ -425,7 +432,7 @@ def redo_define_amount(sender, work_item, user, **kwargs):
 @on(post_complete_work_item, raise_exception=True)
 @filter_events(
     lambda sender, work_item: sender == "post_complete_work_item"
-    and work_item.task_id == "additional-data"
+    and work_item.task_id == "additional-data",
 )
 @transaction.atomic
 def close_multiple_define_amount(sender, work_item, user, **kwargs):
@@ -437,6 +444,7 @@ def close_multiple_define_amount(sender, work_item, user, **kwargs):
     TODO: This is an ugly hack and we want to get rid of it.
     """
     define_amount = work_item.case.work_items.filter(
-        task_id="define-amount", status=caluma_workflow_models.WorkItem.STATUS_REDO
+        task_id="define-amount",
+        status=caluma_workflow_models.WorkItem.STATUS_REDO,
     )
     define_amount.update(status=caluma_workflow_models.WorkItem.STATUS_CANCELED)

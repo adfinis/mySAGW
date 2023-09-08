@@ -23,7 +23,8 @@ def test_migrate_public_localized_interests(transactional_db):  # pragma: no cov
         "InterestCategory": old_apps.get_model("identity", "InterestCategory"),
         "Interest": old_apps.get_model("identity", "Interest"),
         "HistoricalInterestCategory": old_apps.get_model(
-            "identity", "HistoricalInterestCategory"
+            "identity",
+            "HistoricalInterestCategory",
         ),
         "HistoricalInterest": old_apps.get_model("identity", "HistoricalInterest"),
     }
@@ -52,14 +53,15 @@ def test_migrate_public_localized_interests(transactional_db):  # pragma: no cov
         "InterestCategory": new_apps.get_model("identity", "InterestCategory"),
         "Interest": new_apps.get_model("identity", "Interest"),
         "HistoricalInterestCategory": new_apps.get_model(
-            "identity", "HistoricalInterestCategory"
+            "identity",
+            "HistoricalInterestCategory",
         ),
         "HistoricalInterest": new_apps.get_model("identity", "HistoricalInterest"),
     }
 
     for old_record in old_records:
         new_record = new_models[old_record.__class__.__name__].objects.get(
-            pk=old_record.pk
+            pk=old_record.pk,
         )
         assert type(new_record.title) == LocalizedStringValue
         assert dict(new_record.title) == {"de": "foo", "en": "", "fr": ""}

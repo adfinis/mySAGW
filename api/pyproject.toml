@@ -30,21 +30,13 @@ pyexcel-xlsx = "^0.6.0"
 pypdf = "^3.12.1"
 requests = "^2.31.0"
 reportlab = "^4.0.4"
-uwsgi = "^2.0.21"
+uwsgi = "^2.0.22"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.3.0"
 django-extensions = "^3.2.3"
 factory-boy = "^3.2.1"
-flake8 = "^6.0.0"
-flake8-blind-except = "^0.2.1"
-flake8-debugger = "^4.1.2"
-flake8-docstrings = "^1.7.0"
-flake8-isort = "^6.0.0"
-flake8-string-format = "^0.3.0"
-flake8-tuple = "^0.4.1"
 gitlint = "^0.19.1"
-isort = "^5.12.0"
 pdbpp = "^0.10.3"
 pre-commit = "^3.3.2"
 psycopg2-binary = "^2.9.6"
@@ -58,18 +50,67 @@ pytest-mock = "^3.10.0"
 pytest-randomly = "^3.12.0"
 requests-mock = "^1.10.0"
 syrupy = "^4.0.2"
+ruff = "^0.0.284"
 
-[tool.isort]
-skip = [
-  "migrations",
-  "snapshots",
+[tool.ruff]
+exclude = [
+    "migrations",
+    "snapshots",
 ]
-known_first_party = ["mysagw"]
-multi_line_output = 3
-include_trailing_comma = true
-force_grid_wrap = 0
-combine_as_imports = true
-line_length = 88
+ignore = [
+    "A003",     # `flake8-builtins` - Class attribute {name} is shadowing a Python builtin
+    "ANN",      # `flake8-annotations`
+    "ARG",      # `flake8-unused-arguments`
+    "D100",     # Missing docstring in public module
+    "D101",     # Missing docstring in public class
+    "D102",     # Missing docstring in public method
+    "D103",     # Missing docstring in public function
+    "D104",     # Missing docstring in public package
+    "D105",     # Missing docstring in magic method
+    "D106",     # Missing docstring in public nested class
+    "D107",     # Missing docstring in __init__
+    "D202",     # No blank lines allowed after function docstring (found {num_lines})
+    "D203",     # 1 blank line required before class docstring
+    "D212",     # Multi-line docstring summary should start at the first line
+    "DJ001",    #  flake8-django` - Avoid using null=True on string-based fields
+    "E501",     # Line too long ({width} > {limit} characters) - managed by black
+    "ERA001",   # eradicate - Found commented-out code
+    "FA100",    # `future-rewritable-type-annotation` - obsolete in python >= 3.9
+    "FBT002",   # `flake8-boolean-trap` - Boolean default positional argument in function definition
+    "FBT003",   # Boolean positional value in function call
+    "FIX",      # `flake8-fixme`
+    "N818",     # Exception name {name} should be named with an Error suffix - https://github.com/astral-sh/ruff/issues/5367
+    "PERF203",  # `try-except-in-loop` - obsolete in python >= 3.11
+    "PGH005",   # doesn't work correctly with `requests-mock`
+    "PLR0913",  # Too many arguments to function call
+    "PLR2004",  # Magic value used in comparison, consider replacing {value} with a constant variable
+    "PT006",    # Wrong name(s) type in @pytest.mark.parametrize, expected {expected}
+    "PT017",    # Found assertion on exception {name} in except block, use pytest.raises() instead
+    "PLW2901",  # `for` loop variable `search_term` overwritten by assignment target
+    "RET502",   # Do not implicitly return None in function able to return non-None value
+    "RET503",   # Missing explicit return at the end of function able to return non-None value
+    "RUF001",   # ambiguous-unicode-character-string
+    "RUF012",   # Mutable class attributes should be annotated with typing.ClassVar
+    "S101",     # Use of assert detected
+    "TD002",    # missing-todo-author
+    "TD003",    # missing-todo-link
+    "TID252",   # banned-module-level-imports
+]
+line-length = 88
+select = ["ALL"]
+
+[tool.ruff.mccabe]
+max-complexity = 10
+
+[tool.ruff.isort]
+known-first-party = ["mysagw", "caluma"]
+combine-as-imports = true
+
+[tool.ruff.flake8-pytest-style]
+fixture-parentheses = false
+
+[tool.ruff.per-file-ignores]
+"manage.py" = ["INP001"]
 
 [tool.pytest.ini_options]
 addopts = "--reuse-db --randomly-seed=1521188766 --randomly-dont-reorganize"

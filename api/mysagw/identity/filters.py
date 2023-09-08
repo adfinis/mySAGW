@@ -33,14 +33,14 @@ class IdentityFilterSet(FilterSet):
                     | models.Q(time_slot__contains=timezone.now())
                 )
                 & models.Q(inactive=False)
-            )
+            ),
         )
 
         membership_base_subquery = membership_base_query.filter(
-            identity_id=OuterRef("pk")
+            identity_id=OuterRef("pk"),
         )
         return queryset.filter(
-            memberships__id__in=Subquery(membership_base_subquery.values("id"))
+            memberships__id__in=Subquery(membership_base_subquery.values("id")),
         ).distinct()
 
     class Meta:
@@ -126,7 +126,7 @@ class OrganisationAdminMembersFilterSet(FilterSet):
                     ),
                 ),
                 Value(0),
-            )
+            ),
         )
         queryset = queryset.annotate(
             highest_inactive_role=Coalesce(
@@ -138,21 +138,20 @@ class OrganisationAdminMembersFilterSet(FilterSet):
                         & (
                             Q(memberships__time_slot__isnull=True)
                             | Q(memberships__time_slot__contains=timezone.now())
-                        )
+                        ),
                     ),
                 ),
                 Value(0),
-            )
+            ),
         )
 
-        queryset = queryset.order_by(
+        return queryset.order_by(
             "-highest_active_role",
             "-highest_inactive_role",
             "last_name",
             "first_name",
             "email",
         )
-        return queryset
 
     class Meta:
         model = models.Identity
@@ -200,11 +199,11 @@ class SAGWSearchFilter(SearchFilter):
                     | models.Q(time_slot__contains=timezone.now())
                 )
                 & models.Q(inactive=False)
-            )
+            ),
         )
 
         membership_base_subquery = membership_base_query.filter(
-            identity_id=OuterRef("pk")
+            identity_id=OuterRef("pk"),
         )
 
         filters = []
@@ -223,17 +222,17 @@ class SAGWSearchFilter(SearchFilter):
                 if orm_lookup.startswith("memberships__"):
                     membership_orm_lookup = orm_lookup.replace("memberships__", "")
                     if not membership_base_query.filter(
-                        **{membership_orm_lookup: search_term}
+                        **{membership_orm_lookup: search_term},
                     ).exists():
                         # short circuiting in order to save ~75% of processing time
                         continue
 
                     membership_subquery = membership_base_subquery.filter(
-                        **{membership_orm_lookup: search_term}
+                        **{membership_orm_lookup: search_term},
                     )
                     # first Q object short circuits again, for a performance gain
                     lookup = models.Q(**{orm_lookup: search_term}) & models.Q(
-                        memberships__id__in=Subquery(membership_subquery.values("id"))
+                        memberships__id__in=Subquery(membership_subquery.values("id")),
                     )
 
                 queries.append(lookup)

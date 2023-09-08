@@ -72,4 +72,8 @@ export default class CaseAbility extends BaseAbility {
   get canFilterAccess() {
     return this.isStaffOrAdmin;
   }
+
+  get canFilterAllForms() {
+    return this.isStaffOrAdmin;
+  }
 }

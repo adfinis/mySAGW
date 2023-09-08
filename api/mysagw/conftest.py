@@ -102,13 +102,13 @@ def client(db, user, staff_user, admin_user, request):
     return client
 
 
-@pytest.fixture(scope="function", autouse=True)
+@pytest.fixture(autouse=True)
 def _autoclear_cache():
     cache.clear()
 
 
 @pytest.fixture(params=["success"])
-def dms_mock(requests_mock, settings, request):
+def _dms_mock(requests_mock, settings, request):
     matcher = re.compile(
         build_url(
             settings.DOCUMENT_MERGE_SERVICE_URL,
@@ -116,14 +116,14 @@ def dms_mock(requests_mock, settings, request):
             ".*",
             "merge",
             trailing=True,
-        )
+        ),
     )
 
     response_map = {
         "success": {
             "status_code": status.HTTP_200_OK,
             "headers": {
-                "Content-Type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                "Content-Type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
             },
             "body": io.BytesIO(b"I'm the merged document"),
         },

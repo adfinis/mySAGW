@@ -69,7 +69,7 @@ class OIDCUser(BaseUser):
             return None
         try:
             identity = Identity.objects.get(
-                Q(idp_id=self.id) | Q(email__iexact=self.email)
+                Q(idp_id=self.id) | Q(email__iexact=self.email),
             )
             # we only want to save if necessary in order to prevent adding historical
             # records on every request
@@ -78,12 +78,11 @@ class OIDCUser(BaseUser):
                 identity.email = self.email
                 identity.modified_by_user = self.id
                 identity.save()
-            return identity
         except Identity.MultipleObjectsReturned:
             # TODO: trigger notification for staff members or admins
             logger.warning(
                 "Found one Identity with same idp_id and one with same email. Matching"
-                " on idp_id."
+                " on idp_id.",
             )
             return Identity.objects.get(idp_id=self.id)
         except Identity.DoesNotExist:
@@ -102,6 +101,8 @@ class OIDCUser(BaseUser):
                 except Identity.DoesNotExist:
                     pass
                 raise
+        else:
+            return identity
 
     def __str__(self):
         return f"{self.email} - {self.id}"

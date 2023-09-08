@@ -18,26 +18,26 @@ CALUMA_DATA_FULL = {
                                                 "node": {
                                                     "slug": "verteilplan-nr-vp-2021",
                                                     "label": "2021",
-                                                }
+                                                },
                                             },
                                             {
                                                 "node": {
                                                     "slug": "verteilplan-nr-vp-2022",
                                                     "label": "2022",
-                                                }
+                                                },
                                             },
                                             {
                                                 "node": {
                                                     "slug": "verteilplan-nr-vp-2023",
                                                     "label": "2023",
-                                                }
+                                                },
                                             },
-                                        ]
+                                        ],
                                     },
                                 },
-                            }
-                        }
-                    ]
+                            },
+                        },
+                    ],
                 },
                 "answers": {
                     "edges": [
@@ -52,7 +52,7 @@ CALUMA_DATA_FULL = {
                                     "test-many-multiple-choices-choice-6",
                                     "test-many-multiple-choices-choice-11",
                                 ],
-                            }
+                            },
                         },
                         {
                             "node": {
@@ -65,34 +65,34 @@ CALUMA_DATA_FULL = {
                                                     "node": {
                                                         "question": {"slug": "row-1"},
                                                         "stringValue": "Foo",
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
                                                         "question": {"slug": "row-2"},
                                                         "integerValue": 2,
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
                                                         "question": {"slug": "row-3"},
                                                         "floatValue": 2.2,
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
                                                         "question": {"slug": "row-4"},
                                                         "stringValue": "row-4-choice-1",
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
                                                         "question": {"slug": "row-5"},
                                                         "listValue": ["row-5-choice-3"],
-                                                    }
+                                                    },
                                                 },
-                                            ]
-                                        }
+                                            ],
+                                        },
                                     },
                                     {
                                         "answers": {
@@ -101,25 +101,25 @@ CALUMA_DATA_FULL = {
                                                     "node": {
                                                         "question": {"slug": "row-1"},
                                                         "stringValue": "Bar",
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
                                                         "question": {"slug": "row-2"},
                                                         "integerValue": 4,
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
                                                         "question": {"slug": "row-3"},
                                                         "floatValue": 5.5,
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
                                                         "question": {"slug": "row-4"},
                                                         "stringValue": "row-4-choice-2",
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
@@ -128,43 +128,43 @@ CALUMA_DATA_FULL = {
                                                             "row-5-choice-3",
                                                             "row-5-choice-1",
                                                         ],
-                                                    }
+                                                    },
                                                 },
-                                            ]
-                                        }
+                                            ],
+                                        },
                                     },
                                 ],
-                            }
+                            },
                         },
                         {
                             "node": {
                                 "question": {"slug": "test-date", "meta": {}},
                                 "dateValue": "2022-10-14",
-                            }
+                            },
                         },
                         {
                             "node": {
                                 "question": {"slug": "test-many-choices", "meta": {}},
                                 "stringValue": "test-many-choices-choice-7",
-                            }
+                            },
                         },
                         {
                             "node": {
                                 "question": {"slug": "test-textarea", "meta": {}},
                                 "stringValue": "Bar\n\nBaz",
-                            }
+                            },
                         },
                         {
                             "node": {
                                 "question": {"slug": "test-top-level", "meta": {}},
                                 "stringValue": "some value",
-                            }
+                            },
                         },
                         {
                             "node": {
                                 "question": {"slug": "test-text", "meta": {}},
                                 "stringValue": "Foo",
-                            }
+                            },
                         },
                         {
                             "node": {
@@ -176,19 +176,19 @@ CALUMA_DATA_FULL = {
                                     "test-multiple-choice-choice-1",
                                     "test-multiple-choice-choice-3",
                                 ],
-                            }
+                            },
                         },
                         {
                             "node": {
                                 "question": {"slug": "test-calc", "meta": {}},
                                 "floatValue": 46.5,
-                            }
+                            },
                         },
                         {
                             "node": {
                                 "question": {"slug": "test-choice", "meta": {}},
                                 "stringValue": "test-choice-choice-2",
-                            }
+                            },
                         },
                         {
                             "node": {
@@ -223,7 +223,7 @@ CALUMA_DATA_FULL = {
                                         },
                                     },
                                 ],
-                            }
+                            },
                         },
                         {
                             "node": {
@@ -232,7 +232,7 @@ CALUMA_DATA_FULL = {
                                     "meta": {"waehrung": "€"},
                                 },
                                 "floatValue": 23.5,
-                            }
+                            },
                         },
                         {
                             "node": {
@@ -241,9 +241,9 @@ CALUMA_DATA_FULL = {
                                     "meta": {"waehrung": "chf"},
                                 },
                                 "integerValue": 23,
-                            }
+                            },
                         },
-                    ]
+                    ],
                 },
                 "form": {
                     "slug": "test-download",
@@ -269,7 +269,7 @@ CALUMA_DATA_FULL = {
                                                         "infoText": "",
                                                         "meta": {"waehrung": "chf"},
                                                         "staticContent": "Some static content",
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
@@ -278,7 +278,7 @@ CALUMA_DATA_FULL = {
                                                         "label": "Test text",
                                                         "infoText": "",
                                                         "meta": {},
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
@@ -287,7 +287,7 @@ CALUMA_DATA_FULL = {
                                                         "label": "Test textarea",
                                                         "infoText": "",
                                                         "meta": {},
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
@@ -296,7 +296,7 @@ CALUMA_DATA_FULL = {
                                                         "label": "Test int",
                                                         "infoText": "",
                                                         "meta": {"waehrung": "chf"},
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
@@ -305,7 +305,7 @@ CALUMA_DATA_FULL = {
                                                         "label": "Test float",
                                                         "infoText": "",
                                                         "meta": {"waehrung": "€"},
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
@@ -320,23 +320,23 @@ CALUMA_DATA_FULL = {
                                                                     "node": {
                                                                         "slug": "test-multiple-choice-choice-1",
                                                                         "label": "choice 1",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-multiple-choice-choice-2",
                                                                         "label": "choice 2",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-multiple-choice-choice-3",
                                                                         "label": "choice 3",
-                                                                    }
+                                                                    },
                                                                 },
-                                                            ]
+                                                            ],
                                                         },
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
@@ -351,23 +351,23 @@ CALUMA_DATA_FULL = {
                                                                     "node": {
                                                                         "slug": "test-choice-choice-1",
                                                                         "label": "choice 1",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-choice-choice-2",
                                                                         "label": "choice 2",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-choice-choice-3",
                                                                         "label": "choice 3",
-                                                                    }
+                                                                    },
                                                                 },
-                                                            ]
+                                                            ],
                                                         },
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
@@ -376,7 +376,7 @@ CALUMA_DATA_FULL = {
                                                         "label": "Test file",
                                                         "infoText": "",
                                                         "meta": {},
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
@@ -385,7 +385,7 @@ CALUMA_DATA_FULL = {
                                                         "label": "Test date",
                                                         "infoText": "Bitte geben Sie das Datum ein.",
                                                         "meta": {},
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
@@ -394,7 +394,7 @@ CALUMA_DATA_FULL = {
                                                         "label": "Test calc",
                                                         "infoText": "",
                                                         "meta": {},
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
@@ -415,7 +415,7 @@ CALUMA_DATA_FULL = {
                                                                             "label": "Row 1",
                                                                             "infoText": "",
                                                                             "meta": {},
-                                                                        }
+                                                                        },
                                                                     },
                                                                     {
                                                                         "node": {
@@ -424,7 +424,7 @@ CALUMA_DATA_FULL = {
                                                                             "label": "Row 2",
                                                                             "infoText": "",
                                                                             "meta": {},
-                                                                        }
+                                                                        },
                                                                     },
                                                                     {
                                                                         "node": {
@@ -433,7 +433,7 @@ CALUMA_DATA_FULL = {
                                                                             "label": "Row 3",
                                                                             "infoText": "",
                                                                             "meta": {},
-                                                                        }
+                                                                        },
                                                                     },
                                                                     {
                                                                         "node": {
@@ -448,23 +448,23 @@ CALUMA_DATA_FULL = {
                                                                                         "node": {
                                                                                             "slug": "row-4-choice-1",
                                                                                             "label": "choice 1",
-                                                                                        }
+                                                                                        },
                                                                                     },
                                                                                     {
                                                                                         "node": {
                                                                                             "slug": "row-4-choice-2",
                                                                                             "label": "choice 2",
-                                                                                        }
+                                                                                        },
                                                                                     },
                                                                                     {
                                                                                         "node": {
                                                                                             "slug": "row-4-choice-3",
                                                                                             "label": "choice 3",
-                                                                                        }
+                                                                                        },
                                                                                     },
-                                                                                ]
+                                                                                ],
                                                                             },
-                                                                        }
+                                                                        },
                                                                     },
                                                                     {
                                                                         "node": {
@@ -479,28 +479,28 @@ CALUMA_DATA_FULL = {
                                                                                         "node": {
                                                                                             "slug": "row-5-choice-1",
                                                                                             "label": "choice 1",
-                                                                                        }
+                                                                                        },
                                                                                     },
                                                                                     {
                                                                                         "node": {
                                                                                             "slug": "row-5-choice-2",
                                                                                             "label": "choice 2",
-                                                                                        }
+                                                                                        },
                                                                                     },
                                                                                     {
                                                                                         "node": {
                                                                                             "slug": "row-5-choice-3",
                                                                                             "label": "choice 3",
-                                                                                        }
+                                                                                        },
                                                                                     },
-                                                                                ]
+                                                                                ],
                                                                             },
-                                                                        }
+                                                                        },
                                                                     },
-                                                                ]
+                                                                ],
                                                             },
                                                         },
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
@@ -515,71 +515,71 @@ CALUMA_DATA_FULL = {
                                                                     "node": {
                                                                         "slug": "test-many-choices-choice-1",
                                                                         "label": "choice 1",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-choices-choice-2",
                                                                         "label": "choice 2",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-choices-choice-3",
                                                                         "label": "choice 3",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-choices-choice-4",
                                                                         "label": "choice 4",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-choices-choice-5",
                                                                         "label": "choice 5",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-choices-choice-6",
                                                                         "label": "choice 6",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-choices-choice-7",
                                                                         "label": "choice 7",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-choices-choice-8",
                                                                         "label": "choice 8",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-choices-choice-9",
                                                                         "label": "choice 9",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-choices-choice-10",
                                                                         "label": "choice 10",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-choices-choice-11",
                                                                         "label": "choice 11",
-                                                                    }
+                                                                    },
                                                                 },
-                                                            ]
+                                                            ],
                                                         },
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
@@ -589,7 +589,7 @@ CALUMA_DATA_FULL = {
                                                         "infoText": "",
                                                         "staticContent": "",
                                                         "meta": {},
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
@@ -604,76 +604,76 @@ CALUMA_DATA_FULL = {
                                                                     "node": {
                                                                         "slug": "test-many-multiple-choices-choice-1",
                                                                         "label": "choice 1",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-multiple-choices-choice-2",
                                                                         "label": "choice 2",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-multiple-choices-choice-3",
                                                                         "label": "choice 3",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-multiple-choices-choice-4",
                                                                         "label": "choice 4",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-multiple-choices-choice-5",
                                                                         "label": "choice 5",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-multiple-choices-choice-6",
                                                                         "label": "choice 6",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-multiple-choices-choice-7",
                                                                         "label": "choice 7",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-multiple-choices-choice-8",
                                                                         "label": "choice 8",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-multiple-choices-choice-9",
                                                                         "label": "choice 9",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-multiple-choices-choice-10",
                                                                         "label": "choice 10",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-multiple-choices-choice-11",
                                                                         "label": "choice 11",
-                                                                    }
+                                                                    },
                                                                 },
-                                                            ]
+                                                            ],
                                                         },
-                                                    }
+                                                    },
                                                 },
-                                            ]
+                                            ],
                                         },
                                     },
-                                }
+                                },
                             },
                             {
                                 "node": {
@@ -682,14 +682,14 @@ CALUMA_DATA_FULL = {
                                     "label": "Test top level",
                                     "infoText": "<p>Eine Info.</p>",
                                     "meta": {},
-                                }
+                                },
                             },
-                        ]
+                        ],
                     },
                 },
-            }
-        }
-    }
+            },
+        },
+    },
 }
 
 
@@ -724,7 +724,7 @@ CALUMA_DATA_EMPTY = {
                                                         "label": "Test text",
                                                         "infoText": "",
                                                         "meta": {},
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
@@ -733,7 +733,7 @@ CALUMA_DATA_EMPTY = {
                                                         "label": "Test textarea",
                                                         "infoText": "",
                                                         "meta": {},
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
@@ -742,7 +742,7 @@ CALUMA_DATA_EMPTY = {
                                                         "label": "Test int",
                                                         "infoText": "",
                                                         "meta": {"waehrung": "chf"},
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
@@ -751,7 +751,7 @@ CALUMA_DATA_EMPTY = {
                                                         "label": "Test float",
                                                         "infoText": "",
                                                         "meta": {},
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
@@ -766,23 +766,23 @@ CALUMA_DATA_EMPTY = {
                                                                     "node": {
                                                                         "slug": "test-multiple-choice-choice-1",
                                                                         "label": "choice 1",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-multiple-choice-choice-2",
                                                                         "label": "choice 2",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-multiple-choice-choice-3",
                                                                         "label": "choice 3",
-                                                                    }
+                                                                    },
                                                                 },
-                                                            ]
+                                                            ],
                                                         },
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
@@ -797,23 +797,23 @@ CALUMA_DATA_EMPTY = {
                                                                     "node": {
                                                                         "slug": "test-choice-choice-1",
                                                                         "label": "choice 1",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-choice-choice-2",
                                                                         "label": "choice 2",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-choice-choice-3",
                                                                         "label": "choice 3",
-                                                                    }
+                                                                    },
                                                                 },
-                                                            ]
+                                                            ],
                                                         },
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
@@ -822,7 +822,7 @@ CALUMA_DATA_EMPTY = {
                                                         "label": "Test file",
                                                         "infoText": "",
                                                         "meta": {},
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
@@ -832,7 +832,7 @@ CALUMA_DATA_EMPTY = {
                                                         "infoText": "",
                                                         "staticContent": "Some static content",
                                                         "meta": {},
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
@@ -841,7 +841,7 @@ CALUMA_DATA_EMPTY = {
                                                         "label": "Test date",
                                                         "infoText": "Bitte geben Sie das Datum ein.",
                                                         "meta": {},
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
@@ -850,7 +850,7 @@ CALUMA_DATA_EMPTY = {
                                                         "label": "Test calc",
                                                         "infoText": "",
                                                         "meta": {},
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
@@ -871,7 +871,7 @@ CALUMA_DATA_EMPTY = {
                                                                             "label": "Row 1",
                                                                             "infoText": "",
                                                                             "meta": {},
-                                                                        }
+                                                                        },
                                                                     },
                                                                     {
                                                                         "node": {
@@ -880,7 +880,7 @@ CALUMA_DATA_EMPTY = {
                                                                             "label": "Row 2",
                                                                             "infoText": "",
                                                                             "meta": {},
-                                                                        }
+                                                                        },
                                                                     },
                                                                     {
                                                                         "node": {
@@ -889,7 +889,7 @@ CALUMA_DATA_EMPTY = {
                                                                             "label": "Row 3",
                                                                             "infoText": "",
                                                                             "meta": {},
-                                                                        }
+                                                                        },
                                                                     },
                                                                     {
                                                                         "node": {
@@ -904,23 +904,23 @@ CALUMA_DATA_EMPTY = {
                                                                                         "node": {
                                                                                             "slug": "row-4-choice-1",
                                                                                             "label": "choice 1",
-                                                                                        }
+                                                                                        },
                                                                                     },
                                                                                     {
                                                                                         "node": {
                                                                                             "slug": "row-4-choice-2",
                                                                                             "label": "choice 2",
-                                                                                        }
+                                                                                        },
                                                                                     },
                                                                                     {
                                                                                         "node": {
                                                                                             "slug": "row-4-choice-3",
                                                                                             "label": "choice 3",
-                                                                                        }
+                                                                                        },
                                                                                     },
-                                                                                ]
+                                                                                ],
                                                                             },
-                                                                        }
+                                                                        },
                                                                     },
                                                                     {
                                                                         "node": {
@@ -935,28 +935,28 @@ CALUMA_DATA_EMPTY = {
                                                                                         "node": {
                                                                                             "slug": "row-5-choice-1",
                                                                                             "label": "choice 1",
-                                                                                        }
+                                                                                        },
                                                                                     },
                                                                                     {
                                                                                         "node": {
                                                                                             "slug": "row-5-choice-2",
                                                                                             "label": "choice 2",
-                                                                                        }
+                                                                                        },
                                                                                     },
                                                                                     {
                                                                                         "node": {
                                                                                             "slug": "row-5-choice-3",
                                                                                             "label": "choice 3",
-                                                                                        }
+                                                                                        },
                                                                                     },
-                                                                                ]
+                                                                                ],
                                                                             },
-                                                                        }
+                                                                        },
                                                                     },
-                                                                ]
+                                                                ],
                                                             },
                                                         },
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
@@ -971,71 +971,71 @@ CALUMA_DATA_EMPTY = {
                                                                     "node": {
                                                                         "slug": "test-many-choices-choice-1",
                                                                         "label": "choice 1",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-choices-choice-2",
                                                                         "label": "choice 2",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-choices-choice-3",
                                                                         "label": "choice 3",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-choices-choice-4",
                                                                         "label": "choice 4",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-choices-choice-5",
                                                                         "label": "choice 5",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-choices-choice-6",
                                                                         "label": "choice 6",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-choices-choice-7",
                                                                         "label": "choice 7",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-choices-choice-8",
                                                                         "label": "choice 8",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-choices-choice-9",
                                                                         "label": "choice 9",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-choices-choice-10",
                                                                         "label": "choice 10",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-choices-choice-11",
                                                                         "label": "choice 11",
-                                                                    }
+                                                                    },
                                                                 },
-                                                            ]
+                                                            ],
                                                         },
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
@@ -1045,7 +1045,7 @@ CALUMA_DATA_EMPTY = {
                                                         "infoText": "",
                                                         "staticContent": "",
                                                         "meta": {},
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     "node": {
@@ -1060,76 +1060,76 @@ CALUMA_DATA_EMPTY = {
                                                                     "node": {
                                                                         "slug": "test-many-multiple-choices-choice-1",
                                                                         "label": "choice 1",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-multiple-choices-choice-2",
                                                                         "label": "choice 2",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-multiple-choices-choice-3",
                                                                         "label": "choice 3",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-multiple-choices-choice-4",
                                                                         "label": "choice 4",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-multiple-choices-choice-5",
                                                                         "label": "choice 5",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-multiple-choices-choice-6",
                                                                         "label": "choice 6",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-multiple-choices-choice-7",
                                                                         "label": "choice 7",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-multiple-choices-choice-8",
                                                                         "label": "choice 8",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-multiple-choices-choice-9",
                                                                         "label": "choice 9",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-multiple-choices-choice-10",
                                                                         "label": "choice 10",
-                                                                    }
+                                                                    },
                                                                 },
                                                                 {
                                                                     "node": {
                                                                         "slug": "test-many-multiple-choices-choice-11",
                                                                         "label": "choice 11",
-                                                                    }
+                                                                    },
                                                                 },
-                                                            ]
+                                                            ],
                                                         },
-                                                    }
+                                                    },
                                                 },
-                                            ]
+                                            ],
                                         },
                                     },
-                                }
+                                },
                             },
                             {
                                 "node": {
@@ -1138,12 +1138,12 @@ CALUMA_DATA_EMPTY = {
                                     "label": "Test top level",
                                     "infoText": "<p>Eine Info.</p>",
                                     "meta": {},
-                                }
+                                },
                             },
-                        ]
+                        ],
                     },
                 },
-            }
-        }
-    }
+            },
+        },
+    },
 }

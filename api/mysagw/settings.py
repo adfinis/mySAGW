@@ -8,7 +8,7 @@ env = environ.Env()
 django_root = environ.Path(__file__) - 2
 
 ENV_FILE = env.str("ENV_FILE", default=django_root(".env"))
-if os.path.exists(ENV_FILE):  # pragma: no cover
+if os.path.exists(ENV_FILE):  # pragma: no cover # noqa: PTH110
     environ.Env.read_env(ENV_FILE)
 
 # per default production is enabled for security reasons
@@ -69,7 +69,7 @@ DATABASES = {
         "HOST": env.str("DATABASE_HOST", default="db"),
         "PORT": env.str("DATABASE_PORT", default=""),
         "OPTIONS": env.dict("DATABASE_OPTIONS", default={}),
-    }
+    },
 }
 
 # Password validation
@@ -77,7 +77,7 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
@@ -115,22 +115,26 @@ PHONENUMBER_DEFAULT_REGION = "CH"
 
 # Authentication
 OIDC_OP_USER_ENDPOINT = env.str("OIDC_OP_USER_ENDPOINT", default=None)
-OIDC_OP_TOKEN_ENDPOINT = "not supported in mysagw, but a value is needed"
+OIDC_OP_TOKEN_ENDPOINT = "not supported in mysagw, but a value is needed"  # noqa: S105
 OIDC_VERIFY_SSL = env.bool("OIDC_VERIFY_SSL", default=True)
 OIDC_ID_CLAIM = env.str("OIDC_ID_CLAIM", default="sub")
 OIDC_EMAIL_CLAIM = env.str("OIDC_EMAIL_CLAIM", default="email")
 OIDC_GROUPS_CLAIM = env.str("OIDC_GROUPS_CLAIM", default="mysagw_groups")
 OIDC_CLIENT_GRANT_USERNAME_CLAIM = env.str(
-    "OIDC_CLIENT_GRANT_USERNAME_CLAIM", default="preferred_username"
+    "OIDC_CLIENT_GRANT_USERNAME_CLAIM",
+    default="preferred_username",
 )
 OIDC_BEARER_TOKEN_REVALIDATION_TIME = env.int(
-    "OIDC_BEARER_TOKEN_REVALIDATION_TIME", default=300
+    "OIDC_BEARER_TOKEN_REVALIDATION_TIME",
+    default=300,
 )
 OIDC_MONITORING_CLIENT_USERNAME = env.str(
-    "OIDC_MONITORING_CLIENT_GRANT_VALUE", default="service-account-monitoring_client"
+    "OIDC_MONITORING_CLIENT_GRANT_VALUE",
+    default="service-account-monitoring_client",
 )
 OIDC_RP_CLIENT_USERNAME = env.str(
-    "OIDC_RP_CLIENT_GRANT_VALUE", default="service-account-caluma_admin_client"
+    "OIDC_RP_CLIENT_GRANT_VALUE",
+    default="service-account-caluma_admin_client",
 )
 OIDC_DRF_AUTH_BACKEND = "mysagw.oidc_auth.authentication.MySAGWAuthenticationBackend"
 
@@ -157,26 +161,33 @@ WATCHMAN_ERROR_CODE = 503
 
 # Document Merge Service
 DOCUMENT_MERGE_SERVICE_URL = env.str(
-    "DOCUMENT_MERGE_SERVICE_URL", default="http://dms:8000/api/v1"
+    "DOCUMENT_MERGE_SERVICE_URL",
+    default="http://dms:8000/api/v1",
 )
 DOCUMENT_MERGE_SERVICE_ENGINE = env.str(
-    "DOCUMENT_MERGE_SERVICE_ENGINE", default="docx-template"
+    "DOCUMENT_MERGE_SERVICE_ENGINE",
+    default="docx-template",
 )
 
 DOCUMENT_MERGE_SERVICE_LABELS_TEMPLATE_SLUG = env.str(
-    "DOCUMENT_MERGE_SERVICE_LABELS_TEMPLATE_SLUG", default="identity-labels"
+    "DOCUMENT_MERGE_SERVICE_LABELS_TEMPLATE_SLUG",
+    default="identity-labels",
 )
 DOCUMENT_MERGE_SERVICE_ACCOUNTING_COVER_TEMPLATE_SLUG = env.str(
-    "DOCUMENT_MERGE_SERVICE_ACCOUNTING_COVER_TEMPLATE_SLUG", default="accounting-cover"
+    "DOCUMENT_MERGE_SERVICE_ACCOUNTING_COVER_TEMPLATE_SLUG",
+    default="accounting-cover",
 )
 DOCUMENT_MERGE_SERVICE_ACKNOWLEDGEMENT_TEMPLATE_SLUG = env.str(
-    "DOCUMENT_MERGE_SERVICE_ACKNOWLEDGEMENT_TEMPLATE_SLUG", default="acknowledgement"
+    "DOCUMENT_MERGE_SERVICE_ACKNOWLEDGEMENT_TEMPLATE_SLUG",
+    default="acknowledgement",
 )
 DOCUMENT_MERGE_SERVICE_CREDIT_APPROVAL_TEMPLATE_SLUG = env.str(
-    "DOCUMENT_MERGE_SERVICE_CREDIT_APPROVAL_TEMPLATE_SLUG", default="credit-approval"
+    "DOCUMENT_MERGE_SERVICE_CREDIT_APPROVAL_TEMPLATE_SLUG",
+    default="credit-approval",
 )
 DOCUMENT_MERGE_SERVICE_APPLICATION_EXPORT_SLUG = env.str(
-    "DOCUMENT_MERGE_SERVICE_APPLICATION_EXPORT_SLUG", default="application"
+    "DOCUMENT_MERGE_SERVICE_APPLICATION_EXPORT_SLUG",
+    default="application",
 )
 
 # Caluma
@@ -250,9 +261,9 @@ def parse_admins(admins):
     for admin in admins:
         match = re.search(r"(.+) \<(.+@.+)\>", admin)
         if not match:  # pragma: no cover
+            msg = f'In ADMINS admin "{admin}" is not in correct "Firstname Lastname <email@example.com>"'
             raise environ.ImproperlyConfigured(
-                'In ADMINS admin "{0}" is not in correct '
-                '"Firstname Lastname <email@example.com>"'.format(admin)
+                msg,
             )
         result.append((match.group(1), match.group(2)))
     return result

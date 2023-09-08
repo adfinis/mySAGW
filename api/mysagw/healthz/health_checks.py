@@ -7,9 +7,14 @@ from watchman.decorators import check
 from mysagw.identity.models import Identity
 
 
+class HealthzException(Exception):
+    pass
+
+
 @check
 def _check_pending_migrations(db_name):
-    """Check database for pending migrations.
+    """
+    Check database for pending migrations.
 
     Returns JSON mapping if no pending migrations, otherwise raises Exception.
     @check django-watchman decorator catches and handles exceptions.
@@ -19,7 +24,8 @@ def _check_pending_migrations(db_name):
     management.call_command("showmigrations", "--plan", stdout=out)
     plan = out.getvalue()
     if "[ ]" in plan:
-        raise Exception("Database has unapplied migrations (migrate).")
+        msg = "Database has unapplied migrations (migrate)."
+        raise HealthzException(msg)
 
     return {db_name: {"ok": True}}
 

@@ -28,7 +28,11 @@ class CalumaClient:
             headers.update(add_headers)
 
         response = requests.post(
-            self.endpoint, json=data, headers=headers, verify=settings.CALUMA_VERIFY_SSL
+            self.endpoint,
+            json=data,
+            headers=headers,
+            verify=settings.CALUMA_VERIFY_SSL,
+            timeout=15,
         )
         response.raise_for_status()
         return response.json()
@@ -36,5 +40,4 @@ class CalumaClient:
     def get_data(self, gql_file, variables, add_headers=None):
         with gql_file.open("r") as f:
             query = f.read()
-        resp = self.execute(query, variables, add_headers=add_headers)
-        return resp
+        return self.execute(query, variables, add_headers=add_headers)

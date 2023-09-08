@@ -22,7 +22,7 @@ export default class FormConfigurationController extends Controller {
   @restartableTask
   *fetchForms() {
     yield this.formQuery.fetch({
-      filter: [{ isPublished: true }, { isArchived: false }],
+      filter: [{ questions: ["dossier-nr"] }, { isArchived: false }],
     });
   }
 

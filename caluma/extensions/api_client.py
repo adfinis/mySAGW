@@ -1,6 +1,5 @@
-from datetime import datetime, timedelta
-
 import requests
+from django.utils import timezone
 from oauthlib.oauth2 import BackendApplicationClient
 from requests_oauthlib import OAuth2Session
 
@@ -23,7 +22,7 @@ class APIClient:
         The threshold for fetching a new token is 1 minute before expiration.
         :return: dict
         """
-        thresh = datetime.now() + timedelta(minutes=1)
+        thresh = timezone.now() + timezone.timedelta(minutes=1)
 
         if self.token is None or self.token["expires_at_dt"] <= thresh:
             client = BackendApplicationClient(client_id=settings.OIDC_ADMIN_CLIENT_ID)
@@ -35,7 +34,9 @@ class APIClient:
                 verify=settings.API_VERIFY_SSL,
                 scope="openid",
             )
-            token["expires_at_dt"] = datetime.utcfromtimestamp(int(token["expires_at"]))
+            token["expires_at_dt"] = timezone.datetime.utcfromtimestamp(
+                int(token["expires_at"]),
+            )
 
             self.token = token["access_token"]
 
