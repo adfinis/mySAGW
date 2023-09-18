@@ -34,6 +34,12 @@ services:
     env_file: ./.envs/.staging/.minio
     restart: unless-stopped
 
+  minio-legacy:
+    env_file: ./.envs/.staging/.minio
+
+  minio-migrate:
+    env_file: ./.envs/.staging/.minio
+
   mc:
     env_file: ./.envs/.staging/.minio
 
