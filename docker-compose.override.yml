@@ -63,14 +63,6 @@ services:
     ports:
       - "9000:9000"
 
-  minio-legacy:
-    env_file: ./.envs/.local/.minio
-    ports:
-      - "9001:9000"
-
-  minio-migrate:
-    env_file: ./.envs/.local/.minio
-
   mc:
     env_file: ./.envs/.local/.minio
 
