@@ -1,4 +1,4 @@
-query getForms($additionalFilter: FormFilterSetType) {
+query getForms($additionalFilter: FormFilterSetType = {}) {
   allForms(
     filter: [
       { questions: ["dossier-nr"] }
