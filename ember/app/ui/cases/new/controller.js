@@ -27,7 +27,9 @@ export default class CaseNewController extends Controller {
   }
 
   forms = trackedFunction(this, async () => {
-    return await this.filteredForms.fetch();
+    return await this.filteredForms.fetch({
+      additionalFilter: { isPublished: true },
+    });
   });
 
   @restartableTask
