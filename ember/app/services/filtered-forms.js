@@ -13,10 +13,10 @@ export default class FilteredFormsService extends Service {
 
   @tracked value = null;
 
-  async fetch() {
+  async fetch(queryVariables = {}) {
     if (this.value !== null) return this.value;
 
-    this.value = await this.mainForms();
+    this.value = await this.mainForms(queryVariables);
 
     if (this.abilities.can("filter all forms case")) {
       return this.value;
@@ -50,9 +50,15 @@ export default class FilteredFormsService extends Service {
     return this.value;
   }
 
-  async mainForms() {
+  async mainForms(variables) {
     return (
-      await this.apollo.query({ query: getFormsQuery }, "allForms.edges")
+      await this.apollo.query(
+        {
+          query: getFormsQuery,
+          variables,
+        },
+        "allForms.edges"
+      )
     ).map((form) => form.node);
   }
 }

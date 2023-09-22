@@ -34,12 +34,6 @@ services:
     env_file: ./.envs/.production/.minio
     restart: unless-stopped
 
-  minio-legacy:
-    env_file: ./.envs/.production/.minio
-
-  minio-migrate:
-    env_file: ./.envs/.production/.minio
-
   mc:
     env_file: ./.envs/.production/.minio
 
