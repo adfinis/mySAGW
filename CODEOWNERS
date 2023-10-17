@@ -1,0 +1,5 @@
+# general software maintenance
+**/Dockerfile @open-dynaMIX @Yelinz
+docker-compose.yml @open-dynaMIX @Yelinz
+ember/* @Yelinz
+api/* @open-dynaMIX
