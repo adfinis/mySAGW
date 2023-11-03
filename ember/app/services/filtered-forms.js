@@ -12,11 +12,18 @@ export default class FilteredFormsService extends Service {
   @queryManager apollo;
 
   @tracked value = null;
+  @tracked previousQuery = null;
 
   async fetch(queryVariables = {}) {
-    if (this.value !== null) return this.value;
+    if (
+      this.value !== null &&
+      JSON.stringify(queryVariables) === JSON.stringify(this.previousQuery)
+    ) {
+      return this.value;
+    }
 
     this.value = await this.mainForms(queryVariables);
+    this.previousQuery = queryVariables;
 
     if (this.abilities.can("filter all forms case")) {
       return this.value;

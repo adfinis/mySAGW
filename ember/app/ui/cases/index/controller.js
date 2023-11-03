@@ -13,7 +13,6 @@ export default class CasesIndexController extends TableController {
   @service store;
   @service notification;
   @service intl;
-  @service filteredForms;
 
   @queryManager apollo;
 

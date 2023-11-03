@@ -3,7 +3,7 @@ import io
 import requests
 from django.conf import settings
 from pypdf import PdfWriter
-from pypdf.errors import DependencyError, PdfReadError
+from pypdf.errors import FileNotDecryptedError, PdfReadError
 from reportlab.lib.pagesizes import A4, mm
 from reportlab.lib.utils import ImageReader
 from reportlab.pdfgen import canvas
@@ -78,16 +78,15 @@ def add_caluma_files_to_pdf(pdf, urls):
     for file in prepare_files_for_merge(files):
         try:
             merger.append(file)
+        except FileNotDecryptedError as e:
+            # we don't support AES encrypted PDFs
+            if (
+                not e.args or not e.args[0] == "File has not been decrypted"
+            ):  # pragma: no cover
+                raise
         except PdfReadError:  # pragma: no cover
             ## faulty pdf
             pass
-        except DependencyError as e:
-            # we don't support AES encrypted PDFs
-            if (
-                not e.args
-                or not e.args[0] == "PyCryptodome is required for AES algorithm"
-            ):  # pragma: no cover
-                raise
 
     result = io.BytesIO()
 
