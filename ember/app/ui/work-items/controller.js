@@ -12,7 +12,6 @@ import TableController from "mysagw/utils/table-controller";
 export default class WorkItemsIndexController extends TableController {
   @service session;
   @service store;
-  @service filteredForms;
   @service can;
 
   @queryManager apollo;

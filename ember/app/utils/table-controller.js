@@ -1,5 +1,6 @@
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
+import { inject as service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import {
   lastValue,
@@ -12,6 +13,8 @@ import { TrackedObject } from "tracked-built-ins";
 import { stringFromArray } from "mysagw/utils/query-params";
 
 export default class TableController extends Controller {
+  @service filteredForms;
+
   queryParams = ["order", "filter"];
 
   // Filters
