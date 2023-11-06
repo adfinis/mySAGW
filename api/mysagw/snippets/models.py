@@ -8,3 +8,6 @@ class Snippet(UUIDModel, HistoricalModel):
     title = models.CharField(max_length=255)
     body = LocalizedTextField(blank=False, null=False, required=False)
     archived = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ("title",)
