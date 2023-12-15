@@ -23,7 +23,6 @@ class MySAGWAuthenticationBackend(OIDCAuthenticationBackend):
         claims_to_verify = [
             settings.OIDC_ID_CLAIM,
             settings.OIDC_EMAIL_CLAIM,
-            settings.OIDC_GROUPS_CLAIM,
         ]
 
         # claims for application clients
