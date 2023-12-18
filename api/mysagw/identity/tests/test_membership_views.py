@@ -511,7 +511,10 @@ def test_organisation_members(
     second_role = membership_role_factory.create(sort=2)
     third_role = membership_role_factory.create(sort=3)
     organisation = identity_factory(is_organisation=True)
-    user1 = identity_factory(first_name="User", last_name="1")
+    client.user.identity.first_name = "User"
+    client.user.identity.last_name = "1"
+    client.user.identity.save()
+    user1 = client.user.identity
     user2 = identity_factory(first_name="User", last_name="2")
     user3 = identity_factory(first_name="User", last_name="3")
     user4 = identity_factory(first_name="User", last_name="4")
@@ -525,6 +528,7 @@ def test_organisation_members(
         role=first_role,
         identity=user1,
         organisation=organisation,
+        authorized=True,  # without this, the view will return an empty list
     )
     membership_factory.create(
         role=second_role,
@@ -606,3 +610,76 @@ def test_organisation_members(
     assert json["data"][3]["attributes"]["last-name"] == "5"
     assert json["data"][4]["attributes"]["last-name"] == "4"
     assert json == snapshot(exclude=filters.props("id"))
+
+
+@pytest.mark.parametrize(
+    "client,is_org_admin,read_allowed",
+    [
+        ("user", False, False),
+        ("admin", False, False),
+        ("staff", False, False),
+        ("user", True, True),
+        ("admin", True, True),
+        ("staff", True, True),
+    ],
+    indirect=["client"],
+)
+def test_organisation_members_visibility(
+    db,
+    client,
+    membership_role_factory,
+    membership_factory,
+    identity_factory,
+    is_org_admin,
+    read_allowed,
+):
+    first_role = membership_role_factory.create(sort=1)
+    second_role = membership_role_factory.create(sort=2)
+    third_role = membership_role_factory.create(sort=3)
+    organisation = identity_factory(is_organisation=True)
+    user1 = identity_factory(first_name="User", last_name="1")
+
+    # Add membership for user1
+    membership_factory.create(
+        role=first_role,
+        identity=user1,
+        organisation=organisation,
+    )
+
+    # Add membership for request.user.identity
+    membership_factory.create(
+        role=first_role,
+        identity=client.user.identity,
+        organisation=organisation,
+        inactive=False,
+        authorized=is_org_admin,
+    )
+
+    # Add inactive memberships for request.user.identity
+    membership_factory.create(
+        role=second_role,
+        identity=client.user.identity,
+        organisation=organisation,
+        inactive=True,
+        authorized=True,
+    )
+    membership_factory.create(
+        role=third_role,
+        identity=client.user.identity,
+        organisation=organisation,
+        inactive=False,
+        time_slot=DateRange(
+            lower=datetime.date(2020, 1, 1),
+            upper=datetime.date(2020, 1, 2),
+        ),
+        authorized=True,
+    )
+
+    url = reverse("org-memberships-list")
+
+    response = client.get(url, {"filter[organisation]": str(organisation.pk)})
+
+    assert response.status_code == status.HTTP_200_OK
+
+    json = response.json()
+    assert (len(json["data"]) > 0) is read_allowed
