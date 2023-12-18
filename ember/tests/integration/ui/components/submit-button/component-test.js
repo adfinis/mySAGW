@@ -43,6 +43,7 @@ module("Integration | Component | submit-button", function (hooks) {
   test("it shows confirmation", async function (assert) {
     await render(hbs`<SubmitButton @field={{this.field}}/>`);
     await waitFor("[data-test-submit-confirm-open]");
+    await waitFor(":not([data-test-submit-confirm-open]:disabled)");
     await settled();
 
     await click("[data-test-submit-confirm-open]");
