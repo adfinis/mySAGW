@@ -2,7 +2,7 @@ import django_excel
 from django.conf import settings
 from django.db.models import Q
 from django.http import HttpResponse
-from django.utils import translation
+from django.utils import timezone, translation
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.exceptions import PermissionDenied, ValidationError
@@ -331,5 +331,16 @@ class OrganisationAdminMembersViewSet(
 ):
     queryset = models.Identity.objects.all()
     serializer_class = serializers.OrganisationAdminMembersSerializer
-    permission_classes = (IsAuthenticated & (IsAdmin | IsStaff),)
+    permission_classes = (IsAuthenticated,)
     filterset_class = filters.OrganisationAdminMembersFilterSet
+
+    def get_queryset(self, *args, **kwargs):
+        qs = super().get_queryset(*args, **kwargs)
+        return qs.filter(
+            memberships__organisation__in=models.Membership.objects.filter(
+                Q(time_slot__isnull=True) | Q(time_slot__contains=timezone.now()),
+                inactive=False,
+                identity=self.request.user.identity,
+                authorized=True,
+            ).values("organisation"),
+        )
