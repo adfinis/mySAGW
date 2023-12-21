@@ -336,6 +336,8 @@ class OrganisationAdminMembersViewSet(
 
     def get_queryset(self, *args, **kwargs):
         qs = super().get_queryset(*args, **kwargs)
+        if self.request.user.is_admin or self.request.user.is_staff:
+            return qs
         return qs.filter(
             memberships__organisation__in=models.Membership.objects.filter(
                 Q(time_slot__isnull=True) | Q(time_slot__contains=timezone.now()),
