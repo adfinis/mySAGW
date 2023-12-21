@@ -616,8 +616,8 @@ def test_organisation_members(
     "client,is_org_admin,read_allowed",
     [
         ("user", False, False),
-        ("admin", False, False),
-        ("staff", False, False),
+        ("admin", False, True),
+        ("staff", False, True),
         ("user", True, True),
         ("admin", True, True),
         ("staff", True, True),
