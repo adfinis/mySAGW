@@ -48,8 +48,16 @@ You can now access the application under the following URIs:
  - https://mysagw.local/auth/ --> keycloak
  - https://mysagw.local/api/ --> backend
  - https://mysagw.local/graphql/ --> caluma
+ - https://mysagw.local:8025 --> mailhog
 
-First, you might want to register a new user or directly create one using the Keycloak admin interface. The default Keycloak access credentials are user: `admin` and password: `keycloak`.
+The default users are:
+
+| Username          | Password | Used for       |
+|-------------------|----------|----------------|
+| admin             | keycloak | keycloak admin |
+| admin@example.com | mysagw   | apps           |
+| staff@example.com | mysagw   | apps           |
+| user@example.com  | mysagw   | apps           |
 
 ### Configuration
 
