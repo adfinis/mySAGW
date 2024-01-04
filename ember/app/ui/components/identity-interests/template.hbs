@@ -16,7 +16,12 @@
           <ul class="uk-padding-remove uk-list">
             {{#each category.interests as |interest|}}
               <li class="uk-flex uk-flex-between uk-flex-middle">
-                <div>{{interest.title}}</div>
+                <LinkTo
+                  @route="identities"
+                  @query={{hash searchTerm=(concat '"' interest.title '"')}}
+                >
+                  {{interest.title}}
+                </LinkTo>
 
                 {{#if (can "remove interest from identity" @identity)}}
                   <div>
@@ -54,7 +59,7 @@
   {{/if}}
 
   {{#if this.changeset}}
-    <hr>
+    <hr />
 
     <h3 class="uk-margin-remove-top">
       {{t "components.identity-interests.form.title.add"}}
@@ -96,9 +101,7 @@
           {{t "global.cancel"}}
         </button>
 
-        <Form.submit
-          @label={{t "global.save"}}
-        />
+        <Form.submit @label={{t "global.save"}} />
       </p>
     </ValidatedForm>
   {{/if}}
