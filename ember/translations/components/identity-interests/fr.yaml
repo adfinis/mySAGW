@@ -2,6 +2,7 @@ components:
   identity-interests:
     title: "Intérêts"
     add: "Ajouter un intérêt"
+    disclaimer: "En enregistrant, je donne mon accord pour recevoir de l’ASSH des informations ou des publications en lien avec les intérêts que j’ai indiqués et je confirme avoir lu et accepté les indications relatives à la <a href=''https://www.sagw.ch/fr/assh/a-propos/impressum'' target=''_blank''>protection des données</a>."
 
     list:
       delete: "Supprimer un intérêt"

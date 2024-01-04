@@ -2,6 +2,7 @@ components:
   identity-interests:
     title: "Interests"
     add: "Add interest"
+    disclaimer: "By saving, I agree to receive information or publications from the SAHS on the interests I have indicated and confirm that I have read and accept the <a href=''https://www.sagw.ch/sagw/zur-sagw/impressum'' target=''_blank''>information on data protection</a>."
 
     list:
       delete: "Delete interest"
