@@ -16,12 +16,16 @@
           <ul class="uk-padding-remove uk-list">
             {{#each category.interests as |interest|}}
               <li class="uk-flex uk-flex-between uk-flex-middle">
-                <LinkTo
-                  @route="identities"
-                  @query={{hash searchTerm=(concat '"' interest.title '"')}}
-                >
+                {{#if (can "list interest")}}
+                  <LinkTo
+                    @route="identities"
+                    @query={{hash searchTerm=(concat '"' interest.title '"')}}
+                  >
+                    {{interest.title}}
+                  </LinkTo>
+                {{else}}
                   {{interest.title}}
-                </LinkTo>
+                {{/if}}
 
                 {{#if (can "remove interest from identity" @identity)}}
                   <div>
