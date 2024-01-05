@@ -65,9 +65,11 @@
       {{t "components.identity-interests.form.title.add"}}
     </h3>
 
-    <p>
-      {{t "components.identity-interests.disclaimer" htmlSafe=true}}
-    </p>
+    {{#if @profileView}}
+      <p>
+        {{t "components.identity-interests.disclaimer" htmlSafe=true}}
+      </p>
+    {{/if}}
 
     <ValidatedForm
       @model={{this.changeset}}
