@@ -5,14 +5,14 @@ export default class PhoneNumberAbility extends BaseAbility {
     return this.isStaff;
   }
   canAdd() {
-    return this.isStaffOrOwnIdentity(this.model);
+    return this.canEditIdentity(this.model);
   }
 
   canEdit() {
-    return this.isStaffOrOwnIdentity(this.model);
+    return this.canEditIdentity(this.model);
   }
 
   canDelete() {
-    return this.isStaffOrOwnIdentity(this.model);
+    return this.canEditIdentity(this.model);
   }
 }

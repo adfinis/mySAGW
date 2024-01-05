@@ -12,9 +12,9 @@ const membershipInactive = (membership) => {
 export { membershipInactive };
 
 export default class MembershipModel extends LocalizedModel {
-  @belongsTo("identity", { inverse: "memberships" }) identity;
-  @belongsTo("identity", { inverse: "members" }) organisation;
-  @belongsTo("membership-role") role;
+  @belongsTo("identity", { inverse: "memberships", async: true }) identity;
+  @belongsTo("identity", { inverse: "members", async: true }) organisation;
+  @belongsTo("membership-role", { async: true }) role;
   @attr authorized;
   @attr timeSlot;
   @attr nextElection;
