@@ -18,11 +18,12 @@ export default class IdentitiesIndexController extends Controller {
   @service intl;
   @service fetch;
 
-  queryParams = ["pageSize", "pageNumber"];
+  queryParams = ["pageSize", "pageNumber", "searchTerm"];
   @tracked pageSize = 25;
   @tracked pageNumber = 1;
   @tracked totalPages;
   @tracked totalCount = 0;
+  @tracked searchTerm = "";
 
   get pages() {
     if (!this.totalPages) {

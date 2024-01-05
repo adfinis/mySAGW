@@ -13,6 +13,7 @@
         <Form.input
           @label={{t "components.interest-category-form.label.title" lang="DE"}}
           @name="_title.de"
+          data-test-input-title
         />
 
         <Form.input
@@ -30,6 +31,7 @@
         @label={{t "components.interest-category-form.label.description"}}
         @name="description"
         @required={{false}}
+        data-test-input-description
       />
 
       <Form.input
@@ -37,6 +39,7 @@
         @name="public"
         @type="checkbox"
         @required={{false}}
+        data-test-input-public
       />
 
       <div class="uk-text-right">
@@ -50,6 +53,7 @@
         <Form.submit
           @label={{t "global.save"}}
           @disabled={{cannot "edit interest-category" this.changeset.data}}
+          data-test-save
         />
         <UkButton
           @type="submit"
@@ -57,6 +61,7 @@
           @onClick={{this.setBackToInterests}}
           @label={{t "global.saveAndBack"}}
           @disabled={{cannot "edit interest-category" this.changeset.data}}
+          data-test-save-back
         />
       </div>
     </ValidatedForm>

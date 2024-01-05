@@ -7,7 +7,6 @@ export default Factory.extend({
   archived: () => faker.datatype.boolean(),
 
   afterCreate(category, server) {
-    const children = Math.floor(Math.random() * 5 + 0.5);
-    server.createList("interest", children, { category });
+    server.createList("interest", 3, { category });
   },
 });

@@ -2,6 +2,7 @@ components:
   identity-interests:
     title: "Interessen"
     add: "Interesse hinzufügen"
+    disclaimer: "Mit dem Speichern erkläre ich mich einverstanden, von der SAGW Informationen oder Publikationen zu den von mir angegebenen Interessen zu erhalten und bestätige, dass ich die <a href=''https://www.sagw.ch/sagw/zur-sagw/impressum'' target=''_blank''>Hinweise zum Datenschutz</a> gelesen habe und sie akzeptiere."
 
     list:
       delete: "Interesse löschen"

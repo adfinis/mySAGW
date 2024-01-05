@@ -87,6 +87,7 @@
         <Form.input
           @label={{t "interests.edit.form.label.title" lang="DE"}}
           @name="_title.de"
+          data-test-new-interest-title
         />
 
         <Form.input
@@ -104,6 +105,7 @@
         @label={{t "interests.edit.form.label.description"}}
         @name="description"
         @required={{false}}
+          data-test-new-interest-description
       />
 
       <p class="uk-text-right">
@@ -117,6 +119,7 @@
 
         <Form.submit
           @label={{t "global.save"}}
+          data-test-new-interest-save
         />
       </p>
     </ValidatedForm>
