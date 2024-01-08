@@ -81,6 +81,27 @@ export default class CustomCaseModel extends CaseModel {
     )?.node.StringAnswerValue;
   }
 
+  get distributionPlan() {
+    const answer = this.document.answers.edges.findBy(
+      "node.question.slug",
+      "verteilplan-nr"
+    )?.node;
+
+    if (!answer) {
+      return "-";
+    }
+
+    return answer.question.options.edges.findBy(
+      "node.slug",
+      answer.StringAnswerValue
+    ).node.label;
+  }
+
+  get submitDate() {
+    return this.workItems.findBy("task.slug", ENV.APP.caluma.submitTaskSlug)
+      ?.closedAt;
+  }
+
   static fragment = `{
     id
     createdAt

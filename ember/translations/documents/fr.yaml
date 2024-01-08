@@ -10,6 +10,7 @@ documents:
   orderBy: "Trier selon"
   createdAt: "Date de création"
   modifiedAt: "Date de modification"
+  submittedAt: "Date de soumission"
   desc: "Ordre décroissant"
   asc: "Ordre croissant"
   description: "Description"
