@@ -10,6 +10,7 @@ documents:
   orderBy: "Sortieren nach"
   createdAt: "Erstelldatum"
   modifiedAt: "Änderungsdatum"
+  submittedAt: "Einreichedatum"
   desc: "Absteigend"
   asc: "Aufsteigend"
   description: "Beschreibung"

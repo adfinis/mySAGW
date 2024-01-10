@@ -10,6 +10,7 @@ documents:
   orderBy: "Order by"
   createdAt: "Created"
   modifiedAt: "Last updated"
+  submittedAt: "Submitted"
   desc: "Desc"
   asc: "Asc"
   description: "Description"
