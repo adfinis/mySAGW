@@ -28,16 +28,27 @@ export default class BaseAbility extends Ability {
     return this.isStaff || this.isAdmin;
   }
 
-  isOwnIdentity(identity) {
+  isOwnIdentity(idpId) {
     if (!this.session.isAuthenticated) {
       return false;
     }
 
-    return identity.idpId === this.session.data.authenticated.userinfo.sub;
+    return idpId === this.session.data.authenticated.userinfo.sub;
   }
 
-  isStaffOrOwnIdentity(identity) {
-    return this.isStaffOrAdmin || this.isOwnIdentity(identity);
+  canEditIdentity(identity) {
+    if (this.isStaffOrAdmin) {
+      return true;
+    } else if (this.model.isOrganisation) {
+      return this.model.members.any(
+        (member) =>
+          member.authorized &&
+          !member.isInactive &&
+          this.isOwnIdentity(member.identity.get("idpId"))
+      );
+    }
+
+    return this.isOwnIdentity(identity.idpId);
   }
 
   hasAccess(calumaCase) {

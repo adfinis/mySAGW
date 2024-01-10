@@ -11,10 +11,15 @@
     {{#if this.memberships.length}}
       <ul class="uk-list uk-list-divider">
         {{#each this.memberships as |membership|}}
-          <li class="uk-flex uk-flex-between uk-flex-middle">
+          <li class="uk-flex uk-flex-between uk-flex-middle" data-test-membership>
             <div>
               <span class="uk-text-bold {{if membership.isInactive "text-strike-through"}}">
-                {{membership.organisation.organisationName}}
+                <LinkTo
+                  @route="identities.edit"
+                  @model={{membership.organisation}}
+                >
+                  {{membership.organisation.organisationName}}
+                </LinkTo>
                 {{#if membership.authorized}}
                   ({{t "components.identity-memberships.form.label.admin"}})
                 {{/if}}
@@ -68,6 +73,7 @@
                 uk-icon="close"
                 title={{t "components.identity-memberships.list.delete"}}
                 {{on "click" (perform this.delete membership)}}
+                data-test-membership-delete
               ></button>
             </div>
           </li>
@@ -143,6 +149,7 @@
             @onFocus={{this.openPowerSelect}}
             @triggerClass="uk-select"
             @allowClear={{true}}
+            data-test-role-select
             as |opt|
           >
             {{opt.title}}
@@ -232,6 +239,7 @@
 
         <Form.submit
           @label={{t "global.save"}}
+          data-test-membership-save
         />
       </p>
     </ValidatedForm>

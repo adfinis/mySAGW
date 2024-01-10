@@ -12,9 +12,6 @@ export default class IdentityModel extends LocalizedModel {
   @attr lastName;
   @attr email;
   @attr language;
-  @hasMany("additional-email") additionalEmails;
-  @hasMany("phone-number") phoneNumbers;
-  @hasMany("interest") interests;
   @attr isOrganisation;
   @attr isExpertAssociation;
   @attr isAdvisoryBoard;
@@ -23,8 +20,14 @@ export default class IdentityModel extends LocalizedModel {
   @attr hasMembers;
   @attr isAuthorized;
 
-  @hasMany("membership") memberships;
-  @hasMany("membership") members;
+  @hasMany("additional-email", { inverse: "identity", async: true })
+  additionalEmails;
+  @hasMany("phone-number", { inverse: "identity", async: true }) phoneNumbers;
+  @hasMany("address", { inverse: "identity", async: true }) address;
+  @hasMany("interest", { async: true }) interests;
+
+  @hasMany("membership", { inverse: "identity", async: true }) memberships;
+  @hasMany("membership", { inverse: "organisation", async: true }) members;
 
   // special attribute from org-memberships endpoint
   @attr roles;
