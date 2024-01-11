@@ -394,6 +394,15 @@ class DocumentParser:
 
 
 def generate_pdf(parser, append_to=None):
+    """
+    Generate a PDF from the parser data.
+
+    This helper function takes a DocumentParser instance and generates a PDF file
+    containing the whole document, followed by all render-able attachments.
+    Optionally, a PDF can be supplied (`append_to`), that will be put at the top of the
+    resulting PDF.
+    """
+
     def merge_files_to_pdf(pdf):
         parser.merger.merge(0, pdf)
         if append_to:
@@ -421,5 +430,5 @@ def generate_pdf(parser, append_to=None):
     if dms_document_response.status_code != status.HTTP_200_OK:
         raise DMSException(dms_document_response)
 
-    # Then we merge the attachemnts to the newly generated PDF
+    # Then we merge the attachments to the newly generated PDF
     return merge_files_to_pdf(io.BytesIO(dms_document_response.content))
