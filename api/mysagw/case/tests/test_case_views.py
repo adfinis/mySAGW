@@ -265,7 +265,6 @@ def test_download_dms_failure(
     acknowledgement_mock,
     credit_approval_mock,
     requests_mock,
-    snapshot,
     endpoint,
 ):
     address_factory(identity=identity)
