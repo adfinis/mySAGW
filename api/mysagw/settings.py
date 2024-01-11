@@ -1,5 +1,6 @@
 import os
 import re
+from pathlib import Path
 
 import environ
 from django.utils.translation import gettext_lazy as _
@@ -192,6 +193,7 @@ DOCUMENT_MERGE_SERVICE_APPLICATION_EXPORT_SLUG = env.str(
 
 # Caluma
 CALUMA_VERIFY_SSL = env.bool("CALUMA_VERIFY_SSL", default=True)
+COMMON_GQL_DIR = Path(__file__).parent.resolve() / "queries"
 
 
 REST_FRAMEWORK = {

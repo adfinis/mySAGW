@@ -14,13 +14,12 @@ from rest_framework.serializers import BaseSerializer
 from rest_framework.viewsets import GenericViewSet
 
 from mysagw.caluma_client import CalumaClient
+from mysagw.caluma_document_parser import DMSException, DocumentParser, generate_pdf
 from mysagw.case import filters, models, serializers
-from mysagw.case.application_parser import ApplicationParser
 from mysagw.case.permissions import HasCaseAccess
 from mysagw.dms_client import DMSClient, get_dms_error_response
 from mysagw.identity.models import Identity
 from mysagw.oidc_auth.permissions import IsAdmin, IsAuthenticated, IsStaff
-from mysagw.pdf_utils import add_caluma_files_to_pdf
 from mysagw.utils import format_currency
 
 GQL_DIR = Path(__file__).parent.resolve() / "queries"
@@ -210,41 +209,40 @@ class CaseDownloadViewSet(GenericViewSet):
     @action(detail=True)
     def application(self, request, pk=None):
         caluma_client = self.get_caluma_client(request)
+
+        # first we get the document-ID from the main-form document. this is needed
+        # in the main query for applying the visibilities
         variables = {
             "case_id": urlsafe_b64encode(f"Case:{pk}".encode()).decode("utf-8"),
         }
         raw_document_id_data = caluma_client.get_data(
-            GQL_DIR / "get_document_id.gql",
+            [GQL_DIR / "get_document_id.gql"],
             variables,
         )
         document_id = raw_document_id_data["data"]["node"]["document"]["id"]
+
+        # now we execute the main query for the accounting document
         variables["document_id"] = document_id
         language = get_language()
         raw_data = caluma_client.get_data(
-            GQL_DIR / "get_document.gql",
+            [
+                GQL_DIR / "get_document.gql",
+                settings.COMMON_GQL_DIR / "document_fragments.gql",
+            ],
             variables,
             add_headers={"Accept-Language": language},
         )
-        parser = ApplicationParser(raw_data)
-        data = parser.run()
+        parser = DocumentParser(raw_data)
+        parser.run()
 
-        dms_client = DMSClient()
-        dms_response = dms_client.get_merged_document(
-            data,
-            settings.DOCUMENT_MERGE_SERVICE_APPLICATION_EXPORT_SLUG,
-            convert="pdf",
-        )
-
-        if dms_response.status_code != status.HTTP_200_OK:
-            return get_dms_error_response(dms_response)
-
-        result = add_caluma_files_to_pdf(
-            io.BytesIO(dms_response.content),
-            parser.files_to_add,
-        )
+        # Let's generate the PDF
+        try:
+            pdf = generate_pdf(parser)
+        except DMSException as e:
+            return get_dms_error_response(e.response)
 
         return FileResponse(
-            result,
+            pdf,
             filename=(
                 f"{parser.dossier_nr} - "
                 f"{self.get_filename_translation('application', language)}.pdf"
@@ -256,7 +254,7 @@ class CaseDownloadViewSet(GenericViewSet):
         variables = {
             "case_id": urlsafe_b64encode(f"Case:{pk}".encode()).decode("utf-8"),
         }
-        raw_data = caluma_client.get_data(GQL_DIR / f"get_{name}.gql", variables)
+        raw_data = caluma_client.get_data([GQL_DIR / f"get_{name}.gql"], variables)
         data = self.get_formatted_data(raw_data, name)
         language = get_language()
         template = f'{getattr(settings, f"DOCUMENT_MERGE_SERVICE_{name.upper()}_TEMPLATE_SLUG")}-{language}'

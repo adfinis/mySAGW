@@ -1,6 +1,7 @@
 import io
 from base64 import urlsafe_b64encode
 from pathlib import Path
+from uuid import uuid4
 
 from django.conf import settings
 from django.http import FileResponse
@@ -10,33 +11,12 @@ from rest_framework import status
 from rest_framework.views import APIView
 
 from mysagw.caluma_client import CalumaClient
+from mysagw.caluma_document_parser import DocumentParser, generate_pdf
 from mysagw.dms_client import DMSClient, get_dms_error_response
 from mysagw.oidc_auth.permissions import IsAdmin, IsAuthenticated, IsStaff
-from mysagw.pdf_utils import SUPPORTED_MERGE_CONTENT_TYPES, add_caluma_files_to_pdf
 from mysagw.utils import format_currency
 
 GQL_DIR = Path(__file__).parent.resolve() / "queries"
-
-
-def get_receipt_urls(data):
-    try:
-        rows = data["data"]["node"]["additionalData"]["edges"][0]["node"]["document"][
-            "quittungen"
-        ]["edges"][0]["node"]["value"]
-    except (KeyError, TypeError, IndexError):
-        return []
-
-    result = []
-    for row in rows:
-        try:
-            result += [
-                url["downloadUrl"]
-                for url in row["answers"]["edges"][0]["node"]["value"]
-                if url["metadata"]["content_type"] in SUPPORTED_MERGE_CONTENT_TYPES
-            ]
-        except (KeyError, TypeError, IndexError):
-            continue
-    return result
 
 
 def get_cover_context(data):  # noqa: C901
@@ -59,7 +39,7 @@ def get_cover_context(data):  # noqa: C901
             [
                 "data",
                 "node",
-                "document",
+                "main",
                 "form",
                 "name",
             ],
@@ -184,7 +164,7 @@ def get_cover_context(data):  # noqa: C901
             ],
             None,
         ),
-        "dossier_no": (
+        "dossier_nr": (
             [
                 "data",
                 "node",
@@ -270,7 +250,7 @@ def get_cover_context(data):  # noqa: C901
                 "edges",
                 0,
                 "node",
-                "value",
+                "stringValue",
             ],
             lambda x: x.split("-")[3],
         ),
@@ -373,36 +353,89 @@ class ReceiptView(APIView):
             # endpoint="http://caluma:8000/graphql",
             # token="Bearer ey...",
         )
+
+        # first we have to fetch the ID of the additional-data document,
+        # if it's available
         variables = {
             "case_id": urlsafe_b64encode(f"Case:{pk}".encode()).decode("utf-8"),
         }
+
+        raw_document_id_data = caluma_client.get_data(
+            [GQL_DIR / "get_document_id.gql"],
+            variables,
+        )
+
+        # check if the accounting-form document is available
+        additional_data_available = True
+        try:
+            document_id = raw_document_id_data["data"]["node"]["additionalData"][
+                "edges"
+            ][0]["node"]["document"]["id"]
+        except (IndexError, KeyError):
+            # additional_data document is not available. Use random ID to make the
+            # query go through and return empty values.
+            # This is not very nice, but lets us use the same query
+            document_id = str(uuid4())
+            additional_data_available = False
+
+        # now we execute the main query for the accounting document
+        variables["document_id"] = document_id
+
         raw_data = caluma_client.get_data(
-            GQL_DIR / "get_receipts.gql",
+            [
+                GQL_DIR / "get_receipts.gql",
+                settings.COMMON_GQL_DIR / "document_fragments.gql",
+            ],
             variables,
             add_headers={"Accept-Language": get_language()},
         )
 
+        # Let's generate the cover sheet
         cover_context = get_cover_context(raw_data)
         cover_context["date"] = timezone.now().date().strftime("%d. %m. %Y")
 
-        receipt_urls = get_receipt_urls(raw_data)
         dms_client = DMSClient()
-        dms_response = dms_client.get_merged_document(
+        dms_cover_response = dms_client.get_merged_document(
             cover_context,
             settings.DOCUMENT_MERGE_SERVICE_ACCOUNTING_COVER_TEMPLATE_SLUG,
             convert="pdf",
         )
 
-        if dms_response.status_code != status.HTTP_200_OK:
-            return get_dms_error_response(dms_response)
+        if dms_cover_response.status_code != status.HTTP_200_OK:
+            return get_dms_error_response(dms_cover_response)
 
-        result = add_caluma_files_to_pdf(io.BytesIO(dms_response.content), receipt_urls)
+        pdf = io.BytesIO(dms_cover_response.content)
 
+        # Only call document parser, if document is available
+        if additional_data_available:
+            additional_data = raw_data["data"]["node"]["additionalData"]["edges"][0][
+                "node"
+            ]["document"]
+
+            # The DecumentParser only needs a subset of the data and expects it to be
+            # in a specific format
+            prepared_data = {
+                "data": {
+                    "node": {
+                        "document": {
+                            "dossier_nr": raw_data["data"]["node"]["main"]["dossierno"],
+                            "verteilplan": raw_data["data"]["node"]["main"]["vp_year"],
+                            "answers": additional_data["answers"],
+                            "form": additional_data["form"],
+                        },
+                    },
+                },
+            }
+
+            parser = DocumentParser(prepared_data)
+            parser.run()
+            pdf = generate_pdf(parser, append_to=io.BytesIO(dms_cover_response.content))
+
+        dossier_nr = cover_context.get("dossier_nr", "unknown_dossier_nr")
         form_name = cover_context.get("form", "unknown_form")
-        dossier_no = cover_context.get("dossier_no", "unknown_dossier_no")
 
         return FileResponse(
-            result,
+            pdf,
             content_type="application/pdf",
-            filename=f"{form_name} - {dossier_no}.pdf",
+            filename=f"{form_name} - {dossier_nr}.pdf",
         )
