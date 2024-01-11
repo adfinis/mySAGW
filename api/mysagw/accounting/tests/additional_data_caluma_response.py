@@ -24,14 +24,14 @@ CALUMA_DATA_FULL = {
                                                                         },
                                                                         "filesValue": [
                                                                             {
-                                                                                "downloadUrl": "https://mysagw.local/caluma-media/download-url-png",
+                                                                                "downloadUrl": "https://mysagw.local/caluma-media/download-url-small.png",
                                                                                 "metadata": {
                                                                                     "content_type": "image/png",
                                                                                 },
                                                                                 "name": "File 1",
                                                                             },
                                                                             {
-                                                                                "downloadUrl": "https://mysagw.local/caluma-media/download-url-png2",
+                                                                                "downloadUrl": "https://mysagw.local/caluma-media/download-url-wide.png",
                                                                                 "metadata": {
                                                                                     "content_type": "image/png",
                                                                                 },
@@ -57,7 +57,7 @@ CALUMA_DATA_FULL = {
                                                                     "node": {
                                                                         "filesValue": [
                                                                             {
-                                                                                "downloadUrl": "https://mysagw.local/caluma-media/download-url-pdf",
+                                                                                "downloadUrl": "https://mysagw.local/caluma-media/download-url-test.pdf",
                                                                                 "metadata": {
                                                                                     "content_type": "application/pdf",
                                                                                 },
@@ -79,7 +79,7 @@ CALUMA_DATA_FULL = {
                                                                     "node": {
                                                                         "filesValue": [
                                                                             {
-                                                                                "downloadUrl": "https://mysagw.local/caluma-media/download-url-pdf-encrypted",
+                                                                                "downloadUrl": "https://mysagw.local/caluma-media/download-url-test_encrypted.pdf",
                                                                                 "metadata": {
                                                                                     "content_type": "application/pdf",
                                                                                 },
