@@ -31,6 +31,7 @@ services:
       - ./caluma/extensions:/app/caluma/extensions
       - ./caluma/data:/app/caluma/data:ro
       - ./caluma/setup.cfg:/app/setup.cfg:ro
+      - ./caluma/.env:/app/.env
     command:
       [
         "/bin/sh",

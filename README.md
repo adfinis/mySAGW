@@ -19,6 +19,7 @@ After installing and configuring those, download [docker-compose.yml](https://ra
 
 ```bash
 echo "UID=$(id -u)" > .env
+touch ./caluma/.env
 docker-compose up -d
 ```
 
