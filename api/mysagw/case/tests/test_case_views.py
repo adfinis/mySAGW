@@ -305,20 +305,22 @@ def test_download_dms_failure(
     }
 
 
+@pytest.mark.usefixtures("_caluma_files_mock")
 @pytest.mark.parametrize("dms_failure", [False, True])
 @pytest.mark.parametrize("data", [CALUMA_DATA_FULL, CALUMA_DATA_EMPTY])
 @pytest.mark.parametrize("identity__idp_id", ["e5dabdd0-bafb-4b75-82d2-ccf9295b623b"])
 def test_download_application(
     dms_mock,
     requests_mock,
-    application_mock,
+    graphql_mock,
     client,
     identity,
     snapshot,
     dms_failure,
     data,
 ):
-    application_mock(data)
+    graphql_id_response = {"data": {"node": {"document": {"id": "GLOBAL_ID"}}}}
+    graphql_mock(graphql_id_response, data)
     if dms_failure:
         requests_mock.post(
             build_url(
