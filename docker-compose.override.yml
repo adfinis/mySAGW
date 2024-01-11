@@ -26,6 +26,7 @@ services:
       context: caluma
       args:
         INSTALL_DEV: "true"
+    user: "${UID:?Set UID env variable to your user id}"
     env_file: ./.envs/.local/.caluma
     volumes:
       - ./caluma/extensions:/app/caluma/extensions
