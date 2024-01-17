@@ -73,7 +73,7 @@
     "ember-intl": "^5.7.2",
     "ember-load-initializers": "^2.1.2",
     "ember-localized-model": "^2.0.0",
-    "ember-power-select": "^6.0.1",
+    "ember-power-select": "^7.2.0",
     "ember-qunit": "^6.1.1",
     "ember-resolver": "^8.1.0",
     "ember-set-helper": "^2.0.1",
