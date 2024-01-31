@@ -1,42 +1,46 @@
-import os
+from pathlib import Path
 
 import environ
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
 env = environ.Env()
+django_root = Path(__file__).parent.resolve()
+
+ENV_FILE = django_root / ".env"
+if ENV_FILE.exists():  # pragma: no cover
+    environ.Env.read_env(ENV_FILE)
 
 
 # Mailing
-settings.EMAIL_HOST = os.environ.get("EMAIL_HOST", "mail")
-settings.EMAIL_PORT = os.environ.get("EMAIL_PORT", 1025)
-settings.EMAIL_HOST_USER = os.environ.get(
+settings.EMAIL_HOST = env.str("EMAIL_HOST", "mail")
+settings.EMAIL_PORT = env.int("EMAIL_PORT", 1025)
+settings.EMAIL_HOST_USER = env.str(
     "EMAIL_HOST_USER",
     "noreply@mysagw.adfinis.com",
 )
-settings.SERVER_EMAIL = os.environ.get("SERVER_EMAIL", settings.EMAIL_HOST_USER)
-settings.EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
-settings.EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", False)
-from_name = os.environ.get("MAILING_FROM_NAME", "mySAGW")
-from_mail = os.environ.get("MAILING_FROM_MAIL", "noreply@mysagw.adfinis.com")
+settings.SERVER_EMAIL = env.str("SERVER_EMAIL", settings.EMAIL_HOST_USER)
+settings.EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD", "")
+settings.EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS", False)
+from_name = env.str("MAILING_FROM_NAME", "mySAGW")
+from_mail = env.str("MAILING_FROM_MAIL", "noreply@mysagw.adfinis.com")
 settings.MAILING = {"from_email": from_mail, "from_name": from_name}
 settings.MAILING_SENDER = f"{from_name} <{from_mail}>"
 
 # API
-settings.API_BASE_URI = os.environ.get("API_BASE_URI", "https://mysagw.local/api/v1")
-settings.SELF_URI = os.environ.get("SELF_URI", "https://mysagw.local")
-raw_verify_ssl = os.environ.get("API_VERIFY_SSL", "true")
-settings.API_VERIFY_SSL = raw_verify_ssl == "true"
+settings.API_BASE_URI = env.str("API_BASE_URI", "https://mysagw.local/api/v1")
+settings.SELF_URI = env.str("SELF_URI", "https://mysagw.local")
+settings.API_VERIFY_SSL = env.bool("API_VERIFY_SSL", True)
 
-settings.OIDC_ADMIN_CLIENT_ID = os.environ.get(
+settings.OIDC_ADMIN_CLIENT_ID = env.str(
     "OIDC_ADMIN_CLIENT_ID",
     "test_client",
 )
-settings.OIDC_ADMIN_CLIENT_SECRET = os.environ.get(
+settings.OIDC_ADMIN_CLIENT_SECRET = env.str(
     "OIDC_ADMIN_CLIENT_SECRET",
     "fb13e564-75dd-4fc3-a993-3dad9064e71e",
 )
-settings.OIDC_TOKEN_ENDPOINT = os.environ.get(
+settings.OIDC_TOKEN_ENDPOINT = env.str(
     "OIDC_TOKEN_ENDPOINT",
     "https://mysagw.local/auth/realms/mysagw/protocol/openid-connect/token",
 )
@@ -109,7 +113,7 @@ settings.INTERNAL_APPLICATION_PERIODICS_CHOICES = (
 
 settings.EARLY_CAREER_AWARD_FORM_SLUG = "nachwuchspreis-online"
 
-settings.CASE_ID_CACHE_SECONDS = int(os.environ.get("CASE_ID_CACHE_SECONDS", "60"))
+settings.CASE_ID_CACHE_SECONDS = env.int("CASE_ID_CACHE_SECONDS", 60)
 
 # Validation
 

@@ -145,3 +145,41 @@ def _dms_mock(requests_mock, settings, request):
     }
 
     requests_mock.post(matcher, **response_map[request.param])
+
+
+@pytest.fixture
+def _caluma_files_mock(requests_mock):
+    for file, content_type in [
+        ("small.png", "image/png"),
+        ("big.png", "image/png"),
+        ("long.png", "image/png"),
+        ("wide.png", "image/png"),
+        ("test.pdf", "application/pdf"),
+        ("test_encrypted.pdf", "application/pdf"),
+    ]:
+        with (TEST_FILES_DIR / file).open("rb") as f:
+            data = f.read()
+
+        requests_mock.get(
+            f"https://mysagw.local/caluma-media/download-url-{file}",
+            status_code=status.HTTP_200_OK,
+            content=data,
+            headers={"CONTENT-TYPE": content_type},
+        )
+
+
+@pytest.fixture
+def graphql_mock(requests_mock):
+    def mockit(id_data, data):
+        def json_callback(request, context):
+            if request.json()["query"].startswith("query DocumentId"):
+                return id_data
+            return data
+
+        requests_mock.post(
+            "http://testserver/graphql",
+            status_code=200,
+            json=json_callback,
+        )
+
+    return mockit

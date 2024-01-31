@@ -11,7 +11,7 @@ export default class ApplicationRoute extends Route {
 
     await this.session.setup();
 
-    const locale = localStorage.getItem("locale") ?? "en";
+    const locale = localStorage.getItem("locale") ?? "de";
     this.intl.setLocale([locale]);
 
     this.calumaOptions.registerComponentOverride({

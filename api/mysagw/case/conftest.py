@@ -121,31 +121,3 @@ def credit_approval_mock(requests_mock):
         )
 
     return mockit
-
-
-@pytest.fixture
-def application_mock(requests_mock):
-    def mockit(data):
-        def json_callback(request, context):
-            if request.json()["query"].startswith("query DocumentId"):
-                return {"data": {"node": {"document": {"id": "GLOBAL_ID"}}}}
-            return data
-
-        requests_mock.post(
-            "http://testserver/graphql",
-            status_code=200,
-            json=json_callback,
-        )
-
-        for file in ["small.png", "big.png", "long.png", "wide.png"]:
-            with (TEST_FILES_DIR / file).open("rb") as f:
-                png = f.read()
-
-            requests_mock.get(
-                f"https://mysagw.local/caluma-media/download-url-{file}",
-                status_code=status.HTTP_200_OK,
-                content=png,
-                headers={"CONTENT-TYPE": "image/png"},
-            )
-
-    return mockit

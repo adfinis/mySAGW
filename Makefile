@@ -14,7 +14,7 @@ start: ## Start the development server
 
 .PHONY: api-test
 api-test: ## Test the backend
-	@docker compose run --rm api poetry run pytest --no-cov-on-fail --cov --create-db -vv
+	@docker compose run --rm api poetry run pytest --no-cov-on-fail --cov -vv
 
 .PHONY: api-lint
 api-lint: ## Lint the backend

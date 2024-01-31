@@ -4,40 +4,43 @@
   @identity={{@model}}
   @customEndpoint="my-orgs/{{@model.id}}"
   @cancelRouteOverride="profile"
-  @readOnlyView={{true}}
 />
 
-<hr>
+<hr />
 
 <div uk-grid class="uk-margin-bottom">
   <div class="uk-width-1-2@m uk-width-1-3@l">
     <div class="uk-card uk-card-default uk-card-body uk-card-small">
-      <IdentityAddresses @identity={{@model}} @readOnlyView={{true}} />
+      <IdentityAddresses @identity={{@model}} />
     </div>
   </div>
 
   <div class="uk-width-1-2@m uk-width-1-3@l">
     <div class="uk-card uk-card-default uk-card-body uk-card-small">
-      <IdentityEmails @identity={{@model}} @readOnlyView={{true}} />
+      <IdentityEmails @identity={{@model}} />
     </div>
   </div>
 
   <div class="uk-width-1-2@m uk-width-1-3@l">
     <div class="uk-card uk-card-default uk-card-body uk-card-small">
-      <IdentityPhoneNumbers @identity={{@model}} @readOnlyView={{true}} />
+      <IdentityPhoneNumbers @identity={{@model}} />
     </div>
   </div>
 
   <div class="uk-width-1-2@m">
     <div class="uk-card uk-card-default uk-card-body uk-card-small">
-      <IdentityInterests @identity={{@model}} @endpoint={{concat '/my-orgs/' @model.id}} @profileView={{true}} @readOnlyView={{true}} />
+      <IdentityInterests
+        @identity={{@model}}
+        @endpoint={{concat "/my-orgs/" @model.id}}
+        @profileView={{true}}
+      />
     </div>
   </div>
 
   {{#if @model.isAuthorized}}
     <div class="uk-width-1-2@m">
       <div class="uk-card uk-card-default uk-card-body uk-card-small">
-        <IdentityMembers @identity={{@model}} @hideIdentityLink={{true}}/>
+        <IdentityMembers @identity={{@model}} @hideIdentityLink={{true}} />
       </div>
     </div>
   {{/if}}

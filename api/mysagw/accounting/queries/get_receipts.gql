@@ -1,37 +1,10 @@
-query Receipts($case_id: ID!) {
+query Receipts($case_id: ID!, $document_id: ID!) {
   node(id: $case_id) {
     ... on Case {
-      document {
-        form {
-          name
-        }
-      }
       additionalData: workItems(filter: [{task: "additional-data-form"}], first: 1) {
         edges {
           node {
             document {
-              quittungen: answers(filter: [{question: "additional-data-quittungen"}]) {
-                edges {
-                  node {
-                    ... on TableAnswer {
-                      value {
-                        answers(filter: [{question: "additional-data-row-quittung"}]) {
-                          edges {
-                            node {
-                              ... on FilesAnswer {
-                                value {
-                                  downloadUrl
-                                  metadata
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
               applicant_name: answers(filter: [{question: "additional-data-name"}]) {
                 edges {
                   node {
@@ -113,11 +86,33 @@ query Receipts($case_id: ID!) {
                   }
                 }
               }
+              answers(filter: [{visibleInContext: true}]) {
+                edges {
+                  node {
+                    ...FieldAnswer
+                  }
+                }
+              }
+              form {
+                slug
+                name
+                questions(filter: [{isArchived: false}, {visibleInDocument: $document_id}]) {
+                  edges {
+                    node {
+                      __typename
+                      ...FieldQuestion
+                    }
+                  }
+                }
+              }
             }
           }
         }
       }
       main: document {
+        form {
+          name
+        }
         dossierno: answers(filter: [{question: "dossier-nr"}]) {
           edges {
             node {
@@ -140,7 +135,11 @@ query Receipts($case_id: ID!) {
           edges {
             node {
               ... on StringAnswer {
-                value
+                stringValue: value
+                question {
+                  __typename
+                  ...SimpleQuestion
+                }
               }
             }
           }

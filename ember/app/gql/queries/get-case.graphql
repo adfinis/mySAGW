@@ -16,6 +16,7 @@ query getCase($filter: [CaseFilterSetType]) {
               id
               status
               createdAt
+              closedAt
               task {
                 slug
               }
@@ -78,11 +79,21 @@ query getCase($filter: [CaseFilterSetType]) {
             name
             description
           }
-          answers(filter: [{ questions: ["dossier-nr"] }]) {
+          answers(filter: [{ questions: ["dossier-nr" "verteilplan-nr"] }]) {
             edges {
               node {
                 question {
                   slug
+                  ... on ChoiceQuestion {
+                    options {
+                      edges {
+                        node {
+                          slug
+                          label
+                        }
+                      }
+                    }
+                  }
                 }
                 ... on StringAnswer {
                   StringAnswerValue: value
