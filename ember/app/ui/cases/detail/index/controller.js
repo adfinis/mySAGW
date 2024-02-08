@@ -284,7 +284,7 @@ export default class CasesDetailIndexController extends Controller {
     const caseEdges = yield this.apollo.query(
       {
         query: getCaseQuery,
-        variables: { filter: [{ id: this.model.id }] },
+        variables: { filter: [{ ids: [this.model.id] }] },
       },
       "allCases.edges"
     );
