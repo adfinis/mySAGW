@@ -19,7 +19,7 @@ export default class CaseDataService extends Service {
     const caseEdges = yield this.apollo.query(
       {
         query: getCaseQuery,
-        variables: { filter: [{ id: caseId }] },
+        variables: { filter: [{ ids: [caseId] }] },
         fetchPolicy: "network-only",
       },
       "allCases.edges"
