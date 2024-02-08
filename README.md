@@ -85,15 +85,15 @@ docker compose up -d
 # Wait for the database migrations to complete for the API and Caluma.
 make caluma-loadconfig
 # upload the templates to DMS
-docker compose run --rm api python manage.py upload_template -t mysagw/identity/templates/identity-labels.docx
-docker compose run --rm api python manage.py upload_template -t mysagw/accounting/templates/accounting-cover.docx
-docker compose run --rm api python manage.py upload_template -t mysagw/case/templates/acknowledgement-de.docx
-docker compose run --rm api python manage.py upload_template -t mysagw/case/templates/acknowledgement-fr.docx
-docker compose run --rm api python manage.py upload_template -t mysagw/case/templates/acknowledgement-en.docx
-docker compose run --rm api python manage.py upload_template -t mysagw/case/templates/credit-approval-de.docx
-docker compose run --rm api python manage.py upload_template -t mysagw/case/templates/credit-approval-fr.docx
-docker compose run --rm api python manage.py upload_template -t mysagw/case/templates/credit-approval-en.docx
-docker compose run --rm api python manage.py upload_template -t mysagw/case/templates/application.docx
+docker compose run --rm api poetry run ./manage.py upload_template -t mysagw/identity/templates/identity-labels.docx
+docker compose run --rm api poetry run ./manage.py upload_template -t mysagw/accounting/templates/accounting-cover.docx
+docker compose run --rm api poetry run ./manage.py upload_template -t mysagw/case/templates/acknowledgement-de.docx
+docker compose run --rm api poetry run ./manage.py upload_template -t mysagw/case/templates/acknowledgement-fr.docx
+docker compose run --rm api poetry run ./manage.py upload_template -t mysagw/case/templates/acknowledgement-en.docx
+docker compose run --rm api poetry run ./manage.py upload_template -t mysagw/case/templates/credit-approval-de.docx
+docker compose run --rm api poetry run ./manage.py upload_template -t mysagw/case/templates/credit-approval-fr.docx
+docker compose run --rm api poetry run ./manage.py upload_template -t mysagw/case/templates/credit-approval-en.docx
+docker compose run --rm api poetry run ./manage.py upload_template -t mysagw/case/templates/application.docx
 ```
 
 ## Contributing
