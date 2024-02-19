@@ -16,7 +16,16 @@
           <ul class="uk-padding-remove uk-list">
             {{#each category.interests as |interest|}}
               <li class="uk-flex uk-flex-between uk-flex-middle">
-                <div>{{interest.title}}</div>
+                {{#if (can "list interest")}}
+                  <LinkTo
+                    @route="identities"
+                    @query={{hash searchTerm=(concat '"' interest.title '"')}}
+                  >
+                    {{interest.title}}
+                  </LinkTo>
+                {{else}}
+                  {{interest.title}}
+                {{/if}}
 
                 {{#if (can "remove interest from identity" @identity)}}
                   <div>
@@ -54,11 +63,17 @@
   {{/if}}
 
   {{#if this.changeset}}
-    <hr>
+    <hr />
 
     <h3 class="uk-margin-remove-top">
       {{t "components.identity-interests.form.title.add"}}
     </h3>
+
+    {{#if @profileView}}
+      <p>
+        {{t "components.identity-interests.disclaimer" htmlSafe=true}}
+      </p>
+    {{/if}}
 
     <ValidatedForm
       @model={{this.changeset}}
@@ -96,9 +111,7 @@
           {{t "global.cancel"}}
         </button>
 
-        <Form.submit
-          @label={{t "global.save"}}
-        />
+        <Form.submit @label={{t "global.save"}} />
       </p>
     </ValidatedForm>
   {{/if}}

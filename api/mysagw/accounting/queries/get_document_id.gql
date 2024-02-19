@@ -1,0 +1,15 @@
+query DocumentId ($case_id: ID!) {
+  node(id: $case_id) {
+    ... on Case {
+      additionalData: workItems(filter: [{task: "additional-data-form"}], first: 1) {
+        edges {
+          node {
+            document {
+              id
+            }
+          }
+        }
+      }
+    }
+  }
+}

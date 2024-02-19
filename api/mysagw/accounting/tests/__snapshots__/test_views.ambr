@@ -1,34 +1,121 @@
 # serializer version: 1
-# name: test_get_receipts[admin-False-False-200]
+# name: test_get_receipts[admin-False-caluma_data3-2-200]
   dict({
     'convert': 'pdf',
     'data': dict({
-      'applicant_address': 'Dorfplatz 1',
-      'applicant_city': 'Zürich',
-      'applicant_land': 'Schweiz',
+      'applicant_address': 'Teststrasse 23',
+      'applicant_city': '',
+      'applicant_land': '',
       'applicant_name': 'Winston Smith',
-      'applicant_postcode': '8000',
-      'bank': 'Big Bank',
-      'bank_town': 'Bern',
-      'circ_kontonummer': '23 konto1',
+      'applicant_postcode': '',
+      'bank': '',
+      'bank_town': '',
+      'circ_kontonummer': 'Option 1',
       'date': '01. 01. 1970',
-      'dossier_no': '2021-0006',
-      'form': 'Foo form',
-      'iban': 'CH56 0483 5012 3456 7800 9',
+      'dossier_nr': '2024-0001',
+      'form': 'Application',
+      'iban': '',
       'mitgliedinstitution': 'Foo institute',
       'section': '6',
-      'total': "CHF 5'000.-",
-      'vorschussbetrag': "CHF 5'000.-",
-      'vorschussdatum': '04. 05. 2023',
+      'total': 'CHF 500.-',
+      'vorschussbetrag': 'CHF 500.-',
+      'vorschussdatum': '19. 01. 2024',
       'vp_year': '',
-      'zahlungszweck': 'Foo Bar',
+      'zahlungszweck': '',
     }),
   })
 # ---
-# name: test_get_receipts[admin-False-False-200].1
-  'inline; filename="Foo form - 2021-0006.pdf"'
+# name: test_get_receipts[admin-False-caluma_data3-2-200].1
+  dict({
+    'convert': 'pdf',
+    'data': dict({
+      'dossier_nr': 'Referenznummer: 2024-0001',
+      'name': 'Weitere Daten',
+      'questions': dict({
+        'additional-data-bemerkungen': dict({
+          'info_text': None,
+          'label': 'Bemerkungen',
+          'type': 'TextareaQuestion',
+          'value': None,
+        }),
+        'additional-data-land': dict({
+          'info_text': None,
+          'label': 'Land',
+          'type': 'TextQuestion',
+          'value': None,
+        }),
+        'additional-data-quittungen': dict({
+          'info_text': None,
+          'label': 'Quittungen',
+          'rows': list([
+            dict({
+              'name': 'Quittungen',
+              'questions': dict({
+                'additional-data-row-quittung': dict({
+                  'info_text': None,
+                  'label': 'Quittungen',
+                  'type': 'FilesQuestion',
+                  'value': list([
+                    'File 1 (1)',
+                    'File 2 (2)',
+                    'File 3',
+                  ]),
+                }),
+              }),
+            }),
+            dict({
+              'name': 'Quittungen',
+              'questions': dict({
+                'additional-data-row-quittung': dict({
+                  'info_text': None,
+                  'label': 'Quittungen',
+                  'type': 'FilesQuestion',
+                  'value': list([
+                    'File 4 (3)',
+                  ]),
+                }),
+              }),
+            }),
+            dict({
+              'name': 'Quittungen',
+              'questions': dict({
+                'additional-data-row-quittung': dict({
+                  'info_text': None,
+                  'label': 'Quittungen',
+                  'type': 'FilesQuestion',
+                  'value': list([
+                    'File 5',
+                  ]),
+                }),
+              }),
+            }),
+          ]),
+          'type': 'TableQuestion',
+        }),
+        'additional-data-zahlung': dict({
+          'info_text': None,
+          'label': 'Zahlung',
+          'options': list([
+            list([
+              'additional-data-zahlung-1',
+              'Option 1',
+            ]),
+            list([
+              'additional-data-zahlung-2',
+              'Option 2',
+            ]),
+          ]),
+          'type': 'ChoiceQuestion',
+          'value': 'additional-data-zahlung-1',
+        }),
+      }),
+    }),
+  })
 # ---
-# name: test_get_receipts[admin-False-True-200]
+# name: test_get_receipts[admin-False-caluma_data3-2-200].2
+  'inline; filename="Application - 2024-0001.pdf"'
+# ---
+# name: test_get_receipts[admin-False-caluma_data4-1-200]
   dict({
     'convert': 'pdf',
     'data': dict({
@@ -41,8 +128,8 @@
       'bank_town': '',
       'circ_kontonummer': '',
       'date': '01. 01. 1970',
-      'dossier_no': '2021-0006',
-      'form': 'Foo form',
+      'dossier_nr': '2024-0001',
+      'form': 'Application',
       'iban': '',
       'mitgliedinstitution': '',
       'section': '',
@@ -54,35 +141,148 @@
     }),
   })
 # ---
-# name: test_get_receipts[admin-False-True-200].1
-  'inline; filename="Foo form - 2021-0006.pdf"'
+# name: test_get_receipts[admin-False-caluma_data4-1-200].1
+  'inline; filename="Application - 2024-0001.pdf"'
 # ---
-# name: test_get_receipts[staff-False-False-200]
+# name: test_get_receipts[admin-True-caluma_data2-1-500]
   dict({
     'convert': 'pdf',
     'data': dict({
-      'applicant_address': 'Dorfplatz 1',
-      'applicant_city': 'Zürich',
-      'applicant_land': 'Schweiz',
+      'applicant_address': 'Teststrasse 23',
+      'applicant_city': '',
+      'applicant_land': '',
       'applicant_name': 'Winston Smith',
-      'applicant_postcode': '8000',
-      'bank': 'Big Bank',
-      'bank_town': 'Bern',
-      'circ_kontonummer': '23 konto1',
+      'applicant_postcode': '',
+      'bank': '',
+      'bank_town': '',
+      'circ_kontonummer': 'Option 1',
       'date': '01. 01. 1970',
-      'dossier_no': '2021-0006',
-      'form': 'Foo form',
-      'iban': 'CH56 0483 5012 3456 7800 9',
+      'dossier_nr': '2024-0001',
+      'form': 'Application',
+      'iban': '',
       'mitgliedinstitution': 'Foo institute',
       'section': '6',
-      'total': "CHF 5'000.-",
-      'vorschussbetrag': "CHF 5'000.-",
-      'vorschussdatum': '04. 05. 2023',
+      'total': 'CHF 500.-',
+      'vorschussbetrag': 'CHF 500.-',
+      'vorschussdatum': '19. 01. 2024',
       'vp_year': '',
-      'zahlungszweck': 'Foo Bar',
+      'zahlungszweck': '',
     }),
   })
 # ---
-# name: test_get_receipts[staff-False-False-200].1
-  'inline; filename="Foo form - 2021-0006.pdf"'
+# name: test_get_receipts[staff-False-caluma_data1-2-200]
+  dict({
+    'convert': 'pdf',
+    'data': dict({
+      'applicant_address': 'Teststrasse 23',
+      'applicant_city': '',
+      'applicant_land': '',
+      'applicant_name': 'Winston Smith',
+      'applicant_postcode': '',
+      'bank': '',
+      'bank_town': '',
+      'circ_kontonummer': 'Option 1',
+      'date': '01. 01. 1970',
+      'dossier_nr': '2024-0001',
+      'form': 'Application',
+      'iban': '',
+      'mitgliedinstitution': 'Foo institute',
+      'section': '6',
+      'total': 'CHF 500.-',
+      'vorschussbetrag': 'CHF 500.-',
+      'vorschussdatum': '19. 01. 2024',
+      'vp_year': '',
+      'zahlungszweck': '',
+    }),
+  })
+# ---
+# name: test_get_receipts[staff-False-caluma_data1-2-200].1
+  dict({
+    'convert': 'pdf',
+    'data': dict({
+      'dossier_nr': 'Referenznummer: 2024-0001',
+      'name': 'Weitere Daten',
+      'questions': dict({
+        'additional-data-bemerkungen': dict({
+          'info_text': None,
+          'label': 'Bemerkungen',
+          'type': 'TextareaQuestion',
+          'value': None,
+        }),
+        'additional-data-land': dict({
+          'info_text': None,
+          'label': 'Land',
+          'type': 'TextQuestion',
+          'value': None,
+        }),
+        'additional-data-quittungen': dict({
+          'info_text': None,
+          'label': 'Quittungen',
+          'rows': list([
+            dict({
+              'name': 'Quittungen',
+              'questions': dict({
+                'additional-data-row-quittung': dict({
+                  'info_text': None,
+                  'label': 'Quittungen',
+                  'type': 'FilesQuestion',
+                  'value': list([
+                    'File 1 (1)',
+                    'File 2 (2)',
+                    'File 3',
+                  ]),
+                }),
+              }),
+            }),
+            dict({
+              'name': 'Quittungen',
+              'questions': dict({
+                'additional-data-row-quittung': dict({
+                  'info_text': None,
+                  'label': 'Quittungen',
+                  'type': 'FilesQuestion',
+                  'value': list([
+                    'File 4 (3)',
+                  ]),
+                }),
+              }),
+            }),
+            dict({
+              'name': 'Quittungen',
+              'questions': dict({
+                'additional-data-row-quittung': dict({
+                  'info_text': None,
+                  'label': 'Quittungen',
+                  'type': 'FilesQuestion',
+                  'value': list([
+                    'File 5',
+                  ]),
+                }),
+              }),
+            }),
+          ]),
+          'type': 'TableQuestion',
+        }),
+        'additional-data-zahlung': dict({
+          'info_text': None,
+          'label': 'Zahlung',
+          'options': list([
+            list([
+              'additional-data-zahlung-1',
+              'Option 1',
+            ]),
+            list([
+              'additional-data-zahlung-2',
+              'Option 2',
+            ]),
+          ]),
+          'type': 'ChoiceQuestion',
+          'value': 'additional-data-zahlung-1',
+        }),
+      }),
+    }),
+  })
+# ---
+# name: test_get_receipts[staff-False-caluma_data1-2-200].2
+  'inline; filename="Application - 2024-0001.pdf"'
 # ---

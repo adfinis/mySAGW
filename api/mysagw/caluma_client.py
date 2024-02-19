@@ -37,7 +37,9 @@ class CalumaClient:
         response.raise_for_status()
         return response.json()
 
-    def get_data(self, gql_file, variables, add_headers=None):
-        with gql_file.open("r") as f:
-            query = f.read()
+    def get_data(self, gql_files, variables, add_headers=None):
+        query = ""
+        for gql_file in gql_files:
+            with gql_file.open("r") as f:
+                query += f.read()
         return self.execute(query, variables, add_headers=add_headers)

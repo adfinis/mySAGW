@@ -1,7 +1,4 @@
-<div
-  {{did-insert this.onUpdate}}
-  {{did-update this.onUpdate}}
->
+<div {{did-insert this.onUpdate}} {{did-update this.onUpdate}}>
   <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
     <h1 class="uk-margin-remove">{{t "interests.index.title"}}</h1>
 
@@ -9,6 +6,7 @@
       <LinkTo
         @route="interests.add"
         class="uk-button uk-button-default uk-flex-none"
+        data-test-category-add
       >
         {{t "interests.index.add"}}
       </LinkTo>
@@ -19,21 +17,27 @@
     <LoadingSpinner />
   {{else if this.categories.length}}
     <div
-      class="
-        uk-child-width-1-2@s
-        uk-child-width-1-3@m
-        uk-child-width-1-4@l
-      "
+      class="uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-1-4@l"
       uk-grid="masonry: true"
     >
       {{#each this.categories as |category|}}
-        <div>
+        <div data-test-category={{category.title}}>
           <div class="uk-card uk-card-default uk-card-body uk-card-small">
             <div class="uk-flex uk-flex-between uk-flex-middle">
               <div>
-                <strong>{{category.title}}</strong>{{#if category.public}} - <i>{{t "interests.index.list.public"}}</i>{{/if}}
+                <strong data-test-category-title>{{category.title}}</strong>
+                {{#if category.public}}
+                  -
+                  <i data-test-category-public>
+                    {{t "interests.index.list.public"}}
+                  </i>
+                {{/if}}
                 {{#if category.description}}
-                  <div>{{category.description}}</div>
+                  <div
+                    data-test-category-description
+                  >
+                    {{category.description}}
+                  </div>
                 {{/if}}
               </div>
 
@@ -70,9 +74,22 @@
               <ul class="uk-list uk-list-divider">
                 {{#each category.interests as |interest|}}
                   {{#unless interest.isNew}}
-                    <li>
-                      {{interest.title}}
-                      <div class="uk-text-meta">{{interest.description}}</div>
+                    <li data-test-interest>
+                      <LinkTo
+                        @route="identities"
+                        @query={{hash
+                          searchTerm=(concat '"' interest.title '"')
+                        }}
+                        data-test-interest-title
+                      >
+                        {{interest.title}}
+                      </LinkTo>
+                      <div
+                        class="uk-text-meta"
+                        data-test-interest-description
+                      >
+                        {{interest.description}}
+                      </div>
                     </li>
                   {{/unless}}
                 {{/each}}

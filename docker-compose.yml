@@ -16,7 +16,7 @@ services:
       - db
 
   caluma:
-    image: ghcr.io/projectcaluma/caluma:9.3.2
+    image: ghcr.io/projectcaluma/caluma:10.1.1
     build:
       context: caluma
     environment:

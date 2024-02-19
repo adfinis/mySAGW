@@ -38,7 +38,7 @@ module("Acceptance | identities", function (hooks) {
 
     await click(".uk-button-danger");
 
-    assert.dom(".uk-modal-body").includesText("applications");
+    assert.dom(".uk-modal-body").includesText("0 Gesuche");
 
     await click(".uk-modal-footer .uk-button-primary");
 

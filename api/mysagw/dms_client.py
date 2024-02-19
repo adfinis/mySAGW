@@ -68,6 +68,7 @@ class DMSClient:
 
 
 def get_dms_error_response(response):
+    """Generate a 500 response containing the original response from the DMS."""
     content = {
         "source": "DMS",
         "status": response.status_code,

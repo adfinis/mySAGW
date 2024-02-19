@@ -119,7 +119,7 @@ export default class IdentityFormComponent extends Component {
       this.args.onSave?.(changeset.data);
 
       if (this.backToIdentities) {
-        this.router.transitionTo("identities");
+        this.router.transitionTo(this.cancelRoute);
       }
     } catch (error) {
       console.error(error);
