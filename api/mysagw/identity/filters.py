@@ -179,7 +179,7 @@ class SAGWSearchFilter(SearchFilter):
             if e.args[0] == "No closing quotation":
                 return self._split(f'{params}"')
 
-    def filter_queryset(self, request, queryset, view):
+    def filter_queryset(self, request, queryset, view):  # noqa: C901
         search_fields = self.get_search_fields(view, request)
         search_terms = self.get_search_terms(request)
 
@@ -224,7 +224,7 @@ class SAGWSearchFilter(SearchFilter):
                     if not membership_base_query.filter(
                         **{membership_orm_lookup: search_term},
                     ).exists():
-                        # short circuiting in order to save ~75% of processing time
+                        # short-circuiting in order to save ~75% of processing time
                         continue
 
                     membership_subquery = membership_base_subquery.filter(
@@ -244,7 +244,10 @@ class SAGWSearchFilter(SearchFilter):
                 filters.append(condition)
 
         needed = [set(queryset.filter(f).values_list("pk", flat=True)) for f in filters]
-        needed_pks = reduce(lambda a, b: a.intersection(b), needed)
+
+        if needed == [set()]:
+            # if no records match our filters, we don't care about excludes
+            return models.Identity.objects.none()
 
         excluded = [
             pk
@@ -252,7 +255,12 @@ class SAGWSearchFilter(SearchFilter):
             for pk in queryset.filter(f).values_list("pk", flat=True)
         ]
 
-        queryset = queryset.filter(pk__in=needed_pks).exclude(pk__in=excluded)
+        if not needed:
+            # only excludes have been provided to the filter
+            queryset = queryset.exclude(pk__in=excluded)
+        else:
+            needed_pks = reduce(lambda a, b: a.intersection(b), needed)
+            queryset = queryset.filter(pk__in=needed_pks).exclude(pk__in=excluded)
 
         if self.must_call_distinct(queryset, search_fields):
             # Filtering against a many-to-many field requires us to

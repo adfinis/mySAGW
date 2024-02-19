@@ -366,6 +366,8 @@ def test_identity_set_interests(db, client, identity_factory, interest_factory):
         ('"philosophy class', [6]),
         ('"philosophy -class"', []),
         ("SAGW -winst", [1, 2, 3]),
+        ("-example", [0]),
+        ("nonexistent", []),
     ],
 )
 def test_identity_search(
