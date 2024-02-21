@@ -317,6 +317,9 @@
     tuple(
       'document-review',
     ),
+    tuple(
+      'review-document',
+    ),
   ])
 # ---
 # name: test_visibilities_default[test-visibility_map1][Form]
