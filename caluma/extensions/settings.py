@@ -100,6 +100,10 @@ settings.REVISION_QUESTIONS = {
     ],
 }
 
+settings.APPLICANT_VISIBLE_TASKS = settings.APPLICANT_TASK_SLUGS + list(
+    settings.REVISION_QUESTIONS.keys(),
+)
+
 settings.ADDITIONAL_DATA_FORM = {
     "periodika-antrag": "periodika-abrechnung",
 }
