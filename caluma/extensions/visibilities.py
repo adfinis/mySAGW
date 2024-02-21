@@ -91,7 +91,7 @@ class CreateOrAssignVisibility(BaseVisibility):
         node,
         queryset,
         info,
-        tasks=settings.APPLICANT_TASK_SLUGS,
+        tasks=settings.APPLICANT_VISIBLE_TASKS,
     ):
         if self._is_admin_or_sagw(info):
             return queryset
