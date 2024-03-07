@@ -11,7 +11,7 @@ export default class AnswerValue extends Component {
       .mapBy("node")
       .findBy("question.slug", this.args.tdDefinition.questionSlug);
 
-    if (!answer) {
+    if (!answer || !answer[`${answer.__typename}Value`]) {
       return "";
     }
 
