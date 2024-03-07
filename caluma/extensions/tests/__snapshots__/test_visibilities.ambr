@@ -423,6 +423,14 @@
 # name: test_visibilities_default[test-visibility_map1][WorkItem]
   list([
     tuple(
+      'circulation',
+      'document-review',
+    ),
+    tuple(
+      'circulation',
+      'document-review',
+    ),
+    tuple(
       'circulation-decision',
       'circulation',
     ),
