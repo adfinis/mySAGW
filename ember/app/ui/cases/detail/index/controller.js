@@ -73,7 +73,7 @@ export default class CasesDetailIndexController extends Controller {
   get remarks() {
     const workItems = this.remarkWorkItems;
 
-    const newestAnswer = workItems.newest?.document.answers.edges.reduce(
+    const newestAnswer = workItems.newest?.document?.answers.edges.reduce(
       (filteredAnswers, answer, _, answers) => {
         Object.keys(ENV.APP.caluma.displayedAnswers).forEach((taskSlug) => {
           if (!workItems.newest.task.slug.includes(taskSlug)) {

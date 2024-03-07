@@ -120,6 +120,7 @@ class CreateOrAssignVisibility(BaseVisibility):
         ) & (
             Q(family__case__family_id__in=case_ids_circulation)
             | Q(work_item__case__family_id__in=case_ids_circulation)
+            | Q(work_item__case_id__in=case_ids_circulation)
         )
 
         floating_row_document = (
@@ -161,6 +162,8 @@ class CreateOrAssignVisibility(BaseVisibility):
                             # REVISION workitems must be accessible in order to display the
                             # remarks
                             *list(settings.REVISION_QUESTIONS.keys()),
+                            # circulation must be accessible for NWP
+                            "circulation",
                         ],
                     )
                     | Q(assigned_users__contains=[user.username])
