@@ -65,7 +65,7 @@ def test_authentication(
 
 
 @pytest.mark.parametrize(
-    "identity__idp_id,identity__email,",
+    "identity__idp_id,identity__email",
     [("matching_id", None), (None, "match@example.com"), (None, "MATCH@example.com")],
 )
 def test_authentication_existing_identity(
