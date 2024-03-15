@@ -37,7 +37,7 @@
     "@projectcaluma/ember-core": "^11.1.1",
     "@projectcaluma/ember-form": "^11.1.1",
     "@projectcaluma/ember-form-builder": "^11.1.1",
-    "@projectcaluma/ember-testing": "^11.1.1",
+    "@projectcaluma/ember-testing": "^12.10.2",
     "@projectcaluma/ember-workflow": "^11.1.1",
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
