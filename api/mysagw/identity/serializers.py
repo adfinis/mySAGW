@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db.models import Q
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 from drf_extra_fields.fields import DateRangeField
 from rest_framework.exceptions import ValidationError
 from rest_framework.relations import MANY_RELATION_KWARGS
@@ -174,9 +175,7 @@ class IdentitySerializer(TrackingSerializer):
             or validated_data.get("is_advisory_board")
         ):
             msg = 'Can\'t set "is_expert_association" or "is_advisory_board", because it isn\'t a organisation.'
-            raise ValidationError(
-                msg,
-            )
+            raise ValidationError(msg)
 
         return validated_data
 
@@ -189,6 +188,18 @@ class IdentitySerializer(TrackingSerializer):
         # constraint
         if validated_data.get("email") == "":
             validated_data["email"] = None
+
+        if (
+            validated_data.get("email")
+            and models.Identity.objects.filter(
+                email__iexact=validated_data["email"],
+            ).exists()
+        ):
+            msg = _("%(model_name)s with this %(field_label)s already exists.") % {
+                "model_name": "identity",
+                "field_label": "email",
+            }
+            raise ValidationError(code="unique", detail={"email": msg})
 
         return self._handle_organisation_validations(validated_data)
 
