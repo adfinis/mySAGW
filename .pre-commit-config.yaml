@@ -1,11 +1,11 @@
 repos:
   - repo: local
     hooks:
-      - id: api-black
+      - id: api-ruff-format
         stages: [commit]
-        name: api-black
+        name: api-ruff-format
         language: system
-        entry: /bin/sh -c 'cd ./api/ && black .'
+        entry: /bin/sh -c 'cd ./api/ && ruff format .'
         types: [python]
       - id: api-ruff
         stages: [commit]
@@ -13,11 +13,11 @@ repos:
         language: system
         entry: /bin/sh -c 'cd ./api/ && ruff check . --show-source --fix'
         types: [python]
-      - id: caluma-black
+      - id: caluma-ruff-format
         stages: [ commit ]
-        name: caluma-black
+        name: caluma-ruff-format
         language: system
-        entry: /bin/sh -c 'cd ./caluma/ && black .'
+        entry: /bin/sh -c 'cd ./caluma/ && ruff format .'
         types: [ python ]
       - id: caluma-ruff
         stages: [ commit ]

@@ -98,12 +98,21 @@ export default class CustomWorkItemModel extends WorkItemModel {
     try {
       this.assignedUser = user;
 
+      if (this.task.slug === "circulation-decision") {
+        this.meta = {
+          ...this.meta,
+          assigneeName: this.assignedUser.fullName,
+          assigneeEmail: this.assignedUser.email,
+        };
+      }
+
       await this.apollo.mutate({
         mutation: saveWorkItemMutation,
         variables: {
           input: {
             workItem: this.id,
             assignedUsers: this.assignedUsers,
+            meta: JSON.stringify(this.meta),
           },
         },
       });

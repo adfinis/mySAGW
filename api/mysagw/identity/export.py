@@ -53,7 +53,7 @@ class IdentityExport:
         fields = {name: self.FIELDS[name] for name in include_fields}
 
         records = []
-        for identity in qs.iterator():
+        for identity in qs.iterator(2000):
             identity_data = self.fetch_identity_data(identity, fields)
 
             if not ignore_empty or any(identity_data.values()):
@@ -104,7 +104,7 @@ class MembershipExport:
         fields = {name: self.FIELDS[name] for name in include_fields}
 
         records = []
-        for membership in qs.iterator():
+        for membership in qs.iterator(2000):
             membership_data = self.fetch_membership_data(membership, fields)
 
             if not ignore_empty or any(membership_data.values()):

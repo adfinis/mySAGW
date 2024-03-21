@@ -70,3 +70,7 @@ services:
 
   dms:
     env_file: ./.envs/.local/.dms
+    deploy:
+      resources:
+        limits:
+          memory: 512M

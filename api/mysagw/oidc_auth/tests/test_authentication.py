@@ -37,9 +37,9 @@ def test_authentication(
     assert Identity.objects.count() == 0
 
     if is_client_grant_token:
-        claims[
-            settings.OIDC_CLIENT_GRANT_USERNAME_CLAIM
-        ] = settings.OIDC_RP_CLIENT_USERNAME
+        claims[settings.OIDC_CLIENT_GRANT_USERNAME_CLAIM] = (
+            settings.OIDC_RP_CLIENT_USERNAME
+        )
 
     requests_mock.get(settings.OIDC_OP_USER_ENDPOINT, text=json.dumps(claims))
 
@@ -65,7 +65,7 @@ def test_authentication(
 
 
 @pytest.mark.parametrize(
-    "identity__idp_id,identity__email,",
+    "identity__idp_id,identity__email",
     [("matching_id", None), (None, "match@example.com"), (None, "MATCH@example.com")],
 )
 def test_authentication_existing_identity(
