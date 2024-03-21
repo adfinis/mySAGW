@@ -37,9 +37,9 @@ def test_authentication(
     assert Identity.objects.count() == 0
 
     if is_client_grant_token:
-        claims[
-            settings.OIDC_CLIENT_GRANT_USERNAME_CLAIM
-        ] = settings.OIDC_RP_CLIENT_USERNAME
+        claims[settings.OIDC_CLIENT_GRANT_USERNAME_CLAIM] = (
+            settings.OIDC_RP_CLIENT_USERNAME
+        )
 
     requests_mock.get(settings.OIDC_OP_USER_ENDPOINT, text=json.dumps(claims))
 

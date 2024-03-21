@@ -25,6 +25,7 @@ class UniqueBooleanField(models.BooleanField):
          2. if only one record exists for a given user, it we set `default = True`,
             regardless of the input
          3. The same happens, if records exists, but none of them have `default = True`
+
     """
 
     def __init__(self, *args, together=None, **kwargs):

@@ -301,12 +301,12 @@ class DocumentParser:
                 if "sub_forms" not in parsed_data:
                     parsed_data["sub_forms"] = {}
 
-                parsed_data["sub_forms"][
-                    question["subForm"]["slug"]
-                ] = self.format_application_data(
-                    question["subForm"]["name"],
-                    question["subForm"]["questions"]["edges"],
-                    answers,
+                parsed_data["sub_forms"][question["subForm"]["slug"]] = (
+                    self.format_application_data(
+                        question["subForm"]["name"],
+                        question["subForm"]["questions"]["edges"],
+                        answers,
+                    )
                 )
                 continue
 
