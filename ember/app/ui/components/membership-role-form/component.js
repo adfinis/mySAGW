@@ -27,7 +27,7 @@ export default class MembershipRoleFormComponent extends Component {
     this.changeset = Changeset(
       this.args.role || this.store.createRecord("membership-role"),
       lookupValidator(MembershipRoleValidations),
-      MembershipRoleValidations
+      MembershipRoleValidations,
     );
   }
 
@@ -45,7 +45,7 @@ export default class MembershipRoleFormComponent extends Component {
       this.notification.success(
         this.intl.t("components.membership-role-form.success", {
           role: changeset.title,
-        })
+        }),
       );
 
       this.args.onSave?.(changeset);

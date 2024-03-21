@@ -44,7 +44,7 @@ export default class BaseAbility extends Ability {
         (member) =>
           member.authorized &&
           !member.isInactive &&
-          this.isOwnIdentity(member.identity.get("idpId"))
+          this.isOwnIdentity(member.identity.get("idpId")),
       );
     }
 
@@ -55,8 +55,8 @@ export default class BaseAbility extends Ability {
     return Boolean(
       calumaCase.accesses.findBy(
         "identity.idpId",
-        this.session.data.authenticated.userinfo.sub
-      )
+        this.session.data.authenticated.userinfo.sub,
+      ),
     );
   }
 }

@@ -27,7 +27,7 @@ export default class InterestCategoryFormComponent extends Component {
     this.changeset = new Changeset(
       this.args.category || this.store.createRecord("interest-category"),
       lookupValidator(InterestCategoryValidations),
-      InterestCategoryValidations
+      InterestCategoryValidations,
     );
   }
 
@@ -45,7 +45,7 @@ export default class InterestCategoryFormComponent extends Component {
       this.notification.success(
         this.intl.t("components.interest-category-form.success", {
           category: changeset.title,
-        })
+        }),
       );
 
       this.args.onSave?.(this.changeset);

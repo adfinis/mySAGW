@@ -22,7 +22,7 @@ export default class CasesDetailController extends Controller {
           ],
         },
       },
-      "allWorkItems"
+      "allWorkItems",
     );
   });
 

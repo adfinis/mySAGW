@@ -17,7 +17,7 @@ export default class InterestsIndexController extends Controller {
 
   // List
   get categories() {
-    return this.allCategories?.filterBy("isNew", false);
+    return this.allCategories?.filter((category) => !category.isNew);
   }
 
   @lastValue("fetchInterests") allCategories;
@@ -37,13 +37,13 @@ export default class InterestsIndexController extends Controller {
     try {
       const options = { category: category.title };
       yield UIkit.modal.confirm(
-        this.intl.t("interests.index.delete.prompt", options)
+        this.intl.t("interests.index.delete.prompt", options),
       );
 
       try {
         yield category.destroyRecord();
         this.notification.success(
-          this.intl.t("interests.index.delete.success", options)
+          this.intl.t("interests.index.delete.success", options),
         );
         this.onUpdate();
       } catch (error) {

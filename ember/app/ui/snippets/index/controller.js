@@ -38,13 +38,13 @@ export default class SnippetsIndexController extends Controller {
   *fetchSnippets() {
     try {
       const snippets = yield this.store.query("snippet", {
-        "filter[search]": this.searchTerm,
+        filter: { search: this.searchTerm },
         page: {
           number: this.pageNumber,
           size: this.pageSize,
         },
       });
-      this.totalPages = snippets.meta.pagination?.pages;
+      this.totalPages = snippets.meta?.pagination.pages;
       return snippets;
     } catch (error) {
       console.error(error);

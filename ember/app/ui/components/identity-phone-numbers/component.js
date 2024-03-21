@@ -47,7 +47,7 @@ export default class IdentityPhoneNumbersComponent extends Component {
           identity: this.args.identity,
         }),
       lookupValidator(PhoneValidations),
-      PhoneValidations
+      PhoneValidations,
     );
   }
 
@@ -86,7 +86,7 @@ export default class IdentityPhoneNumbersComponent extends Component {
     try {
       const options = { number: phoneNumber.phone };
       yield UIkit.modal.confirm(
-        this.intl.t("components.identity-phone-numbers.delete.prompt", options)
+        this.intl.t("components.identity-phone-numbers.delete.prompt", options),
       );
 
       try {
@@ -94,8 +94,8 @@ export default class IdentityPhoneNumbersComponent extends Component {
         this.notification.success(
           this.intl.t(
             "components.identity-phone-numbers.delete.success",
-            options
-          )
+            options,
+          ),
         );
       } catch (error) {
         console.error(error);

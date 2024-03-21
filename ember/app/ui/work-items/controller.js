@@ -130,7 +130,7 @@ export default class WorkItemsIndexController extends TableController {
             ...workItem.assignedUsers,
             workItem.closedByUser,
           ])
-          .filter(Boolean)
+          .filter(Boolean),
       ),
     ];
 
@@ -139,14 +139,14 @@ export default class WorkItemsIndexController extends TableController {
       .map((identity) => identity.get("idpId"));
 
     const uncachedIdpIds = idpIds.filter(
-      (idpId) => cachedIdpIds.indexOf(idpId) === -1
+      (idpId) => cachedIdpIds.indexOf(idpId) === -1,
     );
 
     if (uncachedIdpIds.length) {
       await this.store.query(
         "identity",
         { filter: { idpIds: uncachedIdpIds.join(",") } },
-        { adapterOptions: { customEndpoint: "public-identities" } }
+        { adapterOptions: { customEndpoint: "public-identities" } },
       );
     }
 

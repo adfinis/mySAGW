@@ -16,7 +16,7 @@ export default async function downloadFile(promise, filenameOverride = null) {
     decodeURIComponent(
       response.headers
         .get("content-disposition")
-        .match(/filename\*?=['"]?(?:UTF-\d['"]*)?([^;\r\n"']*)['"]?;?/i)[1]
+        .match(/filename\*?=['"]?(?:UTF-\d['"]*)?([^;\r\n"']*)['"]?;?/i)[1],
     );
 
   saveAs(blob, filename);

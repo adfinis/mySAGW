@@ -1,18 +1,16 @@
 import { render } from "@ember/test-helpers";
 import { hbs } from "ember-cli-htmlbars";
-import { setupMirage } from "ember-cli-mirage/test-support";
-import { setupRenderingTest } from "ember-qunit";
-import { module, skip } from "qunit";
+import { module, test } from "qunit";
+
+import { setupRenderingTest } from "mysagw/tests/helpers";
 
 module("Integration | Component | identity-members", function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
-
   /*
    * There is a problem with ember-data/mirage resolving the membership role title
    * and returning undefined instead of the generated text.
    */
-  skip("it renders", async function (assert) {
+  test.skip("it renders", async function (assert) {
     const identity = this.server.create("identity");
     const organisation = this.server.create("identity");
     const membership = this.server.create("membership");

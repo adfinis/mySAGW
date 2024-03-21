@@ -1,5 +1,17 @@
 version: 2
+
 updates:
+- package-ecosystem: github-actions
+  directory: "/"
+  schedule:
+    interval: "weekly"
+    day: "friday"
+    time: "12:00"
+    timezone: "Europe/Zurich"
+  commit-message:
+    prefix: chore
+    include: scope
+
 - package-ecosystem: pip
   directory: "/"
   schedule:
@@ -7,13 +19,14 @@ updates:
     day: friday
     time: "12:00"
     timezone: "Europe/Zurich"
+  commit-message:
+    prefix: chore
+    include: scope
   ignore:
   - dependency-name: django
     versions:
     - ">=3.3"
-  commit-message:
-    prefix: chore
-    include: scope
+
 - package-ecosystem: docker
   directory: "/"
   schedule:
@@ -21,13 +34,14 @@ updates:
     day: friday
     time: "12:00"
     timezone: "Europe/Zurich"
+  commit-message:
+    prefix: chore
+    include: scope
   ignore:
   - dependency-name: python
     versions:
     - ">=3.10"
-  commit-message:
-    prefix: chore
-    include: scope
+
 - package-ecosystem: npm
   directory: "/ember"
   schedule:
@@ -40,11 +54,7 @@ updates:
     prefix: chore
     include: scope
   ignore:
-    # mirror part of https://github.com/projectcaluma/ember-caluma/blob/main/.github/dependabot.yml
+    # mirror part of https://github.com/projectcaluma/ember-caluma/blob/main/.github/dependabot.yaml
     - dependency-name: graphql
       versions:
         - ">= 16"
-    # https://github.com/ember-cli/ember-cli/issues/9307
-    - dependency-name: eslint
-      versions:
-        - ">= 8"

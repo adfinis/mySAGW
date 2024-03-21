@@ -74,7 +74,7 @@ export default class CasesDetailWorkItemsEditController extends Controller {
 
       this.router.transitionTo(
         "cases.detail.work-items.index",
-        this.workItem.case.id
+        this.workItem.case.id,
       );
     } catch (error) {
       this.notification.danger(this.intl.t("work-items.saveError"));

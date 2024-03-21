@@ -18,14 +18,14 @@ export default class AnswerValue extends Component {
     if (answer.question.__typename === "ChoiceQuestion") {
       return answer.question.options.edges.findBy(
         "node.slug",
-        answer[`${answer.__typename}Value`]
+        answer[`${answer.__typename}Value`],
       ).node.label;
     }
 
     if (answer.question.meta?.waehrung) {
       return formatCurrency(
         answer[`${answer.__typename}Value`],
-        answer.question.meta.waehrung
+        answer.question.meta.waehrung,
       );
     }
 

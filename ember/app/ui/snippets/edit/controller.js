@@ -9,7 +9,7 @@ export default class SnippetsEditController extends Controller {
     return Changeset(
       this.model,
       lookupValidator(SnippetValidations),
-      SnippetValidations
+      SnippetValidations,
     );
   }
 }
