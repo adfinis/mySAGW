@@ -228,6 +228,7 @@ class MeViewSet(
     UpdateModelMixin,
     GenericViewSet,
 ):
+    queryset = models.Identity.objects.all()
     serializer_class = serializers.MeSerializer
 
     def get_object(self, *args, **kwargs):
