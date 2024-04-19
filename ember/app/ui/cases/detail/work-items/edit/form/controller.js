@@ -36,18 +36,18 @@ export default class CasesDetailWorkItemsEditFormController extends Controller {
       this.model.task.slug === "define-amount" &&
       this.model.raw.document.answers.edges.findBy(
         "node.question.slug",
-        "define-amount-decision"
+        "define-amount-decision",
       )?.node.StringAnswerValue === "define-amount-decision-reject" &&
       this.model.case.workItems.edges
         .findBy("node.task.slug", "decision-and-credit")
         .node.document.answers.edges.findBy(
           "node.question.slug",
-          "decision-and-credit-decision"
+          "decision-and-credit-decision",
         ).node.StringAnswerValue ===
         "decision-and-credit-decision-define-amount"
     ) {
       this.notification.warning(
-        this.intl.t("work-items.rejectDefineAmountNoAdditionData")
+        this.intl.t("work-items.rejectDefineAmountNoAdditionData"),
       );
     }
 
@@ -55,7 +55,7 @@ export default class CasesDetailWorkItemsEditFormController extends Controller {
       if (this.can.can("list admin case", this.model.case)) {
         return this.router.transitionTo(
           "cases.detail.circulation",
-          this.model.case.id
+          this.model.case.id,
         );
       }
       return this.router.transitionTo("cases.detail.index", this.model.case.id);

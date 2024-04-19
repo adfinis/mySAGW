@@ -60,7 +60,7 @@ export default class IdentityMembershipsComponent extends Component {
           timeSlot: {},
         }),
       lookupValidator(MembershipValidations),
-      MembershipValidations
+      MembershipValidations,
     );
 
     if (!this.changeset.get("timeSlot")) {
@@ -137,12 +137,15 @@ export default class IdentityMembershipsComponent extends Component {
         membership: membership.get("organisation.organisationName"),
       };
       yield UIkit.modal.confirm(
-        this.intl.t("components.identity-memberships.delete.prompt", options)
+        this.intl.t("components.identity-memberships.delete.prompt", options),
       );
       try {
         yield membership.destroyRecord();
         this.notification.success(
-          this.intl.t("components.identity-memberships.delete.success", options)
+          this.intl.t(
+            "components.identity-memberships.delete.success",
+            options,
+          ),
         );
         yield this.onUpdate();
       } catch (error) {

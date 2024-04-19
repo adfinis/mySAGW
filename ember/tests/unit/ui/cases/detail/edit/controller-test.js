@@ -23,7 +23,7 @@ module("Unit | Controller | cases/detail/edit", function (hooks) {
           },
         },
       },
-      { instantiate: false }
+      { instantiate: false },
     );
 
     assert.true(this.controller.disabled);
@@ -40,7 +40,7 @@ module("Unit | Controller | cases/detail/edit", function (hooks) {
           },
         },
       },
-      { instantiate: false }
+      { instantiate: false },
     );
 
     assert.false(this.controller.disabled);
@@ -57,7 +57,7 @@ module("Unit | Controller | cases/detail/edit", function (hooks) {
           },
         },
       },
-      { instantiate: false }
+      { instantiate: false },
     );
     this.controller.model = {
       hasEditableWorkItem: true,

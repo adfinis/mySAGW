@@ -2,6 +2,7 @@
 
 module.exports = function (/* environment */) {
   return {
+    includeLocales: ["de", "en", "fr"],
     /**
      * Merges the fallback locale's translations into all other locales as a
      * build-time fallback strategy.
@@ -14,7 +15,7 @@ module.exports = function (/* environment */) {
      * @type {String?}
      * @default "null"
      */
-    fallbackLocale: "en",
+    fallbackLocale: "de",
 
     /**
      * Path where translations are stored.  This is relative to the project root.

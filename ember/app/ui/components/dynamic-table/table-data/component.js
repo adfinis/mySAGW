@@ -16,7 +16,7 @@ export default class DynamicTableTableDataComponent extends Component {
   get linkToModel() {
     return get(
       this.args.value,
-      this.args.tdDefinition.linkToModelField || "id"
+      this.args.tdDefinition.linkToModelField || "id",
     );
   }
 

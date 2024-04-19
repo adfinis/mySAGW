@@ -9,7 +9,7 @@ module.exports = function (environment) {
     podModulePrefix: `${name}/ui`,
 
     rootURL: "/",
-    locationType: "auto",
+    locationType: "history",
 
     "ember-simple-auth-oidc": {
       clientId: "mysagw",

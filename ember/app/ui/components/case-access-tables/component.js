@@ -38,10 +38,10 @@ export default class CaseAccessTablesComponent extends Component {
   }
 
   get accesses() {
-    return this._accesses.filterBy("email", null);
+    return this._accesses.filter((access) => access.email === null);
   }
 
   get invitations() {
-    return this._accesses.filterBy("email");
+    return this._accesses.filter((access) => access.email);
   }
 }

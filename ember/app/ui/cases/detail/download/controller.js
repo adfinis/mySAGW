@@ -18,7 +18,7 @@ export default class CasesDetailDownloadController extends Controller {
       this.model.workItems.find(
         (workItem) =>
           workItem.task.slug === ENV.APP.caluma.submitTaskSlug &&
-          workItem.status === "COMPLETED"
+          workItem.status === "COMPLETED",
       )
     ) {
       downloads.push(this.acknowledgement);
@@ -27,16 +27,16 @@ export default class CasesDetailDownloadController extends Controller {
     const workItem = this.model.workItems.find(
       (workItem) =>
         workItem.task.slug === ENV.APP.caluma.decisionAndCredit.task &&
-        workItem.status === "COMPLETED"
+        workItem.status === "COMPLETED",
     );
     const answer = workItem?.document.answers.edges.find(
       (answer) =>
-        answer.node.question.slug === ENV.APP.caluma.decisionAndCredit.question
+        answer.node.question.slug === ENV.APP.caluma.decisionAndCredit.question,
     ).node.StringAnswerValue;
     if (
       answer &&
       ENV.APP.caluma.decisionAndCredit.answers.some((choice) =>
-        answer.includes(choice)
+        answer.includes(choice),
       )
     ) {
       downloads.push(this.creditApproval);
@@ -49,7 +49,7 @@ export default class CasesDetailDownloadController extends Controller {
     const adapter = this.store.adapterFor("identity");
 
     const uri = `${adapter.buildURL("download")}/${this.model.id}/${decamelize(
-      name
+      name,
     )}`;
     const init = {
       method: "GET",

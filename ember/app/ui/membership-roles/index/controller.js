@@ -32,13 +32,13 @@ export default class MembershipRolesIndexController extends Controller {
     try {
       const options = { role: role.title };
       yield UIkit.modal.confirm(
-        this.intl.t("roles.index.delete.prompt", options)
+        this.intl.t("roles.index.delete.prompt", options),
       );
 
       try {
         yield role.destroyRecord();
         this.notification.success(
-          this.intl.t("roles.index.delete.success", options)
+          this.intl.t("roles.index.delete.success", options),
         );
         this.onUpdate();
       } catch (error) {

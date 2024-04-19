@@ -8,7 +8,7 @@ import { dropTask, restartableTask, lastValue } from "ember-concurrency";
 import UIkit from "uikit";
 
 import applyError from "mysagw/utils/apply-error";
-import PhoneValidations from "mysagw/validations/address";
+import addressValidations from "mysagw/validations/address";
 
 /**
  * @arg identity
@@ -56,8 +56,6 @@ export default class IdentityAddressesComponent extends Component {
 
   // Add / Edit
 
-  validations = PhoneValidations;
-
   @tracked changeset = null;
 
   @action edit(address) {
@@ -66,8 +64,8 @@ export default class IdentityAddressesComponent extends Component {
         this.store.createRecord("address", {
           identity: this.args.identity,
         }),
-      lookupValidator(PhoneValidations),
-      PhoneValidations
+      lookupValidator(addressValidations),
+      addressValidations,
     );
   }
 
@@ -100,13 +98,13 @@ export default class IdentityAddressesComponent extends Component {
     try {
       const options = { address: address.label };
       yield UIkit.modal.confirm(
-        this.intl.t("components.identity-addresses.delete.prompt", options)
+        this.intl.t("components.identity-addresses.delete.prompt", options),
       );
 
       try {
         yield address.destroyRecord();
         this.notification.success(
-          this.intl.t("components.identity-addresses.delete.success", options)
+          this.intl.t("components.identity-addresses.delete.success", options),
         );
       } catch (error) {
         console.error(error);

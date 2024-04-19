@@ -32,14 +32,6 @@ module.exports = function (defaults) {
         },
       },
     },
-
-    sassOptions: {
-      includePaths: [
-        // For some reason sass cant find these on its own :/
-        "node_modules/ember-power-select/app/styles/",
-        "node_modules/ember-basic-dropdown/app/styles/",
-      ],
-    },
   });
 
   // Use `app.import` to add additional libraries to the generated

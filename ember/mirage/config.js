@@ -7,7 +7,7 @@ import parseFilters from "mysagw/mirage/helpers/parse-filters";
 export default function (config) {
   const finalConfig = {
     ...config,
-    models: { ...discoverEmberDataModels(), ...config.models },
+    models: { ...discoverEmberDataModels(config.store), ...config.models },
     routes,
   };
 

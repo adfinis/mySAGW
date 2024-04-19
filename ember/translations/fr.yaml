@@ -21,7 +21,3 @@ global:
   cancel: "Annuler"
   loadMore: "Ajouter d'autres entrées"
   saveAndBack: "Sauvegarde et retour"
-
-  moment:
-    previousMonth: "Mois précédent"
-    nextMonth: "Mois prochain"

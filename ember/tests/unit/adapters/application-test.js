@@ -11,7 +11,7 @@ module("Unit | Adapter | application", function (hooks) {
     const url = "http://example.com/api/v1/foo";
     assert.strictEqual(
       adapter._appendInclude(url, { include: "bar" }),
-      `${url}?include=bar`
+      `${url}?include=bar`,
     );
   });
 
@@ -20,13 +20,13 @@ module("Unit | Adapter | application", function (hooks) {
 
     assert.strictEqual(
       adapter.urlForFindAll("identity", {}),
-      "/api/v1/identities"
+      "/api/v1/identities",
     );
     assert.strictEqual(
       adapter.urlForFindAll("identity", {
         adapterOptions: { customEndpoint: "my-orgs" },
       }),
-      "/api/v1/my-orgs"
+      "/api/v1/my-orgs",
     );
   });
 });

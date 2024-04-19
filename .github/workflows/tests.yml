@@ -4,7 +4,7 @@ on:
   push:
   pull_request:
   schedule:
-    - cron:  '0 0 * * 0'
+    - cron: "0 0 * * 0"
 
 env:
   ember-dir: ./ember
@@ -13,7 +13,7 @@ jobs:
   api-tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set UID
         run: echo "UID=$(id --user)" > .env
       - name: Build the containers
@@ -24,65 +24,70 @@ jobs:
         run: docker compose exec -T api poetry run ./manage.py makemigrations --check --dry-run --no-input
       - name: Run test suite
         run: make api-test
+
   caluma-tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set UID
         run: echo "UID=$(id --user)" > .env
       - name: Build the containers
         run: docker compose up -d --build caluma db
       - name: Run test suite
         run: make caluma-test
+
   caluma-lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install poetry
         run: pipx install poetry
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
-          cache: 'poetry'
+          python-version: "3.9"
+          cache: "poetry"
       - name: Install dependencies
         run: poetry install --directory=api
       - name: Run test suite
         run: make caluma-lint
+
   ember-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: wyvox/action-setup-pnpm@v3
         with:
-          node-version: 16
+          node-version: 18
       - name: Install dependencies
-        run: yarn install
+        run: pnpm install
         working-directory: ${{env.ember-dir}}
       - name: Lint the code
-        run: yarn lint
+        run: pnpm run lint
         working-directory: ${{env.ember-dir}}
       - name: Run tests
-        run: yarn test:ember
+        run: pnpm run test:ember
         working-directory: ${{env.ember-dir}}
+
   ember-build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set UID
         run: echo "UID=$(id --user)" > .env
       - name: Build and start the container
         run: docker compose up -d --build ember
+
   commit-lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: "3.9"
       - name: Install gitlint
         run: pip install gitlint
       - name: Run gitlint

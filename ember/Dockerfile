@@ -1,14 +1,16 @@
-FROM danlynn/ember-cli:3.28.5 as build
+FROM danlynn/ember-cli:4.12.1 as build
 
 ARG OIDC_HOST
 
-COPY package.json yarn.lock /myapp/
+COPY package.json pnpm-lock.yaml /myapp/
 
-RUN yarn install
+RUN npm install -g pnpm
+
+RUN pnpm install
 
 COPY . /myapp/
 
-RUN yarn deploy production
+RUN pnpm run deploy production
 
 FROM nginx:alpine
 
