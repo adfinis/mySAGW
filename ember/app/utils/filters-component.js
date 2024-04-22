@@ -1,6 +1,6 @@
 import { inject as service } from "@ember/service";
 import Component from "@glimmer/component";
-import { trackedFunction } from "ember-resources/util/function";
+import { trackedFunction } from "reactiveweb/function";
 
 import ENV from "mysagw/config/environment";
 import getOptionsQuery from "mysagw/gql/queries/get-options.graphql";

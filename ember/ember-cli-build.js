@@ -12,7 +12,7 @@ module.exports = function (defaults) {
     "ember-validated-form": {
       theme: "uikit",
       defaults: {
-        "types/date": "myapp/components/date-picker",
+        "types/date": "mysagw/ui/components/date-picker",
       },
     },
     "ember-fetch": {
@@ -31,14 +31,6 @@ module.exports = function (defaults) {
           polyfillUUID: true,
         },
       },
-    },
-
-    sassOptions: {
-      includePaths: [
-        // For some reason sass cant find these on its own :/
-        "node_modules/ember-power-select/app/styles/",
-        "node_modules/ember-basic-dropdown/app/styles/",
-      ],
     },
   });
 

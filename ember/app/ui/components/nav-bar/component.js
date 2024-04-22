@@ -4,7 +4,7 @@ import { isTesting, macroCondition } from "@embroider/macros";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { timeout, restartableTask } from "ember-concurrency";
-import { task as trackedTask } from "ember-resources/util/ember-concurrency";
+import { task as trackedTask } from "reactiveweb/ember-concurrency";
 export default class NavbarComponent extends Component {
   @service session;
   @service intl;

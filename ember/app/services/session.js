@@ -1,7 +1,7 @@
 import { inject as service } from "@ember/service";
 import { dropTask } from "ember-concurrency";
-import { task as trackedTask } from "ember-resources/util/ember-concurrency";
 import Session from "ember-simple-auth-oidc/services/session";
+import { task as trackedTask } from "reactiveweb/ember-concurrency";
 
 import ENV from "mysagw/config/environment";
 
