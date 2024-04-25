@@ -38,7 +38,7 @@ module("Integration | Component | identity-memberships", function (hooks) {
     await click("[data-test-add]");
     await selectChoose(
       "[data-test-organisation-select]",
-      organisation.organisationName
+      organisation.organisationName,
     );
     await selectChoose("[data-test-role-select]", "Chef");
 

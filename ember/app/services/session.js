@@ -24,7 +24,7 @@ export default class CustomSession extends Session {
         {
           include: "organisation",
         },
-        { adapterOptions: { customEndpoint: "my-memberships" } }
+        { adapterOptions: { customEndpoint: "my-memberships" } },
       ),
       this.store.queryRecord("identity", {}),
     ]);
@@ -48,9 +48,9 @@ export default class CustomSession extends Session {
       this.identity?.memberships.find(
         (membership) =>
           ENV.APP.circulationOrganisations.includes(
-            membership.organisation.get("organisationName")
-          ) && !membership.isInactive
-      )
+            membership.organisation.get("organisationName"),
+          ) && !membership.isInactive,
+      ),
     );
   }
 }

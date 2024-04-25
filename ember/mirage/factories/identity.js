@@ -17,14 +17,14 @@ export default Factory.extend({
     const interests = server.schema.interests.all();
     interests.models = faker.helpers.arrayElements(
       interests.models,
-      faker.datatype.number({ min: 0, max: 5 })
+      faker.datatype.number({ min: 0, max: 5 }),
     );
     identity.interests = interests;
 
     server.createList(
       "additional-email",
       faker.datatype.number({ min: 0, max: 3 }),
-      { identity }
+      { identity },
     );
 
     server.createList(
@@ -32,7 +32,7 @@ export default Factory.extend({
       faker.datatype.number({ min: 0, max: 3 }),
       {
         identity,
-      }
+      },
     );
 
     server.createList("address", faker.datatype.number({ min: 0, max: 3 }), {

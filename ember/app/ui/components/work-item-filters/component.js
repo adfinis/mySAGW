@@ -13,7 +13,7 @@ export default class WorkItemFiltersComponent extends FiltersComponent {
           order: [{ attribute: "NAME" }],
         },
       },
-      "allTasks.edges"
+      "allTasks.edges",
     );
 
     return response.map((edge) => ({

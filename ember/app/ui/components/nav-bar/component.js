@@ -42,14 +42,14 @@ export default class NavbarComponent extends Component {
   @action
   onCopySuccess() {
     this.notification.success(
-      this.intl.t("components.nav-bar.snippet.copy-success")
+      this.intl.t("components.nav-bar.snippet.copy-success"),
     );
   }
 
   @action
   onCopyError() {
     this.notification.danger(
-      this.intl.t("components.nav-bar.snippet.copy-error")
+      this.intl.t("components.nav-bar.snippet.copy-error"),
     );
   }
 

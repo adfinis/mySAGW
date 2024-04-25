@@ -41,7 +41,7 @@ export default class CustomWorkItemModel extends WorkItemModel {
 
   get isAssignedToCurrentUser() {
     return this.assignedUsers.includes(
-      this.session.data.authenticated.userinfo.sub
+      this.session.data.authenticated.userinfo.sub,
     );
   }
 
@@ -90,7 +90,7 @@ export default class CustomWorkItemModel extends WorkItemModel {
 
   async assignToMe() {
     return await this.assignToUser(
-      this.session.data.authenticated.userinfo.sub
+      this.session.data.authenticated.userinfo.sub,
     );
   }
 

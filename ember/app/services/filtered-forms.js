@@ -45,10 +45,10 @@ export default class FilteredFormsService extends Service {
 
     this.value = this.value.filter((form) => {
       const visibilities = ENV.APP.caluma.formVisibilities.map(
-        (visibility) => form.meta[visibility] && userVisibilities[visibility]
+        (visibility) => form.meta[visibility] && userVisibilities[visibility],
       );
       const publicVisibility = visibilities.every(
-        (visibility) => visibility === undefined
+        (visibility) => visibility === undefined,
       );
 
       return publicVisibility || visibilities.any((visibility) => visibility);
@@ -64,7 +64,7 @@ export default class FilteredFormsService extends Service {
           query: getFormsQuery,
           variables,
         },
-        "allForms.edges"
+        "allForms.edges",
       )
     ).map((form) => form.node);
   }

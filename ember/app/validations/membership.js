@@ -10,7 +10,7 @@ function validateTimeSlotLower() {
       if (
         DateTime.fromISO(newValue) >
         DateTime.fromISO(
-          changes?.timeSlot?.upper ?? content.get("timeSlot.upper")
+          changes?.timeSlot?.upper ?? content.get("timeSlot.upper"),
         )
       ) {
         return "components.identity-memberships.timeSlotErrorLower";
@@ -28,7 +28,7 @@ function validateTimeSlotUpper() {
     ) {
       if (
         DateTime.fromISO(
-          changes?.timeSlot?.lower ?? content.get("timeSlot.lower")
+          changes?.timeSlot?.lower ?? content.get("timeSlot.lower"),
         ) > DateTime.fromISO(newValue)
       ) {
         return "components.identity-memberships.timeSlotError";

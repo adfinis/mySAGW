@@ -46,7 +46,10 @@ module("Unit | Ability | identity", function (hooks) {
 
     this.ability.set(
       "model",
-      this.server.create("identity", { idpId: "own-id", isOrganisation: false })
+      this.server.create("identity", {
+        idpId: "own-id",
+        isOrganisation: false,
+      }),
     );
 
     assert.ok(this.ability.canEdit);
@@ -87,7 +90,7 @@ module("Unit | Ability | identity", function (hooks) {
       this.server.create("identity", {
         idpId: "other-id",
         isOrganisation: false,
-      })
+      }),
     );
 
     assert.notOk(this.ability.canEdit);

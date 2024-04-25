@@ -67,7 +67,7 @@ export default class IdentityAddressesComponent extends Component {
           identity: this.args.identity,
         }),
       lookupValidator(PhoneValidations),
-      PhoneValidations
+      PhoneValidations,
     );
   }
 
@@ -100,13 +100,13 @@ export default class IdentityAddressesComponent extends Component {
     try {
       const options = { address: address.label };
       yield UIkit.modal.confirm(
-        this.intl.t("components.identity-addresses.delete.prompt", options)
+        this.intl.t("components.identity-addresses.delete.prompt", options),
       );
 
       try {
         yield address.destroyRecord();
         this.notification.success(
-          this.intl.t("components.identity-addresses.delete.success", options)
+          this.intl.t("components.identity-addresses.delete.success", options),
         );
       } catch (error) {
         console.error(error);

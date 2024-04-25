@@ -34,7 +34,7 @@ export default class IdentityMembersComponent extends Component {
           size: this.pageSize,
         },
       },
-      { adapterOptions: { customEndpoint: "org-memberships" } }
+      { adapterOptions: { customEndpoint: "org-memberships" } },
     );
     this.totalPages = membersResponse.meta.pagination?.pages;
 
