@@ -24,6 +24,15 @@ export default class IdentityFormComponent extends Component {
   @tracked changeset;
   @tracked backToIdentities;
 
+  constructor() {
+    super(...arguments);
+    this.changeset = Changeset(
+      this.args.identity || this.store.createRecord("identity"),
+      lookupValidator(IdentityValidations),
+      IdentityValidations,
+    );
+  }
+
   get salutations() {
     return [
       { label: this.intl.t("global.salutation.neutral"), value: "neutral" },
@@ -73,15 +82,6 @@ export default class IdentityFormComponent extends Component {
   @action
   eventTarget(handler, event) {
     handler(event.target.value);
-  }
-
-  @action
-  onUpdate() {
-    this.changeset = Changeset(
-      this.args.identity || this.store.createRecord("identity"),
-      lookupValidator(IdentityValidations),
-      IdentityValidations,
-    );
   }
 
   @action
