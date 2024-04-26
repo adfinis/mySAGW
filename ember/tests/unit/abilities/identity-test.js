@@ -55,8 +55,8 @@ module("Unit | Ability | identity", function (hooks) {
     assert.ok(this.ability.canEdit);
   });
 
-  // Mirage relationships are not working properly
-  test.todo("organisation admin can edit", async function (assert) {
+  // TODO: Mirage relationships are not working properly
+  test.skip("organisation admin can edit", async function (assert) {
     await authenticateSession({
       access_token: "123qweasdyxc",
       userinfo: { mysagw_groups: [], sub: "own-id" },

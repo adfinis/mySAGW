@@ -24,8 +24,8 @@ export default class IdentityFormComponent extends Component {
   @tracked changeset;
   @tracked backToIdentities;
 
-  constructor() {
-    super(...arguments);
+  constructor(...args) {
+    super(...args);
     this.changeset = Changeset(
       this.args.identity || this.store.createRecord("identity"),
       lookupValidator(IdentityValidations),

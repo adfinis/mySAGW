@@ -1,4 +1,4 @@
-FROM danlynn/ember-cli:4.4.0-node_18.2 as build
+FROM danlynn/ember-cli:5.4.1 as build
 
 ARG OIDC_HOST
 
