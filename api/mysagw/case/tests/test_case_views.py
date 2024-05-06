@@ -184,20 +184,33 @@ def test_case_create_already_exists(db, case_access_factory, client):
 
 
 @pytest.mark.parametrize(
-    "client,has_access,expected_status",
+    "client,has_access,is_only_access_for_case,expected_status",
     [
-        ("user", False, status.HTTP_404_NOT_FOUND),
-        ("user", True, status.HTTP_204_NO_CONTENT),
-        ("staff", False, status.HTTP_204_NO_CONTENT),
-        ("admin", False, status.HTTP_204_NO_CONTENT),
+        ("user", False, False, status.HTTP_404_NOT_FOUND),
+        ("user", True, False, status.HTTP_204_NO_CONTENT),
+        ("staff", False, False, status.HTTP_204_NO_CONTENT),
+        ("admin", False, False, status.HTTP_204_NO_CONTENT),
+        ("admin", False, True, status.HTTP_400_BAD_REQUEST),
     ],
     indirect=["client"],
 )
-def test_case_delete(db, client, has_access, expected_status, case_access_factory):
+def test_case_delete(
+    db,
+    client,
+    has_access,
+    is_only_access_for_case,
+    expected_status,
+    case_access_factory,
+):
     case_access = case_access_factory()
 
     if has_access:
-        case_access_factory(identity=client.user.identity, case_id=case_access.case_id)
+        case_access.identity = client.user.identity
+        case_access.case_id = case_access.case_id
+        case_access.save()
+
+    if not is_only_access_for_case:
+        case_access_factory(case_id=case_access.case_id)
 
     url = reverse("caseaccess-detail", args=[case_access.pk])
 

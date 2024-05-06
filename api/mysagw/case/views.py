@@ -45,6 +45,13 @@ class CaseAccessViewSet(
             )
         return super().list(request, *args, **kwargs)
 
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if models.CaseAccess.objects.filter(case_id=instance.case_id).count() == 1:
+            msg = "This is the only CaseAccess for this case, hence it cannot be destroyed."
+            raise ValidationError(msg)
+        return super().destroy(request, *args, **kwargs)
+
     def get_queryset(self, *args, **kwargs):
         qs = super().get_queryset(*args, **kwargs)
         if self.request.user.is_staff:
