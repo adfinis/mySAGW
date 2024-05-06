@@ -1,5 +1,5 @@
 import re
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 import pytest
 from django.conf import settings
@@ -208,6 +208,94 @@ def test_case_delete(db, client, has_access, expected_status, case_access_factor
     if expected_status == status.HTTP_204_NO_CONTENT:
         with pytest.raises(models.CaseAccess.DoesNotExist):
             case_access.refresh_from_db()
+
+
+def test_transfer_case(client, case_access_factory, identity_factory):
+    accesses = case_access_factory.create_batch(3, email=None)
+    new_identity = identity_factory()
+    for a in accesses:
+        a.identity = identity_factory()
+        a.save()
+
+    assert models.CaseAccess.objects.count() == 3
+
+    data = {
+        # accesses[0] will be removed
+        "to_remove_assignees": [str(accesses[0].identity.pk)],
+        # 3 new CaseAccess-objects will br created. Two for `new_identity` and only one
+        # for accesses[1].identity, because for accesses[1].case_id there already
+        # exists one
+        "new_assignees": [str(new_identity.pk), str(accesses[1].identity.pk)],
+        "case_ids": [accesses[0].case_id, accesses[1].case_id],
+    }
+    url = reverse("caseaccess-transfer")
+
+    response = client.post(url, data=data, headers={"CONTENT-TYPE": "application/json"})
+    assert response.json() == {"data": {"created": 3}}
+    assert response.status_code == status.HTTP_201_CREATED
+    with pytest.raises(models.CaseAccess.DoesNotExist):
+        accesses[0].refresh_from_db()
+
+    assert models.CaseAccess.objects.count() == 5
+    assert list(
+        models.CaseAccess.objects.filter(identity=new_identity)
+        .order_by("case_id")
+        .values_list("case_id", flat=True)
+    ) == sorted([UUID(accesses[0].case_id), UUID(accesses[1].case_id)])
+
+
+def test_transfer_case_fail_nonexistent_ids(client):
+    to_remove = str(uuid4())
+    new_1 = str(uuid4())
+    new_2 = str(uuid4())
+    data = {
+        # accesses[0] will be removed
+        "to_remove_assignees": [to_remove],
+        "new_assignees": [new_1, new_2],
+        "case_ids": [str(uuid4()), str(uuid4())],
+    }
+    url = reverse("caseaccess-transfer")
+
+    response = client.post(url, data=data, headers={"CONTENT-TYPE": "application/json"})
+
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert response.json() == {
+        "errors": [
+            {
+                "detail": f'Invalid pk "{new_1}" - object does not exist.',
+                "status": "400",
+                "source": {"pointer": "/data/attributes/new-assignees/0"},
+                "code": "does_not_exist",
+            },
+            {
+                "detail": f'Invalid pk "{new_2}" - object does not exist.',
+                "status": "400",
+                "source": {"pointer": "/data/attributes/new-assignees/1"},
+                "code": "does_not_exist",
+            },
+            {
+                "detail": f'Invalid pk "{to_remove}" - object does not exist.',
+                "status": "400",
+                "source": {"pointer": "/data/attributes/to-remove-assignees/0"},
+                "code": "does_not_exist",
+            },
+        ]
+    }
+
+
+def test_transfer_case_fail_required_failure(client, snapshot):
+    url = reverse("caseaccess-transfer")
+
+    data = {
+        "to_remove_assignees": [],
+        # empty new_assignees will fail
+        "new_assignees": [],
+        "case_ids": [],
+    }
+
+    response = client.post(url, data=data, headers={"CONTENT-TYPE": "application/json"})
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert response.json() == snapshot
 
 
 @pytest.mark.freeze_time("1970-01-01")
