@@ -1,5 +1,5 @@
 # serializer version: 1
-# name: test_download[de-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-admin]
+# name: test_download[de-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-admin]
   dict({
     'convert': 'pdf',
     'data': dict({
@@ -15,13 +15,14 @@
         'email': 'gallagherheather@example.com',
         'greeting_salutation_and_name': 'Sehr geehrte·r Bruce Wilkins',
       }),
+      'identity_submit': 'e5dabdd0-bafb-4b75-82d2-ccf9295b623b',
     }),
   })
 # ---
-# name: test_download[de-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-admin].1
+# name: test_download[de-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-admin].1
   "inline; filename*=utf-8''2022-0001%20-%20Eingangsbest%C3%A4tigung.pdf"
 # ---
-# name: test_download[de-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-staff]
+# name: test_download[de-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-staff]
   dict({
     'convert': 'pdf',
     'data': dict({
@@ -37,13 +38,14 @@
         'email': 'gallagherheather@example.com',
         'greeting_salutation_and_name': 'Sehr geehrte·r Bruce Wilkins',
       }),
+      'identity_submit': 'e5dabdd0-bafb-4b75-82d2-ccf9295b623b',
     }),
   })
 # ---
-# name: test_download[de-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-staff].1
+# name: test_download[de-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-staff].1
   "inline; filename*=utf-8''2022-0001%20-%20Eingangsbest%C3%A4tigung.pdf"
 # ---
-# name: test_download[de-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-user]
+# name: test_download[de-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-user]
   dict({
     'convert': 'pdf',
     'data': dict({
@@ -59,13 +61,14 @@
         'email': 'gallagherheather@example.com',
         'greeting_salutation_and_name': 'Sehr geehrte·r Bruce Wilkins',
       }),
+      'identity_submit': 'e5dabdd0-bafb-4b75-82d2-ccf9295b623b',
     }),
   })
 # ---
-# name: test_download[de-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-user].1
+# name: test_download[de-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-user].1
   "inline; filename*=utf-8''2022-0001%20-%20Eingangsbest%C3%A4tigung.pdf"
 # ---
-# name: test_download[de-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-admin]
+# name: test_download[de-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-admin]
   dict({
     'convert': 'pdf',
     'data': dict({
@@ -85,10 +88,10 @@
     }),
   })
 # ---
-# name: test_download[de-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-admin].1
+# name: test_download[de-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-admin].1
   'inline; filename="2022-0001 - Kreditgutsprache.pdf"'
 # ---
-# name: test_download[de-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-staff]
+# name: test_download[de-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-staff]
   dict({
     'convert': 'pdf',
     'data': dict({
@@ -108,10 +111,10 @@
     }),
   })
 # ---
-# name: test_download[de-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-staff].1
+# name: test_download[de-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-staff].1
   'inline; filename="2022-0001 - Kreditgutsprache.pdf"'
 # ---
-# name: test_download[de-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-user]
+# name: test_download[de-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-user]
   dict({
     'convert': 'pdf',
     'data': dict({
@@ -131,10 +134,118 @@
     }),
   })
 # ---
-# name: test_download[de-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-user].1
+# name: test_download[de-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-user].1
   'inline; filename="2022-0001 - Kreditgutsprache.pdf"'
 # ---
-# name: test_download[en-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-admin]
+# name: test_download[de-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-admin]
+  dict({
+    'convert': 'pdf',
+    'data': dict({
+      'date': '1. Januar 1970',
+      'dossier_nr': '2022-0001',
+      'identity': dict({
+        'address_block': 'Christopher Brown',
+        'email': 'jackellis@example.com',
+        'greeting_salutation_and_name': 'Sehr geehrte·r Christopher Brown',
+      }),
+      'identity_submit': 'e5dabdd0-bafb-4b75-82d2-ccf9295b623b',
+    }),
+  })
+# ---
+# name: test_download[de-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-admin].1
+  "inline; filename*=utf-8''2022-0001%20-%20Eingangsbest%C3%A4tigung.pdf"
+# ---
+# name: test_download[de-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-staff]
+  dict({
+    'convert': 'pdf',
+    'data': dict({
+      'date': '1. Januar 1970',
+      'dossier_nr': '2022-0001',
+      'identity': dict({
+        'address_block': 'Christopher Brown',
+        'email': 'jackellis@example.com',
+        'greeting_salutation_and_name': 'Sehr geehrte·r Christopher Brown',
+      }),
+      'identity_submit': 'e5dabdd0-bafb-4b75-82d2-ccf9295b623b',
+    }),
+  })
+# ---
+# name: test_download[de-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-staff].1
+  "inline; filename*=utf-8''2022-0001%20-%20Eingangsbest%C3%A4tigung.pdf"
+# ---
+# name: test_download[de-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-user]
+  dict({
+    'convert': 'pdf',
+    'data': dict({
+      'date': '1. Januar 1970',
+      'dossier_nr': '2022-0001',
+      'identity': dict({
+        'address_block': 'Christopher Brown',
+        'email': 'jackellis@example.com',
+        'greeting_salutation_and_name': 'Sehr geehrte·r Christopher Brown',
+      }),
+      'identity_submit': 'e5dabdd0-bafb-4b75-82d2-ccf9295b623b',
+    }),
+  })
+# ---
+# name: test_download[de-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-user].1
+  "inline; filename*=utf-8''2022-0001%20-%20Eingangsbest%C3%A4tigung.pdf"
+# ---
+# name: test_download[de-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-admin]
+  dict({
+    'convert': 'pdf',
+    'data': dict({
+      'date': '1. Januar 1970',
+      'dossier_nr': '2022-0001',
+      'identity': dict({
+        'address_block': 'Christopher Brown',
+        'email': 'jackellis@example.com',
+        'greeting_salutation_and_name': 'Sehr geehrte·r Christopher Brown',
+      }),
+      'rahmenkredit': 'CHF 23.-',
+    }),
+  })
+# ---
+# name: test_download[de-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-admin].1
+  'inline; filename="2022-0001 - Kreditgutsprache.pdf"'
+# ---
+# name: test_download[de-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-staff]
+  dict({
+    'convert': 'pdf',
+    'data': dict({
+      'date': '1. Januar 1970',
+      'dossier_nr': '2022-0001',
+      'identity': dict({
+        'address_block': 'Christopher Brown',
+        'email': 'jackellis@example.com',
+        'greeting_salutation_and_name': 'Sehr geehrte·r Christopher Brown',
+      }),
+      'rahmenkredit': 'CHF 23.-',
+    }),
+  })
+# ---
+# name: test_download[de-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-staff].1
+  'inline; filename="2022-0001 - Kreditgutsprache.pdf"'
+# ---
+# name: test_download[de-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-user]
+  dict({
+    'convert': 'pdf',
+    'data': dict({
+      'date': '1. Januar 1970',
+      'dossier_nr': '2022-0001',
+      'identity': dict({
+        'address_block': 'Christopher Brown',
+        'email': 'jackellis@example.com',
+        'greeting_salutation_and_name': 'Sehr geehrte·r Christopher Brown',
+      }),
+      'rahmenkredit': 'CHF 23.-',
+    }),
+  })
+# ---
+# name: test_download[de-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-user].1
+  'inline; filename="2022-0001 - Kreditgutsprache.pdf"'
+# ---
+# name: test_download[en-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-admin]
   dict({
     'convert': 'pdf',
     'data': dict({
@@ -150,13 +261,14 @@
         'email': 'gallagherheather@example.com',
         'greeting_salutation_and_name': 'Dear Bruce Wilkins',
       }),
+      'identity_submit': 'e5dabdd0-bafb-4b75-82d2-ccf9295b623b',
     }),
   })
 # ---
-# name: test_download[en-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-admin].1
+# name: test_download[en-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-admin].1
   'inline; filename="2022-0001 - Acknowledgement of receipt.pdf"'
 # ---
-# name: test_download[en-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-staff]
+# name: test_download[en-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-staff]
   dict({
     'convert': 'pdf',
     'data': dict({
@@ -172,13 +284,14 @@
         'email': 'gallagherheather@example.com',
         'greeting_salutation_and_name': 'Dear Bruce Wilkins',
       }),
+      'identity_submit': 'e5dabdd0-bafb-4b75-82d2-ccf9295b623b',
     }),
   })
 # ---
-# name: test_download[en-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-staff].1
+# name: test_download[en-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-staff].1
   'inline; filename="2022-0001 - Acknowledgement of receipt.pdf"'
 # ---
-# name: test_download[en-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-user]
+# name: test_download[en-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-user]
   dict({
     'convert': 'pdf',
     'data': dict({
@@ -194,13 +307,14 @@
         'email': 'gallagherheather@example.com',
         'greeting_salutation_and_name': 'Dear Bruce Wilkins',
       }),
+      'identity_submit': 'e5dabdd0-bafb-4b75-82d2-ccf9295b623b',
     }),
   })
 # ---
-# name: test_download[en-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-user].1
+# name: test_download[en-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-user].1
   'inline; filename="2022-0001 - Acknowledgement of receipt.pdf"'
 # ---
-# name: test_download[en-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-admin]
+# name: test_download[en-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-admin]
   dict({
     'convert': 'pdf',
     'data': dict({
@@ -220,10 +334,10 @@
     }),
   })
 # ---
-# name: test_download[en-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-admin].1
+# name: test_download[en-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-admin].1
   'inline; filename="2022-0001 - Credit approval.pdf"'
 # ---
-# name: test_download[en-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-staff]
+# name: test_download[en-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-staff]
   dict({
     'convert': 'pdf',
     'data': dict({
@@ -243,10 +357,10 @@
     }),
   })
 # ---
-# name: test_download[en-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-staff].1
+# name: test_download[en-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-staff].1
   'inline; filename="2022-0001 - Credit approval.pdf"'
 # ---
-# name: test_download[en-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-user]
+# name: test_download[en-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-user]
   dict({
     'convert': 'pdf',
     'data': dict({
@@ -266,10 +380,118 @@
     }),
   })
 # ---
-# name: test_download[en-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-user].1
+# name: test_download[en-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-user].1
   'inline; filename="2022-0001 - Credit approval.pdf"'
 # ---
-# name: test_download[fr-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-admin]
+# name: test_download[en-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-admin]
+  dict({
+    'convert': 'pdf',
+    'data': dict({
+      'date': 'Jan. 1, 1970',
+      'dossier_nr': '2022-0001',
+      'identity': dict({
+        'address_block': 'Christopher Brown',
+        'email': 'jackellis@example.com',
+        'greeting_salutation_and_name': 'Dear Christopher Brown',
+      }),
+      'identity_submit': 'e5dabdd0-bafb-4b75-82d2-ccf9295b623b',
+    }),
+  })
+# ---
+# name: test_download[en-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-admin].1
+  'inline; filename="2022-0001 - Acknowledgement of receipt.pdf"'
+# ---
+# name: test_download[en-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-staff]
+  dict({
+    'convert': 'pdf',
+    'data': dict({
+      'date': 'Jan. 1, 1970',
+      'dossier_nr': '2022-0001',
+      'identity': dict({
+        'address_block': 'Christopher Brown',
+        'email': 'jackellis@example.com',
+        'greeting_salutation_and_name': 'Dear Christopher Brown',
+      }),
+      'identity_submit': 'e5dabdd0-bafb-4b75-82d2-ccf9295b623b',
+    }),
+  })
+# ---
+# name: test_download[en-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-staff].1
+  'inline; filename="2022-0001 - Acknowledgement of receipt.pdf"'
+# ---
+# name: test_download[en-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-user]
+  dict({
+    'convert': 'pdf',
+    'data': dict({
+      'date': 'Jan. 1, 1970',
+      'dossier_nr': '2022-0001',
+      'identity': dict({
+        'address_block': 'Christopher Brown',
+        'email': 'jackellis@example.com',
+        'greeting_salutation_and_name': 'Dear Christopher Brown',
+      }),
+      'identity_submit': 'e5dabdd0-bafb-4b75-82d2-ccf9295b623b',
+    }),
+  })
+# ---
+# name: test_download[en-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-user].1
+  'inline; filename="2022-0001 - Acknowledgement of receipt.pdf"'
+# ---
+# name: test_download[en-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-admin]
+  dict({
+    'convert': 'pdf',
+    'data': dict({
+      'date': 'Jan. 1, 1970',
+      'dossier_nr': '2022-0001',
+      'identity': dict({
+        'address_block': 'Christopher Brown',
+        'email': 'jackellis@example.com',
+        'greeting_salutation_and_name': 'Dear Christopher Brown',
+      }),
+      'rahmenkredit': 'CHF 23.-',
+    }),
+  })
+# ---
+# name: test_download[en-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-admin].1
+  'inline; filename="2022-0001 - Credit approval.pdf"'
+# ---
+# name: test_download[en-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-staff]
+  dict({
+    'convert': 'pdf',
+    'data': dict({
+      'date': 'Jan. 1, 1970',
+      'dossier_nr': '2022-0001',
+      'identity': dict({
+        'address_block': 'Christopher Brown',
+        'email': 'jackellis@example.com',
+        'greeting_salutation_and_name': 'Dear Christopher Brown',
+      }),
+      'rahmenkredit': 'CHF 23.-',
+    }),
+  })
+# ---
+# name: test_download[en-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-staff].1
+  'inline; filename="2022-0001 - Credit approval.pdf"'
+# ---
+# name: test_download[en-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-user]
+  dict({
+    'convert': 'pdf',
+    'data': dict({
+      'date': 'Jan. 1, 1970',
+      'dossier_nr': '2022-0001',
+      'identity': dict({
+        'address_block': 'Christopher Brown',
+        'email': 'jackellis@example.com',
+        'greeting_salutation_and_name': 'Dear Christopher Brown',
+      }),
+      'rahmenkredit': 'CHF 23.-',
+    }),
+  })
+# ---
+# name: test_download[en-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-user].1
+  'inline; filename="2022-0001 - Credit approval.pdf"'
+# ---
+# name: test_download[fr-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-admin]
   dict({
     'convert': 'pdf',
     'data': dict({
@@ -285,13 +507,14 @@
         'email': 'gallagherheather@example.com',
         'greeting_salutation_and_name': 'Bruce Wilkins',
       }),
+      'identity_submit': 'e5dabdd0-bafb-4b75-82d2-ccf9295b623b',
     }),
   })
 # ---
-# name: test_download[fr-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-admin].1
+# name: test_download[fr-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-admin].1
   "inline; filename*=utf-8''2022-0001%20-%20Accus%C3%A9%20de%20r%C3%A9ception.pdf"
 # ---
-# name: test_download[fr-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-staff]
+# name: test_download[fr-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-staff]
   dict({
     'convert': 'pdf',
     'data': dict({
@@ -307,13 +530,14 @@
         'email': 'gallagherheather@example.com',
         'greeting_salutation_and_name': 'Bruce Wilkins',
       }),
+      'identity_submit': 'e5dabdd0-bafb-4b75-82d2-ccf9295b623b',
     }),
   })
 # ---
-# name: test_download[fr-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-staff].1
+# name: test_download[fr-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-staff].1
   "inline; filename*=utf-8''2022-0001%20-%20Accus%C3%A9%20de%20r%C3%A9ception.pdf"
 # ---
-# name: test_download[fr-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-user]
+# name: test_download[fr-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-user]
   dict({
     'convert': 'pdf',
     'data': dict({
@@ -329,13 +553,14 @@
         'email': 'gallagherheather@example.com',
         'greeting_salutation_and_name': 'Bruce Wilkins',
       }),
+      'identity_submit': 'e5dabdd0-bafb-4b75-82d2-ccf9295b623b',
     }),
   })
 # ---
-# name: test_download[fr-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-user].1
+# name: test_download[fr-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-user].1
   "inline; filename*=utf-8''2022-0001%20-%20Accus%C3%A9%20de%20r%C3%A9ception.pdf"
 # ---
-# name: test_download[fr-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-admin]
+# name: test_download[fr-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-admin]
   dict({
     'convert': 'pdf',
     'data': dict({
@@ -355,10 +580,10 @@
     }),
   })
 # ---
-# name: test_download[fr-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-admin].1
+# name: test_download[fr-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-admin].1
   "inline; filename*=utf-8''2022-0001%20-%20Accord%20de%20cr%C3%A9dit.pdf"
 # ---
-# name: test_download[fr-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-staff]
+# name: test_download[fr-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-staff]
   dict({
     'convert': 'pdf',
     'data': dict({
@@ -378,10 +603,10 @@
     }),
   })
 # ---
-# name: test_download[fr-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-staff].1
+# name: test_download[fr-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-staff].1
   "inline; filename*=utf-8''2022-0001%20-%20Accord%20de%20cr%C3%A9dit.pdf"
 # ---
-# name: test_download[fr-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-user]
+# name: test_download[fr-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-user]
   dict({
     'convert': 'pdf',
     'data': dict({
@@ -401,7 +626,115 @@
     }),
   })
 # ---
-# name: test_download[fr-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-user].1
+# name: test_download[fr-False-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-user].1
+  "inline; filename*=utf-8''2022-0001%20-%20Accord%20de%20cr%C3%A9dit.pdf"
+# ---
+# name: test_download[fr-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-admin]
+  dict({
+    'convert': 'pdf',
+    'data': dict({
+      'date': '1 janvier 1970',
+      'dossier_nr': '2022-0001',
+      'identity': dict({
+        'address_block': 'Christopher Brown',
+        'email': 'jackellis@example.com',
+        'greeting_salutation_and_name': 'Christopher Brown',
+      }),
+      'identity_submit': 'e5dabdd0-bafb-4b75-82d2-ccf9295b623b',
+    }),
+  })
+# ---
+# name: test_download[fr-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-admin].1
+  "inline; filename*=utf-8''2022-0001%20-%20Accus%C3%A9%20de%20r%C3%A9ception.pdf"
+# ---
+# name: test_download[fr-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-staff]
+  dict({
+    'convert': 'pdf',
+    'data': dict({
+      'date': '1 janvier 1970',
+      'dossier_nr': '2022-0001',
+      'identity': dict({
+        'address_block': 'Christopher Brown',
+        'email': 'jackellis@example.com',
+        'greeting_salutation_and_name': 'Christopher Brown',
+      }),
+      'identity_submit': 'e5dabdd0-bafb-4b75-82d2-ccf9295b623b',
+    }),
+  })
+# ---
+# name: test_download[fr-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-staff].1
+  "inline; filename*=utf-8''2022-0001%20-%20Accus%C3%A9%20de%20r%C3%A9ception.pdf"
+# ---
+# name: test_download[fr-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-user]
+  dict({
+    'convert': 'pdf',
+    'data': dict({
+      'date': '1 janvier 1970',
+      'dossier_nr': '2022-0001',
+      'identity': dict({
+        'address_block': 'Christopher Brown',
+        'email': 'jackellis@example.com',
+        'greeting_salutation_and_name': 'Christopher Brown',
+      }),
+      'identity_submit': 'e5dabdd0-bafb-4b75-82d2-ccf9295b623b',
+    }),
+  })
+# ---
+# name: test_download[fr-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-acknowledgement-user].1
+  "inline; filename*=utf-8''2022-0001%20-%20Accus%C3%A9%20de%20r%C3%A9ception.pdf"
+# ---
+# name: test_download[fr-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-admin]
+  dict({
+    'convert': 'pdf',
+    'data': dict({
+      'date': '1 janvier 1970',
+      'dossier_nr': '2022-0001',
+      'identity': dict({
+        'address_block': 'Christopher Brown',
+        'email': 'jackellis@example.com',
+        'greeting_salutation_and_name': 'Christopher Brown',
+      }),
+      'rahmenkredit': 'CHF 23.-',
+    }),
+  })
+# ---
+# name: test_download[fr-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-admin].1
+  "inline; filename*=utf-8''2022-0001%20-%20Accord%20de%20cr%C3%A9dit.pdf"
+# ---
+# name: test_download[fr-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-staff]
+  dict({
+    'convert': 'pdf',
+    'data': dict({
+      'date': '1 janvier 1970',
+      'dossier_nr': '2022-0001',
+      'identity': dict({
+        'address_block': 'Christopher Brown',
+        'email': 'jackellis@example.com',
+        'greeting_salutation_and_name': 'Christopher Brown',
+      }),
+      'rahmenkredit': 'CHF 23.-',
+    }),
+  })
+# ---
+# name: test_download[fr-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-staff].1
+  "inline; filename*=utf-8''2022-0001%20-%20Accord%20de%20cr%C3%A9dit.pdf"
+# ---
+# name: test_download[fr-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-user]
+  dict({
+    'convert': 'pdf',
+    'data': dict({
+      'date': '1 janvier 1970',
+      'dossier_nr': '2022-0001',
+      'identity': dict({
+        'address_block': 'Christopher Brown',
+        'email': 'jackellis@example.com',
+        'greeting_salutation_and_name': 'Christopher Brown',
+      }),
+      'rahmenkredit': 'CHF 23.-',
+    }),
+  })
+# ---
+# name: test_download[fr-True-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-credit-approval-user].1
   "inline; filename*=utf-8''2022-0001%20-%20Accord%20de%20cr%C3%A9dit.pdf"
 # ---
 # name: test_download_application[admin-e5dabdd0-bafb-4b75-82d2-ccf9295b623b-data0-False]

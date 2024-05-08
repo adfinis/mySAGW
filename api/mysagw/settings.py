@@ -235,6 +235,9 @@ JSON_API_PLURALIZE_TYPES = True
 # mySAGW
 ADMIN_GROUP = "admin"
 STAFF_GROUP = "sagw"
+STAFF_ORGANISATION_NAME = (
+    "Schweizerische Akademie der Geistes- und Sozialwissenschaften (SAGW)"
+)
 
 # mailing
 EMAIL_HOST = env.str("EMAIL_HOST", "mail")
