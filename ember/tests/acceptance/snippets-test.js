@@ -22,14 +22,10 @@ module("Acceptance | snippets", function (hooks) {
   });
 
   test("can list snippets", async function (assert) {
-    assert.expect(1);
-
     assert.dom("[data-test-snippet-list] li").exists({ count: 1 });
   });
 
   test("can add an snippets", async function (assert) {
-    assert.expect(2);
-
     assert.dom("[data-test-snippet-list] li").exists({ count: 1 });
     await click("[data-test-snippet-add]");
 
@@ -40,8 +36,6 @@ module("Acceptance | snippets", function (hooks) {
   });
 
   test("can list snippets in sidebar", async function (assert) {
-    assert.expect(2);
-
     await click("[data-test-snippet-sidebar-button]");
 
     assert.dom("[data-test-snippet-sidebar-list] li").exists({ count: 1 });

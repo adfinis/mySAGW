@@ -11,21 +11,21 @@ export default class AnswerValue extends Component {
       .mapBy("node")
       .findBy("question.slug", this.args.tdDefinition.questionSlug);
 
-    if (!answer) {
+    if (!answer || !answer[`${answer.__typename}Value`]) {
       return "";
     }
 
     if (answer.question.__typename === "ChoiceQuestion") {
       return answer.question.options.edges.findBy(
         "node.slug",
-        answer[`${answer.__typename}Value`]
+        answer[`${answer.__typename}Value`],
       ).node.label;
     }
 
     if (answer.question.meta?.waehrung) {
       return formatCurrency(
         answer[`${answer.__typename}Value`],
-        answer.question.meta.waehrung
+        answer.question.meta.waehrung,
       );
     }
 

@@ -8,13 +8,13 @@ module("Unit | Adapter | identity", function (hooks) {
 
     assert.strictEqual(
       adapter.urlForFindRecord("1", "identity", {}),
-      "/api/v1/identities/1"
+      "/api/v1/identities/1",
     );
     assert.strictEqual(
       adapter.urlForFindRecord("1", "identity", {
         adapterOptions: { customEndpoint: "my-orgs" },
       }),
-      "/api/v1/my-orgs/1"
+      "/api/v1/my-orgs/1",
     );
   });
 
@@ -29,13 +29,13 @@ module("Unit | Adapter | identity", function (hooks) {
 
     assert.strictEqual(
       adapter.urlForUpdateRecord("1", "identity", {}),
-      "/api/v1/identities/1"
+      "/api/v1/identities/1",
     );
     assert.strictEqual(
       adapter.urlForUpdateRecord("1", "identity", {
         adapterOptions: { customEndpoint: "my-orgs" },
       }),
-      "/api/v1/my-orgs"
+      "/api/v1/my-orgs",
     );
   });
 });

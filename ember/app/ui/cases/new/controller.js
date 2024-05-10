@@ -4,7 +4,7 @@ import { tracked } from "@glimmer/tracking";
 import { decodeId } from "@projectcaluma/ember-core/helpers/decode-id";
 import { queryManager } from "ember-apollo-client";
 import { restartableTask } from "ember-concurrency";
-import { trackedFunction } from "ember-resources/util/function";
+import { trackedFunction } from "reactiveweb/function";
 
 import createCaseMutation from "mysagw/gql/mutations/create-case.graphql";
 
@@ -41,7 +41,7 @@ export default class CaseNewController extends Controller {
 
     this.router.transitionTo(
       "cases.detail.edit",
-      decodeId(newCase.saveCase.case.id)
+      decodeId(newCase.saveCase.case.id),
     );
   }
 }

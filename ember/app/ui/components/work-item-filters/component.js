@@ -1,4 +1,4 @@
-import { trackedFunction } from "ember-resources/util/function";
+import { trackedFunction } from "reactiveweb/function";
 
 import getTasksQuery from "mysagw/gql/queries/get-tasks.graphql";
 import FiltersComponent from "mysagw/utils/filters-component";
@@ -13,7 +13,7 @@ export default class WorkItemFiltersComponent extends FiltersComponent {
           order: [{ attribute: "NAME" }],
         },
       },
-      "allTasks.edges"
+      "allTasks.edges",
     );
 
     return response.map((edge) => ({

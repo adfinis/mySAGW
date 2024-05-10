@@ -1,8 +1,10 @@
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
+import { inject as service } from "@ember/service";
 
 export default class MembershipRolesAddController extends Controller {
+  @service("router") router;
   @action onSave(role) {
-    this.transitionToRoute("membership-roles.edit", role.id);
+    this.router.transitionTo("membership-roles.edit", role.id);
   }
 }

@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.core.mail import send_mail
+from rest_framework import serializers as drf_serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework_json_api import serializers
 
@@ -72,3 +73,38 @@ class CaseAccessSerializer(serializers.ModelSerializer):
         )
 
         return instance
+
+
+class CaseTransferSerializer(drf_serializers.Serializer):
+    to_remove_assignees = drf_serializers.ListField(
+        child=drf_serializers.PrimaryKeyRelatedField(
+            queryset=Identity.objects.filter(is_organisation=False)
+        )
+    )
+    new_assignees = drf_serializers.ListField(
+        child=drf_serializers.PrimaryKeyRelatedField(
+            queryset=Identity.objects.filter(is_organisation=False)
+        ),
+        allow_empty=False,
+    )
+    case_ids = drf_serializers.ListField(
+        child=drf_serializers.UUIDField(), allow_empty=False
+    )
+
+    def create(self, validated_data):
+        new_accesses = []
+        for case_id in validated_data["case_ids"]:
+            for new_assignee in validated_data["new_assignees"]:
+                access, created = models.CaseAccess.objects.get_or_create(
+                    case_id=case_id, identity=new_assignee
+                )
+                if created:
+                    new_accesses.append(access)
+
+        if validated_data["to_remove_assignees"]:
+            to_remove = models.CaseAccess.objects.filter(
+                case_id__in=validated_data["case_ids"],
+                identity__in=validated_data["to_remove_assignees"],
+            )
+            to_remove.delete()
+        return new_accesses

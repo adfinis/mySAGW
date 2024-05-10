@@ -31,7 +31,6 @@ services:
       - VALIDATION_CLASSES=caluma.extensions.validations.CustomValidation
       - META_FIELDS=assigneeEmail,assigneeName
       - ENABLE_HEALTHZ_ENDPOINT=true
-
     depends_on:
       - db
       - keycloak

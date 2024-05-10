@@ -34,7 +34,7 @@ export default class TableController extends Controller {
 
   serializeFilter() {
     this.filter = btoa(
-      JSON.stringify({ filters: this.filters, inverts: this.invertedFilters })
+      JSON.stringify({ filters: this.filters, inverts: this.invertedFilters }),
     );
   }
   @action
@@ -61,7 +61,7 @@ export default class TableController extends Controller {
     if (Array.isArray(eventOrValue)) {
       this.filters[type] = stringFromArray(
         eventOrValue,
-        type === "identities" ? "idpId" : "value"
+        type === "identities" ? "idpId" : "value",
       );
     } else {
       this.filters[type] = eventOrValue.target?.value ?? eventOrValue;

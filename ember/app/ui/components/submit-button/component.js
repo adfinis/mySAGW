@@ -25,7 +25,7 @@ export default class SubmitButtonComponent extends Component {
         query: getDocumentsQuery,
         variables: { filter: [{ id: this.args.field.document.uuid }] },
       },
-      "allDocuments.edges"
+      "allDocuments.edges",
     );
 
     return document

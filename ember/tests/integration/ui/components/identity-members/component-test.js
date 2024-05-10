@@ -22,7 +22,8 @@ module("Integration | Component | identity-members", function (hooks) {
     membership.organisation = organisation;
     membership.role = role;
 
-    this.identity = organisation;
+    const store = this.owner.lookup("service:store");
+    this.identity = store.findRecord("identity", identity.id);
 
     await render(hbs`<IdentityMembers @identity={{this.identity}}/>`);
 

@@ -23,9 +23,9 @@ module("Integration | Component | identity-addresses", function (hooks) {
   });
 
   test("it can add new addresses", async function (assert) {
-    this.server.create("identity");
-
-    this.identity = { id: "1" };
+    const identityId = this.server.create("identity").id;
+    const store = this.owner.lookup("service:store");
+    this.identity = store.findRecord("identity", identityId);
 
     await render(hbs`<IdentityAddresses @identity={{this.identity}} />`);
     assert.ok(this.element);

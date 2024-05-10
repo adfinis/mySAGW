@@ -2,7 +2,7 @@ import { inject as service } from "@ember/service";
 import { useCalumaQuery } from "@projectcaluma/ember-core/caluma-query";
 import { allCases } from "@projectcaluma/ember-core/caluma-query/queries";
 import { queryManager } from "ember-apollo-client";
-import { trackedFunction } from "ember-resources/util/function";
+import { trackedFunction } from "reactiveweb/function";
 
 import ENV from "mysagw/config/environment";
 import casesCountQuery from "mysagw/gql/queries/cases-count.graphql";

@@ -3,6 +3,7 @@ from base64 import urlsafe_b64encode
 from pathlib import Path
 
 from django.conf import settings
+from django.db import transaction
 from django.http import FileResponse
 from django.utils import formats, timezone
 from django.utils.translation import get_language
@@ -10,6 +11,8 @@ from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
 from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, ListModelMixin
+from rest_framework.parsers import JSONParser
+from rest_framework.response import Response
 from rest_framework.serializers import BaseSerializer
 from rest_framework.viewsets import GenericViewSet
 
@@ -45,6 +48,13 @@ class CaseAccessViewSet(
             )
         return super().list(request, *args, **kwargs)
 
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if models.CaseAccess.objects.filter(case_id=instance.case_id).count() == 1:
+            msg = "This is the only CaseAccess for this case, hence it cannot be destroyed."
+            raise ValidationError(msg)
+        return super().destroy(request, *args, **kwargs)
+
     def get_queryset(self, *args, **kwargs):
         qs = super().get_queryset(*args, **kwargs)
         if self.request.user.is_staff:
@@ -54,6 +64,20 @@ class CaseAccessViewSet(
                 "case_id",
             ),
         )
+
+    @action(
+        methods=["post"],
+        detail=False,
+        serializer_class=serializers.CaseTransferSerializer,
+        permission_classes=(IsAuthenticated & (IsAdmin | IsStaff),),
+        parser_classes=(JSONParser,),
+    )
+    @transaction.atomic
+    def transfer(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        instances = serializer.save()
+        return Response({"created": len(instances)}, status=status.HTTP_201_CREATED)
 
 
 class CaseDownloadViewSet(GenericViewSet):
