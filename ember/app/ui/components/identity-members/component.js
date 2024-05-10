@@ -2,7 +2,7 @@ import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
-import { trackedFunction } from "ember-resources/util/function";
+import { trackedFunction } from "reactiveweb/function";
 
 /**
  * @arg identity
@@ -34,7 +34,7 @@ export default class IdentityMembersComponent extends Component {
           size: this.pageSize,
         },
       },
-      { adapterOptions: { customEndpoint: "org-memberships" } }
+      { adapterOptions: { customEndpoint: "org-memberships" } },
     );
     this.totalPages = membersResponse.meta.pagination?.pages;
 

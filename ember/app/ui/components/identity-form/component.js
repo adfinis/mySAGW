@@ -24,6 +24,15 @@ export default class IdentityFormComponent extends Component {
   @tracked changeset;
   @tracked backToIdentities;
 
+  constructor(...args) {
+    super(...args);
+    this.changeset = Changeset(
+      this.args.identity || this.store.createRecord("identity"),
+      lookupValidator(IdentityValidations),
+      IdentityValidations,
+    );
+  }
+
   get salutations() {
     return [
       { label: this.intl.t("global.salutation.neutral"), value: "neutral" },
@@ -76,15 +85,6 @@ export default class IdentityFormComponent extends Component {
   }
 
   @action
-  onUpdate() {
-    this.changeset = Changeset(
-      this.args.identity || this.store.createRecord("identity"),
-      lookupValidator(IdentityValidations),
-      IdentityValidations
-    );
-  }
-
-  @action
   updateOrganisation() {
     const isOrganisation = !this.changeset.get("isOrganisation");
     this.args.onOrganisationUpdate?.(isOrganisation);
@@ -113,7 +113,7 @@ export default class IdentityFormComponent extends Component {
       this.notification.success(
         this.intl.t("components.identity-form.success", {
           name: changeset.data.fullName,
-        })
+        }),
       );
 
       this.args.onSave?.(changeset.data);
@@ -141,7 +141,7 @@ export default class IdentityFormComponent extends Component {
           "components.identity-form.delete.promptInfo",
           {
             caseAmount: accesses.length,
-          }
+          },
         )}`;
       }
 
@@ -153,7 +153,7 @@ export default class IdentityFormComponent extends Component {
       try {
         yield identity.destroyRecord();
         this.notification.success(
-          this.intl.t("components.identity-form.delete.success")
+          this.intl.t("components.identity-form.delete.success"),
         );
         this.router.transitionTo("identities");
       } catch (error) {

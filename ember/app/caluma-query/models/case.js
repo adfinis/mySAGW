@@ -32,7 +32,7 @@ export default class CustomCaseModel extends CaseModel {
   get hasEditableWorkItem() {
     return this.workItems
       .filter((workItem) =>
-        ENV.APP.caluma.documentEditableTaskSlugs.includes(workItem.task.slug)
+        ENV.APP.caluma.documentEditableTaskSlugs.includes(workItem.task.slug),
       )
       .isAny("status", "READY");
   }
@@ -42,7 +42,7 @@ export default class CustomCaseModel extends CaseModel {
       (workItem) =>
         (workItem.task.slug === ENV.APP.caluma.submitTaskSlug ||
           workItem.task.slug === ENV.APP.caluma.reviseTaskSlug) &&
-        workItem.status === "READY"
+        workItem.status === "READY",
     );
   }
 
@@ -51,14 +51,14 @@ export default class CustomCaseModel extends CaseModel {
       return this.workItems.find(
         (workItem) =>
           workItem.status === "COMPLETED" &&
-          workItem.task.slug === "decision-and-credit"
+          workItem.task.slug === "decision-and-credit",
       );
     }
 
     return this.workItems.find(
       (workItem) =>
         (workItem.status === "COMPLETED" || workItem.status === "SKIPPED") &&
-        ENV.APP.caluma.redoableTaskSlugs.includes(workItem.task.slug)
+        ENV.APP.caluma.redoableTaskSlugs.includes(workItem.task.slug),
     );
   }
 
@@ -66,7 +66,7 @@ export default class CustomCaseModel extends CaseModel {
     return this.workItems.find(
       (workItem) =>
         workItem.status === "READY" &&
-        ENV.APP.caluma.canRedoTaskSlug.includes(workItem.task.slug)
+        ENV.APP.caluma.canRedoTaskSlug.includes(workItem.task.slug),
     );
   }
 
@@ -77,14 +77,14 @@ export default class CustomCaseModel extends CaseModel {
   get documentNumber() {
     return this.document.answers.edges.findBy(
       "node.question.slug",
-      "dossier-nr"
+      "dossier-nr",
     )?.node.StringAnswerValue;
   }
 
   get distributionPlan() {
     const answer = this.document.answers.edges.findBy(
       "node.question.slug",
-      "verteilplan-nr"
+      "verteilplan-nr",
     )?.node;
 
     if (!answer) {
@@ -93,7 +93,7 @@ export default class CustomCaseModel extends CaseModel {
 
     return answer.question.options.edges.findBy(
       "node.slug",
-      answer.StringAnswerValue
+      answer.StringAnswerValue,
     ).node.label;
   }
 

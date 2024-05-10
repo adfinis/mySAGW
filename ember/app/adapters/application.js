@@ -29,14 +29,14 @@ export default class ApplicationAdapter extends OIDCJSONAPIAdapter {
   urlForCreateRecord(modelName, snapshot) {
     return this._appendInclude(
       super.urlForCreateRecord(modelName, snapshot),
-      snapshot.adapterOptions
+      snapshot.adapterOptions,
     );
   }
 
   urlForUpdateRecord(id, modelName, snapshot) {
     return this._appendInclude(
       super.urlForUpdateRecord(id, modelName, snapshot),
-      snapshot.adapterOptions
+      snapshot.adapterOptions,
     );
   }
 

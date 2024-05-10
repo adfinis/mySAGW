@@ -31,7 +31,7 @@ export default class ProfileIndexController extends Controller {
             size: this.pageSize,
           },
         },
-        { adapterOptions: { customEndpoint: "my-memberships" } }
+        { adapterOptions: { customEndpoint: "my-memberships" } },
       );
 
       this.totalPages = memberships.meta.pagination?.pages;

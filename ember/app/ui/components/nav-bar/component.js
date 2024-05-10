@@ -4,7 +4,7 @@ import { isTesting, macroCondition } from "@embroider/macros";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { timeout, restartableTask } from "ember-concurrency";
-import { task as trackedTask } from "ember-resources/util/ember-concurrency";
+import { task as trackedTask } from "reactiveweb/ember-concurrency";
 export default class NavbarComponent extends Component {
   @service session;
   @service intl;
@@ -42,14 +42,14 @@ export default class NavbarComponent extends Component {
   @action
   onCopySuccess() {
     this.notification.success(
-      this.intl.t("components.nav-bar.snippet.copy-success")
+      this.intl.t("components.nav-bar.snippet.copy-success"),
     );
   }
 
   @action
   onCopyError() {
     this.notification.danger(
-      this.intl.t("components.nav-bar.snippet.copy-error")
+      this.intl.t("components.nav-bar.snippet.copy-error"),
     );
   }
 
@@ -80,7 +80,7 @@ export default class NavbarComponent extends Component {
           size: this.pageSize,
         },
       });
-      this.totalPages = snippets.meta.pagination?.pages;
+      this.totalPages = snippets.meta?.pagination?.pages;
 
       this.snippets = [...this.snippets, ...snippets.toArray()];
 

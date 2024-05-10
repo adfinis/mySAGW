@@ -82,7 +82,7 @@ export default class CasesDetailCirculationController extends Controller {
   get finishCirculationWorkItem() {
     return this.circulationWorkItemsQuery.value.findBy(
       "task.slug",
-      "finish-circulation"
+      "finish-circulation",
     );
   }
 
@@ -98,7 +98,7 @@ export default class CasesDetailCirculationController extends Controller {
     }
 
     return this.workItemsQuery.value.every(
-      (workItem) => workItem.raw.status === "COMPLETED"
+      (workItem) => workItem.raw.status === "COMPLETED",
     );
   }
 

@@ -2,7 +2,7 @@ import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import Component from "@glimmer/component";
 import { restartableTask, timeout } from "ember-concurrency";
-import { trackedFunction } from "ember-resources/util/function";
+import { trackedFunction } from "reactiveweb/function";
 
 import { arrayFromString } from "mysagw/utils/query-params";
 
@@ -14,7 +14,7 @@ export default class FiltersIdentityComponent extends Component {
     const selected = arrayFromString(this.args.selected ?? "");
 
     return this.identityOptions.value?.filter((option) =>
-      selected.includes(option.idpId)
+      selected.includes(option.idpId),
     );
   }
 
@@ -34,7 +34,7 @@ export default class FiltersIdentityComponent extends Component {
               idpIds: this.args.selected,
             },
           },
-          { adapterOptions: { customEndpoint: "public-identities" } }
+          { adapterOptions: { customEndpoint: "public-identities" } },
         )
       ).toArray();
     } catch (error) {
@@ -63,7 +63,7 @@ export default class FiltersIdentityComponent extends Component {
             has_idp_id: true,
           },
         },
-        { adapterOptions: { customEndpoint: "public-identities" } }
+        { adapterOptions: { customEndpoint: "public-identities" } },
       )).toArray();
     } catch (error) {
       console.error(error);

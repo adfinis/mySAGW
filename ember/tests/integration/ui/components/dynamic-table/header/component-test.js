@@ -26,7 +26,7 @@ module("Integration | Component | dynamic-table/header", function (hooks) {
     this.order = "foo";
 
     await render(
-      hbs`<DynamicTable::Header @config={{this.config}} @order={{this.order}} />`
+      hbs`<DynamicTable::Header @config={{this.config}} @order={{this.order}} />`,
     );
 
     assert.dom("th").exists();
@@ -61,7 +61,7 @@ module("Integration | Component | dynamic-table/header", function (hooks) {
     };
 
     await render(
-      hbs`<DynamicTable::Header @config={{this.config}} @order={{this.order}} @setOrder={{this.setOrder}} />`
+      hbs`<DynamicTable::Header @config={{this.config}} @order={{this.order}} @setOrder={{this.setOrder}} />`,
     );
 
     await click("button");

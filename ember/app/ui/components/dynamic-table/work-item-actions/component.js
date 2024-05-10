@@ -48,7 +48,7 @@ export default class WorkItemActions extends Component {
     return yield this.router.transitionTo(
       "cases.detail.work-items.edit",
       this.args.value.case.id,
-      this.args.value.id
+      this.args.value.id,
     );
   }
 }

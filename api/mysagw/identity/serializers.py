@@ -191,6 +191,7 @@ class IdentitySerializer(TrackingSerializer):
 
         if (
             validated_data.get("email")
+            and self.context["request"].method == "POST"
             and models.Identity.objects.filter(
                 email__iexact=validated_data["email"],
             ).exists()

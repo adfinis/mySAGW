@@ -49,14 +49,14 @@ export default class CasesDetailIndexController extends Controller {
           [
             ...Object.keys(ENV.APP.caluma.displayedAnswers),
             ...Object.keys(ENV.APP.caluma.alwaysDisplayedAnswers),
-          ].includes(workItem.task.slug) && workItem.status === "COMPLETED"
+          ].includes(workItem.task.slug) && workItem.status === "COMPLETED",
       )
       .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
     const newestWorkItem = configuredWorkItems[0];
 
     const alwaysDisplayedWorkItem = Object.keys(
-      ENV.APP.caluma.alwaysDisplayedAnswers
+      ENV.APP.caluma.alwaysDisplayedAnswers,
     )
       .map((slug) => configuredWorkItems.findBy("task.slug", slug))
       .compact();
@@ -81,13 +81,13 @@ export default class CasesDetailIndexController extends Controller {
           }
 
           const decision = answers.find(
-            (a) => a.node.question.slug === `${taskSlug}-decision`
+            (a) => a.node.question.slug === `${taskSlug}-decision`,
           );
           const value = decision.node[`${decision.node.__typename}Value`];
 
           if (
             ENV.APP.caluma.displayedAnswers[taskSlug][value].includes(
-              answer.node.question.slug
+              answer.node.question.slug,
             ) &&
             answer.node[`${answer.node.__typename}Value`]
           ) {
@@ -97,7 +97,7 @@ export default class CasesDetailIndexController extends Controller {
 
         return filteredAnswers;
       },
-      []
+      [],
     );
 
     const alwaysDisplayedAnswers = workItems.always.map((workItem) => {
@@ -107,18 +107,18 @@ export default class CasesDetailIndexController extends Controller {
             (taskSlug) => {
               if (
                 ENV.APP.caluma.alwaysDisplayedAnswers[taskSlug].includes(
-                  answer.node.question.slug
+                  answer.node.question.slug,
                 ) &&
                 answer.node[`${answer.node.__typename}Value`]
               ) {
                 filteredAnswers.push(this.formatAnswer(answer));
               }
-            }
+            },
           );
 
           return filteredAnswers;
         },
-        []
+        [],
       );
     });
 
@@ -169,7 +169,7 @@ export default class CasesDetailIndexController extends Controller {
         caseId: this.caseData.case.id,
       }),
       lookupValidator(CaseValidations),
-      CaseValidations
+      CaseValidations,
     );
 
     this.modalVisible = true;
@@ -185,7 +185,7 @@ export default class CasesDetailIndexController extends Controller {
       })
     ) {
       this.notification.danger(
-        this.intl.t("documents.accesses.duplicateEmail")
+        this.intl.t("documents.accesses.duplicateEmail"),
       );
       return;
     }
@@ -198,7 +198,7 @@ export default class CasesDetailIndexController extends Controller {
       yield this.store.query(
         "identity",
         { filter: { email } },
-        { adapterOptions: { customEndpoint: "public-identities" } }
+        { adapterOptions: { customEndpoint: "public-identities" } },
       );
 
       this.newRow = null;
@@ -286,7 +286,7 @@ export default class CasesDetailIndexController extends Controller {
         query: getCaseQuery,
         variables: { filter: [{ ids: [this.model.id] }] },
       },
-      "allCases.edges"
+      "allCases.edges",
     );
 
     const caseModel = new CustomCaseModel(caseEdges[0].node);

@@ -1,6 +1,6 @@
 import { inject as service } from "@ember/service";
 import Component from "@glimmer/component";
-import { trackedFunction } from "ember-resources/util/function";
+import { trackedFunction } from "reactiveweb/function";
 
 import ENV from "mysagw/config/environment";
 import getOptionsQuery from "mysagw/gql/queries/get-options.graphql";
@@ -31,7 +31,7 @@ export default class FiltersComponent extends Component {
           order: [{ attribute: "NAME" }],
         },
       },
-      "allQuestions.edges"
+      "allQuestions.edges",
     );
 
     return response.mapBy("node");
@@ -58,19 +58,19 @@ export default class FiltersComponent extends Component {
 
   get expertAssociations() {
     return this.getFormattedOptions(
-      ENV.APP.caluma.filterableQuestions.expertAssociations
+      ENV.APP.caluma.filterableQuestions.expertAssociations,
     );
   }
 
   get distributionPlans() {
     return this.getFormattedOptions(
-      ENV.APP.caluma.filterableQuestions.distributionPlans
+      ENV.APP.caluma.filterableQuestions.distributionPlans,
     );
   }
 
   get sections() {
     return this.getFormattedOptions(
-      ENV.APP.caluma.filterableQuestions.sections
+      ENV.APP.caluma.filterableQuestions.sections,
     );
   }
 

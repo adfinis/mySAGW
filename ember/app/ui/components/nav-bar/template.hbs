@@ -333,9 +333,9 @@
                   readonly=""
                 >{{get snippet._body locale}}</textarea>
                 <CopyButton
-                  @clipboardTarget="#snippet-{{snippet.id}}-{{locale}}"
-                  @success={{this.onCopySuccess}}
-                  @error={{this.onCopyError}}
+                  @target="#snippet-{{snippet.id}}-{{locale}}"
+                  @onSuccess={{this.onCopySuccess}}
+                  @onError={{this.onCopyError}}
                   class="uk-button uk-width-1-1 uk-button-default uk-margin"
                 >
                   {{t "components.nav-bar.snippet.hint" lang=locale}}

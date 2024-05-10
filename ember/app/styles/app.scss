@@ -3,6 +3,8 @@ $app-accent-color: #002596;
 $global-primary-background: $app-accent-color;
 
 @import "ember-uikit";
+@import "flatpickr/dist/flatpickr";
+@import "flatpickr/dist/themes/airbnb";
 @import "@projectcaluma/ember-form";
 @import "@projectcaluma/ember-form-builder";
 @import "@projectcaluma/ember-analytics";
