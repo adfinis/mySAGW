@@ -6,7 +6,8 @@ from django.conf import settings
 from django.urls import reverse
 from rest_framework import status
 
-from mysagw.case import email_texts, models
+from mysagw.case import models
+from mysagw.case.email_texts import invite
 from mysagw.case.tests.application_caluma_response import (
     CALUMA_DATA_EMPTY,
     CALUMA_DATA_FULL,
@@ -116,14 +117,14 @@ def test_case_create(
         assert case_access.email == "test@example.com"
         assert case_access.identity is None
         assert len(mailoutbox) == 1
-        expected_body = email_texts.EMAIL_BODY_INVITE_REGISTER.format(
+        expected_body = invite.EMAIL_BODY_INVITE_REGISTER.format(
             link=settings.SELF_URI,
         )
         assert mailoutbox[0].body == expected_body
 
     if identity_exists or has_access:
         assert len(mailoutbox) == 1
-        expected_body = email_texts.EMAIL_INVITE_BODIES[
+        expected_body = invite.EMAIL_INVITE_BODIES[
             case_access.identity.language
         ].format(
             first_name=case_access.identity.first_name or "",
@@ -223,7 +224,9 @@ def test_case_delete(
             case_access.refresh_from_db()
 
 
-def test_transfer_case(client, case_access_factory, identity_factory):
+def test_transfer_case(
+    client, case_access_factory, identity_factory, mailoutbox, snapshot
+):
     accesses = case_access_factory.create_batch(3, email=None)
     new_identity = identity_factory()
     for a in accesses:
@@ -256,13 +259,16 @@ def test_transfer_case(client, case_access_factory, identity_factory):
         .values_list("case_id", flat=True)
     ) == sorted([UUID(accesses[0].case_id), UUID(accesses[1].case_id)])
 
+    assert len(mailoutbox) == 2
+    assert mailoutbox[0] == snapshot
+    assert mailoutbox[1] == snapshot
+
 
 def test_transfer_case_fail_nonexistent_ids(client):
     to_remove = str(uuid4())
     new_1 = str(uuid4())
     new_2 = str(uuid4())
     data = {
-        # accesses[0] will be removed
         "to_remove_assignees": [to_remove],
         "new_assignees": [new_1, new_2],
         "case_ids": [str(uuid4()), str(uuid4())],

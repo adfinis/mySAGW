@@ -5,7 +5,8 @@ from rest_framework.exceptions import ValidationError
 from rest_framework_json_api import serializers
 
 from ..identity.models import Identity
-from . import email_texts, models
+from . import models
+from .email_texts import case_transfer, invite
 
 
 class CaseAccessSerializer(serializers.ModelSerializer):
@@ -51,13 +52,13 @@ class CaseAccessSerializer(serializers.ModelSerializer):
         if models.CaseAccess.objects.filter(case_id=instance.case_id).count() == 1:
             return instance
 
-        subject = email_texts.EMAIL_SUBJECT_INVITE_REGISTER
-        body = email_texts.EMAIL_BODY_INVITE_REGISTER.format(link=settings.SELF_URI)
+        subject = invite.EMAIL_SUBJECT_INVITE_REGISTER
+        body = invite.EMAIL_BODY_INVITE_REGISTER.format(link=settings.SELF_URI)
         email = instance.email
 
         if instance.identity:
-            subject = email_texts.EMAIL_INVITE_SUBJECTS[instance.identity.language]
-            body = email_texts.EMAIL_INVITE_BODIES[instance.identity.language].format(
+            subject = invite.EMAIL_INVITE_SUBJECTS[instance.identity.language]
+            body = invite.EMAIL_INVITE_BODIES[instance.identity.language].format(
                 first_name=instance.identity.first_name or "",
                 last_name=instance.identity.last_name or "",
                 link=f"{settings.SELF_URI}/cases/{instance.case_id}",
@@ -93,13 +94,17 @@ class CaseTransferSerializer(drf_serializers.Serializer):
 
     def create(self, validated_data):
         new_accesses = []
-        for case_id in validated_data["case_ids"]:
-            for new_assignee in validated_data["new_assignees"]:
+        for new_assignee in validated_data["new_assignees"]:
+            new_accesses_for_user = []
+            for case_id in validated_data["case_ids"]:
                 access, created = models.CaseAccess.objects.get_or_create(
                     case_id=case_id, identity=new_assignee
                 )
                 if created:
-                    new_accesses.append(access)
+                    new_accesses_for_user.append(access)
+            if new_accesses_for_user:
+                self._send_mail(new_accesses_for_user)
+            new_accesses += new_accesses_for_user
 
         if validated_data["to_remove_assignees"]:
             to_remove = models.CaseAccess.objects.filter(
@@ -108,3 +113,26 @@ class CaseTransferSerializer(drf_serializers.Serializer):
             )
             to_remove.delete()
         return new_accesses
+
+    def _send_mail(self, new_accesses_for_user):
+        identity = new_accesses_for_user[0].identity
+        subject = case_transfer.EMAIL_BULK_INVITE_SUBJECTS[identity.language]
+        links = "\n".join(
+            [
+                f"{settings.SELF_URI}/cases/{access.case_id}"
+                for access in new_accesses_for_user
+            ]
+        )
+        body = case_transfer.EMAIL_BULK_INVITE_BODIES[identity.language].format(
+            first_name=identity.first_name or "",
+            last_name=identity.last_name or "",
+            links=links,
+        )
+
+        send_mail(
+            subject,
+            body,
+            settings.MAILING_SENDER,
+            [identity.email],
+            fail_silently=True,
+        )
