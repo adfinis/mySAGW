@@ -6,11 +6,11 @@
   @hasNextPage={{@query.hasNextPage}}
   @setOrder={{@setOrder}}
   @order={{@order}}
+  @selectRow={{@selectRow}}
 />
 <div class="uk-width-expand uk-flex uk-flex-middle uk-text-meta">
   <span>
-    {{
-      t
+    {{t
       "global.paginationInfo"
       count=@query.value.length
       total=@query.totalCount

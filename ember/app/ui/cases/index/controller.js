@@ -1,4 +1,6 @@
+import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
+import { tracked } from "@glimmer/tracking";
 import { useCalumaQuery } from "@projectcaluma/ember-core/caluma-query";
 import { allCases } from "@projectcaluma/ember-core/caluma-query/queries";
 import { queryManager } from "ember-apollo-client";
@@ -12,9 +14,12 @@ import TableController from "mysagw/utils/table-controller";
 export default class CasesIndexController extends TableController {
   @service store;
   @service notification;
-  @service intl;
 
   @queryManager apollo;
+
+  @tracked editMode = false;
+  @tracked selectedCases = [];
+  @tracked refreshList = 0;
 
   caseQuery = useCalumaQuery(this, allCases, () => ({
     options: { pageSize: 20 },
@@ -29,11 +34,12 @@ export default class CasesIndexController extends TableController {
   });
 
   caseFilters = trackedFunction(this, async () => {
-    // This is necessary to trigger a re-run if identities changed and an answer
-    // search is given. If an answer search is given, we await the fetching of
-    // the filtered forms which uses `await Promise.resolve()` to avoid an
-    // infinite loop. However, all tracked properties used after that await
-    // statement won't trigger a re-run if changed.
+    // needed to trigger a re-fetch after editing (e.g. transfer)
+    this.refreshList;
+
+    this.selectedCases = [];
+
+    // access to attributes must happen before await, otherwise no reactivity
     const { identities } = this.filters;
     const { identities: invertedIdentites } = this.invertedFilters;
 
@@ -105,17 +111,39 @@ export default class CasesIndexController extends TableController {
       return [];
     }
 
-    await Promise.resolve();
-
     try {
-      return (
+      const accesses = (
         await this.store.query("case-access", {
           filter: { idpIds: idpIds.join(",") },
         })
       ).map((access) => access.get("caseId"));
+
+      // filtering against an empty list is treated as a no-op, therefore return a dummy value
+      return accesses.length
+        ? accesses
+        : ["00000000-0000-0000-0000-000000000000"];
     } catch (error) {
       console.error(error);
       this.notification.fromError(error);
     }
+  }
+
+  @action
+  selectCase(value) {
+    if (this.selectedCases.includes(value.id)) {
+      this.selectedCases = this.selectedCases.filter((id) => id !== value.id);
+      return;
+    }
+
+    this.selectedCases = [...this.selectedCases, value.id];
+  }
+
+  get accessToRemove() {
+    return arrayFromString(this.filters.identities);
+  }
+
+  @action
+  refreshCases() {
+    this.refreshList++;
   }
 }

@@ -1,0 +1,9 @@
+<label>
+  <span hidden>{{t "documents.bulkEdit.action"}}</span>
+  <input
+    type="checkbox"
+    class="uk-checkbox"
+    checked={{this.checked}}
+    {{on "click" (fn @tdDefinition.action @value)}}
+  />
+</label>
