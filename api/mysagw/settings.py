@@ -119,6 +119,10 @@ OIDC_OP_TOKEN_ENDPOINT = "not supported in mysagw, but a value is needed"  # noq
 OIDC_VERIFY_SSL = env.bool("OIDC_VERIFY_SSL", default=True)
 OIDC_ID_CLAIM = env.str("OIDC_ID_CLAIM", default="sub")
 OIDC_EMAIL_CLAIM = env.str("OIDC_EMAIL_CLAIM", default="email")
+OIDC_FIRST_NAME_CLAIM = env.str("OIDC_FIRST_NAME_CLAIM", default="given_name")
+OIDC_LAST_NAME_CLAIM = env.str("OIDC_LAST_NAME_CLAIM", default="family_name")
+OIDC_SALUTATION_CLAIM = env.str("OIDC_SALUTATION_CLAIM", default="salutation")
+OIDC_TITLE_CLAIM = env.str("OIDC_TITLE_CLAIM", default="title")
 OIDC_GROUPS_CLAIM = env.str("OIDC_GROUPS_CLAIM", default="mysagw_groups")
 OIDC_CLIENT_GRANT_USERNAME_CLAIM = env.str(
     "OIDC_CLIENT_GRANT_USERNAME_CLAIM",
