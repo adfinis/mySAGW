@@ -2,12 +2,11 @@ import operator
 import shlex
 from functools import reduce
 
-from django.db.models import Max, OuterRef, Q, Subquery, Value
+from django.db.models import Exists, Max, OuterRef, Q, Subquery, Value
 from django.db.models.functions import Coalesce
 from django.utils import timezone
 from django_filters import BooleanFilter, UUIDFilter
 from django_filters.rest_framework import FilterSet
-from rest_framework.compat import distinct
 from rest_framework.filters import SearchFilter
 
 from mysagw.filters import CharMultiValueFilter
@@ -187,7 +186,8 @@ class SAGWSearchFilter(SearchFilter):
             return queryset
 
         orm_lookups = [
-            self.construct_search(str(search_field)) for search_field in search_fields
+            self.construct_search(str(search_field), queryset)
+            for search_field in search_fields
         ]
 
         base = queryset
@@ -262,11 +262,12 @@ class SAGWSearchFilter(SearchFilter):
             needed_pks = reduce(lambda a, b: a.intersection(b), needed)
             queryset = queryset.filter(pk__in=needed_pks).exclude(pk__in=excluded)
 
+        # Remove duplicates from results, if necessary
         if self.must_call_distinct(queryset, search_fields):
-            # Filtering against a many-to-many field requires us to
-            # call queryset.distinct() in order to avoid duplicate items
-            # in the resulting queryset.
-            # We try to avoid this if possible, for performance reasons.
-            queryset = distinct(queryset, base)
+            # inspired by django.contrib.admin
+            # this is more accurate than .distinct form M2M relationship
+            # also is cross-database
+            queryset = queryset.filter(pk=OuterRef("pk"))
+            queryset = base.filter(Exists(queryset))
 
         return queryset

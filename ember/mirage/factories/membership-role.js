@@ -4,7 +4,7 @@ import { Factory } from "miragejs";
 import setAllLocales from "../helpers/set-all-locales";
 
 export default Factory.extend({
-  title: () => setAllLocales(faker.name.jobTitle()),
-  description: () => setAllLocales(faker.random.words()),
+  title: () => setAllLocales(faker.person.jobTitle()),
+  description: () => setAllLocales(faker.word.words()),
   archived: () => faker.datatype.boolean(),
 });

@@ -44,7 +44,7 @@ export default class SnippetsIndexController extends Controller {
           size: this.pageSize,
         },
       });
-      this.totalPages = snippets.meta.pagination?.pages;
+      this.totalPages = snippets.meta?.pagination?.pages;
       return snippets;
     } catch (error) {
       console.error(error);

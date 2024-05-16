@@ -148,6 +148,33 @@ def test_identity_update_empty_failure(db, client, identity):
 
 
 @pytest.mark.parametrize(
+    "attributes",
+    [{"email": "foo@bar.com"}, {"email": "FOO@bar.com"}],
+)
+@pytest.mark.parametrize("identity__email", ["foo@bar.com"])
+@pytest.mark.parametrize("update", [True, False])
+def test_identity_post_iunique_email(db, client, attributes, identity, update):
+    url = reverse("identity-list")
+
+    data = {
+        "data": {
+            "type": "identities",
+            "attributes": attributes,
+        },
+    }
+    if update:
+        data["data"]["id"] = identity.pk
+
+    response = client.post(url, data=data)
+
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+    assert response.json()["errors"][0]["detail"] == (
+        "identity mit diesem email existiert bereits."
+    )
+
+
+@pytest.mark.parametrize(
     "client,expected_status",
     [
         ("user", status.HTTP_403_FORBIDDEN),

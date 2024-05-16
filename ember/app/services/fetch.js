@@ -8,7 +8,7 @@ const CONTENT_TYPE = "application/vnd.api+json";
 const cleanObject = (obj) =>
   Object.fromEntries(
     // eslint-disable-next-line no-unused-vars
-    Object.entries(obj).filter(([key, value]) => !isEmpty(value))
+    Object.entries(obj).filter(([key, value]) => !isEmpty(value)),
   );
 
 export default class FetchService extends Service {
@@ -42,7 +42,7 @@ export default class FetchService extends Service {
 
       // throw an error containing a human readable message
       throw new Error(
-        `Fetch request to URL ${response.url} returned ${response.status} ${response.statusText}:\n\n${body}`
+        `Fetch request to URL ${response.url} returned ${response.status} ${response.statusText}:\n\n${body}`,
       );
     }
 

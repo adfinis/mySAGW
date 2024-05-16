@@ -46,14 +46,17 @@ module("Unit | Ability | identity", function (hooks) {
 
     this.ability.set(
       "model",
-      this.server.create("identity", { idpId: "own-id", isOrganisation: false })
+      this.server.create("identity", {
+        idpId: "own-id",
+        isOrganisation: false,
+      }),
     );
 
     assert.ok(this.ability.canEdit);
   });
 
-  // Mirage relationships are not working properly
-  test.todo("organisation admin can edit", async function (assert) {
+  // TODO: Mirage relationships are not working properly
+  test.skip("organisation admin can edit", async function (assert) {
     await authenticateSession({
       access_token: "123qweasdyxc",
       userinfo: { mysagw_groups: [], sub: "own-id" },
@@ -87,7 +90,7 @@ module("Unit | Ability | identity", function (hooks) {
       this.server.create("identity", {
         idpId: "other-id",
         isOrganisation: false,
-      })
+      }),
     );
 
     assert.notOk(this.ability.canEdit);

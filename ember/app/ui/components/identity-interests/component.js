@@ -37,7 +37,7 @@ export default class IdentityInterestsComponent extends Component {
         title: category.get("title"),
         interests: identity.interests.filterBy(
           "category.id",
-          category.get("id")
+          category.get("id"),
         ),
       }));
   }
@@ -56,7 +56,7 @@ export default class IdentityInterestsComponent extends Component {
     this.changeset = Changeset(
       { interest },
       lookupValidator(InterestValidations),
-      InterestValidations
+      InterestValidations,
     );
   }
 
@@ -119,7 +119,7 @@ export default class IdentityInterestsComponent extends Component {
     try {
       const options = { interest: interest.title };
       yield UIkit.modal.confirm(
-        this.intl.t("components.identity-interests.delete.prompt", options)
+        this.intl.t("components.identity-interests.delete.prompt", options),
       );
 
       try {
@@ -127,7 +127,7 @@ export default class IdentityInterestsComponent extends Component {
         this.args.identity.save(this.endpoint);
 
         this.notification.success(
-          this.intl.t("components.identity-interests.delete.success", options)
+          this.intl.t("components.identity-interests.delete.success", options),
         );
         // Reset list.
         // TODO Update `categories` via Ember Data store.

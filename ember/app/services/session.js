@@ -1,7 +1,7 @@
 import { inject as service } from "@ember/service";
 import { dropTask } from "ember-concurrency";
-import { task as trackedTask } from "ember-resources/util/ember-concurrency";
 import Session from "ember-simple-auth-oidc/services/session";
+import { task as trackedTask } from "reactiveweb/ember-concurrency";
 
 import ENV from "mysagw/config/environment";
 
@@ -24,7 +24,7 @@ export default class CustomSession extends Session {
         {
           include: "organisation",
         },
-        { adapterOptions: { customEndpoint: "my-memberships" } }
+        { adapterOptions: { customEndpoint: "my-memberships" } },
       ),
       this.store.queryRecord("identity", {}),
     ]);
@@ -48,9 +48,9 @@ export default class CustomSession extends Session {
       this.identity?.memberships.find(
         (membership) =>
           ENV.APP.circulationOrganisations.includes(
-            membership.organisation.get("organisationName")
-          ) && !membership.isInactive
-      )
+            membership.organisation.get("organisationName"),
+          ) && !membership.isInactive,
+      ),
     );
   }
 }

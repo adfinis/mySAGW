@@ -20,7 +20,7 @@ module("Integration | Component | identity-memberships", function (hooks) {
   });
 
   // TODO ember-power-select does not work
-  test.todo("it adds", async function (assert) {
+  test.skip("it adds", async function (assert) {
     this.identity = this.server.create("identity");
     const organisation = this.server.create("identity", {
       isOrganisation: true,
@@ -38,7 +38,7 @@ module("Integration | Component | identity-memberships", function (hooks) {
     await click("[data-test-add]");
     await selectChoose(
       "[data-test-organisation-select]",
-      organisation.organisationName
+      organisation.organisationName,
     );
     await selectChoose("[data-test-role-select]", "Chef");
 

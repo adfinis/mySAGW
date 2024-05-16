@@ -3,7 +3,7 @@ export default function applyError(changeset, error) {
     ?.filter(
       ({ source: { pointer } }) =>
         pointer.startsWith("/data/attributes") &&
-        !pointer.endsWith("non-field-errors")
+        !pointer.endsWith("non-field-errors"),
     )
     .map(({ detail, source: { pointer } }) => ({
       field: pointer.substr(pointer.lastIndexOf("/") + 1),

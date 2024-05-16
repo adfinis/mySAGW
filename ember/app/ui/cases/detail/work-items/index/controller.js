@@ -108,8 +108,8 @@ export default class CasesDetailWorkItemsController extends Controller {
   @restartableTask
   *getIdentities() {
     const idpIds = [
-      ...this.readyWorkItemsQuery?.value,
-      ...this.completedWorkItemsQuery?.value,
+      ...(this.readyWorkItemsQuery?.value ?? []),
+      ...(this.completedWorkItemsQuery?.value ?? []),
     ]
       .reduce(
         (idpIds, workItem) => [
@@ -118,7 +118,7 @@ export default class CasesDetailWorkItemsController extends Controller {
           workItem.raw.closedByUser,
           workItem.raw.case.createdByUser,
         ],
-        []
+        [],
       )
       .compact()
       .uniq();
@@ -129,7 +129,7 @@ export default class CasesDetailWorkItemsController extends Controller {
         {
           filter: { idpIds: idpIds.join(",") },
         },
-        { adapterOptions: { customEndpoint: "public-identities" } }
+        { adapterOptions: { customEndpoint: "public-identities" } },
       );
     }
   }

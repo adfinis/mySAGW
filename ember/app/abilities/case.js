@@ -37,7 +37,7 @@ export default class CaseAbility extends BaseAbility {
      */
     return (
       ENV.APP.caluma.redoableTaskSlugs.includes(
-        this.model.redoWorkItem?.task.slug
+        this.model.redoWorkItem?.task.slug,
       ) &&
       this.isStaffOrAdmin &&
       (this.model.canRedoWorkItem ||

@@ -73,7 +73,10 @@ class OIDCUser(BaseUser):
             )
             # we only want to save if necessary in order to prevent adding historical
             # records on every request
-            if identity.idp_id != self.id or identity.email != self.email:
+            if (
+                identity.idp_id != self.id
+                or (identity.email and identity.email.lower()) != self.email.lower()
+            ):
                 identity.idp_id = self.id
                 identity.email = self.email
                 identity.modified_by_user = self.id

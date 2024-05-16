@@ -1,6 +1,5 @@
 "use strict";
 
-//eslint-disable-next-line node/no-missing-require, node/no-unpublished-require
 const EmberApp = require("ember-cli/lib/broccoli/ember-app");
 
 module.exports = function (defaults) {
@@ -12,7 +11,7 @@ module.exports = function (defaults) {
     "ember-validated-form": {
       theme: "uikit",
       defaults: {
-        "types/date": "myapp/components/date-picker",
+        "types/date": "mysagw/ui/components/date-picker",
       },
     },
     "ember-fetch": {
@@ -23,22 +22,6 @@ module.exports = function (defaults) {
     },
     flatpickr: {
       locales: ["fr", "de"],
-    },
-    "@embroider/macros": {
-      setConfig: {
-        "@ember-data/store": {
-          // https://github.com/emberjs/data/pull/8109
-          polyfillUUID: true,
-        },
-      },
-    },
-
-    sassOptions: {
-      includePaths: [
-        // For some reason sass cant find these on its own :/
-        "node_modules/ember-power-select/app/styles/",
-        "node_modules/ember-basic-dropdown/app/styles/",
-      ],
     },
   });
 
