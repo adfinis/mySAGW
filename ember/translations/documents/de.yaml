@@ -89,7 +89,7 @@ documents:
     table:
       name: "Name"
       email: "E-Mail"
-      action: ""
+      action: "Aktionen"
 
   filters:
     identity: "Identität"
@@ -99,3 +99,13 @@ documents:
     application: "Gesuch (beta)"
     acknowledgement: "Eingangsbestätigung"
     creditApproval: "Kreditgutsprache"
+
+  bulkEdit:
+    title: "Massenbearbeitung"
+    action: "Dossier auswählen"
+    transfer:
+      title: "Dossier übertragen"
+      save: "Übertragen"
+      description: "Wählen Sie die Identität aus, welche Zugriffsberechtigungen auf die ausgewählten Gesuche bekommt. Bestehende Zugriffsberichtigungen können entzogen werden wenn Identitäts-Filter gesetzt wird und das Kontrollkästchen 'Zugriffsberechtigungen entfernen' angewählt ist."
+      removeAssignees: "Zugriffsberechtigungen entfernen"
+      success: "Gesuche erfolgreich übertragen"

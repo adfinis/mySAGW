@@ -23,6 +23,13 @@ module.exports = function (defaults) {
     flatpickr: {
       locales: ["fr", "de"],
     },
+    "@embroider/macros": {
+      setConfig: {
+        "@ember-data/store": {
+          polyfillUUID: true,
+        },
+      },
+    },
   });
 
   // Use `app.import` to add additional libraries to the generated
