@@ -64,7 +64,7 @@
     "ember-source": "~4.12.4",
     "ember-truth-helpers": "^4.0.3",
     "ember-uikit": "^9.1.1",
-    "ember-validated-form": "^6.1.2",
+    "ember-validated-form": "^7.0.1",
     "file-saver": "^2.0.5",
     "flatpickr": "^4.6.13",
     "graphql": "^16.8.1",
