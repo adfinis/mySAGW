@@ -47,7 +47,7 @@
     "ember-cli-string-helpers": "^6.1.0",
     "ember-composable-helpers": "^5.0.0",
     "ember-concurrency": "^2.3.7",
-    "ember-data": "~4.12.4",
+    "ember-data": "~5.3.3",
     "ember-engines": "^0.9.0",
     "ember-export-application-global": "^2.0.1",
     "ember-fetch": "^8.1.2",
