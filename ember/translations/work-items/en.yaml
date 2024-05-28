@@ -33,6 +33,7 @@ work-items:
     edit: "Edit task"
     finish: "Complete task"
     skip: "Skip task"
+    redo: "Aufgabe wieder eröffnen"
     confirmation: "Have you uploaded all the receipts?"
 
   filters:

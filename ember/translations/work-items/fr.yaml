@@ -33,6 +33,7 @@ work-items:
     edit: "Modifier la tâche"
     finish: "Terminer la tâche"
     skip: "Ignorer la tâche"
+    redo: "Aufgabe wieder eröffnen"
     confirmation: "Avez-vous téléchargé tous les justificatifs?"
 
   filters:

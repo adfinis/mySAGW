@@ -88,5 +88,13 @@
         @onSuccess={{this.transitionToCaseWorkItems}}
       />
     {{/if}}
+    {{#if @model.canRedo}}
+      <WorkItemButton
+        @mutation="skip"
+        @workItemId={{@model.id}}
+        @type="submit"
+        @label={{t "work-items.actions.redo"}}
+      />
+    {{/if}}
   </DocumentValidity>
 </CfContent>

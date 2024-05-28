@@ -33,6 +33,7 @@ work-items:
     edit: "Aufgabe bearbeiten"
     finish: "Aufgabe abschliessen"
     skip: "Aufgabe überspringen"
+    redo: "Aufgabe wieder eröffnen"
     confirmation: "Haben Sie alle Belege hochgeladen?"
 
   filters:

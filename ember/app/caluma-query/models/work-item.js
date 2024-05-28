@@ -76,6 +76,10 @@ export default class CustomWorkItemModel extends WorkItemModel {
     );
   }
 
+  get canRedo() {
+    return this.isCompleted && this.raw.task.slug === "circulation-decision";
+  }
+
   get responsible() {
     return this.assignedUser?.fullName ?? "-";
   }
