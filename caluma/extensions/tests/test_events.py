@@ -473,6 +473,7 @@ def test_redo_circulation(
         circ_work_item.child_case.work_items.get(task_id="finish-circulation").status
         == WorkItem.STATUS_CANCELED
     )
+    assert circ_work_item.child_case.pk == circulation.pk
     assert circ_work_item.child_case.work_items.count() == 3
 
     redo_work_item(circ_work_item.case.work_items.get(task_id="circulation"), user)
@@ -482,7 +483,8 @@ def test_redo_circulation(
         circ_work_item.child_case.work_items.get(task_id="finish-circulation").status
         == WorkItem.STATUS_READY
     )
-    assert circ_work_item.child_case.work_items.count() == 2
+    assert circ_work_item.child_case.pk == circulation.pk
+    assert circ_work_item.child_case.work_items.count() == 3
 
 
 @pytest.mark.usefixtures("_caluma_data")
