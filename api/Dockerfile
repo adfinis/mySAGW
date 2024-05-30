@@ -19,13 +19,13 @@ RUN mkdir -p /app \
     libpq-dev \
 && pip install -U poetry
 
+USER mysagw
+
 WORKDIR $APP_HOME
 
 ARG INSTALL_DEV_DEPENDENCIES=false
 COPY pyproject.toml poetry.lock $APP_HOME/
 RUN if [ "$INSTALL_DEV_DEPENDENCIES" = "true" ]; then poetry install; else poetry install --without dev; fi
-
-USER mysagw
 
 COPY . $APP_HOME
 

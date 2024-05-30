@@ -41,13 +41,24 @@ def _get_claims(
     id_claim="00000000-0000-0000-0000-000000000000",
     groups_claim=None,
     email_claim="test@example.com",
+    first_name_claim=None,
+    last_name_claim=None,
+    salutation_claim="neutral",
+    title_claim=None,
 ):
     groups_claim = groups_claim if groups_claim else []
-    return {
+    claims = {
         settings.OIDC_ID_CLAIM: id_claim,
         settings.OIDC_GROUPS_CLAIM: groups_claim,
         settings.OIDC_EMAIL_CLAIM: email_claim,
+        settings.OIDC_FIRST_NAME_CLAIM: first_name_claim,
+        settings.OIDC_LAST_NAME_CLAIM: last_name_claim,
     }
+    if title_claim is not None:
+        claims[settings.OIDC_TITLE_CLAIM] = title_claim
+    if salutation_claim is not None:
+        claims[settings.OIDC_SALUTATION_CLAIM] = salutation_claim
+    return claims
 
 
 @pytest.fixture

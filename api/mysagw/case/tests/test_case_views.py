@@ -4,13 +4,16 @@ from uuid import UUID, uuid4
 import pytest
 from django.conf import settings
 from django.urls import reverse
+from freezegun import freeze_time
 from rest_framework import status
 
-from mysagw.case import email_texts, models
+from mysagw.case import models
+from mysagw.case.email_texts import invite
 from mysagw.case.tests.application_caluma_response import (
     CALUMA_DATA_EMPTY,
     CALUMA_DATA_FULL,
 )
+from mysagw.case.views import CaseDownloadViewSet
 from mysagw.utils import build_url
 
 
@@ -116,14 +119,14 @@ def test_case_create(
         assert case_access.email == "test@example.com"
         assert case_access.identity is None
         assert len(mailoutbox) == 1
-        expected_body = email_texts.EMAIL_BODY_INVITE_REGISTER.format(
+        expected_body = invite.EMAIL_BODY_INVITE_REGISTER.format(
             link=settings.SELF_URI,
         )
         assert mailoutbox[0].body == expected_body
 
     if identity_exists or has_access:
         assert len(mailoutbox) == 1
-        expected_body = email_texts.EMAIL_INVITE_BODIES[
+        expected_body = invite.EMAIL_INVITE_BODIES[
             case_access.identity.language
         ].format(
             first_name=case_access.identity.first_name or "",
@@ -223,7 +226,9 @@ def test_case_delete(
             case_access.refresh_from_db()
 
 
-def test_transfer_case(client, case_access_factory, identity_factory):
+def test_transfer_case(
+    client, case_access_factory, identity_factory, mailoutbox, snapshot
+):
     accesses = case_access_factory.create_batch(3, email=None)
     new_identity = identity_factory()
     for a in accesses:
@@ -256,13 +261,16 @@ def test_transfer_case(client, case_access_factory, identity_factory):
         .values_list("case_id", flat=True)
     ) == sorted([UUID(accesses[0].case_id), UUID(accesses[1].case_id)])
 
+    assert len(mailoutbox) == 2
+    assert mailoutbox[0] == snapshot
+    assert mailoutbox[1] == snapshot
+
 
 def test_transfer_case_fail_nonexistent_ids(client):
     to_remove = str(uuid4())
     new_1 = str(uuid4())
     new_2 = str(uuid4())
     data = {
-        # accesses[0] will be removed
         "to_remove_assignees": [to_remove],
         "new_assignees": [new_1, new_2],
         "case_ids": [str(uuid4()), str(uuid4())],
@@ -318,18 +326,26 @@ def test_transfer_case_fail_required_failure(client, snapshot):
     ["acknowledgement", "credit-approval"],
 )
 @pytest.mark.parametrize("identity__idp_id", ["e5dabdd0-bafb-4b75-82d2-ccf9295b623b"])
+@pytest.mark.parametrize("missing_identity", [False, True])
 @pytest.mark.parametrize("language", [lang[0] for lang in settings.LANGUAGES])
 def test_download(
     db,
     address,
     language,
     client,
+    case_access_factory,
+    identity_factory,
     dms_mock,
     acknowledgement_mock,
     credit_approval_mock,
     snapshot,
     endpoint,
+    missing_identity,
 ):
+    case_id = "e535ac0c-f3be-4a36-b2d4-1ef405ec71c8"
+    case_access = case_access_factory(
+        identity=identity_factory(), email=None, case_id=case_id
+    )
     address.identity.language = language
     address.identity.save()
     if endpoint == "acknowledgement":
@@ -337,7 +353,9 @@ def test_download(
     else:
         credit_approval_mock()
 
-    case_id = "e535ac0c-f3be-4a36-b2d4-1ef405ec71c8"
+    if missing_identity:
+        address.identity.delete()
+
     url = reverse(f"downloads-{endpoint}", args=[case_id])
 
     response = client.get(url, HTTP_ACCEPT_LANGUAGE=language)
@@ -349,8 +367,56 @@ def test_download(
         == f"/api/v1/template/{endpoint}-{language}/merge/"
     )
 
+    expected_email = (
+        case_access.identity.email if missing_identity else address.identity.email
+    )
+    assert (
+        dms_mock.request_history[0].json()["data"]["identity"]["email"]
+        == expected_email
+    )
     snapshot.assert_match(dms_mock.request_history[0].json())
     snapshot.assert_match(response.headers["content-disposition"])
+
+
+@pytest.mark.parametrize(
+    "identity_exists,external_exists,expected_email",
+    [
+        (True, True, "gql@example.com"),
+        (False, True, "external@example.com"),
+        (False, False, "staff@example.com"),
+    ],
+)
+def test_download_get_identity(
+    db,
+    case_access_factory,
+    identity_factory,
+    membership_factory,
+    identity_exists,
+    external_exists,
+    expected_email,
+):
+    gql_identity = identity_factory(email="gql@example.com")
+    staff_identity = membership_factory(
+        organisation__is_organisation=True,
+        organisation__organisation_name=settings.STAFF_ORGANISATION_NAME,
+        authorized=True,
+        identity__email="staff@example.com",
+    ).identity
+    external_identity = identity_factory(email="external@example.com")
+
+    case_id = uuid4()
+
+    with freeze_time("2024-01-01"):
+        case_access_factory(case_id=case_id, identity=staff_identity, email=None)
+
+    if external_exists:
+        with freeze_time("2024-01-02"):
+            case_access_factory(case_id=case_id, identity=external_identity, email=None)
+
+    identity_id = gql_identity.idp_id if identity_exists else uuid4()
+
+    identity = CaseDownloadViewSet().get_identity(str(identity_id), str(case_id))
+    assert identity.email == expected_email
 
 
 @pytest.mark.parametrize(
