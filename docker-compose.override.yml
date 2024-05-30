@@ -51,6 +51,7 @@ services:
 
   keycloak:
     env_file: ./.envs/.local/.keycloak
+    command: start-dev
 
   mail:
     image: mailhog/mailhog
