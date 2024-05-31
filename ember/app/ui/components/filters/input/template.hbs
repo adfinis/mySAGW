@@ -12,15 +12,5 @@
     </span>
     <input value={{@value}} class="uk-input" {{on "input" @onChange}} />
   </label>
-  {{#if @invertFilter}}
-    <label>
-      <Input
-        class="uk-checkbox"
-        @type="checkbox"
-        @checked={{@inverted}}
-        {{on "click" @invertFilter}}
-      />
-      {{t "components.filters.invert"}}
-    </label>
-  {{/if}}
+  <Filters::Invert @invertFilter={{@invertFilter}} @inverted={{@inverted}} />
 </div>

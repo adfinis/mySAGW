@@ -23,6 +23,18 @@ module.exports = function (defaults) {
     flatpickr: {
       locales: ["fr", "de"],
     },
+    "@embroider/macros": {
+      setConfig: {
+        "@ember-data/store": {
+          polyfillUUID: true,
+        },
+      },
+    },
+    babel: {
+      plugins: [
+        require.resolve("ember-concurrency/async-arrow-task-transform"),
+      ],
+    },
   });
 
   // Use `app.import` to add additional libraries to the generated

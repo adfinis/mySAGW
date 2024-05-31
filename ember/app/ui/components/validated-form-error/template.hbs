@@ -1,7 +1,7 @@
 <small class="uk-text-danger">
   {{yield}}
   {{#each @errors as |error idx|}}
-    {{if (not (eq idx 0)) ", "}} {{!-- Space out multiple errors --}}
+    {{if (not-eq idx 0) ", "}} {{!-- Space out multiple errors --}}
     {{t error}}
   {{/each}}
 </small>
