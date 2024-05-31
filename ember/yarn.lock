@@ -53,28 +53,7 @@
   resolved "https://registry.yarnpkg.com/@babel/compat-data/-/compat-data-7.24.4.tgz#6f102372e9094f25d908ca0d34fc74c74606059a"
   integrity sha512-vg8Gih2MLK+kOkHJp4gBEIkyaIi00jgWot2D9QOmmfLC8jINSOzmCLta6Bvz/JSBCqnegV0L80jhxkol5GWNfQ==
 
-"@babel/core@^7.0.0", "@babel/core@^7.1.6", "@babel/core@^7.13.10", "@babel/core@^7.16.7", "@babel/core@^7.21.4", "@babel/core@^7.22.20", "@babel/core@^7.23.2", "@babel/core@^7.23.5", "@babel/core@^7.24.3":
-  version "7.24.4"
-  resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.24.4.tgz#1f758428e88e0d8c563874741bc4ffc4f71a4717"
-  integrity sha512-MBVlMXP+kkl5394RBLSxxk/iLTeVGuXTV3cIDXavPpMMqnSnt6apKgan/U8O3USWZCWZT/TbgfEpKa4uMgN4Dg==
-  dependencies:
-    "@ampproject/remapping" "^2.2.0"
-    "@babel/code-frame" "^7.24.2"
-    "@babel/generator" "^7.24.4"
-    "@babel/helper-compilation-targets" "^7.23.6"
-    "@babel/helper-module-transforms" "^7.23.3"
-    "@babel/helpers" "^7.24.4"
-    "@babel/parser" "^7.24.4"
-    "@babel/template" "^7.24.0"
-    "@babel/traverse" "^7.24.1"
-    "@babel/types" "^7.24.0"
-    convert-source-map "^2.0.0"
-    debug "^4.1.0"
-    gensync "^1.0.0-beta.2"
-    json5 "^2.2.3"
-    semver "^6.3.1"
-
-"@babel/core@^7.12.0", "@babel/core@^7.16.10", "@babel/core@^7.21.0", "@babel/core@^7.24.0", "@babel/core@^7.3.4":
+"@babel/core@^7.0.0", "@babel/core@^7.1.6", "@babel/core@^7.12.0", "@babel/core@^7.13.10", "@babel/core@^7.16.10", "@babel/core@^7.16.7", "@babel/core@^7.21.0", "@babel/core@^7.21.4", "@babel/core@^7.22.20", "@babel/core@^7.23.2", "@babel/core@^7.23.5", "@babel/core@^7.24.0", "@babel/core@^7.24.3", "@babel/core@^7.3.4":
   version "7.24.5"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.24.5.tgz#15ab5b98e101972d171aeef92ac70d8d6718f06a"
   integrity sha512-tVQRucExLQ02Boi4vdPp49svNGcfL2GhdTCT9aldhXgCJVAI21EtRfBettiuLUwce/7r6bFdgs6JFkcdTiFttA==
@@ -122,7 +101,7 @@
     eslint-visitor-keys "^2.1.0"
     semver "^6.3.1"
 
-"@babel/generator@^7.24.1", "@babel/generator@^7.24.4", "@babel/generator@^7.24.5":
+"@babel/generator@^7.24.1", "@babel/generator@^7.24.5":
   version "7.24.5"
   resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.24.5.tgz#e5afc068f932f05616b66713e28d0f04e99daeb3"
   integrity sha512-x32i4hEXvr+iI0NEoEfDKzlemF8AmtOP8CcrRaEcpzysWuoEb1KknpcvMsHKPONoKZiDuItklgWhB18xEhr9PA==
@@ -332,7 +311,7 @@
     "@babel/template" "^7.22.15"
     "@babel/types" "^7.22.19"
 
-"@babel/helpers@^7.24.4", "@babel/helpers@^7.24.5":
+"@babel/helpers@^7.24.5":
   version "7.24.5"
   resolved "https://registry.yarnpkg.com/@babel/helpers/-/helpers-7.24.5.tgz#fedeb87eeafa62b621160402181ad8585a22a40a"
   integrity sha512-CiQmBMMpMQHwM5m01YnrM6imUG1ebgYJ+fAIW4FZe6m4qHTPaRHti+R8cggAwkdz4oXhtO4/K9JWlh+8hIfR2Q==
@@ -351,7 +330,7 @@
     js-tokens "^4.0.0"
     picocolors "^1.0.0"
 
-"@babel/parser@^7.24.0", "@babel/parser@^7.24.1", "@babel/parser@^7.24.4", "@babel/parser@^7.24.5":
+"@babel/parser@^7.24.0", "@babel/parser@^7.24.1", "@babel/parser@^7.24.5":
   version "7.24.5"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.24.5.tgz#4a4d5ab4315579e5398a82dcf636ca80c3392790"
   integrity sha512-EOv5IK8arwh3LI47dz1b0tKUb/1uhHAnHJOrjgtQMIpu1uXd9mlFrJg9IUgGUgZ41Ch0K8REPTYpO7B76b4vJg==
@@ -1165,7 +1144,7 @@
     debug "^4.3.1"
     globals "^11.1.0"
 
-"@babel/traverse@^7.24.1", "@babel/traverse@^7.24.5":
+"@babel/traverse@^7.24.5":
   version "7.24.5"
   resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.24.5.tgz#972aa0bc45f16983bf64aa1f877b2dd0eea7e6f8"
   integrity sha512-7aaBLeDQ4zYcUFDUD41lJc1fG8+5IU9DaNSJAgal866FGvmD5EbWQgnEC6kO1gGLsX0esNkfnJSndbTXA3r7UA==
@@ -1438,22 +1417,7 @@
     broccoli-funnel "^3.0.8"
     semver "^7.3.8"
 
-"@embroider/macros@^0.50.0 || ^1.0.0", "@embroider/macros@^1.0.0", "@embroider/macros@^1.10.0", "@embroider/macros@^1.12.0", "@embroider/macros@^1.12.3", "@embroider/macros@^1.13.1", "@embroider/macros@^1.13.2", "@embroider/macros@^1.13.3", "@embroider/macros@^1.13.4", "@embroider/macros@^1.15.0", "@embroider/macros@^1.3.0", "@embroider/macros@^1.5.0", "@embroider/macros@^1.8.1", "@embroider/macros@^1.8.3":
-  version "1.16.0"
-  resolved "https://registry.yarnpkg.com/@embroider/macros/-/macros-1.16.0.tgz#4d7ffe3496f6052a6f7abe2d1235be44c5f10720"
-  integrity sha512-k36Zt+RPGZiMR6lFqrb/fJmMCCG7He0ww7O1w72eT/QVlvlJ2d7T1/0yvG+ZThHGpvX1FQMKQYJkREfG2DJF6w==
-  dependencies:
-    "@babel/core" "^7.24.0"
-    "@embroider/shared-internals" "2.6.0"
-    assert-never "^1.2.1"
-    babel-import-util "^2.0.0"
-    ember-cli-babel "^8.2.0"
-    find-up "^5.0.0"
-    lodash "^4.17.21"
-    resolve "^1.20.0"
-    semver "^7.3.2"
-
-"@embroider/macros@^1.16.0":
+"@embroider/macros@^0.50.0 || ^1.0.0", "@embroider/macros@^1.0.0", "@embroider/macros@^1.10.0", "@embroider/macros@^1.12.0", "@embroider/macros@^1.12.3", "@embroider/macros@^1.13.1", "@embroider/macros@^1.13.2", "@embroider/macros@^1.13.3", "@embroider/macros@^1.13.4", "@embroider/macros@^1.15.0", "@embroider/macros@^1.16.0", "@embroider/macros@^1.3.0", "@embroider/macros@^1.5.0", "@embroider/macros@^1.8.1", "@embroider/macros@^1.8.3":
   version "1.16.1"
   resolved "https://registry.yarnpkg.com/@embroider/macros/-/macros-1.16.1.tgz#925c947ae00d7937d1c6b1ffb0d778924642c67b"
   integrity sha512-yBavtQBbiCjIW4tTNdoS+5/eu3mckZImrcVFkloRvZ5ZWvs2zqnLJVtfNsPMxhWu6dknFlmLqfuT30+kqnsQbg==
@@ -2162,10 +2126,10 @@
     reactiveweb "^1.2.3"
     xlsx "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz"
 
-"@projectcaluma/ember-core@^12.14.0":
-  version "12.14.0"
-  resolved "https://registry.yarnpkg.com/@projectcaluma/ember-core/-/ember-core-12.14.0.tgz#161c9f667e80a114b0ccfcb3052542e8e2228040"
-  integrity sha512-nF8/+jU6qXRjrnxFvHkVltQQezcVZqDEhRVyx8N6+OmS64dasxFO21+oEJ9h0nWZ3UIo5h037UAQcQGSDkeJgw==
+"@projectcaluma/ember-core@^12.14.0", "@projectcaluma/ember-core@^12.15.0":
+  version "12.15.0"
+  resolved "https://registry.yarnpkg.com/@projectcaluma/ember-core/-/ember-core-12.15.0.tgz#16835897eb54726d2bda13d1aaae201769cd2ba4"
+  integrity sha512-PQOSja4AFQdECD4zIvwC0uBTVh1aKHkhvJFGFggJfJchKYBF6QvJBV4IQzEX94zC+tpQ8zNNkP5spbKI/OQsvQ==
   dependencies:
     "@apollo/client" "^3.9.9"
     "@babel/core" "^7.24.3"
@@ -2188,10 +2152,10 @@
     lodash.clonedeep "^4.5.0"
     slugify "^1.6.6"
 
-"@projectcaluma/ember-form-builder@^12.14.0":
-  version "12.14.0"
-  resolved "https://registry.yarnpkg.com/@projectcaluma/ember-form-builder/-/ember-form-builder-12.14.0.tgz#e092afc02f7b46210422cde9c05ca3aeefa197fc"
-  integrity sha512-miV6KMunCmWjLRk3CdrhoZEIDyfWxoWkfikvvtVLV4PH7M2xq4klls2jL9uNzfs23/UhpNmXSoGOh/8Tsj82TA==
+"@projectcaluma/ember-form-builder@^12.15.0":
+  version "12.15.0"
+  resolved "https://registry.yarnpkg.com/@projectcaluma/ember-form-builder/-/ember-form-builder-12.15.0.tgz#6cc0f716d8371bb5b655f8af9fc2a7efed67c69e"
+  integrity sha512-0CJHxHCWF/SsyRJksfcisPGPWKEof+RmPSW0nDizqvD9XzFOz62l3sQMGIVQNhpoZrNz+/lqXhhJ8AX9X3DjZw==
   dependencies:
     "@babel/core" "^7.24.3"
     "@ember/legacy-built-in-components" "^0.5.0"
@@ -2200,8 +2164,8 @@
     "@embroider/macros" "^1.15.0"
     "@glimmer/component" "^1.1.2"
     "@glimmer/tracking" "^1.1.2"
-    "@projectcaluma/ember-core" "^12.14.0"
-    "@projectcaluma/ember-form" "^12.14.0"
+    "@projectcaluma/ember-core" "^12.15.0"
+    "@projectcaluma/ember-form" "^12.15.0"
     codejar "^4.2.0"
     ember-apollo-client "~4.0.2"
     ember-auto-import "^2.7.2"
@@ -2230,10 +2194,10 @@
     reactiveweb "^1.2.3"
     uikit "^3.19.2"
 
-"@projectcaluma/ember-form@^12.14.0":
-  version "12.14.0"
-  resolved "https://registry.yarnpkg.com/@projectcaluma/ember-form/-/ember-form-12.14.0.tgz#39d31d81588216b3900ebbaadc4a3d61ac9a09d6"
-  integrity sha512-Se4gYdD8O7ARZzJemEE7dFmgp1mW9o5Y9tBO5qZ1napiJTO4HRBkLWvGjmSo/SAeUOry7Lb7KoTroGmuEPhz2A==
+"@projectcaluma/ember-form@^12.14.0", "@projectcaluma/ember-form@^12.15.0":
+  version "12.15.0"
+  resolved "https://registry.yarnpkg.com/@projectcaluma/ember-form/-/ember-form-12.15.0.tgz#1ffe7896ac31d973e6523ff700fee0647755b3d5"
+  integrity sha512-iaM2y00xiiUdQYTISonZk2rsr2owmnCkNC6uRIRvSFSEuZbJWjYrkVrVMzJuiwE+CRFVfFifEDgx0FpGlvIeTg==
   dependencies:
     "@babel/core" "^7.24.3"
     "@ember/string" "^3.1.1"
@@ -2241,7 +2205,7 @@
     "@embroider/util" "^1.13.0"
     "@glimmer/component" "^1.1.2"
     "@glimmer/tracking" "^1.1.2"
-    "@projectcaluma/ember-core" "^12.14.0"
+    "@projectcaluma/ember-core" "^12.15.0"
     ember-apollo-client "~4.0.2"
     ember-auto-import "^2.7.2"
     ember-autoresize-modifier "^0.7.0"
