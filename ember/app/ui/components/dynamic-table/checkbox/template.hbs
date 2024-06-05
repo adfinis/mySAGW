@@ -4,6 +4,6 @@
     type="checkbox"
     class="uk-checkbox"
     checked={{this.checked}}
-    {{on "click" (fn @tdDefinition.action @value)}}
+    {{on "change" (fn @tdDefinition.selectRow @value)}}
   />
 </label>

@@ -70,8 +70,10 @@ export default class CasesTableComponent extends Component {
       columns.unshift({
         heading: { label: "documents.bulkEdit.action", hidden: true },
         type: "checkbox",
-        action: this.args.selectRow,
+        selectRow: this.args.selectRow,
+        selectAll: this.args.selectAll,
         selected: this.args.selectedCases,
+        total: this.args.query.totalCount,
       });
     }
 

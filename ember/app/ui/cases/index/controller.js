@@ -20,9 +20,10 @@ export default class CasesIndexController extends TableController {
   @tracked editMode = false;
   @tracked selectedCases = [];
   @tracked refreshList = 0;
+  @tracked pageSize = 1;
 
   caseQuery = useCalumaQuery(this, allCases, () => ({
-    options: { pageSize: 20 },
+    options: { pageSize: this.pageSize },
     filter: this.caseFilters.value,
     order: [serializeOrder(this.order, "documentAnswer")],
   }));
@@ -138,12 +139,36 @@ export default class CasesIndexController extends TableController {
     this.selectedCases = [...this.selectedCases, value.id];
   }
 
+  @action
+  async selectAll() {
+    if (this.caseQuery.totalCount === this.selectedCases.length) {
+      this.selectedCases = [];
+      return;
+    }
+
+    // fetch all cases and select them
+    let modified = false;
+    if (this.caseQuery.hasNextPage) {
+      this.pageSize = 0;
+      modified = true;
+      await this.caseQuery.query._fetchPage.last;
+    }
+
+
+    this.selectedCases = this.caseQuery.value.map((c) => c.id);
+
+    if (modified) {
+      this.pageSize = 1;
+    }
+  }
+
   get accessToRemove() {
     return arrayFromString(this.filters.identities);
   }
 
   @action
-  refreshCases() {
+  afterTransfer() {
+    this.editMode = false;
     this.refreshList++;
   }
 }

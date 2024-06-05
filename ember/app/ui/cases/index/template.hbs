@@ -8,7 +8,7 @@
           <CaseTransfer
             @cases={{this.selectedCases}}
             @toRemove={{this.accessToRemove}}
-            @afterTransfer={{this.refreshCases}}
+            @afterTransfer={{this.afterTransfer}}
           />
           <UkButton @onClick={{fn (mut this.editMode) false}} @color="danger">
             {{t "global.cancel"}}
@@ -78,6 +78,7 @@
         @order={{this.order}}
         @editMode={{this.editMode}}
         @selectRow={{this.selectCase}}
+        @selectAll={{this.selectAll}}
         @selectedCases={{this.selectedCases}}
       />
     {{else}}

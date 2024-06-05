@@ -103,6 +103,7 @@ documents:
   bulkEdit:
     title: "Massenbearbeitung"
     action: "Dossier auswählen"
+    selectAll: "Alle auswählen"
     transfer:
       title: "Dossier übertragen"
       save: "Übertragen"

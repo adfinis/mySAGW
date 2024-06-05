@@ -1,14 +1,24 @@
-<th class={{join " " @config.classList}}>
-  {{#if @config.sortKey}}
+<th class={{join " " @config.heading.classList}}>
+  {{#if @config.heading.sortKey}}
     <UkButton @color="text" @onClick={{this.order}}>
-      {{t @config.label}}
+      {{t @config.heading.label}}
       {{#if this.isActive}}
         <span uk-icon="icon: {{this.icon}}"></span>
       {{/if}}
     </UkButton>
-  {{else if @config.hidden}}
-    <span hidden>{{t @config.label}}</span>
+  {{else if @config.heading.hidden}}
+    <span hidden>{{t @config.heading.label}}</span>
+    {{#if (eq @config.type "checkbox")}}
+    {{log @config.selected.length @config.total}}
+      <input
+        type="checkbox"
+        class="uk-checkbox"
+        uk-tooltip={{t "documents.bulkEdit.selectAll"}}
+        checked={{eq @config.selected.length @config.total}}
+        {{on "change" @config.selectAll}}
+      />
+    {{/if}}
   {{else}}
-    {{t @config.label}}
+    {{t @config.heading.label}}
   {{/if}}
 </th>

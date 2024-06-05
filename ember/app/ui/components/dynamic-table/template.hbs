@@ -5,9 +5,9 @@
 >
   <thead>
     <tr>
-      {{#each (map-by "heading" @config.columns) as |header|}}
+      {{#each @config.columns as |column|}}
         <DynamicTable::Header
-          @config={{header}}
+          @config={{column}}
           @order={{@order}}
           @setOrder={{@setOrder}}
         />
@@ -43,8 +43,11 @@
 
 {{#if @loading}}
   <LoadingSpinner />
+{{!--
 {{else if @hasNextPage}}
   <div {{in-viewport onEnter=@loadMoreData}}>
+<div>
     <LoadingSpinner />
   </div>
+--}}
 {{/if}}
