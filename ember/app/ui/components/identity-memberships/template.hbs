@@ -1,87 +1,85 @@
-<div
-  {{did-insert this.onUpdate}}
-  {{did-update this.onUpdate @identity}}
-  class="uk-margin-remove-last-child"
->
+<div class="uk-margin-remove-last-child">
   <h2>{{t "components.identity-memberships.title"}}</h2>
 
-  {{#if this.fetchMemberships.isRunning}}
+  {{#if this.memberships.isLoading}}
     <LoadingSpinner />
   {{else}}
-    {{#if this.memberships.length}}
-      <ul class="uk-list uk-list-divider">
-        {{#each this.memberships as |membership|}}
-          <li class="uk-flex uk-flex-between uk-flex-middle" data-test-membership>
-            <div>
-              <span class="uk-text-bold {{if membership.isInactive "text-strike-through"}}">
-                <LinkTo
-                  @route="identities.edit"
-                  @model={{membership.organisation}}
-                >
-                  {{membership.organisation.organisationName}}
-                </LinkTo>
-                {{#if membership.authorized}}
-                  ({{t "components.identity-memberships.form.label.admin"}})
-                {{/if}}
-              </span>
-
-              {{#if membership.role}}
-                <div class="uk-text-meta">
-                  <span class={{if membership.isInactive "text-strike-through"}}>
-                    {{membership.role.title}}
-                  </span>
-                </div>
+    <ul class="uk-list uk-list-divider">
+      {{#each this.memberships.records as |membership|}}
+        <li class="uk-flex uk-flex-between uk-flex-middle" data-test-membership>
+          <div>
+            <span
+              class="uk-text-bold
+                {{if membership.isInactive 'text-strike-through'}}"
+            >
+              <LinkTo
+                @route="identities.edit"
+                @model={{membership.organisation.id}}
+              >
+                {{membership.organisation.organisationName}}
+              </LinkTo>
+              {{#if membership.authorized}}
+                ({{t "components.identity-memberships.form.label.admin"}})
               {{/if}}
+            </span>
 
-              <div class="uk-text-small">
-                {{#if membership.timeSlot.lower}}
-                  {{t "components.identity-memberships.timeSlotLower"}}
-                  {{format-date membership.timeSlot.lower "dd.LL.yyyy"}}
-                {{/if}}
-
-                {{#if membership.timeSlot.upper}}
-                  {{t "components.identity-memberships.timeSlotUpper"}}
-                  {{format-date membership.timeSlot.upper "dd.LL.yyyy"}}
-                {{/if}}
+            {{#if membership.role}}
+              <div class="uk-text-meta">
+                <span class={{if membership.isInactive "text-strike-through"}}>
+                  {{membership.role.title}}
+                </span>
               </div>
+            {{/if}}
 
-              {{#if membership.nextElection}}
-                <div class="uk-text-small">
-                  {{t "components.identity-memberships.list.nextElection"
-                    date=(format-date membership.nextElection "dd.LL.yyyy")
-                  }}
-                </div>
+            <div class="uk-text-small">
+              {{#if membership.timeSlot.lower}}
+                {{t "components.identity-memberships.timeSlotLower"}}
+                {{format-date membership.timeSlot.lower "dd.LL.yyyy"}}
               {{/if}}
 
-              {{membership.comment}}
+              {{#if membership.timeSlot.upper}}
+                {{t "components.identity-memberships.timeSlotUpper"}}
+                {{format-date membership.timeSlot.upper "dd.LL.yyyy"}}
+              {{/if}}
             </div>
 
-            <div>
-              <button
-                class="uk-icon-button uk-button-default"
-                type="button"
-                disabled={{this.changeset}}
-                uk-icon="pencil"
-                title={{t "components.identity-memberships.list.edit"}}
-                {{on "click" (fn this.edit membership)}}
-              ></button>
+            {{#if membership.nextElection}}
+              <div class="uk-text-small">
+                {{t
+                  "components.identity-memberships.list.nextElection"
+                  date=(format-date membership.nextElection "dd.LL.yyyy")
+                }}
+              </div>
+            {{/if}}
 
-              <button
-                class="uk-icon-button uk-button-default"
-                type="button"
-                disabled={{or this.changeset this.delete.isRunning}}
-                uk-icon="close"
-                title={{t "components.identity-memberships.list.delete"}}
-                {{on "click" (perform this.delete membership)}}
-                data-test-membership-delete
-              ></button>
-            </div>
-          </li>
-        {{/each}}
-      </ul>
-    {{else}}
-      <p>{{t "components.identity-memberships.list.empty"}}</p>
-    {{/if}}
+            {{membership.comment}}
+          </div>
+
+          <div>
+            <button
+              class="uk-icon-button uk-button-default"
+              type="button"
+              disabled={{this.changeset}}
+              uk-icon="pencil"
+              title={{t "components.identity-memberships.list.edit"}}
+              {{on "click" (fn this.edit membership)}}
+            ></button>
+
+            <button
+              class="uk-icon-button uk-button-default"
+              type="button"
+              disabled={{or this.changeset this.delete.isRunning}}
+              uk-icon="close"
+              title={{t "components.identity-memberships.list.delete"}}
+              {{on "click" (perform this.delete membership)}}
+              data-test-membership-delete
+            ></button>
+          </div>
+        </li>
+      {{else}}
+        <li>{{t "components.identity-memberships.list.empty"}}</li>
+      {{/each}}
+    </ul>
 
     {{#if (can "add membership-role")}}
       <p class="uk-text-right">
@@ -97,10 +95,11 @@
   {{/if}}
 
   {{#if this.changeset}}
-    <hr>
+    <hr />
 
     <h3 class="uk-margin-remove-top">
-      {{if this.changeset.isNew
+      {{if
+        this.changeset.isNew
         (t "components.identity-memberships.form.title.add")
         (t "components.identity-memberships.form.title.edit")
       }}
@@ -118,19 +117,28 @@
           @name="organisation"
           as |field|
         >
-          <PowerSelect
-            @searchEnabled={{true}}
-            @searchField="organisationName"
-            @options={{this.identities}}
-            @selected={{field.value}}
-            @onChange={{field.update}}
-            @onFocus={{this.openPowerSelect}}
-            @triggerClass="uk-select"
-            data-test-organisation-select
-            as |opt|
-          >
-            {{opt.organisationName}}
-          </PowerSelect>
+          {{#let
+            (query "identity" (hash filter=(hash isOrganisation=true)))
+            as |organisations|
+          }}
+            {{#if organisations.isLoading}}
+              <LoadingSpinner />
+            {{else}}
+              <PowerSelect
+                @searchEnabled={{true}}
+                @searchField="organisationName"
+                @options={{organisations.records}}
+                @selected={{field.value}}
+                @onChange={{field.update}}
+                @onFocus={{this.openPowerSelect}}
+                @triggerClass="uk-select"
+                data-test-organisation-select
+                as |opt|
+              >
+                {{opt.organisationName}}
+              </PowerSelect>
+            {{/if}}
+          {{/let}}
         </Form.input>
       </div>
 
@@ -140,20 +148,26 @@
           @name="role"
           as |field|
         >
-          <PowerSelect
-            @searchEnabled={{true}}
-            @searchField="title"
-            @options={{this.roles}}
-            @selected={{field.value}}
-            @onChange={{field.update}}
-            @onFocus={{this.openPowerSelect}}
-            @triggerClass="uk-select"
-            @allowClear={{true}}
-            data-test-role-select
-            as |opt|
-          >
-            {{opt.title}}
-          </PowerSelect>
+          {{#let (find-all "membership-role") as |roles|}}
+            {{#if roles.isLoading}}
+              <LoadingSpinner />
+            {{else}}
+              <PowerSelect
+                @searchEnabled={{true}}
+                @searchField="title"
+                @options={{roles.records}}
+                @selected={{field.value}}
+                @onChange={{field.update}}
+                @onFocus={{this.openPowerSelect}}
+                @triggerClass="uk-select"
+                @allowClear={{true}}
+                data-test-role-select
+                as |opt|
+              >
+                {{opt.title}}
+              </PowerSelect>
+            {{/if}}
+          {{/let}}
         </Form.input>
       </div>
 
@@ -170,30 +184,28 @@
           <div>
             <div class="uk-margin">
               <Form.input
-                @label={{t "components.identity-memberships.form.label.timeFrom"}}
+                @label={{t
+                  "components.identity-memberships.form.label.timeFrom"
+                }}
                 @name="timeSlot.lower"
                 @errorComponent={{component "validated-form-error"}}
                 as |field|
               >
-                <DatePicker
-                  @date={{field.value}}
-                  @onChange={{field.update}}
-                />
+                <DatePicker @date={{field.value}} @onChange={{field.update}} />
               </Form.input>
             </div>
           </div>
           <div>
             <div class="uk-margin">
               <Form.input
-                @label={{t "components.identity-memberships.form.label.timeUntil"}}
+                @label={{t
+                  "components.identity-memberships.form.label.timeUntil"
+                }}
                 @name="timeSlot.upper"
                 @errorComponent={{component "validated-form-error"}}
                 as |field|
               >
-                <DatePicker
-                  @date={{field.value}}
-                  @onChange={{field.update}}
-                />
+                <DatePicker @date={{field.value}} @onChange={{field.update}} />
               </Form.input>
             </div>
           </div>
@@ -206,10 +218,7 @@
           @name="nextElection"
           as |field|
         >
-          <DatePicker
-            @date={{field.value}}
-            @onChange={{field.update}}
-          />
+          <DatePicker @date={{field.value}} @onChange={{field.update}} />
         </Form.input>
       </div>
 
@@ -237,10 +246,7 @@
           {{t "global.cancel"}}
         </button>
 
-        <Form.submit
-          @label={{t "global.save"}}
-          data-test-membership-save
-        />
+        <Form.submit @label={{t "global.save"}} data-test-membership-save />
       </p>
     </ValidatedForm>
   {{/if}}
