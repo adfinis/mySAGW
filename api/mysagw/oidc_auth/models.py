@@ -43,12 +43,32 @@ class BaseUser:  # pragma: no cover
 
 
 class OIDCUser(BaseUser):
+    SALUTATION_MAP = {
+        "Mr.": Identity.SALUTATION_MR,
+        "Mrs.": Identity.SALUTATION_MRS,
+        "neutral": Identity.SALUTATION_NEUTRAL,
+    }
+    TITLE_MAP = {
+        "Dr.": Identity.TITLE_DR,
+        "Prof.": Identity.TITLE_PROF,
+        "Prof. Dr.": Identity.TITLE_PROF_DR,
+        "PD Dr.": Identity.TITLE_PD_DR,
+        "": Identity.TITLE_NONE,
+    }
+
     def __init__(self, token: str, claims: dict):
         super().__init__()
 
         self.claims = claims
         self.id = self.claims[settings.OIDC_ID_CLAIM]
         self.email = self.claims.get(settings.OIDC_EMAIL_CLAIM)
+        self.first_name = self.claims.get(settings.OIDC_FIRST_NAME_CLAIM)
+        self.last_name = self.claims.get(settings.OIDC_LAST_NAME_CLAIM)
+        salutation = self.claims.get(settings.OIDC_SALUTATION_CLAIM, "neutral")
+        self.salutation = self.SALUTATION_MAP[salutation]
+
+        title = self.claims.get(settings.OIDC_TITLE_CLAIM, "")
+        self.title = self.TITLE_MAP[title]
         self.groups = self.claims.get(settings.OIDC_GROUPS_CLAIM, [])
         self.group = self.groups[0] if self.groups else None
         self.token = token
@@ -94,6 +114,10 @@ class OIDCUser(BaseUser):
                     return Identity.objects.create(
                         idp_id=self.id,
                         email=self.email,
+                        first_name=self.first_name,
+                        last_name=self.last_name,
+                        salutation=self.salutation,
+                        title=self.title,
                         modified_by_user=self.id,
                         created_by_user=self.id,
                     )

@@ -48,7 +48,7 @@ services:
   keycloak:
     depends_on:
       - db
-    image: quay.io/keycloak/keycloak:23.0.1
+    image: quay.io/keycloak/keycloak:24.0.4
     volumes:
       - ./keycloak/config.json:/opt/keycloak/data/import/test-config.json
     environment:
@@ -62,7 +62,7 @@ services:
       - KC_PROXY=edge
     # import: docker compose exec keycloak /opt/keycloak/bin/kc.sh import --override true --file /opt/keycloak/data/import/test-config.json
     # export: docker compose exec keycloak /opt/keycloak/bin/kc.sh export --file /opt/keycloak/data/import/test-config.json
-    command: "start"
+    command: start
 
   ember:
     build:
