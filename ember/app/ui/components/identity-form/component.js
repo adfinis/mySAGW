@@ -6,6 +6,7 @@ import { Changeset } from "ember-changeset";
 import lookupValidator from "ember-changeset-validations";
 import { dropTask } from "ember-concurrency";
 import UIkit from "uikit";
+import { trackedFunction } from "reactiveweb/function";
 
 import applyError from "mysagw/utils/apply-error";
 import IdentityValidations from "mysagw/validations/identity";
@@ -24,14 +25,13 @@ export default class IdentityFormComponent extends Component {
   @tracked changeset;
   @tracked backToIdentities;
 
-  constructor(...args) {
-    super(...args);
+  changesetResource = trackedFunction(this, async () => {
     this.changeset = Changeset(
       this.args.identity || this.store.createRecord("identity"),
       lookupValidator(IdentityValidations),
       IdentityValidations,
     );
-  }
+  });
 
   get salutations() {
     return [
