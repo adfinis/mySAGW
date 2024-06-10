@@ -23,10 +23,10 @@ module.exports = function (defaults) {
     flatpickr: {
       locales: ["fr", "de"],
     },
-    '@embroider/macros': {
+    "@embroider/macros": {
       setConfig: {
-        '@ember-data/store': {
-          polyfillUUID: true
+        "@ember-data/store": {
+          polyfillUUID: true,
         },
       },
     },

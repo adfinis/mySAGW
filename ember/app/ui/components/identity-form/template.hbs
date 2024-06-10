@@ -175,7 +175,7 @@
           @disabled={{cannot "edit identity" this.changeset.data}}
         />
       </div>
-    {{else if @readOnlyView}}{{else}}
+    {{else if (not @readOnlyView)}}
       <Form.input
         @label={{t "components.identity-form.label.comment"}}
         @name="comment"

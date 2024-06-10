@@ -5,9 +5,9 @@ import { tracked } from "@glimmer/tracking";
 import { Changeset } from "ember-changeset";
 import lookupValidator from "ember-changeset-validations";
 import { dropTask } from "ember-concurrency";
+import { query } from "ember-data-resources";
 import { DateTime } from "luxon";
 import UIkit from "uikit";
-import { query } from "ember-data-resources";
 
 import applyError from "mysagw/utils/apply-error";
 import MembershipValidations from "mysagw/validations/membership";
@@ -95,7 +95,7 @@ export default class IdentityMembershipsComponent extends Component {
       if (changeset.isValid) {
         yield changeset.save();
         this.changeset = null;
-        this.memberships.retry()
+        this.memberships.retry();
       }
     } catch (error) {
       console.error(error);

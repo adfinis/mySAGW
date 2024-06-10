@@ -5,8 +5,8 @@ import { tracked } from "@glimmer/tracking";
 import { Changeset } from "ember-changeset";
 import lookupValidator from "ember-changeset-validations";
 import { dropTask } from "ember-concurrency";
-import UIkit from "uikit";
 import { trackedFunction } from "reactiveweb/function";
+import UIkit from "uikit";
 
 import applyError from "mysagw/utils/apply-error";
 import IdentityValidations from "mysagw/validations/identity";

@@ -59,7 +59,7 @@ module("Acceptance | identities", function (hooks) {
 
     await click("[data-test-membership] a");
 
-    assert.equal(currentURL(), `/identities/edit/${organisation.id}`);
+    assert.strictEqual(currentURL(), `/identities/edit/${organisation.id}`);
     assert.dom("input[type=checkbox]").isChecked();
   });
 });
