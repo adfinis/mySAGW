@@ -4,7 +4,8 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { Changeset } from "ember-changeset";
 import lookupValidator from "ember-changeset-validations";
-import { dropTask, restartableTask, lastValue } from "ember-concurrency";
+import { dropTask } from "ember-concurrency";
+import { query } from "ember-data-resources";
 import { DateTime } from "luxon";
 import UIkit from "uikit";
 
@@ -20,22 +21,12 @@ export default class IdentityMembershipsComponent extends Component {
   @service notification;
 
   // List
-
-  @lastValue("fetchMemberships") memberships;
-  @restartableTask
-  *fetchMemberships(identity) {
-    return yield this.store.query("membership", {
-      filter: { identity: identity.id },
-      include: "role",
-    });
-  }
-
-  @action
-  onUpdate() {
-    this.fetchMemberships.perform(this.args.identity);
-    this.fetchIdentities.perform(this.args.identity);
-    this.fetchRoles.perform(this.args.identity);
-  }
+  memberships = query(this, "membership", () => ({
+    filter: {
+      identity: this.args.identity.id,
+    },
+    include: "organisation,role",
+  }));
 
   @action updateDateField(fieldName, newValue, changeset) {
     changeset.rollbackProperty(fieldName);
@@ -103,8 +94,8 @@ export default class IdentityMembershipsComponent extends Component {
       yield changeset.validate();
       if (changeset.isValid) {
         yield changeset.save();
-        yield this.onUpdate();
         this.changeset = null;
+        this.memberships.retry();
       }
     } catch (error) {
       console.error(error);
@@ -112,20 +103,6 @@ export default class IdentityMembershipsComponent extends Component {
       applyError(changeset, error);
       changeset.rollback();
     }
-  }
-
-  @lastValue("fetchIdentities") identities;
-  @restartableTask
-  *fetchIdentities() {
-    return yield this.store.query("identity", {
-      filter: { isOrganisation: true },
-    });
-  }
-
-  @lastValue("fetchRoles") roles;
-  @restartableTask
-  *fetchRoles() {
-    return yield this.store.findAll("membership-role");
   }
 
   // Delete
@@ -147,7 +124,6 @@ export default class IdentityMembershipsComponent extends Component {
             options,
           ),
         );
-        yield this.onUpdate();
       } catch (error) {
         console.error(error);
         this.notification.fromError(error);
