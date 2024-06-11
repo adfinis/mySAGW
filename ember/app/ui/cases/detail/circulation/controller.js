@@ -65,7 +65,7 @@ export default class CasesDetailCirculationController extends Controller {
           type: "answer-value",
         },
         {
-          heading: { label: "work-items.action" },
+          heading: { label: "work-items.actions.title", hidden: true },
           type: "work-item-actions",
         },
       ],

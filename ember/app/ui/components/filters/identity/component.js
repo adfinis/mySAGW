@@ -11,7 +11,10 @@ export default class FiltersIdentityComponent extends Component {
   @service notification;
 
   get selected() {
-    const selected = arrayFromString(this.args.selected ?? "");
+    const selected =
+      typeof this.args.selected === "string"
+        ? arrayFromString(this.args.selected ?? "")
+        : this.args.selected;
 
     return this.identityOptions.value?.filter((option) =>
       selected.includes(option.idpId),
@@ -19,19 +22,22 @@ export default class FiltersIdentityComponent extends Component {
   }
 
   identityOptions = trackedFunction(this, async () => {
-    if (!this.args.selected) {
+    if (!this.args.selected.length) {
       return [];
     }
 
-    try {
-      await Promise.resolve();
+    let idpIds = this.args.selected;
+    if (typeof this.args.selected !== "string") {
+      idpIds = this.args.selected.join(",");
+    }
 
+    try {
       return (
         await this.store.query(
           "identity",
           {
             filter: {
-              idpIds: this.args.selected,
+              idpIds,
             },
           },
           { adapterOptions: { customEndpoint: "public-identities" } },

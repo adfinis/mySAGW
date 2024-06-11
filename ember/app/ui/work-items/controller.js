@@ -223,7 +223,7 @@ export default class WorkItemsIndexController extends TableController {
           type: "answer-value",
         },
         {
-          heading: { label: "work-items.action" },
+          heading: { label: "work-items.actions.title", hidden: true },
           type: "work-item-actions",
         },
       ],

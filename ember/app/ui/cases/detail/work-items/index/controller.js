@@ -46,7 +46,7 @@ export default class CasesDetailWorkItemsController extends Controller {
           type: "answer-value",
         },
         {
-          heading: { label: "work-items.action" },
+          heading: { label: "work-items.actions.title", hidden: true },
           type: "work-item-actions",
         },
       ],
@@ -69,7 +69,7 @@ export default class CasesDetailWorkItemsController extends Controller {
           modelKey: "closedByUser.fullName",
         },
         {
-          heading: { label: "work-items.action" },
+          heading: { label: "work-items.actions.title", hidden: true },
           type: "work-item-actions",
         },
       ],

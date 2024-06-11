@@ -61,4 +61,6 @@ main {
   align-content: start;
 }
 
-@import 'ember-uikit';
+.case-list-action-divider {
+  height: 50px !important;
+}

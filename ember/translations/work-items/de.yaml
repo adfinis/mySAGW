@@ -24,7 +24,6 @@ work-items:
   saveError: "Fehler beim Speichern"
   rejectDefineAmountNoAdditionData: "Stelle sicher, dass noch einen Schritt zurückgegangen werden muss."
 
-  action: ""
   actions:
     title: "Aktionen"
     highlight: "Highlight"

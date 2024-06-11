@@ -9,7 +9,7 @@ export default class CaseAccessTablesComponent extends Component {
           modelKey: "name",
         },
         {
-          heading: { label: "documents.accesses.table.action" },
+          heading: { label: "documents.accesses.table.action", hidden: true },
           type: "case-access-actions",
           additionalInfo: this.args.case,
         },
@@ -25,7 +25,7 @@ export default class CaseAccessTablesComponent extends Component {
           modelKey: "email",
         },
         {
-          heading: { label: "documents.accesses.table.action" },
+          heading: { label: "documents.accesses.table.action", hidden: true },
           type: "case-access-actions",
           additionalInfo: this.args.case,
         },
