@@ -16,7 +16,12 @@
   </thead>
   <tbody class="uk-overflow-auto">
     {{#each @data as |entry|}}
-      <tr class="uk-table-middle">
+      {{! template-lint-disable no-invalid-interactive }}
+      <tr
+        class="uk-table-middle"
+        {{on "click" (fn (optional @selectRow) entry)}}
+        role={{if @selectRow "button" "row"}}
+      >
         {{#each @config.columns as |tdDefinition|}}
           <DynamicTable::TableData
             @tdDefinition={{tdDefinition}}

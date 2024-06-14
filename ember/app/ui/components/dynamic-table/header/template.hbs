@@ -6,6 +6,8 @@
         <span uk-icon="icon: {{this.icon}}"></span>
       {{/if}}
     </UkButton>
+  {{else if @config.hidden}}
+    <span hidden>{{t @config.label}}</span>
   {{else}}
     {{t @config.label}}
   {{/if}}

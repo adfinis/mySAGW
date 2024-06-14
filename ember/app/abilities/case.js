@@ -25,6 +25,10 @@ export default class CaseAbility extends BaseAbility {
     );
   }
 
+  get canBulkEdit() {
+    return this.isAdmin;
+  }
+
   get canDelete() {
     return this.model.hasSubmitOrReviseWorkItem || this.isStaffOrAdmin;
   }

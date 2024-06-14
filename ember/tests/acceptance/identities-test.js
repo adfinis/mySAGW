@@ -1,4 +1,4 @@
-import { visit, click } from "@ember/test-helpers";
+import { visit, click, currentURL } from "@ember/test-helpers";
 import { setupMirage } from "ember-cli-mirage/test-support";
 import { setupIntl } from "ember-intl/test-support";
 import { setupApplicationTest } from "ember-qunit";
@@ -11,7 +11,10 @@ module("Acceptance | identities", function (hooks) {
   setupIntl(hooks);
 
   hooks.beforeEach(async function () {
-    this.identity = this.server.create("identity", { email: "test@test.com" });
+    this.identity = this.server.create("identity", {
+      email: "test@test.com",
+      isOrganisation: false,
+    });
 
     await authenticateSession({
       access_token: "123qweasdyxc",
@@ -43,5 +46,20 @@ module("Acceptance | identities", function (hooks) {
     await click(".uk-modal-footer .uk-button-primary");
 
     assert.dom("[data-test-identities-list] li").exists({ count: 1 });
+  });
+
+  test("can navigate through membership", async function (assert) {
+    const organisation = this.server.create("identity", {
+      isOrganisation: true,
+    });
+    const identity = this.server.create("identity", { isOrganisation: false });
+    this.server.create("membership", { identity, organisation });
+
+    await visit(`/identities/edit/${identity.id}`);
+
+    await click("[data-test-membership] a");
+
+    assert.strictEqual(currentURL(), `/identities/edit/${organisation.id}`);
+    assert.dom("input[type=checkbox]").isChecked();
   });
 });

@@ -1409,7 +1409,7 @@
     ember-cli-babel "^7.26.11"
     ember-cli-htmlbars "^6.2.0"
 
-"@ember/test-waiters@^3", "@ember/test-waiters@^3.0.0", "@ember/test-waiters@^3.0.2":
+"@ember/test-waiters@^3", "@ember/test-waiters@^3.0.0", "@ember/test-waiters@^3.0.2", "@ember/test-waiters@^3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@ember/test-waiters/-/test-waiters-3.1.0.tgz#61399919cbf793978da0b8bfdfdb7bca0cb80e9e"
   integrity sha512-bb9h95ktG2wKY9+ja1sdsFBdOms2lB19VWs8wmNpzgHv1NCetonBoV5jHBV4DHt0uS1tg9z66cZqhUVlYs96KQ==
@@ -6603,6 +6603,16 @@ ember-cookies@^1.0.0:
   dependencies:
     "@embroider/addon-shim" "^1.7.1"
 
+ember-data-resources@^5.2.1:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/ember-data-resources/-/ember-data-resources-5.2.1.tgz#582e049f2171a6c10c118b8379fa39b3927abd7a"
+  integrity sha512-1rTFThKfFhaWyen6wqzwIFBS+bAqrXAZvHCIhPwX6Dym8KJ8bmNuoOJ+zNG/iuPnKMMsdnq2xjMmBDFT3+ul6Q==
+  dependencies:
+    "@ember/string" "^3.1.1"
+    "@ember/test-waiters" "^3.1.0"
+    "@embroider/addon-shim" "^1.0.0"
+    ember-modify-based-class-resource "^1.1.0"
+
 ember-data@~4.12.4:
   version "4.12.7"
   resolved "https://registry.yarnpkg.com/ember-data/-/ember-data-4.12.7.tgz#29383c7cd9da810dfb55c7d2f723bf75c99ff40e"
@@ -6961,6 +6971,14 @@ ember-resolver@^11.0.1:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/ember-resources/-/ember-resources-7.0.0.tgz#5f7c0fd0e8d2bf5f45cc17e79ba8ced18b2ebe12"
   integrity sha512-BRah6wsXMejHWfTBFJZ+8MYeUz4ylLP4afUxK+sPCb+Nv3LKqBTEPpvahHoE5FwY56pOPhg1TQWJI/+Aj1rWWA==
+  dependencies:
+    "@embroider/addon-shim" "^1.2.0"
+    "@embroider/macros" "^1.12.3"
+
+ember-resources@^7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/ember-resources/-/ember-resources-7.0.1.tgz#0c493073b8efef1574c366f04873050b5b00b53e"
+  integrity sha512-dN/5QwNMjnx99+T/QPxDRceFF8lrqXEb6/7heO7QEpkA6Td5mB/mzSECsE7W3du93WM2NOSpInp0I6b4gmdp7Q==
   dependencies:
     "@embroider/addon-shim" "^1.2.0"
     "@embroider/macros" "^1.12.3"

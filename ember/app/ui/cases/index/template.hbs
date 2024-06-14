@@ -1,11 +1,36 @@
 <h1 class="uk-flex uk-flex-between">
   {{t "documents.title"}}
 
-  <span>
-    <LinkTo @route="cases.new" class="uk-button uk-button-primary">
-      {{t "documents.new.title"}}
-    </LinkTo>
-  </span>
+  <div class="uk-flex">
+    {{#if (can "bulk edit case")}}
+      <div>
+        {{#if this.editMode}}
+          <CaseTransfer
+            @cases={{this.selectedCases}}
+            @toRemove={{this.accessToRemove}}
+            @afterTransfer={{this.afterTransfer}}
+          />
+          <UkButton @onClick={{fn (mut this.editMode) false}} @color="danger">
+            {{t "global.cancel"}}
+          </UkButton>
+        {{else}}
+          <UkButton @onClick={{fn (mut this.editMode) true}}>
+            {{t "documents.bulkEdit.title"}}
+          </UkButton>
+        {{/if}}
+      </div>
+    {{/if}}
+
+    <div
+      class="case-list-action-divider uk-divider-vertical uk-margin-left uk-margin-right uk-margin-remove-top uk-margin-remove-bottom"
+    ></div>
+
+    <div>
+      <LinkTo @route="cases.new" class="uk-button uk-button-primary">
+        {{t "documents.new.title"}}
+      </LinkTo>
+    </div>
+  </div>
 </h1>
 
 <hr />
@@ -51,6 +76,9 @@
         @query={{this.caseQuery}}
         @setOrder={{fn (mut this.order)}}
         @order={{this.order}}
+        @editMode={{this.editMode}}
+        @selectRow={{this.selectCase}}
+        @selectedCases={{this.selectedCases}}
       />
     {{else}}
       <UkSpinner />
