@@ -86,7 +86,7 @@ services:
       - minio
 
   dms:
-    image: ghcr.io/adfinis/document-merge-service:6.1.2
+    image: ghcr.io/adfinis/document-merge-service:6.5.2
     depends_on:
       - db
     volumes:
