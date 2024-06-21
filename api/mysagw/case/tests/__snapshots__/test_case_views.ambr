@@ -1196,8 +1196,8 @@
       
       Sie wurden zu folgenden Gesuchen auf mySAGW eingeladen:
       
-      https://mysagw.adfinis.com/cases/993e81d7-ccbd-46b1-9ab0-ac83b1dfb859
-      https://mysagw.adfinis.com/cases/753b60ee-ef3b-41b4-af1b-46e4331d3af2
+      2024-0001 - https://mysagw.adfinis.com/cases/993e81d7-ccbd-46b1-9ab0-ac83b1dfb859
+      2024-0002 - https://mysagw.adfinis.com/cases/753b60ee-ef3b-41b4-af1b-46e4331d3af2
   
     ''',
     cc=list([
@@ -1233,7 +1233,7 @@
       
       Sie wurden zu folgenden Gesuchen auf mySAGW eingeladen:
       
-      https://mysagw.adfinis.com/cases/993e81d7-ccbd-46b1-9ab0-ac83b1dfb859
+      2024-0001 - https://mysagw.adfinis.com/cases/993e81d7-ccbd-46b1-9ab0-ac83b1dfb859
   
     ''',
     cc=list([
@@ -1267,10 +1267,32 @@
         'status': '400',
       }),
       dict({
+        'code': 'required',
+        'detail': 'Dieses Feld ist zwingend erforderlich.',
+        'source': dict({
+          'pointer': '/data/attributes/dossier-nrs',
+        }),
+        'status': '400',
+      }),
+      dict({
         'code': 'empty',
         'detail': 'This list may not be empty.',
         'source': dict({
           'pointer': '/data/attributes/new-assignees',
+        }),
+        'status': '400',
+      }),
+    ]),
+  })
+# ---
+# name: test_transfer_case_fail_unequal_list_len[admin]
+  dict({
+    'errors': list([
+      dict({
+        'code': 'invalid',
+        'detail': '"case_ids" and "dossier_nrs" must be of equal length.',
+        'source': dict({
+          'pointer': '/data',
         }),
         'status': '400',
       }),
