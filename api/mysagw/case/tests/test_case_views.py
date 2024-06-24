@@ -34,15 +34,22 @@ def test_case_list(
     identity_factory,
     case_access_factory,
 ):
-    identity_0 = identity_factory(idp_id="00000000-0000-0000-0000-000000000000")
-    identity_1 = identity_factory(idp_id="11111111-1111-1111-1111-111111111111")
-    case_access_factory.create_batch(2, identity=identity_0, email=None)
-    case_access_factory(identity=identity_1, email=None)
+    identity_0 = identity_factory()
+    identity_1 = identity_factory()
+    case_access_factory(
+        identity=identity_0, email=None, case_id="00000000-0000-0000-0000-000000000000"
+    )
+    case_access_factory(
+        identity=identity_0, email=None, case_id="11111111-1111-1111-1111-111111111111"
+    )
+    case_access_factory(
+        identity=identity_1, email=None, case_id="00000000-0000-0000-0000-000000000000"
+    )
     case_access_factory()
 
     url = reverse("caseaccess-list")
 
-    response = client.get(url, {"filter[idpId]": filter_id} if filter_id else None)
+    response = client.get(url, {"filter[caseIds]": filter_id} if filter_id else None)
 
     assert response.status_code == expected_status
 
