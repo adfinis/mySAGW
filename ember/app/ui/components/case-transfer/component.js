@@ -33,8 +33,16 @@ export default class CaseTransfer extends Component {
     const adapter = this.store.adapterFor("case-access");
     const uri = `${adapter.buildURL("case-access")}/transfer`;
 
+    const caseIds = [];
+    const dossierNrs = [];
+    this.args.cases.forEach((c) => {
+      caseIds.push(c.id);
+      dossierNrs.push(c.documentNumber);
+    });
+
     const body = {
-      case_ids: this.args.cases,
+      case_ids: caseIds,
+      dossier_nrs: dossierNrs,
       new_assignees: this.idpIdsToIds(this.newAssignees),
       to_remove_assignees: [],
     };
