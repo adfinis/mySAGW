@@ -92,16 +92,29 @@ class CaseTransferSerializer(drf_serializers.Serializer):
         child=drf_serializers.UUIDField(), allow_empty=False
     )
 
+    dossier_nrs = drf_serializers.ListField(
+        child=drf_serializers.CharField(), allow_empty=False
+    )
+
+    def validate(self, attrs):
+        if len(attrs["dossier_nrs"]) != len(attrs["case_ids"]):
+            msg = '"case_ids" and "dossier_nrs" must be of equal length.'
+            raise ValidationError(msg)
+        attrs["dossier_nrs_mapping"] = dict(
+            zip(attrs["dossier_nrs"], attrs["case_ids"])
+        )
+        return super().validate(attrs)
+
     def create(self, validated_data):
         new_accesses = []
         for new_assignee in validated_data["new_assignees"]:
             new_accesses_for_user = []
-            for case_id in validated_data["case_ids"]:
+            for dossier_nr, case_id in validated_data["dossier_nrs_mapping"].items():
                 access, created = models.CaseAccess.objects.get_or_create(
                     case_id=case_id, identity=new_assignee
                 )
                 if created:
-                    new_accesses_for_user.append(access)
+                    new_accesses_for_user.append((access, dossier_nr))
             if new_accesses_for_user:
                 self._send_mail(new_accesses_for_user)
             new_accesses += new_accesses_for_user
@@ -115,11 +128,11 @@ class CaseTransferSerializer(drf_serializers.Serializer):
         return new_accesses
 
     def _send_mail(self, new_accesses_for_user):
-        identity = new_accesses_for_user[0].identity
+        identity = new_accesses_for_user[0][0].identity
         subject = case_transfer.EMAIL_BULK_INVITE_SUBJECTS[identity.language]
         links = "\n".join(
             [
-                f"{settings.SELF_URI}/cases/{access.case_id}"
+                f"{access[1]} - {settings.SELF_URI}/cases/{access[0].case_id}"
                 for access in new_accesses_for_user
             ]
         )
