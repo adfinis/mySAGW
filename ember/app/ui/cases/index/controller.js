@@ -130,12 +130,17 @@ export default class CasesIndexController extends TableController {
 
   @action
   selectCase(value) {
-    if (this.selectedCases.includes(value.id)) {
-      this.selectedCases = this.selectedCases.filter((id) => id !== value.id);
+    const deselection = this.selectedCases.filter((c) => c.id !== value.id);
+    if (deselection.length < this.selectedCases.length) {
+      this.selectedCases = deselection;
       return;
     }
 
-    this.selectedCases = [...this.selectedCases, value.id];
+    this.selectedCases = [...this.selectedCases, value];
+  }
+
+  get selectedCaseIds() {
+    return this.selectedCases.map((c) => c.id);
   }
 
   get accessToRemove() {
