@@ -17,7 +17,7 @@ export default class FiltersIdentityComponent extends Component {
         : this.args.selected;
 
     return this.identityOptions.value?.filter((option) =>
-      selected.includes(option.idpId),
+      selected.includes(option.id),
     );
   }
 
@@ -26,9 +26,9 @@ export default class FiltersIdentityComponent extends Component {
       return [];
     }
 
-    let idpIds = this.args.selected;
+    let ids = this.args.selected;
     if (typeof this.args.selected !== "string") {
-      idpIds = this.args.selected.join(",");
+      ids = this.args.selected.join(",");
     }
 
     try {
@@ -37,7 +37,7 @@ export default class FiltersIdentityComponent extends Component {
           "identity",
           {
             filter: {
-              idpIds,
+              ids,
             },
           },
           { adapterOptions: { customEndpoint: "public-identities" } },
@@ -66,7 +66,6 @@ export default class FiltersIdentityComponent extends Component {
           filter: {
             search,
             isOrganisation: false,
-            has_idp_id: true,
           },
         },
         { adapterOptions: { customEndpoint: "public-identities" } },
