@@ -2,8 +2,8 @@ import { action } from "@ember/object";
 import Component from "@glimmer/component";
 
 export default class CasesTableComponent extends Component {
-  dynamicTableConfig = {
-    columns: [
+  get dynamicTableConfig() {
+    const columns = [
       {
         heading: {
           label: "documents.number",
@@ -46,7 +46,10 @@ export default class CasesTableComponent extends Component {
         type: "answer-value",
       },
       {
-        heading: { label: "documents.society", sortKey: "mitgliedinstitution" },
+        heading: {
+          label: "documents.society",
+          sortKey: "mitgliedinstitution",
+        },
         questionSlug: "mitgliedinstitution",
         answerKey: "document.answers.edges",
         type: "answer-value",
@@ -61,8 +64,19 @@ export default class CasesTableComponent extends Component {
         modelKey: "modifiedAt",
         type: "date",
       },
-    ],
-  };
+    ];
+
+    if (this.args.editMode) {
+      columns.unshift({
+        heading: { label: "documents.bulkEdit.action", hidden: true },
+        type: "checkbox",
+        action: this.args.selectRow,
+        selected: this.args.selectedCases,
+      });
+    }
+
+    return { columns };
+  }
 
   @action
   fetchMoreCases() {

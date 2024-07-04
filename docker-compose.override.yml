@@ -71,7 +71,8 @@ services:
 
   dms:
     env_file: ./.envs/.local/.dms
-    deploy:
-      resources:
-        limits:
-          memory: 512M
+# Suddenly with this, the uwsgi workers are constantly restarted. Uncommenting for now.
+#    deploy:
+#      resources:
+#        limits:
+#          memory: 1024M

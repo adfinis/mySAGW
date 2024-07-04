@@ -245,6 +245,7 @@ def test_transfer_case(
         # exists one
         "new_assignees": [str(new_identity.pk), str(accesses[1].identity.pk)],
         "case_ids": [accesses[0].case_id, accesses[1].case_id],
+        "dossier_nrs": ["2024-0001", "2024-0002"],
     }
     url = reverse("caseaccess-transfer")
 
@@ -274,6 +275,7 @@ def test_transfer_case_fail_nonexistent_ids(client):
         "to_remove_assignees": [to_remove],
         "new_assignees": [new_1, new_2],
         "case_ids": [str(uuid4()), str(uuid4())],
+        "dossier_nrs": ["2024-0001", "2024-0002"],
     }
     url = reverse("caseaccess-transfer")
 
@@ -313,6 +315,24 @@ def test_transfer_case_fail_required_failure(client, snapshot):
         "new_assignees": [],
         "case_ids": [],
     }
+
+    response = client.post(url, data=data, headers={"CONTENT-TYPE": "application/json"})
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert response.json() == snapshot
+
+
+def test_transfer_case_fail_unequal_list_len(
+    client, case_access_factory, identity_factory, mailoutbox, snapshot
+):
+    access = case_access_factory(email=None, identity=identity_factory())
+
+    data = {
+        "to_remove_assignees": [],
+        "new_assignees": [str(access.identity.pk)],
+        "case_ids": [access.case_id],
+        "dossier_nrs": ["2024-0001", "2024-0002"],
+    }
+    url = reverse("caseaccess-transfer")
 
     response = client.post(url, data=data, headers={"CONTENT-TYPE": "application/json"})
     assert response.status_code == status.HTTP_400_BAD_REQUEST
