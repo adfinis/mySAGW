@@ -141,17 +141,15 @@ export default class IdentityFormComponent extends Component {
     try {
       let message = this.intl.t("components.identity-form.delete.prompt");
 
-      if (this.args.identity.idpId) {
-        const accesses = yield this.store.query("case-access", {
-          filter: { idpIds: this.args.identity.idpId },
-        });
-        message += `\n${this.intl.t(
-          "components.identity-form.delete.promptInfo",
-          {
-            caseAmount: accesses.length,
-          },
-        )}`;
-      }
+      const accesses = yield this.store.query("case-access", {
+        filter: { identityIds: this.args.identity.id },
+      });
+      message += `\n${this.intl.t(
+        "components.identity-form.delete.promptInfo",
+        {
+          caseAmount: accesses.length,
+        },
+      )}`;
 
       const modal = UIkit.modal.confirm(message);
       // We need to add css white-space rule for the new line
