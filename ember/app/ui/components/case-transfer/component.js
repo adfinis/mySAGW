@@ -15,17 +15,7 @@ export default class CaseTransfer extends Component {
 
   @action
   selectNewAssignees(value) {
-    this.newAssignees = value.map((assignee) => assignee.idpId);
-  }
-
-  idpIdsToIds(idpIds) {
-    const idpIdSet = new Set(idpIds);
-    return this.store.peekAll("identity").reduce((ids, identity) => {
-      if (idpIdSet.has(identity.idpId)) {
-        return ids.push(identity.id), ids;
-      }
-      return ids;
-    }, []);
+    this.newAssignees = value.map((assignee) => assignee.id);
   }
 
   @action
@@ -43,12 +33,12 @@ export default class CaseTransfer extends Component {
     const body = {
       case_ids: caseIds,
       dossier_nrs: dossierNrs,
-      new_assignees: this.idpIdsToIds(this.newAssignees),
+      new_assignees: this.newAssignees,
       to_remove_assignees: [],
     };
 
     if (this.removeAccess) {
-      body.to_remove_assignees = this.idpIdsToIds(this.args.toRemove);
+      body.to_remove_assignees = this.args.toRemove;
     }
 
     const headers = adapter.headers;
