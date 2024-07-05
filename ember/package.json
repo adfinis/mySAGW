@@ -33,7 +33,7 @@
     "@projectcaluma/ember-core": "^12.14.0",
     "@projectcaluma/ember-form": "^12.14.0",
     "@projectcaluma/ember-form-builder": "^12.14.0",
-    "@projectcaluma/ember-testing": "^12.14.0",
+    "@projectcaluma/ember-testing": "^12.15.3",
     "@projectcaluma/ember-workflow": "^12.14.0",
     "ember-apollo-client": "^4.1.0",
     "ember-auto-import": "^2.7.2",
