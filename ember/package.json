@@ -36,7 +36,7 @@
     "@projectcaluma/ember-testing": "^12.15.4",
     "@projectcaluma/ember-workflow": "^12.15.4",
     "ember-apollo-client": "^4.1.0",
-    "ember-auto-import": "^2.7.2",
+    "ember-auto-import": "^2.7.4",
     "ember-can": "^4.2.0",
     "ember-changeset": "^4.1.2",
     "ember-changeset-validations": "^4.1.1",
