@@ -63,5 +63,5 @@ def test_migrate_public_localized_interests(transactional_db):  # pragma: no cov
         new_record = new_models[old_record.__class__.__name__].objects.get(
             pk=old_record.pk,
         )
-        assert type(new_record.title) == LocalizedStringValue
+        assert isinstance(new_record.title, LocalizedStringValue)
         assert dict(new_record.title) == {"de": "foo", "en": "", "fr": ""}
