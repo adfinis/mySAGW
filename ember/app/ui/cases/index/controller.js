@@ -106,15 +106,15 @@ export default class CasesIndexController extends TableController {
     return filters;
   });
 
-  async fetchAccesses(idpIds) {
-    if (!idpIds) {
+  async fetchAccesses(ids) {
+    if (!ids) {
       return [];
     }
 
     try {
       const accesses = (
         await this.store.query("case-access", {
-          filter: { idpIds: idpIds.join(",") },
+          filter: { identityIds: ids.join(",") },
         })
       ).map((access) => access.get("caseId"));
 
