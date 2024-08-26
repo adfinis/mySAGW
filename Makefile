@@ -14,11 +14,11 @@ start: ## Start the development server
 
 .PHONY: api-test
 api-test: ## Test the backend
-	@docker compose run --rm api poetry run pytest --no-cov-on-fail --cov -vv
+	@docker compose run --rm api pytest --no-cov-on-fail --cov -vv
 
 .PHONY: api-lint
 api-lint: ## Lint the backend
-	@docker compose run --rm api sh -c "poetry run ruff format --diff . && poetry run ruff check ."
+	@docker compose run --rm api sh -c "ruff format --diff . && ruff check ."
 
 .PHONY: api-bash
 api-bash: ## Shell into the backend
@@ -26,20 +26,20 @@ api-bash: ## Shell into the backend
 
 .PHONY: api-shell_plus
 api-shell_plus: ## Run shell_plus
-	@docker compose run --rm api poetry run ./manage.py shell_plus
+	@docker compose run --rm api ./manage.py shell_plus
 
 .PHONY: api-dev-server
 api-dev-server: ## Start backend dev server
 	@docker compose stop api
-	@docker compose run --user root --use-aliases --service-ports api bash -c 'pip install pdbpp && poetry run ./manage.py runserver 0.0.0.0:8000'
+	@docker compose run --user root --use-aliases --service-ports api bash -c 'pip install pdbpp && ./manage.py runserver 0.0.0.0:8000'
 
 .PHONY: makemigrations
 makemigrations: ## Make django migrations
-	@docker compose run --rm api poetry run ./manage.py makemigrations
+	@docker compose run --rm api ./manage.py makemigrations
 
 .PHONY: migrate
 migrate: ## Migrate django
-	@docker compose run --rm api poetry run ./manage.py migrate
+	@docker compose run --rm api ./manage.py migrate
 
 .PHONY: dbshell
 dbshell: ## Start a psql shell

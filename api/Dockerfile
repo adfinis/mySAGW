@@ -1,38 +1,66 @@
-FROM python:3.9
+FROM python:3.12-alpine AS base
 
-# needs to be set for users with manually set UID
-ENV HOME=/home/mysagw
+RUN apk update --no-cache && \
+    apk upgrade --no-cache && \
+    apk add wait4ports shadow libpq-dev --no-cache && \
+    useradd -m -r -u 1001 mysagw && \
+    apk del shadow && \
+    rm -rf /var/cache/apk/*
 
-ENV PYTHONUNBUFFERED=1
-ENV DJANGO_SETTINGS_MODULE mysagw.settings
-ENV APP_HOME=/app
-
-RUN mkdir -p /app \
-&& useradd -u 901 -r mysagw --create-home \
-# all project specific folders need to be accessible by newly created user but also for unknown users (when UID is set manually). Such users are in group root.
-&& chown -R mysagw:root /home/mysagw \
-&& chmod -R 770 /home/mysagw \
-&& apt-get update && apt-get install -y --no-install-recommends \
-    wait-for-it \
-    # needed for psycopg2
-    libpq-dev \
-&& pip install -U poetry
-
-USER mysagw
-
-WORKDIR $APP_HOME
-
-ARG INSTALL_DEV_DEPENDENCIES=false
-COPY pyproject.toml poetry.lock $APP_HOME/
-RUN if [ "$INSTALL_DEV_DEPENDENCIES" = "true" ]; then poetry install --with dev; else poetry install; fi
-
-COPY . $APP_HOME
+ENV DJANGO_SETTINGS_MODULE=mysagw.settings \
+    PYTHONFAULTHANDLER=1 \
+    PYTHONHASHSEED=random \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PIP_NO_CACHE_DIR=off \
+    PIP_DISABLE_PIP_VERSION_CHECK=on \
+    PIP_DEFAULT_TIMEOUT=100
 
 EXPOSE 8000
 
+FROM base AS build
+
+WORKDIR /app
+
+COPY . ./
+
+ENV POETRY_NO_INTERACTION=1 \
+    POETRY_VIRTUALENVS_CREATE=false
+
+RUN pip install -U poetry
+
+FROM build AS wheel
+
+WORKDIR /app
+
+RUN poetry build -f wheel && mv ./dist/*.whl /tmp/ && pip uninstall -y poetry
+
+FROM build AS dev
+
+WORKDIR /app
+
+RUN poetry install --no-root
+
+USER 1001
+
 CMD [\
     "/bin/sh", "-c", \
-    "wait-for-it $DATABASE_HOST:${DATABASE_PORT:-5432} -- \
-    poetry run ./manage.py migrate && \
-    exec poetry run gunicorn --workers 10 --access-logfile - --limit-request-line 16384 --bind 0.0.0.0:8000 mysagw.wsgi" \
+    "wait4ports -s 15 tcp://${DATABASE_HOST:-db}:${DATABASE_PORT:-5432} && \
+    ./manage.py migrate --no-input && \
+    ./manage.py runserver 0.0.0.0:8000 -v 3" \
+]
+
+FROM base AS prod
+
+COPY manage.py /usr/local/bin
+COPY --from=wheel /tmp/*.whl /tmp/
+
+RUN pip install /tmp/*.whl && rm /tmp/*.whl
+
+USER 1001
+
+CMD [\
+    "/bin/sh", "-c", \
+    "wait4ports -s 15 tcp://${DATABASE_HOST:-db}:${DATABASE_PORT:-5432} && \
+    manage.py migrate --no-input && \
+    gunicorn --workers 10 --access-logfile - --limit-request-line 16384 --bind :8000 mysagw.wsgi" \
 ]
