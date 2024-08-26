@@ -19,7 +19,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  IMAGE_NAME: adfinis/mysagw
+  IMAGE_NAME: ${{ github.repository }}
   REGISTRY: ghcr.io
 
 jobs:
@@ -27,6 +27,14 @@ jobs:
   # See also https://docs.docker.com/build/ci/github-actions/
   container-registry:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - image: ${{ github.repository }}
+            path: api
+          - image: ${{ github.repository }}-caluma
+            path: caluma
     permissions:
       packages: write
       contents: read
@@ -49,7 +57,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ matrix.image }}
           tags: |
             type=raw,value=dev,enable={{is_default_branch}}
             type=semver,pattern={{version}}
@@ -59,7 +67,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: "{{defaultContext}}:api"
+          context: "{{defaultContext}}:${{ matrix.path }}"
           file: ./Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
