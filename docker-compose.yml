@@ -9,7 +9,7 @@ services:
       - "5432:5432"
 
   api:
-    image: adfinis-sygroup/mysagw
+    image: ghcr.io/adfinis/mysagw:latest
     environment:
       - DATABASE_HOST=db
       - DATABASE_PORT=5432

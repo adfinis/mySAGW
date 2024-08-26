@@ -5,8 +5,7 @@ services:
     restart: unless-stopped
 
   api:
-    build:
-      context: ./api/
+    image: ghcr.io/adfinis/mysagw:0.1.0
     env_file: ./.envs/.staging/.api
     restart: unless-stopped
 
