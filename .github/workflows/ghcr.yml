@@ -57,7 +57,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ matrix.image }}
+          images: ${{ env.REGISTRY }}/${{ matrix.image }}
           tags: |
             type=raw,value=dev,enable={{is_default_branch}}
             type=semver,pattern={{version}}
