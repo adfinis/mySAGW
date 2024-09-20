@@ -19,8 +19,7 @@ module.exports = function (environment) {
       userinfoEndpoint: "/userinfo",
       afterLogoutUri: "/login",
       host:
-        process.env.OIDC_HOST ||
-        "https://mysagw.local/auth/realms/mysagw/protocol/openid-connect",
+        process.env.OIDC_HOST || "/auth/realms/mysagw/protocol/openid-connect",
       enablePkce: true,
     },
     localizedModel: {
@@ -179,6 +178,9 @@ module.exports = function (environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
+    ENV["ember-simple-auth-oidc"].host =
+      process.env.OIDC_HOST ||
+      "https://mysagw.local/auth/realms/mysagw/protocol/openid-connect";
   }
 
   if (environment === "test") {
