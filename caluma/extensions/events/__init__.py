@@ -2,4 +2,4 @@
 # automatically without having to define each file as caluma event receiver
 # module
 
-from . import case, work_item  # noqa: F401
+from . import case, form, work_item  # noqa: F401

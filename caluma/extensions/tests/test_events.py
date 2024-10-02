@@ -1,6 +1,7 @@
 import pytest
 from django.utils import timezone
 
+from caluma.caluma_form.api import save_answer
 from caluma.caluma_form.models import Question
 from caluma.caluma_workflow.api import (
     complete_work_item,
@@ -572,3 +573,167 @@ def test_redo_define_amount(
         task_id=expected_work_item_task,
         status=WorkItem.STATUS_READY,
     ).exists()
+
+
+@pytest.fixture
+def add_table_with_summary(
+    _caluma_data,
+    form_factory,
+    question_factory,
+    form_question_factory,
+    case_access_event_mock,
+    document_review_case,
+):
+    main_doc = document_review_case.document
+    main_form = main_doc.form
+
+    row_form = form_factory(slug="row_form")
+    table_question = question_factory(
+        type=Question.TYPE_TABLE,
+        slug="table",
+        row_form=row_form,
+        is_required="true",
+        is_hidden="false",
+        meta={"summary-question": "summary", "summary-mode": "csv"},
+    )
+    form_question_factory(form=main_form, question=table_question)
+    row_question_1 = question_factory(
+        type=Question.TYPE_FLOAT,
+        slug="row1",
+        is_required="true",
+        is_hidden="false",
+    )
+    form_question_factory(form=row_form, question=row_question_1)
+
+    row_question_2 = question_factory(
+        type=Question.TYPE_TEXT,
+        slug="row2",
+        is_required="true",
+        is_hidden="false",
+    )
+    form_question_factory(form=row_form, question=row_question_2)
+
+    row_question_3 = question_factory(
+        type=Question.TYPE_TEXT,
+        slug="row3",
+        is_required="true",
+        is_hidden="false",
+    )
+    form_question_factory(form=row_form, question=row_question_3)
+
+    question_factory(type=Question.TYPE_TEXTAREA, slug="summary", is_hidden="true")
+    return main_doc, main_form, table_question, row_form, row_question_1, row_question_3
+
+
+def test_table_summary(
+    document_factory,
+    case_access_event_mock,
+    add_table_with_summary,
+):
+    main_doc, main_form, table_question, row_form, row_question_1, row_question_3 = (
+        add_table_with_summary
+    )
+
+    # save first row document in TableAnswer
+    row_document_1 = document_factory(form=row_form)
+    save_answer(question=table_question, document=main_doc, value=[row_document_1.pk])
+    assert (
+        main_doc.answers.get(question_id="summary").value == "row1;row2;row3\r\n;;\r\n"
+    )
+
+    # save answer to first row question
+    save_answer(value=23.5, question=row_question_1, document=row_document_1)
+    assert (
+        main_doc.answers.get(question_id="summary").value
+        == "row1;row2;row3\r\n23.5;;\r\n"
+    )
+
+    # save answer to third row question and test quoting
+    save_answer(
+        value='bar;baz\r\nlorem "ipsem"; \'dolor\n',
+        question=row_question_3,
+        document=row_document_1,
+    )
+    assert (
+        main_doc.answers.get(question_id="summary").value
+        == 'row1;row2;row3\r\n23.5;;"bar;baz\r\nlorem ""ipsem""; \'dolor\n"\r\n'
+    )
+
+    # override answer to third row question
+    save_answer(value="bar", question=row_question_3, document=row_document_1)
+    assert (
+        main_doc.answers.get(question_id="summary").value
+        == "row1;row2;row3\r\n23.5;;bar\r\n"
+    )
+
+    # save second row document in TableAnswer
+    row_document_2 = document_factory(form=row_form)
+    save_answer(
+        question=table_question,
+        document=main_doc,
+        value=[row_document_1.pk, row_document_2.pk],
+    )
+    assert (
+        main_doc.answers.get(question_id="summary").value
+        == "row1;row2;row3\r\n23.5;;bar\r\n;;\r\n"
+    )
+
+    # save answer to first row question to second row document
+    save_answer(value=23.5, question=row_question_1, document=row_document_2)
+    assert (
+        main_doc.answers.get(question_id="summary").value
+        == "row1;row2;row3\r\n23.5;;bar\r\n23.5;;\r\n"
+    )
+
+
+def test_table_summary_errors(
+    caplog,
+    document_factory,
+    case_access_event_mock,
+    add_table_with_summary,
+):
+    main_doc, main_form, table_question, row_form, row_question_1, row_question_3 = (
+        add_table_with_summary
+    )
+
+    table_question.meta = {}
+    table_question.save()
+
+    # save a row document in TableAnswer
+    # this should not try to make a summary and should not error
+    row_document = document_factory(form=row_form)
+    save_answer(question=table_question, document=main_doc, value=[row_document.pk])
+
+    # save row document with faulty summary config
+    table_question.meta = {"summary-question": "summary"}
+    table_question.save()
+    row_document = document_factory(form=row_form)
+    save_answer(question=table_question, document=main_doc, value=[row_document.pk])
+    assert len(caplog.records) == 1
+    assert (
+        caplog.messages[0]
+        == "Updating table summary: missing info in TQ meta: sq=summary, sm=None"
+    )
+
+    # save row document with faulty summary config
+    table_question.meta = {"summary-question": "summary", "summary-mode": "missing"}
+    table_question.save()
+    row_document = document_factory(form=row_form)
+    save_answer(question=table_question, document=main_doc, value=[row_document.pk])
+    assert len(caplog.records) == 2
+    assert (
+        caplog.messages[1]
+        == f'Updating table summary: summary mode "missing" does not exist. '
+        f"Must be one of {settings.TABLE_SUMMARY_MODES}"
+    )
+
+    # save row document with faulty summary config
+    table_question.meta = {"summary-mode": "csv"}
+    table_question.save()
+    row_document = document_factory(form=row_form)
+    save_answer(question=table_question, document=main_doc, value=[row_document.pk])
+    assert len(caplog.records) == 3
+    assert (
+        caplog.messages[2]
+        == "Updating table summary: missing info in TQ meta: sq=None, sm=csv"
+    )

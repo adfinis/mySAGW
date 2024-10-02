@@ -184,3 +184,5 @@ settings.LOGGING = {
         },
     },
 }
+
+settings.TABLE_SUMMARY_MODES = ["csv"]
