@@ -1,0 +1,87 @@
+---
+name: Release
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  application:
+    if: "!contains(github.ref_name, '-')"
+    runs-on: ubuntu-latest
+    name: Release Application
+    steps:
+      - run: |
+          echo "Application v${{ github.ref_name }} :tada:"
+
+  service:
+    if: contains(github.ref_name, '-')
+    runs-on: ubuntu-latest
+    name: Release Service
+    env:
+      TAG_NAME: ${{ github.ref_name }}
+
+    permissions:
+      actions: none
+      checks: none
+      contents: none
+      deployments: none
+      issues: none
+      packages: write
+      pull-requests: none
+      repository-projects: none
+      security-events: write
+      statuses: none
+      id-token: none
+
+    steps:
+      - id: parse-tagname
+        run: |
+          echo "service=${TAG_NAME%-*}" >> "$GITHUB_OUTPUT"
+          echo "version=${TAG_NAME#*-}" >> "$GITHUB_OUTPUT"
+
+      - id: repo
+        run: |
+          echo "lower=$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ steps.repo.outputs.lower }}/${{ steps.parse-tagname.outputs.service }}
+          flavor: |
+            latest=auto
+          tags: |
+            type=semver,pattern={{version}},value=${{ steps.parse-tagname.outputs.version }}
+            type=semver,pattern={{major}}.{{minor}},value=${{ steps.parse-tagname.outputs.version }}
+            type=semver,pattern={{major}},value=${{ steps.parse-tagname.outputs.version }}
+          labels: |
+            org.opencontainers.image.title=${{ steps.parse-tagname.outputs.service }}
+            org.opencontainers.image.description=${{ github.event.repository.description }}
+            org.opencontainers.image.url=${{ github.event.repository.html_url }}
+            org.opencontainers.image.source=${{ github.event.repository.clone_url }}
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.licenses=${{ github.event.repository.license.spdx_id }}
+
+      - name: build and push ${{ steps.parse-tagname.outputs.service }} image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./${{ steps.parse-tagname.outputs.service }}/
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: |
+            ${{ steps.meta.outputs.labels }}

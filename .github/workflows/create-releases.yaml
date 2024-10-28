@@ -1,0 +1,84 @@
+---
+name: Create Releases
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - compose.yaml
+      - ember/package.json
+      - api/pyproject.toml
+      - caluma/version.txt
+
+jobs:
+  calculate-fetch-depth:
+    runs-on: ubuntu-latest
+    name: Calculate Fetch Depth
+
+    outputs:
+      depth: ${{ steps.depth.outputs.depth }}
+
+    steps:
+      - name: Calculate Fetch Depth
+        id: depth
+        env:
+          COMMITS: ${{ toJSON(github.event.commits) }}
+        run: |
+          echo "depth=$(echo $COMMITS | jq '. | length + 1')" >> "$GITHUB_OUTPUT"
+
+  create-tags:
+    runs-on: ubuntu-latest
+    name: Create Tags
+    needs: calculate-fetch-depth
+
+    permissions:
+      contents: write
+
+    strategy:
+      matrix:
+        config:
+          - name: api
+            version-file: api/pyproject.toml
+            command: python -c 'import sys; import tomllib; print(tomllib.loads(sys.stdin.read())["tool"]["poetry"]["version"])'
+          - name: ember
+            version-file: ember/package.json
+            command: jq -r '.version'
+          - name: caluma
+            version-file: caluma/version.txt
+            command: cat
+          - name: mysagw
+            version-file: compose.yaml
+            command: yq '.x-version'
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: ${{ needs.calculate-fetch-depth.outputs.depth }}
+
+      - name: Install python
+        if: contains(matrix.config.version-file, 'toml')
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Get new version
+        id: after
+        run: |
+          echo "version=$(cat ${{ matrix.config.version-file }} | ${{ matrix.config.command }})" >> "$GITHUB_OUTPUT"
+
+      - name: Get previous version
+        id: before
+        run: |
+          echo "version=$(git show ${{ github.event.before }}:${{ matrix.config.version-file }} | ${{ matrix.config.command }})" >> "$GITHUB_OUTPUT"
+
+      - name: Create release
+        if: steps.after.outputs.version != steps.before.outputs.version
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+        with:
+          tag_name: ${{ matrix.config.name == 'mysagw' && steps.after.outputs.version || format('{0}-{1}', matrix.config.name, steps.after.outputs.version) }}
+          release_name: ${{ matrix.config.name == 'mysagw' && steps.after.outputs.version || format('{0}-{1}', matrix.config.name, steps.after.outputs.version) }}
+          body: ""
+          draft: false
+          prerelease: false
