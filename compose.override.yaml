@@ -1,3 +1,4 @@
+---
 services:
   db:
     env_file: ./.envs/.local/.postgres

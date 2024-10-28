@@ -1,5 +1,5 @@
+---
 services:
-
   db:
     env_file: ./.envs/.staging/.postgres
     restart: unless-stopped
