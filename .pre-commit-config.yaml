@@ -11,7 +11,7 @@ repos:
         stages: [commit]
         name: api-ruff
         language: system
-        entry: /bin/sh -c 'cd ./api/ && ruff check . --show-source --fix'
+        entry: /bin/sh -c 'cd ./api/ && ruff check . --output-format=full --fix'
         types: [python]
       - id: caluma-ruff-format
         stages: [ commit ]
@@ -23,7 +23,7 @@ repos:
         stages: [ commit ]
         name: caluma-ruff
         language: system
-        entry: /bin/sh -c 'cd ./caluma/ && ruff check . --config ../api/pyproject.toml --show-source --fix'
+        entry: /bin/sh -c 'cd ./caluma/ && ruff check . --config ../api/pyproject.toml --output-format=full --fix'
         types: [ python ]
       - id: gitlint
         stages: [commit-msg]
