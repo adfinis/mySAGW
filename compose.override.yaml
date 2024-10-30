@@ -46,6 +46,9 @@ services:
     env_file: ./.envs/.local/.keycloak
     command: start-dev
 
+  ember:
+    build: ./ember
+
   mail:
     image: mailhog/mailhog
     environment:
