@@ -1,4 +1,4 @@
-FROM ghcr.io/projectcaluma/caluma:10.1.1
+FROM ghcr.io/projectcaluma/caluma:10.5.1
 
 ENV PATH="${HOME}/.local/bin:${PATH}"
 
