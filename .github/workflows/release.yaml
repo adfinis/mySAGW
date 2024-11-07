@@ -31,7 +31,7 @@ jobs:
       packages: write
       pull-requests: none
       repository-projects: none
-      security-events: write
+      security-events: none
       statuses: none
       id-token: none
 
