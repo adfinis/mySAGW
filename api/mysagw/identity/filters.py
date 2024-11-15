@@ -14,6 +14,7 @@ from mysagw.identity import models
 
 
 class IdentityFilterSet(FilterSet):
+    ids = CharMultiValueFilter(field_name="pk")
     idp_ids = CharMultiValueFilter(field_name="idp_id")
     has_idp_id = BooleanFilter(field_name="idp_id", lookup_expr="isnull", exclude=True)
     member_of_organisations = CharMultiValueFilter(
