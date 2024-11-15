@@ -1,14 +1,11 @@
 import { visit, fillIn, click } from "@ember/test-helpers";
-import { setupMirage } from "ember-cli-mirage/test-support";
-import { setupIntl } from "ember-intl/test-support";
-import { setupApplicationTest } from "ember-qunit";
 import { authenticateSession } from "ember-simple-auth/test-support";
 import { module, test } from "qunit";
 
+import { setupApplicationTest } from "mysagw/tests/helpers";
+
 module("Acceptance | snippets", function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
-  setupIntl(hooks);
 
   hooks.beforeEach(async function () {
     this.server.create("snippet", { body: { de: "Lorem ipsum" } });

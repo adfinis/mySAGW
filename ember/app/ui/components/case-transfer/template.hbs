@@ -21,11 +21,12 @@
     </div>
     <div class="uk-margin">
       <label class="uk-form-label">
-        <Input
-          @type="checkbox"
-          @checked={{this.removeAccess}}
-          disabled={{not @toRemove}}
+        <input
+          type="checkbox"
+          checked={{this.removeAccess}}
+          disabled={{not @toRemove.length}}
           class="uk-checkbox"
+          {{on "click" (fn (mut this.removeAccess) (not this.removeAccess))}}
         />
         {{t "documents.bulkEdit.transfer.removeAssignees"}}
       </label>

@@ -1,3 +1,5 @@
+import { setupMirage } from "ember-cli-mirage/test-support";
+import { setupIntl } from "ember-intl/test-support";
 import {
   setupApplicationTest as upstreamSetupApplicationTest,
   setupRenderingTest as upstreamSetupRenderingTest,
@@ -23,20 +25,18 @@ function setupApplicationTest(hooks, options) {
   // This is also a good place to call test setup functions coming
   // from other addons:
   //
-  // setupIntl(hooks); // ember-intl
-  // setupMirage(hooks); // ember-cli-mirage
+  setupIntl(hooks, "de");
+  setupMirage(hooks);
 }
 
 function setupRenderingTest(hooks, options) {
   upstreamSetupRenderingTest(hooks, options);
-
-  // Additional setup for rendering tests can be done here.
+  setupIntl(hooks, "de");
 }
 
 function setupTest(hooks, options) {
   upstreamSetupTest(hooks, options);
-
-  // Additional setup for unit tests can be done here.
+  setupIntl(hooks, "de");
 }
 
 export { setupApplicationTest, setupRenderingTest, setupTest };

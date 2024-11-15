@@ -10,7 +10,7 @@ export default class CfFieldInputDateComponent extends Component {
   @tracked flatpickrRef = null;
 
   get locale() {
-    return this.intl.primaryLocale.split("-")[0];
+    return this.intl.primaryLocale;
   }
 
   @action
