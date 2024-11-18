@@ -1,9 +1,10 @@
 import { render, click, fillIn } from "@ember/test-helpers";
 import { hbs } from "ember-cli-htmlbars";
 import { setupMirage } from "ember-cli-mirage/test-support";
-import { setupRenderingTest } from "ember-qunit";
 import { authenticateSession } from "ember-simple-auth/test-support";
 import { module, test } from "qunit";
+
+import { setupRenderingTest } from "mysagw/tests/helpers";
 
 module("Integration | Component | identity-phone-numbers", function (hooks) {
   setupRenderingTest(hooks);

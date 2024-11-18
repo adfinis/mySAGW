@@ -98,12 +98,11 @@
       {{t "work-items.description"}}
     </label>
     <div class="uk-form-controls">
-      <Textarea
-        class="uk-input"
+      <textarea
+        class="uk-textarea"
         id="description"
-        @value={{this.workItem.task.description}}
         disabled
-      />
+      >{{this.workItem.task.description}}</textarea>
     </div>
   </div>
 

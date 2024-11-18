@@ -133,7 +133,7 @@
       {{/if}}
       <li class="language-select">
         <a class="uk-link-reset" href="#">
-          {{this.intl.locale}}
+          {{this.intl.primaryLocale}}
           <UkIcon @icon="chevron-down" />
         </a>
         <ul
@@ -271,7 +271,7 @@
           href="#"
           data-test-locale
         >
-          {{this.intl.locale}}
+          {{this.intl.primaryLocale}}
           <UkIcon @icon="chevron-down" />
         </a>
         <ul
@@ -346,7 +346,7 @@
         {{else}}
           <p>{{t "snippets.index.empty"}}</p>
         {{/each}}
-        {{#if (not (eq this.pageNumber this.totalPages))}}
+        {{#if (not-eq this.pageNumber this.totalPages)}}
           <a {{on "click" this.loadMoreSnippets}} href="#">
             {{t "components.nav-bar.snippet.load-more"}}
           </a>

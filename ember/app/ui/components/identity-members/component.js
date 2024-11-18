@@ -21,7 +21,7 @@ export default class IdentityMembersComponent extends Component {
   }
 
   get locale() {
-    return this.intl.locale[0];
+    return this.intl.primaryLocale;
   }
 
   membersResource = trackedFunction(this, async () => {

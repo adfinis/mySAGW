@@ -32,7 +32,7 @@ export default class AddressModel extends LocalizedModel {
   }
 
   get countryName() {
-    const countries = new Intl.DisplayNames(this.intl.locale, {
+    const countries = new Intl.DisplayNames(this.intl.primaryLocale, {
       type: "region",
     });
     return countries.of(this.country);
