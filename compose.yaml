@@ -62,7 +62,7 @@ services:
       - KC_HTTP_RELATIVE_PATH=/auth
       - KC_PROXY=edge
     # import: docker compose exec keycloak /opt/keycloak/bin/kc.sh import --override true --file /opt/keycloak/data/import/test-config.json
-    # export: docker compose run keycloak /opt/keycloak/bin/kc.sh export --file /opt/keycloak/data/import/test-config.json
+    # export: docker compose run --rm keycloak /opt/keycloak/bin/kc.sh export --file /opt/keycloak/data/import/test-config.json
     command: start
 
   ember:
