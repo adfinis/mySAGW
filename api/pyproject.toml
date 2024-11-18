@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mysagw"
-version = "0.1.0"
+version = "0.1.1"
 description = "Application management for SAGW"
 repository = "https://github.com/adfinis/mySAGW"
 authors = ["Adfinis"]
