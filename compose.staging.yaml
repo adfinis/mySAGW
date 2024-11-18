@@ -5,7 +5,6 @@ services:
     restart: unless-stopped
 
   api:
-    image: ghcr.io/adfinis/mysagw:0.1.0
     env_file: ./.envs/.staging/.api
     restart: unless-stopped
 
@@ -22,9 +21,6 @@ services:
     restart: unless-stopped
 
   ember:
-    build:
-      args:
-        OIDC_HOST: "${OIDC_HOST:?Set OIDC_HOST env variable}"
     restart: unless-stopped
 
   minio:
