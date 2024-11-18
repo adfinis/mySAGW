@@ -5,8 +5,6 @@ services:
     restart: unless-stopped
 
   api:
-    build:
-      context: ./api/
     env_file: ./.envs/.production/.api
     restart: unless-stopped
 
@@ -23,9 +21,6 @@ services:
     restart: unless-stopped
 
   ember:
-    build:
-      args:
-        OIDC_HOST: "${OIDC_HOST:?Set OIDC_HOST env variable}"
     restart: unless-stopped
 
   minio:
