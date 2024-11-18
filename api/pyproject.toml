@@ -30,7 +30,7 @@ pyexcel-xlsx = "^0.6.0"
 pypdf = "^4.1.0"
 requests = "^2.32.2"
 reportlab = "^4.1.0"
-setuptools = "^74.1.2"  # needed fopr django-excel
+setuptools = "^75.5.0"  # needed fopr django-excel
 
 [tool.poetry.group.dev.dependencies]
 django-extensions = "^3.2.3"
