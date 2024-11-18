@@ -26,7 +26,7 @@
           checked={{this.removeAccess}}
           disabled={{not @toRemove.length}}
           class="uk-checkbox"
-          {{on "click" (fn (mut this.removeAccess) (not this.removeAccess))}}
+          {{on "click" (toggle "removeAccess" this)}}
         />
         {{t "documents.bulkEdit.transfer.removeAssignees"}}
       </label>

@@ -35,6 +35,11 @@ module.exports = function (defaults) {
         require.resolve("ember-concurrency/async-arrow-task-transform"),
       ],
     },
+    autoImport: {
+      alias: {
+        "ember-composable-helpers": "@nullvoxpopuli/ember-composable-helpers",
+      },
+    },
   });
 
   // Use `app.import` to add additional libraries to the generated

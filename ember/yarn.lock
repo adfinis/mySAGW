@@ -1959,7 +1959,7 @@
     broccoli-funnel "^3.0.8"
     semver "^7.3.8"
 
-"@embroider/addon-shim@^1.8.9", "@embroider/addon-shim@^1.9.0":
+"@embroider/addon-shim@^1.8.8", "@embroider/addon-shim@^1.8.9", "@embroider/addon-shim@^1.9.0":
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/@embroider/addon-shim/-/addon-shim-1.9.0.tgz#f729cfaf0f2d5f3c178808a546251743335c62f4"
   integrity sha512-fMzayl/licUL8VRAy4qXROKcYvHwUbV8aTh4m97L5/MRuVpxbcAy92DGGTqx5OBKCSQN3gMg+sUKeE6AviefpQ==
@@ -2661,6 +2661,13 @@
     node-gyp "^9.0.0"
     read-package-json-fast "^2.0.3"
     which "^2.0.2"
+
+"@nullvoxpopuli/ember-composable-helpers@^5.2.6":
+  version "5.2.6"
+  resolved "https://registry.yarnpkg.com/@nullvoxpopuli/ember-composable-helpers/-/ember-composable-helpers-5.2.6.tgz#05ebf92d955c25861886033e321224113a73b80a"
+  integrity sha512-/cphEawPkbg1Q7DOgsUFftCSm+hDV+phryNsWqZZ7trDtjjI8wRuhIendtEVh8X5KPg8CGG6z6Ht1P4O74iyPQ==
+  dependencies:
+    "@embroider/addon-shim" "^1.8.8"
 
 "@pkgjs/parseargs@^0.11.0":
   version "0.11.0"
