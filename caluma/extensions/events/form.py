@@ -86,6 +86,22 @@ def update_table_summary_from_row(instance, *args, **kwargs):
     update_table_summary(instance=ad)
 
 
+@on(post_save, sender=caluma_form_models.Question, raise_exception=True)
+@transaction.atomic
+def update_table_summary_from_table_question(instance, *args, **kwargs):
+    if instance.type != "table" or "summary-question" not in instance.meta:
+        return
+
+    # Call `update_table_summary()` for one AnswerDocument per every existing Answer
+    updated_answers = []
+    for ad in caluma_form_models.AnswerDocument.objects.filter(
+        answer__question_id=instance.slug
+    ):
+        if ad.answer not in updated_answers:
+            updated_answers.append(ad.answer)
+            update_table_summary(instance=ad)
+
+
 def _make_csv_summary(table_answer):
     def get_lines(answer_docs, row_question_slugs):
         for ad in answer_docs:
