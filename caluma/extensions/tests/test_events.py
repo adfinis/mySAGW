@@ -622,6 +622,7 @@ def add_table_with_summary(
     form_question_factory(form=row_form, question=row_question_3)
 
     question_factory(type=Question.TYPE_TEXTAREA, slug="summary", is_hidden="true")
+    question_factory(type=Question.TYPE_TEXTAREA, slug="summary2", is_hidden="true")
     return main_doc, main_form, table_question, row_form, row_question_1, row_question_3
 
 
@@ -685,6 +686,13 @@ def test_table_summary(
         == "row1;row2;row3\r\n23.5;;bar\r\n23.5;;\r\n"
     )
 
+    table_question.meta = {"summary-question": "summary2", "summary-mode": "csv"}
+    table_question.save()
+    assert (
+        main_doc.answers.get(question_id="summary2").value
+        == "row1;row2;row3\r\n23.5;;bar\r\n23.5;;\r\n"
+    )
+
 
 def test_table_summary_errors(
     caplog,
@@ -707,22 +715,33 @@ def test_table_summary_errors(
     # save row document with faulty summary config
     table_question.meta = {"summary-question": "summary"}
     table_question.save()
-    row_document = document_factory(form=row_form)
-    save_answer(question=table_question, document=main_doc, value=[row_document.pk])
     assert len(caplog.records) == 1
     assert (
         caplog.messages[0]
+        == "Updating table summary: missing info in TQ meta: sq=summary, sm=None"
+    )
+    row_document = document_factory(form=row_form)
+    save_answer(question=table_question, document=main_doc, value=[row_document.pk])
+    assert len(caplog.records) == 2
+    assert (
+        caplog.messages[1]
         == "Updating table summary: missing info in TQ meta: sq=summary, sm=None"
     )
 
     # save row document with faulty summary config
     table_question.meta = {"summary-question": "summary", "summary-mode": "missing"}
     table_question.save()
+    assert len(caplog.records) == 3
+    assert (
+        caplog.messages[2]
+        == f'Updating table summary: summary mode "missing" does not exist. '
+        f"Must be one of {settings.TABLE_SUMMARY_MODES}"
+    )
     row_document = document_factory(form=row_form)
     save_answer(question=table_question, document=main_doc, value=[row_document.pk])
-    assert len(caplog.records) == 2
+    assert len(caplog.records) == 4
     assert (
-        caplog.messages[1]
+        caplog.messages[3]
         == f'Updating table summary: summary mode "missing" does not exist. '
         f"Must be one of {settings.TABLE_SUMMARY_MODES}"
     )
@@ -732,8 +751,8 @@ def test_table_summary_errors(
     table_question.save()
     row_document = document_factory(form=row_form)
     save_answer(question=table_question, document=main_doc, value=[row_document.pk])
-    assert len(caplog.records) == 3
+    assert len(caplog.records) == 5
     assert (
-        caplog.messages[2]
+        caplog.messages[4]
         == "Updating table summary: missing info in TQ meta: sq=None, sm=csv"
     )
