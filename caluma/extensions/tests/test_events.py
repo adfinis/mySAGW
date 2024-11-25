@@ -581,6 +581,8 @@ def add_table_with_summary(
     form_factory,
     question_factory,
     form_question_factory,
+    option_factory,
+    question_option_factory,
     case_access_event_mock,
     document_review_case,
 ):
@@ -600,6 +602,7 @@ def add_table_with_summary(
     row_question_1 = question_factory(
         type=Question.TYPE_FLOAT,
         slug="row1",
+        label="row1_label",
         is_required="true",
         is_hidden="false",
     )
@@ -608,17 +611,26 @@ def add_table_with_summary(
     row_question_2 = question_factory(
         type=Question.TYPE_TEXT,
         slug="row2",
+        label="row2_label",
         is_required="true",
         is_hidden="false",
     )
     form_question_factory(form=row_form, question=row_question_2)
 
     row_question_3 = question_factory(
-        type=Question.TYPE_TEXT,
+        type=Question.TYPE_CHOICE,
         slug="row3",
+        label="row3_label",
         is_required="true",
         is_hidden="false",
     )
+    question_option_factory(
+        question=row_question_3, option=option_factory(slug="o1", label="option1 label")
+    )
+    question_option_factory(
+        question=row_question_3, option=option_factory(slug="o2", label="option2 label")
+    )
+
     form_question_factory(form=row_form, question=row_question_3)
 
     question_factory(type=Question.TYPE_TEXTAREA, slug="summary", is_hidden="true")
@@ -639,32 +651,33 @@ def test_table_summary(
     row_document_1 = document_factory(form=row_form)
     save_answer(question=table_question, document=main_doc, value=[row_document_1.pk])
     assert (
-        main_doc.answers.get(question_id="summary").value == "row1;row2;row3\r\n;;\r\n"
+        main_doc.answers.get(question_id="summary").value
+        == "row1_label;row2_label;row3_label\r\n;;\r\n"
     )
 
     # save answer to first row question
     save_answer(value=23.5, question=row_question_1, document=row_document_1)
     assert (
         main_doc.answers.get(question_id="summary").value
-        == "row1;row2;row3\r\n23.5;;\r\n"
+        == "row1_label;row2_label;row3_label\r\n23.5;;\r\n"
     )
 
-    # save answer to third row question and test quoting
+    # save answer to third row question
     save_answer(
-        value='bar;baz\r\nlorem "ipsem"; \'dolor\n',
+        value="o1",
         question=row_question_3,
         document=row_document_1,
     )
     assert (
         main_doc.answers.get(question_id="summary").value
-        == 'row1;row2;row3\r\n23.5;;"bar;baz\r\nlorem ""ipsem""; \'dolor\n"\r\n'
+        == "row1_label;row2_label;row3_label\r\n23.5;;option1 label\r\n"
     )
 
     # override answer to third row question
-    save_answer(value="bar", question=row_question_3, document=row_document_1)
+    save_answer(value="o2", question=row_question_3, document=row_document_1)
     assert (
         main_doc.answers.get(question_id="summary").value
-        == "row1;row2;row3\r\n23.5;;bar\r\n"
+        == "row1_label;row2_label;row3_label\r\n23.5;;option2 label\r\n"
     )
 
     # save second row document in TableAnswer
@@ -676,21 +689,21 @@ def test_table_summary(
     )
     assert (
         main_doc.answers.get(question_id="summary").value
-        == "row1;row2;row3\r\n23.5;;bar\r\n;;\r\n"
+        == "row1_label;row2_label;row3_label\r\n23.5;;option2 label\r\n;;\r\n"
     )
 
-    # save answer to first row question to second row document
+    # save answer to first row question to second row document and test quoting
     save_answer(value=23.5, question=row_question_1, document=row_document_2)
     assert (
         main_doc.answers.get(question_id="summary").value
-        == "row1;row2;row3\r\n23.5;;bar\r\n23.5;;\r\n"
+        == "row1_label;row2_label;row3_label\r\n23.5;;option2 label\r\n23.5;;\r\n"
     )
 
     table_question.meta = {"summary-question": "summary2", "summary-mode": "csv"}
     table_question.save()
     assert (
         main_doc.answers.get(question_id="summary2").value
-        == "row1;row2;row3\r\n23.5;;bar\r\n23.5;;\r\n"
+        == "row1_label;row2_label;row3_label\r\n23.5;;option2 label\r\n23.5;;\r\n"
     )
 
 
