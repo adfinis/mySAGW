@@ -103,37 +103,47 @@ def update_table_summary_from_table_question(instance, *args, **kwargs):
 
 
 def _make_csv_summary(table_answer):
-    def get_lines(answer_docs, row_question_slugs):
-        for ad in answer_docs:
+    def get_answer_value(answer):
+        value = answer.value
+        if options := answer.selected_options:
+            value = ",".join([str(o.label) for o in options])
+        return value
+
+    def get_lines(ads, q_slugs_and_labels):
+        for ad in ads:
             result = {}
             answer_data = {
-                a.question.slug: a.value
-                for a in ad.document.answers.filter(question_id__in=row_question_slugs)
+                a.question.slug: get_answer_value(a)
+                for a in ad.document.answers.filter(
+                    question_id__in=[slug for slug, _ in q_slugs_and_labels]
+                )
             }
-            for question_slug in row_question_slugs:
-                result[question_slug] = answer_data.get(question_slug, "")
+            for question_slug, question_label in q_slugs_and_labels:
+                result[question_label] = answer_data.get(question_slug, "")
             yield result
 
     logger.debug("Making CSV summary for %s", table_answer.question)
     answer_docs = caluma_form_models.AnswerDocument.objects.filter(
         answer=table_answer
     ).order_by("-sort")
-    row_question_slugs = _sorted_form_question_slugs(table_answer.question.row_form)
+    row_question_slugs_and_labels = _sorted_form_question_slugs_and_labels(
+        table_answer.question.row_form
+    )
 
     with io.StringIO() as csvfile:
         writer = csv.DictWriter(
             csvfile,
-            fieldnames=row_question_slugs,
+            fieldnames=[label for _, label in row_question_slugs_and_labels],
             delimiter=";",
             quoting=csv.QUOTE_MINIMAL,
         )
         writer.writeheader()
-        for line in get_lines(answer_docs, row_question_slugs):
+        for line in get_lines(answer_docs, row_question_slugs_and_labels):
             writer.writerow(line)
 
         return csvfile.getvalue()
 
 
-def _sorted_form_question_slugs(form):
+def _sorted_form_question_slugs_and_labels(form):
     fqs = caluma_form_models.FormQuestion.objects.filter(form=form).order_by("-sort")
-    return [fq.question.slug for fq in fqs]
+    return [(fq.question.slug, str(fq.question.label)) for fq in fqs]
