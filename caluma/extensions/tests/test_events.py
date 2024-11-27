@@ -600,7 +600,7 @@ def add_table_with_summary(
     )
     form_question_factory(form=main_form, question=table_question)
     row_question_1 = question_factory(
-        type=Question.TYPE_FLOAT,
+        type=Question.TYPE_DATE,
         slug="row1",
         label="row1_label",
         is_required="true",
@@ -646,6 +646,7 @@ def test_table_summary(
     main_doc, main_form, table_question, row_form, row_question_1, row_question_3 = (
         add_table_with_summary
     )
+    date = timezone.datetime(2024, 1, 1).date()
 
     # save first row document in TableAnswer
     row_document_1 = document_factory(form=row_form)
@@ -656,10 +657,10 @@ def test_table_summary(
     )
 
     # save answer to first row question
-    save_answer(value=23.5, question=row_question_1, document=row_document_1)
+    save_answer(value=date, question=row_question_1, document=row_document_1)
     assert (
         main_doc.answers.get(question_id="summary").value
-        == "row1_label;row2_label;row3_label\r\n23.5;;\r\n"
+        == "row1_label;row2_label;row3_label\r\n2024-01-01;;\r\n"
     )
 
     # save answer to third row question
@@ -670,14 +671,14 @@ def test_table_summary(
     )
     assert (
         main_doc.answers.get(question_id="summary").value
-        == "row1_label;row2_label;row3_label\r\n23.5;;option1 label\r\n"
+        == "row1_label;row2_label;row3_label\r\n2024-01-01;;option1 label\r\n"
     )
 
     # override answer to third row question
     save_answer(value="o2", question=row_question_3, document=row_document_1)
     assert (
         main_doc.answers.get(question_id="summary").value
-        == "row1_label;row2_label;row3_label\r\n23.5;;option2 label\r\n"
+        == "row1_label;row2_label;row3_label\r\n2024-01-01;;option2 label\r\n"
     )
 
     # save second row document in TableAnswer
@@ -689,21 +690,21 @@ def test_table_summary(
     )
     assert (
         main_doc.answers.get(question_id="summary").value
-        == "row1_label;row2_label;row3_label\r\n23.5;;option2 label\r\n;;\r\n"
+        == "row1_label;row2_label;row3_label\r\n2024-01-01;;option2 label\r\n;;\r\n"
     )
 
     # save answer to first row question to second row document and test quoting
-    save_answer(value=23.5, question=row_question_1, document=row_document_2)
+    save_answer(value=date, question=row_question_1, document=row_document_2)
     assert (
         main_doc.answers.get(question_id="summary").value
-        == "row1_label;row2_label;row3_label\r\n23.5;;option2 label\r\n23.5;;\r\n"
+        == "row1_label;row2_label;row3_label\r\n2024-01-01;;option2 label\r\n2024-01-01;;\r\n"
     )
 
     table_question.meta = {"summary-question": "summary2", "summary-mode": "csv"}
     table_question.save()
     assert (
         main_doc.answers.get(question_id="summary2").value
-        == "row1_label;row2_label;row3_label\r\n23.5;;option2 label\r\n23.5;;\r\n"
+        == "row1_label;row2_label;row3_label\r\n2024-01-01;;option2 label\r\n2024-01-01;;\r\n"
     )
 
 
