@@ -104,7 +104,7 @@ def update_table_summary_from_table_question(instance, *args, **kwargs):
 
 def _make_csv_summary(table_answer):
     def get_answer_value(answer):
-        value = answer.value
+        value = answer.value or answer.date
         if options := answer.selected_options:
             value = ",".join([str(o.label) for o in options])
         return value
