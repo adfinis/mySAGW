@@ -617,13 +617,15 @@ def add_table_with_summary(
     )
     form_question_factory(form=row_form, question=row_question_2)
 
+    # Only set English label to test fallback
     row_question_3 = question_factory(
         type=Question.TYPE_CHOICE,
         slug="row3",
-        label="row3_label",
+        label={"en": "row3_label"},
         is_required="true",
         is_hidden="false",
     )
+
     question_option_factory(
         question=row_question_3, option=option_factory(slug="o1", label="option1 label")
     )

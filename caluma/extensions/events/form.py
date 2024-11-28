@@ -4,6 +4,7 @@ import logging
 
 from django.db import transaction
 from django.db.models.signals import post_save
+from django.utils.translation import get_language
 
 from caluma.caluma_core.events import on
 from caluma.caluma_form import models as caluma_form_models
@@ -102,11 +103,26 @@ def update_table_summary_from_table_question(instance, *args, **kwargs):
             update_table_summary(instance=ad)
 
 
+def get_translation_with_fallback(value):
+    # This should not be necessary, because LOCALIZED_FIELDS_FALLBACKS is set
+    # https://django-localized-fields.readthedocs.io/en/latest/settings.html#localized-fields-fallbacks
+    lang = get_language()
+    fallback_langs = ["en", "de"]
+    fallback_langs.remove(lang)
+    translated = getattr(value, lang)
+    if not translated:
+        for fl in fallback_langs:
+            translated = getattr(value, fl)
+            if translated:
+                break
+    return translated
+
+
 def _make_csv_summary(table_answer):
     def get_answer_value(answer):
         value = answer.value or answer.date
         if options := answer.selected_options:
-            value = ",".join([str(o.label) for o in options])
+            value = ",".join([get_translation_with_fallback(o.label) for o in options])
         return value
 
     def get_lines(ads, q_slugs_and_labels):
@@ -146,4 +162,7 @@ def _make_csv_summary(table_answer):
 
 def _sorted_form_question_slugs_and_labels(form):
     fqs = caluma_form_models.FormQuestion.objects.filter(form=form).order_by("-sort")
-    return [(fq.question.slug, str(fq.question.label)) for fq in fqs]
+    return [
+        (fq.question.slug, get_translation_with_fallback(fq.question.label))
+        for fq in fqs
+    ]
