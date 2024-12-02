@@ -1,5 +1,5 @@
 ---
-x-version: 0.3.1
+x-version: 0.3.2
 
 services:
   db:
@@ -19,7 +19,7 @@ services:
       - db
 
   caluma:
-    image: ghcr.io/adfinis/mysagw/caluma:0.3.1
+    image: ghcr.io/adfinis/mysagw/caluma:0.3.2
     environment:
       - DATABASE_HOST=db
       - DATABASE_PORT=5432
