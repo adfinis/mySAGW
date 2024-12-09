@@ -31,7 +31,7 @@
     "@glimmer/tracking": "^1.1.2",
     "@projectcaluma/ember-analytics": "^13.1.2",
     "@projectcaluma/ember-core": "^13.1.2",
-    "@projectcaluma/ember-form": "^13.1.2",
+    "@projectcaluma/ember-form": "^13.1.5",
     "@projectcaluma/ember-form-builder": "^13.1.2",
     "@projectcaluma/ember-testing": "^13.1.2",
     "@projectcaluma/ember-workflow": "^13.1.2",
