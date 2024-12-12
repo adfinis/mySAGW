@@ -60,7 +60,7 @@ module.exports = function (environment) {
         "Schweizerische Akademie der Geistes- und Sozialwissenschaften (SAGW)",
       circulationOrganisations: [
         "Schweizerische Akademie der Geistes- und Sozialwissenschaften (SAGW)",
-        "Kommission Nachwuchspreis (NWP)",
+        "Kommission des Early Career Award (ECA)",
       ],
 
       caseStateIcons: {
