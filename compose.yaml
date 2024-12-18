@@ -69,7 +69,7 @@ services:
     image: ghcr.io/adfinis/mysagw/ember:0.2.0
 
   minio:
-    image: minio/minio:RELEASE.2023-09-04T19-57-37Z
+    image: minio/minio:RELEASE.2024-12-13T22-19-12Z
     volumes:
       - minio_data_snsd:/data
     command: server data
