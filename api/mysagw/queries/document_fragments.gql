@@ -33,7 +33,7 @@ fragment FieldTableQuestion on Question {
     rowForm {
       slug
       name
-      questions(filter: [{isArchived: false}]) {
+      questions(filter: [{isArchived: false}, {visibleInDocument: $document_id}]) {
         edges {
           node {
             __typename
