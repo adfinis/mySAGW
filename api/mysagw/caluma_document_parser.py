@@ -34,7 +34,7 @@ def prepare_image_file_for_pdf_merge(file):
     can = canvas.Canvas(page, pagesize=A4)
 
     # load image and get dimensions
-    image = ImageReader(file["file"])
+    image = ImageReader(file)
     image_width, image_height = image.getSize()
     image_aspect = image_height / float(image_width)
 
@@ -177,23 +177,19 @@ class DocumentParser:
             }
 
         filename_list = []
+        page_count = len(self.merger.pages)
         for value in answer["node"][
             self.value_key_for_question(question["__typename"])
         ]:
             name = value["name"]
-            if (value.get("metadata", {}) or {}).get(
-                "content_type",
-            ) in SUPPORTED_MERGE_CONTENT_TYPES:
-                file = get_caluma_file(value["downloadUrl"])
-                if file["content-type"] == "application/pdf":
-                    file = file["file"]
-                elif file["content-type"] in ["image/png", "image/jpeg"]:
+            content_type = (value.get("metadata", {}) or {}).get("content_type")
+            if content_type in SUPPORTED_MERGE_CONTENT_TYPES:
+                file = get_caluma_file(value["downloadUrl"])["file"]
+                if content_type in ["image/png", "image/jpeg"]:
                     file = prepare_image_file_for_pdf_merge(file)
+
                 try:
                     self.merger.append(file)
-                    self.file_count += 1
-                    # On success, add attachement index to filename
-                    name = f"{name} ({self.file_count})"
                 except FileNotDecryptedError as e:
                     # we don't support AES encrypted PDFs
                     if (
@@ -203,9 +199,21 @@ class DocumentParser:
                 except PdfReadError:  # pragma: no cover
                     # faulty pdf
                     pass
-                except KeyError:  # pragma: no cover
-                    # PDF probably not supported by pypdf
+                except (KeyError, TypeError):  # pragma: no cover
+                    # PDF probably not supported by pypdf or contains faulty data.
+                    # In some cases the document is still merged.
                     pass
+
+                # Some errors can be raised, even though the document was merged. This
+                # happens for example with faulty annotations. In Order to not mess up
+                # the indexing, we compare the number of pages to determine if a
+                # document has been merged.
+                if new_page_count := len(self.merger.pages) > page_count:
+                    # document has been merged
+                    page_count = new_page_count
+                    self.file_count += 1
+                    # add attachement index to filename
+                    name = f"{name} ({self.file_count})"
             filename_list.append(name)
 
         return {
