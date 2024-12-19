@@ -16,7 +16,9 @@ class Command(BaseCommand):
         self.client = DMSClient()
 
     def template_file(self, value):
-        template = Path(value)
+        template = (
+            Path(__file__).parent.parent.parent.parent.absolute() / "templates" / value
+        )
         if not template.exists() or not template.is_file:
             msg = f"Template not found: {template}"
             raise ArgumentTypeError(msg)
@@ -26,9 +28,7 @@ class Command(BaseCommand):
         parser.add_argument(
             "-t",
             "--template",
-            default=Path(__file__).parent.parent.parent.absolute()
-            / "templates"
-            / f"{settings.DOCUMENT_MERGE_SERVICE_LABELS_TEMPLATE_SLUG}.docx",
+            default=f"{settings.DOCUMENT_MERGE_SERVICE_LABELS_TEMPLATE_SLUG}.docx",
             type=self.template_file,
         )
 

@@ -1,5 +1,4 @@
 import io
-from pathlib import Path
 
 import pytest
 from django.conf import settings
@@ -8,14 +7,12 @@ from rest_framework import status
 
 from mysagw.utils import build_url
 
-TEMPLATE_PATH = Path(__file__).parent.parent.absolute() / "templates"
-
 
 @pytest.mark.parametrize(
     "args,success",
     [
         ([], True),
-        (["-t", TEMPLATE_PATH / "identity-labels.docx"], True),
+        (["-t", "identity-labels.docx"], True),
         (["-t", "no-existing-template.docx"], False),
     ],
 )
