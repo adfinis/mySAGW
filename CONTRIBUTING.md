@@ -1,8 +1,9 @@
 # Contributing
 
-Contributions to mysagw are very welcome! Best have a look at the open [issues](https://github.com/adfinis-sygroup/mysagw)
-and open a [GitHub pull request](https://github.com/adfinis-sygroup/mysagw/compare). See instructions below how to setup development
-environment. Before writing any code, best discuss your proposed change in a GitHub issue to see if the proposed change makes sense for the project.
+Contributions to mySAGW are very welcome! Best have a look at the open [issues](https://github.com/adfinis-sygroup/mysagw)
+and open a [GitHub pull request](https://github.com/adfinis-sygroup/mysagw/compare). See instructions below how to set up development
+environment. Before writing any code, best discuss your proposed change in a GitHub
+issue to see if the proposed change makes sense for the project.
 
 ## Setup development environment
 
@@ -11,14 +12,23 @@ environment. Before writing any code, best discuss your proposed change in a Git
 To work on mysagw you first need to clone
 
 ```bash
-git clone https://github.com/adfinis-sygroup/mysagw.git
-cd mysagw
+git clone https://github.com/adfinis/mySAGW.git
+cd mySAGW
+```
+
+### Build the dev containers
+
+By default, it pulls images for prod, that don't contain any tooling needed during dev.
+In order to have those tools available, you need to build those containers first:
+
+```bash
+docker compose build --pull api caluma
 ```
 
 ### Open Shell
 
 Once it is cloned you can easily open a shell in the docker container to
-open an development environment.
+open a development environment.
 
 ```bash
 # needed for permission handling
@@ -43,8 +53,7 @@ ruff format .
 pytest
 # create migrations
 ./manage.py makemigrations
-# install debugger or other temporary dependencies
-pip install --user pdbpp
+# you can use pip to install other temporary dependencies
 ```
 
 Writing of code can still happen outside the docker container of course.
