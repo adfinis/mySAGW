@@ -1,5 +1,4 @@
 import io
-from pathlib import Path
 
 import pytest
 from django.conf import settings
@@ -8,15 +7,13 @@ from rest_framework import status
 
 from mysagw.utils import build_url
 
-TEMPLATE_PATH = Path(__file__).parent.parent.absolute() / "templates"
-
 
 @pytest.mark.parametrize(
     "args,success",
     [
         ([], True),
-        (["-t", TEMPLATE_PATH / "identity-labels.docx"], True),
-        (["-t", "no-existing-template.docx"], False),
+        (["identity-labels.docx"], True),
+        (["no-existing-template.docx"], False),
     ],
 )
 def test_upload_labels_template_command(requests_mock, args, success):
@@ -56,5 +53,5 @@ def test_upload_labels_template_command(requests_mock, args, success):
         with pytest.raises(CommandError) as e:
             call_command("upload_template", *args)
         assert e.value.args[0].startswith(
-            "Error: argument -t/--template: Template not found:",
+            "Error: argument templates: Template not found:",
         )

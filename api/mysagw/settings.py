@@ -168,10 +168,13 @@ DOCUMENT_MERGE_SERVICE_URL = env.str(
     "DOCUMENT_MERGE_SERVICE_URL",
     default="http://dms:8000/api/v1",
 )
+
 DOCUMENT_MERGE_SERVICE_ENGINE = env.str(
     "DOCUMENT_MERGE_SERVICE_ENGINE",
     default="docx-template",
 )
+
+DOCUMENT_MERGE_SERVICE_TEMPLATE_DIR = Path(__file__).parent.resolve() / "templates"
 
 DOCUMENT_MERGE_SERVICE_LABELS_TEMPLATE_SLUG = env.str(
     "DOCUMENT_MERGE_SERVICE_LABELS_TEMPLATE_SLUG",
