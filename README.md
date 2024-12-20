@@ -85,15 +85,10 @@ docker compose up -d
 # Wait for the database migrations to complete for the API and Caluma.
 make caluma-loadconfig
 # upload the templates to DMS
-docker compose run --rm api python manage.py upload_template -t identity-labels.docx
-docker compose run --rm api python manage.py upload_template -t accounting-cover.docx
-docker compose run --rm api python manage.py upload_template -t acknowledgement-de.docx
-docker compose run --rm api python manage.py upload_template -t acknowledgement-fr.docx
-docker compose run --rm api python manage.py upload_template -t acknowledgement-en.docx
-docker compose run --rm api python manage.py upload_template -t credit-approval-de.docx
-docker compose run --rm api python manage.py upload_template -t credit-approval-fr.docx
-docker compose run --rm api python manage.py upload_template -t credit-approval-en.docx
-docker compose run --rm api python manage.py upload_template -t application.docx
+docker compose run --rm api python manage.py upload_template identity-labels.docx \
+    accounting-cover.docx acknowledgement-de.docx acknowledgement-fr.docx \
+    acknowledgement-en.docx credit-approval-de.docx credit-approval-fr.docx \
+    credit-approval-en.docx application.docx
 ```
 
 ## Contributing

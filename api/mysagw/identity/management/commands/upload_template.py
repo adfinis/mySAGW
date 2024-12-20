@@ -1,5 +1,4 @@
 from argparse import ArgumentTypeError
-from pathlib import Path
 
 from django.conf import settings
 from django.core.management.base import BaseCommand
@@ -9,16 +8,14 @@ from mysagw.dms_client import DMSClient
 
 
 class Command(BaseCommand):
-    help = "Upload template for exports"
+    help = "Upload templates for exports"
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.client = DMSClient()
 
     def template_file(self, value):
-        template = (
-            Path(__file__).parent.parent.parent.parent.absolute() / "templates" / value
-        )
+        template = settings.DOCUMENT_MERGE_SERVICE_TEMPLATE_DIR / value
         if not template.exists() or not template.is_file:
             msg = f"Template not found: {template}"
             raise ArgumentTypeError(msg)
@@ -26,10 +23,13 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
-            "-t",
-            "--template",
-            default=f"{settings.DOCUMENT_MERGE_SERVICE_LABELS_TEMPLATE_SLUG}.docx",
+            "templates",
+            default=[
+                settings.DOCUMENT_MERGE_SERVICE_TEMPLATE_DIR
+                / f"{settings.DOCUMENT_MERGE_SERVICE_LABELS_TEMPLATE_SLUG}.docx"
+            ],
             type=self.template_file,
+            nargs="*",
         )
 
     def _upload_template(self, template, update=False):
@@ -51,6 +51,7 @@ class Command(BaseCommand):
         return True
 
     def handle(self, *args, **options):
-        template = options.get("template")
-        if self._upload_template(template) is False:
-            assert self._upload_template(template, update=True) is True
+        templates = options.get("templates")
+        for template in templates:
+            if self._upload_template(template) is False:
+                assert self._upload_template(template, update=True) is True

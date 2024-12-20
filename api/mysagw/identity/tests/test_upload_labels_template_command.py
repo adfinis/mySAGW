@@ -12,8 +12,8 @@ from mysagw.utils import build_url
     "args,success",
     [
         ([], True),
-        (["-t", "identity-labels.docx"], True),
-        (["-t", "no-existing-template.docx"], False),
+        (["identity-labels.docx"], True),
+        (["no-existing-template.docx"], False),
     ],
 )
 def test_upload_labels_template_command(requests_mock, args, success):
@@ -53,5 +53,5 @@ def test_upload_labels_template_command(requests_mock, args, success):
         with pytest.raises(CommandError) as e:
             call_command("upload_template", *args)
         assert e.value.args[0].startswith(
-            "Error: argument -t/--template: Template not found:",
+            "Error: argument templates: Template not found:",
         )
