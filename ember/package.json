@@ -29,12 +29,12 @@
     "@embroider/macros": "^1.16.0",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
-    "@projectcaluma/ember-analytics": "^13.1.2",
-    "@projectcaluma/ember-core": "^13.1.2",
-    "@projectcaluma/ember-form": "^13.1.2",
-    "@projectcaluma/ember-form-builder": "^13.1.2",
-    "@projectcaluma/ember-testing": "^13.1.2",
-    "@projectcaluma/ember-workflow": "^13.1.2",
+    "@projectcaluma/ember-analytics": "^13.1.6",
+    "@projectcaluma/ember-core": "^13.1.6",
+    "@projectcaluma/ember-form": "^13.1.6",
+    "@projectcaluma/ember-form-builder": "^13.1.6",
+    "@projectcaluma/ember-testing": "^13.1.6",
+    "@projectcaluma/ember-workflow": "^13.1.6",
     "ember-apollo-client": "^4.1.0",
     "ember-auto-import": "^2.10.0",
     "ember-basic-dropdown": "^8.1.0",
@@ -60,13 +60,13 @@
     "ember-localized-model": "^3.2.2",
     "ember-power-select": "^8.2.0",
     "ember-resolver": "^11.0.1",
-    "ember-resources": "^7.0.1",
+    "ember-resources": "^7.0.3",
     "ember-set-helper": "^3.0.1",
     "ember-simple-auth-oidc": "^6.0.1",
     "ember-sortable": "^5.2.2",
     "ember-source": "~4.12.4",
     "ember-truth-helpers": "^4.0.3",
-    "ember-uikit": "^9.1.2",
+    "ember-uikit": "^9.1.3",
     "ember-validated-form": "^7.0.1",
     "file-saver": "^2.0.5",
     "flatpickr": "^4.6.13",
@@ -115,11 +115,13 @@
   },
   "//": [
     "ember-engines-router-service: version 0.4/0.5 causes problems: https://github.com/villander/ember-engines-router-service/issues/67",
-    "@projectcaluma/ember-form-builder needs uikit satisfying ^3.21.13"
+    "@projectcaluma/ember-form-builder needs uikit satisfying ^3.21.16",
+    "caluma and ember-data-resources both use it, pin needed to prevent older versions causing conflicts"
   ],
   "resolutions": {
     "ember-engines-router-service": "~0.6.0",
-    "uikit": "3.21.13"
+    "uikit": "3.21.16",
+    "ember-modify-based-class-resource": "1.1.1"
   },
   "engines": {
     "node": ">= 18"

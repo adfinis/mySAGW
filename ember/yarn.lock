@@ -40,10 +40,10 @@
     tslib "^2.3.0"
     zen-observable-ts "^1.2.5"
 
-"@apollo/client@^3.11.8":
-  version "3.11.10"
-  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.11.10.tgz#e16ae82ea9b16536ffd109847d24f9293fab5c4d"
-  integrity sha512-IfGc+X4il0rDqVQBBWdxIKM+ciDCiDzBq9+Bg9z4tJMi87uF6po4v+ddiac1wP0ARgVPsFwEIGxK7jhN4pW8jg==
+"@apollo/client@^3.12.4":
+  version "3.12.4"
+  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.12.4.tgz#d8b5753459dfb5642129247c02956fe5b5ad8f11"
+  integrity sha512-S/eC9jxEW9Jg1BjD6AZonE1fHxYuvC3gFHop8FRQkUdeK63MmBD5r0DOrN2WlJbwha1MSD6A97OwXwjaujEQpA==
   dependencies:
     "@graphql-typed-document-node/core" "^3.1.1"
     "@wry/caches" "^1.0.0"
@@ -79,7 +79,7 @@
   resolved "https://registry.yarnpkg.com/@babel/compat-data/-/compat-data-7.26.2.tgz#278b6b13664557de95b8f35b90d96785850bb56e"
   integrity sha512-Z0WgzSEa+aUcdiJuCIqgujCshpMWgUpgOxXotrYPSA53hA3qopNaqcJpyr0hVb1FeWdnqFA35/fUtXgBK8srQg==
 
-"@babel/core@^7.0.0", "@babel/core@^7.12.0", "@babel/core@^7.13.10", "@babel/core@^7.16.10", "@babel/core@^7.16.7", "@babel/core@^7.21.0", "@babel/core@^7.21.4", "@babel/core@^7.22.20", "@babel/core@^7.23.2", "@babel/core@^7.23.5", "@babel/core@^7.24.0", "@babel/core@^7.24.4", "@babel/core@^7.24.5", "@babel/core@^7.24.7", "@babel/core@^7.25.7", "@babel/core@^7.25.8", "@babel/core@^7.26.0", "@babel/core@^7.3.4":
+"@babel/core@^7.0.0", "@babel/core@^7.12.0", "@babel/core@^7.13.10", "@babel/core@^7.16.10", "@babel/core@^7.16.7", "@babel/core@^7.21.0", "@babel/core@^7.21.4", "@babel/core@^7.22.20", "@babel/core@^7.23.2", "@babel/core@^7.23.5", "@babel/core@^7.24.0", "@babel/core@^7.24.4", "@babel/core@^7.24.5", "@babel/core@^7.25.8", "@babel/core@^7.26.0", "@babel/core@^7.3.4":
   version "7.26.0"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.26.0.tgz#d78b6023cc8f3114ccf049eb219613f74a747b40"
   integrity sha512-i1SLeK+DzNnQ3LL/CswPCa/E5u4lh1k6IAEphON8F+cXt0t9euTshDru0q7/IqMa1PMPz5RnHuHscF8/ZJsStg==
@@ -1373,7 +1373,7 @@
   dependencies:
     ember-cli-babel "^7.26.6"
 
-"@ember/string@^4.0.0":
+"@ember/string@^3.1.1 || ^4.0.0", "@ember/string@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@ember/string/-/string-4.0.0.tgz#24fe5cda227c9e6634e6e0b550944a3a13437878"
   integrity sha512-IMVyVE72twuAMSYcHzWSgtgYTtzlHlKSGW8vEbztnnmkU6uo7kVHmiqSN9R4RkBhzvh0VD4G76Eph+55t3iNIA==
@@ -1515,7 +1515,7 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.57.0.tgz#a5417ae8427873f1dd08b70b3574b453e67b5f7f"
   integrity sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==
 
-"@faker-js/faker@^9.0.3", "@faker-js/faker@^9.3.0":
+"@faker-js/faker@^9.2.0", "@faker-js/faker@^9.3.0":
   version "9.3.0"
   resolved "https://registry.yarnpkg.com/@faker-js/faker/-/faker-9.3.0.tgz#ef398dab34c67faaa0e348318c905eae3564fa58"
   integrity sha512-r0tJ3ZOkMd9xsu3VRfqlFR6cz0V/jFYRswAIpC+m/DIfAUXq7g8N7wTAlhSANySXYGKzGryfDXwtwsY8TxEIDw==
@@ -2147,20 +2147,20 @@
   resolved "https://registry.yarnpkg.com/@pkgr/core/-/core-0.1.1.tgz#1ec17e2edbec25c8306d424ecfbf13c7de1aaa31"
   integrity sha512-cq8o4cWH0ibXh9VGi5P20Tu9XF/0fFXl9EUinr9QfTM7a7p0oTA4iJRCQWppXR1Pg8dSM0UCItCkPwsk9qWWYA==
 
-"@projectcaluma/ember-analytics@^13.1.2":
-  version "13.1.2"
-  resolved "https://registry.yarnpkg.com/@projectcaluma/ember-analytics/-/ember-analytics-13.1.2.tgz#e2f93240ebd5f63249a87746e3966d1fe695791a"
-  integrity sha512-AFcVwjTd5WSF3M9d32V6FZIr2nnEm7FW8rH5uCWdKyqAdLxVu5EAaD46LnAsbElhw3/pY1sL6Ze0CjI8bTxvBg==
+"@projectcaluma/ember-analytics@^13.1.6":
+  version "13.1.6"
+  resolved "https://registry.yarnpkg.com/@projectcaluma/ember-analytics/-/ember-analytics-13.1.6.tgz#820820583ca2c1ca543f581cbf36739368d6ba69"
+  integrity sha512-2NlaP2IdY51jbBFpzZuilsEzvOOYJzT723chNQYxyi0V4xTC/Img8d75W3PwmJaFJr/74mtzUmXlaltV4W/taA==
   dependencies:
-    "@babel/core" "^7.25.7"
+    "@babel/core" "^7.26.0"
     "@ember/legacy-built-in-components" "^0.5.0"
-    "@embroider/macros" "^1.16.6"
+    "@embroider/macros" "^1.16.9"
     "@glimmer/component" "^1.1.2"
     "@glimmer/tracking" "^1.1.2"
-    "@projectcaluma/ember-core" "^13.1.2"
+    "@projectcaluma/ember-core" "^13.1.6"
     ember-apollo-client "~4.0.2"
-    ember-auto-import "^2.8.1"
-    ember-basic-dropdown "^8.3.0"
+    ember-auto-import "^2.10.0"
+    ember-basic-dropdown "^8.4.0"
     ember-changeset "^4.1.2"
     ember-changeset-validations "^4.1.1"
     ember-cli-babel "^8.2.0"
@@ -2169,59 +2169,59 @@
     ember-concurrency "^4.0.2"
     ember-engines-router-service "^0.6.0"
     ember-fetch "^8.1.2"
-    ember-intl "^7.0.5"
-    ember-power-select "^8.3.1"
+    ember-intl "^7.0.7"
+    ember-power-select "^8.4.0"
     ember-sortable "^5.2.2"
-    ember-uikit "^9.1.2"
+    ember-uikit "^9.1.3"
     ember-validated-form "^7.0.1"
     graphql "^15.9.0"
     reactiveweb "^1.3.0"
     xlsx "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz"
 
-"@projectcaluma/ember-core@^13.1.2":
-  version "13.1.2"
-  resolved "https://registry.yarnpkg.com/@projectcaluma/ember-core/-/ember-core-13.1.2.tgz#d46dead18a5609acb92eb29025228e4ede527707"
-  integrity sha512-RshYA0nZo0mdLveqIDw2FJWZ49gFJJJKAv+H4lRdXdqT7g1juoVaoK+IfkPzctxUUe3iDMWc+0jH82zzWIe1LA==
+"@projectcaluma/ember-core@^13.1.6":
+  version "13.1.6"
+  resolved "https://registry.yarnpkg.com/@projectcaluma/ember-core/-/ember-core-13.1.6.tgz#824cddad6bc78438666a475c900ecb97ab6e0b47"
+  integrity sha512-cOR8cIY98KKCCUo8b8HXyR1qZHdLJFjR+UyEJjOq/mSNyR4mbdNDSpxbzCWRNWYcNZezptI60reHD28RqTsbWQ==
   dependencies:
-    "@apollo/client" "^3.11.8"
-    "@babel/core" "^7.25.7"
-    "@ember/string" "^4.0.0"
-    "@embroider/macros" "^1.16.6"
+    "@apollo/client" "^3.12.4"
+    "@babel/core" "^7.26.0"
+    "@ember/string" "^3.1.1 || ^4.0.0"
+    "@embroider/macros" "^1.16.9"
     "@glimmer/tracking" "^1.1.2"
     ember-apollo-client "~4.0.2"
-    ember-auto-import "^2.8.1"
+    ember-auto-import "^2.10.0"
     ember-cli-babel "^8.2.0"
     ember-cli-htmlbars "^6.3.0"
     ember-concurrency "^4.0.2"
     ember-fetch "^8.1.2"
-    ember-inflector "^5.0.1"
-    ember-intl "^7.0.5"
-    ember-modify-based-class-resource "^1.1.0"
-    ember-uikit "^9.1.2"
+    ember-inflector "^4.0.3 || ^5.0.1"
+    ember-intl "^7.0.7"
+    ember-modify-based-class-resource "^1.1.1"
+    ember-uikit "^9.1.3"
     graphql "^15.9.0"
     graphql-tag "^2.12.6"
     jexl "^2.3.0"
     lodash.clonedeep "^4.5.0"
     slugify "^1.6.6"
 
-"@projectcaluma/ember-form-builder@^13.1.2":
-  version "13.1.2"
-  resolved "https://registry.yarnpkg.com/@projectcaluma/ember-form-builder/-/ember-form-builder-13.1.2.tgz#3777621dfc795cdea881f7e14cbd3ad557f6a5bf"
-  integrity sha512-oQKvm6sH6Xtr3Fi3mMg2eDlSNU9ipPgjLf8IA3trgip3htAxFO5FvHf8T56Dbxuk0V0eQYgd0O1D+LOCJgQ8Lw==
+"@projectcaluma/ember-form-builder@^13.1.6":
+  version "13.1.6"
+  resolved "https://registry.yarnpkg.com/@projectcaluma/ember-form-builder/-/ember-form-builder-13.1.6.tgz#55691c2548f30fd544a787fa050ae46feaee4ea3"
+  integrity sha512-XYtXgcS0X3vg/EA+pkmlkFeQJmLeXYr3G1gMpa3dTBLyHOgYIcAaU6qsmf98Y+5tAPWYWezg/cLBCdXf8eV1yw==
   dependencies:
-    "@babel/core" "^7.25.7"
+    "@babel/core" "^7.26.0"
     "@ember/legacy-built-in-components" "^0.5.0"
     "@ember/render-modifiers" "^2.1.0"
-    "@ember/string" "^4.0.0"
-    "@embroider/macros" "^1.16.6"
+    "@ember/string" "^3.1.1 || ^4.0.0"
+    "@embroider/macros" "^1.16.9"
     "@glimmer/component" "^1.1.2"
     "@glimmer/tracking" "^1.1.2"
-    "@projectcaluma/ember-core" "^13.1.2"
-    "@projectcaluma/ember-form" "^13.1.2"
+    "@projectcaluma/ember-core" "^13.1.6"
+    "@projectcaluma/ember-form" "^13.1.6"
     codejar "^4.2.0"
     ember-apollo-client "~4.0.2"
-    ember-auto-import "^2.8.1"
-    ember-basic-dropdown "^8.3.0"
+    ember-auto-import "^2.10.0"
+    ember-basic-dropdown "^8.4.0"
     ember-changeset "^4.1.2"
     ember-changeset-validations "^4.1.1"
     ember-cli-babel "^8.2.0"
@@ -2231,11 +2231,11 @@
     ember-engines-router-service "^0.6.0"
     ember-fetch "^8.1.2"
     ember-flatpickr "^8.0.1"
-    ember-intl "^7.0.5"
+    ember-intl "^7.0.7"
     ember-math-helpers "^4.0.0"
-    ember-power-select "^8.3.1"
+    ember-power-select "^8.4.0"
     ember-test-selectors "^7.0.0"
-    ember-uikit "^9.1.2"
+    ember-uikit "^9.1.3"
     ember-validated-form "^7.0.1"
     flatpickr "^4.6.13"
     graphql "^15.9.0"
@@ -2245,24 +2245,24 @@
     jexl "^2.3.0"
     lodash.isequal "^4.5.0"
     reactiveweb "^1.3.0"
-    uikit "^3.21.13"
+    uikit "^3.21.16"
 
-"@projectcaluma/ember-form@^13.1.2":
-  version "13.1.2"
-  resolved "https://registry.yarnpkg.com/@projectcaluma/ember-form/-/ember-form-13.1.2.tgz#65dc5afdaf33cea0d208411b76df791749270828"
-  integrity sha512-DoFQZ1RZykKBMHY95XrPRLsM3lEOWZSCl/4mG+VjTwWu3KoZX6yNoO3VuHsr/RiN0MtEGd/RbJ56xFmf4dRBNw==
+"@projectcaluma/ember-form@^13.1.6":
+  version "13.1.6"
+  resolved "https://registry.yarnpkg.com/@projectcaluma/ember-form/-/ember-form-13.1.6.tgz#3b9803a1710f57a5e290ae0786704e0f48b9fdd7"
+  integrity sha512-3Lh4Ah6zfX3Hb6CiBsfFcGCD6+2fUukeqnOs8HaJCYsztiugJuDtrlTd/RoZiVK0fbDrCe/iTBo/hYxFdBewQw==
   dependencies:
-    "@babel/core" "^7.25.7"
-    "@ember/string" "^4.0.0"
-    "@embroider/macros" "^1.16.6"
+    "@babel/core" "^7.26.0"
+    "@ember/string" "^3.1.1 || ^4.0.0"
+    "@embroider/macros" "^1.16.9"
     "@embroider/util" "^1.13.2"
     "@glimmer/component" "^1.1.2"
     "@glimmer/tracking" "^1.1.2"
-    "@projectcaluma/ember-core" "^13.1.2"
+    "@projectcaluma/ember-core" "^13.1.6"
     ember-apollo-client "~4.0.2"
-    ember-auto-import "^2.8.1"
+    ember-auto-import "^2.10.0"
     ember-autoresize-modifier "^0.7.0"
-    ember-basic-dropdown "^8.3.0"
+    ember-basic-dropdown "^8.4.0"
     ember-cli-babel "^8.2.0"
     ember-cli-htmlbars "^6.3.0"
     ember-cli-showdown "^9.0.1"
@@ -2271,11 +2271,11 @@
     ember-fetch "^8.1.2"
     ember-flatpickr "^8.0.1"
     ember-in-viewport "^4.1.0"
-    ember-intl "^7.0.5"
+    ember-intl "^7.0.7"
     ember-math-helpers "^4.0.0"
-    ember-power-select "^8.3.1"
+    ember-power-select "^8.4.0"
     ember-truth-helpers "^4.0.3"
-    ember-uikit "^9.1.2"
+    ember-uikit "^9.1.3"
     ember-validators "^4.1.2"
     flatpickr "^4.6.13"
     graphql "^15.9.0"
@@ -2285,47 +2285,47 @@
     reactiveweb "^1.3.0"
     tracked-toolbox "^2.0.0"
 
-"@projectcaluma/ember-testing@^13.1.2":
-  version "13.1.2"
-  resolved "https://registry.yarnpkg.com/@projectcaluma/ember-testing/-/ember-testing-13.1.2.tgz#6d82ef69f3a4fb2ec4be0554d98a92f608fced28"
-  integrity sha512-bzZvH509tL2nbI3DfRQ8BUlGnXPd+W6EiMwaYSNSQt9DvjNrBjKY0Q3jGFI5vCH6DFFmzBBKEOCyNsQ7Ox46bA==
+"@projectcaluma/ember-testing@^13.1.6":
+  version "13.1.6"
+  resolved "https://registry.yarnpkg.com/@projectcaluma/ember-testing/-/ember-testing-13.1.6.tgz#fce7097425998b035ebda6103889e333bccf955d"
+  integrity sha512-zs1L5QTg6KUHWUdRj/VHDXH2RcfRFkn3hy1MLLKZh3inMaxIswmCKwpidBHY0sV9FN/cGWi29vBmkwPjCNTvwA==
   dependencies:
-    "@babel/core" "^7.25.7"
-    "@ember/string" "^4.0.0"
-    "@faker-js/faker" "^9.0.3"
+    "@babel/core" "^7.26.0"
+    "@ember/string" "^3.1.1 || ^4.0.0"
+    "@faker-js/faker" "^9.2.0"
     broccoli-funnel "^3.0.8"
     broccoli-merge-trees "^4.2.0"
     ember-apollo-client "~4.0.2"
-    ember-auto-import "^2.8.1"
+    ember-auto-import "^2.10.0"
     ember-cli-babel "^8.2.0"
     ember-cli-htmlbars "^6.3.0"
     ember-cli-mirage "^3.0.4"
     ember-fetch "^8.1.2"
-    ember-inflector "^5.0.1"
+    ember-inflector "^4.0.3 || ^5.0.1"
     graphql "^15.9.0"
     graphql-iso-date "^3.6.1"
     graphql-tools "^4.0.8"
     luxon "^3.5.0"
     miragejs "^0.1.48"
 
-"@projectcaluma/ember-workflow@^13.1.2":
-  version "13.1.2"
-  resolved "https://registry.yarnpkg.com/@projectcaluma/ember-workflow/-/ember-workflow-13.1.2.tgz#b923fd8830449f6a471ff1afc0f527844573ec1f"
-  integrity sha512-0Duac1C7djobRbOTEt+6N7vp9ZvR8T8lETnur/F5ErfQElbw7XtNfW6B+dFb7myfnfrTEqHmEttiDOQn7xsdMQ==
+"@projectcaluma/ember-workflow@^13.1.6":
+  version "13.1.6"
+  resolved "https://registry.yarnpkg.com/@projectcaluma/ember-workflow/-/ember-workflow-13.1.6.tgz#e013fa67607ef5169e1c34350f0a9ef098c40e2f"
+  integrity sha512-2QuCqeYqa4jmsOOyqVI78aiSEbCEu3+TA8ZbIxv9kd6dUYcd/+z8q4NHYlBQYXtjbqvwYJ1xYMDmMb8KFH3OGg==
   dependencies:
-    "@babel/core" "^7.25.7"
+    "@babel/core" "^7.26.0"
     "@glimmer/component" "^1.1.2"
-    "@projectcaluma/ember-core" "^13.1.2"
+    "@projectcaluma/ember-core" "^13.1.6"
     ember-apollo-client "~4.0.2"
-    ember-auto-import "^2.8.1"
+    ember-auto-import "^2.10.0"
     ember-cli-babel "^8.2.0"
     ember-cli-htmlbars "^6.3.0"
     ember-composable-helpers "^5.0.0"
     ember-concurrency "^4.0.2"
     ember-fetch "^8.1.2"
-    ember-intl "^7.0.5"
+    ember-intl "^7.0.7"
     ember-truth-helpers "^4.0.3"
-    ember-uikit "^9.1.2"
+    ember-uikit "^9.1.3"
     graphql "^15.9.0"
     reactiveweb "^1.3.0"
 
@@ -5248,7 +5248,7 @@ ember-async-data@^1.0.3:
     "@ember/test-waiters" "^3.0.0"
     "@embroider/addon-shim" "^1.8.6"
 
-ember-auto-import@^2.10.0, ember-auto-import@^2.2.3, ember-auto-import@^2.3.0, ember-auto-import@^2.4.0, ember-auto-import@^2.4.2, ember-auto-import@^2.5.0, ember-auto-import@^2.6.0, ember-auto-import@^2.6.1, ember-auto-import@^2.6.3, ember-auto-import@^2.7.0, ember-auto-import@^2.7.3, ember-auto-import@^2.8.1:
+ember-auto-import@^2.10.0, ember-auto-import@^2.2.3, ember-auto-import@^2.3.0, ember-auto-import@^2.4.0, ember-auto-import@^2.4.2, ember-auto-import@^2.5.0, ember-auto-import@^2.6.0, ember-auto-import@^2.6.1, ember-auto-import@^2.6.3, ember-auto-import@^2.7.0, ember-auto-import@^2.8.1:
   version "2.10.0"
   resolved "https://registry.yarnpkg.com/ember-auto-import/-/ember-auto-import-2.10.0.tgz#2a29b82335eba4375d115570cbe836666ed2e7cc"
   integrity sha512-bcBFDYVTFHyqyq8BNvsj6UO3pE6Uqou/cNmee0WaqBgZ+1nQqFz0UE26usrtnFAT+YaFZSkqF2H36QW84k0/cg==
@@ -5316,7 +5316,7 @@ ember-basic-dropdown@^8.1.0:
     ember-style-modifier "^4.3.1"
     ember-truth-helpers "^4.0.3"
 
-ember-basic-dropdown@^8.3.0:
+ember-basic-dropdown@^8.4.0:
   version "8.4.0"
   resolved "https://registry.yarnpkg.com/ember-basic-dropdown/-/ember-basic-dropdown-8.4.0.tgz#8c83ba9e3dc32243d47f498ca0f86e099d67d608"
   integrity sha512-vaK0ypA6J8hduvIrctquMpIoAsgp1Uz/W2RGQJ1KsvvgAttowuDBBuGFEmubzhnnKJM2LGBX7+miRXnn36kBTA==
@@ -6177,7 +6177,7 @@ ember-in-viewport@^4.1.0:
   dependencies:
     ember-cli-babel "^7.26.5"
 
-"ember-inflector@^2.0.0 || ^3.0.0 || ^4.0.2 || ^5.0.0", ember-inflector@^5.0.1:
+"ember-inflector@^2.0.0 || ^3.0.0 || ^4.0.2 || ^5.0.0", "ember-inflector@^4.0.3 || ^5.0.1":
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/ember-inflector/-/ember-inflector-5.0.2.tgz#785c05ebaa79307ccc364e0217271531fc353138"
   integrity sha512-aoPaT7B3pbUHSi4ulf02iRaMMvPteuDBO8jA1SLLOl/JwnO2YI5F/MhNPaolxp8DWwAd/P6MNN+wD5bLwmiUIA==
@@ -6185,7 +6185,7 @@ ember-in-viewport@^4.1.0:
     "@embroider/addon-shim" "^1.8.7"
     decorator-transforms "^2.0.0"
 
-ember-intl@^7.0.5, ember-intl@^7.0.7:
+ember-intl@^7.0.7:
   version "7.0.7"
   resolved "https://registry.yarnpkg.com/ember-intl/-/ember-intl-7.0.7.tgz#7535bf53e8f71f408742ce633b37121582c48f98"
   integrity sha512-K9KDkDIm49/qSLguO7OBOp3tB61GQws9DHfPKEdjSztHTbZvLD+uv2vT9ASRE0+xszYG7Q15UwUQqf6tRJGRxQ==
@@ -6280,10 +6280,10 @@ ember-modifier@^4.2.0:
     ember-cli-normalize-entity-name "^1.0.0"
     ember-cli-string-utils "^1.1.0"
 
-ember-modify-based-class-resource@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/ember-modify-based-class-resource/-/ember-modify-based-class-resource-1.1.0.tgz#fdea4b1f82c064debbcfc318bca8dddbe8c73cb8"
-  integrity sha512-35PqPA6XFncpJkePr1Zs5aR/bANpsCEa8X7fXkA0EkTyuILqP3ycqtlfK0VxkADz62lk86BR8biGsTz0jgdZUQ==
+ember-modify-based-class-resource@1.1.1, ember-modify-based-class-resource@^1.1.0, ember-modify-based-class-resource@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/ember-modify-based-class-resource/-/ember-modify-based-class-resource-1.1.1.tgz#87d3cbbbe83ffa6b3be0615d2fc8f10c5e778a7e"
+  integrity sha512-Uig2iEpFf34l/0QgQ8mIo8agUlUEU0JgKXLfYc8gpU2tTHqFnZZ6m6j18HwxTE+sF1/LbH2lWHDdmCs48kLvbQ==
   dependencies:
     "@babel/runtime" "^7.17.8"
     "@embroider/addon-shim" "^1.2.0"
@@ -6302,10 +6302,10 @@ ember-power-select@^8.2.0:
     ember-modifier "^4.1.0"
     ember-truth-helpers "^4.0.3"
 
-ember-power-select@^8.3.1:
-  version "8.4.0"
-  resolved "https://registry.yarnpkg.com/ember-power-select/-/ember-power-select-8.4.0.tgz#dba2c6dcf2b39a1a6770835cd37209a1155555ad"
-  integrity sha512-Kxur31Gxc6Va7djphIjiRayZFQXRVseBNK0zCDAK7P19iXzNI8vtptkYQJ9Wgr1QftIu5N+ksJ4pMySqCQq7QQ==
+ember-power-select@^8.4.0:
+  version "8.6.1"
+  resolved "https://registry.yarnpkg.com/ember-power-select/-/ember-power-select-8.6.1.tgz#ca74206b3df532898053983096c9907c5b79953a"
+  integrity sha512-/IJj8+acOOzDjOxWN7Mu4mY5AL6IBnBNxgECudaL1HSOtC5VG6QpSUGJpbbZ4SScAoOFUIo/x5fcPhMiyQ8GUw==
   dependencies:
     "@embroider/addon-shim" "^1.9.0"
     "@embroider/util" "^1.13.2"
@@ -6332,10 +6332,18 @@ ember-resolver@^11.0.1:
   dependencies:
     ember-cli-babel "^7.26.11"
 
-"ember-resources@>= 6.4.2", ember-resources@^7.0.1:
+"ember-resources@>= 6.4.2":
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/ember-resources/-/ember-resources-7.0.1.tgz#0c493073b8efef1574c366f04873050b5b00b53e"
   integrity sha512-dN/5QwNMjnx99+T/QPxDRceFF8lrqXEb6/7heO7QEpkA6Td5mB/mzSECsE7W3du93WM2NOSpInp0I6b4gmdp7Q==
+  dependencies:
+    "@embroider/addon-shim" "^1.2.0"
+    "@embroider/macros" "^1.12.3"
+
+ember-resources@^7.0.3:
+  version "7.0.3"
+  resolved "https://registry.yarnpkg.com/ember-resources/-/ember-resources-7.0.3.tgz#a1e47103aee89540e22d460379bc66a742fbda54"
+  integrity sha512-aebWpULjdWEUnxheoOz5e6XZ8kDV8b79CerPSMcUkdzOcKS7N4HC8FuyCPG6M6MiVuYYqgsrhzSxyW8H1164MA==
   dependencies:
     "@embroider/addon-shim" "^1.2.0"
     "@embroider/macros" "^1.12.3"
@@ -6563,28 +6571,28 @@ ember-truth-helpers@^4.0.3:
     "@embroider/addon-shim" "^1.8.6"
     ember-functions-as-helper-polyfill "^2.1.2"
 
-ember-uikit@^9.1.2:
-  version "9.1.2"
-  resolved "https://registry.yarnpkg.com/ember-uikit/-/ember-uikit-9.1.2.tgz#08404c4008f1e80b29ed79184efa807af8f8669a"
-  integrity sha512-lD7CMBVVY18GlopcArdA8J09+/y+R6fKgwlHdOl5WwhPFea78Xll3Q187q9hfrJvJZfHahkWlDEz3fL2g9dKLg==
+ember-uikit@^9.1.3:
+  version "9.1.3"
+  resolved "https://registry.yarnpkg.com/ember-uikit/-/ember-uikit-9.1.3.tgz#b96595a0efe024860051d5d57f6b84b70273c8b7"
+  integrity sha512-Fs/crPJTcV9+Q4r+nwVJsB8F3aLDAT9CXPK6znG99U/Um1Rti0NzMnasaJzDDAjKo2oPh+kN1R3YFkJa5E7W6w==
   dependencies:
-    "@babel/core" "^7.24.7"
-    "@ember/string" "^3.1.1"
+    "@babel/core" "^7.26.0"
+    "@ember/string" "^4.0.0"
     "@embroider/util" "^1.13.1"
     "@glimmer/component" "^1.1.2"
     "@glimmer/tracking" "^1.1.2"
     broccoli-funnel "^3.0.8"
     broccoli-merge-trees "^4.2.0"
     broccoli-stew "^3.0.0"
-    ember-auto-import "^2.7.3"
+    ember-auto-import "^2.10.0"
     ember-cli-babel "^8.2.0"
     ember-cli-htmlbars "^6.3.0"
     ember-composable-helpers "^5.0.0"
     ember-focus-trap "^1.1.0"
-    ember-modifier "^4.1.0"
+    ember-modifier "^4.2.0"
     ember-toggle "^9.0.3"
     ember-truth-helpers "^4.0.3"
-    uikit "^3.21.5"
+    uikit "^3.21.13"
 
 ember-validated-form@^7.0.1:
   version "7.0.1"
@@ -13163,10 +13171,10 @@ uglify-js@^3.1.4:
   resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.17.4.tgz#61678cf5fa3f5b7eb789bb345df29afb8257c22c"
   integrity sha512-T9q82TJI9e/C1TAxYvfb16xO120tMVFZrGA3f9/P4424DNu6ypK103y0GPFVa17yotwSyZW5iYXgjYHkGrJW/g==
 
-uikit@3.21.13, uikit@^3.21.13, uikit@^3.21.5:
-  version "3.21.13"
-  resolved "https://registry.yarnpkg.com/uikit/-/uikit-3.21.13.tgz#81aa7a6b8460ff7dacf1a94e323adba126f2acee"
-  integrity sha512-Yc1VWCarqK8kMu9KCXfMH+1lQLZ0PxQRWML1ElJYt2KCwSNGxUVLJSDXcO4qtBR8asRAY+pHBtuM5iIQq0Odsg==
+uikit@3.21.16, uikit@^3.21.13, uikit@^3.21.16:
+  version "3.21.16"
+  resolved "https://registry.yarnpkg.com/uikit/-/uikit-3.21.16.tgz#b0f18d50354587cfcc3bcf1ec0259b620d7d4884"
+  integrity sha512-2spSziLkschoka/vv7tmLInCMrwFWxJ5t4cWop8XytXexSH1WIt/h1GFk9WhsDD9UQIe/FzUZ4axO4EeMtEd5w==
 
 unbox-primitive@^1.0.2:
   version "1.0.2"
