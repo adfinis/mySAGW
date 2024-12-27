@@ -57,7 +57,7 @@
     "ember-in-viewport": "^4.1.0",
     "ember-intl": "^7.0.7",
     "ember-load-initializers": "^2.1.2",
-    "ember-localized-model": "^3.2.2",
+    "ember-localized-model": "^4.0.0",
     "ember-power-select": "^8.2.0",
     "ember-resolver": "^11.0.1",
     "ember-resources": "^7.0.3",
