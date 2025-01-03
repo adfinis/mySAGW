@@ -103,7 +103,7 @@
     "ember-test-selectors": "^6.0.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-ember": "^12.1.0",
+    "eslint-plugin-ember": "^12.3.3",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-n": "^16.6.2",
     "eslint-plugin-prettier": "^5.2.1",
