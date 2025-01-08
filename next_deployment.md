@@ -1,7 +1,6 @@
 # Manual steps for next deployment
 
 
-## Enable email logging for DMS
+## Configure token lifespan
 
-Configure email settings in the DMS env file according to the new settings added to
-`.envs/.production.example/.dms`.
+Set `Access Token Lifespan` to 5 minutes in Keycloak.
