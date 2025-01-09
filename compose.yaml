@@ -23,7 +23,7 @@ services:
     environment:
       - DATABASE_HOST=db
       - DATABASE_PORT=5432
-      - OIDC_BEARER_TOKEN_REVALIDATION_TIME=300
+      - OIDC_BEARER_TOKEN_REVALIDATION_TIME=60
       - OIDC_GROUPS_CLAIM=mysagw_groups
       - EVENT_RECEIVER_MODULES=caluma.extensions.events
       - VISIBILITY_CLASSES=caluma.caluma_user.visibilities.Authenticated,caluma.extensions.visibilities.MySAGWVisibility
@@ -98,7 +98,7 @@ services:
       - DATABASE_NAME=dms
       - DATABASE_USER=dms
       - ALLOWED_HOSTS=dms
-      - OIDC_BEARER_TOKEN_REVALIDATION_TIME=300
+      - OIDC_BEARER_TOKEN_REVALIDATION_TIME=60
       # needed until https://github.com/adfinis-sygroup/document-merge-service/issues/407 is closed
       - DOCXTEMPLATE_JINJA_EXTENSIONS=
 
