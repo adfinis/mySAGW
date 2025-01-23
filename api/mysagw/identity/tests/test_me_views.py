@@ -96,9 +96,11 @@ def test_me_update(db, client):
     "authorized",
     [True, False],
 )
-def test_my_orgs_update(db, client, authorized, membership_factory):
+def test_my_orgs_update_readonly(db, client, authorized, membership_factory):
     identity = client.user.identity
     membership = membership_factory(identity=identity, authorized=authorized)
+    membership.organisation.organisation_name = "Foo"
+    membership.organisation.save()
 
     url = reverse("my-orgs-detail", args=[str(membership.organisation.pk)])
 
@@ -106,7 +108,7 @@ def test_my_orgs_update(db, client, authorized, membership_factory):
         "data": {
             "type": "identities",
             "id": str(membership.organisation.pk),
-            "attributes": {"organisation-name": "Foo"},
+            "attributes": {"organisation-name": "Bar"},
         },
     }
 

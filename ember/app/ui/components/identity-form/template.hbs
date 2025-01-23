@@ -59,10 +59,7 @@
       <Form.input
         @label={{t "components.identity-form.label.organisationName"}}
         @name="organisationName"
-        @disabled={{or
-          (cannot "edit identity" this.changeset.data)
-          @readOnlyView
-        }}
+        @disabled="true"
       />
     {{/if}}
     <div class="uk-child-width-expand@s" uk-grid>
@@ -77,6 +74,7 @@
           @disabled={{or
             (cannot "edit identity" this.changeset.data)
             @readOnlyView
+            @customEndpoint
           }}
         />
       </div>
@@ -91,6 +89,7 @@
           @disabled={{or
             (cannot "edit identity" this.changeset.data)
             @readOnlyView
+            @customEndpoint
           }}
         />
       </div>
@@ -103,6 +102,7 @@
           @disabled={{or
             (cannot "edit identity" this.changeset.data)
             @readOnlyView
+            @customEndpoint
           }}
         />
       </div>
@@ -113,6 +113,7 @@
           @disabled={{or
             (cannot "edit identity" this.changeset.data)
             @readOnlyView
+            @customEndpoint
           }}
         />
       </div>
@@ -135,6 +136,7 @@
               this.changeset.idpId
               (cannot "edit identity" this.changeset.data)
               @readOnlyView
+              @customEndpoint
             }}
             value={{field.value}}
             {{on "input" (fn this.eventTarget field.update)}}
@@ -165,6 +167,7 @@
       @disabled={{or
         (cannot "edit identity" this.changeset.data)
         @readOnlyView
+        @customEndpoint
       }}
     />
 
@@ -175,11 +178,15 @@
           @disabled={{cannot "edit identity" this.changeset.data}}
         />
       </div>
-    {{else if (not @readOnlyView)}}
+    {{else if (not @readOnlyView @customEndpoint)}}
       <Form.input
         @label={{t "components.identity-form.label.comment"}}
         @name="comment"
         @type="textarea"
+        @disabled={{or
+        (cannot "edit identity" this.changeset.data)
+        @customEndpoint
+      }}
       />
 
       <p class="uk-flex uk-flex-between">
