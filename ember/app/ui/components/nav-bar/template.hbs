@@ -137,13 +137,13 @@
           <UkIcon @icon="chevron-down" />
         </a>
         <ul
-          uk-dropdown="pos: bottom-justify"
+          uk-dropdown="offset: -30"
           class="uk-list uk-list-collapse uk-padding-small uk-text-center uk-margin-remove"
         >
-          {{#each this.intl.locales as |locale|}}
-            <li>
+          {{#each this.locales as |locale|}}
+            <li class="uk-margin-small">
               <a
-                class="uk-link-text uk-text-uppercase"
+                class="uk-link-text uk-text-uppercase {{if (eq this.intl.primaryLocale locale) 'uk-text-primary'}}"
                 {{on "click" (fn this.setLocale locale)}}
                 href="#"
               >
@@ -246,6 +246,11 @@
             {{t "components.nav-bar.form-configuration"}}
           </LinkTo>
         </li>
+        <li>
+          <LinkTo @route="analytics">
+            {{t "components.nav-bar.analytics"}}
+          </LinkTo>
+        </li>
       {{/if}}
 
       <li class="uk-nav-header">{{t "components.nav-bar.account"}}</li>
@@ -275,14 +280,14 @@
           <UkIcon @icon="chevron-down" />
         </a>
         <ul
-          uk-dropdown="pos: bottom-center; mode: click"
-          class="uk-list uk-list-collapse uk-padding-small"
+          uk-dropdown="pos: bottom-center; mode: click;"
+          class="uk-list uk-list-collapse uk-padding-small uk-width-1-2"
           data-test-locale-dropdown
         >
-          {{#each this.intl.locales as |locale|}}
+          {{#each this.locales as |locale|}}
             <li>
               <a
-                class="uk-link-text uk-text-uppercase"
+                class="uk-link-text uk-text-uppercase {{if (eq this.intl.primaryLocale locale) 'uk-text-primary'}}"
                 {{on "click" (fn this.setLocale locale)}}
                 href="#"
                 data-test-locale-select={{locale}}
