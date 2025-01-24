@@ -98,7 +98,7 @@
     "ember-cli-mirage": "^3.0.0",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-terser": "^4.0.2",
-    "ember-qunit": "^8.1.1",
+    "ember-qunit": "^9.0.1",
     "ember-template-lint": "^6.0.0",
     "ember-test-selectors": "^6.0.0",
     "eslint": "^8.57.0",
