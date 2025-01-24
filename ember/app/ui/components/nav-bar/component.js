@@ -5,6 +5,9 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { timeout, restartableTask } from "ember-concurrency";
 import { task as trackedTask } from "reactiveweb/ember-concurrency";
+
+import ENV from "mysagw/config/environment";
+
 export default class NavbarComponent extends Component {
   @service session;
   @service intl;
@@ -17,6 +20,8 @@ export default class NavbarComponent extends Component {
   @tracked searchTerm = "";
   @tracked totalPages;
   @tracked snippets = [];
+
+  locales = ENV.APP.locales;
 
   @action
   invalidateSession() {

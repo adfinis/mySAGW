@@ -51,8 +51,6 @@ module.exports = function (environment) {
     },
 
     APP: {
-      // Here you can pass flags/options to your application document
-      // when it is created
       navBarLogo: "/assets/logo-header.svg",
       navBarText: "mySAGW",
 
@@ -71,6 +69,8 @@ module.exports = function (environment) {
         decision: "clock",
         complete: "check",
       },
+
+      locales: ["de", "fr", "en"],
 
       caluma: {
         submitTaskSlug: "submit-document",
