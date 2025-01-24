@@ -4,10 +4,12 @@ from uuid import uuid4
 
 import pytest
 from django.core.cache import cache
+from django.urls import reverse
 from mozilla_django_oidc.contrib.drf import OIDCAuthentication
 from requests.exceptions import HTTPError
 from rest_framework import exceptions, status
 from rest_framework.exceptions import AuthenticationFailed
+from rest_framework.test import APIClient
 from simple_history.models import HistoricalRecords
 
 from mysagw.identity.models import Identity
@@ -245,3 +247,42 @@ def test_authentication_idp_missing_claim(
     request = rf.get("/openid", HTTP_AUTHORIZATION="Bearer Token")
     with pytest.raises(AuthenticationFailed):
         OIDCAuthentication().authenticate(request)
+
+
+@pytest.mark.parametrize(
+    "identity__is_organisation,identity__organisation_name,identity__email",
+    [
+        (True, "org name", "email@example.com"),
+    ],
+)
+def test_authentication_email_already_used(
+    db, rf, requests_mock, settings, get_claims, identity
+):
+    idp_id = str(uuid4())
+    claims = get_claims(
+        id_claim=idp_id,
+        email_claim="email@example.com",
+        first_name_claim="Winston",
+        last_name_claim="Smith",
+        salutation_claim="neutral",
+        title_claim=None,
+    )
+    assert Identity.objects.count() == 1
+
+    requests_mock.get(settings.OIDC_OP_USER_ENDPOINT, text=json.dumps(claims))
+
+    url = reverse("me")
+
+    client = APIClient()
+    response = client.get(url, HTTP_AUTHORIZATION="Bearer Token")
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert response.json() == {
+        "errors": [
+            {
+                "detail": "Can't create Identity, because there is already an organisation with this email address.",
+                "status": "400",
+                "source": {"pointer": "/data"},
+                "code": "invalid",
+            }
+        ]
+    }

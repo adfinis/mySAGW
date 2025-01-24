@@ -3,6 +3,7 @@ import logging
 from django.conf import settings
 from django.db import IntegrityError, transaction
 from django.db.models import Q
+from rest_framework.exceptions import ValidationError
 
 from mysagw.identity.models import Identity
 
@@ -87,8 +88,13 @@ class OIDCUser(BaseUser):
             settings.OIDC_MONITORING_CLIENT_USERNAME,
         ]:
             return None
+        if Identity.objects.filter(
+            is_organisation=True, email__iexact=self.email
+        ).exists():
+            msg = "Can't create Identity, because there is already an organisation with this email address."
+            raise ValidationError(msg)
         try:
-            identity = Identity.objects.get(
+            identity = Identity.objects.filter(is_organisation=False).get(
                 Q(idp_id=self.id) | Q(email__iexact=self.email),
             )
             # we only want to save if necessary in order to prevent adding historical

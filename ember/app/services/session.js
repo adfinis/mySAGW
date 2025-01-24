@@ -7,6 +7,7 @@ import ENV from "mysagw/config/environment";
 
 export default class CustomSession extends Session {
   @service store;
+  @service router;
 
   currentIdentity = trackedTask(this, this.fetchCurrentIdentity, () => [
     this.isAuthenticated,
@@ -18,21 +19,34 @@ export default class CustomSession extends Session {
 
     if (!this.isAuthenticated) return null;
 
-    const data = yield Promise.all([
-      this.store.query(
-        "membership",
-        {
-          include: "organisation",
-        },
-        { adapterOptions: { customEndpoint: "my-memberships" } },
-      ),
-      this.store.queryRecord("identity", {}),
-    ]);
+    try {
+      const data = yield Promise.all([
+        this.store.query(
+          "membership",
+          {
+            include: "organisation",
+          },
+          { adapterOptions: { customEndpoint: "my-memberships" } },
+        ),
+        this.store.queryRecord("identity", {}),
+      ]);
 
-    return {
-      memberships: data[0],
-      identity: data[1],
-    };
+      return {
+        memberships: data[0],
+        identity: data[1],
+      };
+    } catch (error) {
+      this.invalidate();
+
+      if (
+        error.errors[0].detail ===
+        "Can't create Identity, because there is already an organisation with this email address."
+      ) {
+        return this.router.transitionTo("support");
+      }
+
+      return this.router.transitionTo("login");
+    }
   }
 
   get identity() {
