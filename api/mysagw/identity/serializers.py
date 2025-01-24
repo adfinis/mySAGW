@@ -309,6 +309,7 @@ class MyOrgsSerializer(MeSerializer):
             "first_name",
             "last_name",
             "salutation",
+            "title",
             "language",
             "is_organisation",
             "organisation_name",
@@ -320,6 +321,13 @@ class MyOrgsSerializer(MeSerializer):
         )
         extra_kwargs = {
             "idp_id": {"read_only": True},
+            "email": {"read_only": True},
+            "organisation_name": {"read_only": True},
+            "first_name": {"read_only": True},
+            "last_name": {"read_only": True},
+            "salutation": {"read_only": True},
+            "title": {"read_only": True},
+            "language": {"read_only": True},
             "is_organisation": {"read_only": True},
             "is_expert_association": {"read_only": True},
             "is_advisory_board": {"read_only": True},
