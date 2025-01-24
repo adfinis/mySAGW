@@ -48,7 +48,7 @@
       {{/each}}
     </ul>
 
-    {{#if (and (can "add interest to identity" @identity) (not @readOnlyView))}}
+    {{#if (can "add interest to identity" @identity)}}
       <p class="uk-text-right">
         <button
           class="uk-button uk-button-default"

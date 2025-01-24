@@ -21,6 +21,7 @@ export default class IdentityFormComponent extends Component {
   @service store;
   @service intl;
   @service router;
+  @service can;
 
   @tracked changeset;
   @tracked backToIdentities;
@@ -77,6 +78,13 @@ export default class IdentityFormComponent extends Component {
 
   get cancelRoute() {
     return this.args.cancelRouteOverride || "identities";
+  }
+
+  get disabledOnProfileView() {
+    return (
+      this.can.cannot("edit identity", this.changeset.data) ||
+      (this.changeset.isOrganisation && this.args.profileView)
+    );
   }
 
   @action

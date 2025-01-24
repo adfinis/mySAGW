@@ -70,7 +70,7 @@
       <p>{{t "components.identity-emails.list.empty"}}</p>
     {{/if}}
 
-    {{#if (and (can "add additional-email" @identity) (not @readOnlyView))}}
+    {{#if (can "add additional-email" @identity)}}
       <p class="uk-text-right">
         <button
           class="uk-button uk-button-default"
