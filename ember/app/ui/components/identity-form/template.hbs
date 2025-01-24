@@ -5,7 +5,7 @@
     class="uk-margin-remove-last-child"
     as |Form|
   >
-    {{#unless @customEndpoint}}
+    {{#unless @profileView}}
       <Form.input
         @label={{t "components.identity-form.label.isOrganisation"}}
         @type="checkbox"
@@ -22,10 +22,7 @@
         <Form.input
           @label={{t "components.identity-form.label.organisationName"}}
           @name="organisationName"
-          @disabled={{or
-            (cannot "edit identity" this.changeset.data)
-            @readOnlyView
-          }}
+          @disabled={{cannot "edit identity" this.changeset.data}}
         />
 
         <div uk-grid>
@@ -34,10 +31,7 @@
               @label={{t "components.identity-form.label.isExpertAssociation"}}
               @type="checkbox"
               @name="isExpertAssociation"
-              @disabled={{or
-                (cannot "edit identity" this.changeset.data)
-                @readOnlyView
-              }}
+              @disabled={{cannot "edit identity" this.changeset.data}}
             />
           </div>
           <div>
@@ -45,17 +39,14 @@
               @label={{t "components.identity-form.label.isAdvisoryBoard"}}
               @type="checkbox"
               @name="isAdvisoryBoard"
-              @disabled={{or
-                (cannot "edit identity" this.changeset.data)
-                @readOnlyView
-              }}
+              @disabled={{cannot "edit identity" this.changeset.data}}
             />
           </div>
         </div>
       {{/if}}
     {{/unless}}
 
-    {{#if (and this.changeset.isOrganisation @customEndpoint)}}
+    {{#if (and this.changeset.isOrganisation @profileView)}}
       <Form.input
         @label={{t "components.identity-form.label.organisationName"}}
         @name="organisationName"
@@ -71,11 +62,7 @@
           @options={{this.salutations}}
           @optionLabelPath="label"
           @optionTargetPath="value"
-          @disabled={{or
-            (cannot "edit identity" this.changeset.data)
-            @readOnlyView
-            @customEndpoint
-          }}
+          @disabled={{this.disabledOnProfileView}}
         />
       </div>
       <div>
@@ -86,11 +73,7 @@
           @options={{this.titles}}
           @optionLabelPath="label"
           @optionTargetPath="value"
-          @disabled={{or
-            (cannot "edit identity" this.changeset.data)
-            @readOnlyView
-            @customEndpoint
-          }}
+          @disabled={{this.disabledOnProfileView}}
         />
       </div>
     </div>
@@ -99,22 +82,14 @@
         <Form.input
           @label={{t "components.identity-form.label.firstName"}}
           @name="firstName"
-          @disabled={{or
-            (cannot "edit identity" this.changeset.data)
-            @readOnlyView
-            @customEndpoint
-          }}
+          @disabled={{this.disabledOnProfileView}}
         />
       </div>
       <div>
         <Form.input
           @label={{t "components.identity-form.label.lastName"}}
           @name="lastName"
-          @disabled={{or
-            (cannot "edit identity" this.changeset.data)
-            @readOnlyView
-            @customEndpoint
-          }}
+          @disabled={{this.disabledOnProfileView}}
         />
       </div>
     </div>
@@ -135,8 +110,7 @@
             disabled={{or
               this.changeset.idpId
               (cannot "edit identity" this.changeset.data)
-              @readOnlyView
-              @customEndpoint
+              @profileView
             }}
             value={{field.value}}
             {{on "input" (fn this.eventTarget field.update)}}
@@ -164,11 +138,7 @@
       @options={{this.languages}}
       @optionLabelPath="label"
       @optionTargetPath="value"
-      @disabled={{or
-        (cannot "edit identity" this.changeset.data)
-        @readOnlyView
-        @customEndpoint
-      }}
+      @disabled={{this.disabledOnProfileView}}
     />
 
     {{#if @profileView}}
@@ -178,15 +148,12 @@
           @disabled={{cannot "edit identity" this.changeset.data}}
         />
       </div>
-    {{else if (not @readOnlyView @customEndpoint)}}
+    {{else}}
       <Form.input
         @label={{t "components.identity-form.label.comment"}}
         @name="comment"
         @type="textarea"
-        @disabled={{or
-        (cannot "edit identity" this.changeset.data)
-        @customEndpoint
-      }}
+        @disabled={{cannot "edit identity" this.changeset.data}}
       />
 
       <p class="uk-flex uk-flex-between">
