@@ -57,6 +57,7 @@ documents:
     submit-receipts: "Submit receipts"
     decision: "Decision"
     complete: "Completed"
+    canceled: "Canceled"
 
   new:
     title: "Create a new application"

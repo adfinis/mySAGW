@@ -4,6 +4,7 @@ from django.utils import timezone
 from caluma.caluma_form.api import save_answer
 from caluma.caluma_form.models import Question
 from caluma.caluma_workflow.api import (
+    cancel_case,
     complete_work_item,
     redo_work_item,
     reopen_case,
@@ -257,6 +258,12 @@ def test_case_status(
     skip_work_item(case.work_items.get(task_id="review-document"), user)
     assert case.meta["status"] == "audit"
 
+    cancel_case(case, user)
+    assert case.meta["status"] == "canceled"
+
+    reopen_case(case, [case.work_items.get(task_id="circulation")], user)
+    assert case.meta["status"] == "audit"
+
     skip_work_item(case.work_items.get(task_id="circulation"), user)
     assert case.meta["status"] == "audit"
 
@@ -265,6 +272,20 @@ def test_case_status(
         value="decision-and-credit-decision-additional-data",
     )
     skip_work_item(case.work_items.get(task_id="decision-and-credit"), user)
+    assert case.meta["status"] == "submit-receipts"
+
+    cancel_case(case, user)
+    assert case.meta["status"] == "canceled"
+
+    reopen_case(
+        case,
+        [
+            case.work_items.get(task_id="additional-data"),
+            case.work_items.get(task_id="additional-data-form"),
+            case.work_items.get(task_id="advance-credits"),
+        ],
+        user,
+    )
     assert case.meta["status"] == "submit-receipts"
 
     skip_work_item(case.work_items.get(task_id="additional-data"), user)
@@ -286,6 +307,9 @@ def test_case_status(
 
     reopen_case(case, [case.work_items.get(task_id="complete-document")], user)
     assert case.meta["status"] == "decision"
+
+    cancel_case(case, user)
+    assert case.meta["status"] == "canceled"
 
 
 @pytest.mark.usefixtures("_caluma_data")

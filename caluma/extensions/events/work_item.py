@@ -169,22 +169,39 @@ def send_rejection_mail(sender, work_item, user, **kwargs):
     _send_work_item_mail(work_item)
 
 
-@on(post_create_work_item, raise_exception=True)
 @on(post_reopen_case, raise_exception=True)
+@filter_events(lambda case: case.workflow.slug == "document-review")
 @transaction.atomic
-def set_case_status_post_create_work_item_reopen_case(
+def set_case_status_post_reopen_case(
     sender,
+    case,
     user,
-    work_item=None,
-    case=None,
+    work_items,
     **kwargs,
 ):
-    work_item = (
-        work_item if work_item else case.work_items.filter(status="ready").first()
-    )
-
+    work_item = case.work_items.filter(
+        status=caluma_workflow_models.WorkItem.STATUS_READY
+    ).first()
     status = settings.CASE_STATUS.get(work_item.task_id)
-    if status is None:
+    if status is None:  # pragma: no cover
+        # Shouldn't happen, if all tasks are correctly added to `settings.CASE_STATUS`
+        return
+    case.meta["status"] = status
+    case.save()
+
+
+@on(post_create_work_item, raise_exception=True)
+@filter_events(lambda work_item: work_item.case.workflow.slug == "document-review")
+@transaction.atomic
+def set_case_status_post_create_work_item(
+    sender,
+    work_item,
+    user,
+    **kwargs,
+):
+    status = settings.CASE_STATUS.get(work_item.task_id)
+    if status is None:  # pragma: no cover
+        # Shouldn't happen, if all tasks are correctly added to `settings.CASE_STATUS`
         return
     work_item.case.meta["status"] = status
     work_item.case.save()

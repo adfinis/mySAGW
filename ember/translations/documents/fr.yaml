@@ -57,6 +57,7 @@ documents:
     submit-receipts: "Joindre des annexes"
     decision: "Décision"
     complete: "Bouclée"
+    canceled: "Annulé"
 
   new:
     title: "Ouvrir une nouvelle requête"

@@ -57,6 +57,7 @@ documents:
     submit-receipts: "Belege einreichen"
     decision: "Entscheid"
     complete: "Abgeschlossen"
+    canceled: "Abgebrochen"
 
   new:
     title: "Gesuch eröffnen"
