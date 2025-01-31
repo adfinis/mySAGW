@@ -1,10 +1,14 @@
 from django.db import transaction
 from django.utils import timezone
 
-from caluma.caluma_core.events import on
+from caluma.caluma_core.events import filter_events, on
 from caluma.caluma_form import models as caluma_form_models
 from caluma.caluma_workflow import api as caluma_workflow_api
-from caluma.caluma_workflow.events import post_complete_case, post_create_case
+from caluma.caluma_workflow.events import (
+    post_cancel_case,
+    post_complete_case,
+    post_create_case,
+)
 
 from ..api_client import APIClient
 from ..common import get_api_user_attributes
@@ -21,9 +25,18 @@ def complete_circulation(sender, case, user, **kwargs):
 
 
 @on(post_complete_case, raise_exception=True)
+@filter_events(lambda case: case.workflow.slug == "document-review")
 @transaction.atomic
 def set_case_finished_status(sender, case, user, **kwargs):
     case.meta["status"] = "complete"
+    case.save()
+
+
+@on(post_cancel_case, raise_exception=True)
+@filter_events(lambda case: case.workflow.slug == "document-review")
+@transaction.atomic
+def set_case_canceled_status(sender, case, user, **kwargs):
+    case.meta["status"] = "canceled"
     case.save()
 
 

@@ -4,6 +4,7 @@ from django.utils import timezone
 from caluma.caluma_form.api import save_answer
 from caluma.caluma_form.models import Question
 from caluma.caluma_workflow.api import (
+    cancel_case,
     complete_work_item,
     redo_work_item,
     reopen_case,
@@ -257,6 +258,12 @@ def test_case_status(
     skip_work_item(case.work_items.get(task_id="review-document"), user)
     assert case.meta["status"] == "audit"
 
+    cancel_case(case, user)
+    assert case.meta["status"] == "canceled"
+
+    reopen_case(case, [case.work_items.get(task_id="circulation")], user)
+    assert case.meta["status"] == "audit"
+
     skip_work_item(case.work_items.get(task_id="circulation"), user)
     assert case.meta["status"] == "audit"
 
@@ -265,6 +272,20 @@ def test_case_status(
         value="decision-and-credit-decision-additional-data",
     )
     skip_work_item(case.work_items.get(task_id="decision-and-credit"), user)
+    assert case.meta["status"] == "submit-receipts"
+
+    cancel_case(case, user)
+    assert case.meta["status"] == "canceled"
+
+    reopen_case(
+        case,
+        [
+            case.work_items.get(task_id="additional-data"),
+            case.work_items.get(task_id="additional-data-form"),
+            case.work_items.get(task_id="advance-credits"),
+        ],
+        user,
+    )
     assert case.meta["status"] == "submit-receipts"
 
     skip_work_item(case.work_items.get(task_id="additional-data"), user)
@@ -286,6 +307,9 @@ def test_case_status(
 
     reopen_case(case, [case.work_items.get(task_id="complete-document")], user)
     assert case.meta["status"] == "decision"
+
+    cancel_case(case, user)
+    assert case.meta["status"] == "canceled"
 
 
 @pytest.mark.usefixtures("_caluma_data")
@@ -606,7 +630,7 @@ def add_table_with_summary(
         is_required="true",
         is_hidden="false",
     )
-    form_question_factory(form=row_form, question=row_question_1)
+    form_question_factory(form=row_form, question=row_question_1, sort=3)
 
     row_question_2 = question_factory(
         type=Question.TYPE_TEXT,
@@ -615,7 +639,7 @@ def add_table_with_summary(
         is_required="true",
         is_hidden="false",
     )
-    form_question_factory(form=row_form, question=row_question_2)
+    form_question_factory(form=row_form, question=row_question_2, sort=2)
 
     # Only set English label to test fallback
     row_question_3 = question_factory(
@@ -626,14 +650,14 @@ def add_table_with_summary(
         is_hidden="false",
     )
 
+    form_question_factory(form=row_form, question=row_question_3, sort=1)
+
     question_option_factory(
         question=row_question_3, option=option_factory(slug="o1", label="option1 label")
     )
     question_option_factory(
         question=row_question_3, option=option_factory(slug="o2", label="option2 label")
     )
-
-    form_question_factory(form=row_form, question=row_question_3)
 
     question_factory(type=Question.TYPE_TEXTAREA, slug="summary", is_hidden="true")
     question_factory(type=Question.TYPE_TEXTAREA, slug="summary2", is_hidden="true")

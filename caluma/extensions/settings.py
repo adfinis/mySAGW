@@ -63,14 +63,22 @@ settings.LOCALIZED_FIELDS_EXPERIMENTAL = False
 
 # Case
 
+# Define user facing statuses according to Tasks of ready WorkItems
 settings.CASE_STATUS = {
     "submit-document": "submit",
     "review-document": "audit",
+    "circulation": "audit",
+    "decision-and-credit": "audit",
     "revise-document": "revise",
     "additional-data": "submit-receipts",
+    "additional-data-form": "submit-receipts",
+    "advance-credits": "submit-receipts",
     "define-amount": "decision",
     "complete-document": "decision",
 }
+# Additional statuses that can be set in events independently of Task slugs:
+# canceled
+# complete
 
 settings.APPLICANT_TASK_SLUGS = [
     "submit-document",
