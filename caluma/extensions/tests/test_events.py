@@ -606,7 +606,7 @@ def add_table_with_summary(
         is_required="true",
         is_hidden="false",
     )
-    form_question_factory(form=row_form, question=row_question_1)
+    form_question_factory(form=row_form, question=row_question_1, sort=3)
 
     row_question_2 = question_factory(
         type=Question.TYPE_TEXT,
@@ -615,7 +615,7 @@ def add_table_with_summary(
         is_required="true",
         is_hidden="false",
     )
-    form_question_factory(form=row_form, question=row_question_2)
+    form_question_factory(form=row_form, question=row_question_2, sort=2)
 
     # Only set English label to test fallback
     row_question_3 = question_factory(
@@ -626,14 +626,14 @@ def add_table_with_summary(
         is_hidden="false",
     )
 
+    form_question_factory(form=row_form, question=row_question_3, sort=1)
+
     question_option_factory(
         question=row_question_3, option=option_factory(slug="o1", label="option1 label")
     )
     question_option_factory(
         question=row_question_3, option=option_factory(slug="o2", label="option2 label")
     )
-
-    form_question_factory(form=row_form, question=row_question_3)
 
     question_factory(type=Question.TYPE_TEXTAREA, slug="summary", is_hidden="true")
     question_factory(type=Question.TYPE_TEXTAREA, slug="summary2", is_hidden="true")
