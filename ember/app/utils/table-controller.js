@@ -61,7 +61,7 @@ export default class TableController extends Controller {
     if (Array.isArray(eventOrValue)) {
       this.filters[type] = stringFromArray(
         eventOrValue,
-        type === "identities" ? "idpId" : "value",
+        type === "identities" ? "id" : "value",
       );
     } else {
       this.filters[type] = eventOrValue.target?.value ?? eventOrValue;
