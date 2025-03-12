@@ -4,12 +4,6 @@ from rest_framework import status
 from watchman import settings as watchman_settings
 
 
-def _set_identity_healthcheck_properties(identity):
-    identity.email = "sagw@sagw.ch"
-    identity.is_organisation = True
-    identity.save()
-
-
 @pytest.mark.parametrize(
     "client,expected_status",
     [
@@ -20,8 +14,6 @@ def _set_identity_healthcheck_properties(identity):
     indirect=["client"],
 )
 def test_healthz_permissions(db, snapshot, identity, client, expected_status):
-    _set_identity_healthcheck_properties(identity)
-
     url = reverse("healthz")
 
     response = client.get(url)
@@ -48,8 +40,6 @@ def test_db_migrations_not_applied(
     Affects database migrations health check, which should detect unapplied
     migrations and fail.
     """
-    _set_identity_healthcheck_properties(identity)
-
     # get /healthz/ response and compare to previous snapshot
     response = client.get(reverse("healthz"))
     snapshot.assert_match(response.json())

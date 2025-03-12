@@ -34,7 +34,7 @@ def _check_pending_migrations(db_name):
 def _check_models(database):
     """Check model fetching on database."""
     # Retrieve object
-    identity = Identity.objects.get(email="sagw@sagw.ch", is_organisation=True)
+    identity = Identity.objects.first()
     assert identity
 
     return {database: {"ok": True}}
