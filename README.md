@@ -23,6 +23,16 @@ touch ./caluma/.env
 docker-compose up -d
 ```
 
+NOTE: if you run into trouble with authorizing with caluma or the api client you might
+need to override the credentials in the compose or override configs e. g. by setting
+these env vars in `./caluma/.env`
+
+```
+OIDC_ADMIN_CLIENT_ID=test_client
+OIDC_ADMIN_CLIENT_SECRET=<SECRET>
+```
+
+
 Wait for the database migrations to complete for the API and Caluma.
 
 Load the config data into Caluma:
