@@ -65,8 +65,17 @@ export default class WorkItemsIndexController extends TableController {
     }
 
     if (this.filters.identities) {
+      const idSet = new Set(arrayFromString(this.filters.identities));
+      const assignedUsers = this.store
+        .peekAll("identity")
+        .reduce((ids, identity) => {
+          if (idSet.has(identity.id)) {
+            return ids.push(identity.idpId), ids;
+          }
+          return ids;
+        }, []);
       filter.push({
-        assignedUsers: arrayFromString(this.filters.identities),
+        assignedUsers,
         invert: Boolean(this.invertedFilters.identities),
       });
     }
