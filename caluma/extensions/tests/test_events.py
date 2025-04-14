@@ -532,9 +532,30 @@ def test_redo_review_document(
         task_id="circulation-decision",
         status=WorkItem.STATUS_READY,
     )
+
+    assert circulation.status == "running"
     assert circ_work_item.child_case.work_items.count() == 3
+    assert list(
+        circ_work_item.child_case.work_items.values_list("status", flat=True)
+    ) == [
+        "ready",
+        "ready",
+        "ready",
+    ]
 
     redo_work_item(circ_work_item.case.work_items.get(task_id="review-document"), user)
+
+    circulation.refresh_from_db()
+
+    # old discarded circulation
+    assert circulation.status == "canceled"
+    assert list(
+        circ_work_item.child_case.work_items.values_list("status", flat=True)
+    ) == [
+        "canceled",
+        "canceled",
+        "canceled",
+    ]
 
     circ_work_item.refresh_from_db()
     new_case = circ_work_item.child_case.pk

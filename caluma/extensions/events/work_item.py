@@ -406,14 +406,23 @@ def redo_circulation(sender, work_item, user, **kwargs):
 @filter_events(lambda sender, work_item: work_item.task_id == "review-document")
 @transaction.atomic
 def redo_review_document(sender, work_item, user, **kwargs):
-    circulation = work_item.case.work_items.get(task_id="circulation")
-    circulation.child_case = caluma_workflow_api.start_case(
+    circulation_wi = work_item.case.work_items.get(task_id="circulation")
+
+    # Set status of possible old circulation case and all its workitems to `canceled`
+    if old_circulation := circulation_wi.child_case:
+        for wi in old_circulation.work_items.all():
+            wi.status = caluma_workflow_models.WorkItem.STATUS_CANCELED
+            wi.save()
+        old_circulation.status = caluma_workflow_models.Case.STATUS_CANCELED
+        old_circulation.save()
+
+    circulation_wi.child_case = caluma_workflow_api.start_case(
         workflow=caluma_workflow_models.Workflow.objects.get(pk="circulation"),
         form=caluma_form_models.Form.objects.get(pk="circulation-form"),
         user=user,
-        parent_work_item=circulation,
+        parent_work_item=circulation_wi,
     )
-    circulation.save()
+    circulation_wi.save()
 
 
 @on(post_redo_work_item, raise_exception=True)
