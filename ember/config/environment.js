@@ -51,9 +51,6 @@ module.exports = function (environment) {
     },
 
     APP: {
-      navBarLogo: "/assets/logo-header.png",
-      navBarText: "mySAGW",
-
       staffOrganisationName:
         "Schweizerische Akademie der Geistes- und Sozialwissenschaften (SAGW)",
       circulationOrganisations: [
