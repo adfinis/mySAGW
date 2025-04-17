@@ -28,9 +28,9 @@ print(f"Fixing {cases.count()} dangling circulations...")
 for case in cases:
     for wi in case.work_items.all():
         wi.status = WorkItem.STATUS_CANCELED
-        # wi.save()
+        wi.save()
     case.status = Case.STATUS_CANCELED
-    # case.save()
+    case.save()
 
 print("Done.")
 ```
