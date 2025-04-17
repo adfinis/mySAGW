@@ -51,7 +51,7 @@ module.exports = function (environment) {
     },
 
     APP: {
-      navBarLogo: "/assets/logo-header.svg",
+      navBarLogo: "/assets/logo-header.png",
       navBarText: "mySAGW",
 
       staffOrganisationName:

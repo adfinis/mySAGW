@@ -1,6 +1,12 @@
 .nav-bar {
   border-bottom: solid 1px $global-border;
 
+  // prevent logo from shrinking when menu column width is smaller
+  // than logo width.
+  a.uk-logo {
+    flex: 0 0 auto;
+  }
+
   & img.nav-bar-logo {
     height: 50px;
   }

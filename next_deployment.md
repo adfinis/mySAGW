@@ -1,38 +1,15 @@
 # Manual steps for next deployment
 
 
-### Fix case statuses
+## Upload updated templates to DMS
 
- - Remove status from Cases not stemming from the `document-review` Workflow
- - Set cancelled cases to `canceled`
-
-Run in Caluma Django shell:
-
-```python
-from caluma.caluma_workflow.models import Case
-
-
-def status_removal():
-    cases = Case.objects.exclude(workflow__slug="document-review").filter(
-        meta__status__isnull=False
-    )
-    print(f"Unset status of {cases.count()} Cases.")
-    for case in cases:
-        del case.meta["status"]
-        case.save()
-
-
-def set_cancelled_status():
-    cases = Case.objects.filter(
-        workflow__slug="document-review", status=Case.STATUS_CANCELED
-    )
-    print(f'Set status of {cases.count()} canceled Cases to "canceled".')
-    for case in cases:
-        case.meta["status"] = "canceled"
-        case.save()
-
-
-status_removal()
-set_cancelled_status()
-
+```
+docker compose run --rm api python manage.py upload_template \
+    acknowledgement-de.docx \
+    acknowledgement-fr.docx \
+    acknowledgement-en.docx \
+    credit-approval-de.docx \
+    credit-approval-fr.docx \
+    credit-approval-en.docx \
+    application.docx    
 ```
