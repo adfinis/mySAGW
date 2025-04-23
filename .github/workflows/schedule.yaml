@@ -1,0 +1,38 @@
+---
+name: Schedule
+
+on:
+  schedule:
+    - cron: 4 4 * * *
+  workflow_dispatch:
+
+jobs:
+  scan:
+    strategy:
+      matrix:
+        service: [api, caluma, ember]
+
+    name: scan ${{ matrix.image }} image
+    runs-on: ubuntu-latest
+    permissions:
+      actions: none
+      checks: none
+      contents: none
+      deployments: none
+      issues: none
+      packages: write
+      pull-requests: none
+      repository-projects: none
+      security-events: write
+      statuses: none
+      # needed for `cosign attest`
+      id-token: write
+    steps:
+      - id: repo
+        run: |
+          echo "lower=$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
+      - uses: adfinis/container-scanning-action@v0.2.12
+        with:
+          image-ref: ghcr.io/${{ steps.repo.outputs.lower }}/${{ matrix.service }}
+          attest: true
+          token: ${{ secrets.GITHUB_TOKEN }}
