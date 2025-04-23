@@ -79,9 +79,18 @@ jobs:
 
       - name: build and push ${{ steps.parse-tagname.outputs.service }} image
         uses: docker/build-push-action@v6
+        id: docker
         with:
           context: ./${{ steps.parse-tagname.outputs.service }}/
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: |
             ${{ steps.meta.outputs.labels }}
+
+      - name: sign ${{ steps.parse-tagname.outputs.service }} image and attach SBOM attestation
+        uses: adfinis/container-scanning-action@v0.2.12
+        with:
+          image-ref: ghcr.io/${{ steps.repo.outputs.lower }}/${{ steps.parse-tagname.outputs.service }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          digest: ${{ steps.docker.outputs.digest }}
+          attest: true
