@@ -1,3 +1,5 @@
+from datetime import UTC
+
 import requests
 from django.utils import timezone
 from oauthlib.oauth2 import BackendApplicationClient
@@ -34,8 +36,8 @@ class APIClient:
                 verify=settings.API_VERIFY_SSL,
                 scope="openid",
             )
-            token["expires_at_dt"] = timezone.datetime.utcfromtimestamp(
-                int(token["expires_at"]),
+            token["expires_at_dt"] = timezone.datetime.fromtimestamp(
+                int(token["expires_at"]), UTC
             )
 
             self.token = token["access_token"]
