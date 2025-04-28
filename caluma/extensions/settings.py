@@ -123,7 +123,10 @@ settings.INTERNAL_APPLICATION_PERIODICS_CHOICES = (
     "intern-gesuchsart-intern-antrag-periodika",
 )
 
-settings.EARLY_CAREER_AWARD_FORM_SLUG = "nachwuchspreis-online"
+settings.EARLY_CAREER_AWARD_FORM_SLUGS = [
+    "early-career-award",
+    "eca-early-career-award",
+]
 
 settings.CASE_ID_CACHE_SECONDS = env.int("CASE_ID_CACHE_SECONDS", 60)
 
