@@ -31,9 +31,9 @@ jobs:
       packages: write
       pull-requests: none
       repository-projects: none
-      security-events: none
+      security-events: write
       statuses: none
-      id-token: none
+      id-token: write # needed for signing the images with GitHub OIDC using cosign
 
     steps:
       - id: parse-tagname
