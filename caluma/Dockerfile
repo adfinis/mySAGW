@@ -13,7 +13,7 @@ COPY requirements.txt /app/sagw-requirements.txt
 USER root
 ARG INSTALL_DEV="false"
 
-RUN if [ "$INSTALL_DEV" = "true" ] ; then poetry install --no-root; fi \
-&& poetry run pip install -r /app/sagw-requirements.txt
+RUN apt-get -y update && apt-get -y upgrade && if [ "$INSTALL_DEV" = "true" ] ; then poetry install --no-root; fi \
+  && poetry run pip install -r /app/sagw-requirements.txt
 
 USER caluma
