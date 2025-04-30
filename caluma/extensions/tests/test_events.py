@@ -353,7 +353,7 @@ def test_send_work_item_mail(  # noqa: PLR0915
         ]
     case = document_review_case
     if early_career_form:
-        case.document.form.slug = settings.EARLY_CAREER_AWARD_FORM_SLUG
+        case.document.form.slug = settings.EARLY_CAREER_AWARD_FORM_SLUGS[0]
         case.document.form.save()
 
     review_document_decision_answer = "review-document-decision-continue"

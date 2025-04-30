@@ -104,7 +104,7 @@ def _send_work_item_mail(work_item):
     elif work_item.task.slug in ["review-document", "decision-and-credit"]:
         selected_email_texts = email_rejection
         if (
-            work_item.case.document.form.slug == settings.EARLY_CAREER_AWARD_FORM_SLUG
+            work_item.case.document.form.slug in settings.EARLY_CAREER_AWARD_FORM_SLUGS
             and work_item.task.slug == "decision-and-credit"
         ):
             selected_email_texts = email_rejection_early_career_award
