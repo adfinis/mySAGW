@@ -12,7 +12,7 @@ jobs:
       matrix:
         service: [api, caluma, ember]
 
-    name: scan ${{ matrix.image }} image
+    name: scan ${{ matrix.service }} image
     runs-on: ubuntu-latest
     permissions:
       actions: none
