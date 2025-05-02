@@ -102,3 +102,11 @@ ember-lint-fix: ## lint and fix the frontend
 .PHONY: ember-test
 ember-test: ## test the frontend
 	@docker compose run --rm ember yarn test:ember
+
+.PHONY: keycloak-import-config
+keycloak-import-config: ## import the Keycloak config for local development
+	@docker compose exec keycloak /opt/keycloak/bin/kc.sh import --override true --file /opt/keycloak/data/import/test-config.json
+
+.PHONY: keycloak-export-config
+keycloak-export-config: ## export the Keycloak config
+	@docker compose run --rm keycloak export --file /opt/keycloak/data/import/test-config.json
