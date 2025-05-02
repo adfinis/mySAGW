@@ -1,36 +1,43 @@
 # Manual steps for next deployment
 
+## Test client creds used by caluma
 
-## Upload updated templates to DMS
-
-```
-docker compose run --rm api python manage.py upload_template \
-    acknowledgement-de.docx \
-    acknowledgement-fr.docx \
-    acknowledgement-en.docx \
-    credit-approval-de.docx \
-    credit-approval-fr.docx \
-    credit-approval-en.docx \
-    application.docx
-```
-
-## Fix dangling circulations
-
-```bash
-docker compose run --rm caluma poetry run ./manage.py shell
-```
+This can be tested from the shell, without modifying any data:
 
 ```python
-from caluma.caluma_workflow.models import Case, WorkItem
+from caluma.extensions.common import get_users_for_case
+from caluma.caluma_workflow.models import Case
 
-cases = Case.objects.filter(parent_work_item__isnull=True, document__form__slug="circulation-form")
-print(f"Fixing {cases.count()} dangling circulations...")
-for case in cases:
-    for wi in case.work_items.all():
-        wi.status = WorkItem.STATUS_CANCELED
-        wi.save()
-    case.status = Case.STATUS_CANCELED
-    case.save()
+# Fetch the most recent case
+c = Case.objects.filter(workflow__slug="document-review").order_by("-created_at").first()
 
-print("Done.")
+# Fetch the users with access to this case from the API
+get_users_for_case(c)
+
+# This should return something like this:
+# [
+#     {
+#         'idp-id': 'ID',
+#         'email': 'MAIL',
+#         'organisation-name': None,
+#         'first-name':'Name',
+#         'last-name': 'Name',
+#         'salutation': 'neutral',
+#         'language': 'de',
+#         'is-organisation': False
+#     }
+# ]
+```
+
+## Test the monitoring config in Caddy
+
+Make an authenticated request to the healthz endpoint from an IP that is configured in
+the Caddy .env file. This should return the healthz information.
+
+Do the same request from another IP and it should fail.
+
+```bash
+curl 'https://DOMAIN/api/v1/healthz' \
+  -H 'Accept: application/vnd.api+json' \
+  -H 'Authorization: Bearer $TOKEN' -v
 ```
