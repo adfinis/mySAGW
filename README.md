@@ -34,7 +34,7 @@ make caluma-loadconfig
 Import the Keycloak config:
 
 ```bash
-docker-compose exec keycloak /opt/keycloak/bin/kc.sh import --override true --file /opt/keycloak/data/import/test-config.json
+make keycloak-import-config
 ```
 
 Add `mysagw.local` to `/etc/hosts`:
