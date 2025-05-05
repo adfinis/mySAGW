@@ -1,5 +1,5 @@
 ---
-x-version: 0.7.0
+x-version: 0.8.0
 
 services:
   db:
