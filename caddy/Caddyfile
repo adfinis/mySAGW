@@ -8,7 +8,7 @@
     {$GRAPHIQL_PROXY}
 
     @monitoring {
-        remote_ip forwarded private_ranges {$MONITORING_IPS}
+        client_ip private_ranges {$MONITORING_IPS}
     }
     handle @monitoring {
         reverse_proxy /healthz* http://caluma:8000
@@ -19,14 +19,20 @@
     }
     encode gzip
 
-    # generated 2021-02-04, Mozilla Guideline v5.6, Caddy 2.1.1, intermediate configuration
-    # https://ssl-config.mozilla.org/#server=caddy&version=2.1.1&config=intermediate&guideline=5.6
+    # generated 2025-05-02, Mozilla Guideline v5.6, Caddy 2.10.0, intermediate config
+    # https://ssl-config.mozilla.org/#server=caddy&version=2.10.0&config=intermediate&guideline=5.6
 
-    header / Strict-Transport-Security "max-age=63072000"
-
-    # Due to a lack of DHE support, you -must- use an ECDSA cert to support IE 11 on Windows 7
     tls {
-        protocols tls1.2 tls1.3
+        # Note: Caddy automatically configures safe TLS settings,
+        # so 'ciphers' and 'curves' may safely be commented out to use Caddy defaults.
+
+        # Due to a lack of DHE support, you -must- use an ECDSA cert to support IE 11 on Windows 7
+
         ciphers TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256 TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256
+        curves x25519 secp256r1 secp384r1
+        #protocols tls1.2 tls1.3
     }
+
+    # HSTS (63072000 seconds)
+    header Strict-Transport-Security "max-age=63072000"
 }
