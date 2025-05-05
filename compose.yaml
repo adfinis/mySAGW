@@ -1,5 +1,5 @@
 ---
-x-version: 0.8.0
+x-version: 0.8.1
 
 services:
   db:
@@ -58,10 +58,9 @@ services:
       - KC_DB_USERNAME=keycloak
       - KEYCLOAK_ADMIN=admin
       - KC_HOSTNAME_STRICT=false
-      - KC_HOSTNAME_STRICT_HTTPS=false
       - KC_HTTP_RELATIVE_PATH=/auth
-      - KC_PROXY=edge
       - KC_PROXY_HEADERS=xforwarded
+      - KC_HTTP_ENABLED=true
     command: start
 
   ember:
