@@ -1,6 +1,6 @@
 # mySAGW
 
-[![Build Status](https://github.com/adfinis/mySAGW/workflows/Tests/badge.svg)](https://github.com/adfinis/mySAGW/actions?query=workflow%3ATests)
+[![Tests](https://github.com/adfinis/mySAGW/actions/workflows/tests.yaml/badge.svg?branch=main)](https://github.com/adfinis/mySAGW/actions/workflows/tests.yaml)
 [![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)](https://github.com/adfinis/mySAGW/blob/master/api/setup.cfg#L53)
 [![Ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://docs.astral.sh/ruff/)
 [![License: GPL-3.0-or-later](https://img.shields.io/github/license/adfinis-sygroup/mySAGW)](https://spdx.org/licenses/GPL-3.0-or-later.html)
