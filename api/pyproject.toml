@@ -21,7 +21,7 @@ django-watchman = "^1.3.0"
 djangorestframework = "^3.15.2"
 djangorestframework-jsonapi = "^7.0.2"
 drf-extra-fields = "^3.5.0"
-gunicorn = "^22.0.0"
+gunicorn = "^23.0.0"
 mozilla-django-oidc = "^4.0.1"
 openpyxl = "3.0.10"  # TODO: dependency of `pyexcel-xlsx`. Remove as soon as https://github.com/pyexcel/pyexcel-xlsx/issues/52 is resolved
 psycopg2-binary = "^2.9.10"
@@ -30,7 +30,7 @@ pyexcel-xlsx = "^0.6.0"
 pypdf = "^4.1.0"
 requests = "^2.32.2"
 reportlab = "^4.1.0"
-setuptools = "75.5.0"  # needed for django-excel. Pinned because of build errors. See https://github.com/adfinis/mySAGW/issues/1176
+setuptools = "78.1.1"  # needed for django-excel. Pinned because of build errors. See https://github.com/adfinis/mySAGW/issues/1176
 
 [tool.poetry.group.dev.dependencies]
 django-extensions = "^3.2.3"
