@@ -59,7 +59,7 @@ jobs:
         if: contains(matrix.config.version-file, 'toml')
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: "3.13"
 
       - name: Get new version
         id: after

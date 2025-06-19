@@ -48,7 +48,6 @@ dbshell: ## Start a psql shell
 .PHONY: caluma-test
 caluma-test: ## test caluma config and extensions
 	@docker compose exec -T caluma poetry run python manage.py check
-	@docker compose exec -T -u root caluma poetry install --no-root
 	@docker compose exec -T caluma ./caluma/ci/test.sh
 
 .PHONY: caluma-lint
