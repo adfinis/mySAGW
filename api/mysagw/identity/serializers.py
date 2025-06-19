@@ -249,10 +249,10 @@ class InterestsResourceRelatedField(serializers.ResourceRelatedField):
     # overridden for using a custom `ManyRelatedField`
     @classmethod
     def many_init(cls, *args, **kwargs):
-        list_kwargs = {"child_relation": cls(*args, **kwargs)}
-        for key in kwargs:
-            if key in MANY_RELATION_KWARGS:
-                list_kwargs[key] = kwargs[key]
+        list_kwargs = {
+            key: item for key, item in kwargs.items() if key in MANY_RELATION_KWARGS
+        }
+        list_kwargs["child_relation"] = cls(*args, **kwargs)
         return InterestsManyRelatedField(**list_kwargs)
 
 
