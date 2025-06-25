@@ -324,7 +324,7 @@ class CaseDownloadViewSet(GenericViewSet):
         raw_data = caluma_client.get_data([GQL_DIR / f"get_{name}.gql"], variables)
         data = self.get_formatted_data(raw_data, name, pk)
         language = get_language()
-        template = f'{getattr(settings, f"DOCUMENT_MERGE_SERVICE_{name.upper()}_TEMPLATE_SLUG")}-{language}'
+        template = f"{getattr(settings, f'DOCUMENT_MERGE_SERVICE_{name.upper()}_TEMPLATE_SLUG')}-{language}"
         file_name = (
             f"{data['dossier_nr']} - "
             f"{self.get_filename_translation(name, language)}.pdf"

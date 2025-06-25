@@ -116,8 +116,7 @@ def test_identity_create_empty_failure(db, client, attributes):
     assert response.status_code == status.HTTP_400_BAD_REQUEST
 
     assert response.json()["errors"][0]["detail"] == (
-        "Identities need at least an email, first_name, last_name or "
-        "organisation_name."
+        "Identities need at least an email, first_name, last_name or organisation_name."
     )
 
 
@@ -142,8 +141,7 @@ def test_identity_update_empty_failure(db, client, identity):
     assert response.status_code == status.HTTP_400_BAD_REQUEST
 
     assert response.json()["errors"][0]["detail"] == (
-        "Identities need at least an email, first_name, last_name or "
-        "organisation_name."
+        "Identities need at least an email, first_name, last_name or organisation_name."
     )
 
 

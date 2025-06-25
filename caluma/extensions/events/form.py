@@ -45,7 +45,7 @@ def update_table_summary(instance, *args, **kwargs):
 
     if not summary_question or not summary_mode:
         logger.warning(
-            "Updating table summary: missing info in TQ meta: " "sq=%s, sm=%s",
+            "Updating table summary: missing info in TQ meta: sq=%s, sm=%s",
             summary_question,
             summary_mode,
         )
