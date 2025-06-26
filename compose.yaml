@@ -1,5 +1,5 @@
 ---
-x-version: 0.8.1
+x-version: 0.8.2
 
 services:
   db:
@@ -11,7 +11,7 @@ services:
       - "5432:5432"
 
   api:
-    image: ghcr.io/adfinis/mysagw/api:0.3.2
+    image: ghcr.io/adfinis/mysagw/api:0.3.3
     environment:
       - DATABASE_HOST=db
       - DATABASE_PORT=5432
@@ -19,7 +19,7 @@ services:
       - db
 
   caluma:
-    image: ghcr.io/adfinis/mysagw/caluma:0.3.8
+    image: ghcr.io/adfinis/mysagw/caluma:0.3.9
     environment:
       - DATABASE_HOST=db
       - DATABASE_PORT=5432
@@ -64,7 +64,7 @@ services:
     command: start
 
   ember:
-    image: ghcr.io/adfinis/mysagw/ember:0.4.0
+    image: ghcr.io/adfinis/mysagw/ember:0.4.1
 
   minio:
     image: minio/minio:RELEASE.2025-04-22T22-12-26Z
