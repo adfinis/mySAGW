@@ -46,6 +46,7 @@ query getCase($filter: [CaseFilterSetType]) {
                         "review-document-decision"
                         "decision-and-credit-decision"
                         "define-amount-decision"
+                        "gesprochener-rahmenkredit"
                       ]
                     }
                   ]
