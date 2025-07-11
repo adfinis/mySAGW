@@ -194,6 +194,8 @@ module("Unit | Controller | cases/detail/index", function (hooks) {
         label: "Kommentar",
         value: "Remarked",
       },
+    ]);
+    assert.deepEqual(controller.permamentRemarks[0].answers, [
       {
         label: "Gesprochener Rahmenkredit",
         value: "CHF 123.-",

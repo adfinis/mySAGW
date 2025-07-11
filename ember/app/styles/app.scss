@@ -64,3 +64,16 @@ main {
 .case-list-action-divider {
   height: 50px !important;
 }
+
+.text-divider {
+  display: flex;
+  align-items: center;
+}
+
+.text-divider::after {
+  content: "";
+  height: 1px;
+  background-color: $global-primary-background;
+  flex-grow: 1;
+  margin-left: 1rem;
+}

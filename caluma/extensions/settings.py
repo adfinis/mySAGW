@@ -106,6 +106,11 @@ settings.REVISION_QUESTIONS = {
         "define-amount-remark",
         "define-amount-decision",
     ],
+    "advance-credits": [
+        "advance-credit-date",
+        "advance-credit-amount-float",
+        "priorisierung-der-antrage-kommentar",
+    ],
 }
 
 settings.APPLICANT_VISIBLE_TASKS = settings.APPLICANT_TASK_SLUGS + list(
