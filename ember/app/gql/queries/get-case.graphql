@@ -35,6 +35,9 @@ query getCase($filter: [CaseFilterSetType]) {
                 }
               }
               document {
+                form {
+                  name
+                }
                 answers(
                   filter: [
                     {
@@ -47,6 +50,9 @@ query getCase($filter: [CaseFilterSetType]) {
                         "decision-and-credit-decision"
                         "define-amount-decision"
                         "gesprochener-rahmenkredit"
+                        "advance-credit-date"
+                        "advance-credit-amount-float"
+                        "advance-credit-remark-staff"
                       ]
                     }
                   ]
@@ -61,6 +67,9 @@ query getCase($filter: [CaseFilterSetType]) {
                       }
                       ... on FloatAnswer {
                         FloatAnswerValue: value
+                      }
+                      ... on DateAnswer {
+                        DateAnswerValue: value
                       }
                       question {
                         meta

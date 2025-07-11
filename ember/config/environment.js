@@ -98,7 +98,7 @@ module.exports = function (environment) {
           "complete-document",
         ],
         manuallyCompletableTasks: ["complete-document"],
-        // when adding to displayAnswers, remeber to add to get-case.graphql
+        // when adding questions to displayAnswers, also add to get-case.graphql
         displayedAnswers: {
           // task slug
           "review-document": {
@@ -143,8 +143,16 @@ module.exports = function (environment) {
             "define-amount-decision-dismissed": ["define-amount-remark"],
           },
         },
+        // when adding questions to alwaysDisplayedAnswers, also add to get-case.graphql
+        // when adding a task, also add to CaseDetailIndexController remarkWorkItems filter
         alwaysDisplayedAnswers: {
           "decision-and-credit": ["gesprochener-rahmenkredit"],
+          "advance-credits": [
+            "advance-credit-date",
+            "advance-credit-amount-float",
+            "priorisierung-der-antrage-kommentar",
+            "advance-credit-remark-staff",
+          ],
         },
         orderTypeKeys: {
           attribute: [

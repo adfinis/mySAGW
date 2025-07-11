@@ -70,13 +70,25 @@
     </span>
   </div>
   <div class="uk-width-2-3 uk-flex uk-flex-column">
+    {{#unless (or this.remarks this.permamentRemarks)}}
+      {{t "global.empty"}}
+    {{/unless}}
     {{#each this.remarks as |remark|}}
       <div class="uk-margin-bottom">
         <p class="uk-text-bold uk-margin-small-bottom">{{remark.label}}</p>
         <span>{{remark.value}}</span>
       </div>
-    {{else}}
-      {{t "global.empty"}}
+    {{/each}}
+    {{#each this.permamentRemarks as |remark|}}
+      <span class="uk-text-bold uk-margin-bottom text-divider">
+        {{remark.workItem.document.form.name}}
+      </span>
+      {{#each remark.answers as |answer|}}
+        <div class="uk-margin-bottom">
+          <p class="uk-text-bold uk-margin-small-bottom">{{answer.label}}</p>
+          <span>{{answer.value}}</span>
+        </div>
+      {{/each}}
     {{/each}}
   </div>
 </div>

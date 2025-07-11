@@ -7,6 +7,7 @@ import { queryManager } from "ember-apollo-client";
 import Changeset from "ember-changeset";
 import lookupValidator from "ember-changeset-validations";
 import { dropTask, restartableTask } from "ember-concurrency";
+import { DateTime } from "luxon";
 
 import CustomCaseModel from "mysagw/caluma-query/models/case";
 import ENV from "mysagw/config/environment";
@@ -25,6 +26,7 @@ export default class CasesDetailIndexController extends Controller {
   @service store;
   @service fetch;
   @service caseData;
+  @service can;
 
   @queryManager apollo;
 
@@ -46,10 +48,15 @@ export default class CasesDetailIndexController extends Controller {
     const configuredWorkItems = this.caseData.case.workItems
       .filter(
         (workItem) =>
-          [
+          ([
             ...Object.keys(ENV.APP.caluma.displayedAnswers),
-            ...Object.keys(ENV.APP.caluma.alwaysDisplayedAnswers),
-          ].includes(workItem.task.slug) && workItem.status === "COMPLETED",
+            "decision-and-credit",
+          ].includes(workItem.task.slug) &&
+            workItem.status === "COMPLETED") ||
+          // advance-credits is displayed in READY and COMPLETED,
+          // due to it being completed very late in the workflow
+          ("advance-credits" === workItem.task.slug &&
+            ["READY", "COMPLETED"].includes(workItem.status)),
       )
       .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
@@ -73,8 +80,8 @@ export default class CasesDetailIndexController extends Controller {
   get remarks() {
     const workItems = this.remarkWorkItems;
 
-    const newestAnswer = workItems.newest?.document?.answers.edges.reduce(
-      (filteredAnswers, answer, _, answers) => {
+    return workItems.newest?.document?.answers.edges
+      .reduce((filteredAnswers, answer, _, answers) => {
         Object.keys(ENV.APP.caluma.displayedAnswers).forEach((taskSlug) => {
           if (!workItems.newest.task.slug.includes(taskSlug)) {
             return;
@@ -96,12 +103,13 @@ export default class CasesDetailIndexController extends Controller {
         });
 
         return filteredAnswers;
-      },
-      [],
-    );
+      }, [])
+      .flat();
+  }
 
-    const alwaysDisplayedAnswers = workItems.always.map((workItem) => {
-      return workItem.document.answers.edges.reduce(
+  get permamentRemarks() {
+    return this.remarkWorkItems.always.map((workItem) => {
+      const answers = workItem.document.answers.edges.reduce(
         (filteredAnswers, answer) => {
           Object.keys(ENV.APP.caluma.alwaysDisplayedAnswers).forEach(
             (taskSlug) => {
@@ -120,9 +128,11 @@ export default class CasesDetailIndexController extends Controller {
         },
         [],
       );
+      return {
+        workItem,
+        answers,
+      };
     });
-
-    return [...(newestAnswer ?? []), ...alwaysDisplayedAnswers].flat();
   }
 
   formatAnswer(answer) {
@@ -130,6 +140,8 @@ export default class CasesDetailIndexController extends Controller {
 
     if (answer.node.question.meta.waehrung) {
       value = formatCurrency(value, answer.node.question.meta.waehrung);
+    } else if (answer.node.__typename === "DateAnswer") {
+      value = DateTime.fromISO(value).toFormat("dd.LL.yyyy");
     }
 
     return {
