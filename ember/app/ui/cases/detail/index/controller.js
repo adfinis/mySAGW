@@ -25,6 +25,7 @@ export default class CasesDetailIndexController extends Controller {
   @service store;
   @service fetch;
   @service caseData;
+  @service can;
 
   @queryManager apollo;
 
@@ -46,10 +47,15 @@ export default class CasesDetailIndexController extends Controller {
     const configuredWorkItems = this.caseData.case.workItems
       .filter(
         (workItem) =>
-          [
+          ([
             ...Object.keys(ENV.APP.caluma.displayedAnswers),
-            ...Object.keys(ENV.APP.caluma.alwaysDisplayedAnswers),
-          ].includes(workItem.task.slug) && workItem.status === "COMPLETED",
+            "decision-and-credit",
+          ].includes(workItem.task.slug) &&
+            workItem.status === "COMPLETED") ||
+          // advance-credits is displayed in READY and COMPLETED,
+          // due to it being completed very late in the workflow
+          ("advance-credits" === workItem.task.slug &&
+            ["READY", "COMPLETED"].includes(workItem.status)),
       )
       .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 

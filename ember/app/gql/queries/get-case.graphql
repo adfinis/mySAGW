@@ -47,6 +47,9 @@ query getCase($filter: [CaseFilterSetType]) {
                         "decision-and-credit-decision"
                         "define-amount-decision"
                         "gesprochener-rahmenkredit"
+                        "decision-and-credit-remark"
+                        "advance-credit-amount-float"
+                        "advance-credit-remark-staff"
                       ]
                     }
                   ]
