@@ -28,8 +28,13 @@
                 </a>
               </li>
               <li>
-                <a href="#" {{on "click" (perform this.exportSearch "export-email" "xlsx")}}>
-                  {{t "identities.index.export.email-only"}}
+                <a href="#" {{on "click" (perform this.exportSearch "export-email/xlsx" "xlsx")}}>
+                  {{t "identities.index.export.email-only-xlsx"}}
+                </a>
+              </li>
+              <li>
+                <a href="#" {{on "click" (perform this.exportSearch "export-email/csv" "csv")}}>
+                  {{t "identities.index.export.email-only-csv"}}
                 </a>
               </li>
               <li>
