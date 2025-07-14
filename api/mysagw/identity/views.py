@@ -150,12 +150,16 @@ class IdentityViewSet(views.ModelViewSet):
         records = ex.export(queryset)
         return django_excel.make_response_from_records(records, "xlsx")
 
-    @action(detail=False, methods=["post"], url_path="export-email")
-    def export_email(self, request, *args, **kwargs):
+    @action(
+        detail=False,
+        methods=["post"],
+        url_path=r"export-email/(?P<file_type>xlsx|csv)$",
+    )
+    def export_email(self, request, file_type, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
 
         records = queryset.values("email")
-        return django_excel.make_response_from_records(records, "xlsx")
+        return django_excel.make_response_from_records(records, file_type)
 
     @action(detail=False, methods=["post"], url_path="export-labels")
     def export_labels(self, request, *args, **kwargs):

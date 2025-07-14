@@ -3,7 +3,7 @@ import datetime
 import pyexcel
 import pytest
 from django.http import HttpResponse
-from django.urls import reverse
+from django.urls import NoReverseMatch, reverse
 from django.utils import timezone
 from psycopg2._range import DateRange
 from rest_framework import status
@@ -701,10 +701,21 @@ def test_membership_export(
     snapshot.assert_match(sorted(sheet.array, reverse=True))
 
 
+@pytest.mark.parametrize(
+    "file_type,expected_status_code",
+    [
+        ("xlsx", status.HTTP_200_OK),
+        ("csv", status.HTTP_200_OK),
+        (None, status.HTTP_405_METHOD_NOT_ALLOWED),
+        ("invalid", status.HTTP_404_NOT_FOUND),
+    ],
+)
 def test_identity_export_email(
     db,
     client,
     identity_factory,
+    file_type,
+    expected_status_code,
 ):
     identities = sorted(
         identity_factory.create_batch(10, last_name="Smith"),
@@ -715,18 +726,37 @@ def test_identity_export_email(
         ),  # use same ordering as the model
     )
 
-    url = reverse("identity-export-email")
+    try:
+        url = reverse("identity-export-email", args=[file_type])
+    except NoReverseMatch:
+        # happens with None and "invalid", but we still want to test the request
+        assert file_type in [None, "invalid"]
+        url = "/api/v1/identities/export-email"
+        if file_type == "invalid":
+            url = f"{url}/invalid"
 
     response = client.post(url, QUERY_STRING="filter[search]=smith")
 
-    assert response.status_code == status.HTTP_200_OK
+    assert response.status_code == expected_status_code
+    if expected_status_code != status.HTTP_200_OK:
+        return
 
-    sheet = pyexcel.get_sheet(file_type="xlsx", file_content=response.content)
-    assert len(sheet.array) == len(identities) + 1
-    assert sheet.array[0] == ["email"]
+    if file_type == "xlsx":
+        sheet = pyexcel.get_sheet(file_type="xlsx", file_content=response.content)
+        assert len(sheet.array) == len(identities) + 1
+        assert sheet.array[0] == ["email"]
 
-    for i in range(10):
-        assert sheet.array[i + 1][0] == identities[i].email
+        for i in range(10):
+            assert sheet.array[i + 1][0] == identities[i].email
+    elif file_type == "csv":
+        csv_list = [
+            mail
+            for mail in response.content.decode("utf-8").split("\r\n")
+            if "@" in mail
+        ]
+        assert len(csv_list) == len(identities)
+        for i in range(10):
+            assert csv_list[i] == identities[i].email
 
 
 @pytest.mark.usefixtures("_dms_mock")
