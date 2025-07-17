@@ -53,9 +53,7 @@ class CreateOrAssignVisibility(BaseVisibility):
         return queryset.filter(
             Q(
                 document__family__in=self.filter_queryset_for_document(
-                    None,
-                    form_models.Document.objects,
-                    info,
+                    None, form_models.Document.objects, info, []
                 ),
             )
             | (

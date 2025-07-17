@@ -55,7 +55,7 @@
         "created_by_group": "admin",
         "modified_by_user": null,
         "modified_by_group": null,
-        "name": "{\"de\": \"Vorschusszahlung\", \"en\": \"Advance payment\", \"fr\": \"Versement d\\u2019une avance\"}",
+        "name": "{\"de\": \"Vorschusszahlung und Notizen\", \"en\": \"Advance payment and notes\", \"fr\": \"Paiement anticip\\u00e9 et remarques\"}",
         "description": "{\"de\": null, \"en\": null, \"fr\": null}",
         "type": "complete_task_form",
         "meta": {},
