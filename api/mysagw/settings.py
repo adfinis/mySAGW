@@ -138,7 +138,7 @@ OIDC_MONITORING_CLIENT_USERNAME = env.str(
 )
 OIDC_RP_CLIENT_USERNAME = env.str(
     "OIDC_RP_CLIENT_GRANT_VALUE",
-    default="service-account-caluma_admin_client",
+    default="service-account-test_client",
 )
 OIDC_DRF_AUTH_BACKEND = "mysagw.oidc_auth.authentication.MySAGWAuthenticationBackend"
 
