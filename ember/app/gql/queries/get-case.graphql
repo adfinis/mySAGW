@@ -52,7 +52,7 @@ query getCase($filter: [CaseFilterSetType]) {
                         "gesprochener-rahmenkredit"
                         "advance-credit-date"
                         "advance-credit-amount-float"
-                        "advance-credit-remark-staff"
+                        "notizen-intern"
                       ]
                     }
                   ]

@@ -12,3 +12,6 @@ docker compose run --rm api python manage.py upload_template acknowledgement-de.
 
 The env var `OIDC_RP_CLIENT_GRANT_VALUE` to set `OIDC_RP_CLIENT_USERNAME` must be set to
 the correct client username: `service-account-caluma_admin_client`.
+
+## Add question `notizen-intern` to form `advance-credits-form`
+Copy question from here: https://test.my.sagw.ch/form/builder/advance-credits-form/questions/notizen-intern

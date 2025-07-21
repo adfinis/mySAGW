@@ -151,7 +151,7 @@ module.exports = function (environment) {
             "advance-credit-date",
             "advance-credit-amount-float",
             "priorisierung-der-antrage-kommentar",
-            "advance-credit-remark-staff",
+            "notizen-intern",
           ],
         },
         orderTypeKeys: {
