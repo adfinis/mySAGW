@@ -78,6 +78,10 @@ Different environment variable types are explained at [django-environ](https://d
 
 ### Deployment
 
+If there are manual steps needed, you can find those in the [wiki](https://github.com/adfinis/mySAGW/wiki/Deployment-Manual-Steps).
+After deployment, rename `Next deployment` to the date you deployed. If you have steps for the next deployment, just add them at
+the top with `Next deployment` again.
+
 ```bash
 cp -r ./.envs/.production.example ./.envs/.production
 ```
