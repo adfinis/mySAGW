@@ -67,6 +67,7 @@ export default class WorkItemsIndexController extends TableController {
     if (this.filters.identities) {
       const idSet = new Set(arrayFromString(this.filters.identities));
       const assignedUsers = this.store
+        // This is fetched in the select input when selecting identities to filter the work item list
         .peekAll("identity")
         .reduce((ids, identity) => {
           if (idSet.has(identity.id)) {
