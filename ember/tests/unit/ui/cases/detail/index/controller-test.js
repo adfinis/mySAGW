@@ -84,6 +84,7 @@ module("Unit | Controller | cases/detail/index", function (hooks) {
           status: "COMPLETED",
           createdAt: "2023-02-22T07:24:01.560319+00:00",
           closedAt: "2023-02-22T08:08:13.250799+00:00",
+          name: "Gesprochener Rahmenkredit",
           task: {
             __typename: "CompleteTaskFormTask",
             slug: "decision-and-credit",
@@ -187,18 +188,26 @@ module("Unit | Controller | cases/detail/index", function (hooks) {
 
     assert.deepEqual(controller.remarks, [
       {
+        slug: "define-amount-amount-float",
         label: "Betrag",
         value: 1234,
       },
       {
+        slug: "define-amount-remark",
         label: "Kommentar",
         value: "Remarked",
       },
     ]);
-    assert.deepEqual(controller.permamentRemarks[0].answers, [
+    assert.deepEqual(controller.permanentRemarks, [
       {
-        label: "Gesprochener Rahmenkredit",
-        value: "CHF 123.-",
+        title: "Gesprochener Rahmenkredit",
+        answers: [
+          {
+            slug: "gesprochener-rahmenkredit",
+            label: "Gesprochener Rahmenkredit",
+            value: "CHF 123.-",
+          },
+        ],
       },
     ]);
   });
