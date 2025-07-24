@@ -195,10 +195,12 @@ module("Unit | Controller | cases/detail/index", function (hooks) {
         value: "Remarked",
       },
     ]);
-    assert.deepEqual(controller.permamentRemarks[0].answers, [
+    assert.deepEqual(controller.permamentRemarks, [
       {
-        label: "Gesprochener Rahmenkredit",
-        value: "CHF 123.-",
+        amount: {
+          label: "Gesprochener Rahmenkredit",
+          value: "CHF 123.-",
+        },
       },
     ]);
   });
