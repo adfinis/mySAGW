@@ -145,11 +145,12 @@ module.exports = function (environment) {
         },
         // when adding questions to alwaysDisplayedAnswers, also add to get-case.graphql
         // when adding a task, also add to CaseDetailIndexController remarkWorkItems filter
+        // answers are sorted order of this list
         alwaysDisplayedAnswers: {
           "decision-and-credit": ["gesprochener-rahmenkredit"],
           "advance-credits": [
-            "advance-credit-date",
             "advance-credit-amount-float",
+            "advance-credit-date",
             "priorisierung-der-antrage-kommentar",
             "advance-credit-remark-staff",
           ],

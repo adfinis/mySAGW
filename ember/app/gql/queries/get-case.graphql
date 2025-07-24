@@ -17,6 +17,7 @@ query getCase($filter: [CaseFilterSetType]) {
               status
               createdAt
               closedAt
+              name
               task {
                 slug
               }
