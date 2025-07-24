@@ -79,17 +79,41 @@
         <span>{{remark.value}}</span>
       </div>
     {{/each}}
-    {{#each this.permamentRemarks as |remark|}}
-      <span class="uk-text-bold uk-margin-bottom text-divider">
-        {{remark.workItem.document.form.name}}
-      </span>
-      {{#each remark.answers as |answer|}}
-        <div class="uk-margin-bottom">
-          <p class="uk-text-bold uk-margin-small-bottom">{{answer.label}}</p>
-          <span>{{answer.value}}</span>
+    <div class="uk-flex uk-flex-row">
+      {{#each this.permamentRemarks as |remark|}}
+        <div class="uk-margin-large-right">
+          <div class="uk-margin-bottom">
+            <p
+              class="uk-text-bold uk-margin-small-bottom"
+            >
+              {{remark.amount.label}}
+            </p>
+            <p>{{remark.amount.value}}</p>
+            <p>{{remark.date.value}}</p>
+          </div>
+          {{#if remark.comment}}
+            <div class="uk-margin-bottom">
+              <p
+                class="uk-text-bold uk-margin-small-bottom"
+              >
+                {{remark.comment.label}}
+              </p>
+              <span>{{remark.comment.value}}</span>
+            </div>
+          {{/if}}
+          {{#if remark.commentInternal}}
+            <div class="uk-margin-bottom">
+              <p
+                class="uk-text-bold uk-margin-small-bottom"
+              >
+                {{remark.commentInternal.label}}
+              </p>
+              <span>{{remark.commentInternal.value}}</span>
+            </div>
+          {{/if}}
         </div>
       {{/each}}
-    {{/each}}
+    </div>
   </div>
 </div>
 

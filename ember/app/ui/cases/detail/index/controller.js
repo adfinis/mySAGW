@@ -58,7 +58,7 @@ export default class CasesDetailIndexController extends Controller {
           ("advance-credits" === workItem.task.slug &&
             ["READY", "COMPLETED"].includes(workItem.status)),
       )
-      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      .sort((a, b) => new Date(b.closedAt) - new Date(a.closedAt));
 
     const newestWorkItem = configuredWorkItems[0];
 
@@ -78,12 +78,12 @@ export default class CasesDetailIndexController extends Controller {
    * Answers in alwaysDisplayedAnswers should always be displayed.
    */
   get remarks() {
-    const workItems = this.remarkWorkItems;
+    const workItem = this.remarkWorkItems.newest;
 
-    return workItems.newest?.document?.answers.edges
+    return workItem?.document?.answers.edges
       .reduce((filteredAnswers, answer, _, answers) => {
         Object.keys(ENV.APP.caluma.displayedAnswers).forEach((taskSlug) => {
-          if (!workItems.newest.task.slug.includes(taskSlug)) {
+          if (!workItem.task.slug.includes(taskSlug)) {
             return;
           }
 
@@ -109,29 +109,24 @@ export default class CasesDetailIndexController extends Controller {
 
   get permamentRemarks() {
     return this.remarkWorkItems.always.map((workItem) => {
-      const answers = workItem.document.answers.edges.reduce(
-        (filteredAnswers, answer) => {
-          Object.keys(ENV.APP.caluma.alwaysDisplayedAnswers).forEach(
-            (taskSlug) => {
+      return workItem.document.answers.edges.reduce((result, answer) => {
+        Object.entries(ENV.APP.caluma.alwaysDisplayedAnswers).forEach(
+          ([workItemSlug, mapping]) => {
+            if (workItem.task.slug !== workItemSlug) {
+              return;
+            }
+            Object.entries(mapping).forEach(([key, questionSlug]) => {
               if (
-                ENV.APP.caluma.alwaysDisplayedAnswers[taskSlug].includes(
-                  answer.node.question.slug,
-                ) &&
+                questionSlug === answer.node.question.slug &&
                 answer.node[`${answer.node.__typename}Value`]
               ) {
-                filteredAnswers.push(this.formatAnswer(answer));
+                result[key] = this.formatAnswer(answer);
               }
-            },
-          );
-
-          return filteredAnswers;
-        },
-        [],
-      );
-      return {
-        workItem,
-        answers,
-      };
+            });
+          },
+        );
+        return result;
+      }, {});
     });
   }
 
