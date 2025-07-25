@@ -60,7 +60,7 @@
     "ember-localized-model": "^3.2.2",
     "ember-power-select": "^8.2.0",
     "ember-resolver": "^11.0.1",
-    "ember-resources": "^7.0.3",
+    "ember-resources": "^7.0.6",
     "ember-set-helper": "^3.0.1",
     "ember-simple-auth-oidc": "^6.0.1",
     "ember-sortable": "^5.2.2",
