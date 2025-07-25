@@ -75,7 +75,7 @@
     "luxon": "^3.2.1",
     "miragejs": "^0.1.48",
     "reactiveweb": "^1.3.0",
-    "sass": "^1.81.0",
+    "sass": "^1.89.2",
     "tracked-built-ins": "^3.4.0",
     "webpack": "^5.94.0"
   },
