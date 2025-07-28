@@ -49,7 +49,7 @@ services:
   keycloak:
     depends_on:
       - db
-    image: quay.io/keycloak/keycloak:26.2.2
+    image: quay.io/keycloak/keycloak:26.3.2
     volumes:
       - ./keycloak/config.json:/opt/keycloak/data/import/test-config.json
     environment:
@@ -84,7 +84,7 @@ services:
       - minio
 
   dms:
-    image: ghcr.io/adfinis/document-merge-service:7.3.7
+    image: ghcr.io/adfinis/document-merge-service:8.0.0
     depends_on:
       - db
     volumes:
