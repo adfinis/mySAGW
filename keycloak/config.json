@@ -547,8 +547,8 @@
     "id" : "95b0f88e-f7c7-4b7d-a17f-5f3c30a49e34",
     "username" : "admin",
     "emailVerified" : false,
-    "createdTimestamp" : 1670598949899,
     "enabled" : true,
+    "createdTimestamp" : 1670598949899,
     "totp" : false,
     "credentials" : [ {
       "id" : "e6346f4a-ef77-4517-a1bf-f8699ead8167",
@@ -1517,7 +1517,6 @@
     } ]
   },
   "internationalizationEnabled" : false,
-  "supportedLocales" : [ ],
   "authenticationFlows" : [ {
     "id" : "c11a1313-3276-49d1-9695-c391738be284",
     "alias" : "Account verification options",
@@ -2023,6 +2022,14 @@
     "priority" : 100,
     "config" : { }
   }, {
+    "alias" : "idp_link",
+    "name" : "Linking Identity Provider",
+    "providerId" : "idp_link",
+    "enabled" : true,
+    "defaultAction" : false,
+    "priority" : 110,
+    "config" : { }
+  }, {
     "alias" : "update_user_locale",
     "name" : "Update User Locale",
     "providerId" : "update_user_locale",
@@ -2052,7 +2059,7 @@
     "cibaInterval" : "5",
     "realmReusableOtpCode" : "false"
   },
-  "keycloakVersion" : "26.2.2",
+  "keycloakVersion" : "26.3.2",
   "userManagedAccessAllowed" : false,
   "organizationsEnabled" : false,
   "verifiableCredentialsEnabled" : false,
@@ -2486,16 +2493,16 @@
     "attributes" : {
       "salutation" : [ "neutral" ]
     },
-    "createdTimestamp" : 1702568183381,
     "enabled" : true,
+    "createdTimestamp" : 1702568183381,
     "totp" : false,
     "credentials" : [ {
       "id" : "261f5163-8f10-4bb3-974e-a5ea081d1f68",
       "type" : "password",
       "userLabel" : "My password",
       "createdDate" : 1702568212742,
-      "secretData" : "{\"value\":\"6ReHG5279Y1O8dAxozExo3wTCSRspX40PqMQLCqh1dAwmhD73Zgf8sl7Z5kHXNwQtb+P7ODYYEDqzrsTZloQGg==\",\"salt\":\"6Re0IcAAoodLdubnvHb5eg==\",\"additionalParameters\":{}}",
-      "credentialData" : "{\"hashIterations\":210000,\"algorithm\":\"pbkdf2-sha512\",\"additionalParameters\":{}}"
+      "secretData" : "{\"value\":\"dqtpMtVogzOWwqPsO76/cq3dwX+uObQ8H21G/8Pin5Y=\",\"salt\":\"Izs5XcxHFRMQp4cMmlo/og==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":5,\"algorithm\":\"argon2\",\"additionalParameters\":{\"hashLength\":[\"32\"],\"memory\":[\"7168\"],\"type\":[\"id\"],\"version\":[\"1.3\"],\"parallelism\":[\"1\"]}}"
     } ],
     "disableableCredentialTypes" : [ ],
     "requiredActions" : [ ],
@@ -2506,8 +2513,8 @@
     "id" : "39232f23-c157-49a1-b896-96fe15084e7c",
     "username" : "service-account-monitoring_client",
     "emailVerified" : false,
-    "createdTimestamp" : 1670599410931,
     "enabled" : true,
+    "createdTimestamp" : 1670599410931,
     "totp" : false,
     "serviceAccountClientId" : "monitoring_client",
     "credentials" : [ ],
@@ -2520,8 +2527,8 @@
     "id" : "040d960b-c83a-4abf-a667-7cf785cb8a95",
     "username" : "service-account-test_client",
     "emailVerified" : false,
-    "createdTimestamp" : 1632389993127,
     "enabled" : true,
+    "createdTimestamp" : 1632389993127,
     "totp" : false,
     "serviceAccountClientId" : "test_client",
     "credentials" : [ ],
@@ -2543,8 +2550,8 @@
     "attributes" : {
       "salutation" : [ "neutral" ]
     },
-    "createdTimestamp" : 1702568233876,
     "enabled" : true,
+    "createdTimestamp" : 1702568233876,
     "totp" : false,
     "credentials" : [ {
       "id" : "05f03314-1880-4795-b785-47183a5f0123",
@@ -2569,16 +2576,16 @@
     "attributes" : {
       "salutation" : [ "neutral" ]
     },
-    "createdTimestamp" : 1702568261974,
     "enabled" : true,
+    "createdTimestamp" : 1702568261974,
     "totp" : false,
     "credentials" : [ {
       "id" : "580a6450-cd24-4293-960e-b36733119cf0",
       "type" : "password",
       "userLabel" : "My password",
       "createdDate" : 1702568270822,
-      "secretData" : "{\"value\":\"wMgACFb7p2eWtKdI3alSuA9od9UEDdVXVKzcLjA0PVM=\",\"salt\":\"SOr69qXsRdmUKGIzV1bNbg==\",\"additionalParameters\":{}}",
-      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
+      "secretData" : "{\"value\":\"XT/BTWXKd2CK9YN5/tTNAxVMXkD/ENphFpArVUZ1jbQ=\",\"salt\":\"kUNd/UhX3zI06n4gdhQcgw==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":5,\"algorithm\":\"argon2\",\"additionalParameters\":{\"hashLength\":[\"32\"],\"memory\":[\"7168\"],\"type\":[\"id\"],\"version\":[\"1.3\"],\"parallelism\":[\"1\"]}}"
     } ],
     "disableableCredentialTypes" : [ ],
     "requiredActions" : [ ],
@@ -2999,7 +3006,7 @@
     "enabled" : true,
     "alwaysDisplayInConsole" : false,
     "clientAuthenticatorType" : "client-secret",
-    "secret" : "**********",
+    "secret" : "9tdQipAskRXNNwdFFzxanPdXqVZkAlqY",
     "redirectUris" : [ "https://mysagw.local/*" ],
     "webOrigins" : [ ],
     "notBefore" : 0,
@@ -3014,6 +3021,7 @@
     "protocol" : "openid-connect",
     "attributes" : {
       "saml.assertion.signature" : "false",
+      "client.secret.creation.time" : "1746173075",
       "saml.force.post.binding" : "false",
       "saml.multivalued.roles" : "false",
       "saml.encrypt" : "false",
@@ -3784,7 +3792,6 @@
     } ]
   },
   "internationalizationEnabled" : false,
-  "supportedLocales" : [ ],
   "authenticationFlows" : [ {
     "id" : "624277e3-be94-405d-b2e7-599b4e99f966",
     "alias" : "Account verification options",
@@ -4290,6 +4297,14 @@
     "priority" : 100,
     "config" : { }
   }, {
+    "alias" : "idp_link",
+    "name" : "Linking Identity Provider",
+    "providerId" : "idp_link",
+    "enabled" : true,
+    "defaultAction" : false,
+    "priority" : 110,
+    "config" : { }
+  }, {
     "alias" : "update_user_locale",
     "name" : "Update User Locale",
     "providerId" : "update_user_locale",
@@ -4319,7 +4334,7 @@
     "cibaInterval" : "5",
     "realmReusableOtpCode" : "false"
   },
-  "keycloakVersion" : "26.2.2",
+  "keycloakVersion" : "26.3.2",
   "userManagedAccessAllowed" : false,
   "organizationsEnabled" : false,
   "verifiableCredentialsEnabled" : false,
