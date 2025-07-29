@@ -498,7 +498,7 @@
         "workflow": "document-review",
         "task": "decision-and-credit",
         "flow": "4f66a0b3-b5e6-445e-8ae3-9ac1c2ced929",
-        "redoable": "'circulation'|task"
+        "redoable": "['circulation', 'define-amount']|tasks"
     }
 },
 {

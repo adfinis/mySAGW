@@ -27,29 +27,7 @@ export default class CasesDetailWorkItemsEditFormController extends Controller {
 
   @action
   async transitionToCaseWorkItems() {
-    /*
-      Display notification to redo when additional-data has been skipped
-      by decision-and-credit but define-amount is being rejected, 
-      leading to no open additional-data-form which would place the workflow in a stuck state
-    */
-    if (
-      this.model.task.slug === "define-amount" &&
-      this.model.raw.document.answers.edges.findBy(
-        "node.question.slug",
-        "define-amount-decision",
-      )?.node.StringAnswerValue === "define-amount-decision-reject" &&
-      this.model.case.workItems.edges
-        .findBy("node.task.slug", "decision-and-credit")
-        .node.document.answers.edges.findBy(
-          "node.question.slug",
-          "decision-and-credit-decision",
-        ).node.StringAnswerValue ===
-        "decision-and-credit-decision-define-amount"
-    ) {
-      this.notification.warning(
-        this.intl.t("work-items.rejectDefineAmountNoAdditionData"),
-      );
-    }
+    this.confirmModal = false;
 
     if (this.model.task.slug === "circulation-decision") {
       if (this.can.can("list admin case", this.model.case)) {

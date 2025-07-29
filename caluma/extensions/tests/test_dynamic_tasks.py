@@ -99,7 +99,7 @@ def test_workflow_edge_cases(
     skip_work_item(case.work_items.get(task_id="circulation"), user)
 
     decision_and_credit = case.work_items.get(task_id="decision-and-credit")
-    decision_and_credit.document.answers.create(
+    answer = decision_and_credit.document.answers.create(
         question_id="decision-and-credit-decision",
         value="decision-and-credit-decision-additional-data",
     )
@@ -143,9 +143,7 @@ def test_workflow_edge_cases(
     )
 
     redo_work_item(decision_and_credit, user)
-    answer = decision_and_credit.document.answers.get(
-        question_id="decision-and-credit-decision",
-    )
+
     answer.value = "decision-and-credit-decision-define-amount"
     answer.save()
 
@@ -156,18 +154,22 @@ def test_workflow_edge_cases(
         status=WorkItem.STATUS_READY,
     )
     assert define_amount.count() == 1
-    define_amount.first().document.answers.get(
+    assert case.work_items.filter(status=WorkItem.STATUS_READY).count() == 1
+    define_amount_answer = define_amount.first().document.answers.get(
         question_id="define-amount-decision",
-    ).value = "define-amount-decision-reject"
+    )
+    define_amount_answer.value = "define-amount-decision-reject"
+    define_amount_answer.save()
     complete_work_item(define_amount.first(), user)
 
     assert (
         case.work_items.filter(
-            task_id="additional-data",
+            task_id="decision-and-credit",
             status=WorkItem.STATUS_READY,
         ).count()
         == 1
     )
+    assert case.work_items.filter(status=WorkItem.STATUS_READY).count() == 1
 
 
 @pytest.mark.usefixtures("_caluma_data")
