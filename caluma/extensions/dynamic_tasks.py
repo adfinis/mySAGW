@@ -59,14 +59,21 @@ class CustomDynamicTasks(BaseDynamicTasks):
         decision = prev_work_item.document.answers.get(
             question_id="define-amount-decision",
         )
-
-        if "reject" in decision.value:
-            additional_data = case.work_items.filter(
-                task__slug="additional-data",
-                status=WorkItem.STATUS_REDO,
+        decision = prev_work_item.document.answers.get(
+            question_id="define-amount-decision",
+        )
+        decision_and_credit = (
+            WorkItem.objects.filter(case=case, task_id="decision-and-credit")
+            .order_by("-created_at")
+            .first()
+            .document.answers.filter(
+                question_id="decision-and-credit-decision",
+                value="decision-and-credit-decision-define-amount",
             )
-            if additional_data.exists():
-                set_one_workitem_ready(additional_data)
+            .exists()
+        )
+
+        if "reject" in decision.value and not decision_and_credit:
             return ["additional-data"]
         if "continue" in decision.value:
             return ["complete-document"]

@@ -2,10 +2,10 @@ from django.core.mail import send_mail
 from django.db import transaction
 
 from caluma.caluma_core.events import filter_events, on
-from caluma.caluma_form import api as caluma_form_api, models as caluma_form_models
+from caluma.caluma_form import api as caluma_form_api
+from caluma.caluma_form.models import Answer, Document, Form
 from caluma.caluma_workflow import (
     api as caluma_workflow_api,
-    models as caluma_workflow_models,
 )
 from caluma.caluma_workflow.events import (
     post_complete_work_item,
@@ -14,6 +14,7 @@ from caluma.caluma_workflow.events import (
     post_reopen_case,
     pre_complete_work_item,
 )
+from caluma.caluma_workflow.models import Case, Workflow, WorkItem
 
 from ..common import format_currency, get_users_for_case
 from ..email_texts import (
@@ -37,7 +38,7 @@ def set_assigned_user(sender, work_item, user, **kwargs):
         "additional-data",
         "additional-data-form",
     ]:
-        work_item.assigned_users = caluma_workflow_models.WorkItem.objects.get(
+        work_item.assigned_users = WorkItem.objects.get(
             task_id="submit-document",
             case=work_item.case,
         ).assigned_users
@@ -56,7 +57,7 @@ def _send_work_item_mail(work_item):
 
     try:
         dossier_nr = work_item.case.document.answers.get(question_id="dossier-nr").value
-    except caluma_form_models.Answer.DoesNotExist:
+    except Answer.DoesNotExist:
         dossier_nr = "Not found"
 
     framework_credit = None
@@ -179,9 +180,7 @@ def set_case_status_post_reopen_case(
     work_items,
     **kwargs,
 ):
-    work_item = case.work_items.filter(
-        status=caluma_workflow_models.WorkItem.STATUS_READY
-    ).first()
+    work_item = case.work_items.filter(status=WorkItem.STATUS_READY).first()
     status = settings.CASE_STATUS.get(work_item.task_id)
     if status is None:  # pragma: no cover
         # Shouldn't happen, if all tasks are correctly added to `settings.CASE_STATUS`
@@ -217,8 +216,8 @@ def set_case_status_post_create_work_item(
 @transaction.atomic
 def create_circulation_child_case(sender, work_item, user, **kwargs):
     caluma_workflow_api.start_case(
-        workflow=caluma_workflow_models.Workflow.objects.get(pk="circulation"),
-        form=caluma_form_models.Form.objects.get(pk="circulation-form"),
+        workflow=Workflow.objects.get(pk="circulation"),
+        form=Form.objects.get(pk="circulation-form"),
         user=user,
         parent_work_item=work_item,
     )
@@ -240,18 +239,18 @@ def invite_to_circulation(sender, work_item, user, context, **kwargs):
             work_item.save()
             continue
 
-        caluma_workflow_models.WorkItem.objects.create(
+        WorkItem.objects.create(
             name=work_item.task.name,
             description=work_item.task.description,
             task=work_item.task,
-            status=caluma_workflow_models.WorkItem.STATUS_READY,
+            status=WorkItem.STATUS_READY,
             assigned_users=[assign_user["idpId"]],
             meta={
                 "assigneeName": assign_user["name"],
                 "assigneeEmail": assign_user["email"],
             },
             case=work_item.case,
-            document=caluma_form_models.Document.objects.create(
+            document=Document.objects.create(
                 form=work_item.document.form,
             ),
         )
@@ -278,7 +277,7 @@ def create_additional_data_form_document(sender, work_item, user, context, **kwa
         ):
             form_slug = settings.ADDITIONAL_DATA_FORM["periodika-antrag"]
 
-    form = caluma_form_models.Form.objects.get(slug=form_slug)
+    form = Form.objects.get(slug=form_slug)
 
     work_item.document = caluma_form_api.save_document(form=form, user=user)
     work_item.save()
@@ -292,10 +291,10 @@ def create_additional_data_form_document(sender, work_item, user, context, **kwa
 @transaction.atomic
 def finish_circulation(sender, work_item, user, **kwargs):
     caluma_workflow_api.cancel_work_item(
-        work_item=caluma_workflow_models.WorkItem.objects.get(
+        work_item=WorkItem.objects.get(
             task_id="invite-to-circulation",
             case=work_item.case,
-            status=caluma_workflow_models.WorkItem.STATUS_READY,
+            status=WorkItem.STATUS_READY,
         ),
         user=user,
     )
@@ -308,10 +307,10 @@ def finish_circulation(sender, work_item, user, **kwargs):
 )
 @transaction.atomic
 def finish_additional_data(sender, work_item, user, **kwargs):
-    form_work_item = caluma_workflow_models.WorkItem.objects.filter(
+    form_work_item = WorkItem.objects.filter(
         task_id="additional-data-form",
         case=work_item.case,
-        status=caluma_workflow_models.WorkItem.STATUS_READY,
+        status=WorkItem.STATUS_READY,
     ).first()
 
     if form_work_item:
@@ -325,10 +324,10 @@ def finish_additional_data(sender, work_item, user, **kwargs):
 )
 @transaction.atomic
 def finish_additional_data_form(sender, work_item, user, **kwargs):
-    work_item = caluma_workflow_models.WorkItem.objects.filter(
+    work_item = WorkItem.objects.filter(
         task_id="advance-credits",
         case=work_item.case,
-        status=caluma_workflow_models.WorkItem.STATUS_READY,
+        status=WorkItem.STATUS_READY,
     ).first()
 
     if work_item:
@@ -351,7 +350,7 @@ def finish_define_amount(sender, work_item, user, **kwargs):
 
     if any(state in decision.value for state in ["zurueckgezogen", "dismissed"]):
         for sibling in work_item.case.work_items.filter(
-            status=caluma_workflow_models.WorkItem.STATUS_READY,
+            status=WorkItem.STATUS_READY,
         ):
             caluma_workflow_api.complete_work_item(
                 work_item=sibling,
@@ -359,24 +358,55 @@ def finish_define_amount(sender, work_item, user, **kwargs):
             )
         return
 
-    form_work_item = caluma_workflow_models.WorkItem.objects.filter(
+    form_work_item = WorkItem.objects.filter(
         task_id="additional-data-form",
         case=work_item.case,
-        status=caluma_workflow_models.WorkItem.STATUS_SUSPENDED,
+        status=WorkItem.STATUS_SUSPENDED,
     ).first()
 
     if form_work_item:
         caluma_workflow_api.resume_work_item(work_item=form_work_item, user=user)
 
 
+@on(pre_complete_work_item, raise_exception=True)
+@filter_events(lambda sender, work_item: work_item.task_id == "define-amount")
+@transaction.atomic
+def redo_to_decision_and_credit(sender, work_item, user, **kwargs):
+    # fix workflow edge case where there is no additional-data-form
+    # due to skipping it from decision-and-credit
+    decision_and_credit = (
+        WorkItem.objects.filter(case=work_item.case, task_id="decision-and-credit")
+        .order_by("-created_at")
+        .first()
+    )
+    if (
+        work_item
+        and work_item.document.answers.filter(
+            question_id="define-amount-decision",
+            value="define-amount-decision-reject",
+        ).exists()
+        and decision_and_credit.status != WorkItem.STATUS_READY
+        and (
+            decision_and_credit.document.answers.filter(
+                question_id="decision-and-credit-decision",
+                value="decision-and-credit-decision-define-amount",
+            ).exists()
+        )
+    ):
+        caluma_workflow_api.redo_work_item(
+            work_item=decision_and_credit,
+            user=user,
+        )
+
+
 @on(post_create_work_item, raise_exception=True)
 @filter_events(lambda sender, work_item: work_item.task_id == "complete-document")
 @transaction.atomic
 def complete_additional_data_form(sender, work_item, user, **kwargs):
-    form_work_item = caluma_workflow_models.WorkItem.objects.filter(
+    form_work_item = WorkItem.objects.filter(
         task_id="additional-data-form",
         case=work_item.case,
-        status=caluma_workflow_models.WorkItem.STATUS_READY,
+        status=WorkItem.STATUS_READY,
     ).first()
 
     if form_work_item:
@@ -411,14 +441,14 @@ def redo_review_document(sender, work_item, user, **kwargs):
     # Set status of possible old circulation case and all its workitems to `canceled`
     if old_circulation := circulation_wi.child_case:
         for wi in old_circulation.work_items.all():
-            wi.status = caluma_workflow_models.WorkItem.STATUS_CANCELED
+            wi.status = WorkItem.STATUS_CANCELED
             wi.save()
-        old_circulation.status = caluma_workflow_models.Case.STATUS_CANCELED
+        old_circulation.status = Case.STATUS_CANCELED
         old_circulation.save()
 
     circulation_wi.child_case = caluma_workflow_api.start_case(
-        workflow=caluma_workflow_models.Workflow.objects.get(pk="circulation"),
-        form=caluma_form_models.Form.objects.get(pk="circulation-form"),
+        workflow=Workflow.objects.get(pk="circulation"),
+        form=Form.objects.get(pk="circulation-form"),
         user=user,
         parent_work_item=circulation_wi,
     )
@@ -452,9 +482,9 @@ def redo_define_amount(sender, work_item, user, **kwargs):
 
         # This can't be done over caluma_workflow_api because they are the last work items of a "branch",
         # consequently they don't have another following work item which defines redoable for them.
-        advance_credits.status = caluma_workflow_models.WorkItem.STATUS_READY
+        advance_credits.status = WorkItem.STATUS_READY
         advance_credits.save()
-        data_form.status = caluma_workflow_models.WorkItem.STATUS_SUSPENDED
+        data_form.status = WorkItem.STATUS_SUSPENDED
         data_form.save()
 
 
@@ -474,6 +504,6 @@ def close_multiple_define_amount(sender, work_item, user, **kwargs):
     """
     define_amount = work_item.case.work_items.filter(
         task_id="define-amount",
-        status=caluma_workflow_models.WorkItem.STATUS_REDO,
+        status=WorkItem.STATUS_REDO,
     )
-    define_amount.update(status=caluma_workflow_models.WorkItem.STATUS_CANCELED)
+    define_amount.update(status=WorkItem.STATUS_CANCELED)
