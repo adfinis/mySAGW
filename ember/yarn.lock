@@ -79,7 +79,7 @@
   resolved "https://registry.yarnpkg.com/@babel/compat-data/-/compat-data-7.26.2.tgz#278b6b13664557de95b8f35b90d96785850bb56e"
   integrity sha512-Z0WgzSEa+aUcdiJuCIqgujCshpMWgUpgOxXotrYPSA53hA3qopNaqcJpyr0hVb1FeWdnqFA35/fUtXgBK8srQg==
 
-"@babel/core@^7.0.0", "@babel/core@^7.12.0", "@babel/core@^7.13.10", "@babel/core@^7.16.10", "@babel/core@^7.16.7", "@babel/core@^7.21.0", "@babel/core@^7.21.4", "@babel/core@^7.22.20", "@babel/core@^7.23.2", "@babel/core@^7.23.5", "@babel/core@^7.24.0", "@babel/core@^7.24.4", "@babel/core@^7.24.5", "@babel/core@^7.25.8", "@babel/core@^7.26.0", "@babel/core@^7.3.4":
+"@babel/core@^7.0.0", "@babel/core@^7.12.0", "@babel/core@^7.13.10", "@babel/core@^7.16.10", "@babel/core@^7.16.7", "@babel/core@^7.21.0", "@babel/core@^7.21.4", "@babel/core@^7.22.20", "@babel/core@^7.23.2", "@babel/core@^7.23.5", "@babel/core@^7.24.0", "@babel/core@^7.24.4", "@babel/core@^7.24.5", "@babel/core@^7.24.7", "@babel/core@^7.25.8", "@babel/core@^7.26.0", "@babel/core@^7.3.4":
   version "7.26.0"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.26.0.tgz#d78b6023cc8f3114ccf049eb219613f74a747b40"
   integrity sha512-i1SLeK+DzNnQ3LL/CswPCa/E5u4lh1k6IAEphON8F+cXt0t9euTshDru0q7/IqMa1PMPz5RnHuHscF8/ZJsStg==
@@ -1429,10 +1429,10 @@
     common-ancestor-path "^1.0.1"
     semver "^7.3.8"
 
-"@embroider/macros@^0.50.0 || ^1.0.0", "@embroider/macros@^1.0.0", "@embroider/macros@^1.10.0", "@embroider/macros@^1.12.3", "@embroider/macros@^1.13.1", "@embroider/macros@^1.13.2", "@embroider/macros@^1.13.3", "@embroider/macros@^1.13.4", "@embroider/macros@^1.15.0", "@embroider/macros@^1.16.0", "@embroider/macros@^1.16.1", "@embroider/macros@^1.16.5", "@embroider/macros@^1.16.6", "@embroider/macros@^1.16.9", "@embroider/macros@^1.5.0", "@embroider/macros@^1.8.1", "@embroider/macros@^1.8.3":
-  version "1.16.9"
-  resolved "https://registry.yarnpkg.com/@embroider/macros/-/macros-1.16.9.tgz#d1292105259f53f31a8bf0fde48cf972495f06d1"
-  integrity sha512-AUrmHQdixczIU3ouv/+HzWxwYVsw/NwssZxAQnXfBDJ3d3/CRtAvGRu3JhY6OT3AAPFwfa2WT66tB5jeAa7r5g==
+"@embroider/macros@^0.50.0 || ^1.0.0", "@embroider/macros@^1.0.0", "@embroider/macros@^1.10.0", "@embroider/macros@^1.12.3", "@embroider/macros@^1.13.1", "@embroider/macros@^1.13.2", "@embroider/macros@^1.13.3", "@embroider/macros@^1.13.4", "@embroider/macros@^1.15.0", "@embroider/macros@^1.16.0", "@embroider/macros@^1.16.1", "@embroider/macros@^1.16.4", "@embroider/macros@^1.16.5", "@embroider/macros@^1.16.6", "@embroider/macros@^1.16.9", "@embroider/macros@^1.5.0", "@embroider/macros@^1.8.1", "@embroider/macros@^1.8.3":
+  version "1.16.10"
+  resolved "https://registry.yarnpkg.com/@embroider/macros/-/macros-1.16.10.tgz#4f00c959409ee7327a344c250fc91c4622bf1589"
+  integrity sha512-G0vCsKgNCX0PMmuVNsTLG7IYXz8VkekQMK4Kcllzqpwb7ivFRDwVx2bD4QSvZ9LCTd4eWQ654RsCqVbW5aviww==
   dependencies:
     "@embroider/shared-internals" "2.8.1"
     assert-never "^1.2.1"
@@ -6231,13 +6231,13 @@ ember-load-initializers@^2.1.2:
     ember-cli-babel "^7.13.0"
     ember-cli-typescript "^2.0.2"
 
-ember-localized-model@^3.2.2:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/ember-localized-model/-/ember-localized-model-3.2.2.tgz#eca5005ca2e5900e9107d049b7daa7cc9357a326"
-  integrity sha512-0bidNA2rrtk9HKjdDJHN+51NW/v2AvBh1Jr8vwjZlOlX7CazCgDNF+U14QgCHJoLtnJoYicnA89Z3A62VxpXQg==
+ember-localized-model@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/ember-localized-model/-/ember-localized-model-4.0.0.tgz#9a7717698dead6229f91d32861f8c4d3c89152f7"
+  integrity sha512-WZiSu9SBC0Llckb0bhCT4DHUJ4laF9wrKRGs9snlbtay1mHcVWvjA1/jtG1ui2qIXATASmiO/FkEdBK29zlrIg==
   dependencies:
-    "@babel/core" "^7.23.2"
-    "@embroider/macros" "^1.13.3"
+    "@babel/core" "^7.24.7"
+    "@embroider/macros" "^1.16.4"
     "@glimmer/tracking" "^1.1.2"
     ember-cli-babel "^8.2.0"
     ember-cli-htmlbars "^6.3.0"
