@@ -6340,18 +6340,10 @@ ember-resolver@^11.0.1:
   dependencies:
     ember-cli-babel "^7.26.11"
 
-"ember-resources@>= 6.4.2":
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/ember-resources/-/ember-resources-7.0.1.tgz#0c493073b8efef1574c366f04873050b5b00b53e"
-  integrity sha512-dN/5QwNMjnx99+T/QPxDRceFF8lrqXEb6/7heO7QEpkA6Td5mB/mzSECsE7W3du93WM2NOSpInp0I6b4gmdp7Q==
-  dependencies:
-    "@embroider/addon-shim" "^1.2.0"
-    "@embroider/macros" "^1.12.3"
-
-ember-resources@^7.0.3:
-  version "7.0.3"
-  resolved "https://registry.yarnpkg.com/ember-resources/-/ember-resources-7.0.3.tgz#a1e47103aee89540e22d460379bc66a742fbda54"
-  integrity sha512-aebWpULjdWEUnxheoOz5e6XZ8kDV8b79CerPSMcUkdzOcKS7N4HC8FuyCPG6M6MiVuYYqgsrhzSxyW8H1164MA==
+"ember-resources@>= 6.4.2", ember-resources@^7.0.6:
+  version "7.0.6"
+  resolved "https://registry.yarnpkg.com/ember-resources/-/ember-resources-7.0.6.tgz#707c37ace4fae836fbd231065e66fc160ef93636"
+  integrity sha512-0IHjhnr+ntOA7ND6C/xzX8PUFUnmg3dz55syh6LcfkNuacb9qL91xQWQQl6OC3u15YAV4wOvavskKoX+wzE5tA==
   dependencies:
     "@embroider/addon-shim" "^1.2.0"
     "@embroider/macros" "^1.12.3"
