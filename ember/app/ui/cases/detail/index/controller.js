@@ -58,7 +58,7 @@ export default class CasesDetailIndexController extends Controller {
           ("advance-credits" === workItem.task.slug &&
             ["READY", "COMPLETED"].includes(workItem.status)),
       )
-      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      .sort((a, b) => new Date(b.closedAt) - new Date(a.closedAt));
 
     const newestWorkItem = configuredWorkItems[0];
 
@@ -78,12 +78,12 @@ export default class CasesDetailIndexController extends Controller {
    * Answers in alwaysDisplayedAnswers should always be displayed.
    */
   get remarks() {
-    const workItems = this.remarkWorkItems;
+    const workItem = this.remarkWorkItems.newest;
 
-    return workItems.newest?.document?.answers.edges
+    return workItem?.document?.answers.edges
       .reduce((filteredAnswers, answer, _, answers) => {
         Object.keys(ENV.APP.caluma.displayedAnswers).forEach((taskSlug) => {
-          if (!workItems.newest.task.slug.includes(taskSlug)) {
+          if (!workItem.task.slug.includes(taskSlug)) {
             return;
           }
 
@@ -107,32 +107,37 @@ export default class CasesDetailIndexController extends Controller {
       .flat();
   }
 
-  get permamentRemarks() {
-    return this.remarkWorkItems.always.map((workItem) => {
-      const answers = workItem.document.answers.edges.reduce(
-        (filteredAnswers, answer) => {
-          Object.keys(ENV.APP.caluma.alwaysDisplayedAnswers).forEach(
-            (taskSlug) => {
+  get permanentRemarks() {
+    return this.remarkWorkItems.always
+      .map((workItem) => {
+        const displayedAnswers =
+          ENV.APP.caluma.alwaysDisplayedAnswers[workItem.task.slug];
+
+        const remark = workItem.document.answers.edges.reduce(
+          (result, answer) => {
+            displayedAnswers.forEach((questionSlug) => {
               if (
-                ENV.APP.caluma.alwaysDisplayedAnswers[taskSlug].includes(
-                  answer.node.question.slug,
-                ) &&
+                questionSlug === answer.node.question.slug &&
                 answer.node[`${answer.node.__typename}Value`]
               ) {
-                filteredAnswers.push(this.formatAnswer(answer));
+                result.answers.push(this.formatAnswer(answer));
               }
-            },
-          );
+            });
+            result.title = workItem.name;
+            return result;
+          },
+          { answers: [] },
+        );
 
-          return filteredAnswers;
-        },
-        [],
-      );
-      return {
-        workItem,
-        answers,
-      };
-    });
+        remark.answers.sort((a, b) => {
+          const aIndex = displayedAnswers.indexOf(a.slug);
+          const bIndex = displayedAnswers.indexOf(b.slug);
+          return aIndex - bIndex;
+        });
+
+        return remark.answers.length > 0 ? remark : null;
+      })
+      .filter((r) => r !== null);
   }
 
   formatAnswer(answer) {
@@ -145,6 +150,7 @@ export default class CasesDetailIndexController extends Controller {
     }
 
     return {
+      slug: answer.node.question.slug,
       label: answer.node.question.label,
       value,
     };
