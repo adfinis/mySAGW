@@ -817,3 +817,50 @@ def test_table_summary_errors(
         caplog.messages[4]
         == "Updating table summary: missing info in TQ meta: sq=None, sm=csv"
     )
+
+
+@pytest.mark.usefixtures("_caluma_data")
+def test_define_amount_edge_cases(
+    db,
+    user,
+    case_access_event_mock,
+    circulation,
+    send_mail_mock,
+):
+    case = circulation.parent_work_item.case
+
+    skip_work_item(case.work_items.get(task_id="circulation"), user)
+
+    decision_and_credit = case.work_items.get(task_id="decision-and-credit")
+    decision_and_credit.document.answers.create(
+        question_id="decision-and-credit-decision",
+        value="decision-and-credit-decision-define-amount",
+    )
+
+    complete_work_item(decision_and_credit, user)
+
+    define_amount = case.work_items.filter(
+        task_id="define-amount",
+        status=WorkItem.STATUS_READY,
+    )
+    assert define_amount.count() == 1
+    define_amount = define_amount.first()
+    define_amount.document.answers.create(
+        question_id="define-amount-decision",
+        value="define-amount-decision-reject",
+    )
+    complete_work_item(define_amount, user)
+
+    assert (
+        case.work_items.filter(
+            task_id="decision-and-credit",
+            status=WorkItem.STATUS_READY,
+        ).count()
+        == 1
+    )
+    assert (
+        case.work_items.filter(
+            status=WorkItem.STATUS_READY,
+        ).count()
+        == 1
+    )
