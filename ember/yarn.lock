@@ -6533,23 +6533,15 @@ ember-template-recast@^6.1.4:
     tmp "^0.2.1"
     workerpool "^6.4.0"
 
-ember-test-selectors@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/ember-test-selectors/-/ember-test-selectors-6.0.0.tgz#ba9bb19550d9dec6e4037d86d2b13c2cfd329341"
-  integrity sha512-PgYcI9PeNvtKaF0QncxfbS68olMYM1idwuI8v/WxsjOGqUx5bmsu6V17vy/d9hX4mwmjgsBhEghrVasGSuaIgw==
+ember-test-selectors@^7.0.0, ember-test-selectors@^7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/ember-test-selectors/-/ember-test-selectors-7.1.0.tgz#5a489167827547e9732da8d7fe64cb242b1b96d2"
+  integrity sha512-mIgjzv5PE+z64p1+o8eYkLHqkJY1g4BD93vgfE+ZTAvarIsJxGO8WmmZ7xCkmCM0xB4Idf0duR7IhLRsTg/81w==
   dependencies:
     calculate-cache-key-for-tree "^2.0.0"
     ember-cli-babel "^7.26.4"
     ember-cli-version-checker "^5.1.2"
-
-ember-test-selectors@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/ember-test-selectors/-/ember-test-selectors-7.0.0.tgz#120e4892dca818255190274164a56c9a01b424cb"
-  integrity sha512-gGJzzBw6CsBB9gfk9/4qw0+iOSvhlqvUe4jIZKDf4waMkgVLtnPdFUWMocfFvUnJS7IitwKB/iTgIctD4RgH7w==
-  dependencies:
-    calculate-cache-key-for-tree "^2.0.0"
-    ember-cli-babel "^7.26.4"
-    ember-cli-version-checker "^5.1.2"
+    strip-test-selectors "0.1.0"
 
 ember-toggle@^9.0.3:
   version "9.0.3"
@@ -12698,6 +12690,11 @@ strip-json-comments@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-3.1.1.tgz#31f1281b3832630434831c310c01cccda8cbe006"
   integrity sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==
+
+strip-test-selectors@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/strip-test-selectors/-/strip-test-selectors-0.1.0.tgz#36842dc361de307d1d80a4b8872bcf6fbfe61161"
+  integrity sha512-wkVYph30L7wYkMf5EypfTqhY4qZwmQ0hpFOTksaXne49YbUr2jenJl5w5yj9IWx3ojtoH9BGAQ7cShnYEzbs5g==
 
 style-loader@^2.0.0:
   version "2.0.0"
