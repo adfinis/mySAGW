@@ -1,5 +1,5 @@
 # general software maintenance
-**/Dockerfile @open-dynaMIX @velrest @yelinz
-docker-compose.yml @open-dynaMIX @velrest @yelinz
-ember/* @velrest @yelinz
+**/Dockerfile @open-dynaMIX @velrest
+docker-compose.yml @open-dynaMIX @velrest
+ember/* @velrest
 api/* @open-dynaMIX
