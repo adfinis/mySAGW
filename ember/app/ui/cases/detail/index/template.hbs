@@ -8,13 +8,13 @@
     <table class="uk-table uk-table-justify uk-table-small">
       <tbody>
         <tr>
-          <th class="uk-text-bold uk-width-1-6">
+          <th class="uk-text-bold uk-width-1-6 hyphenate">
             {{t "documents.number"}}
           </th>
           <td class="uk-width-1-3">
             {{this.caseData.case.documentNumber}}
           </td>
-          <th class="uk-text-bold uk-width-1-6">
+          <th class="uk-text-bold uk-width-1-6 hyphenate">
             {{t "documents.submittedAt"}}
           </th>
           <td class="uk-width-1-3">
@@ -22,13 +22,13 @@
           </td>
         </tr>
         <tr>
-          <th class="uk-text-bold uk-width-1-6">
+          <th class="uk-text-bold uk-width-1-6 hyphenate">
             {{t "documents.distributionPlan"}}
           </th>
           <td class="uk-width-1-3">
             {{this.caseData.case.distributionPlan}}
           </td>
-          <th class="uk-text-bold uk-width-1-6">
+          <th class="uk-text-bold uk-width-1-6 hyphenate">
             {{t "documents.createdAt"}}
           </th>
           <td class="uk-width-1-3">
@@ -36,7 +36,7 @@
           </td>
         </tr>
         <tr>
-          <th class="uk-text-bold uk-width-1-6">
+          <th class="uk-text-bold uk-width-1-6 hyphenate">
             {{t "documents.status"}}
           </th>
           <td class="uk-width-1-3">
@@ -45,7 +45,7 @@
               @iconPosition="right"
             />
           </td>
-          <th class="uk-text-bold uk-width-1-6">
+          <th class="uk-text-bold uk-width-1-6 hyphenate">
             {{t "documents.modifiedAt"}}
           </th>
           <td class="uk-width-1-3">
@@ -75,7 +75,7 @@
         <tbody>
           <tr>
             {{#each this.remarks as |remark|}}
-              <th class="uk-text-bold uk-width-1-6 uk-text-top">
+              <th class="uk-text-bold uk-width-1-6 uk-text-top hyphenate">
                 {{remark.label}}
               </th>
               <td class="uk-width-expand">
@@ -103,7 +103,7 @@
           {{#each (chunk 2 remark.answers) as |answerPair|}}
             <tr class="uk-flex">
               {{#each answerPair as |answer|}}
-                <th class="uk-text-bold uk-width-1-6 uk-text-top">
+                <th class="uk-text-bold uk-width-1-6 uk-text-top hyphenate">
                   {{answer.label}}
                 </th>
                 <td class="uk-width-expand">
