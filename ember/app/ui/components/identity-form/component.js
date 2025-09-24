@@ -2,12 +2,14 @@ import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
+import { decodeId } from "@projectcaluma/ember-core/helpers/decode-id";
 import { Changeset } from "ember-changeset";
 import lookupValidator from "ember-changeset-validations";
 import { dropTask } from "ember-concurrency";
 import { trackedFunction } from "reactiveweb/function";
 import UIkit from "uikit";
 
+import getCancelledCases from "mysagw/gql/queries/get-cancelled-cases.graphql";
 import applyError from "mysagw/utils/apply-error";
 import IdentityValidations from "mysagw/validations/identity";
 
@@ -22,6 +24,7 @@ export default class IdentityFormComponent extends Component {
   @service intl;
   @service router;
   @service can;
+  @service apollo;
 
   @tracked changeset;
   @tracked backToIdentities;
@@ -144,10 +147,29 @@ export default class IdentityFormComponent extends Component {
       const accesses = yield this.store.query("case-access", {
         filter: { identityIds: this.args.identity.id },
       });
+
+      const caseIds = accesses.map((access) => access.caseId);
+      const cancelledCaseEdges = yield this.apollo.query(
+        {
+          query: getCancelledCases,
+          variables: {
+            caseIds,
+          },
+          fetchPolicy: "network-only",
+        },
+        "allCases.edges",
+      );
+      const casesNotCancelled = caseIds.filter(
+        (caseId) =>
+          !cancelledCaseEdges
+            .map((edge) => decodeId(edge.node.id))
+            .includes(caseId),
+      );
+
       message += `\n${this.intl.t(
         "components.identity-form.delete.promptInfo",
         {
-          caseAmount: accesses.length,
+          caseAmount: casesNotCancelled.length,
         },
       )}`;
 
