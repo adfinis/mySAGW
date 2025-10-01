@@ -20,9 +20,9 @@ api-test: ## Test the backend
 api-lint: ## Lint the backend
 	@docker compose run --rm api sh -c "ruff format --diff . && ruff check ."
 
-.PHONY: api-shell
-api-shell: ## Shell into the backend
-	@docker compose run --rm api sh
+.PHONY: api-bash
+api-bash: ## Shell into the backend
+	@docker compose run --rm api bash
 
 .PHONY: api-shell_plus
 api-shell_plus: ## Run shell_plus
@@ -31,7 +31,7 @@ api-shell_plus: ## Run shell_plus
 .PHONY: api-dev-server
 api-dev-server: ## Start backend dev server
 	@docker compose stop api
-	@docker compose run --user root --use-aliases --service-ports api sh -c "poetry run pip install pdbpp && poetry run python manage.py runserver 0.0.0.0:8000"
+	@docker compose run --user root --use-aliases --service-ports api sh -c 'pip install pdbpp && ./manage.py runserver 0.0.0.0:8000'
 
 .PHONY: makemigrations
 makemigrations: ## Make django migrations
