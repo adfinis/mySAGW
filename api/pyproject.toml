@@ -8,7 +8,7 @@ license = "GPL-3.0-or-later"
 
 [tool.poetry.dependencies]
 python = "^3.13"
-django = "^5.2.4"
+django = "^5.2.7"
 django-countries = "^7.6.1"
 django-environ = "^0.12.0"
 django-excel = "^0.0.10"
