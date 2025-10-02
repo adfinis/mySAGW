@@ -39,7 +39,7 @@ jobs:
         config:
           - name: api
             version-file: api/pyproject.toml
-            command: python -c 'import sys; import tomllib; print(tomllib.loads(sys.stdin.read())["tool"]["poetry"]["version"])'
+            command: python -c 'import sys; import tomllib; print(tomllib.loads(sys.stdin.read())["project"]["version"])'
           - name: ember
             version-file: ember/package.json
             command: jq -r '.version'
