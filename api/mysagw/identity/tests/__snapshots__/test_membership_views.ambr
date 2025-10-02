@@ -4,7 +4,7 @@
     'data': list([
       dict({
         'attributes': dict({
-          'email': 'michelle86@example.com',
+          'email': 'lauraayala@example.net',
           'first-name': 'User',
           'last-name': '2',
           'roles': list([
@@ -12,9 +12,9 @@
               'authorized': False,
               'inactive': False,
               'role': dict({
-                'de': 'Beamter',
-                'en': 'Tour manager',
-                'fr': 'officier de la marine marchande',
+                'de': 'Florist',
+                'en': 'Environmental health practitioner',
+                'fr': 'façadier',
               }),
               'time_slot': None,
             }),
@@ -22,9 +22,9 @@
               'authorized': False,
               'inactive': False,
               'role': dict({
-                'de': 'Altenpfleger',
-                'en': 'Investment banker, corporate',
-                'fr': 'ingénieur efficacité énergétique du bâtiment',
+                'de': 'Erzieher',
+                'en': 'Engineer, civil (contracting)',
+                'fr': 'metteur en scène',
               }),
               'time_slot': None,
             }),
@@ -32,9 +32,9 @@
               'authorized': False,
               'inactive': True,
               'role': dict({
-                'de': 'Altenpfleger',
-                'en': 'Investment banker, corporate',
-                'fr': 'ingénieur efficacité énergétique du bâtiment',
+                'de': 'Erzieher',
+                'en': 'Engineer, civil (contracting)',
+                'fr': 'metteur en scène',
               }),
               'time_slot': None,
             }),
@@ -52,9 +52,9 @@
               'authorized': False,
               'inactive': False,
               'role': dict({
-                'de': 'Altenpfleger',
-                'en': 'Investment banker, corporate',
-                'fr': 'ingénieur efficacité énergétique du bâtiment',
+                'de': 'Erzieher',
+                'en': 'Engineer, civil (contracting)',
+                'fr': 'metteur en scène',
               }),
               'time_slot': None,
             }),
@@ -62,9 +62,9 @@
               'authorized': True,
               'inactive': False,
               'role': dict({
-                'de': 'Drogist',
-                'en': 'Educational psychologist',
-                'fr': 'journaliste',
+                'de': 'Bäcker',
+                'en': 'Museum education officer',
+                'fr': 'garçon de café',
               }),
               'time_slot': None,
             }),
@@ -72,9 +72,9 @@
               'authorized': False,
               'inactive': False,
               'role': dict({
-                'de': 'Beamter',
-                'en': 'Tour manager',
-                'fr': 'officier de la marine marchande',
+                'de': 'Florist',
+                'en': 'Environmental health practitioner',
+                'fr': 'façadier',
               }),
               'time_slot': dict({
                 'bounds': '[)',
@@ -88,7 +88,7 @@
       }),
       dict({
         'attributes': dict({
-          'email': 'evansthomas@example.com',
+          'email': 'wagnerbrenda@example.com',
           'first-name': 'User',
           'last-name': '3',
           'roles': list([
@@ -96,9 +96,9 @@
               'authorized': False,
               'inactive': False,
               'role': dict({
-                'de': 'Altenpfleger',
-                'en': 'Investment banker, corporate',
-                'fr': 'ingénieur efficacité énergétique du bâtiment',
+                'de': 'Erzieher',
+                'en': 'Engineer, civil (contracting)',
+                'fr': 'metteur en scène',
               }),
               'time_slot': None,
             }),
@@ -106,9 +106,9 @@
               'authorized': False,
               'inactive': True,
               'role': dict({
-                'de': 'Beamter',
-                'en': 'Tour manager',
-                'fr': 'officier de la marine marchande',
+                'de': 'Florist',
+                'en': 'Environmental health practitioner',
+                'fr': 'façadier',
               }),
               'time_slot': None,
             }),
@@ -118,7 +118,7 @@
       }),
       dict({
         'attributes': dict({
-          'email': 'delacruzbrandon@example.com',
+          'email': 'melissapineda@example.net',
           'first-name': 'User',
           'last-name': '5',
           'roles': list([
@@ -126,9 +126,9 @@
               'authorized': False,
               'inactive': True,
               'role': dict({
-                'de': 'Beamter',
-                'en': 'Tour manager',
-                'fr': 'officier de la marine marchande',
+                'de': 'Florist',
+                'en': 'Environmental health practitioner',
+                'fr': 'façadier',
               }),
               'time_slot': None,
             }),
@@ -138,7 +138,7 @@
       }),
       dict({
         'attributes': dict({
-          'email': 'ebonyjohnson@example.com',
+          'email': 'garrettvirginia@example.net',
           'first-name': 'User',
           'last-name': '4',
           'roles': list([
@@ -146,9 +146,9 @@
               'authorized': False,
               'inactive': True,
               'role': dict({
-                'de': 'Altenpfleger',
-                'en': 'Investment banker, corporate',
-                'fr': 'ingénieur efficacité énergétique du bâtiment',
+                'de': 'Erzieher',
+                'en': 'Engineer, civil (contracting)',
+                'fr': 'metteur en scène',
               }),
               'time_slot': None,
             }),

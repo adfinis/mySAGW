@@ -690,7 +690,7 @@ def test_table_summary(
     case_access_event_mock,
     add_table_with_summary,
 ):
-    main_doc, main_form, table_question, row_form, row_question_1, row_question_3 = (
+    main_doc, _main_form, table_question, row_form, row_question_1, row_question_3 = (
         add_table_with_summary
     )
     date = timezone.datetime(2024, 1, 1).date()
@@ -761,7 +761,7 @@ def test_table_summary_errors(
     case_access_event_mock,
     add_table_with_summary,
 ):
-    main_doc, main_form, table_question, row_form, row_question_1, row_question_3 = (
+    main_doc, _main_form, table_question, row_form, _row_question_1, _row_question_3 = (
         add_table_with_summary
     )
 

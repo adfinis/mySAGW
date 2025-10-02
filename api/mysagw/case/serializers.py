@@ -97,12 +97,13 @@ class CaseTransferSerializer(drf_serializers.Serializer):
     )
 
     def validate(self, attrs):
-        if len(attrs["dossier_nrs"]) != len(attrs["case_ids"]):
+        try:
+            attrs["dossier_nrs_mapping"] = dict(
+                zip(attrs["dossier_nrs"], attrs["case_ids"], strict=True)
+            )
+        except ValueError as e:
             msg = '"case_ids" and "dossier_nrs" must be of equal length.'
-            raise ValidationError(msg)
-        attrs["dossier_nrs_mapping"] = dict(
-            zip(attrs["dossier_nrs"], attrs["case_ids"])
-        )
+            raise ValidationError(msg) from e
         return super().validate(attrs)
 
     def create(self, validated_data):
