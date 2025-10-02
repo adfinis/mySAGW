@@ -101,7 +101,7 @@ def test_authentication_identity_create(
     HistoricalRecords.thread.request = request
 
     result = OIDCAuthentication().authenticate(request)
-    user, auth = result
+    user, _auth = result
     assert user.is_authenticated
     assert cache.get(f"auth.userinfo.{hashlib.sha256(b'Token').hexdigest()}") == claims
     assert Identity.objects.count() == 1
@@ -208,7 +208,7 @@ def test_authentication_multiple_existing_identity(
 
     result = OIDCAuthentication().authenticate(request)
 
-    user, auth = result
+    user, _auth = result
     assert user.is_authenticated
     assert user.identity == identity
     assert Identity.objects.count() == 2
