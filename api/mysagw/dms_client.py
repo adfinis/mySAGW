@@ -1,5 +1,4 @@
 import json
-from typing import Optional
 
 import requests
 from django.conf import settings
@@ -24,7 +23,7 @@ class DMSClient:
         response.raise_for_status()
         return response
 
-    def upload_template(self, slug, file, update=False, headers: Optional[dict] = None):
+    def upload_template(self, slug, file, update=False, headers: dict | None = None):
         headers = headers if headers else {}
 
         url = build_url(self.url, "template", trailing=True)
@@ -42,8 +41,8 @@ class DMSClient:
         self,
         template_slug: str,
         data: dict,
-        convert: Optional[str] = None,
-        headers: Optional[dict] = None,
+        convert: str | None = None,
+        headers: dict | None = None,
     ):
         headers = headers if headers else {}
 

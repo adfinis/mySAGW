@@ -168,7 +168,7 @@ def test_identity_post_iunique_email(db, client, attributes, identity, update):
     assert response.status_code == status.HTTP_400_BAD_REQUEST
 
     assert response.json()["errors"][0]["detail"] == (
-        "identity mit diesem email existiert bereits."
+        "identity mit diesem Wert für das Feld email existiert bereits."
     )
 
 
