@@ -2,13 +2,13 @@ FROM danlynn/ember-cli:5.8.1-node_20.12 as build
 
 ARG OIDC_HOST
 
-COPY package.json yarn.lock /myapp/
+COPY package.json pnpm-lock.yaml /myapp/
 
-RUN yarn install
+RUN pnpm install
 
 COPY . /myapp/
 
-RUN yarn deploy production
+RUN pnpm run ember build --environment=production
 
 FROM nginx:alpine
 
