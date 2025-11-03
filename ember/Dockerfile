@@ -1,16 +1,23 @@
-FROM danlynn/ember-cli:5.8.1-node_20.12 as build
+FROM node:20-slim AS base
+
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
 
 ARG OIDC_HOST
 
-COPY package.json pnpm-lock.yaml /myapp/
+RUN corepack enable
 
-RUN pnpm install
+WORKDIR /app
 
-COPY . /myapp/
+FROM base AS deps
+COPY package.json pnpm-lock.yaml /app/
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
-RUN pnpm run ember build --environment=production
+FROM base AS build
+COPY . /app
+COPY --from=deps /app/node_modules /app/node_modules
+RUN pnpm build
 
 FROM nginx:alpine
-
-COPY --from=build /myapp/build /usr/share/nginx/html
+COPY --from=build /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
