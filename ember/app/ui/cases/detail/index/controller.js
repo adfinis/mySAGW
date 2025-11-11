@@ -263,7 +263,7 @@ export default class CasesDetailIndexController extends Controller {
     try {
       yield this.apollo.mutate({
         mutation: redoWorkItemMutation,
-        variables: { input: { id: this.caseData.case.redoWorkItem.id } },
+        variables: { input: { id: this.caseData.case.readyWorkItem.previousWorkItem.id } },
       });
 
       yield Promise.all(this.caseData.fetch(this.model.id));
