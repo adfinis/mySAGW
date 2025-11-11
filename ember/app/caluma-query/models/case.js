@@ -46,6 +46,10 @@ export default class CustomCaseModel extends CaseModel {
     );
   }
 
+  get readyWorkItem() {
+    return this.workItems.find(w => w.status === "READY")
+  }
+
   get redoWorkItem() {
     if (this.canRedoWorkItem?.task.slug === "additional-data") {
       return this.workItems.find(

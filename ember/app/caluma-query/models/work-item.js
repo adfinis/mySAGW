@@ -49,6 +49,10 @@ export default class CustomWorkItemModel extends WorkItemModel {
     return this.raw.status === "READY";
   }
 
+  get previousWorkItem() {
+    return this.raw.previousWorkItem;
+  }
+
   get isCompleted() {
     return this.raw.status === "COMPLETED";
   }
@@ -69,6 +73,7 @@ export default class CustomWorkItemModel extends WorkItemModel {
     return this.isReady;
   }
 
+  // Not used as of 2d16806d
   get canSkip() {
     return (
       this.isReady &&

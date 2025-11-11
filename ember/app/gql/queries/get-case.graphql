@@ -18,6 +18,13 @@ query getCase($filter: [CaseFilterSetType]) {
               createdAt
               closedAt
               name
+              previousWorkItem {
+                id
+                status
+                task {
+                  slug
+                }
+              }
               task {
                 slug
               }
