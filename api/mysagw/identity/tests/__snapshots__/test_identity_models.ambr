@@ -284,6 +284,15 @@
 # name: test_fullname[de-None-None-prof-dr-neutral]
   'Prof. Dr.'
 # ---
+# name: test_fullname[de-None-None-prof-em-dr-female]
+  'Frau Prof. em. Dr.'
+# ---
+# name: test_fullname[de-None-None-prof-em-dr-male]
+  'Herr Prof. em. Dr.'
+# ---
+# name: test_fullname[de-None-None-prof-em-dr-neutral]
+  'Prof. em. Dr.'
+# ---
 # name: test_fullname[de-None-None-prof-female]
   'Frau Prof.'
 # ---
@@ -328,6 +337,15 @@
 # ---
 # name: test_fullname[de-None-Winston-prof-dr-neutral]
   'Prof. Dr. Winston'
+# ---
+# name: test_fullname[de-None-Winston-prof-em-dr-female]
+  'Frau Prof. em. Dr. Winston'
+# ---
+# name: test_fullname[de-None-Winston-prof-em-dr-male]
+  'Herr Prof. em. Dr. Winston'
+# ---
+# name: test_fullname[de-None-Winston-prof-em-dr-neutral]
+  'Prof. em. Dr. Winston'
 # ---
 # name: test_fullname[de-None-Winston-prof-female]
   'Frau Prof. Winston'
@@ -374,6 +392,15 @@
 # name: test_fullname[de-Smith-None-prof-dr-neutral]
   'Prof. Dr. Smith'
 # ---
+# name: test_fullname[de-Smith-None-prof-em-dr-female]
+  'Frau Prof. em. Dr. Smith'
+# ---
+# name: test_fullname[de-Smith-None-prof-em-dr-male]
+  'Herr Prof. em. Dr. Smith'
+# ---
+# name: test_fullname[de-Smith-None-prof-em-dr-neutral]
+  'Prof. em. Dr. Smith'
+# ---
 # name: test_fullname[de-Smith-None-prof-female]
   'Frau Prof. Smith'
 # ---
@@ -418,6 +445,15 @@
 # ---
 # name: test_fullname[de-Smith-Winston-prof-dr-neutral]
   'Prof. Dr. Winston Smith'
+# ---
+# name: test_fullname[de-Smith-Winston-prof-em-dr-female]
+  'Frau Prof. em. Dr. Winston Smith'
+# ---
+# name: test_fullname[de-Smith-Winston-prof-em-dr-male]
+  'Herr Prof. em. Dr. Winston Smith'
+# ---
+# name: test_fullname[de-Smith-Winston-prof-em-dr-neutral]
+  'Prof. em. Dr. Winston Smith'
 # ---
 # name: test_fullname[de-Smith-Winston-prof-female]
   'Frau Prof. Winston Smith'
@@ -464,6 +500,15 @@
 # name: test_fullname[en-None-None-prof-dr-neutral]
   'Prof. Dr.'
 # ---
+# name: test_fullname[en-None-None-prof-em-dr-female]
+  'Mrs. Prof. em. Dr.'
+# ---
+# name: test_fullname[en-None-None-prof-em-dr-male]
+  'Mr. Prof. em. Dr.'
+# ---
+# name: test_fullname[en-None-None-prof-em-dr-neutral]
+  'Prof. em. Dr.'
+# ---
 # name: test_fullname[en-None-None-prof-female]
   'Mrs. Prof.'
 # ---
@@ -508,6 +553,15 @@
 # ---
 # name: test_fullname[en-None-Winston-prof-dr-neutral]
   'Prof. Dr. Winston'
+# ---
+# name: test_fullname[en-None-Winston-prof-em-dr-female]
+  'Mrs. Prof. em. Dr. Winston'
+# ---
+# name: test_fullname[en-None-Winston-prof-em-dr-male]
+  'Mr. Prof. em. Dr. Winston'
+# ---
+# name: test_fullname[en-None-Winston-prof-em-dr-neutral]
+  'Prof. em. Dr. Winston'
 # ---
 # name: test_fullname[en-None-Winston-prof-female]
   'Mrs. Prof. Winston'
@@ -554,6 +608,15 @@
 # name: test_fullname[en-Smith-None-prof-dr-neutral]
   'Prof. Dr. Smith'
 # ---
+# name: test_fullname[en-Smith-None-prof-em-dr-female]
+  'Mrs. Prof. em. Dr. Smith'
+# ---
+# name: test_fullname[en-Smith-None-prof-em-dr-male]
+  'Mr. Prof. em. Dr. Smith'
+# ---
+# name: test_fullname[en-Smith-None-prof-em-dr-neutral]
+  'Prof. em. Dr. Smith'
+# ---
 # name: test_fullname[en-Smith-None-prof-female]
   'Mrs. Prof. Smith'
 # ---
@@ -598,6 +661,15 @@
 # ---
 # name: test_fullname[en-Smith-Winston-prof-dr-neutral]
   'Prof. Dr. Winston Smith'
+# ---
+# name: test_fullname[en-Smith-Winston-prof-em-dr-female]
+  'Mrs. Prof. em. Dr. Winston Smith'
+# ---
+# name: test_fullname[en-Smith-Winston-prof-em-dr-male]
+  'Mr. Prof. em. Dr. Winston Smith'
+# ---
+# name: test_fullname[en-Smith-Winston-prof-em-dr-neutral]
+  'Prof. em. Dr. Winston Smith'
 # ---
 # name: test_fullname[en-Smith-Winston-prof-female]
   'Mrs. Prof. Winston Smith'
@@ -644,6 +716,15 @@
 # name: test_fullname[fr-None-None-prof-dr-neutral]
   'Prof. Dr'
 # ---
+# name: test_fullname[fr-None-None-prof-em-dr-female]
+  'Madame Prof. em. Dr'
+# ---
+# name: test_fullname[fr-None-None-prof-em-dr-male]
+  'Monsieur Prof. em. Dr'
+# ---
+# name: test_fullname[fr-None-None-prof-em-dr-neutral]
+  'Prof. em. Dr'
+# ---
 # name: test_fullname[fr-None-None-prof-female]
   'Madame Prof.'
 # ---
@@ -688,6 +769,15 @@
 # ---
 # name: test_fullname[fr-None-Winston-prof-dr-neutral]
   'Prof. Dr Winston'
+# ---
+# name: test_fullname[fr-None-Winston-prof-em-dr-female]
+  'Madame Prof. em. Dr Winston'
+# ---
+# name: test_fullname[fr-None-Winston-prof-em-dr-male]
+  'Monsieur Prof. em. Dr Winston'
+# ---
+# name: test_fullname[fr-None-Winston-prof-em-dr-neutral]
+  'Prof. em. Dr Winston'
 # ---
 # name: test_fullname[fr-None-Winston-prof-female]
   'Madame Prof. Winston'
@@ -734,6 +824,15 @@
 # name: test_fullname[fr-Smith-None-prof-dr-neutral]
   'Prof. Dr Smith'
 # ---
+# name: test_fullname[fr-Smith-None-prof-em-dr-female]
+  'Madame Prof. em. Dr Smith'
+# ---
+# name: test_fullname[fr-Smith-None-prof-em-dr-male]
+  'Monsieur Prof. em. Dr Smith'
+# ---
+# name: test_fullname[fr-Smith-None-prof-em-dr-neutral]
+  'Prof. em. Dr Smith'
+# ---
 # name: test_fullname[fr-Smith-None-prof-female]
   'Madame Prof. Smith'
 # ---
@@ -778,6 +877,15 @@
 # ---
 # name: test_fullname[fr-Smith-Winston-prof-dr-neutral]
   'Prof. Dr Winston Smith'
+# ---
+# name: test_fullname[fr-Smith-Winston-prof-em-dr-female]
+  'Madame Prof. em. Dr Winston Smith'
+# ---
+# name: test_fullname[fr-Smith-Winston-prof-em-dr-male]
+  'Monsieur Prof. em. Dr Winston Smith'
+# ---
+# name: test_fullname[fr-Smith-Winston-prof-em-dr-neutral]
+  'Prof. em. Dr Winston Smith'
 # ---
 # name: test_fullname[fr-Smith-Winston-prof-female]
   'Madame Prof. Winston Smith'
