@@ -51,6 +51,7 @@ export default class IdentityFormComponent extends Component {
       { label: this.intl.t("global.title.dr"), value: "dr" },
       { label: this.intl.t("global.title.prof"), value: "prof" },
       { label: this.intl.t("global.title.profDr"), value: "prof-dr" },
+      { label: this.intl.t("global.title.profEmDr"), value: "prof-em-dr" },
       { label: this.intl.t("global.title.pdDr"), value: "pd-dr" },
     ];
   }
