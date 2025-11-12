@@ -53,6 +53,7 @@ class OIDCUser(BaseUser):
         "Dr.": Identity.TITLE_DR,
         "Prof.": Identity.TITLE_PROF,
         "Prof. Dr.": Identity.TITLE_PROF_DR,
+        "Prof. em. Dr.": Identity.TITLE_PROF_EM_DR,
         "PD Dr.": Identity.TITLE_PD_DR,
         "": Identity.TITLE_NONE,
     }
