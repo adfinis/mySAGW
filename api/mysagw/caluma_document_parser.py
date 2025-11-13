@@ -199,7 +199,7 @@ class DocumentParser:
                 except PdfReadError:  # pragma: no cover
                     # faulty pdf
                     pass
-                except (KeyError, TypeError):  # pragma: no cover
+                except (KeyError, TypeError, AttributeError):  # pragma: no cover
                     # PDF probably not supported by pypdf or contains faulty data.
                     # In some cases the document is still merged.
                     pass
