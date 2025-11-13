@@ -9,6 +9,7 @@ global:
     dr: "Dr."
     prof: "Prof."
     profDr: "Prof. Dr."
+    profEmDr: "Prof. em. Dr."
     pdDr: "PD Dr."
   languages:
     english: "Englisch"
