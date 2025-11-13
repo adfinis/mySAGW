@@ -34,10 +34,6 @@ export default class CasesDetailIndexController extends Controller {
   @tracked modalVisible;
   @tracked isDeleteConfirmationShown = false;
 
-  get readyWorkItems() {
-    return this.caseData.case.workItems.filterBy("status", "READY").length;
-  }
-
   /*
    * This filters the queried work items for only the ones
    * which contain answers to be displayed as configured in displayedAnswers
@@ -261,9 +257,23 @@ export default class CasesDetailIndexController extends Controller {
   @dropTask
   *redoLastWorkItem() {
     try {
+      let previousReadyWorkItem =
+        this.caseData.case.readyWorkItems?.[0].previousWorkItem;
+      while (previousReadyWorkItem.status === "SKIPPED") {
+        previousReadyWorkItem = this.caseData.case.workItems.find(
+          (wi) => wi.id === previousReadyWorkItem.id,
+        ).previousWorkItem;
+      }
+
       yield this.apollo.mutate({
         mutation: redoWorkItemMutation,
-        variables: { input: { id: this.caseData.case.redoWorkItem.id } },
+        // It doesn't matter which ready work item is passed as they will have the same previous work item.
+        // The backend checks all redoable conditions for all ready work items.
+        variables: {
+          input: {
+            id: previousReadyWorkItem.id,
+          },
+        },
       });
 
       yield Promise.all(this.caseData.fetch(this.model.id));
@@ -283,7 +293,7 @@ export default class CasesDetailIndexController extends Controller {
         variables: {
           input: {
             id: this.caseData.case.id,
-            workItems: [this.caseData.case.redoWorkItem.id],
+            workItems: [this.caseData.case.workItems?.[0].id],
           },
         },
       });

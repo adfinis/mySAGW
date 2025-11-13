@@ -46,28 +46,8 @@ export default class CustomCaseModel extends CaseModel {
     );
   }
 
-  get redoWorkItem() {
-    if (this.canRedoWorkItem?.task.slug === "additional-data") {
-      return this.workItems.find(
-        (workItem) =>
-          workItem.status === "COMPLETED" &&
-          workItem.task.slug === "decision-and-credit",
-      );
-    }
-
-    return this.workItems.find(
-      (workItem) =>
-        (workItem.status === "COMPLETED" || workItem.status === "SKIPPED") &&
-        ENV.APP.caluma.redoableTaskSlugs.includes(workItem.task.slug),
-    );
-  }
-
-  get canRedoWorkItem() {
-    return this.workItems.find(
-      (workItem) =>
-        workItem.status === "READY" &&
-        ENV.APP.caluma.canRedoTaskSlug.includes(workItem.task.slug),
-    );
+  get readyWorkItems() {
+    return this.workItems.filter((w) => w.status === "READY");
   }
 
   get completeWorkItem() {
