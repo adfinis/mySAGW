@@ -90,6 +90,7 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
     TITLE_DR = "dr"
     TITLE_PROF = "prof"
     TITLE_PROF_DR = "prof-dr"
+    TITLE_PROF_EM_DR = "prof-em-dr"
     TITLE_PD_DR = "pd-dr"
     TITLE_NONE = "none"
 
@@ -97,6 +98,11 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
         TITLE_DR: {"de": "Dr.", "en": "Dr.", "fr": "Dr"},
         TITLE_PROF: {"de": "Prof.", "en": "Prof.", "fr": "Prof."},
         TITLE_PROF_DR: {"de": "Prof. Dr.", "en": "Prof. Dr.", "fr": "Prof. Dr"},
+        TITLE_PROF_EM_DR: {
+            "de": "Prof. em. Dr.",
+            "en": "Prof. em. Dr.",
+            "fr": "Prof. em. Dr",
+        },
         TITLE_PD_DR: {"de": "PD Dr.", "en": "PD Dr.", "fr": "PD Dr"},
         TITLE_NONE: {"de": "", "en": "", "fr": ""},
     }
@@ -105,6 +111,7 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
         (TITLE_DR, TITLE_DR),
         (TITLE_PROF, TITLE_PROF),
         (TITLE_PROF_DR, TITLE_PROF_DR),
+        (TITLE_PROF_EM_DR, TITLE_PROF_EM_DR),
         (TITLE_PD_DR, TITLE_PD_DR),
         (TITLE_NONE, TITLE_NONE),
     )
@@ -119,7 +126,7 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
         default=SALUTATION_NEUTRAL,
         max_length=7,
     )
-    title = models.CharField(choices=TITLE_CHOICES, default=TITLE_NONE, max_length=9)
+    title = models.CharField(choices=TITLE_CHOICES, default=TITLE_NONE, max_length=14)
     language = models.CharField(
         max_length=2,
         choices=settings.LANGUAGES,
