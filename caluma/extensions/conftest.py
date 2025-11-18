@@ -205,4 +205,4 @@ def case_access_event_mock(
 
 @pytest.fixture
 def send_mail_mock(mocker):
-    return mocker.patch("caluma.extensions.events.work_item._send_work_item_mail")
+    return mocker.patch("caluma.extensions.events.work_item.send_work_item_mail")

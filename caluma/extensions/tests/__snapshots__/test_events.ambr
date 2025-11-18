@@ -324,66 +324,63 @@
   '''
 # ---
 # name: test_send_work_item_mail[decision-and-credit-False-True-de]
-  'Early Career Award'
+  'Early Career Award: Final decision'
 # ---
 # name: test_send_work_item_mail[decision-and-credit-False-True-de].1
   '''
   Dear Winston Smith
   
-  We regret to inform you that you are not among the three prize winners and finalists of the Early Career Award.
+  We regret to inform you that you are not among the three prizewinners or finalists of the Early Career Award.
   On behalf of the jury, we thank you for your understanding and wish you all the best for your academic future.
   
-  Yours sincerely
+  Yours sincerely,
   
-  Your SAGW team
+  The SAGW Team
   
   ******
   
-  This is an automatically generated message. Please do not reply. The contact details of SASH can be found on the following website:
-  www.sagw.ch/kontakt-mysagw
-  
+  This is an automatically generated message. Please do not reply. The contact details of the Swiss Academy of Humanities and Social Sciences can be found on the following website:
+  https://www.sagw.ch/sagw/foerderung/early-career-award
   '''
 # ---
 # name: test_send_work_item_mail[decision-and-credit-False-True-en]
-  'Early Career Award'
+  'Early Career Award: Final decision'
 # ---
 # name: test_send_work_item_mail[decision-and-credit-False-True-en].1
   '''
   Dear Winston Smith
   
-  We regret to inform you that you are not among the three prize winners and finalists of the Early Career Award.
+  We regret to inform you that you are not among the three prizewinners or finalists of the Early Career Award.
   On behalf of the jury, we thank you for your understanding and wish you all the best for your academic future.
   
-  Yours sincerely
+  Yours sincerely,
   
-  Your SAGW team
+  The SAGW Team
   
   ******
   
-  This is an automatically generated message. Please do not reply. The contact details of SASH can be found on the following website:
-  www.sagw.ch/kontakt-mysagw
-  
+  This is an automatically generated message. Please do not reply. The contact details of the Swiss Academy of Humanities and Social Sciences can be found on the following website:
+  https://www.sagw.ch/sagw/foerderung/early-career-award
   '''
 # ---
 # name: test_send_work_item_mail[decision-and-credit-False-True-fr]
-  'Early Career Award'
+  'Early Career Award: Final decision'
 # ---
 # name: test_send_work_item_mail[decision-and-credit-False-True-fr].1
   '''
   Dear Winston Smith
   
-  We regret to inform you that you are not among the three prize winners and finalists of the Early Career Award.
+  We regret to inform you that you are not among the three prizewinners or finalists of the Early Career Award.
   On behalf of the jury, we thank you for your understanding and wish you all the best for your academic future.
   
-  Yours sincerely
+  Yours sincerely,
   
-  Your SAGW team
+  The SAGW Team
   
   ******
   
-  This is an automatically generated message. Please do not reply. The contact details of SASH can be found on the following website:
-  www.sagw.ch/kontakt-mysagw
-  
+  This is an automatically generated message. Please do not reply. The contact details of the Swiss Academy of Humanities and Social Sciences can be found on the following website:
+  https://www.sagw.ch/sagw/foerderung/early-career-award
   '''
 # ---
 # name: test_send_work_item_mail[review-document-False-False-de]
@@ -465,80 +462,80 @@
   '''
 # ---
 # name: test_send_work_item_mail[review-document-False-True-de]
-  'Neue Informationen zu 1984-0023'
+  'Early Career Award: Administrative verification'
 # ---
 # name: test_send_work_item_mail[review-document-False-True-de].1
   '''
-  Guten Tag Winston Smith
+  Dear Winston Smith
   
-  Die Schweizerische Akademie der Geistes- und Sozialwissenschaften (SAGW) hat Ihr oben genanntes Gesuch geprüft. Leider müssen wir Ihnen mitteilen, dass wir Ihrem Antrag nicht entsprechen können, da die formellen oder materiellen Voraussetzungen dafür nicht gegeben sind.
+  Following the administrative verification by the Secretary of the Swiss Academy of Humanities and Social Sciences, we regret to inform you that your application does not fulfill the eligibility criteria and therefore cannot be accepted.
   
-  Referenz: 1984-0023
-  Über den nachfolgenden Link können Sie direkt auf Ihr Dokument zugreifen:
+  Reference: 1984-0023
+  
+  You can access your online application form via the following link, where you will find further information regarding the administrative verification:
   https://mysagw.local/cases/my-case-id
   
-  Sollten Sie Fragen haben, können Sie uns gerne über sagw@sagw.ch, die Telefonnummer +41 31 306 92 50 oder unter www.sagw.ch/kontakt-mysagw kontaktieren. Gerne bitten wir Sie, bei einer Frage immer die Referenznummer anzugeben.
+  If you have any questions, please contact us at sagw@sagw.ch or by phone at +41 31 306 92 50
   
-  Freundliche Grüsse
+  Yours sincerely,
   
-  Ihr SAGW-Team
+  The SAGW Team
   
   ******
   
-  Dies ist eine automatisch generierte Email, bitte antworten Sie nicht auf diese Nachricht. Die Kontaktangaben der SAGW können Sie der nachfolgenden Seite entnehmen:
-  www.sagw.ch/kontakt-mysagw
+  This is an automatically generated message. Please do not reply. The contact details of the Swiss Academy of Humanities and Social Sciences can be found on the following website: www.sagw.ch/kontakt-mysagw
   
   '''
 # ---
 # name: test_send_work_item_mail[review-document-False-True-en]
-  'New information concerning 1984-0023'
+  'Early Career Award: Administrative verification'
 # ---
 # name: test_send_work_item_mail[review-document-False-True-en].1
   '''
   Dear Winston Smith
   
-  The Swiss Academy of Humanities and Social Sciences (SAGW/SAHS) has reviewed your request. Unfortunately, we have to inform you that your request cannot be granted since the formal or the material criteria are not being fulfilled.
+  Following the administrative verification by the Secretary of the Swiss Academy of Humanities and Social Sciences, we regret to inform you that your application does not fulfill the eligibility criteria and therefore cannot be accepted.
   
   Reference: 1984-0023
-  You can access your document via the following link:
+  
+  You can access your online application form via the following link, where you will find further information regarding the administrative verification:
   https://mysagw.local/cases/my-case-id
   
-  If you have any questions, please contact us via e-mail (sagw@sagw.ch), phone (+41 31 306 92 50) or online (www.sagw.ch/kontakt-mysagw). Please bear in mind to state the reference number of your application.
+  If you have any questions, please contact us at sagw@sagw.ch or by phone at +41 31 306 92 50
   
-  Yours sincerely
+  Yours sincerely,
   
-  Your SAGW team
+  The SAGW Team
   
   ******
   
-  This is an automatically generated message. Please do not reply. The contact details of SASH can be found on the following website:
-  www.sagw.ch/kontakt-mysagw
+  This is an automatically generated message. Please do not reply. The contact details of the Swiss Academy of Humanities and Social Sciences can be found on the following website: www.sagw.ch/kontakt-mysagw
   
   '''
 # ---
 # name: test_send_work_item_mail[review-document-False-True-fr]
-  'Nouvelles informations concernant 1984-0023'
+  'Early Career Award: Administrative verification'
 # ---
 # name: test_send_work_item_mail[review-document-False-True-fr].1
   '''
-  Bonjour Winston Smith
+  Dear Winston Smith
   
-  L’Académie suisse des sciences humaines et sociales (ASSH) a examiné votre requête susmentionnée. Malheureusement, nous devons vous informer que nous ne pouvons pas donner suite à votre demande, car les conditions formelles ou les conditions matérielles pour un soutien ne sont pas remplies.
+  Following the administrative verification by the Secretary of the Swiss Academy of Humanities and Social Sciences, we regret to inform you that your application does not fulfill the eligibility criteria and therefore cannot be accepted.
   
-  Référence : 1984-0023
-  Cliquez sur le lien ci-dessous pour ouvrir votre document:
+  Reference: 1984-0023
+  
+  You can access your online application form via the following link, where you will find further information regarding the administrative verification:
   https://mysagw.local/cases/my-case-id
   
-  Si vous avez des questions, n’hésitez pas à nous contacter à l’adresse sagw@sagw.ch, au numéro de téléphone +41 31 306 92 50 ou via www.sagw.ch/kontakt-mysagw. Nous vous prions de toujours indiquer le numéro de référence lorsque vous posez une question.
+  If you have any questions, please contact us at sagw@sagw.ch or by phone at +41 31 306 92 50
   
-  Avec nos meilleures salutations,
+  Yours sincerely,
   
-  Votre équipe de l’ASSH
+  The SAGW Team
   
   ******
   
-  Ceci est un message électronique généré automatiquement, merci de ne pas y répondre. Vous trouverez les coordonnées de l'ASSH sur la page suivante :
-  www.sagw.ch/kontakt-mysagw
+  This is an automatically generated message. Please do not reply. The contact details of the Swiss Academy of Humanities and Social Sciences can be found on the following website: www.sagw.ch/kontakt-mysagw
   
   '''
 # ---
@@ -617,6 +614,84 @@
   
   Ceci est un message électronique généré automatiquement, merci de ne pas y répondre. Vous trouverez les coordonnées de l'ASSH sur la page suivante :
   www.sagw.ch/kontakt-mysagw
+  
+  '''
+# ---
+# name: test_send_work_item_mail[revise-document-False-True-de]
+  'Early Career Award: Incomplete application'
+# ---
+# name: test_send_work_item_mail[revise-document-False-True-de].1
+  '''
+  Dear Winston Smith
+  
+  To complete the verification of your application’s formal eligibility for our Early Career Award, we require additional information. We kindly ask you to submit the missing information as soon as possible.
+  
+  Reference: 1984-0023
+  
+  You can access your online application form via the following link, where you will find details of the information that is still required:
+  https://mysagw.local/cases/my-case-id
+  
+  If you have any questions, please contact us at sagw@sagw.ch or by phone at +41 31 306 92 50.
+  
+  Yours sincerely,
+  
+  The SAGW Team
+  
+  ******
+  
+  This is an automatically generated message. Please do not reply. The contact details of the Swiss Academy of Humanities and Social Sciences can be found on the following website: www.sagw.ch/kontakt-mysagw
+  
+  '''
+# ---
+# name: test_send_work_item_mail[revise-document-False-True-en]
+  'Early Career Award: Incomplete application'
+# ---
+# name: test_send_work_item_mail[revise-document-False-True-en].1
+  '''
+  Dear Winston Smith
+  
+  To complete the verification of your application’s formal eligibility for our Early Career Award, we require additional information. We kindly ask you to submit the missing information as soon as possible.
+  
+  Reference: 1984-0023
+  
+  You can access your online application form via the following link, where you will find details of the information that is still required:
+  https://mysagw.local/cases/my-case-id
+  
+  If you have any questions, please contact us at sagw@sagw.ch or by phone at +41 31 306 92 50.
+  
+  Yours sincerely,
+  
+  The SAGW Team
+  
+  ******
+  
+  This is an automatically generated message. Please do not reply. The contact details of the Swiss Academy of Humanities and Social Sciences can be found on the following website: www.sagw.ch/kontakt-mysagw
+  
+  '''
+# ---
+# name: test_send_work_item_mail[revise-document-False-True-fr]
+  'Early Career Award: Incomplete application'
+# ---
+# name: test_send_work_item_mail[revise-document-False-True-fr].1
+  '''
+  Dear Winston Smith
+  
+  To complete the verification of your application’s formal eligibility for our Early Career Award, we require additional information. We kindly ask you to submit the missing information as soon as possible.
+  
+  Reference: 1984-0023
+  
+  You can access your online application form via the following link, where you will find details of the information that is still required:
+  https://mysagw.local/cases/my-case-id
+  
+  If you have any questions, please contact us at sagw@sagw.ch or by phone at +41 31 306 92 50.
+  
+  Yours sincerely,
+  
+  The SAGW Team
+  
+  ******
+  
+  This is an automatically generated message. Please do not reply. The contact details of the Swiss Academy of Humanities and Social Sciences can be found on the following website: www.sagw.ch/kontakt-mysagw
   
   '''
 # ---
