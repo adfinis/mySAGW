@@ -84,19 +84,6 @@ module.exports = function (environment) {
           "additional-data-form",
         ],
         skippableTaskSlugs: [],
-        redoableTaskSlugs: [
-          "review-document",
-          "circulation",
-          "decision-and-credit",
-          "define-amount",
-          "complete-document",
-        ],
-        canRedoTaskSlug: [
-          "circulation",
-          "decision-and-credit",
-          "additional-data",
-          "complete-document",
-        ],
         manuallyCompletableTasks: ["complete-document"],
         // when adding questions to displayAnswers, also add to get-case.graphql
         displayedAnswers: {

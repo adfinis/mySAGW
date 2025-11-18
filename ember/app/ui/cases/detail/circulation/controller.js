@@ -17,6 +17,7 @@ export default class CasesDetailCirculationController extends Controller {
   @service notification;
   @service intl;
   @service router;
+  @service caseData;
 
   @tracked selectedIdentities = [];
 
@@ -192,7 +193,9 @@ export default class CasesDetailCirculationController extends Controller {
   }
 
   @action
-  transitionToCaseWorkItems() {
+  async transitionToCaseWorkItems() {
+    // Refresh case to get updated work item list on caseData service
+    await Promise.all(this.caseData.fetch(this.model.id));
     this.router.transitionTo("cases.detail.work-items", this.model.id);
   }
 }
