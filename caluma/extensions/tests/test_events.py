@@ -320,6 +320,7 @@ def test_case_status(
         ("review-document", False, False),
         ("review-document", False, True),
         ("revise-document", False, False),
+        ("revise-document", False, True),
         ("additional-data", False, False),
         ("additional-data", True, False),
         ("complete-document", False, False),
@@ -341,7 +342,7 @@ def test_send_work_item_mail(  # noqa: PLR0915
     mocker,
 ):
     if lang != "de":
-        mock = mocker.patch("caluma.extensions.events.work_item.get_users_for_case")
+        mock = mocker.patch("caluma.extensions.email.send_email.get_users_for_case")
         mock.return_value = [
             {
                 "idp-id": "267796f2-ae48-4235-93d7-bf26e8ba66bb",
