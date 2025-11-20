@@ -31,7 +31,12 @@ api-shell_plus: ## Run shell_plus
 .PHONY: api-dev-server
 api-dev-server: ## Start backend dev server
 	@docker compose stop api
-	@docker compose run --user root --use-aliases --service-ports api sh -c "poetry run pip install pdbpp && poetry run python manage.py runserver 0.0.0.0:8000"
+	@docker compose run --user root --use-aliases --service-ports api sh -c "poetry run pip install pdbpp ipdb && poetry run python manage.py runserver 0.0.0.0:8000"
+
+.PHONY: caluma-dev-server
+caluma-dev-server: ## Start backend dev server
+	@docker compose stop caluma
+	@docker compose run --user root --use-aliases --service-ports caluma sh -c "poetry run pip install pdbpp ipdb && poetry run python manage.py runserver 0.0.0.0:8000"
 
 .PHONY: makemigrations
 makemigrations: ## Make django migrations

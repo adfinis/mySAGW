@@ -1,9 +1,8 @@
-from django.core.mail import send_mail
 from django.db import transaction
 
 from caluma.caluma_core.events import filter_events, on
 from caluma.caluma_form import api as caluma_form_api
-from caluma.caluma_form.models import Answer, Document, Form
+from caluma.caluma_form.models import Document, Form
 from caluma.caluma_workflow import (
     api as caluma_workflow_api,
 )
@@ -16,14 +15,7 @@ from caluma.caluma_workflow.events import (
 )
 from caluma.caluma_workflow.models import Case, Workflow, WorkItem
 
-from ..common import format_currency, get_users_for_case
-from ..email_texts import (
-    email_cost_approval,
-    email_general,
-    email_payout_amount,
-    email_rejection,
-    email_rejection_early_career_award,
-)
+from ..email.send_email import send_work_item_mail
 from ..settings import settings
 
 
@@ -46,97 +38,6 @@ def set_assigned_user(sender, work_item, user, **kwargs):
     work_item.save()
 
 
-def _send_work_item_mail(work_item):
-    """
-    Send the work_item emails.
-
-    This must reside in a separate function in order to be able to patch it in the
-    tests.
-    """
-    link = f"{settings.SELF_URI}/cases/{work_item.case.pk}"
-
-    try:
-        dossier_nr = work_item.case.document.answers.get(question_id="dossier-nr").value
-    except Answer.DoesNotExist:
-        dossier_nr = "Not found"
-
-    framework_credit = None
-    payout_amount = None
-    selected_email_texts = email_general
-
-    if work_item.task.slug == "additional-data":
-        define_amount_work_item = (
-            work_item.case.work_items.filter(task__slug="define-amount")
-            .order_by("-closed_at")
-            .first()
-        )
-        if not (
-            define_amount_work_item
-            and define_amount_work_item.status == "completed"
-            and define_amount_work_item.document.answers.filter(
-                question_id="define-amount-decision",
-                value="define-amount-decision-reject",
-            ).exists()
-        ):
-            decision_and_credit_work_item = (
-                work_item.case.work_items.filter(task__slug="decision-and-credit")
-                .order_by("-created_at")
-                .first()
-            )
-            framework_credit = decision_and_credit_work_item.document.answers.get(
-                question__slug="gesprochener-rahmenkredit",
-            ).value
-            framework_credit = format_currency(framework_credit, "CHF")
-            selected_email_texts = email_cost_approval
-    elif work_item.task.slug == "complete-document":
-        define_amount_work_item = (
-            work_item.case.work_items.filter(task__slug="define-amount")
-            .order_by("-created_at")
-            .first()
-        )
-        payout_amount_answer = define_amount_work_item.document.answers.filter(
-            question__slug="define-amount-amount-float",
-        ).first()
-        payout_amount = format_currency(
-            payout_amount_answer.value if payout_amount_answer else 0,
-            "CHF",
-        )
-        selected_email_texts = email_payout_amount
-    elif work_item.task.slug in ["review-document", "decision-and-credit"]:
-        selected_email_texts = email_rejection
-        if (
-            work_item.case.document.form.slug in settings.EARLY_CAREER_AWARD_FORM_SLUGS
-            and work_item.task.slug == "decision-and-credit"
-        ):
-            selected_email_texts = email_rejection_early_career_award
-
-    users = get_users_for_case(work_item.case)
-
-    for user in users:
-        subject = selected_email_texts.EMAIL_SUBJECTS[user["language"]]
-
-        subject = subject.format(dossier_nr=dossier_nr)
-
-        body = selected_email_texts.EMAIL_BODIES[user["language"]]
-
-        body = body.format(
-            first_name=user["first-name"] or "",
-            last_name=user["last-name"] or "",
-            link=link,
-            dossier_nr=dossier_nr,
-            framework_credit=framework_credit,
-            payout_amount=payout_amount,
-        )
-
-        send_mail(
-            subject,
-            body,
-            settings.MAILING_SENDER,
-            [user["email"]],
-            fail_silently=True,
-        )
-
-
 @on(post_create_work_item, raise_exception=True)
 @filter_events(
     lambda sender, work_item: sender == "post_complete_work_item"
@@ -148,7 +49,7 @@ def _send_work_item_mail(work_item):
     ],
 )
 def send_new_work_item_mail(sender, work_item, user, **kwargs):
-    _send_work_item_mail(work_item)
+    send_work_item_mail(work_item)
 
 
 @on(post_complete_work_item, raise_exception=True)
@@ -167,7 +68,7 @@ def send_new_work_item_mail(sender, work_item, user, **kwargs):
     ),
 )
 def send_rejection_mail(sender, work_item, user, **kwargs):
-    _send_work_item_mail(work_item)
+    send_work_item_mail(work_item)
 
 
 @on(post_reopen_case, raise_exception=True)
