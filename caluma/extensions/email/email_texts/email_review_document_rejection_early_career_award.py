@@ -1,5 +1,5 @@
 SUBJECT = "Early Career Award: Incomplete application"
-BODY = """Dear {first_name} {last_name}
+BODY = """Dear {first_name} {last_name},
 
 To complete the verification of your application’s formal eligibility for our Early Career Award, we require additional information. We kindly ask you to submit the missing information as soon as possible.
 

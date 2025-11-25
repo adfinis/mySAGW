@@ -1,7 +1,7 @@
 SUBJECT = "Early Career Award: Administrative verification"
-BODY = """Dear {first_name} {last_name}
+BODY = """Dear {first_name} {last_name},
 
-Following the administrative verification by the Secretary of the Swiss Academy of Humanities and Social Sciences, we regret to inform you that your application does not fulfill the eligibility criteria and therefore cannot be accepted.
+Following the administrative verification by the General Secretariat of the Swiss Academy of Humanities and Social Sciences, we regret to inform you that your application does not fulfill the eligibility criteria and therefore cannot be accepted.
 
 Reference: {dossier_nr}
 
