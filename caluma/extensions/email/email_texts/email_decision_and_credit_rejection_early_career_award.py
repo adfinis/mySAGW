@@ -1,5 +1,5 @@
 SUBJECT = "Early Career Award: Final decision"
-BODY = """Dear {first_name} {last_name}
+BODY = """Dear {first_name} {last_name},
 
 We regret to inform you that you are not among the three prizewinners or finalists of the Early Career Award.
 On behalf of the jury, we thank you for your understanding and wish you all the best for your academic future.
