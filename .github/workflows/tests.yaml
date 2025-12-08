@@ -57,14 +57,17 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - name: Enable corepack
+        run: corepack enable
+        working-directory: ${{env.ember-dir}}
       - name: Install dependencies
-        run: yarn install
+        run: pnpm install
         working-directory: ${{env.ember-dir}}
       - name: Lint the code
-        run: yarn lint
+        run: pnpm lint
         working-directory: ${{env.ember-dir}}
       - name: Run tests
-        run: yarn test:ember
+        run: pnpm test:ember
         working-directory: ${{env.ember-dir}}
   ember-build:
     runs-on: ubuntu-latest
