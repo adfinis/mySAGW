@@ -71,7 +71,7 @@ export default class WorkItemsIndexController extends TableController {
         .peekAll("identity")
         .reduce((ids, identity) => {
           if (idSet.has(identity.id)) {
-            return ids.push(identity.idpId), ids;
+            return (ids.push(identity.idpId), ids);
           }
           return ids;
         }, []);
