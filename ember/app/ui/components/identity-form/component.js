@@ -26,12 +26,18 @@ export default class IdentityFormComponent extends Component {
   @service can;
   @service apollo;
 
-  @tracked changeset;
   @tracked backToIdentities;
 
+  get changeset () {
+    return this.changesetResource.value
+  }
+
   changesetResource = trackedFunction(this, async () => {
-    this.changeset = Changeset(
-      this.args.identity || this.store.createRecord("identity"),
+    const identitiy = this.args.identity ?? this.store.createRecord("identity");
+    // Prevent excessive re-rendering
+    await Promise.resolve()
+    return Changeset(
+      identitiy,
       lookupValidator(IdentityValidations),
       IdentityValidations,
     );
@@ -75,7 +81,7 @@ export default class IdentityFormComponent extends Component {
     return [
       `https://${host}/auth/admin/mysagw/console/`,
       "#/mysagw/users/",
-      this.changeset.get("idpId"),
+      this.changeset?.get("idpId"),
       "/settings",
     ].join("");
   }
@@ -86,8 +92,8 @@ export default class IdentityFormComponent extends Component {
 
   get disabledOnProfileView() {
     return (
-      this.can.cannot("edit identity", this.changeset.data) ||
-      (this.changeset.isOrganisation && this.args.profileView)
+      this.can.cannot("edit identity", this.changeset?.data) ||
+      (this.changeset?.isOrganisation && this.args.profileView)
     );
   }
 
@@ -98,9 +104,9 @@ export default class IdentityFormComponent extends Component {
 
   @action
   updateOrganisation() {
-    const isOrganisation = !this.changeset.get("isOrganisation");
+    const isOrganisation = !this.changeset?.get("isOrganisation");
     this.args.onOrganisationUpdate?.(isOrganisation);
-    this.changeset.set("isOrganisation", isOrganisation);
+    this.changeset?.set("isOrganisation", isOrganisation);
   }
 
   @action
