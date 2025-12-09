@@ -12,10 +12,22 @@ overrides:
 importers:
 
   .:
-    dependencies:
+    devDependencies:
+      '@adfinis/eslint-config':
+        specifier: ^2.1.1
+        version: 2.1.1(@babel/core@7.28.5)(@babel/eslint-parser@7.28.5(@babel/core@7.28.5)(eslint@8.57.0))(@babel/plugin-proposal-decorators@7.28.0(@babel/core@7.28.5))(eslint-config-prettier@9.1.0(eslint@8.57.0))(eslint-plugin-ember@12.7.5(@babel/core@7.28.5)(eslint@8.57.0)(typescript@5.9.3))(eslint-plugin-import@2.32.0(eslint@8.57.0))(eslint-plugin-n@16.6.2(eslint@8.57.0))(eslint-plugin-prettier@5.5.4(@types/eslint@9.6.1)(eslint-config-prettier@9.1.0(eslint@8.57.0))(eslint@8.57.0)(prettier@3.7.4))(eslint-plugin-qunit@8.2.5(eslint@8.57.0))(eslint@8.57.0)(prettier@3.7.4)
       '@apollo/client':
         specifier: ^3.10.4
         version: 3.12.4(graphql@16.12.0)
+      '@babel/core':
+        specifier: ^7.28.5
+        version: 7.28.5
+      '@babel/eslint-parser':
+        specifier: ^7.28.5
+        version: 7.28.5(@babel/core@7.28.5)(eslint@8.57.0)
+      '@babel/plugin-proposal-decorators':
+        specifier: ^7.28.0
+        version: 7.28.0(@babel/core@7.28.5)
       '@ember-data/store':
         specifier: 4.12.7
         version: 4.12.7(@babel/core@7.28.5)(@ember-data/graph@4.12.7)(@ember-data/json-api@4.12.7)(@ember-data/legacy-compat@4.12.7)(@ember-data/model@4.12.7)(@ember-data/tracking@4.12.7(@glint/template@1.7.2))(@ember/string@4.0.0)(@glimmer/tracking@1.1.2)(@glint/template@1.7.2)(ember-source@4.12.4(@babel/core@7.28.5)(@glimmer/component@1.1.2(@babel/core@7.28.5))(@glint/template@1.7.2)(webpack@5.103.0))
@@ -28,9 +40,15 @@ importers:
       '@ember/render-modifiers':
         specifier: ^2.0.5
         version: 2.1.0(@babel/core@7.28.5)(@glint/template@1.7.2)(ember-source@4.12.4(@babel/core@7.28.5)(@glimmer/component@1.1.2(@babel/core@7.28.5))(@glint/template@1.7.2)(webpack@5.103.0))
+      '@ember/test-helpers':
+        specifier: ^3.3.1
+        version: 3.3.1(@babel/core@7.28.5)(@glint/template@1.7.2)(ember-source@4.12.4(@babel/core@7.28.5)(@glimmer/component@1.1.2(@babel/core@7.28.5))(@glint/template@1.7.2)(webpack@5.103.0))(webpack@5.103.0)
       '@embroider/macros':
         specifier: ^1.19.5
         version: 1.19.5(@glint/template@1.7.2)
+      '@faker-js/faker':
+        specifier: ^9.3.0
+        version: 9.3.0
       '@glimmer/component':
         specifier: ^1.1.2
         version: 1.1.2(@babel/core@7.28.5)
@@ -58,6 +76,9 @@ importers:
       '@projectcaluma/ember-workflow':
         specifier: ^13.1.6
         version: 13.1.6(@ember/test-helpers@3.3.1(@babel/core@7.28.5)(@glint/template@1.7.2)(ember-source@4.12.4(@babel/core@7.28.5)(@glimmer/component@1.1.2(@babel/core@7.28.5))(@glint/template@1.7.2)(webpack@5.103.0))(webpack@5.103.0))(@ember/test-waiters@3.1.0)(@glimmer/tracking@1.1.2)(@glint/template@1.7.2)(ember-data@4.12.7(@babel/core@7.28.5)(@ember/string@4.0.0)(@glimmer/tracking@1.1.2)(@glint/template@1.7.2)(ember-source@4.12.4(@babel/core@7.28.5)(@glimmer/component@1.1.2(@babel/core@7.28.5))(@glint/template@1.7.2)(webpack@5.103.0))(webpack@5.103.0))(ember-resources@7.0.7(@glimmer/component@1.1.2(@babel/core@7.28.5))(@glint/template@1.7.2))(ember-source@4.12.4(@babel/core@7.28.5)(@glimmer/component@1.1.2(@babel/core@7.28.5))(@glint/template@1.7.2)(webpack@5.103.0))(typescript@5.9.3)(webpack@5.103.0)
+      broccoli-asset-rev:
+        specifier: ^3.0.0
+        version: 3.0.0
       ember-apollo-client:
         specifier: ^4.1.0
         version: 4.1.1(@glint/template@1.7.2)(graphql@16.12.0)(webpack@5.103.0)
@@ -76,15 +97,39 @@ importers:
       ember-changeset-validations:
         specifier: ^5.0.0
         version: 5.0.0(@babel/core@7.28.5)(@ember/string@4.0.0)(@glint/template@1.7.2)(ember-source@4.12.4(@babel/core@7.28.5)(@glimmer/component@1.1.2(@babel/core@7.28.5))(@glint/template@1.7.2)(webpack@5.103.0))
+      ember-cli:
+        specifier: ~4.12.0
+        version: 4.12.3(handlebars@4.7.8)(underscore@1.13.6)
+      ember-cli-app-version:
+        specifier: ^6.0.1
+        version: 6.0.1(ember-source@4.12.4(@babel/core@7.28.5)(@glimmer/component@1.1.2(@babel/core@7.28.5))(@glint/template@1.7.2)(webpack@5.103.0))
+      ember-cli-babel:
+        specifier: ^8.2.0
+        version: 8.2.0(@babel/core@7.28.5)
+      ember-cli-dependency-checker:
+        specifier: ^3.3.3
+        version: 3.3.3(ember-cli@4.12.3(handlebars@4.7.8)(underscore@1.13.6))
       ember-cli-htmlbars:
         specifier: ^6.2.0
         version: 6.3.0
+      ember-cli-inject-live-reload:
+        specifier: ^2.1.0
+        version: 2.1.0
+      ember-cli-mirage:
+        specifier: ^3.0.0
+        version: 3.0.4(mj2y2k5tekkxolps6mms7di2iy)
       ember-cli-sass:
         specifier: ^11.0.1
         version: 11.0.1
+      ember-cli-sri:
+        specifier: ^2.1.1
+        version: 2.1.1
       ember-cli-string-helpers:
         specifier: ^6.1.0
         version: 6.1.0
+      ember-cli-terser:
+        specifier: ^4.0.2
+        version: 4.0.2
       ember-concurrency:
         specifier: ^4.0.2
         version: 4.0.2(@babel/core@7.28.5)(@glimmer/tracking@1.1.2)(@glint/template@1.7.2)(ember-source@4.12.4(@babel/core@7.28.5)(@glimmer/component@1.1.2(@babel/core@7.28.5))(@glint/template@1.7.2)(webpack@5.103.0))
@@ -118,6 +163,9 @@ importers:
       ember-power-select:
         specifier: ^8.12.1
         version: 8.12.1(qhwch6bh2ztitnmnfq4qbnhjna)
+      ember-qunit:
+        specifier: ^8.1.1
+        version: 8.1.1(@ember/test-helpers@3.3.1(@babel/core@7.28.5)(@glint/template@1.7.2)(ember-source@4.12.4(@babel/core@7.28.5)(@glimmer/component@1.1.2(@babel/core@7.28.5))(@glint/template@1.7.2)(webpack@5.103.0))(webpack@5.103.0))(@glint/template@1.7.2)(ember-source@4.12.4(@babel/core@7.28.5)(@glimmer/component@1.1.2(@babel/core@7.28.5))(@glint/template@1.7.2)(webpack@5.103.0))(qunit@2.24.3)
       ember-resolver:
         specifier: ^11.0.1
         version: 11.0.1(ember-source@4.12.4(@babel/core@7.28.5)(@glimmer/component@1.1.2(@babel/core@7.28.5))(@glint/template@1.7.2)(webpack@5.103.0))
@@ -127,12 +175,15 @@ importers:
       ember-simple-auth-oidc:
         specifier: ^6.0.1
         version: 6.0.1(@ember/test-helpers@3.3.1(@babel/core@7.28.5)(@glint/template@1.7.2)(ember-source@4.12.4(@babel/core@7.28.5)(@glimmer/component@1.1.2(@babel/core@7.28.5))(@glint/template@1.7.2)(webpack@5.103.0))(webpack@5.103.0))(@glint/template@1.7.2)(ember-source@4.12.4(@babel/core@7.28.5)(@glimmer/component@1.1.2(@babel/core@7.28.5))(@glint/template@1.7.2)(webpack@5.103.0))(graphql@16.12.0)(webpack@5.103.0)
-      ember-sortable:
-        specifier: ^5.3.3
-        version: 5.3.3(@ember/test-helpers@3.3.1(@babel/core@7.28.5)(@glint/template@1.7.2)(ember-source@4.12.4(@babel/core@7.28.5)(@glimmer/component@1.1.2(@babel/core@7.28.5))(@glint/template@1.7.2)(webpack@5.103.0))(webpack@5.103.0))(@ember/test-waiters@3.1.0)(@glint/template@1.7.2)(ember-modifier@4.2.2(@babel/core@7.28.5))
       ember-source:
         specifier: ~4.12.4
         version: 4.12.4(@babel/core@7.28.5)(@glimmer/component@1.1.2(@babel/core@7.28.5))(@glint/template@1.7.2)(webpack@5.103.0)
+      ember-template-lint:
+        specifier: ^6.0.0
+        version: 6.0.0
+      ember-test-selectors:
+        specifier: ^6.0.0
+        version: 6.0.0
       ember-truth-helpers:
         specifier: ^4.0.3
         version: 4.0.3(ember-source@4.12.4(@babel/core@7.28.5)(@glimmer/component@1.1.2(@babel/core@7.28.5))(@glint/template@1.7.2)(webpack@5.103.0))
@@ -142,91 +193,6 @@ importers:
       ember-validated-form:
         specifier: ^7.0.1
         version: 7.0.1(@ember/string@4.0.0)(@glint/template@1.7.2)(ember-data@4.12.7(@babel/core@7.28.5)(@ember/string@4.0.0)(@glimmer/tracking@1.1.2)(@glint/template@1.7.2)(ember-source@4.12.4(@babel/core@7.28.5)(@glimmer/component@1.1.2(@babel/core@7.28.5))(@glint/template@1.7.2)(webpack@5.103.0))(webpack@5.103.0))(ember-source@4.12.4(@babel/core@7.28.5)(@glimmer/component@1.1.2(@babel/core@7.28.5))(@glint/template@1.7.2)(webpack@5.103.0))(webpack@5.103.0)
-      file-saver:
-        specifier: ^2.0.5
-        version: 2.0.5
-      flatpickr:
-        specifier: ^4.6.13
-        version: 4.6.13
-      graphql:
-        specifier: ^16.12.0
-        version: 16.12.0
-      loader.js:
-        specifier: ^4.7.0
-        version: 4.7.0
-      luxon:
-        specifier: ^3.7.2
-        version: 3.7.2
-      miragejs:
-        specifier: ^0.1.48
-        version: 0.1.48
-      reactiveweb:
-        specifier: ^1.9.0
-        version: 1.9.0(@babel/core@7.28.5)(@ember/test-waiters@3.1.0)(@glimmer/component@1.1.2(@babel/core@7.28.5))(@glint/template@1.7.2)
-      sass:
-        specifier: ^1.94.2
-        version: 1.94.2
-      tracked-built-ins:
-        specifier: ^3.4.0
-        version: 3.4.0(@babel/core@7.28.5)
-      webpack:
-        specifier: ^5.103.0
-        version: 5.103.0
-    devDependencies:
-      '@adfinis/eslint-config':
-        specifier: ^2.1.1
-        version: 2.1.1(@babel/core@7.28.5)(@babel/eslint-parser@7.28.5(@babel/core@7.28.5)(eslint@8.57.0))(@babel/plugin-proposal-decorators@7.28.0(@babel/core@7.28.5))(eslint-config-prettier@9.1.0(eslint@8.57.0))(eslint-plugin-ember@12.7.5(@babel/core@7.28.5)(eslint@8.57.0)(typescript@5.9.3))(eslint-plugin-import@2.32.0(eslint@8.57.0))(eslint-plugin-n@16.6.2(eslint@8.57.0))(eslint-plugin-prettier@5.5.4(@types/eslint@9.6.1)(eslint-config-prettier@9.1.0(eslint@8.57.0))(eslint@8.57.0)(prettier@3.7.4))(eslint-plugin-qunit@8.2.5(eslint@8.57.0))(eslint@8.57.0)(prettier@3.7.4)
-      '@babel/core':
-        specifier: ^7.28.5
-        version: 7.28.5
-      '@babel/eslint-parser':
-        specifier: ^7.28.5
-        version: 7.28.5(@babel/core@7.28.5)(eslint@8.57.0)
-      '@babel/plugin-proposal-decorators':
-        specifier: ^7.28.0
-        version: 7.28.0(@babel/core@7.28.5)
-      '@ember/test-helpers':
-        specifier: ^3.3.1
-        version: 3.3.1(@babel/core@7.28.5)(@glint/template@1.7.2)(ember-source@4.12.4(@babel/core@7.28.5)(@glimmer/component@1.1.2(@babel/core@7.28.5))(@glint/template@1.7.2)(webpack@5.103.0))(webpack@5.103.0)
-      '@faker-js/faker':
-        specifier: ^9.3.0
-        version: 9.3.0
-      broccoli-asset-rev:
-        specifier: ^3.0.0
-        version: 3.0.0
-      ember-cli:
-        specifier: ~4.12.0
-        version: 4.12.3(handlebars@4.7.8)(underscore@1.13.6)
-      ember-cli-app-version:
-        specifier: ^6.0.1
-        version: 6.0.1(ember-source@4.12.4(@babel/core@7.28.5)(@glimmer/component@1.1.2(@babel/core@7.28.5))(@glint/template@1.7.2)(webpack@5.103.0))
-      ember-cli-babel:
-        specifier: ^8.2.0
-        version: 8.2.0(@babel/core@7.28.5)
-      ember-cli-dependency-checker:
-        specifier: ^3.3.3
-        version: 3.3.3(ember-cli@4.12.3(handlebars@4.7.8)(underscore@1.13.6))
-      ember-cli-inject-live-reload:
-        specifier: ^2.1.0
-        version: 2.1.0
-      ember-cli-mirage:
-        specifier: ^3.0.0
-        version: 3.0.4(mj2y2k5tekkxolps6mms7di2iy)
-      ember-cli-sri:
-        specifier: ^2.1.1
-        version: 2.1.1
-      ember-cli-terser:
-        specifier: ^4.0.2
-        version: 4.0.2
-      ember-qunit:
-        specifier: ^8.1.1
-        version: 8.1.1(@ember/test-helpers@3.3.1(@babel/core@7.28.5)(@glint/template@1.7.2)(ember-source@4.12.4(@babel/core@7.28.5)(@glimmer/component@1.1.2(@babel/core@7.28.5))(@glint/template@1.7.2)(webpack@5.103.0))(webpack@5.103.0))(@glint/template@1.7.2)(ember-source@4.12.4(@babel/core@7.28.5)(@glimmer/component@1.1.2(@babel/core@7.28.5))(@glint/template@1.7.2)(webpack@5.103.0))(qunit@2.24.3)
-      ember-template-lint:
-        specifier: ^6.0.0
-        version: 6.0.0
-      ember-test-selectors:
-        specifier: ^6.0.0
-        version: 6.0.0
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
@@ -248,6 +214,24 @@ importers:
       eslint-plugin-qunit:
         specifier: ^8.2.5
         version: 8.2.5(eslint@8.57.0)
+      file-saver:
+        specifier: ^2.0.5
+        version: 2.0.5
+      flatpickr:
+        specifier: ^4.6.13
+        version: 4.6.13
+      graphql:
+        specifier: ^16.12.0
+        version: 16.12.0
+      loader.js:
+        specifier: ^4.7.0
+        version: 4.7.0
+      luxon:
+        specifier: ^3.7.2
+        version: 3.7.2
+      miragejs:
+        specifier: ^0.1.48
+        version: 0.1.48
       npm-run-all:
         specifier: ^4.1.5
         version: 4.1.5
@@ -260,6 +244,18 @@ importers:
       qunit-dom:
         specifier: ^3.5.0
         version: 3.5.0
+      reactiveweb:
+        specifier: ^1.9.0
+        version: 1.9.0(@babel/core@7.28.5)(@ember/test-waiters@3.1.0)(@glimmer/component@1.1.2(@babel/core@7.28.5))(@glint/template@1.7.2)
+      sass:
+        specifier: ^1.94.2
+        version: 1.94.2
+      tracked-built-ins:
+        specifier: ^3.4.0
+        version: 3.4.0(@babel/core@7.28.5)
+      webpack:
+        specifier: ^5.103.0
+        version: 5.103.0
 
 packages:
 
