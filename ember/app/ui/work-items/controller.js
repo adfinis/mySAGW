@@ -1,5 +1,5 @@
 import { action } from "@ember/object";
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import { useCalumaQuery } from "@projectcaluma/ember-core/caluma-query";
 import { allWorkItems } from "@projectcaluma/ember-core/caluma-query/queries";
 import { queryManager } from "ember-apollo-client";

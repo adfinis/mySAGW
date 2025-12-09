@@ -1,6 +1,6 @@
 import { getOwner, setOwner } from "@ember/application";
 import Route from "@ember/routing/route";
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import { queryManager } from "ember-apollo-client";
 
 import CustomWorkItemModel from "mysagw/caluma-query/models/work-item";

@@ -1,4 +1,4 @@
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import WorkItemModel from "@projectcaluma/ember-core/caluma-query/models/work-item";
 import { queryManager } from "ember-apollo-client";

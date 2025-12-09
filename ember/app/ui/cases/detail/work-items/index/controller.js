@@ -1,5 +1,5 @@
 import Controller from "@ember/controller";
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import calumaQuery from "@projectcaluma/ember-core/caluma-query";
 import { allWorkItems } from "@projectcaluma/ember-core/caluma-query/queries";
 import { restartableTask } from "ember-concurrency";
