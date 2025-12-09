@@ -35,53 +35,51 @@
 
 <hr />
 
-{{#if this.showEmpty.isResolved}}
-  {{#if this.showEmpty.value}}
-    <div class="uk-width-2-3 uk-margin-auto">
-      <h1 class="uk-text-center">
-        {{t "documents.empty.welcome" appName="mySAGW"}}
-      </h1>
+{{#if this.showEmpty.value}}
+  <div class="uk-width-2-3 uk-margin-auto">
+    <h1 class="uk-text-center">
+      {{t "documents.empty.welcome" appName="mySAGW"}}
+    </h1>
 
-      <p
-        class="uk-text-center uk-text-large uk-margin-large-top uk-margin-medium-bottom"
+    <p
+      class="uk-text-center uk-text-large uk-margin-large-top uk-margin-medium-bottom"
+    >
+      {{t "documents.empty.no-documents"}}
+    </p>
+
+    <div class="uk-flex uk-flex-center">
+      <div
+        class="uk-flex uk-flex-middle uk-margin-small-left uk-margin-small-right"
       >
-        {{t "documents.empty.no-documents"}}
-      </p>
-
-      <div class="uk-flex uk-flex-center">
-        <div
-          class="uk-flex uk-flex-middle uk-margin-small-left uk-margin-small-right"
+        <LinkTo
+          @route="cases.new"
+          class="uk-button uk-button-default uk-width-medium uk-height-medium uk-flex uk-flex-middle uk-flex-center uk-flex-column"
         >
-          <LinkTo
-            @route="cases.new"
-            class="uk-button uk-button-default uk-width-medium uk-height-medium uk-flex uk-flex-middle uk-flex-center uk-flex-column"
-          >
-            <UkIcon @icon="plus" @ratio="3" class="uk-margin" />
-            {{t "documents.new.title"}}
-          </LinkTo>
-        </div>
+          <UkIcon @icon="plus" @ratio="3" class="uk-margin" />
+          {{t "documents.new.title"}}
+        </LinkTo>
       </div>
     </div>
-  {{else}}
-    <CaseFilters
-      @filters={{this.filters}}
-      @invertedFilters={{this.invertedFilters}}
-      @updateFilter={{this.updateFilter}}
-      @resetFilters={{this.resetFilters}}
-      @invertFilter={{this.invertFilter}}
-    />
+  </div>
+{{else}}
+  <CaseFilters
+    @filters={{this.filters}}
+    @invertedFilters={{this.invertedFilters}}
+    @updateFilter={{this.updateFilter}}
+    @resetFilters={{this.resetFilters}}
+    @invertFilter={{this.invertFilter}}
+  />
 
-    {{#if this.caseFilters.isResolved}}
-      <CasesTable
-        @query={{this.caseQuery}}
-        @setOrder={{fn (mut this.order)}}
-        @order={{this.order}}
-        @editMode={{this.editMode}}
-        @selectRow={{this.selectCase}}
-        @selectedCases={{this.selectedCaseIds}}
-      />
-    {{else}}
-      <UkSpinner />
-    {{/if}}
+  {{#if this.caseFilters.isResolved}}
+    <CasesTable
+      @query={{this.caseQuery}}
+      @setOrder={{fn (mut this.order)}}
+      @order={{this.order}}
+      @editMode={{this.editMode}}
+      @selectRow={{this.selectCase}}
+      @selectedCases={{this.selectedCaseIds}}
+    />
+  {{else}}
+    <UkSpinner />
   {{/if}}
 {{/if}}

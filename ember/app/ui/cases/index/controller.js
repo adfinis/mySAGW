@@ -28,9 +28,11 @@ export default class CasesIndexController extends TableController {
   }));
 
   showEmpty = trackedFunction(this, async () => {
-    return (
-      this.apollo.query({ query: casesCountQuery }, "allCases.totalCount") === 0
+    const caseCount = await this.apollo.query(
+      { query: casesCountQuery },
+      "allCases.totalCount",
     );
+    return caseCount === 0;
   });
 
   caseFilters = trackedFunction(this, async () => {
