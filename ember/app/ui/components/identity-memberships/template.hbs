@@ -1,11 +1,11 @@
 <div class="uk-margin-remove-last-child">
   <h2>{{t "components.identity-memberships.title"}}</h2>
 
-  {{#if this.memberships.isLoading}}
+  {{#if this.memberships.isRunning}}
     <LoadingSpinner />
   {{else}}
     <ul class="uk-list uk-list-divider">
-      {{#each this.memberships.records as |membership|}}
+      {{#each this.memberships.value as |membership|}}
         <li class="uk-flex uk-flex-between uk-flex-middle" data-test-membership>
           <div>
             <span

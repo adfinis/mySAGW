@@ -5,9 +5,9 @@ import { tracked } from "@glimmer/tracking";
 import { Changeset } from "ember-changeset";
 import lookupValidator from "ember-changeset-validations";
 import { dropTask } from "ember-concurrency";
-import { query } from "ember-data-resources";
 import { DateTime } from "luxon";
 import UIkit from "uikit";
+import { trackedFunction } from "reactiveweb/function";
 
 import applyError from "mysagw/utils/apply-error";
 import MembershipValidations from "mysagw/validations/membership";
@@ -20,13 +20,16 @@ export default class IdentityMembershipsComponent extends Component {
   @service intl;
   @service notification;
 
-  // List
-  memberships = query(this, "membership", () => ({
-    filter: {
-      identity: this.args.identity.id,
-    },
-    include: "organisation,role",
-  }));
+  memberships = trackedFunction(this, async () => {
+    const query = {
+      filter: {
+        identity: this.args.identity.id,
+      },
+      include: "organisation,role",
+    }
+    return await this.store.query("membership", query)
+
+  })
 
   @action updateDateField(fieldName, newValue, changeset) {
     changeset.rollbackProperty(fieldName);
