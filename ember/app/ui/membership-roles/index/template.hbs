@@ -1,7 +1,4 @@
-<div
-  {{did-insert this.onUpdate}}
-  {{did-update this.onUpdate}}
->
+<div {{did-insert this.onUpdate}} {{did-update this.onUpdate}}>
   <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
     <h1 class="uk-margin-remove">{{t "roles.index.title"}}</h1>
 
@@ -19,11 +16,7 @@
     <LoadingSpinner />
   {{else if this.roles.length}}
     <div
-      class="
-        uk-child-width-1-2@s
-        uk-child-width-1-3@m
-        uk-child-width-1-4@l
-      "
+      class="uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-1-4@l"
       uk-grid="masonry: true"
     >
       {{#each this.roles as |role|}}

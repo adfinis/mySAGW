@@ -4,7 +4,12 @@
     {{#if icon}}
       <UkIcon
         @icon={{icon}}
-        class="case-state-label__icon {{if this.iconLeft "uk-flex-first uk-margin-small-right" "uk-margin-small-left"}}"
+        class="case-state-label__icon
+          {{if
+            this.iconLeft
+            'uk-flex-first uk-margin-small-right'
+            'uk-margin-small-left'
+          }}"
       />
     {{/if}}
   {{/let}}

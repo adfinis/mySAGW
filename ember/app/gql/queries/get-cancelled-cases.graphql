@@ -1,10 +1,8 @@
 query getCancelledCases($caseIds: [ID]) {
-  allCases(
-    filter: [{ids: $caseIds}, {status: CANCELED}]
-  ) {
+  allCases(filter: [{ ids: $caseIds }, { status: CANCELED }]) {
     edges {
       node {
-        id,
+        id
       }
     }
   }

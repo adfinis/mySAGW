@@ -143,7 +143,8 @@
           {{#each this.locales as |locale|}}
             <li class="uk-margin-small">
               <a
-                class="uk-link-text uk-text-uppercase {{if (eq this.intl.primaryLocale locale) 'uk-text-primary'}}"
+                class="uk-link-text uk-text-uppercase
+                  {{if (eq this.intl.primaryLocale locale) 'uk-text-primary'}}"
                 {{on "click" (fn this.setLocale locale)}}
                 href="#"
               >
@@ -271,11 +272,7 @@
       </li>
 
       <li class="language-select-offcanvas">
-        <a
-          class="uk-link-reset uk-text-uppercase"
-          href="#"
-          data-test-locale
-        >
+        <a class="uk-link-reset uk-text-uppercase" href="#" data-test-locale>
           {{this.intl.primaryLocale}}
           <UkIcon @icon="chevron-down" />
         </a>
@@ -287,7 +284,8 @@
           {{#each this.locales as |locale|}}
             <li>
               <a
-                class="uk-link-text uk-text-uppercase {{if (eq this.intl.primaryLocale locale) 'uk-text-primary'}}"
+                class="uk-link-text uk-text-uppercase
+                  {{if (eq this.intl.primaryLocale locale) 'uk-text-primary'}}"
                 {{on "click" (fn this.setLocale locale)}}
                 href="#"
                 data-test-locale-select={{locale}}
@@ -303,9 +301,7 @@
 </div>
 
 <div id="offcanvas-snippets" uk-offcanvas="flip: true; overlay: true">
-  <div
-    class="uk-offcanvas-bar uk-flex uk-flex-column"
-  >
+  <div class="uk-offcanvas-bar uk-flex uk-flex-column">
     <button class="uk-offcanvas-close" type="button" uk-close></button>
 
     <h3>{{t "components.nav-bar.snippets"}}</h3>

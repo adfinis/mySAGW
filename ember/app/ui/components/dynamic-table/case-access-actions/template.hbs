@@ -1,8 +1,10 @@
 <div class="uk-text-right">
-  {{#if (and
-    (gt @tdDefinition.additionalInfo.accesses.length 1)
-    (can "delete access case" @tdDefinition.additionalInfo access=@value)
-  )}}
+  {{#if
+    (and
+      (gt @tdDefinition.additionalInfo.accesses.length 1)
+      (can "delete access case" @tdDefinition.additionalInfo access=@value)
+    )
+  }}
     <button
       class="uk-icon-button"
       uk-icon="trash"

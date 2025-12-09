@@ -13,9 +13,7 @@
         <UkButton
           @width="1-1"
           @label={{form.name}}
-          @color={{
-            if (eq form.slug this.selectedForm) "primary" "default"
-          }}
+          @color={{if (eq form.slug this.selectedForm) "primary" "default"}}
           @onClick={{fn (mut this.selectedForm) form.slug}}
         />
       </div>

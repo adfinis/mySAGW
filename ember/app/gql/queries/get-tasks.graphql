@@ -1,6 +1,6 @@
 query getTasks($filter: [TaskFilterSetType], $order: [TaskOrderSetType]) {
   allTasks(filter: $filter, order: $order) {
-    edges{
+    edges {
       node {
         slug
         name

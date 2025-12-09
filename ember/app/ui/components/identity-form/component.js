@@ -28,14 +28,14 @@ export default class IdentityFormComponent extends Component {
 
   @tracked backToIdentities;
 
-  get changeset () {
-    return this.changesetResource.value
+  get changeset() {
+    return this.changesetResource.value;
   }
 
   changesetResource = trackedFunction(this, async () => {
     const identitiy = this.args.identity ?? this.store.createRecord("identity");
     // Prevent excessive re-rendering
-    await Promise.resolve()
+    await Promise.resolve();
     return Changeset(
       identitiy,
       lookupValidator(IdentityValidations),

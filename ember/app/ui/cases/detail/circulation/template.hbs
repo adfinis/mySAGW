@@ -15,7 +15,10 @@
 
     <UkButton
       @color="primary"
-      @disabled={{or this.addToCirculation.isRunning (not this.selectedIdentities.length)}}
+      @disabled={{or
+        this.addToCirculation.isRunning
+        (not this.selectedIdentities.length)
+      }}
       @loading={{this.addToCirculation.isRunning}}
       @onClick={{perform this.addToCirculation}}
       @class="uk-margin-left"
@@ -25,10 +28,7 @@
   </div>
 {{/if}}
 
-<WorkItemList
-  @query={{this.workItemsQuery}}
-  @config={{this.tableConfig}}
-/>
+<WorkItemList @query={{this.workItemsQuery}} @config={{this.tableConfig}} />
 
 {{#if this.circulationActive}}
   <WorkItemButton

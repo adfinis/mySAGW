@@ -1,6 +1,7 @@
 <ValidatedForm
   @model={{@changeset}}
-  @on-submit={{perform this.submit}} as |Form|
+  @on-submit={{perform this.submit}}
+  as |Form|
 >
   <Form.input
     @label={{t "components.snippet-form.label.title"}}
@@ -28,9 +29,7 @@
         {{t "global.cancel"}}
       </LinkTo>
 
-      <Form.submit
-        @label={{t "global.save"}}
-      />
+      <Form.submit @label={{t "global.save"}} />
     </div>
   </p>
 </ValidatedForm>

@@ -9,10 +9,7 @@
     {{#each this.formQuery.value as |form|}}
       <li class="uk-flex uk-flex-middle">
         <span class="uk-text-bold">
-          <LinkTo
-            @route="form-builder.edit"
-            @model={{form.slug}}
-          >
+          <LinkTo @route="form-builder.edit" @model={{form.slug}}>
             {{form.name}}
           </LinkTo>
         </span>
