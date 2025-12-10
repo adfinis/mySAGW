@@ -24,7 +24,7 @@ export default class IdentityModel extends LocalizedModel {
   additionalEmails;
   @hasMany("phone-number", { inverse: "identity", async: true }) phoneNumbers;
   @hasMany("address", { inverse: "identity", async: true }) address;
-  @hasMany("interest", { async: true }) interests;
+  @hasMany("interest", { inverse: null, async: true }) interests;
 
   @hasMany("membership", { inverse: "identity", async: true }) memberships;
   @hasMany("membership", { inverse: "organisation", async: true }) members;

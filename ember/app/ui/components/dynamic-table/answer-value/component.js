@@ -9,16 +9,15 @@ export default class AnswerValue extends Component {
 
     const answer = get(value, this.args.tdDefinition.answerKey)
       .mapBy("node")
-      .findBy("question.slug", this.args.tdDefinition.questionSlug);
+      .find((i) => i.question.slug === this.args.tdDefinition.questionSlug);
 
     if (!answer || !answer[`${answer.__typename}Value`]) {
       return "";
     }
 
     if (answer.question.__typename === "ChoiceQuestion") {
-      return answer.question.options.edges.findBy(
-        "node.slug",
-        answer[`${answer.__typename}Value`],
+      return answer.question.options.edges.find(
+        (option) => option.node.slug === answer[`${answer.__typename}Value`],
       ).node.label;
     }
 

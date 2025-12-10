@@ -30,13 +30,13 @@ export default class CustomWorkItemModel extends WorkItemModel {
   get closedByUser() {
     return this.store
       .peekAll("identity")
-      .findBy("idpId", this.raw.closedByUser);
+      .find((identity) => identity.idpId === this.raw.closedByUser);
   }
 
   get createdByUser() {
     return this.store
       .peekAll("identity")
-      .findBy("idpId", this.raw.closedByUser);
+      .find((identity) => identity.idpId === this.raw.createdByUser);
   }
 
   get isAssignedToCurrentUser() {

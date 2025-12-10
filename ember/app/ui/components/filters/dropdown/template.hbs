@@ -10,7 +10,8 @@
         />
       {{/if}}
     </span>
-    <PowerSelectMultiple
+    <PowerSelect
+      @mulitple={{true}}
       @options={{@options}}
       @selected={{this.selected}}
       @onChange={{this.setSelection}}
@@ -23,7 +24,7 @@
       as |option|
     >
       {{option.label}}
-    </PowerSelectMultiple>
+    </PowerSelect>
   </label>
   <Filters::Invert @invertFilter={{@invertFilter}} @inverted={{@inverted}} />
 </div>

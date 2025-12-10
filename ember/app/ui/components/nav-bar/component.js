@@ -87,7 +87,7 @@ export default class NavbarComponent extends Component {
       });
       this.totalPages = snippets.meta?.pagination?.pages;
 
-      this.snippets = [...this.snippets, ...snippets.toArray()];
+      this.snippets = [...this.snippets, ...Array.from(snippets)];
 
       return snippets;
     } catch (error) {

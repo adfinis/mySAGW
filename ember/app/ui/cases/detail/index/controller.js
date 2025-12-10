@@ -61,7 +61,7 @@ export default class CasesDetailIndexController extends Controller {
     const alwaysDisplayedWorkItem = Object.keys(
       ENV.APP.caluma.alwaysDisplayedAnswers,
     )
-      .map((slug) => configuredWorkItems.findBy("task.slug", slug))
+      .map((slug) => configuredWorkItems.find((i) => i.task.slug === slug))
       .compact();
 
     return { newest: newestWorkItem, always: alwaysDisplayedWorkItem };
@@ -223,7 +223,7 @@ export default class CasesDetailIndexController extends Controller {
   @dropTask
   *deleteAccessRow(access) {
     yield this.caseData.case.accesses
-      .findBy("email", access.email)
+      .find((i) => i.email === access.email)
       .destroyRecord();
 
     if (this.can.cannot("list case", this.caseData.case)) {

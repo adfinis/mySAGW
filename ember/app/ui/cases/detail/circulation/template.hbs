@@ -1,6 +1,7 @@
 {{#if this.circulationActive}}
   <div class="uk-flex">
-    <PowerSelectMultiple
+    <PowerSelect
+      @multiple={{true}}
       @searchEnabled={{true}}
       @searchField="fullName"
       @options={{this.identities}}
@@ -11,7 +12,7 @@
       as |identity|
     >
       {{identity.fullName}}
-    </PowerSelectMultiple>
+    </PowerSelect>
 
     <UkButton
       @color="primary"

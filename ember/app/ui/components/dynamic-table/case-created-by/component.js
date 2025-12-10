@@ -5,6 +5,8 @@ export default class CaseCreatedBy extends Component {
   @service store;
 
   get createdBy() {
-    return this.store.peekAll("identity").findBy("idpId", this.args.value);
+    return this.store
+      .peekAll("identity")
+      .find((i) => i.idpId === this.args.value);
   }
 }

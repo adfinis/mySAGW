@@ -53,9 +53,10 @@ export default class BaseAbility extends Ability {
 
   hasAccess(calumaCase) {
     return Boolean(
-      calumaCase.accesses.findBy(
-        "identity.idpId",
-        this.session.data.authenticated.userinfo.sub,
+      calumaCase.accesses.find(
+        (access) =>
+          access.identity.idpId ===
+          this.session.data.authenticated.userinfo.sub,
       ),
     );
   }

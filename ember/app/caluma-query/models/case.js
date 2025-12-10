@@ -51,35 +51,35 @@ export default class CustomCaseModel extends CaseModel {
   }
 
   get completeWorkItem() {
-    return this.workItems.findBy("task.slug", ENV.APP.caluma.completeTaskSlug);
+    return this.workItems.find(
+      (i) => i.task.slug === ENV.APP.caluma.completeTaskSlug,
+    );
   }
 
   get documentNumber() {
-    return this.document.answers.edges.findBy(
-      "node.question.slug",
-      "dossier-nr",
+    return this.document.answers.edges.find(
+      (answer) => answer.node.question.slug === "dossier-nr",
     )?.node.StringAnswerValue;
   }
 
   get distributionPlan() {
-    const answer = this.document.answers.edges.findBy(
-      "node.question.slug",
-      "verteilplan-nr",
+    const answer = this.document.answers.edges.find(
+      (answer) => answer.node.question.slug === "verteilplan-nr",
     )?.node;
 
     if (!answer) {
       return "-";
     }
 
-    return answer.question.options.edges.findBy(
-      "node.slug",
-      answer.StringAnswerValue,
+    return answer.question.options.edges.find(
+      (options) => options.node.slug === answer.StringAnswerValue,
     ).node.label;
   }
 
   get submitDate() {
-    return this.workItems.findBy("task.slug", ENV.APP.caluma.submitTaskSlug)
-      ?.closedAt;
+    return this.workItems.find(
+      (i) => i.task.slug === ENV.APP.caluma.submitTaskSlug,
+    )?.closedAt;
   }
 
   static fragment = `{

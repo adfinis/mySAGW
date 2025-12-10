@@ -75,15 +75,15 @@ export default class CasesDetailCirculationController extends Controller {
 
   get circulationWorkItem() {
     return (
-      this.circulationWorkItemsQuery.value.findBy("task.slug", "circulation") ??
-      this.model.workItems.findBy("task.slug", "circulation")
+      this.circulationWorkItemsQuery.value.find(
+        (i) => i.task.slug === "circulation",
+      ) ?? this.model.workItems.find((i) => i.task.slug === "circulation")
     );
   }
 
   get finishCirculationWorkItem() {
-    return this.circulationWorkItemsQuery.value.findBy(
-      "task.slug",
-      "finish-circulation",
+    return this.circulationWorkItemsQuery.value.find(
+      (wi) => wi.task.slug === "finish-circulation",
     );
   }
 
