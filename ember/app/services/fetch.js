@@ -1,7 +1,7 @@
 import Service, { service } from "@ember/service";
+import { waitForFetch } from "@ember/test-waiters";
 import { isEmpty } from "@ember/utils";
 import { handleUnauthorized } from "ember-simple-auth-oidc";
-import fetch from "fetch";
 
 const CONTENT_TYPE = "application/vnd.api+json";
 
@@ -24,7 +24,7 @@ export default class FetchService extends Service {
       ...(options.headers || {}),
     });
 
-    const response = await fetch(resource, options);
+    const response = await waitForFetch(fetch(resource, options));
 
     if (!response.ok) {
       if (response.status === 401) {
