@@ -29,8 +29,8 @@ export default class SubmitButtonComponent extends Component {
     );
 
     return document
-      .mapBy("node")[0]
-      .case.workItems.edges.mapBy("node")
+      .map((doc) => doc.node)[0]
+      .case.workItems.edges.map((wi) => wi.node)
       .find((workItem) => {
         return (
           workItem.status === "READY" &&

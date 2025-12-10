@@ -107,7 +107,7 @@ export default class CasesDetailWorkItemsController extends Controller {
 
   @restartableTask
   *getIdentities() {
-    const idpIds = [
+    let idpIds = [
       ...(this.readyWorkItemsQuery?.value ?? []),
       ...(this.completedWorkItemsQuery?.value ?? []),
     ]
@@ -120,8 +120,9 @@ export default class CasesDetailWorkItemsController extends Controller {
         ],
         [],
       )
-      .compact()
-      .uniq();
+      .filter((val) => val !== undefined && val !== null);
+    // Unique
+    idpIds = [...new Set(idpIds)];
 
     if (idpIds.length) {
       return yield this.store.query(

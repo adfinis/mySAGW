@@ -25,7 +25,7 @@ export default class CustomCaseModel extends CaseModel {
 
   get workItems() {
     return this.raw.workItems.edges
-      .mapBy("node")
+      .map((wi) => wi.node)
       .filter((workItem) => workItem.status !== "REDO");
   }
 
@@ -34,7 +34,7 @@ export default class CustomCaseModel extends CaseModel {
       .filter((workItem) =>
         ENV.APP.caluma.documentEditableTaskSlugs.includes(workItem.task.slug),
       )
-      .isAny("status", "READY");
+      .some((i) => i.status === "READY");
   }
 
   get hasSubmitOrReviseWorkItem() {

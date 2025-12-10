@@ -40,7 +40,7 @@ export default class BaseAbility extends Ability {
     if (this.isStaffOrAdmin) {
       return true;
     } else if (this.model.isOrganisation) {
-      return this.model.members.any(
+      return this.model.members.some(
         (member) =>
           member.authorized &&
           !member.isInactive &&

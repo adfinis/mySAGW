@@ -35,7 +35,7 @@ export default class ProfileIndexController extends Controller {
       );
 
       this.totalPages = memberships.meta.pagination?.pages;
-      this.memberships = [...this.memberships, ...memberships.toArray()];
+      this.memberships = [...this.memberships, ...Array.from(memberships)];
 
       return memberships;
     } catch (error) {

@@ -8,7 +8,7 @@ export default class AnswerValue extends Component {
     const value = this.args.value.parentWorkItem ?? this.args.value;
 
     const answer = get(value, this.args.tdDefinition.answerKey)
-      .mapBy("node")
+      .map((answer) => answer.node)
       .find((i) => i.question.slug === this.args.tdDefinition.questionSlug);
 
     if (!answer || !answer[`${answer.__typename}Value`]) {

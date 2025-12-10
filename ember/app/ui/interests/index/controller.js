@@ -17,7 +17,7 @@ export default class InterestsIndexController extends Controller {
 
   // List
   get categories() {
-    return this.allCategories?.filterBy("isNew", false);
+    return this.allCategories?.filter((value) => value.isNew === false);
   }
 
   @lastValue("fetchInterests") allCategories;

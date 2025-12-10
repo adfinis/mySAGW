@@ -34,7 +34,7 @@ export default class FiltersComponent extends Component {
       "allQuestions.edges",
     );
 
-    return response.mapBy("node");
+    return response.map((option) => option.node);
   });
 
   getFormattedOptions(slug) {
@@ -42,7 +42,9 @@ export default class FiltersComponent extends Component {
       return [];
     }
 
-    const question = this.questionOptions.value.filterBy("slug", slug)[0];
+    const question = this.questionOptions.value.filter(
+      (value) => value.slug === slug,
+    )[0];
 
     if (!question) {
       return [];

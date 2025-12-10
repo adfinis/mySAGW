@@ -32,8 +32,8 @@ export default class FiltersIdentityComponent extends Component {
     }
 
     try {
-      return (
-        await this.store.query(
+      return Array.from(
+        ...(await this.store.query(
           "identity",
           {
             filter: {
@@ -41,8 +41,8 @@ export default class FiltersIdentityComponent extends Component {
             },
           },
           { adapterOptions: { customEndpoint: "public-identities" } },
-        )
-      ).toArray();
+        )),
+      );
     } catch (error) {
       console.error(error);
       this.notification.fromError(error);
@@ -60,16 +60,18 @@ export default class FiltersIdentityComponent extends Component {
     try {
       yield Promise.resolve();
 
-      return (yield this.store.query(
-        "identity",
-        {
-          filter: {
-            search,
-            isOrganisation: false,
+      return Array.from(
+        yield this.store.query(
+          "identity",
+          {
+            filter: {
+              search,
+              isOrganisation: false,
+            },
           },
-        },
-        { adapterOptions: { customEndpoint: "public-identities" } },
-      )).toArray();
+          { adapterOptions: { customEndpoint: "public-identities" } },
+        ),
+      );
     } catch (error) {
       console.error(error);
       this.notification.fromError(error);

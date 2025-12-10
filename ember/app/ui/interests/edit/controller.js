@@ -17,7 +17,7 @@ export default class InterestsEditController extends Controller {
   @tracked changeset = null;
 
   get interests() {
-    return this.model.interests.filterBy("isNew", false);
+    return this.model.interests.filter((value) => value.isNew === false);
   }
 
   @action

@@ -31,13 +31,18 @@ export default class IdentityInterestsComponent extends Component {
 
   async parseOwnInterests(identity) {
     return await identity.interests
-      .getEach("category")
-      .uniqBy("id")
+      .map((interest) => interest.category)
+      // Previously .uniqBy
+      .reduce((unique, item) => {
+        if (!unique.find((i) => item.id === i.id)) {
+          unique.push(item);
+        }
+        return unique;
+      }, [])
       .map((category) => ({
         title: category.get("title"),
-        interests: identity.interests.filterBy(
-          "category.id",
-          category.get("id"),
+        interests: identity.interests.filter(
+          (value) => value.category.id === category.get("id"),
         ),
       }));
   }
@@ -79,7 +84,10 @@ export default class IdentityInterestsComponent extends Component {
     try {
       // Apply changes and save.
       changeset.execute();
-      this.args.identity.interests.pushObject(changeset.interest);
+      this.args.identity.interests = [
+        ...this.args.identity.interests,
+        changeset.interest,
+      ];
       yield this.args.identity.save(this.endpoint);
 
       // Reset form and list.
@@ -103,13 +111,23 @@ export default class IdentityInterestsComponent extends Component {
 
     this.categories = yield this.parseOwnInterests(this.args.identity);
 
-    return interests
-      .getEach("category")
-      .uniqBy("id")
-      .map((category) => ({
-        groupName: category.get("title"),
-        options: interests.filterBy("category.id", category.get("id")),
-      }));
+    return (
+      interests
+        .map((interest) => interest.category)
+        // Previously .uniqBy
+        .reduce((unique, item) => {
+          if (!unique.find((i) => item.id === i.id)) {
+            unique.push(item);
+          }
+          return unique;
+        }, [])
+        .map((category) => ({
+          groupName: category.get("title"),
+          options: interests.filter(
+            (value) => value.category.id === category.get("id"),
+          ),
+        }))
+    );
   }
 
   // Delete
@@ -123,6 +141,13 @@ export default class IdentityInterestsComponent extends Component {
       );
 
       try {
+        // Replacement for removeObject
+        const index = this.args.identity.interests.indexOf(interest);
+        if (index !== -1) {
+          this.args.identity.interests = [
+            ...this.args.identity.interests.toSpliced(index, 1),
+          ];
+        }
         this.args.identity.interests.removeObject(interest);
         this.args.identity.save(this.endpoint);
 

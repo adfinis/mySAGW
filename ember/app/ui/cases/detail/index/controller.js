@@ -62,7 +62,7 @@ export default class CasesDetailIndexController extends Controller {
       ENV.APP.caluma.alwaysDisplayedAnswers,
     )
       .map((slug) => configuredWorkItems.find((i) => i.task.slug === slug))
-      .compact();
+      .filter((val) => val !== undefined && val !== null);
 
     return { newest: newestWorkItem, always: alwaysDisplayedWorkItem };
   }
