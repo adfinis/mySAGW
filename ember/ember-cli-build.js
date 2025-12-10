@@ -14,9 +14,6 @@ module.exports = function (defaults) {
         "types/date": "mysagw/ui/components/date-picker",
       },
     },
-    "ember-fetch": {
-      preferNative: true,
-    },
     "ember-simple-auth": {
       useSessionSetupMethod: true,
     },
