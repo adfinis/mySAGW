@@ -148,7 +148,6 @@ export default class IdentityInterestsComponent extends Component {
             ...this.args.identity.interests.toSpliced(index, 1),
           ];
         }
-        this.args.identity.interests.removeObject(interest);
         this.args.identity.save(this.endpoint);
 
         this.notification.success(
