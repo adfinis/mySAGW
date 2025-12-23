@@ -1,0 +1,65 @@
+<div {{did-insert this.onUpdate}} {{did-update this.onUpdate @identity}}>
+  {{#if this.changeset}}
+    <ValidatedForm
+      @model={{this.changeset}}
+      @on-submit={{perform this.submit}}
+      class="uk-margin-remove-last-child"
+      as |Form|
+    >
+      <div
+        class="uk-background-muted uk-padding-small uk-margin uk-margin-remove-last-child"
+      >
+        <Form.input
+          @label={{t "components.interest-category-form.label.title" lang="DE"}}
+          @name="_title.de"
+          data-test-input-title
+        />
+
+        <Form.input
+          @label={{t "components.interest-category-form.label.title" lang="FR"}}
+          @name="_title.fr"
+        />
+
+        <Form.input
+          @label={{t "components.interest-category-form.label.title" lang="EN"}}
+          @name="_title.en"
+        />
+      </div>
+
+      <Form.input
+        @label={{t "components.interest-category-form.label.description"}}
+        @name="description"
+        @required={{false}}
+        data-test-input-description
+      />
+
+      <Form.input
+        @label={{t "components.interest-category-form.label.public"}}
+        @name="public"
+        @type="checkbox"
+        @required={{false}}
+        data-test-input-public
+      />
+
+      <div class="uk-text-right">
+        <LinkTo class="uk-button uk-button-default" @route="interests">
+          {{t "global.cancel"}}
+        </LinkTo>
+
+        <Form.submit
+          @label={{t "global.save"}}
+          @disabled={{cannot "edit interest-category" this.changeset.data}}
+          data-test-save
+        />
+        <UkButton
+          @type="submit"
+          @color="primary"
+          @onClick={{this.setBackToInterests}}
+          @label={{t "global.saveAndBack"}}
+          @disabled={{cannot "edit interest-category" this.changeset.data}}
+          data-test-save-back
+        />
+      </div>
+    </ValidatedForm>
+  {{/if}}
+</div>

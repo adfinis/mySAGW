@@ -1,0 +1,10 @@
+<div class="uk-flex uk-flex-wrap filters-gap" ...attributes>
+  {{yield
+    (hash
+      RadioButtons=(component "filters/radio-buttons" invertable=@invertable)
+      Dropdown=(component "filters/dropdown" invertable=@invertable)
+      Input=(component "filters/input" invertable=@invertable)
+      Identity=(component "filters/identity" invertable=@invertable)
+    )
+  }}
+</div>

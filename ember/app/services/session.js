@@ -1,4 +1,4 @@
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import { dropTask } from "ember-concurrency";
 import Session from "ember-simple-auth-oidc/services/session";
 import { task as trackedTask } from "reactiveweb/ember-concurrency";

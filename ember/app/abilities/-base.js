@@ -1,4 +1,4 @@
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import { Ability } from "ember-can";
 
 export default class BaseAbility extends Ability {
@@ -40,7 +40,7 @@ export default class BaseAbility extends Ability {
     if (this.isStaffOrAdmin) {
       return true;
     } else if (this.model.isOrganisation) {
-      return this.model.members.any(
+      return this.model.members.some(
         (member) =>
           member.authorized &&
           !member.isInactive &&
@@ -53,9 +53,10 @@ export default class BaseAbility extends Ability {
 
   hasAccess(calumaCase) {
     return Boolean(
-      calumaCase.accesses.findBy(
-        "identity.idpId",
-        this.session.data.authenticated.userinfo.sub,
+      calumaCase.accesses.find(
+        (access) =>
+          access.identity.idpId ===
+          this.session.data.authenticated.userinfo.sub,
       ),
     );
   }

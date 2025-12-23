@@ -1,0 +1,74 @@
+<div {{did-insert this.onUpdate}} {{did-update this.onUpdate @role}}>
+  {{#if this.changeset}}
+    <ValidatedForm
+      @model={{this.changeset}}
+      @on-submit={{perform this.submit}}
+      class="uk-margin-remove-last-child"
+      as |Form|
+    >
+      <div
+        class="uk-background-muted uk-padding-small uk-margin uk-margin-remove-last-child"
+      >
+        <Form.input
+          @label={{t "components.membership-role-form.label.title" lang="DE"}}
+          @name="_title.de"
+        />
+
+        <Form.input
+          @label={{t "components.membership-role-form.label.title" lang="FR"}}
+          @name="_title.fr"
+        />
+
+        <Form.input
+          @label={{t "components.membership-role-form.label.title" lang="EN"}}
+          @name="_title.en"
+        />
+      </div>
+
+      <div
+        class="uk-background-muted uk-padding-small uk-margin uk-margin-remove-last-child"
+      >
+        <Form.input
+          @label={{t
+            "components.membership-role-form.label.description"
+            lang="DE"
+          }}
+          @name="_description.de"
+        />
+
+        <Form.input
+          @label={{t
+            "components.membership-role-form.label.description"
+            lang="FR"
+          }}
+          @name="_description.fr"
+        />
+
+        <Form.input
+          @label={{t
+            "components.membership-role-form.label.description"
+            lang="EN"
+          }}
+          @name="_description.en"
+        />
+      </div>
+
+      <div class="uk-text-right">
+        <LinkTo class="uk-button uk-button-default" @route="membership-roles">
+          {{t "global.cancel"}}
+        </LinkTo>
+
+        <Form.submit
+          @label={{t "global.save"}}
+          @disabled={{cannot "edit membership-role" this.changeset.data}}
+        />
+        <UkButton
+          @type="submit"
+          @color="primary"
+          @onClick={{this.setBackToRoles}}
+          @label={{t "global.saveAndBack"}}
+        />
+      </div>
+    </ValidatedForm>
+  {{/if}}
+</div>

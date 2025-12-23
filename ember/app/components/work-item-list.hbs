@@ -1,0 +1,20 @@
+<DynamicTable
+  @loading={{or @query.isLoading @loading}}
+  @data={{@query.value}}
+  @config={{@config}}
+  @loadMoreData={{this.fetchMore}}
+  @hasNextPage={{@query.hasNextPage}}
+  @setOrder={{@setOrder}}
+  @order={{@order}}
+/>
+
+<div class="uk-width-expand uk-flex uk-flex-middle uk-text-meta uk-margin">
+  <span>
+    {{t
+      "global.paginationInfo"
+      count=@query.value.length
+      total=@query.totalCount
+      htmlSafe=true
+    }}
+  </span>
+</div>

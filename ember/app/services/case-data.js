@@ -49,8 +49,8 @@ export default class CaseDataService extends Service {
       "allWorkItems.edges",
     );
 
-    this.circulation = circulation.firstObject;
-    return circulation.firstObject;
+    this.circulation = circulation[0];
+    return circulation[0];
   }
 
   fetch(caseId) {

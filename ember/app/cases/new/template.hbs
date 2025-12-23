@@ -1,0 +1,34 @@
+<h1 class="uk-text-center">
+  {{t "documents.new.title"}}
+</h1>
+
+<p class="uk-text-center uk-text-large">
+  {{t "documents.new.type"}}
+</p>
+
+{{#if this.forms.value}}
+  <div class="uk-margin-bottom uk-margin-large-top uk-flex uk-flex-wrap">
+    {{#each this.forms.value as |form|}}
+      <div class="uk-padding-small uk-width-1-2">
+        <UkButton
+          @width="1-1"
+          @label={{form.name}}
+          @color={{if (eq form.slug this.selectedForm) "primary" "default"}}
+          @onClick={{fn (mut this.selectedForm) form.slug}}
+        />
+      </div>
+    {{/each}}
+  </div>
+{{else}}
+  <LoadingSpinner />
+{{/if}}
+
+<div class="uk-text-right">
+  <UkButton
+    @color="primary"
+    @label={{t "global.continue"}}
+    @disabled={{or (not this.selectedForm) this.createCase.isRunning}}
+    @loading={{this.createCase.isRunning}}
+    @onClick={{perform this.createCase}}
+  />
+</div>

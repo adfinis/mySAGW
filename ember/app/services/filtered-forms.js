@@ -1,4 +1,4 @@
-import Service, { inject as service } from "@ember/service";
+import Service, { service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import { queryManager } from "ember-apollo-client";
 
@@ -34,13 +34,13 @@ export default class FilteredFormsService extends Service {
         reload: true,
         adapterOptions: { customEndpoint: "my-orgs" },
       })
-    ).filterBy("isAuthorized");
+    ).filter((value) => value.isAuthorized);
 
     // map all visibilities from ENV.APP.caluma.formVisibilities
     const userVisibilities = {
       hiddenForm: this.abilities.can("create hidden form case"),
-      advisoryBoardForm: organisations.isAny("isAdvisoryBoard"),
-      expertAssociationForm: organisations.isAny("isExpertAssociation"),
+      advisoryBoardForm: organisations.some((i) => i.isAdvisoryBoard),
+      expertAssociationForm: organisations.some((i) => i.isExpertAssociation),
     };
 
     this.value = this.value.filter((form) => {
@@ -51,7 +51,7 @@ export default class FilteredFormsService extends Service {
         (visibility) => visibility === undefined,
       );
 
-      return publicVisibility || visibilities.any((visibility) => visibility);
+      return publicVisibility || visibilities.some((visibility) => visibility);
     });
 
     return this.value;

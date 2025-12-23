@@ -1,4 +1,4 @@
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import WorkItemModel from "@projectcaluma/ember-core/caluma-query/models/work-item";
 import { queryManager } from "ember-apollo-client";
@@ -30,13 +30,13 @@ export default class CustomWorkItemModel extends WorkItemModel {
   get closedByUser() {
     return this.store
       .peekAll("identity")
-      .findBy("idpId", this.raw.closedByUser);
+      .find((identity) => identity.idpId === this.raw.closedByUser);
   }
 
   get createdByUser() {
     return this.store
       .peekAll("identity")
-      .findBy("idpId", this.raw.closedByUser);
+      .find((identity) => identity.idpId === this.raw.createdByUser);
   }
 
   get isAssignedToCurrentUser() {

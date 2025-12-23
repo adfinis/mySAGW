@@ -1,0 +1,56 @@
+<UkButton
+  @onClick={{fn (mut this.transferModalVisible) true}}
+  @disabled={{not @cases}}
+>
+  {{t "documents.bulkEdit.transfer.title"}}
+</UkButton>
+
+<UkModal
+  @visible={{this.transferModalVisible}}
+  @onHide={{fn (mut this.transferModalVisible) false}}
+  as |modal|
+>
+  <modal.header>
+    <h2 class="uk-modal-title">
+      {{t "documents.bulkEdit.transfer.title"}}
+    </h2>
+  </modal.header>
+  <modal.body>
+    <div>
+      {{t "documents.bulkEdit.transfer.description"}}
+    </div>
+    <div class="uk-margin">
+      <label class="uk-form-label">
+        <input
+          type="checkbox"
+          checked={{this.removeAccess}}
+          disabled={{not @toRemove.length}}
+          class="uk-checkbox"
+          {{on "click" (toggle "removeAccess" this)}}
+        />
+        {{t "documents.bulkEdit.transfer.removeAssignees"}}
+      </label>
+    </div>
+
+    <Filters::Identity
+      @identifier="id"
+      @selected={{this.newAssignees}}
+      @onChange={{this.selectNewAssignees}}
+    />
+  </modal.body>
+  <modal.footer class="uk-text-right">
+    <UkButton
+      @onClick={{fn (mut this.transferModalVisible) false}}
+      @color="danger"
+    >
+      {{t "global.cancel"}}
+    </UkButton>
+    <UkButton
+      @color="primary"
+      @onClick={{this.transferCases}}
+      @disabled={{not this.newAssignees}}
+    >
+      {{t "documents.bulkEdit.transfer.save"}}
+    </UkButton>
+  </modal.footer>
+</UkModal>

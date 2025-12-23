@@ -97,7 +97,7 @@ query getCase($filter: [CaseFilterSetType]) {
             name
             description
           }
-          answers(filter: [{ questions: ["dossier-nr" "verteilplan-nr"] }]) {
+          answers(filter: [{ questions: ["dossier-nr", "verteilplan-nr"] }]) {
             edges {
               node {
                 question {

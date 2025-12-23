@@ -1,4 +1,4 @@
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import { attr, belongsTo } from "@ember-data/model";
 import { LocalizedModel, localizedAttr } from "ember-localized-model";
 

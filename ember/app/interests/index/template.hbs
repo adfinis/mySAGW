@@ -1,0 +1,100 @@
+<div {{did-insert this.onUpdate}} {{did-update this.onUpdate}}>
+  <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
+    <h1 class="uk-margin-remove">{{t "interests.index.title"}}</h1>
+
+    {{#if (can "add interest-category")}}
+      <LinkTo
+        @route="interests.add"
+        class="uk-button uk-button-default uk-flex-none"
+        data-test-category-add
+      >
+        {{t "interests.index.add"}}
+      </LinkTo>
+    {{/if}}
+  </div>
+
+  {{#if this.fetchInterests.isRunning}}
+    <LoadingSpinner />
+  {{else if this.categories.length}}
+    <div
+      class="uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-1-4@l"
+      uk-grid="masonry: true"
+    >
+      {{#each this.categories as |category|}}
+        <div data-test-category={{category.title}}>
+          <div class="uk-card uk-card-default uk-card-body uk-card-small">
+            <div class="uk-flex uk-flex-between uk-flex-middle">
+              <div>
+                <strong data-test-category-title>{{category.title}}</strong>
+                {{#if category.public}}
+                  -
+                  <i data-test-category-public>
+                    {{t "interests.index.list.public"}}
+                  </i>
+                {{/if}}
+                {{#if category.description}}
+                  <div data-test-category-description>
+                    {{category.description}}
+                  </div>
+                {{/if}}
+              </div>
+
+              <div class="uk-flex-none">
+                {{#if (can "edit interest-category" category)}}
+                  <LinkTo
+                    class="uk-icon-button uk-button-default"
+                    uk-icon="pencil"
+                    title={{t "interests.index.list.edit"}}
+                    aria-label={{t "interests.index.list.edit"}}
+                    @route="interests.edit"
+                    @model={{category.id}}
+                    data-test-category-edit
+                  >
+                    <span hidden>{{t "interests.index.list.edit"}}</span>
+                  </LinkTo>
+                {{/if}}
+
+                {{#if (can "delete interest-category" category)}}
+                  <button
+                    class="uk-icon-button uk-button-default"
+                    type="button"
+                    uk-icon="close"
+                    title={{t "interests.index.list.delete"}}
+                    disabled={{or this.delete.isRunning}}
+                    {{on "click" (perform this.delete category)}}
+                    data-test-category-delete
+                  ></button>
+                {{/if}}
+              </div>
+            </div>
+
+            {{#if category.interests.length}}
+              <ul class="uk-list uk-list-divider">
+                {{#each category.interests as |interest|}}
+                  {{#unless interest.isNew}}
+                    <li data-test-interest>
+                      <LinkTo
+                        @route="identities"
+                        @query={{hash
+                          searchTerm=(concat '"' interest.title '"')
+                        }}
+                        data-test-interest-title
+                      >
+                        {{interest.title}}
+                      </LinkTo>
+                      <div class="uk-text-meta" data-test-interest-description>
+                        {{interest.description}}
+                      </div>
+                    </li>
+                  {{/unless}}
+                {{/each}}
+              </ul>
+            {{/if}}
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  {{else}}
+    <p>{{t "interests.index.list.empty"}}</p>
+  {{/if}}
+</div>

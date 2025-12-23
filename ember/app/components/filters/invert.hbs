@@ -1,0 +1,11 @@
+{{#if @invertFilter}}
+  <label>
+    <input
+      class="uk-checkbox"
+      type="checkbox"
+      checked={{@inverted}}
+      {{on "click" @invertFilter}}
+    />
+    {{t "components.filters.invert"}}
+  </label>
+{{/if}}

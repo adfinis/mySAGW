@@ -1,0 +1,24 @@
+<h1 class="uk-flex uk-flex-between">
+  {{t "work-items.title"}}
+</h1>
+
+<hr />
+
+<WorkItemFilters
+  @filters={{this.filters}}
+  @invertedFilters={{this.invertedFilters}}
+  @updateFilter={{this.updateFilter}}
+  @resetFilters={{this.resetFilters}}
+  @invertFilter={{this.invertFilter}}
+/>
+
+{{#if this.workItemsFilter.isResolved}}
+  <WorkItemList
+    @query={{this.workItemsQuery}}
+    @config={{this.tableConfig}}
+    @setOrder={{fn (mut this.order)}}
+    @order={{this.order}}
+  />
+{{else}}
+  <UkSpinner />
+{{/if}}

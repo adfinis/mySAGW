@@ -1,0 +1,123 @@
+<h1>{{t "interests.edit.title"}}</h1>
+
+<InterestCategoryForm @category={{this.model}} />
+
+<hr />
+
+<div class="uk-card uk-card-default uk-card-body uk-card-small">
+  <h2>{{t "interests.edit.list.title"}}</h2>
+  {{#if this.interests.length}}
+    <ul class="uk-list uk-list-divider" data-test-interest-list>
+      {{#each this.interests as |interest|}}
+        <li
+          class="uk-flex uk-flex-between uk-flex-middle"
+          data-test-interest-item
+        >
+          <div>
+            {{interest.title}}
+            {{#if interest.description}}
+              <div class="uk-text-meta">{{interest.description}}</div>
+            {{/if}}
+          </div>
+
+          <div>
+            {{#if (can "edit interest" interest)}}
+              <button
+                class="uk-icon-button uk-button-default"
+                type="button"
+                uk-icon="pencil"
+                title={{t "interests.edit.list.edit"}}
+                disabled={{this.changeset}}
+                {{on "click" (fn this.edit interest)}}
+                data-test-interest-edit
+              ></button>
+            {{/if}}
+
+            {{#if (can "delete interest" interest)}}
+              <button
+                class="uk-icon-button uk-button-default"
+                type="button"
+                uk-icon="close"
+                title={{t "interests.edit.list.delete"}}
+                disabled={{or this.changeset this.delete.isRunning}}
+                {{on "click" (perform this.delete interest)}}
+                data-test-interest-edit
+              ></button>
+            {{/if}}
+          </div>
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <p>{{t "interests.edit.list.empty"}}</p>
+  {{/if}}
+
+  {{#if (can "add interest")}}
+    <p class="uk-text-right">
+      <button
+        class="uk-button uk-button-default"
+        type="button"
+        disabled={{this.changeset}}
+        {{on "click" (fn this.edit null)}}
+        data-test-interest-add
+      >
+        {{t "interests.edit.list.add"}}
+      </button>
+    </p>
+  {{/if}}
+
+  {{#if this.changeset}}
+    <hr />
+
+    <h3 class="uk-margin-remove-top">
+      {{t "interests.edit.form.title"}}
+    </h3>
+
+    <ValidatedForm
+      @model={{this.changeset}}
+      @on-submit={{perform this.submit}}
+      class="uk-margin-remove-last-child"
+      as |Form|
+    >
+
+      <div
+        class="uk-background-muted uk-padding-small uk-margin uk-margin-remove-last-child"
+      >
+        <Form.input
+          @label={{t "interests.edit.form.label.title" lang="DE"}}
+          @name="_title.de"
+          data-test-new-interest-title
+        />
+
+        <Form.input
+          @label={{t "interests.edit.form.label.title" lang="FR"}}
+          @name="_title.fr"
+        />
+
+        <Form.input
+          @label={{t "interests.edit.form.label.title" lang="EN"}}
+          @name="_title.en"
+        />
+      </div>
+
+      <Form.input
+        @label={{t "interests.edit.form.label.description"}}
+        @name="description"
+        @required={{false}}
+        data-test-new-interest-description
+      />
+
+      <p class="uk-text-right">
+        <button
+          class="uk-button uk-button-default"
+          type="button"
+          {{on "click" this.cancel}}
+        >
+          {{t "global.cancel"}}
+        </button>
+
+        <Form.submit @label={{t "global.save"}} data-test-new-interest-save />
+      </p>
+    </ValidatedForm>
+  {{/if}}
+</div>

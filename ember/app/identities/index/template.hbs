@@ -1,0 +1,152 @@
+<div {{did-insert this.onUpdate}} {{did-update this.onUpdate this.pageNumber}}>
+  <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
+    <h1 class="uk-margin-remove">{{t "identities.index.title"}}</h1>
+
+    {{#if (can "add identity")}}
+      <div class="uk-flex-none">
+        <div class="uk-inline">
+          <button type="button" class="uk-button uk-button-primary">
+            {{t "identities.index.export.button"}}
+            <span uk-icon="triangle-down"></span>
+          </button>
+          <div uk-dropdown="mode: click">
+            <ul class="uk-nav uk-dropdown-nav">
+              <li>
+                <a
+                  href="#"
+                  {{on "click" (perform this.exportSearch "export" "xlsx")}}
+                >
+                  {{t "identities.index.export.standard"}}
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  {{on
+                    "click"
+                    (perform this.exportSearch "export-memberships" "xlsx")
+                  }}
+                >
+                  {{t "identities.index.export.memberships"}}
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  {{on
+                    "click"
+                    (perform this.exportSearch "export-email/xlsx" "xlsx")
+                  }}
+                >
+                  {{t "identities.index.export.email-only-xlsx"}}
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  {{on
+                    "click"
+                    (perform this.exportSearch "export-email/csv" "csv")
+                  }}
+                >
+                  {{t "identities.index.export.email-only-csv"}}
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  {{on
+                    "click"
+                    (perform this.exportSearch "export-labels" "docx")
+                  }}
+                >
+                  {{t "identities.index.export.address-labels"}}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <LinkTo @route="identities.add" class="uk-button uk-button-default">
+          {{t "identities.index.add"}}
+        </LinkTo>
+      </div>
+    {{/if}}
+  </div>
+
+  <div class="uk-margin">
+    <label class="uk-form-label" for="form-search">
+      {{t "identities.index.search"}}
+    </label>
+    <input
+      class="uk-input"
+      id="form-search"
+      type="search"
+      value={{this.searchTerm}}
+      {{on "input" (perform this.search)}}
+    />
+  </div>
+
+  {{#if this.fetchIdentities.isRunning}}
+    <LoadingSpinner />
+  {{else}}
+    <p>{{t "identities.index.identityAmount" itemCount=this.totalCount}}</p>
+    <ul class="uk-list uk-list-divider" data-test-identities-list>
+      {{#each this.identities as |identity|}}
+        {{#unless identity.isNew}}
+          <li>
+            <LinkTo
+              @route="identities.edit"
+              @model={{identity.id}}
+              class="uk-text-bold uk-flex uk-flex-between uk-flex-wrap"
+            >
+              {{#if (or identity.fullName identity.isOrganisation)}}
+                <div class="uk-margin-right">
+                  {{#if identity.isOrganisation}}
+                    <i>{{identity.organisationName}}</i>
+                  {{/if}}
+
+                  {{~if (and identity.fullName identity.isOrganisation) " -"}}
+
+                  {{#if identity.fullName}}
+                    {{identity.fullName}}
+                  {{~/if}}
+                </div>
+              {{/if}}
+
+              <div class="uk-text-small uk-width-1-1 uk-width-auto@s">
+                {{identity.email}}
+              </div>
+            </LinkTo>
+          </li>
+        {{/unless}}
+      {{/each}}
+    </ul>
+  {{/if}}
+
+  {{#if (and this.totalPages (not this.fetchIdentities.isRunning))}}
+    <ul class="uk-pagination uk-flex-center">
+      <li class={{if (eq this.pageNumber 1) "uk-disabled"}}>
+        <LinkTo @query={{hash pageNumber=(sub this.pageNumber 1)}}>
+          <span uk-pagination-previous></span>
+        </LinkTo>
+      </li>
+      {{#each this.pages as |page|}}
+        {{#if page.dots}}
+          <li class="uk-text-muted">...</li>
+        {{else}}
+          <li class={{if page.active "uk-active"}}>
+            <LinkTo @query={{hash pageNumber=page.number}}>
+              {{page.number}}
+            </LinkTo>
+          </li>
+        {{/if}}
+      {{/each}}
+      <li class={{if (eq this.pageNumber this.totalPages) "uk-disabled"}}>
+        <LinkTo @query={{hash pageNumber=(add this.pageNumber 1)}}>
+          <span uk-pagination-next></span>
+        </LinkTo>
+      </li>
+    </ul>
+  {{/if}}
+</div>
