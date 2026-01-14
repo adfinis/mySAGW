@@ -5,9 +5,9 @@ export default class CasesDetailWorkItemsEditRoute extends Route {
     return this.modelFor("cases.detail.work-items.edit");
   }
 
-  setupController(controller, model) {
+  async setupController(controller, model) {
     super.setupController(controller, model);
-    controller.fetchWorkItem.perform();
+    await controller.fetchWorkItem.perform();
     controller.fetchIdentities.perform();
   }
 }

@@ -221,6 +221,7 @@ class IdentitySerializer(TrackingSerializer):
             "addresses",
             "is_organisation",
             "organisation_name",
+            "organisation_slug",
             "is_expert_association",
             "is_advisory_board",
             "comment",

@@ -26,7 +26,7 @@ class IdentityFilterSet(FilterSet):
     @staticmethod
     def member_of_organisations_filter(queryset, name, value):
         membership_base_query = models.Membership.objects.filter(
-            models.Q(organisation__organisation_name__in=value)
+            models.Q(organisation__organisation_slug__in=value)
             & (
                 (
                     models.Q(time_slot__isnull=True)

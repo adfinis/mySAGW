@@ -84,10 +84,14 @@ export default class CasesDetailWorkItemsEditController extends Controller {
   @lastValue("fetchIdentities") identities;
   @dropTask
   *fetchIdentities() {
+    const isCirculation = this.workItem?.task?.slug === "circulation-decision";
+    const memberOfOrganisation = isCirculation
+      ? ENV.APP.circulationOrganisationSlugs.toString()
+      : ENV.APP.staffOrganisationSlug;
     return yield this.store.query("identity", {
       filter: {
         isOrganisation: false,
-        member_of_organisations: ENV.APP.staffOrganisationName,
+        member_of_organisations: memberOfOrganisation,
         hasIdpId: true,
       },
     });
