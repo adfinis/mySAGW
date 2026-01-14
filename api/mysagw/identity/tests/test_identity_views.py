@@ -549,10 +549,10 @@ def test_identity_organisation_multi_filter_distinct(
     membership_factory,
     snapshot,
 ):
-    sagw = identity_factory(is_organisation=True, organisation_name="SAGW")
+    sagw = identity_factory(is_organisation=True, organisation_slug="SAGW")
     sagw_membership = membership_factory(organisation=sagw, role=None)
     membership_factory(identity=sagw_membership.identity, organisation=sagw, role=None)
-    nwp = identity_factory(is_organisation=True, organisation_name="NWP")
+    nwp = identity_factory(is_organisation=True, organisation_slug="NWP")
     nwp_membership = membership_factory(organisation=nwp, role=None)
     membership_factory(identity=nwp_membership.identity, organisation=nwp, role=None)
 

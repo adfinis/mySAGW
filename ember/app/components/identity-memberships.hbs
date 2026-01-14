@@ -117,28 +117,23 @@
           @name="organisation"
           as |field|
         >
-          {{#let
-            (query "identity" (hash filter=(hash isOrganisation=true)))
-            as |organisations|
-          }}
-            {{#if organisations.isLoading}}
-              <LoadingSpinner />
-            {{else}}
-              <PowerSelect
-                @searchEnabled={{true}}
-                @searchField="organisationName"
-                @options={{organisations.records}}
-                @selected={{field.value}}
-                @onChange={{field.update}}
-                @onFocus={{this.openPowerSelect}}
-                @triggerClass="uk-select"
-                data-test-organisation-select
-                as |opt|
-              >
-                {{opt.organisationName}}
-              </PowerSelect>
-            {{/if}}
-          {{/let}}
+          {{#if this.organisations.isRunning}}
+            <LoadingSpinner />
+          {{else}}
+            <PowerSelect
+              @searchEnabled={{true}}
+              @searchField="organisationName"
+              @options={{this.organisations.value}}
+              @selected={{field.value}}
+              @onChange={{field.update}}
+              @onFocus={{this.openPowerSelect}}
+              @triggerClass="uk-select"
+              data-test-organisation-select
+              as |opt|
+            >
+              {{opt.organisationName}}
+            </PowerSelect>
+          {{/if}}
         </Form.input>
       </div>
 
@@ -148,26 +143,24 @@
           @name="role"
           as |field|
         >
-          {{#let (find-all "membership-role") as |roles|}}
-            {{#if roles.isLoading}}
-              <LoadingSpinner />
-            {{else}}
-              <PowerSelect
-                @searchEnabled={{true}}
-                @searchField="title"
-                @options={{roles.records}}
-                @selected={{field.value}}
-                @onChange={{field.update}}
-                @onFocus={{this.openPowerSelect}}
-                @triggerClass="uk-select"
-                @allowClear={{true}}
-                data-test-role-select
-                as |opt|
-              >
-                {{opt.title}}
-              </PowerSelect>
-            {{/if}}
-          {{/let}}
+          {{#if this.roles.isRunning}}
+            <LoadingSpinner />
+          {{else}}
+            <PowerSelect
+              @searchEnabled={{true}}
+              @searchField="title"
+              @options={{this.roles.value}}
+              @selected={{field.value}}
+              @onChange={{field.update}}
+              @onFocus={{this.openPowerSelect}}
+              @triggerClass="uk-select"
+              @allowClear={{true}}
+              data-test-role-select
+              as |opt|
+            >
+              {{opt.title}}
+            </PowerSelect>
+          {{/if}}
         </Form.input>
       </div>
 

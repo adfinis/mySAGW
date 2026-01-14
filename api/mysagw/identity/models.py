@@ -119,6 +119,7 @@ class Identity(UUIDModel, HistoricalModel, TrackingModel):
     idp_id = models.CharField(max_length=255, unique=True, null=True, blank=False)
     email = models.EmailField(unique=True, null=True, blank=True)
     organisation_name = models.CharField(max_length=255, null=True, blank=True)
+    organisation_slug = models.SlugField(max_length=255, null=True, blank=True)
     first_name = models.CharField(max_length=255, null=True, blank=True)
     last_name = models.CharField(max_length=255, null=True, blank=True)
     salutation = models.CharField(

@@ -47,12 +47,8 @@ module.exports = function (environment) {
     },
 
     APP: {
-      staffOrganisationName:
-        "Schweizerische Akademie der Geistes- und Sozialwissenschaften (SAGW)",
-      circulationOrganisations: [
-        "Schweizerische Akademie der Geistes- und Sozialwissenschaften (SAGW)",
-        "Kommission des Early Career Award (ECA)",
-      ],
+      staffOrganisationSlug: "sagw",
+      circulationOrganisationSlugs: ["sagw", "eca-committee"],
 
       caseStateIcons: {
         submit: "clock",

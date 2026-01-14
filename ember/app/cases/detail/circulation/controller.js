@@ -127,7 +127,8 @@ export default class CasesDetailCirculationController extends Controller {
     return yield this.store.query("identity", {
       filter: {
         isOrganisation: false,
-        member_of_organisations: ENV.APP.circulationOrganisations.toString(),
+        member_of_organisations:
+          ENV.APP.circulationOrganisationSlugs.toString(),
         hasIdpId: true,
       },
     });

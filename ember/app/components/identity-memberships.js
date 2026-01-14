@@ -21,13 +21,24 @@ export default class IdentityMembershipsComponent extends Component {
   @service notification;
 
   memberships = trackedFunction(this, async () => {
-    const query = {
+    return await this.store.query("membership", {
       filter: {
         identity: this.args.identity.id,
       },
       include: "organisation,role",
-    };
-    return await this.store.query("membership", query);
+    });
+  });
+
+  organisations = trackedFunction(this, async () => {
+    return await this.store.query("identity", {
+      filter: {
+        isOrganisation: true,
+      },
+    });
+  });
+
+  roles = trackedFunction(this, async () => {
+    return await this.store.findAll("membership-role");
   });
 
   @action updateDateField(fieldName, newValue, changeset) {

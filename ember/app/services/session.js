@@ -61,8 +61,8 @@ export default class CustomSession extends Session {
     return Boolean(
       this.identity?.memberships.find(
         (membership) =>
-          ENV.APP.circulationOrganisations.includes(
-            membership.organisation.get("organisationName"),
+          ENV.APP.circulationOrganisationSlugs.includes(
+            membership.organisation.get("organisationSlug"),
           ) && !membership.isInactive,
       ),
     );
