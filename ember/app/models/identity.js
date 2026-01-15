@@ -8,6 +8,7 @@ export default class IdentityModel extends LocalizedModel {
   @attr salutation;
   @attr title;
   @attr organisationName;
+  @attr organisationSlug;
   @attr firstName;
   @attr lastName;
   @attr email;

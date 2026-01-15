@@ -20,15 +20,7 @@
       <span class="uk-text-bold">
         {{t "work-items.closedAt"}}
       </span>
-      {{format-date
-        this.workItem.closedAt
-        day="2-digit"
-        month="2-digit"
-        year="numeric"
-        hour="2-digit"
-        minute="2-digit"
-        hour12=false
-      }}
+      {{format-date this.workItem.closedAt "dd.LL.yyyy"}}
     </div>
   {{/if}}
 </div>
