@@ -2,7 +2,7 @@
 name = "mysagw"
 description = "Application management for SAGW"
 license = "GPL-3.0-or-later"
-version = "0.6.0"
+version = "0.6.1"
 authors = [{name = "Adfinis"}]
 requires-python = '>=3.13,<4.0'
 dependencies = [
