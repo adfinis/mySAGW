@@ -16,7 +16,7 @@
     "lint:hbs": "ember-template-lint .",
     "lint:js": "eslint .",
     "start": "ember serve",
-    "start-proxy": "ember server --proxy=https://mysagw.local --secure-proxy=false",
+    "start-proxy": "ember server --proxy=https://mysagw.localhost --secure-proxy=false",
     "test": "npm-run-all lint:* test:*",
     "test:ember": "ember test",
     "format": "prettier --write . && eslint . --fix && ember-template-lint . --fix"

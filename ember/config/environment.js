@@ -165,7 +165,7 @@ module.exports = function (environment) {
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV["ember-simple-auth-oidc"].host =
       process.env.OIDC_HOST ||
-      "https://mysagw.local/auth/realms/mysagw/protocol/openid-connect";
+      "https://mysagw.localhost/auth/realms/mysagw/protocol/openid-connect";
   }
 
   if (environment === "test") {

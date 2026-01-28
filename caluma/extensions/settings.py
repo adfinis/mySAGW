@@ -28,8 +28,8 @@ settings.MAILING = {"from_email": from_mail, "from_name": from_name}
 settings.MAILING_SENDER = f"{from_name} <{from_mail}>"
 
 # API
-settings.API_BASE_URI = env.str("API_BASE_URI", "https://mysagw.local/api/v1")
-settings.SELF_URI = env.str("SELF_URI", "https://mysagw.local")
+settings.API_BASE_URI = env.str("API_BASE_URI", "https://mysagw.localhost/api/v1")
+settings.SELF_URI = env.str("SELF_URI", "https://mysagw.localhost")
 settings.API_VERIFY_SSL = env.bool("API_VERIFY_SSL", True)
 
 settings.OIDC_ADMIN_CLIENT_ID = env.str(
@@ -42,7 +42,7 @@ settings.OIDC_ADMIN_CLIENT_SECRET = env.str(
 )
 settings.OIDC_TOKEN_ENDPOINT = env.str(
     "OIDC_TOKEN_ENDPOINT",
-    "https://mysagw.local/auth/realms/mysagw/protocol/openid-connect/token",
+    "https://mysagw.localhost/auth/realms/mysagw/protocol/openid-connect/token",
 )
 
 

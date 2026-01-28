@@ -196,28 +196,28 @@ CALUMA_DATA_FULL = {
                                 "filesValue": [
                                     {
                                         "name": "small.png",
-                                        "downloadUrl": "https://mysagw.local/caluma-media/download-url-small.png",
+                                        "downloadUrl": "https://mysagw.localhost/caluma-media/download-url-small.png",
                                         "metadata": {
                                             "content_type": "image/png",
                                         },
                                     },
                                     {
                                         "name": "big.png",
-                                        "downloadUrl": "https://mysagw.local/caluma-media/download-url-big.png",
+                                        "downloadUrl": "https://mysagw.localhost/caluma-media/download-url-big.png",
                                         "metadata": {
                                             "content_type": "image/png",
                                         },
                                     },
                                     {
                                         "name": "long.png",
-                                        "downloadUrl": "https://mysagw.local/caluma-media/download-url-long.png",
+                                        "downloadUrl": "https://mysagw.localhost/caluma-media/download-url-long.png",
                                         "metadata": {
                                             "content_type": "image/png",
                                         },
                                     },
                                     {
                                         "name": "wide.png",
-                                        "downloadUrl": "https://mysagw.local/caluma-media/download-url-wide.png",
+                                        "downloadUrl": "https://mysagw.localhost/caluma-media/download-url-wide.png",
                                         "metadata": {
                                             "content_type": "image/png",
                                         },

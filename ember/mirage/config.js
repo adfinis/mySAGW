@@ -16,7 +16,7 @@ export default function (config) {
 
 function routes() {
   this.passthrough("/auth");
-  this.passthrough("https://mysagw.local/auth/**");
+  this.passthrough("https://mysagw.localhost/auth/**");
 
   // Use ember-caluma's Mirage routing for /graphql endpoint.
   // https://github.com/projectcaluma/ember-caluma/blob/master/tests/dummy/app/templates/docs/testing.md
