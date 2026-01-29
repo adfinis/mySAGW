@@ -172,7 +172,7 @@ def _caluma_files_mock(requests_mock):
             data = f.read()
 
         requests_mock.get(
-            f"https://mysagw.local/caluma-media/download-url-{file}",
+            f"https://mysagw.localhost/caluma-media/download-url-{file}",
             status_code=status.HTTP_200_OK,
             content=data,
             headers={"CONTENT-TYPE": content_type},

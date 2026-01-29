@@ -2,7 +2,7 @@
 # ------------------------------------------------------------------------------
 ENV=dev
 OIDC_VERIFY_SSL=False
-OIDC_USERINFO_ENDPOINT=https://mysagw.local/auth/realms/mysagw/protocol/openid-connect/userinfo
+OIDC_USERINFO_ENDPOINT=https://mysagw.localhost/auth/realms/mysagw/protocol/openid-connect/userinfo
 # Multiple ADMINS need to be comma separated
 ADMINS=Test Example <test@example.com>
 DISABLE_INTROSPECTION=false
@@ -10,7 +10,7 @@ DISABLE_INTROSPECTION=false
 # Minio config
 MINIO_PRESIGNED_TTL_MINUTES=30
 MINIO_STORAGE_ACCESS_KEY=mysagw-minio
-MINIO_STORAGE_ENDPOINT=mysagw.local
+MINIO_STORAGE_ENDPOINT=mysagw.localhost
 MINIO_STORAGE_MEDIA_BUCKET_NAME=caluma-media
 MINIO_STORAGE_SECRET_KEY=mysagw-minio123
 MINIO_STORAGE_USE_HTTPS=true
