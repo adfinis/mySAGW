@@ -40,7 +40,7 @@ services:
     networks:
       default:
         aliases:
-          - mysagw.local
+          - mysagw.localhost
 
   keycloak:
     env_file: ./.envs/.local/.keycloak
@@ -53,7 +53,7 @@ services:
     image: mailhog/mailhog
     environment:
       - VIRTUAL_PORT=8025
-      - VIRTUAL_HOST=mail.mysagw.local
+      - VIRTUAL_HOST=mail.mysagw.localhost
     ports:
       - "8025:8025"
 

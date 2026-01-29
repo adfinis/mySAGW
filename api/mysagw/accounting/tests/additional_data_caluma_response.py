@@ -24,21 +24,21 @@ CALUMA_DATA_FULL = {
                                                                         },
                                                                         "filesValue": [
                                                                             {
-                                                                                "downloadUrl": "https://mysagw.local/caluma-media/download-url-small.png",
+                                                                                "downloadUrl": "https://mysagw.localhost/caluma-media/download-url-small.png",
                                                                                 "metadata": {
                                                                                     "content_type": "image/png",
                                                                                 },
                                                                                 "name": "File 1",
                                                                             },
                                                                             {
-                                                                                "downloadUrl": "https://mysagw.local/caluma-media/download-url-wide.png",
+                                                                                "downloadUrl": "https://mysagw.localhost/caluma-media/download-url-wide.png",
                                                                                 "metadata": {
                                                                                     "content_type": "image/png",
                                                                                 },
                                                                                 "name": "File 2",
                                                                             },
                                                                             {
-                                                                                "downloadUrl": "https://mysagw.local/caluma-media/song.mp3",
+                                                                                "downloadUrl": "https://mysagw.localhost/caluma-media/song.mp3",
                                                                                 "metadata": {
                                                                                     "content_type": "audio/mpeg",
                                                                                 },
@@ -57,7 +57,7 @@ CALUMA_DATA_FULL = {
                                                                     "node": {
                                                                         "filesValue": [
                                                                             {
-                                                                                "downloadUrl": "https://mysagw.local/caluma-media/download-url-test.pdf",
+                                                                                "downloadUrl": "https://mysagw.localhost/caluma-media/download-url-test.pdf",
                                                                                 "metadata": {
                                                                                     "content_type": "application/pdf",
                                                                                 },
@@ -79,7 +79,7 @@ CALUMA_DATA_FULL = {
                                                                     "node": {
                                                                         "filesValue": [
                                                                             {
-                                                                                "downloadUrl": "https://mysagw.local/caluma-media/download-url-test_encrypted.pdf",
+                                                                                "downloadUrl": "https://mysagw.localhost/caluma-media/download-url-test_encrypted.pdf",
                                                                                 "metadata": {
                                                                                     "content_type": "application/pdf",
                                                                                 },
