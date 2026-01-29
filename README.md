@@ -12,8 +12,9 @@ Application management for SAGW
 ### Installation (dev)
 
 **Requirements**
-* docker
-* docker-compose
+
+- docker
+- docker-compose
 
 After installing and configuring those, download [docker-compose.yml](https://raw.githubusercontent.com/adfinis/mysagw/main/docker-compose.yml) and run the following command:
 
@@ -32,7 +33,6 @@ OIDC_ADMIN_CLIENT_ID=test_client
 OIDC_ADMIN_CLIENT_SECRET=<SECRET>
 ```
 
-
 Wait for the database migrations to complete for the API and Caluma.
 
 Load the config data into Caluma:
@@ -47,24 +47,18 @@ Import the Keycloak config:
 make keycloak-import-config
 ```
 
-Add `mysagw.local` to `/etc/hosts`:
-
-```bash
-echo "127.0.0.1 mysagw.local" | sudo tee -a /etc/hosts
-```
-
 You can now access the application under the following URIs:
 
- - https://mysagw.local/ --> frontend
- - https://mysagw.local/auth/ --> keycloak
- - https://mysagw.local/api/ --> backend
- - https://mysagw.local/graphql/ --> caluma
- - https://mysagw.local:8025 --> mailhog
+- https://mysagw.localhost/ --> frontend
+- https://mysagw.localhost/auth/ --> keycloak
+- https://mysagw.localhost/api/ --> backend
+- https://mysagw.localhost/graphql/ --> caluma
+- https://mysagw.localhost:8025 --> mailhog
 
 The default users are:
 
 | Username          | Password | Used for       |
-|-------------------|----------|----------------|
+| ----------------- | -------- | -------------- |
 | admin             | keycloak | keycloak admin |
 | admin@example.com | mysagw   | apps           |
 | staff@example.com | mysagw   | apps           |
@@ -74,7 +68,6 @@ The default users are:
 
 mySAGW is a [12factor app](https://12factor.net/) which means that configuration is stored in environment variables.
 Different environment variable types are explained at [django-environ](https://django-environ.readthedocs.io/en/latest/types.html).
-
 
 ### Deployment
 
