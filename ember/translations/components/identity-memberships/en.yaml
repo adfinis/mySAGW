@@ -6,6 +6,7 @@ components:
     timeSlotUpper: "Until"
     timeSlotError: "Until date can't be before From date."
     timeSlotErrorLower: "From date can't be after Until date."
+    appliedInFuture: "This membership is not yet active."
 
     list:
       nextElection: "Next election {date}"
