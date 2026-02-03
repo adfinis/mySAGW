@@ -6,6 +6,7 @@ components:
     timeSlotUpper: "Jusqu'à"
     timeSlotError: "La date de fin ne peut pas être antérieure à la date de début."
     timeSlotErrorLower: "La date de début ne peut pas être postérieure à la date de fin."
+    appliedInFuture: "Cet abonnement n'est pas encore actif."
 
     list:
       nextElection: "Prochaine réélection {date}"
