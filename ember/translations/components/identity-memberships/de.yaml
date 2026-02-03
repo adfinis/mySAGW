@@ -6,6 +6,7 @@ components:
     timeSlotUpper: "Bis"
     timeSlotError: "Das Bis-Datum kann nicht vor dem Von-Datum liegen."
     timeSlotErrorLower: "Das Von-Datum kann nicht nach dem Bis-Datum liegen."
+    appliedInFuture: "Diese Mitgliedschaft ist noch nicht aktiv."
 
     list:
       nextElection: "Nächste Wiederwahl {date}"
