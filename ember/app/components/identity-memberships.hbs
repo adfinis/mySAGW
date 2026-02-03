@@ -18,6 +18,12 @@
               >
                 {{membership.organisation.organisationName}}
               </LinkTo>
+              {{#if membership.appliedInFuture}}
+                <UkIcon
+                  @icon="future"
+                  title={{t "components.identity-memberships.appliedInFuture"}}
+                />
+              {{/if}}
               {{#if membership.authorized}}
                 ({{t "components.identity-memberships.form.label.admin"}})
               {{/if}}

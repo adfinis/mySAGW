@@ -24,4 +24,10 @@ export default class MembershipModel extends LocalizedModel {
   get isInactive() {
     return membershipInactive(this);
   }
+
+  get appliedInFuture() {
+    return this.timeSlot?.lower
+      ? DateTime.now() < DateTime.fromISO(this.timeSlot.lower)
+      : false;
+  }
 }
