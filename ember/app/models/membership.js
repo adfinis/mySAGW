@@ -3,10 +3,7 @@ import { LocalizedModel } from "ember-localized-model";
 import { DateTime } from "luxon";
 
 const membershipInactive = (membership) => {
-  return membership.timeSlot && membership.timeSlot.upper
-    ? membership.inactive ||
-        DateTime.now() > DateTime.fromISO(membership.timeSlot.upper)
-    : membership.inactive;
+  return membership.inactive || membership.isExpired || membership.isInFuture;
 };
 
 export { membershipInactive };
@@ -25,9 +22,17 @@ export default class MembershipModel extends LocalizedModel {
     return membershipInactive(this);
   }
 
-  get appliedInFuture() {
-    return this.timeSlot?.lower
-      ? DateTime.now() < DateTime.fromISO(this.timeSlot.lower)
-      : false;
+  get isInFuture() {
+    return (
+      this.timeSlot?.lower &&
+      DateTime.fromISO(this.timeSlot.lower) > DateTime.now()
+    );
+  }
+
+  get isExpired() {
+    return (
+      this.timeSlot?.upper &&
+      DateTime.now() > DateTime.fromISO(this.timeSlot.upper)
+    );
   }
 }
