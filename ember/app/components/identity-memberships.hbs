@@ -8,15 +8,13 @@
       {{#each this.memberships.value as |membership|}}
         <li class="uk-flex uk-flex-between uk-flex-middle" data-test-membership>
           <div>
-            <span
-              class="uk-text-bold
-                {{if membership.isInactive 'text-strike-through'}}"
-            >
+            <span>
               <LinkTo
                 @route="identities.edit"
                 @model={{membership.organisation.id}}
+                class="uk-text-bold {{if membership.isInactive 'text-strike-through'}}"
               >
-                {{membership.organisation.organisationName}}
+                {{~membership.organisation.organisationName~}}
               </LinkTo>
               {{#if membership.isInFuture}}
                 <UkIcon
