@@ -1,16 +1,13 @@
-FROM ghcr.io/projectcaluma/caluma:11.3.0
+FROM ghcr.io/projectcaluma/caluma:12.3.4
 
 ENV PATH="${HOME}/.local/bin:${PATH}"
-
-COPY extensions /app/caluma/extensions
-COPY ci/test.sh /app/caluma/ci/test.sh
-COPY data /app/caluma/data
-COPY requirements.txt /app/sagw-requirements.txt
+ENV PYTHONPATH="/app"
 
 USER root
-RUN apt-get -y update && apt-get -y upgrade
+COPY requirements.txt /app/sagw-requirements.txt
+RUN pip install --no-cache-dir -r /app/sagw-requirements.txt
 
 USER caluma
-ARG INSTALL_DEV="false"
-RUN if [ "$INSTALL_DEV" = "true" ] ; then poetry install --no-root; fi \
-  && poetry run pip install -r /app/sagw-requirements.txt
+COPY extensions /app/caluma_extensions
+COPY ci/test.sh /app/caluma/ci/test.sh
+COPY data /app/caluma/data

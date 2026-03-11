@@ -14,12 +14,12 @@ from caluma.caluma_core.visibilities import BaseVisibility, Union, filter_querys
 from caluma.caluma_form import models as form_models
 from caluma.caluma_form.schema import Answer, Document, Form, Option, Question
 from caluma.caluma_workflow.schema import Case, Flow, Task, Workflow, WorkItem
-from caluma.extensions.common import (
+from caluma_extensions.common import (
     get_cases_for_user,
     get_cases_for_user_by_access,
     get_cases_for_user_by_circulation_invite,
 )
-from caluma.extensions.settings import settings
+from caluma_extensions.settings import settings
 
 
 class StaffVisibility(BaseVisibility):

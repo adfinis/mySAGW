@@ -25,11 +25,11 @@ services:
       - DATABASE_PORT=5432
       - OIDC_BEARER_TOKEN_REVALIDATION_TIME=60
       - OIDC_GROUPS_CLAIM=mysagw_groups
-      - EVENT_RECEIVER_MODULES=caluma.extensions.events
-      - VISIBILITY_CLASSES=caluma.caluma_user.visibilities.Authenticated,caluma.extensions.visibilities.MySAGWVisibility
-      - PERMISSION_CLASSES=caluma.caluma_user.permissions.IsAuthenticated,caluma.extensions.permissions.MySAGWPermission
-      - DYNAMIC_TASKS_CLASSES=caluma.extensions.dynamic_tasks.CustomDynamicTasks
-      - VALIDATION_CLASSES=caluma.extensions.validations.CustomValidation
+      - EVENT_RECEIVER_MODULES=caluma_extensions.events
+      - VISIBILITY_CLASSES=caluma.caluma_user.visibilities.Authenticated,caluma_extensions.visibilities.MySAGWVisibility
+      - PERMISSION_CLASSES=caluma.caluma_user.permissions.IsAuthenticated,caluma_extensions.permissions.MySAGWPermission
+      - DYNAMIC_TASKS_CLASSES=caluma_extensions.dynamic_tasks.CustomDynamicTasks
+      - VALIDATION_CLASSES=caluma_extensions.validations.CustomValidation
       - META_FIELDS=assigneeEmail,assigneeName
       - ENABLE_HEALTHZ_ENDPOINT=true
     depends_on:

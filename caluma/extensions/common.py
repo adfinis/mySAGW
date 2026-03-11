@@ -1,7 +1,7 @@
 from django.core.cache import cache
 
 from caluma.caluma_workflow.models import WorkItem
-from caluma.extensions.settings import settings
+from caluma_extensions.settings import settings
 
 from .api_client import APIClient
 

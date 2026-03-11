@@ -13,8 +13,8 @@ from caluma.caluma_workflow.schema import (
     RedoWorkItem,
     SaveCase,
 )
-from caluma.extensions.permissions import MySAGWPermission
-from caluma.extensions.settings import settings
+from caluma_extensions.permissions import MySAGWPermission
+from caluma_extensions.settings import settings
 
 
 class _Fallbackobj(NamedTuple):
