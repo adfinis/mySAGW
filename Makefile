@@ -111,6 +111,10 @@ ember-test: ## test the frontend
 keycloak-import-config: ## import the Keycloak config for local development
 	@docker compose exec keycloak /opt/keycloak/bin/kc.sh import --override true --file /opt/keycloak/data/import/test-config.json
 
-.PHONY: keycloak-export-config
+KEYCLOAK_CONFIG_FILE := ./keycloak/config.json
+
+.PHONY: dump-keycloak-config
 keycloak-export-config: ## export the Keycloak config
+	@if ! command -v jq &>/dev/null; then echo "jq is required for normalizing the output.";fi && exit 0
 	@docker compose run --rm keycloak export --file /opt/keycloak/data/import/test-config.json
+	cat $(KEYCLOAK_CONFIG_FILE) | jq | grep -Ev '^\s+"(id|containerId)": "\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b"' | jq -S -f tools/normalize.jq > normalized.json && mv normalized.json $(KEYCLOAK_CONFIG_FILE)
