@@ -3,7 +3,7 @@ name: Create Releases
 
 on:
   push:
-    branches: [main]
+    branches: [main, cherry_pick_main]
     paths:
       - compose.yaml
       - ember/package.json
