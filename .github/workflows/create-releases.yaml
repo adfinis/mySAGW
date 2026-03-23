@@ -54,6 +54,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: ${{ needs.calculate-fetch-depth.outputs.depth }}
+          persist-credentials: false
 
       - name: Install python
         if: contains(matrix.config.version-file, 'toml')
