@@ -10,31 +10,35 @@ on:
       - api/pyproject.toml
       - caluma/version.txt
 
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   calculate-fetch-depth:
     runs-on: ubuntu-latest
     name: Calculate Fetch Depth
-
     outputs:
       depth: ${{ steps.depth.outputs.depth }}
-
     steps:
       - name: Calculate Fetch Depth
         id: depth
         env:
           COMMITS: ${{ toJSON(github.event.commits) }}
         run: |
-          echo "depth=$(echo $COMMITS | jq '. | length + 1')" >> "$GITHUB_OUTPUT"
+          count=$(echo "$COMMITS" | jq '. | length' || echo "1")
+          echo "depth=$((count + 1))" >> "$GITHUB_OUTPUT"
 
-  create-tags:
+  release:
     runs-on: ubuntu-latest
     name: Create Tags
     needs: calculate-fetch-depth
-
     permissions:
       contents: write
-
     strategy:
+      fail-fast: false
       matrix:
         config:
           - name: api
@@ -49,11 +53,13 @@ jobs:
           - name: mysagw
             version-file: compose.yaml
             command: yq '.x-version'
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: ${{ needs.calculate-fetch-depth.outputs.depth }}
+          token: ${{ secrets.PAT }}
           persist-credentials: false
 
       - name: Install python
@@ -62,24 +68,24 @@ jobs:
         with:
           python-version: "3.13"
 
-      - name: Get new version
-        id: after
+      - name: Parse Versions
+        id: versions
         run: |
-          echo "version=$(cat ${{ matrix.config.version-file }} | ${{ matrix.config.command }})" >> "$GITHUB_OUTPUT"
+          # Current version
+          NEW_VER=$(cat ${{ matrix.config.version-file }} | ${{ matrix.config.command }})
+          echo "after=$NEW_VER" >> "$GITHUB_OUTPUT"
 
-      - name: Get previous version
-        id: before
-        run: |
-          echo "version=$(git show ${{ github.event.before }}:${{ matrix.config.version-file }} | ${{ matrix.config.command }})" >> "$GITHUB_OUTPUT"
+          # Previous version - handles first-time files or deleted refs gracefully
+          OLD_VER=$(git show ${{ github.event.before }}:${{ matrix.config.version-file }} 2>/dev/null | ${{ matrix.config.command }} || echo "none")
+          echo "before=$OLD_VER" >> "$GITHUB_OUTPUT"
 
-      - name: Create release
-        if: steps.after.outputs.version != steps.before.outputs.version
-        uses: actions/create-release@0cb9c9b65d5d1901c1f53e5e66eaf4afd303e70e # v1.1.4
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
+      - name: Create GitHub Release
+        if: steps.versions.outputs.after != steps.versions.outputs.before
+        uses: softprops/action-gh-release@153bb8e04406b158c6c84fc1615b65b24149a1fe # v2.6.1
         with:
-          tag_name: ${{ matrix.config.name == 'mysagw' && steps.after.outputs.version || format('{0}-{1}', matrix.config.name, steps.after.outputs.version) }}
-          release_name: ${{ matrix.config.name == 'mysagw' && steps.after.outputs.version || format('{0}-{1}', matrix.config.name, steps.after.outputs.version) }}
-          body: ""
+          tag_name: ${{ matrix.config.name == 'mysagw' && steps.versions.outputs.after || format('{0}-{1}', matrix.config.name, steps.versions.outputs.after) }}
+          name: ${{ matrix.config.name == 'mysagw' && steps.versions.outputs.after || format('{0}-{1}', matrix.config.name, steps.versions.outputs.after) }}
+          generate_release_notes: true
           draft: false
           prerelease: false
+          token: ${{ secrets.PAT }}
