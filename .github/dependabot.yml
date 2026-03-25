@@ -14,6 +14,8 @@ updates:
   commit-message:
     prefix: chore
     include: scope
+  cooldown:
+    default-days: 7
 - package-ecosystem: docker
   directory: "/"
   schedule:
@@ -28,6 +30,8 @@ updates:
   commit-message:
     prefix: chore
     include: scope
+  cooldown:
+    default-days: 7
 - package-ecosystem: npm
   directory: "/ember"
   schedule:
@@ -48,3 +52,5 @@ updates:
     - dependency-name: eslint
       versions:
         - ">= 8"
+  cooldown:
+    default-days: 7
