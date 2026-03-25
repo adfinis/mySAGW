@@ -21,6 +21,7 @@ export default class CasesDetailController extends Controller {
             { caseFamily: this.model.id },
           ],
         },
+        fetchPolicy: "network-only",
       },
       "allWorkItems",
     );
