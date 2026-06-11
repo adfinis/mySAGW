@@ -1,4 +1,5 @@
 import pytest
+from django.conf import settings
 from django.utils import timezone
 
 from caluma.caluma_form.api import save_answer
@@ -12,8 +13,6 @@ from caluma.caluma_workflow.api import (
     start_case,
 )
 from caluma.caluma_workflow.models import Case, Workflow, WorkItem
-
-from ..settings import settings
 
 
 @pytest.mark.usefixtures("_caluma_data")
@@ -342,7 +341,9 @@ def test_send_work_item_mail(  # noqa: PLR0915
     mocker,
 ):
     if lang != "de":
-        mock = mocker.patch("caluma.extensions.email.send_email.get_users_for_case")
+        mock = mocker.patch(
+            "mysagw.caluma_extensions.email.send_email.get_users_for_case"
+        )
         mock.return_value = [
             {
                 "idp-id": "267796f2-ae48-4235-93d7-bf26e8ba66bb",

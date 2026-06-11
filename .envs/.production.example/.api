@@ -5,6 +5,10 @@ ALLOWED_HOSTS=yourdomain.tld,www.yourdomain.tdl
 DATABASE_PASSWORD=alsoverysecure
 ADMINS=Test Example <test@example.com>,Test2 <test2@example.com>
 OIDC_OP_USER_ENDPOINT=https://yourdomain.tld/auth/realms/mysagw/protocol/openid-connect/userinfo
+OIDC_USERINFO_ENDPOINT=https://yourdomain.tld/auth/realms/mysagw/protocol/openid-connect/userinfo
+OIDC_ADMIN_CLIENT_ID=client_id
+OIDC_ADMIN_CLIENT_SECRET=verysecret
+OIDC_TOKEN_ENDPOINT=https://yourdomain.tld/auth/realms/mysagw/protocol/openid-connect/token
 
 # Mailing
 EMAIL_HOST=mail
@@ -17,4 +21,14 @@ MAILING_FROM_MAIL=noreply@my.yourdomain.tld
 MAILING_SENDER="mySAGW <noreply@my.yourdomain.tld>"
 
 # URIs
+API_BASE_URI=http://api:8000/api/v1
 SELF_URI=https://my.yourdomain.tld
+
+# Caluma
+# Minio config
+MINIO_PRESIGNED_TTL_MINUTES=30
+MINIO_STORAGE_ACCESS_KEY=verysecure
+MINIO_STORAGE_ENDPOINT=yourdomain.tld
+MINIO_STORAGE_MEDIA_BUCKET_NAME=caluma-media
+MINIO_STORAGE_SECRET_KEY=verysecure
+MINIO_STORAGE_USE_HTTPS=true

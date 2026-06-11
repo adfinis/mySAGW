@@ -1,8 +1,8 @@
 import datetime
 
 import pytest
+from django.db.backends.postgresql.psycopg_any import DateRange
 from django.utils import timezone
-from psycopg2._range import DateRange
 
 
 @pytest.mark.parametrize(

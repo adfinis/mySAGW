@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from caluma.caluma_analytics.schema import (
     RemoveAnalyticsField,
     RemoveAnalyticsTable,
@@ -18,11 +20,11 @@ from caluma.caluma_workflow.schema import (
     ReopenCase,
     SaveCase,
 )
-from caluma.extensions.common import (
+
+from .common import (
     get_cases_for_user,
     get_cases_for_user_by_circulation_invite,
 )
-from caluma.extensions.settings import settings
 
 
 class MySAGWPermission(BasePermission):
