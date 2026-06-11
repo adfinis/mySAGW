@@ -1,6 +1,6 @@
 {$DOMAIN_NAME} {
     reverse_proxy /api* http://api:8000
-    reverse_proxy /graphql* http://caluma:8000
+    reverse_proxy /graphql* http://api:8000
     reverse_proxy /auth* http://keycloak:8080
     reverse_proxy /caluma-media* http://minio:9000
     reverse_proxy /minio/* http://minio:9000
@@ -11,7 +11,7 @@
         client_ip private_ranges {$MONITORING_IPS}
     }
     handle @monitoring {
-        reverse_proxy /healthz* http://caluma:8000
+        reverse_proxy /healthz* http://api:8000
     }
 
     log {

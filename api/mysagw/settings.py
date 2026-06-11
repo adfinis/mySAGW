@@ -5,6 +5,8 @@ from pathlib import Path
 import environ
 from django.utils.translation import gettext_lazy as _
 
+from caluma.settings.caluma import *  # noqa: F403
+
 env = environ.Env()
 django_root = environ.Path(__file__) - 2
 
@@ -33,11 +35,20 @@ INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.postgres",
+    "psqlextra",
     "localized_fields",
     "phonenumber_field",
     "django_countries",
     "simple_history",
+    "caluma.caluma_core.apps.DefaultConfig",
+    "caluma.caluma_user.apps.DefaultConfig",
+    "caluma.caluma_form.apps.DefaultConfig",
+    "caluma.caluma_workflow.apps.DefaultConfig",
+    "caluma.caluma_logging.apps.DefaultConfig",
+    "caluma.caluma_data_source.apps.DefaultConfig",
+    "caluma.caluma_analytics.apps.DefaultConfig",
     "mysagw.identity.apps.DefaultConfig",
+    "graphene_django",
     "mysagw.snippets.apps.SnippetsConfig",
     "mysagw.accounting.apps.AccountingConfig",
     "mysagw.case.apps.CaseConfig",
@@ -343,3 +354,130 @@ LOGGING = {
         },
     },
 }
+
+## Caluma
+
+# API
+API_BASE_URI = env.str("API_BASE_URI", "https://mysagw.localhost/api/v1")
+SELF_URI = env.str("SELF_URI", "https://mysagw.localhost")
+API_VERIFY_SSL = env.bool("API_VERIFY_SSL", True)
+
+OIDC_ADMIN_CLIENT_ID = env.str(
+    "OIDC_ADMIN_CLIENT_ID",
+    "test_client",
+)
+OIDC_ADMIN_CLIENT_SECRET = env.str(
+    "OIDC_ADMIN_CLIENT_SECRET",
+    "9tdQipAskRXNNwdFFzxanPdXqVZkAlqY",
+)
+OIDC_TOKEN_ENDPOINT = env.str(
+    "OIDC_TOKEN_ENDPOINT",
+    "https://mysagw.localhost/auth/realms/mysagw/protocol/openid-connect/token",
+)
+OIDC_USERINFO_ENDPOINT = OIDC_OP_USER_ENDPOINT
+
+CALUMA_OIDC_USER_FACTORY = "mysagw.oidc_auth.models.OIDCUser"
+
+
+# Case
+
+# Define user facing statuses according to Tasks of ready WorkItems
+CASE_STATUS = {
+    "submit-document": "submit",
+    "review-document": "audit",
+    "circulation": "audit",
+    "decision-and-credit": "audit",
+    "revise-document": "revise",
+    "additional-data": "submit-receipts",
+    "additional-data-form": "submit-receipts",
+    "advance-credits": "submit-receipts",
+    "define-amount": "decision",
+    "complete-document": "decision",
+}
+# Additional statuses that can be set in events independently of Task slugs:
+# canceled
+# complete
+
+APPLICANT_TASK_SLUGS = [
+    "submit-document",
+    "revise-document",
+    "additional-data",
+    "additional-data-form",
+]
+
+CIRCULATION_TASK_SLUGS = [
+    "circulation-decision",
+]
+
+REVISION_QUESTIONS = {
+    "review-document": [
+        "priorisierung-der-antrage-kommentar",
+        "review-document-decision",
+    ],
+    "decision-and-credit": [
+        "gesprochener-rahmenkredit",
+        "decision-and-credit-remark",
+        "decision-and-credit-decision",
+    ],
+    "define-amount": [
+        "define-amount-amount-float",
+        "define-amount-remark",
+        "define-amount-decision",
+    ],
+    "advance-credits": [
+        "advance-credit-date",
+        "advance-credit-amount-float",
+        "priorisierung-der-antrage-kommentar",
+    ],
+}
+
+APPLICANT_VISIBLE_TASKS = APPLICANT_TASK_SLUGS + list(
+    REVISION_QUESTIONS.keys(),
+)
+
+ADDITIONAL_DATA_FORM = {
+    "periodika-antrag": "periodika-abrechnung",
+}
+
+INTERNAL_APPLICATION_FORM_SLUG = "intern"
+INTERNAL_APPLICATION_TYPE_QUESTION_SLUG = "intern-gesuchsart"
+INTERNAL_APPLICATION_PERIODICS_CHOICES = (
+    "intern-gesuchsart-intern-abrechnung-periodika",
+    "intern-gesuchsart-intern-antrag-periodika",
+)
+
+EARLY_CAREER_AWARD_FORM_SLUGS = [
+    "early-career-award",
+    "eca-early-career-award",
+]
+
+CASE_ID_CACHE_SECONDS = env.int("CASE_ID_CACHE_SECONDS", 60)
+
+# Validation
+
+BIRTHDATE_SLUG_PART = "geburtsdatum"
+
+TABLE_SUMMARY_MODES = ["csv"]
+
+
+# Minio config for Caluma
+MEDIA_STORAGE_SERVICE = "minio"
+MINIO_STORAGE_ENDPOINT = env.str("MINIO_STORAGE_ENDPOINT", default="minio:9000")
+MINIO_STORAGE_ACCESS_KEY = env.str("MINIO_STORAGE_ACCESS_KEY", default="minio")
+MINIO_STORAGE_SECRET_KEY = env.str("MINIO_STORAGE_SECRET_KEY", default="minio123")
+MINIO_STORAGE_USE_HTTPS = env.bool("MINIO_STORAGE_USE_HTTPS", default=True)
+MINIO_DISABLE_CERT_CHECKS = env.bool("MINIO_DISABLE_CERT_CHECKS", default=False)
+MINIO_PRESIGNED_TTL_MINUTES = env.int("MINIO_PRESIGNED_TTL_MINUTES", default=30)
+# MINIO_STORAGE_REGION_NAME = None
+MINIO_STORAGE_MEDIA_BUCKET_NAME = env.str(
+    "MINIO_STORAGE_MEDIA_BUCKET_NAME", default="caluma-media"
+)
+MINIO_STORAGE_AUTO_CREATE_MEDIA_BUCKET = True
+
+## Extensions
+EVENT_RECEIVER_MODULES = env.list("EVENT_RECEIVER_MODULES", default=[])
+VISIBILITY_CLASSES = env.list("VISIBILITY_CLASSES", default=[])
+PERMISSION_CLASSES = env.list("PERMISSION_CLASSES", default=[])
+DYNAMIC_TASKS_CLASSES = env.list("DYNAMIC_TASKS_CLASSES", default=[])
+VALIDATION_CLASSES = env.list("VALIDATION_CLASSES", default=[])
+META_FIELDS = env.list("META_FIELDS", default=[])

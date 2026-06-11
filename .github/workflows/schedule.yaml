@@ -11,7 +11,7 @@ jobs:
     if: github.repository == 'adfinis/mysagw'
     strategy:
       matrix:
-        service: [api, caluma, ember]
+        service: [api, ember]
 
     name: scan ${{ matrix.service }} image
     runs-on: ubuntu-latest

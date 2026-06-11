@@ -1,4 +1,5 @@
 import pytest
+from django.conf import settings
 
 from caluma.caluma_analytics import (
     models as analytics_models,
@@ -8,8 +9,7 @@ from caluma.caluma_form import models as form_models, schema as form_schema
 from caluma.caluma_user.models import OIDCUser
 from caluma.caluma_workflow import models as workflow_models, schema as workflow_schema
 from caluma.caluma_workflow.api import complete_work_item
-from caluma.extensions.settings import settings
-from caluma.extensions.visibilities import MySAGWVisibility
+from mysagw.caluma_extensions.visibilities import MySAGWVisibility
 
 
 @pytest.mark.usefixtures("_caluma_data")

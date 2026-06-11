@@ -62,7 +62,7 @@ class OIDCUser(BaseUser):
         super().__init__()
 
         self.claims = claims
-        self.id = self.claims[settings.OIDC_ID_CLAIM]
+        self.id = self.username = self.claims[settings.OIDC_ID_CLAIM]
         self.email = self.claims.get(settings.OIDC_EMAIL_CLAIM)
         self.first_name = self.claims.get(settings.OIDC_FIRST_NAME_CLAIM)
         self.last_name = self.claims.get(settings.OIDC_LAST_NAME_CLAIM)

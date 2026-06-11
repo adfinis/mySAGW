@@ -1,9 +1,9 @@
+from django.conf import settings
 from django.core.mail import send_mail
 
 from caluma.caluma_form.models import Answer
 
 from ..common import format_currency, get_users_for_case
-from ..settings import settings
 from .email_texts import (
     email_cost_approval,
     email_decision_and_credit_rejection_early_career_award,
