@@ -8,6 +8,7 @@ on:
 
 jobs:
   scan:
+    if: github.repository == 'adfinis/mysagw'
     strategy:
       matrix:
         service: [api, caluma, ember]
