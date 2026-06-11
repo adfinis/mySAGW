@@ -20,22 +20,21 @@ export default class CustomSession extends Session {
     if (!this.isAuthenticated) return null;
 
     try {
-      const data = yield Promise.all([
-        this.store.query(
-          "membership",
-          {
-            include: "organisation",
-          },
-          { adapterOptions: { customEndpoint: "my-memberships" } },
-        ),
-        this.store.queryRecord("identity", {}),
-      ]);
+      const memberships = yield this.store.query(
+        "membership",
+        {
+          include: "organisation",
+        },
+        { adapterOptions: { customEndpoint: "my-memberships" } },
+      );
+      const identity = yield this.store.queryRecord("identity", {});
 
       return {
-        memberships: data[0],
-        identity: data[1],
+        memberships,
+        identity,
       };
     } catch (error) {
+      console.error(error);
       this.invalidate();
 
       if (

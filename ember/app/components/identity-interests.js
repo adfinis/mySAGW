@@ -141,13 +141,9 @@ export default class IdentityInterestsComponent extends Component {
       );
 
       try {
-        // Replacement for removeObject
-        const index = this.args.identity.interests.indexOf(interest);
-        if (index !== -1) {
-          this.args.identity.interests = [
-            ...this.args.identity.interests.toSpliced(index, 1),
-          ];
-        }
+        this.args.identity.interests = this.args.identity.interests.filter(
+          (i) => i !== interest,
+        );
         this.args.identity.save(this.endpoint);
 
         this.notification.success(

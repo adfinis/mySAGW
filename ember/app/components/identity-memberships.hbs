@@ -12,7 +12,8 @@
               <LinkTo
                 @route="identities.edit"
                 @model={{membership.organisation.id}}
-                class="uk-text-bold {{if membership.isInactive 'text-strike-through'}}"
+                class="uk-text-bold
+                  {{if membership.isInactive 'text-strike-through'}}"
               >
                 {{~membership.organisation.organisationName~}}
               </LinkTo>
