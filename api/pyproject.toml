@@ -22,13 +22,16 @@ dependencies = [
     "gunicorn (>=23.0.0,<24.0.0)",
     "mozilla-django-oidc (>=4.0.1,<5.0.0)",
     "packaging (>=24.2)",  # needed because of https://github.com/pypa/setuptools/issues/4894
+    "pillow (>=12.1.1,<13.0.0)",
     "psycopg2-binary (>=2.9.10,<3.0.0)",
     "pyexcel (>=0.7.3,<0.8.0)",
     "pyexcel-xlsx (>=0.6.1,<0.7.0)",
     "pypdf (>=6.1.1,<7.0.0)",
     "requests (>=2.32.5,<3.0.0)",
     "reportlab (>=4.4.4,<5.0.0)",
-    "setuptools (>=80.9.0,<81.0.0)"  # needed for django-excel. Pinned because of build errors. See https://github.com/adfinis/mySAGW/issues/1176
+    "setuptools (>=80.9.0,<81.0.0)",  # needed for django-excel. Pinned because of build errors. See https://github.com/adfinis/mySAGW/issues/1176
+    "caluma (>=12.0.0,<12.1.0)",
+    "requests-oauthlib (>=2.0.0,<3.0.0)",
 ]
 
 [project.urls]

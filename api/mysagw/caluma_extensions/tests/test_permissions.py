@@ -2,6 +2,7 @@ from typing import NamedTuple
 from uuid import uuid4
 
 import pytest
+from django.conf import settings
 
 from caluma.caluma_analytics.schema import SaveAnalyticsTable
 from caluma.caluma_core.mutation import Mutation
@@ -13,8 +14,7 @@ from caluma.caluma_workflow.schema import (
     RedoWorkItem,
     SaveCase,
 )
-from caluma.extensions.permissions import MySAGWPermission
-from caluma.extensions.settings import settings
+from mysagw.caluma_extensions.permissions import MySAGWPermission
 
 
 class _Fallbackobj(NamedTuple):
@@ -39,7 +39,7 @@ def test_permissions_fallback(
     has_obj_perm,
 ):
     admin_info.context.user.groups = groups
-    admin_info.context.user.username = "baz"
+    admin_info.context.user.id = "baz"
 
     fallback_obj = _Fallbackobj(created_by_user=created_by_user)
 
@@ -117,7 +117,7 @@ def test_permission_for_save_document_answer_floating_row_document(
     case_access_request_mock,
 ):
     admin_info.context.user.groups = ["test"]
-    document.created_by_user = admin_info.context.user.username = "test"
+    document.created_by_user = admin_info.context.user.id = "test"
     document.save()
 
     mocker.patch.object(
@@ -175,7 +175,7 @@ def test_permission_for_save_case_and_start_case(
     has_obj_perm,
 ):
     admin_info.context.user.groups = groups
-    admin_info.context.user.username = "baz"
+    admin_info.context.user.id = "baz"
 
     answer.document.created_by_user = created_by_user
     answer.document.save()

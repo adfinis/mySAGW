@@ -2,27 +2,93 @@ import time
 from pathlib import Path
 
 import pytest
+from django.conf import settings
 from django.core.management import call_command
 from django.utils import timezone
+from graphene import ResolveInfo
 
 from caluma.caluma_form.models import Answer, Question
 from caluma.caluma_user.models import BaseUser
 from caluma.caluma_workflow.api import complete_work_item, skip_work_item, start_case
 from caluma.caluma_workflow.models import Workflow
+from caluma.conftest import *  # noqa: F403
 
+from ..oidc_auth.models import OIDCUser
 from . import api_client
-from .settings import settings
 
 
 @pytest.fixture
 def _caluma_data(db):
-    call_command("loaddata", Path.cwd() / "caluma" / "data" / "form-config.json")
-    call_command("loaddata", Path.cwd() / "caluma" / "data" / "workflow-config.json")
+    call_command("loaddata", Path.cwd() / "caluma_data" / "form-config.json")
+    call_command("loaddata", Path.cwd() / "caluma_data" / "workflow-config.json")
 
 
 @pytest.fixture
 def user():
     return BaseUser(username="name", claims={"sub": "test"}, token=b"eyToken")
+
+
+# We need to override some of the Caluma fixures in order to use our own User class
+@pytest.fixture
+def admin_user(db, settings, admin_groups):
+    return OIDCUser(
+        b"sometoken", {"sub": "admin", settings.OIDC_GROUPS_CLAIM: admin_groups}
+    )
+
+
+@pytest.fixture
+def admin_request(rf, admin_user):
+    request = rf.get("/graphql")
+    request.user = admin_user
+    return request
+
+
+@pytest.fixture
+def anonymous_request(rf):
+    request = rf.get("/graphql")
+    request.user = BaseUser()
+    return request
+
+
+@pytest.fixture
+def info(anonymous_request):
+    """Mock for GraphQL resolve info embedding django request as context."""
+
+    return ResolveInfo(
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        context=anonymous_request,
+        # TODO: see if this has an influence on execution, might need parametrization
+        is_awaitable=lambda x: False,
+    )
+
+
+@pytest.fixture
+def admin_info(admin_request):
+    """Mock for GraphQL resolve info embedding authenticated django request as context."""
+    return ResolveInfo(
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        context=admin_request,
+        # TODO: see if this has an influence on execution, might need parametrization
+        is_awaitable=lambda x: False,
+    )
 
 
 @pytest.fixture
@@ -205,4 +271,4 @@ def case_access_event_mock(
 
 @pytest.fixture
 def send_mail_mock(mocker):
-    return mocker.patch("caluma.extensions.events.work_item.send_work_item_mail")
+    return mocker.patch("mysagw.caluma_extensions.events.work_item.send_work_item_mail")

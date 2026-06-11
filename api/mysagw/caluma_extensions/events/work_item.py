@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import transaction
 
 from caluma.caluma_core.events import filter_events, on
@@ -16,7 +17,6 @@ from caluma.caluma_workflow.events import (
 from caluma.caluma_workflow.models import Case, Workflow, WorkItem
 
 from ..email.send_email import send_work_item_mail
-from ..settings import settings
 
 
 @on(post_create_work_item, raise_exception=True)

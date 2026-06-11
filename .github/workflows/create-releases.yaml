@@ -8,7 +8,6 @@ on:
       - compose.yaml
       - ember/package.json
       - api/pyproject.toml
-      - caluma/version.txt
 
 permissions: {}
 
@@ -47,9 +46,6 @@ jobs:
           - name: ember
             version-file: ember/package.json
             command: jq -r '.version'
-          - name: caluma
-            version-file: caluma/version.txt
-            command: cat
           - name: mysagw
             version-file: compose.yaml
             command: yq '.x-version'
