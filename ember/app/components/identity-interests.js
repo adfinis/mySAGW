@@ -107,6 +107,7 @@ export default class IdentityInterestsComponent extends Component {
     const interests = yield this.store.query("interest", {
       filter: { public: this.args.profileView },
       include: "category",
+      reload: true
     });
 
     this.categories = yield this.parseOwnInterests(this.args.identity);
