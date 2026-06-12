@@ -27,7 +27,7 @@ module.exports = function (environment) {
     },
     "changeset-validations": { rawOutput: true },
     apollo: {
-      apiURL: "/graphql",
+      apiURL: "/graphql/",
     },
     "ember-caluma": {
       FLATPICKR_DATE_FORMAT: {

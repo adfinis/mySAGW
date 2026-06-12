@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.utils import timezone
 from localized_fields.value import LocalizedValue
 from rest_framework import exceptions
@@ -6,8 +7,6 @@ from rest_framework.exceptions import ValidationError
 from caluma.caluma_core.validations import BaseValidation, validation_for
 from caluma.caluma_form.models import Question
 from caluma.caluma_form.schema import SaveDocumentDateAnswer, SaveTableQuestion
-
-from .settings import settings
 
 
 class CustomValidation(BaseValidation):

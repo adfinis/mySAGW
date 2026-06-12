@@ -19,7 +19,7 @@ from django.core.management import call_command
                 "caluma_form.Option",
                 "caluma_form.Answer",
             ],
-            Path.cwd() / "caluma" / "data" / "form-config.json",
+            Path.cwd() / "caluma_data" / "form-config.json",
         ),
         (
             [
@@ -29,7 +29,7 @@ from django.core.management import call_command
                 "caluma_workflow.TaskFlow",
                 "caluma_workflow.Case",
             ],
-            Path.cwd() / "caluma" / "data" / "workflow-config.json",
+            Path.cwd() / "caluma_data" / "workflow-config.json",
         ),
     ],
 )

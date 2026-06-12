@@ -10,33 +10,17 @@ services:
     user: "${UID:?Set UID env variable to your user id}"
     volumes:
       - ./api:/app
+      - ./api/caluma_extensions:/app/caluma/extensions
+      - ./api/data:/app/caluma/data:ro
+      - ./api/.env:/app/.env
     ports:
       - "8000:8000"
     env_file: ./.envs/.local/.api
 
-  caluma:
-    build:
-      context: caluma
-      args:
-        INSTALL_DEV: "true"
-    user: "${UID:?Set UID env variable to your user id}"
-    env_file: ./.envs/.local/.caluma
-    volumes:
-      - ./caluma/extensions:/app/caluma/extensions
-      - ./caluma/data:/app/caluma/data:ro
-      - ./caluma/setup.cfg:/app/setup.cfg:ro
-      - ./caluma/.env:/app/.env
-    command:
-      [
-        "/bin/sh",
-        "-c",
-        "wait-for-it db:5432 -- poetry run python ./manage.py migrate && poetry run python ./manage.py runserver 0.0.0.0:8000",
-      ]
-
   caddy:
     env_file: ./.envs/.local/.caddy
     environment:
-      - GRAPHIQL_PROXY=reverse_proxy /static/graphene_django/* http://caluma:8000
+      - GRAPHIQL_PROXY=reverse_proxy /static/graphene_django/* http://api:8000
     networks:
       default:
         aliases:

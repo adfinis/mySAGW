@@ -2,14 +2,13 @@ import csv
 import io
 import logging
 
+from django.conf import settings
 from django.db import transaction
 from django.db.models.signals import post_save
 from django.utils.translation import get_language
 
 from caluma.caluma_core.events import on
 from caluma.caluma_form import models as caluma_form_models
-
-from ..settings import settings
 
 logger = logging.getLogger(__name__)
 

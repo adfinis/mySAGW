@@ -6,7 +6,7 @@ from . import models
 
 class SnippetFactory(DjangoModelFactory):
     title = Faker("word")
-    body = Faker("multilang", faker_provider="text")
+    body = Faker("multilanguage", faker_provider="text")
     archived = False
 
     class Meta:

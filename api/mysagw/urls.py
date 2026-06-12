@@ -7,4 +7,5 @@ urlpatterns = [
     path("api/v1/", include("mysagw.accounting.urls")),
     path("api/v1/", include("mysagw.case.urls")),
     path("api/v1/", include("mysagw.healthz.urls")),
+    path("", include(("caluma.caluma_core.urls", "caluma"))),
 ]

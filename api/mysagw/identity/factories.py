@@ -76,8 +76,8 @@ class InterestFactory(DjangoModelFactory):
 
 
 class MembershipRoleFactory(DjangoModelFactory):
-    title = Faker("multilang", faker_provider="job")
-    description = Faker("multilang", faker_provider="text")
+    title = Faker("multilanguage", faker_provider="job")
+    description = Faker("multilanguage", faker_provider="text")
     sort = 0
     archived = False
 

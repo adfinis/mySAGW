@@ -1196,8 +1196,8 @@
       
       Sie wurden zu folgenden Gesuchen auf mySAGW eingeladen:
       
-      2024-0001 - https://mysagw.adfinis.com/cases/e58ea0d4-69de-4aca-b131-7dc7153cf09b
-      2024-0002 - https://mysagw.adfinis.com/cases/80619a53-c6f6-4e49-85f1-82a12d320f92
+      2024-0001 - https://mysagw.localhost/cases/e58ea0d4-69de-4aca-b131-7dc7153cf09b
+      2024-0002 - https://mysagw.localhost/cases/80619a53-c6f6-4e49-85f1-82a12d320f92
   
     ''',
     cc=list([
@@ -1233,7 +1233,7 @@
       
       Sie wurden zu folgenden Gesuchen auf mySAGW eingeladen:
       
-      2024-0001 - https://mysagw.adfinis.com/cases/e58ea0d4-69de-4aca-b131-7dc7153cf09b
+      2024-0001 - https://mysagw.localhost/cases/e58ea0d4-69de-4aca-b131-7dc7153cf09b
   
     ''',
     cc=list([

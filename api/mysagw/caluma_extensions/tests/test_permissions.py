@@ -2,6 +2,7 @@ from typing import NamedTuple
 from uuid import uuid4
 
 import pytest
+from django.conf import settings
 
 from caluma.caluma_analytics.schema import SaveAnalyticsTable
 from caluma.caluma_core.mutation import Mutation
@@ -13,8 +14,7 @@ from caluma.caluma_workflow.schema import (
     RedoWorkItem,
     SaveCase,
 )
-from caluma.extensions.permissions import MySAGWPermission
-from caluma.extensions.settings import settings
+from mysagw.caluma_extensions.permissions import MySAGWPermission
 
 
 class _Fallbackobj(NamedTuple):
