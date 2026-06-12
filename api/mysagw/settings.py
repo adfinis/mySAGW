@@ -282,6 +282,11 @@ def parse_admins(admins):
 
 ADMINS = parse_admins(env.list("ADMINS", default=[]))
 
+DEFAULT_EXCEPTION_REPORTER_FILTER = env.str(
+    "DEFAULT_EXCEPTION_REPORTER_FILTER",
+    default="mysagw.log.CensoredExceptionReporterFilter",
+)
+
 # Logging
 
 LOGGING = {
