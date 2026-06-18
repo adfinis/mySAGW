@@ -7,6 +7,7 @@ export default class ProfileEditRoute extends Route {
   model({ identity }) {
     return this.store.findRecord("identity", identity, {
       adapterOptions: { customEndpoint: "my-orgs" },
+      reload: true,
     });
   }
 }

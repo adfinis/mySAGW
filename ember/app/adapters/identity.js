@@ -11,15 +11,15 @@ export default class IdentityAdapter extends ApplicationAdapter {
     return super.urlForFindRecord(id, modelName, snapshot);
   }
 
-  urlForQueryRecord() {
-    return `${this.buildURL()}/me`;
-  }
-
   urlForUpdateRecord(id, modelName, snapshot) {
     if (snapshot.adapterOptions?.customEndpoint) {
       return `${this.buildURL()}/${snapshot.adapterOptions.customEndpoint}`;
     }
 
     return super.urlForUpdateRecord(id, modelName, snapshot);
+  }
+
+  urlForQueryRecord() {
+    return `${this.buildURL()}/me`;
   }
 }

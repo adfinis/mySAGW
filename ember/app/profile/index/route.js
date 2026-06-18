@@ -3,9 +3,10 @@ import { service } from "@ember/service";
 
 export default class ProfileIndexRoute extends Route {
   @service session;
+  @service store;
 
   model() {
-    return this.session.identity;
+    return this.store.queryRecord("identity", {});
   }
 
   setupController(controller, post) {
