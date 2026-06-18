@@ -1,11 +1,10 @@
 from datetime import UTC
 
 import requests
+from django.conf import settings
 from django.utils import timezone
 from oauthlib.oauth2 import BackendApplicationClient
 from requests_oauthlib import OAuth2Session
-
-from .settings import settings
 
 
 class APIClient:

@@ -2,10 +2,10 @@ import datetime
 
 import pyexcel
 import pytest
+from django.db.backends.postgresql.psycopg_any import DateRange
 from django.http import HttpResponse
 from django.urls import NoReverseMatch, reverse
 from django.utils import timezone
-from psycopg2._range import DateRange
 from rest_framework import status
 from syrupy import filters
 

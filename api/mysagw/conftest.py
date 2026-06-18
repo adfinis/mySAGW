@@ -11,13 +11,13 @@ from rest_framework import status
 from rest_framework.test import APIClient
 
 from .case import factories as case_factories
-from .faker import MultilangProvider, SwissPhoneNumberProvider
+from .faker import MultilanguageProvider, SwissPhoneNumberProvider
 from .identity import factories as identity_factories
 from .oidc_auth.models import OIDCUser
 from .snippets import factories as snippets_factories
 from .utils import build_url
 
-Faker.add_provider(MultilangProvider)
+Faker.add_provider(MultilanguageProvider)
 Faker.add_provider(SwissPhoneNumberProvider)
 
 

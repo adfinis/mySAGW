@@ -2,13 +2,25 @@
 # name: test_visibilities_default[admin-visibility_map0][AnalyticsTable]
   list([
     tuple(
-      'live-five-term',
+      'lead-skill-require',
     ),
   ])
 # ---
 # name: test_visibilities_default[admin-visibility_map0][Answer]
   list([
     tuple(
+      'relationship',
+      'foo',
+    ),
+    tuple(
+      'relationship',
+      'foo',
+    ),
+    tuple(
+      'relationship',
+      'foo',
+    ),
+    tuple(
       'review-document-decision',
       'review-document-decision-continue',
     ),
@@ -19,18 +31,6 @@
     tuple(
       'review-document-decision',
       'review-document-decision-continue',
-    ),
-    tuple(
-      'suggest-adult-allow',
-      'foo',
-    ),
-    tuple(
-      'suggest-adult-allow',
-      'foo',
-    ),
-    tuple(
-      'suggest-adult-allow',
-      'foo',
     ),
     tuple(
       'verteilplan-nr',
@@ -109,9 +109,6 @@
       'advance-credits-form',
     ),
     tuple(
-      'body-perhaps',
-    ),
-    tuple(
       'circulation-form',
     ),
     tuple(
@@ -119,6 +116,9 @@
     ),
     tuple(
       'define-amount-form',
+    ),
+    tuple(
+      'network-event-new',
     ),
     tuple(
       'quittungen',
@@ -182,6 +182,9 @@
       'gesprochener-rahmenkredit',
     ),
     tuple(
+      'relationship',
+    ),
+    tuple(
       'review-document-decision',
     ),
     tuple(
@@ -189,9 +192,6 @@
     ),
     tuple(
       'submit-button',
-    ),
-    tuple(
-      'suggest-adult-allow',
     ),
     tuple(
       'verteilplan-nr',
@@ -273,20 +273,20 @@
 # name: test_visibilities_default[test-visibility_map1][Answer]
   list([
     tuple(
+      'discover',
+      'foo',
+    ),
+    tuple(
+      'discover',
+      'foo',
+    ),
+    tuple(
       'review-document-decision',
       'review-document-decision-continue',
     ),
     tuple(
       'review-document-decision',
       'review-document-decision-continue',
-    ),
-    tuple(
-      'suggest-adult-allow',
-      'foo',
-    ),
-    tuple(
-      'suggest-adult-allow',
-      'foo',
     ),
   ])
 # ---
@@ -331,9 +331,6 @@
       'advance-credits-form',
     ),
     tuple(
-      'body-perhaps',
-    ),
-    tuple(
       'circulation-form',
     ),
     tuple(
@@ -341,6 +338,9 @@
     ),
     tuple(
       'define-amount-form',
+    ),
+    tuple(
+      'nor-themselves',
     ),
     tuple(
       'quittungen',
@@ -398,6 +398,9 @@
       'define-amount-decision',
     ),
     tuple(
+      'discover',
+    ),
+    tuple(
       'dossier-nr',
     ),
     tuple(
@@ -411,9 +414,6 @@
     ),
     tuple(
       'submit-button',
-    ),
-    tuple(
-      'suggest-adult-allow',
     ),
     tuple(
       'verteilplan-nr',

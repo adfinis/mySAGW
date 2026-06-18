@@ -4,14 +4,14 @@ from faker.providers.phone_number import Provider as PhoneNumberProvider
 from localized_fields.util import get_language_codes
 
 
-class MultilangProvider(DateTimeProvider):
+class MultilanguageProvider(DateTimeProvider):
     """
     Create dictionary compatible with `LocalizedField`.
 
     A value with given `faker_provider` is created for given languages.
     """
 
-    def multilang(self, faker_provider, languages=None, **kwargs):
+    def multilanguage(self, faker_provider, languages=None, **kwargs):
         languages = languages if languages is not None else get_language_codes()
         value = {}
         for language in languages:

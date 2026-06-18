@@ -77,6 +77,13 @@ class OIDCUser(BaseUser):
         self.is_authenticated = True
         self.identity = self._update_or_create_identity()
 
+    @property
+    def username(self):
+        # Return the user ID, not username - this is for Caluma only.
+        # We want caluma to store the user ID, as the username (= email)
+        # may change over time
+        return self.id
+
     def _update_or_create_identity(self):
         """
         Update or create Identity.

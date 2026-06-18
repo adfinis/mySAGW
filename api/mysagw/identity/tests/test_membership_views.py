@@ -2,8 +2,8 @@ import datetime
 
 import pytest
 from django.conf import settings
+from django.db.backends.postgresql.psycopg_any import DateRange
 from django.urls import reverse
-from psycopg2.extras import DateRange
 from rest_framework import status
 from syrupy import filters
 
