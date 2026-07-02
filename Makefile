@@ -118,3 +118,35 @@ keycloak-export-config: ## export the Keycloak config
 	@if ! command -v jq &>/dev/null; then echo "jq is required for normalizing the output.";fi && exit 0
 	@docker compose run --rm keycloak export --file /opt/keycloak/data/import/test-config.json
 	cat $(KEYCLOAK_CONFIG_FILE) | jq | grep -Ev '^\s+"(id|containerId)": "\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b"' | jq -S -f tools/normalize.jq > normalized.json && mv normalized.json $(KEYCLOAK_CONFIG_FILE)
+
+LIST_DB_SNAPSHOTS := docker compose exec db psql -Umysagw -d postgres -c "\l" | grep -Po '_snap_\K[^\s]+' | sort | uniq
+
+ifndef SNAPSHOT
+CREATE_SNAPSHOT := $(shell date +%y_%m_%d_%H_%M)
+RESTORE_SNAPSHOT = $(shell $(LIST_DB_SNAPSHOTS) | tail -n 1)
+else
+CREATE_SNAPSHOT := $(SNAPSHOT)
+RESTORE_SNAPSHOT := $(SNAPSHOT)
+endif
+
+.PHONY: create-db-snapshot
+create-db-snapshot: ## create snapshot dbs for caluma and mysagw
+	@echo Creating $(CREATE_SNAPSHOT)
+	@docker compose exec db psql -Umysagw -d postgres \
+          -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE pid <> pg_backend_pid()" \
+          -c "CREATE DATABASE caluma_snap_$(CREATE_SNAPSHOT) WITH TEMPLATE caluma" \
+          -c "CREATE DATABASE mysagw_snap_$(CREATE_SNAPSHOT) WITH TEMPLATE mysagw"
+
+.PHONY: restore-db-snapshot
+restore-db-snapshot: ## create snapshot dbs for caluma and mysagw
+	@echo Restoring $(RESTORE_SNAPSHOT)
+	@docker compose exec db psql -Umysagw -d postgres \
+      -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE pid <> pg_backend_pid()" \
+      -c "DROP DATABASE caluma" \
+      -c "DROP DATABASE mysagw" \
+      -c "CREATE DATABASE caluma WITH TEMPLATE caluma_snap_$(RESTORE_SNAPSHOT)" \
+      -c "CREATE DATABASE mysagw WITH TEMPLATE mysagw_snap_$(RESTORE_SNAPSHOT)"
+
+.PHONY: list-db-snapshot
+list-db-snapshot: ## create snapshot dbs for caluma and mysagw
+	@$(LIST_DB_SNAPSHOTS)
