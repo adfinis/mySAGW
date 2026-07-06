@@ -288,12 +288,45 @@ export default class CasesDetailIndexController extends Controller {
   @dropTask
   *reopenCase() {
     try {
+      let workItems = this.caseData.case.workItems ?? [];
+      const defineAmount = workItems.find(
+        (wi) => wi.task.slug === "define-amount",
+      );
+      const defineAmountAnswer = defineAmount.document.answers.edges
+        .map(({ node }) => node)
+        .find(
+          (a) => a.question.slug === "define-amount-decision",
+        )?.StringAnswerValue;
+
+      const defineAmountDismissed =
+        defineAmountAnswer?.includes("dismissed") ||
+        defineAmountAnswer?.includes("zurueckgezogen");
+      workItems = defineAmountDismissed
+        ? workItems
+            // We need to reopen both advance-credits and define-amount if
+            // the case was closed with either answering dismissed or zurueckgezogen
+            // in define-amount instead of just the last work item.
+            .filter((wi) =>
+              ["advance-credits", "define-amount"].includes(wi.task.slug),
+            )
+            // Dedupe so we only reopen the most recently closed.
+            // The list is sorted by graphql by closed_at:desc.
+            .reduce(
+              (items, wi) =>
+                !items.map((wi) => wi.task.slug).includes(wi.task.slug)
+                  ? [...items, wi]
+                  : items,
+              [],
+            )
+            .map((wi) => wi.id)
+        : workItems?.[0].id;
+
       yield this.apollo.mutate({
         mutation: reopenCaseMutation,
         variables: {
           input: {
             id: this.caseData.case.id,
-            workItems: [this.caseData.case.workItems?.[0].id],
+            workItems,
           },
         },
       });

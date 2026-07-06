@@ -59,9 +59,6 @@ class CustomDynamicTasks(BaseDynamicTasks):
         decision = prev_work_item.document.answers.get(
             question_id="define-amount-decision",
         )
-        decision = prev_work_item.document.answers.get(
-            question_id="define-amount-decision",
-        )
         decision_and_credit = (
             WorkItem.objects.filter(case=case, task_id="decision-and-credit")
             .order_by("-created_at")
