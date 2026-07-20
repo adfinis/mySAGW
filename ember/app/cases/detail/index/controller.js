@@ -298,10 +298,10 @@ export default class CasesDetailIndexController extends Controller {
           (a) => a.question.slug === "define-amount-decision",
         )?.StringAnswerValue;
 
-      const defineAmountDismissed =
+      const defineAmountDismissedOrWithdrawn =
         defineAmountAnswer?.includes("dismissed") ||
         defineAmountAnswer?.includes("zurueckgezogen");
-      workItems = defineAmountDismissed
+      workItems = defineAmountDismissedOrWithdrawn
         ? workItems
             // We need to reopen both advance-credits and define-amount if
             // the case was closed with either answering dismissed or zurueckgezogen
@@ -319,7 +319,7 @@ export default class CasesDetailIndexController extends Controller {
               [],
             )
             .map((wi) => wi.id)
-        : workItems?.[0].id;
+        : [workItems?.[0].id];
 
       yield this.apollo.mutate({
         mutation: reopenCaseMutation,
