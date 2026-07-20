@@ -22,10 +22,11 @@ export default class FilteredFormsService extends Service {
       return this.value;
     }
 
-    this.value = await this.mainForms(queryVariables);
-    this.previousQuery = queryVariables;
+    const mainForms = await this.mainForms(queryVariables);
 
     if (this.abilities.can("filter all forms case")) {
+      this.value = mainForms;
+      this.previousQuery = queryVariables;
       return this.value;
     }
 
@@ -43,7 +44,7 @@ export default class FilteredFormsService extends Service {
       expertAssociationForm: organisations.some((i) => i.isExpertAssociation),
     };
 
-    this.value = this.value.filter((form) => {
+    this.value = mainForms.filter((form) => {
       const visibilities = ENV.APP.caluma.formVisibilities.map(
         (visibility) => form.meta[visibility] && userVisibilities[visibility],
       );
@@ -53,6 +54,7 @@ export default class FilteredFormsService extends Service {
 
       return publicVisibility || visibilities.some((visibility) => visibility);
     });
+    this.previousQuery = queryVariables;
 
     return this.value;
   }

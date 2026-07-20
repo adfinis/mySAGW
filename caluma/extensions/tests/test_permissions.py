@@ -2,6 +2,7 @@ from typing import NamedTuple
 from uuid import uuid4
 
 import pytest
+from graphene import ResolveInfo
 
 from caluma.caluma_analytics.schema import SaveAnalyticsTable
 from caluma.caluma_core.mutation import Mutation
@@ -157,33 +158,53 @@ def test_permission_for_save_document_answer_no_access(
 
 
 @pytest.mark.parametrize(
-    "groups,created_by_user,has_perm,has_obj_perm",
+    "groups,created_by_user,form_slug,has_perm,has_obj_perm",
     [
-        (["admin"], "bar", True, True),
-        (["sagw"], "bar", True, True),
-        (["foo"], "bar", True, True),
-        (["foo"], "baz", True, True),
+        (["admin"], "bar", "hidden", True, True),
+        (["sagw"], "bar", "hidden", True, True),
+        (["foo"], "bar", "hidden", False, False),
+        (["foo"], "baz", "visible", True, True),
     ],
 )
 def test_permission_for_save_case_and_start_case(
     db,
-    admin_info,
+    admin_request,
     answer,
     groups,
     created_by_user,
+    form_slug,
     has_perm,
     has_obj_perm,
+    form_factory,
 ):
-    admin_info.context.user.groups = groups
-    admin_info.context.user.username = "baz"
+    # Not using admin_info fixture so we can set the `variable_values`.
+    info = ResolveInfo(
+        field_name=None,
+        field_nodes=None,
+        return_type=None,
+        parent_type=None,
+        path=None,
+        schema=None,
+        fragments=None,
+        root_value=None,
+        operation=None,
+        variable_values={"form": form_slug},
+        context=admin_request,
+        is_awaitable=lambda x: False,
+    )
+    info.context.user.groups = groups
+    info.context.user.username = "baz"
+
+    form_factory(slug="hidden", meta={"hiddenForm": True})
+    form_factory(slug="visible")
 
     answer.document.created_by_user = created_by_user
     answer.document.save()
 
     perm = MySAGWPermission()
 
-    assert perm.has_permission(SaveCase, admin_info) is has_perm
-    assert perm.has_object_permission(SaveCase, admin_info, answer) is has_obj_perm
+    assert perm.has_permission(SaveCase, info) is has_perm
+    assert perm.has_object_permission(SaveCase, info, answer) is has_obj_perm
 
 
 @pytest.mark.parametrize(

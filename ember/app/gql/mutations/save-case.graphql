@@ -1,7 +1,0 @@
-mutation saveCase($input: SaveCaseInput!) {
-  saveCase(input: $input) {
-    case {
-      id
-    }
-  }
-}

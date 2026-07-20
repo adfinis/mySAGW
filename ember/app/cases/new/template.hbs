@@ -19,8 +19,14 @@
       </div>
     {{/each}}
   </div>
-{{else}}
+{{else if this.forms.isRunning}}
   <LoadingSpinner />
+{{else}}
+  <div class="uk-text-center uk-padding-large uk-padding-remove-horizontal">
+    <span class="uk-text-large">
+      {{t "global.empty"}}
+    </span>
+  </div>
 {{/if}}
 
 <div class="uk-text-right">
