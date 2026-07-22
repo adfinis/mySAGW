@@ -9,7 +9,8 @@ import { trackedFunction } from "reactiveweb/function";
 import createCaseMutation from "mysagw/gql/mutations/create-case.graphql";
 
 export default class CaseNewController extends Controller {
-  queryParams = ["selectedForm"];
+  queryParams = [{ _selectedFormQP: "selectedForm" }];
+  @tracked _selectedFormQP;
   @queryManager apollo;
 
   @service router;
@@ -17,7 +18,20 @@ export default class CaseNewController extends Controller {
   @service session;
   @service filteredForms;
 
-  @tracked selectedForm = "";
+  get selectedForm() {
+    if (this.forms.isLoading || !this.forms.value) {
+      return null;
+    }
+    return this.forms.value
+      .map((form) => form.slug)
+      .includes(this._selectedFormQP)
+      ? this._selectedFormQP
+      : null;
+  }
+
+  set selectedForm(value) {
+    this._selectedFormQP = value;
+  }
 
   reset(_, isExiting) {
     if (isExiting) {

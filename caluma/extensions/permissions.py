@@ -10,6 +10,7 @@ from caluma.caluma_core.permissions import (
     object_permission_for,
     permission_for,
 )
+from caluma.caluma_form.models import Form
 from caluma.caluma_form.schema import SaveDocument, SaveDocumentAnswer
 from caluma.caluma_workflow.schema import (
     CancelCase,
@@ -79,13 +80,21 @@ class MySAGWPermission(BasePermission):
             if case:
                 return case.family
 
-    @permission_for(SaveCase)
-    @object_permission_for(SaveCase)
     @permission_for(SaveDocument)
     @object_permission_for(SaveDocument)
     @permission_for(SaveDocumentAnswer)
     def has_permission_for_save_case_save_document(self, mutation, info, obj=None):
         return True
+
+    @permission_for(SaveCase)
+    @object_permission_for(SaveCase)
+    def has_permission_for_create_case(self, mutation, info, obj=None):
+        if self._is_admin_or_sagw(info):
+            return True
+
+        form = info.variable_values["form"]
+        form = Form.objects.get(slug=form)
+        return not form.meta.get("hiddenForm")
 
     @object_permission_for(SaveDocumentAnswer)
     def has_permission_for_save_document_answer(self, mutation, info, answer):
