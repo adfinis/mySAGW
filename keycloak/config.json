@@ -22,7 +22,8 @@
       "oauth2DeviceCodeLifespan": "600",
       "oauth2DevicePollingInterval": "5",
       "parRequestUriLifespan": "60",
-      "realmReusableOtpCode": "false"
+      "realmReusableOtpCode": "false",
+      "scimApiEnabled": "false"
     },
     "authenticationFlows": [
       {
@@ -575,6 +576,21 @@
         "description": "OpenID Connect built-in scope: offline_access",
         "name": "offline_access",
         "protocol": "openid-connect"
+      },
+      {
+        "attributes": {},
+        "description": "AuthnContextClassRef Level of Authentiation",
+        "name": "AuthnContextClassRef",
+        "protocol": "saml",
+        "protocolMappers": [
+          {
+            "config": {},
+            "consentRequired": false,
+            "name": "AuthnContextClassRef",
+            "protocol": "saml",
+            "protocolMapper": "saml-authn-context-class-ref-mapper"
+          }
+        ]
       },
       {
         "attributes": {
@@ -1299,6 +1315,119 @@
       {
         "alwaysDisplayInConsole": false,
         "attributes": {
+          "client.secret.creation.time": "1788184709",
+          "post.logout.redirect.uris": "+",
+          "realm_client": "true"
+        },
+        "authenticationFlowBindingOverrides": {},
+        "bearerOnly": true,
+        "clientAuthenticatorType": "client-secret",
+        "clientId": "broker",
+        "consentRequired": false,
+        "defaultClientScopes": [
+          "email",
+          "profile",
+          "roles",
+          "web-origins"
+        ],
+        "directAccessGrantsEnabled": false,
+        "enabled": true,
+        "frontchannelLogout": false,
+        "fullScopeAllowed": false,
+        "implicitFlowEnabled": false,
+        "name": "${client_broker}",
+        "nodeReRegistrationTimeout": 0,
+        "notBefore": 0,
+        "optionalClientScopes": [
+          "address",
+          "microprofile-jwt",
+          "offline_access",
+          "phone"
+        ],
+        "protocol": "openid-connect",
+        "publicClient": false,
+        "redirectUris": [],
+        "secret": "zlOLLAkDZUHr8Pfu2pAqWqj2XIHNJC7BUJMCEwH8WrZsY51OVR9VaR4kK4bPS7vTVOokLDfu15xISEh2NyIPFG",
+        "serviceAccountsEnabled": false,
+        "standardFlowEnabled": true,
+        "surrogateAuthRequired": false,
+        "webOrigins": []
+      },
+      {
+        "alwaysDisplayInConsole": false,
+        "attributes": {
+          "client.secret.creation.time": "1788184709",
+          "post.logout.redirect.uris": "+",
+          "realm_client": "true"
+        },
+        "authenticationFlowBindingOverrides": {},
+        "bearerOnly": true,
+        "clientAuthenticatorType": "client-secret",
+        "clientId": "master-realm",
+        "consentRequired": false,
+        "defaultClientScopes": [
+          "email",
+          "profile",
+          "roles",
+          "web-origins"
+        ],
+        "directAccessGrantsEnabled": false,
+        "enabled": true,
+        "frontchannelLogout": false,
+        "fullScopeAllowed": false,
+        "implicitFlowEnabled": false,
+        "name": "master Realm",
+        "nodeReRegistrationTimeout": 0,
+        "notBefore": 0,
+        "optionalClientScopes": [
+          "address",
+          "microprofile-jwt",
+          "offline_access",
+          "phone"
+        ],
+        "protocol": "openid-connect",
+        "publicClient": false,
+        "redirectUris": [],
+        "secret": "6mOWFzFuOZe28f75sUvvcNJxleo57G1PwxM9yh3cQoaLWHyPR8t7OgqLPlv62UB1fvwimxn9zgf35SkAt7IFux",
+        "serviceAccountsEnabled": false,
+        "standardFlowEnabled": true,
+        "surrogateAuthRequired": false,
+        "webOrigins": []
+      },
+      {
+        "alwaysDisplayInConsole": false,
+        "attributes": {
+          "client.secret.creation.time": "1788184709",
+          "post.logout.redirect.uris": "+",
+          "realm_client": "true"
+        },
+        "authenticationFlowBindingOverrides": {},
+        "bearerOnly": true,
+        "clientAuthenticatorType": "client-secret",
+        "clientId": "mysagw-realm",
+        "consentRequired": false,
+        "defaultClientScopes": [],
+        "directAccessGrantsEnabled": false,
+        "enabled": true,
+        "frontchannelLogout": false,
+        "fullScopeAllowed": false,
+        "implicitFlowEnabled": false,
+        "name": "mysagw Realm",
+        "nodeReRegistrationTimeout": 0,
+        "notBefore": 0,
+        "optionalClientScopes": [],
+        "protocol": "openid-connect",
+        "publicClient": false,
+        "redirectUris": [],
+        "secret": "3qGYSnOKLGsanIYRnXdnSI6LxCoHBYHgzHLuQg1zZ1Bo3KlptL00XClMOUX8GXcfmGlikDg2t8YdSmVXRZxG1x",
+        "serviceAccountsEnabled": false,
+        "standardFlowEnabled": true,
+        "surrogateAuthRequired": false,
+        "webOrigins": []
+      },
+      {
+        "alwaysDisplayInConsole": false,
+        "attributes": {
           "client.use.lightweight.access.token.enabled": "true",
           "post.logout.redirect.uris": "+",
           "realm_client": "false"
@@ -1334,113 +1463,6 @@
         "redirectUris": [],
         "serviceAccountsEnabled": false,
         "standardFlowEnabled": false,
-        "surrogateAuthRequired": false,
-        "webOrigins": []
-      },
-      {
-        "alwaysDisplayInConsole": false,
-        "attributes": {
-          "post.logout.redirect.uris": "+",
-          "realm_client": "true"
-        },
-        "authenticationFlowBindingOverrides": {},
-        "bearerOnly": true,
-        "clientAuthenticatorType": "client-secret",
-        "clientId": "broker",
-        "consentRequired": false,
-        "defaultClientScopes": [
-          "email",
-          "profile",
-          "roles",
-          "web-origins"
-        ],
-        "directAccessGrantsEnabled": false,
-        "enabled": true,
-        "frontchannelLogout": false,
-        "fullScopeAllowed": false,
-        "implicitFlowEnabled": false,
-        "name": "${client_broker}",
-        "nodeReRegistrationTimeout": 0,
-        "notBefore": 0,
-        "optionalClientScopes": [
-          "address",
-          "microprofile-jwt",
-          "offline_access",
-          "phone"
-        ],
-        "protocol": "openid-connect",
-        "publicClient": false,
-        "redirectUris": [],
-        "serviceAccountsEnabled": false,
-        "standardFlowEnabled": true,
-        "surrogateAuthRequired": false,
-        "webOrigins": []
-      },
-      {
-        "alwaysDisplayInConsole": false,
-        "attributes": {
-          "post.logout.redirect.uris": "+",
-          "realm_client": "true"
-        },
-        "authenticationFlowBindingOverrides": {},
-        "bearerOnly": true,
-        "clientAuthenticatorType": "client-secret",
-        "clientId": "master-realm",
-        "consentRequired": false,
-        "defaultClientScopes": [
-          "email",
-          "profile",
-          "roles",
-          "web-origins"
-        ],
-        "directAccessGrantsEnabled": false,
-        "enabled": true,
-        "frontchannelLogout": false,
-        "fullScopeAllowed": false,
-        "implicitFlowEnabled": false,
-        "name": "master Realm",
-        "nodeReRegistrationTimeout": 0,
-        "notBefore": 0,
-        "optionalClientScopes": [
-          "address",
-          "microprofile-jwt",
-          "offline_access",
-          "phone"
-        ],
-        "protocol": "openid-connect",
-        "publicClient": false,
-        "redirectUris": [],
-        "serviceAccountsEnabled": false,
-        "standardFlowEnabled": true,
-        "surrogateAuthRequired": false,
-        "webOrigins": []
-      },
-      {
-        "alwaysDisplayInConsole": false,
-        "attributes": {
-          "post.logout.redirect.uris": "+",
-          "realm_client": "true"
-        },
-        "authenticationFlowBindingOverrides": {},
-        "bearerOnly": true,
-        "clientAuthenticatorType": "client-secret",
-        "clientId": "mysagw-realm",
-        "consentRequired": false,
-        "defaultClientScopes": [],
-        "directAccessGrantsEnabled": false,
-        "enabled": true,
-        "frontchannelLogout": false,
-        "fullScopeAllowed": false,
-        "implicitFlowEnabled": false,
-        "name": "mysagw Realm",
-        "nodeReRegistrationTimeout": 0,
-        "notBefore": 0,
-        "optionalClientScopes": [],
-        "protocol": "openid-connect",
-        "publicClient": false,
-        "redirectUris": [],
-        "serviceAccountsEnabled": false,
-        "standardFlowEnabled": true,
         "surrogateAuthRequired": false,
         "webOrigins": []
       }
@@ -1536,6 +1558,9 @@
             ],
             "secret": [
               "BkM_MHDTzGC6Ji3zAFr04Q"
+            ],
+            "secretSize": [
+              "16"
             ]
           },
           "name": "aes-generated",
@@ -1655,6 +1680,7 @@
       ]
     },
     "defaultDefaultClientScopes": [
+      "AuthnContextClassRef",
       "acr",
       "basic",
       "email",
@@ -1696,11 +1722,12 @@
     "identityProviderMappers": [],
     "identityProviders": [],
     "internationalizationEnabled": false,
-    "keycloakVersion": "26.5.5",
+    "keycloakVersion": "26.7.3",
     "localizationTexts": {},
     "loginWithEmailAllowed": true,
     "maxDeltaTimeSeconds": 43200,
     "maxFailureWaitSeconds": 900,
+    "maxSecondaryAuthFailures": 0,
     "maxTemporaryLockouts": 0,
     "minimumQuickLoginWaitSeconds": 60,
     "notBefore": 0,
@@ -1737,7 +1764,7 @@
         "defaultAction": false,
         "enabled": true,
         "name": "Configure OTP",
-        "priority": 10,
+        "priority": 54,
         "providerId": "CONFIGURE_TOTP"
       },
       {
@@ -1755,7 +1782,7 @@
         "defaultAction": false,
         "enabled": true,
         "name": "Update Password",
-        "priority": 30,
+        "priority": 57,
         "providerId": "UPDATE_PASSWORD"
       },
       {
@@ -1937,6 +1964,20 @@
           {
             "attributes": {},
             "clientRole": true,
+            "composite": true,
+            "composites": {
+              "client": {
+                "master-realm": [
+                  "query-organizations"
+                ]
+              }
+            },
+            "description": "${role_view-organizations}",
+            "name": "view-organizations"
+          },
+          {
+            "attributes": {},
+            "clientRole": true,
             "composite": false,
             "description": "${role_create-client}",
             "name": "create-client"
@@ -1980,6 +2021,13 @@
             "attributes": {},
             "clientRole": true,
             "composite": false,
+            "description": "${role_manage-organizations}",
+            "name": "manage-organizations"
+          },
+          {
+            "attributes": {},
+            "clientRole": true,
+            "composite": false,
             "description": "${role_manage-realm}",
             "name": "manage-realm"
           },
@@ -2003,6 +2051,13 @@
             "composite": false,
             "description": "${role_query-groups}",
             "name": "query-groups"
+          },
+          {
+            "attributes": {},
+            "clientRole": true,
+            "composite": false,
+            "description": "${role_query-organizations}",
+            "name": "query-organizations"
           },
           {
             "attributes": {},
@@ -2080,6 +2135,20 @@
           {
             "attributes": {},
             "clientRole": true,
+            "composite": true,
+            "composites": {
+              "client": {
+                "mysagw-realm": [
+                  "query-organizations"
+                ]
+              }
+            },
+            "description": "${role_view-organizations}",
+            "name": "view-organizations"
+          },
+          {
+            "attributes": {},
+            "clientRole": true,
             "composite": false,
             "description": "${role_create-client}",
             "name": "create-client"
@@ -2123,6 +2192,13 @@
             "attributes": {},
             "clientRole": true,
             "composite": false,
+            "description": "${role_manage-organizations}",
+            "name": "manage-organizations"
+          },
+          {
+            "attributes": {},
+            "clientRole": true,
+            "composite": false,
             "description": "${role_manage-realm}",
             "name": "manage-realm"
           },
@@ -2146,6 +2222,13 @@
             "composite": false,
             "description": "${role_query-groups}",
             "name": "query-groups"
+          },
+          {
+            "attributes": {},
+            "clientRole": true,
+            "composite": false,
+            "description": "${role_query-organizations}",
+            "name": "query-organizations"
           },
           {
             "attributes": {},
@@ -2226,16 +2309,19 @@
                 "manage-clients",
                 "manage-events",
                 "manage-identity-providers",
+                "manage-organizations",
                 "manage-realm",
                 "manage-users",
                 "query-clients",
                 "query-groups",
+                "query-organizations",
                 "query-realms",
                 "query-users",
                 "view-authorization",
                 "view-clients",
                 "view-events",
                 "view-identity-providers",
+                "view-organizations",
                 "view-realm",
                 "view-users"
               ],
@@ -2246,16 +2332,19 @@
                 "manage-clients",
                 "manage-events",
                 "manage-identity-providers",
+                "manage-organizations",
                 "manage-realm",
                 "manage-users",
                 "query-clients",
                 "query-groups",
+                "query-organizations",
                 "query-realms",
                 "query-users",
                 "view-authorization",
                 "view-clients",
                 "view-events",
                 "view-identity-providers",
+                "view-organizations",
                 "view-realm",
                 "view-users"
               ]
@@ -2294,6 +2383,7 @@
         }
       ]
     },
+    "scimApiEnabled": false,
     "scopeMappings": [
       {
         "clientScope": "offline_access",
@@ -2350,6 +2440,7 @@
     "webAuthnPolicyPasswordlessCreateTimeout": 0,
     "webAuthnPolicyPasswordlessExtraOrigins": [],
     "webAuthnPolicyPasswordlessRequireResidentKey": "not specified",
+    "webAuthnPolicyPasswordlessResidentKey": "required",
     "webAuthnPolicyPasswordlessRpEntityName": "keycloak",
     "webAuthnPolicyPasswordlessRpId": "",
     "webAuthnPolicyPasswordlessSignatureAlgorithms": [
@@ -2357,6 +2448,7 @@
     ],
     "webAuthnPolicyPasswordlessUserVerificationRequirement": "not specified",
     "webAuthnPolicyRequireResidentKey": "not specified",
+    "webAuthnPolicyResidentKey": "not specified",
     "webAuthnPolicyRpEntityName": "keycloak",
     "webAuthnPolicyRpId": "",
     "webAuthnPolicySignatureAlgorithms": [
@@ -2387,7 +2479,8 @@
       "oauth2DeviceCodeLifespan": "600",
       "oauth2DevicePollingInterval": "5",
       "parRequestUriLifespan": "60",
-      "realmReusableOtpCode": "false"
+      "realmReusableOtpCode": "false",
+      "scimApiEnabled": "false"
     },
     "authenticationFlows": [
       {
@@ -2437,6 +2530,31 @@
         ],
         "builtIn": true,
         "description": "Flow to determine if the OTP is required for the authentication",
+        "providerId": "basic-flow",
+        "topLevel": false
+      },
+      {
+        "alias": "Browser - Conditional Organization",
+        "authenticationExecutions": [
+          {
+            "authenticator": "conditional-user-configured",
+            "authenticatorFlow": false,
+            "autheticatorFlow": false,
+            "priority": 10,
+            "requirement": "REQUIRED",
+            "userSetupAllowed": false
+          },
+          {
+            "authenticator": "organization",
+            "authenticatorFlow": false,
+            "autheticatorFlow": false,
+            "priority": 20,
+            "requirement": "ALTERNATIVE",
+            "userSetupAllowed": false
+          }
+        ],
+        "builtIn": true,
+        "description": "Flow to determine if the organization identity-first login is to be used",
         "providerId": "basic-flow",
         "topLevel": false
       },
@@ -2615,6 +2733,14 @@
             "authenticatorFlow": false,
             "autheticatorFlow": false,
             "priority": 25,
+            "requirement": "ALTERNATIVE",
+            "userSetupAllowed": false
+          },
+          {
+            "authenticatorFlow": true,
+            "autheticatorFlow": true,
+            "flowAlias": "Organization",
+            "priority": 26,
             "requirement": "ALTERNATIVE",
             "userSetupAllowed": false
           },
@@ -2882,6 +3008,22 @@
         "description": "SAML ECP Profile Authentication Flow",
         "providerId": "basic-flow",
         "topLevel": true
+      },
+      {
+        "alias": "Organization",
+        "authenticationExecutions": [
+          {
+            "authenticatorFlow": true,
+            "autheticatorFlow": true,
+            "flowAlias": "Browser - Conditional Organization",
+            "priority": 10,
+            "requirement": "CONDITIONAL",
+            "userSetupAllowed": false
+          }
+        ],
+        "builtIn": true,
+        "providerId": "basic-flow",
+        "topLevel": false
       }
     ],
     "authenticatorConfig": [
@@ -2940,6 +3082,21 @@
         "description": "OpenID Connect built-in scope: offline_access",
         "name": "offline_access",
         "protocol": "openid-connect"
+      },
+      {
+        "attributes": {},
+        "description": "AuthnContextClassRef Level of Authentiation",
+        "name": "AuthnContextClassRef",
+        "protocol": "saml",
+        "protocolMappers": [
+          {
+            "config": {},
+            "consentRequired": false,
+            "name": "AuthnContextClassRef",
+            "protocol": "saml",
+            "protocolMapper": "saml-authn-context-class-ref-mapper"
+          }
+        ]
       },
       {
         "attributes": {
@@ -3605,7 +3762,8 @@
         "publicClient": true,
         "redirectUris": [
           "http://localhost:4200/*",
-          "https://mysagw.localhost/*"
+          "http://mysagw.local:4200/*",
+          "https://mysagw.local/*"
         ],
         "rootUrl": "",
         "serviceAccountsEnabled": false,
@@ -3613,7 +3771,8 @@
         "surrogateAuthRequired": false,
         "webOrigins": [
           "http://localhost:4200",
-          "https://mysagw.localhost"
+          "http://mysagw.local:4200",
+          "https://mysagw.local"
         ]
       },
       {
@@ -3889,6 +4048,47 @@
       {
         "alwaysDisplayInConsole": false,
         "attributes": {
+          "client.secret.creation.time": "1788184710",
+          "post.logout.redirect.uris": "+",
+          "realm_client": "true"
+        },
+        "authenticationFlowBindingOverrides": {},
+        "bearerOnly": true,
+        "clientAuthenticatorType": "client-secret",
+        "clientId": "realm-management",
+        "consentRequired": false,
+        "defaultClientScopes": [
+          "email",
+          "profile",
+          "roles",
+          "web-origins"
+        ],
+        "directAccessGrantsEnabled": false,
+        "enabled": true,
+        "frontchannelLogout": false,
+        "fullScopeAllowed": false,
+        "implicitFlowEnabled": false,
+        "name": "${client_realm-management}",
+        "nodeReRegistrationTimeout": 0,
+        "notBefore": 0,
+        "optionalClientScopes": [
+          "address",
+          "microprofile-jwt",
+          "offline_access",
+          "phone"
+        ],
+        "protocol": "openid-connect",
+        "publicClient": false,
+        "redirectUris": [],
+        "secret": "tDHZcrQaQOzACAZNRcWn9IL9OSxzNBhy2D1kcfujrWqCrlzLwfrj8ITcdOFXC7QnECzBOXWR5JWlMST0HpJ0Ad",
+        "serviceAccountsEnabled": false,
+        "standardFlowEnabled": true,
+        "surrogateAuthRequired": false,
+        "webOrigins": []
+      },
+      {
+        "alwaysDisplayInConsole": false,
+        "attributes": {
           "post.logout.redirect.uris": "+",
           "realm_client": "true"
         },
@@ -3965,45 +4165,6 @@
         "redirectUris": [],
         "serviceAccountsEnabled": false,
         "standardFlowEnabled": false,
-        "surrogateAuthRequired": false,
-        "webOrigins": []
-      },
-      {
-        "alwaysDisplayInConsole": false,
-        "attributes": {
-          "post.logout.redirect.uris": "+",
-          "realm_client": "true"
-        },
-        "authenticationFlowBindingOverrides": {},
-        "bearerOnly": true,
-        "clientAuthenticatorType": "client-secret",
-        "clientId": "realm-management",
-        "consentRequired": false,
-        "defaultClientScopes": [
-          "email",
-          "profile",
-          "roles",
-          "web-origins"
-        ],
-        "directAccessGrantsEnabled": false,
-        "enabled": true,
-        "frontchannelLogout": false,
-        "fullScopeAllowed": false,
-        "implicitFlowEnabled": false,
-        "name": "${client_realm-management}",
-        "nodeReRegistrationTimeout": 0,
-        "notBefore": 0,
-        "optionalClientScopes": [
-          "address",
-          "microprofile-jwt",
-          "offline_access",
-          "phone"
-        ],
-        "protocol": "openid-connect",
-        "publicClient": false,
-        "redirectUris": [],
-        "serviceAccountsEnabled": false,
-        "standardFlowEnabled": true,
         "surrogateAuthRequired": false,
         "webOrigins": []
       },
@@ -4102,7 +4263,7 @@
         ],
         "publicClient": false,
         "redirectUris": [
-          "https://mysagw.localhost/*"
+          "https://mysagw.local/*"
         ],
         "secret": "9tdQipAskRXNNwdFFzxanPdXqVZkAlqY",
         "serviceAccountsEnabled": true,
@@ -4177,6 +4338,9 @@
             ],
             "secret": [
               "9150ufOLZxWSTBKpIGBqKA"
+            ],
+            "secretSize": [
+              "16"
             ]
           },
           "name": "aes-generated",
@@ -4287,7 +4451,7 @@
         {
           "config": {
             "kc.user.profile.config": [
-              "{\"attributes\":[{\"name\":\"username\",\"displayName\":\"${username}\",\"validations\":{\"length\":{\"min\":3,\"max\":255},\"username-prohibited-characters\":{},\"up-username-not-idn-homograph\":{}},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"email\",\"displayName\":\"${email}\",\"validations\":{\"email\":{},\"length\":{\"max\":255}},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"salutation\",\"displayName\":\"Salutation\",\"validations\":{\"options\":{\"options\":[\"Mrs.\",\"Mr.\",\"neutral\"]}},\"annotations\":{\"inputType\":\"select\"},\"required\":{\"roles\":[\"admin\",\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"firstName\",\"displayName\":\"${firstName}\",\"validations\":{\"length\":{\"max\":255},\"person-name-prohibited-characters\":{}},\"annotations\":{},\"required\":{\"roles\":[\"admin\",\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"title\",\"displayName\":\"Title\",\"validations\":{\"options\":{\"options\":[\"Dr.\",\"Prof.\",\"Prof. Dr.\",\"Prof. em. Dr.\",\"PD Dr.\"]}},\"annotations\":{\"inputType\":\"select\"},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"lastName\",\"displayName\":\"${lastName}\",\"validations\":{\"length\":{\"max\":255},\"person-name-prohibited-characters\":{}},\"annotations\":{},\"required\":{\"roles\":[\"admin\",\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false}],\"groups\":[{\"name\":\"user-metadata\",\"displayHeader\":\"User metadata\",\"displayDescription\":\"Attributes, which refer to user metadata\"}]}"
+              "{\"attributes\":[{\"name\":\"username\",\"displayName\":\"${username}\",\"validations\":{\"length\":{\"min\":3,\"max\":255},\"username-prohibited-characters\":{},\"up-username-not-idn-homograph\":{}},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"email\",\"displayName\":\"${email}\",\"validations\":{\"email\":{},\"length\":{\"max\":255}},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"salutation\",\"displayName\":\"Salutation\",\"validations\":{\"options\":{\"options\":[\"Mrs.\",\"Mr.\",\"neutral\"]}},\"annotations\":{\"inputType\":\"select\"},\"required\":{\"roles\":[\"admin\",\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"firstName\",\"displayName\":\"${firstName}\",\"validations\":{\"length\":{\"max\":255},\"person-name-prohibited-characters\":{}},\"annotations\":{},\"required\":{\"roles\":[\"admin\",\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"title\",\"displayName\":\"Title\",\"validations\":{\"options\":{\"options\":[\"Dr.\",\"Prof.\",\"Prof. Dr.\",\"PD Dr.\"]}},\"annotations\":{\"inputType\":\"select\"},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"lastName\",\"displayName\":\"${lastName}\",\"validations\":{\"length\":{\"max\":255},\"person-name-prohibited-characters\":{}},\"annotations\":{},\"required\":{\"roles\":[\"admin\",\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false}],\"groups\":[{\"name\":\"user-metadata\",\"displayHeader\":\"User metadata\",\"displayDescription\":\"Attributes, which refer to user metadata\"}]}"
             ]
           },
           "providerId": "declarative-user-profile",
@@ -4296,6 +4460,7 @@
       ]
     },
     "defaultDefaultClientScopes": [
+      "AuthnContextClassRef",
       "acr",
       "basic",
       "email",
@@ -4371,11 +4536,12 @@
     "identityProviderMappers": [],
     "identityProviders": [],
     "internationalizationEnabled": false,
-    "keycloakVersion": "26.5.5",
+    "keycloakVersion": "26.7.3",
     "localizationTexts": {},
     "loginWithEmailAllowed": true,
     "maxDeltaTimeSeconds": 43200,
     "maxFailureWaitSeconds": 900,
+    "maxSecondaryAuthFailures": 0,
     "maxTemporaryLockouts": 0,
     "minimumQuickLoginWaitSeconds": 60,
     "notBefore": 0,
@@ -4412,7 +4578,7 @@
         "defaultAction": false,
         "enabled": true,
         "name": "Configure OTP",
-        "priority": 10,
+        "priority": 54,
         "providerId": "CONFIGURE_TOTP"
       },
       {
@@ -4430,7 +4596,7 @@
         "defaultAction": false,
         "enabled": true,
         "name": "Update Password",
-        "priority": 30,
+        "priority": 57,
         "providerId": "UPDATE_PASSWORD"
       },
       {
@@ -4609,16 +4775,19 @@
                   "manage-clients",
                   "manage-events",
                   "manage-identity-providers",
+                  "manage-organizations",
                   "manage-realm",
                   "manage-users",
                   "query-clients",
                   "query-groups",
+                  "query-organizations",
                   "query-realms",
                   "query-users",
                   "view-authorization",
                   "view-clients",
                   "view-events",
                   "view-identity-providers",
+                  "view-organizations",
                   "view-realm",
                   "view-users"
                 ]
@@ -4655,6 +4824,20 @@
             },
             "description": "${role_view-users}",
             "name": "view-users"
+          },
+          {
+            "attributes": {},
+            "clientRole": true,
+            "composite": true,
+            "composites": {
+              "client": {
+                "realm-management": [
+                  "query-organizations"
+                ]
+              }
+            },
+            "description": "${role_view-organizations}",
+            "name": "view-organizations"
           },
           {
             "attributes": {},
@@ -4702,6 +4885,13 @@
             "attributes": {},
             "clientRole": true,
             "composite": false,
+            "description": "${role_manage-organizations}",
+            "name": "manage-organizations"
+          },
+          {
+            "attributes": {},
+            "clientRole": true,
+            "composite": false,
             "description": "${role_manage-realm}",
             "name": "manage-realm"
           },
@@ -4725,6 +4915,13 @@
             "composite": false,
             "description": "${role_query-groups}",
             "name": "query-groups"
+          },
+          {
+            "attributes": {},
+            "clientRole": true,
+            "composite": false,
+            "description": "${role_query-organizations}",
+            "name": "query-organizations"
           },
           {
             "attributes": {},
@@ -4811,6 +5008,7 @@
         }
       ]
     },
+    "scimApiEnabled": false,
     "scopeMappings": [
       {
         "clientScope": "offline_access",
@@ -4821,7 +5019,7 @@
     ],
     "smtpServer": {
       "auth": "false",
-      "from": "noreply@mysagw.localhost",
+      "from": "noreply@mysagw.local",
       "fromDisplayName": "mySAGW",
       "host": "mail",
       "port": "1025",
@@ -4941,7 +5139,7 @@
             "view-profile"
           ]
         },
-        "createdTimestamp": 1769596482452,
+        "createdTimestamp": 1632389993127,
         "credentials": [],
         "disableableCredentialTypes": [],
         "emailVerified": false,
@@ -4990,6 +5188,7 @@
     "webAuthnPolicyPasswordlessCreateTimeout": 0,
     "webAuthnPolicyPasswordlessExtraOrigins": [],
     "webAuthnPolicyPasswordlessRequireResidentKey": "not specified",
+    "webAuthnPolicyPasswordlessResidentKey": "required",
     "webAuthnPolicyPasswordlessRpEntityName": "keycloak",
     "webAuthnPolicyPasswordlessRpId": "",
     "webAuthnPolicyPasswordlessSignatureAlgorithms": [
@@ -4997,6 +5196,7 @@
     ],
     "webAuthnPolicyPasswordlessUserVerificationRequirement": "not specified",
     "webAuthnPolicyRequireResidentKey": "not specified",
+    "webAuthnPolicyResidentKey": "not specified",
     "webAuthnPolicyRpEntityName": "keycloak",
     "webAuthnPolicyRpId": "",
     "webAuthnPolicySignatureAlgorithms": [
