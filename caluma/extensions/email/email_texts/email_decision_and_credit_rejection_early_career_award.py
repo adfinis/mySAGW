@@ -11,7 +11,7 @@ The SAGW Team
 ******
 
 This is an automatically generated message. Please do not reply. The contact details of the Swiss Academy of Humanities and Social Sciences can be found on the following website:
-https://www.sagw.ch/sagw/foerderung/early-career-award"""
+https://www.sagw.ch/en/funding/early-career-award"""
 
 EMAIL_SUBJECTS = {"de": SUBJECT, "fr": SUBJECT, "en": SUBJECT}
 EMAIL_BODIES = {"de": BODY, "fr": BODY, "en": BODY}
