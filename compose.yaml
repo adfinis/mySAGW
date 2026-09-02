@@ -49,7 +49,7 @@ services:
   keycloak:
     depends_on:
       - db
-    image: quay.io/keycloak/keycloak:26.5.5
+    image: quay.io/keycloak/keycloak:26.7.3@sha256:ff4257d0d64efbe99ed1ddfaf07765cc3c36dc7518bf8324d41961327f441c54
     volumes:
       - ./keycloak/config.json:/opt/keycloak/data/import/test-config.json
     environment:
