@@ -1,0 +1,13 @@
+# Garage
+# ------------------------------------------------------------------------------
+# 32 random bytes, hex encoded (openssl rand -hex 32)
+GARAGE_RPC_SECRET=4425f5c26c5e11581d3223904324dcb5b5d5dfb14e5e7f35e38c595424f5f1e6
+# must match MINIO_STORAGE_ACCESS_KEY / MINIO_STORAGE_SECRET_KEY in .caluma
+# access key: at least 8 chars of [A-Za-z0-9-_.], secret key: at least 16 chars
+GARAGE_DEFAULT_ACCESS_KEY=verysecure
+GARAGE_DEFAULT_SECRET_KEY=verysecureverysecure
+GARAGE_DEFAULT_BUCKET=caluma-media
+
+# Admin API, for the metrics endpoint (openssl rand -base64 32)
+GARAGE_ADMIN_TOKEN=BwNJ1gyQiqPHUO4axZSA6yCk8WFNjzl3zScqdTYwwks=
+GARAGE_METRICS_TOKEN=LRn+Jy5rBrm+7O9NO0BDNbpvZqcm0Ez75B6T7ocKigg=

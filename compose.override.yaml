@@ -65,6 +65,12 @@ services:
   mc:
     env_file: ./.envs/.local/.minio
 
+  garage:
+    env_file: ./.envs/.local/.garage
+    ports:
+      # S3 API, for pointing awscli/s3cmd/rclone at it directly
+      - "3900:3900"
+
   dms:
     env_file: ./.envs/.local/.dms
 # Suddenly with this, the uwsgi workers are constantly restarted. Uncommenting for now.

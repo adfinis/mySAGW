@@ -30,6 +30,10 @@ services:
   mc:
     env_file: ./.envs/.staging/.minio
 
+  garage:
+    env_file: ./.envs/.staging/.garage
+    restart: unless-stopped
+
   dms:
     env_file: ./.envs/.staging/.dms
     restart: unless-stopped

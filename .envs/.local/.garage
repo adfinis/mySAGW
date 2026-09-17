@@ -1,0 +1,11 @@
+# Garage
+# ------------------------------------------------------------------------------
+# 32 random bytes, hex encoded (openssl rand -hex 32)
+GARAGE_RPC_SECRET=2f0dd5e8f4bbd7192b0d47c9be0e73b06e6d8d3cf1f1cd7d3f27c3b30dcb4d63
+GARAGE_DEFAULT_ACCESS_KEY=mysagw-garage
+GARAGE_DEFAULT_SECRET_KEY=mysagw-garage123456
+GARAGE_DEFAULT_BUCKET=caluma-media
+
+# Admin API, for the metrics endpoint (openssl rand -base64 32)
+GARAGE_ADMIN_TOKEN=gfI5Lb5HVeAxj4AORX6CPx3iYx2zz8PHf5SwAwS01rk=
+GARAGE_METRICS_TOKEN=nRl67F5JxBU2l3f9mjCGMB694dM53C6Yqf46jUeUZjE=
