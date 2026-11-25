@@ -100,6 +100,7 @@ def test_my_orgs_update_readonly(db, client, authorized, membership_factory):
     identity = client.user.identity
     membership = membership_factory(identity=identity, authorized=authorized)
     membership.organisation.organisation_name = "Foo"
+    membership.organisation.organisation_slug = "foo"
     membership.organisation.save()
 
     url = reverse("my-orgs-detail", args=[str(membership.organisation.pk)])
@@ -108,7 +109,7 @@ def test_my_orgs_update_readonly(db, client, authorized, membership_factory):
         "data": {
             "type": "identities",
             "id": str(membership.organisation.pk),
-            "attributes": {"organisation-name": "Bar"},
+            "attributes": {"organisation-name": "Bar", "organisation-slug": "bar"},
         },
     }
 
@@ -121,6 +122,7 @@ def test_my_orgs_update_readonly(db, client, authorized, membership_factory):
     assert response.status_code == status.HTTP_200_OK
     membership.organisation.refresh_from_db()
     assert membership.organisation.organisation_name == "Foo"
+    assert membership.organisation.organisation_slug == "foo"
 
 
 @pytest.mark.parametrize(

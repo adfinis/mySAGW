@@ -156,6 +156,32 @@ def test_my_membership_list(db, client, expected_count, membership_factory):
     assert len(json["data"]) == expected_count
 
 
+@pytest.mark.django_db
+@pytest.mark.parametrize("client", ["user"], indirect=["client"])
+def test_my_membership_list_includes_organisation_slug(
+    client,
+    identity_factory,
+    membership_factory,
+):
+    organisation = identity_factory(
+        is_organisation=True,
+        organisation_name="ECA",
+        organisation_slug="eca-committee",
+    )
+    membership_factory(identity=client.user.identity, organisation=organisation)
+
+    url = reverse("my-memberships-list")
+
+    response = client.get(url, data={"include": "organisation"})
+
+    assert response.status_code == status.HTTP_200_OK
+
+    included = response.json()["included"]
+    assert len(included) == 1
+    # The frontend relies on this to show the work items to circulation members
+    assert included[0]["attributes"].get("organisation-slug") == "eca-committee"
+
+
 @pytest.mark.parametrize(
     "client,expected_status",
     [
